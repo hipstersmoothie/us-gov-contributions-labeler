@@ -27,8 +27,40 @@ interface Label {
   description: string;
 }
 
+const numbers = [
+  "zero",
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+];
+
 function getIdentifier(name: string) {
-  return name.replace("/", "-").toLowerCase();
+  // GitHub allows [A-Za-z0-9_.-]+ but bsky only supports ^[a-z-]+$
+  let identifier = name
+    // Replace the / in org/repo
+    .replace("/", "-")
+    // Replace _ and . with -
+    .replaceAll("_", "-")
+    .replaceAll(".", "-")
+    // Convert to lowercase
+    .toLowerCase();
+
+  // replace numbers with the corresponding string representation
+  for (let i = 0; i < numbers.length; i++) {
+    const number = numbers[i];
+
+    if (number && identifier.includes(`${i}`)) {
+      identifier = identifier.replaceAll(`${i}`, number);
+    }
+  }
+
+  return identifier;
 }
 
 async function createLabel({ name, description }: Label) {
