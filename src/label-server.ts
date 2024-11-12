@@ -28,7 +28,7 @@ interface Label {
 }
 
 function getIdentifier(name: string) {
-  return name.replace("/", "-");
+  return name.replace("/", "-").toLowerCase();
 }
 
 async function createLabel({ name, description }: Label) {
