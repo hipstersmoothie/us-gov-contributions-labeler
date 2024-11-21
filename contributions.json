@@ -455,6 +455,22 @@
       "Apple Inc"
     ]
   },
+  "ocasio-cortez.house.gov": {
+    "industries": [
+      "Retired",
+      "Education",
+      "Health Professionals",
+      "Civil Servants/Public Officials",
+      "Electronics Mfg & Equip"
+    ],
+    "contributors": [
+      "Google Inc",
+      "New York City Dept of Education",
+      "Kaiser Permanente",
+      "US Postal Service",
+      "Apple Inc"
+    ]
+  },
   "wyden.senate.gov": {
     "industries": [
       "Securities & Investment",
@@ -469,6 +485,54 @@
       "Centene Corp",
       "American Israel Public Affairs Cmte",
       "Synergi Partners"
+    ]
+  },
+  "smith.senate.gov": {
+    "industries": [
+      "Retired",
+      "Democratic/Liberal",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Women's Issues"
+    ],
+    "contributors": [
+      "University of Minnesota",
+      "EMILY's List",
+      "Signature Bank",
+      "State of Minnesota",
+      "Mayo Clinic"
+    ]
+  },
+  "markey.senate.gov": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Education",
+      "Securities & Investment",
+      "Real Estate"
+    ],
+    "contributors": [
+      "WilmerHale LLP",
+      "Harvard University",
+      "Google Inc",
+      "Apollo Global Management",
+      "Commonwealth of Massachusetts"
+    ]
+  },
+  "fetterman.senate.gov": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Education",
+      "Health Professionals",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "JStreetPAC",
+      "Google Inc",
+      "University of Pennsylvania",
+      "University of Pittsburgh",
+      "Penn State University"
     ]
   }
 }

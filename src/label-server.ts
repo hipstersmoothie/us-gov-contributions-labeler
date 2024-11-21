@@ -1,4 +1,3 @@
-import { ComAtprotoLabelDefs } from "@atcute/client/lexicons";
 import {
   getLabelerLabelDefinitions,
   setLabelerLabelDefinitions,
@@ -84,26 +83,13 @@ async function createLabel({ name, description }: Label) {
 
 export const addUserLabel = async (did: string, label: Label) => {
   const identifier = getIdentifier(label.name);
-  // Get the current labels for the did
-  const query = server.db
-    .prepare<string[]>(`SELECT * FROM labels WHERE uri = ?`)
-    .all(did) as ComAtprotoLabelDefs.Label[];
 
   await createLabel(label);
 
-  // make a set of the current labels
-  const labels = query.reduce((set, label) => {
-    if (!label.neg) set.add(label.val);
-    else set.delete(label.val);
-    return set;
-  }, new Set<string>());
-
   try {
-    if (labels.size < 5) {
-      server.createLabel({ uri: did, val: identifier });
-      console.log(`${new Date().toISOString()} Labeled ${did}: ${identifier}`);
-      return true;
-    }
+    server.createLabel({ uri: did, val: identifier });
+    console.log(`${new Date().toISOString()} Labeled ${did}: ${identifier}`);
+    return true;
   } catch (err) {
     console.error(err);
   }

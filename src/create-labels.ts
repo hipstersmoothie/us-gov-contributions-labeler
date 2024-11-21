@@ -4,6 +4,8 @@ import { addUserLabel } from "./label-server.js";
 const data = fs.readFileSync("contributions.json", "utf8");
 const map = JSON.parse(data);
 
+await new Promise((resolve) => setTimeout(resolve, 1000));
+
 for (const [key, value] of Object.entries(map) as [
   string,
   { industries: string[]; contributors: string[] }
