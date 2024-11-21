@@ -6,7 +6,7 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "start": "pnpm exec playwright install chromium && tsx src/label-server.ts"
+    "start": "tsx src/label-server.ts"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
