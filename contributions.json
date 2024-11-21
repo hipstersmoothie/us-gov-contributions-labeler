@@ -550,5 +550,95 @@
       "Matthews Southwest",
       "Home Depot"
     ]
+  },
+  "padilla.senate.gov": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Real Estate",
+      "TV/Movies/Music"
+    ],
+    "contributors": []
+  },
+  "markwarner.bsky.social": {
+    "industries": [
+      "Securities & Investment",
+      "Retired",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Electronics Mfg & Equip"
+    ],
+    "contributors": [
+      "Apollo Global Management",
+      "Wachtell, Lipton et al                  ",
+      "C3.AI",
+      "Sullivan & Cromwell",
+      "Dominion Energy"
+    ]
+  },
+  "corybooker.com": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Lowenstein Sandler Llp",
+      "United Airlines",
+      "Bain Capital",
+      "Stanford University",
+      "NorPAC"
+    ]
+  },
+  "senatorheinrich.bsky.social": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Lobbyists",
+      "Securities & Investment",
+      "Leadership PACs"
+    ],
+    "contributors": [
+      "Pattern Energy Group",
+      "Summit Ridge Energy",
+      "University of New Mexico",
+      "Nextera Energy",
+      "JStreetPAC"
+    ]
+  },
+  "whitehouse.senate.gov": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Securities & Investment",
+      "Leadership PACs",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Cotchett, Pitre & McCarthy",
+      "JStreetPAC",
+      "Chisholm, Chisholm & Kilpatrick",
+      "Clifford Law Offices"
+    ]
+  },
+  "edmarkey.bsky.social": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Education",
+      "Securities & Investment",
+      "Real Estate"
+    ],
+    "contributors": [
+      "WilmerHale LLP",
+      "Harvard University",
+      "Google Inc",
+      "Apollo Global Management",
+      "Commonwealth of Massachusetts"
+    ]
   }
 }
