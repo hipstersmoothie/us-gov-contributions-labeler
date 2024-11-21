@@ -6,7 +6,8 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "start": "tsx src/label-server.ts"
+    "start": "tsx src/label-server.ts",
+    "create-labels": "tsx src/create-labels.ts"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
