@@ -534,5 +534,21 @@
       "University of Pittsburgh",
       "Penn State University"
     ]
+  },
+  "jasmineforus.bsky.social": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Health Professionals",
+      "Securities & Investment",
+      "Civil Servants/Public Officials"
+    ],
+    "contributors": [
+      "Miller Weisbrod Olesky",
+      "Doctors Hospital at Renaissance",
+      "Karla T Jurvetson MD",
+      "Matthews Southwest",
+      "Home Depot"
+    ]
   }
 }

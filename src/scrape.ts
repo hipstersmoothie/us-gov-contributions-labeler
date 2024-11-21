@@ -143,4 +143,4 @@ async function scrapeDataForHandle(handle: string) {
 
 // scrapeOpenData("Pat Ryan").then(console.log);
 
-scrapeDataForHandle("fetterman.senate.gov");
+scrapeDataForHandle("jasmineforus.bsky.social");
