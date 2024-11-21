@@ -1,0 +1,12 @@
+diff --git a/dist/LabelerServer.js b/dist/LabelerServer.js
+index f6600d73a82fa0ceb6af4d079891b6a4a8049306..1738ad18de0066acb0bf56610981afccc5a1dbd9 100644
+--- a/dist/LabelerServer.js
++++ b/dist/LabelerServer.js
+@@ -272,6 +272,7 @@ export class LabelerServer {
+ 			`);
+             try {
+                 for (const row of stmt.iterate(cursor)) {
++                    console.log('Sending', row);
+                     const { id: seq, ...label } = row;
+                     const bytes = frameToBytes("message", { seq, labels: [formatLabel(label)] }, "#labels");
+                     ws.send(bytes);
