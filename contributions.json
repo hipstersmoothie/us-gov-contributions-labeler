@@ -1,274 +1,130 @@
 {
-  "repgwenmoore.bsky.social": {
+  "joaquincastrotx.bsky.social": {
     "industries": [
-      "Insurance",
-      "Securities & Investment",
-      "Casinos/Gambling",
-      "Real Estate",
-      "Commercial Banks"
-    ],
-    "contributors": [
-      "Invariant LLC",
-      "Carlyle Group",
-      "America's Credit Unions",
-      "American Federation of State/Cnty/Munic Employees",
-      "American Investment Council"
-    ]
-  },
-  "reploisfrankel.bsky.social": {
-    "industries": [
-      "Pro-Israel",
-      "Retired",
-      "Real Estate",
       "Lawyers/Law Firms",
-      "Securities & Investment"
-    ],
-    "contributors": [
-      "American Israel Public Affairs Cmte",
-      "Florida Crystals",
-      "Southern Glazer'S Wine & Spirits",
-      "Tate Development",
-      "Searcy, Denney et al                    "
-    ]
-  },
-  "repwilson.bsky.social": {
-    "industries": [
-      "Transportation Unions",
-      "Public Sector Unions",
       "Health Professionals",
-      "Lawyers/Law Firms",
-      "Railroads"
-    ],
-    "contributors": [
-      "Carnival Cruise Lines",
-      "American Israel Public Affairs Cmte",
-      "American Crystal Sugar",
-      "American Federation of State/Cnty/Munic Employees",
-      "American Federation of Teachers"
-    ]
-  },
-  "usrepkathycastor.bsky.social": {
-    "industries": [
-      "Health Professionals",
-      "Lawyers/Law Firms",
-      "Telecom Services",
-      "Retired",
-      "Insurance"
-    ],
-    "contributors": [
-      "American Israel Public Affairs Cmte",
-      "Comcast Corp",
-      "National Assn of Broadcasters",
-      "AFLAC Inc",
-      "American Hospital Assn"
-    ]
-  },
-  "wileynickel.bsky.social": {
-    "industries": [
-      "Securities & Investment",
-      "Retired",
-      "Leadership PACs",
       "Real Estate",
-      "Lawyers/Law Firms"
-    ],
-    "contributors": [
-      "American Israel Public Affairs Cmte",
-      "Fair Shot PAC",
-      "Coinbase",
-      "AmeriPAC: The Fund for a Greater America",
-      "SAS Institute"
-    ]
-  },
-  "rokhanna.bsky.social": {
-    "industries": [
-      "Securities & Investment",
-      "Retired",
-      "Lawyers/Law Firms",
-      "Electronics Mfg & Equip",
-      "Internet"
-    ],
-    "contributors": [
-      "Google Inc",
-      "Apple Inc",
-      "Stanford University",
-      "JStreetPAC",
-      "Accel Partners"
-    ]
-  },
-  "repdingell.bsky.social": {
-    "industries": [
-      "Health Professionals",
-      "Retired",
-      "Electric Utilities",
       "Building Trade Unions",
-      "Automotive"
+      "Public Sector Unions"
     ],
     "contributors": [
-      "University of Michigan",
-      "Dearborn Sausage Co",
-      "Cisco Systems",
-      "Oxford Co",
-      "Wonderful Co"
+      "Laborers Union/Midwest Region",
+      "American Federation of State/Cnty/Munic Employees",
+      "National Beer Wholesalers Assn",
+      "American Assn for Justice",
+      "Machinists/Aerospace Workers Union"
     ]
   },
-  "repmarkpocan.bsky.social": {
+  "robinlynnekelly.bsky.social": {
     "industries": [
-      "Retired",
+      "Pharmaceuticals/Health Products",
       "Health Professionals",
+      "Lawyers/Law Firms",
       "Building Trade Unions",
-      "Public Sector Unions",
-      "Industrial Unions"
+      "Public Sector Unions"
     ],
     "contributors": [
-      "University of Wisconsin/Madison",
+      "Blue Cross/Blue Shield",
       "Service Employees International Union",
-      "Air Line Pilots Assn",
-      "American Bankers Assn",
-      "American Crystal Sugar"
+      "United Food & Commercial Workers Union",
+      "Laborers Union",
+      "National Assn of Realtors"
     ]
   },
-  "repbeccab.bsky.social": {
+  "brotherjones.bsky.social": {
     "industries": [
-      "Democratic/Liberal",
+      "Securities & Investment",
+      "Misc Manufacturing & Distributing",
       "Retired",
-      "Human Rights",
-      "Leadership PACs",
+      "Republican/Conservative",
       "Health Professionals"
     ],
     "contributors": [
-      "State of Vermont",
-      "Northlane Capital Partners",
-      "JStreetPAC",
-      "Invariant LLC",
-      "American Federation of State/Cnty/Munic Employees"
+      "Club for Growth",
+      "Michigan Industrial Tools",
+      "Amway/Alticor Inc",
+      "S Abraham & Sons",
+      "Windquest Group"
     ]
   },
-  "summerlee.bsky.social": {
+  "seancasten.bsky.social": {
     "industries": [
-      "Health Professionals",
       "Retired",
-      "Education",
       "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Education",
       "Democratic/Liberal"
     ],
     "contributors": [
-      "University of Pittsburgh",
+      "University of Chicago",
       "JStreetPAC",
-      "University of Pittsburgh Medical Center",
-      "Pumnonary Assoc",
-      "Vici"
+      "Northwestern University",
+      "University of Illinois",
+      "US Dept of Energy"
     ]
   },
-  "repcasten.bsky.social": {
-    "industries": [
-      "Retired",
-      "Securities & Investment",
-      "Lawyers/Law Firms",
-      "Education",
-      "Insurance"
-    ],
-    "contributors": [
-      "Argonne National Laboratory",
-      "JStreetPAC",
-      "Lone Pine Capital",
-      "Grippo & Elden",
-      "CME Group"
-    ]
-  },
-  "repdean.bsky.social": {
-    "industries": [
-      "Securities & Investment",
-      "Retired",
-      "Lawyers/Law Firms",
-      "Insurance",
-      "Real Estate"
-    ],
-    "contributors": [
-      "University of Pennsylvania",
-      "JStreetPAC",
-      "Apollo Global Management",
-      "Truist Financial",
-      "Ballard Spahr LLP"
-    ]
-  },
-  "reptedlieu.bsky.social": {
+  "pattymurray.bsky.social": {
     "industries": [
       "Retired",
       "Lawyers/Law Firms",
-      "Real Estate",
-      "TV/Movies/Music",
+      "Women's Issues",
+      "Lobbyists",
       "Securities & Investment"
     ],
     "contributors": [
-      "American Israel Public Affairs Cmte",
-      "Cotchett, Pitre & McCarthy",
-      "Seville Classics",
-      "Google Inc",
-      "McDonald's Corp"
+      "Microsoft Corp",
+      "EMILY's List",
+      "University of Washington",
+      "Boeing Co",
+      "Amazon.com"
     ]
   },
-  "repmikequigley.bsky.social": {
+  "repadamsmith.bsky.social": {
     "industries": [
+      "Defense Aerospace",
+      "Electronics Mfg & Equip",
       "Lawyers/Law Firms",
-      "Securities & Investment",
-      "Real Estate",
-      "Air Transport",
-      "Transportation Unions"
-    ],
-    "contributors": [
-      "Clifford Law Offices",
-      "Cooney & Conway",
-      "Air Line Pilots Assn",
-      "American Council of Engineering Cos",
-      "American Federation of State/Cnty/Munic Employees"
-    ]
-  },
-  "bennet.senate.gov": {
-    "industries": [
-      "Retired",
-      "Securities & Investment",
-      "Lawyers/Law Firms",
-      "Real Estate",
-      "Education"
-    ],
-    "contributors": [
-      "American Israel Public Affairs Cmte",
-      "Blackstone Group",
-      "Paul, Weiss et al",
-      "University of Colorado",
-      "Democratic Senatorial Campaign Cmte"
-    ]
-  },
-  "schatz.bsky.social": {
-    "industries": [
-      "Leadership PACs",
-      "Real Estate",
-      "Casinos/Gambling",
-      "Lawyers/Law Firms",
+      "Misc Defense",
       "Lobbyists"
     ],
     "contributors": [
-      "Charter Communications",
-      "Matson Inc",
-      "DISH Network",
-      "Emerson Collective",
-      "Rocket Mortgage"
+      "Microsoft Corp",
+      "American Israel Public Affairs Cmte",
+      "Boeing Co",
+      "Northrop Grumman",
+      "Lockheed Martin"
     ]
   },
-  "repjayapal.bsky.social": {
+  "murray.senate.gov": {
     "industries": [
       "Retired",
-      "Electronics Mfg & Equip",
-      "Democratic/Liberal",
       "Lawyers/Law Firms",
-      "Education"
+      "Women's Issues",
+      "Lobbyists",
+      "Securities & Investment"
     ],
     "contributors": [
       "Microsoft Corp",
-      "Service Employees International Union",
-      "JStreetPAC",
+      "EMILY's List",
       "University of Washington",
-      "Indian American Impact Fund"
+      "Boeing Co",
+      "Amazon.com"
+    ]
+  },
+  "pkryan.bsky.social": {
+    "industries": [
+      "Securities & Investment",
+      "Retired",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Leadership PACs"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "KLM Equities",
+      "Patterson Planning & Services",
+      "Palantir Technologies",
+      "AmeriPAC: The Fund for a Greater America"
     ]
   },
   "shrithanedar.bsky.social": {
@@ -279,244 +135,444 @@
       "Human Rights",
       "Securities & Investment"
     ],
-    "contributors": []
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Indian American Impact Fund",
+      "Edward C Levy Co",
+      "Star Pipe Products",
+      "General Motors"
+    ]
   },
-  "pkryan.bsky.social": {
+  "repjayapal.bsky.social": {
+    "industries": [
+      "Retired",
+      "Non-Profit Institutions",
+      "Electronics Mfg & Equip",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "Microsoft Corp",
+      "University of Washington",
+      "Valve Corp",
+      "Service Employees International Union",
+      "Amazon.com"
+    ]
+  },
+  "schatz.bsky.social": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Leadership PACs",
+      "Securities & Investment",
+      "Lobbyists"
+    ],
+    "contributors": [
+      "League of Conservation Voters",
+      "JStreetPAC",
+      "Kobayashi, Sugita & Goda",
+      "Martin Defense Group",
+      "Matson Inc"
+    ]
+  },
+  "bennet.senate.gov": {
     "industries": [
       "Securities & Investment",
       "Retired",
       "Lawyers/Law Firms",
+      "Real Estate",
+      "Education"
+    ],
+    "contributors": [
+      "League of Conservation Voters",
+      "University of Colorado",
+      "Blackstone Group",
+      "Oaktree Capital Management",
+      "Brownstein, Hyatt et al"
+    ]
+  },
+  "repmikequigley.bsky.social": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Real Estate",
+      "Public Sector Unions",
+      "Transportation Unions"
+    ],
+    "contributors": [
+      "National Beer Wholesalers Assn",
+      "American Federation of Teachers",
+      "National Air Traffic Controllers Assn",
+      "National Assn of Realtors",
+      "American Assn for Justice"
+    ]
+  },
+  "reptedlieu.bsky.social": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "Health Professionals",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "Munger, Tolles & Olson",
+      "Every State Blue",
+      "Seville Classics",
+      "Jeffer, Mangels et al",
+      "Trendnet Inc"
+    ]
+  },
+  "repdean.bsky.social": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "Insurance"
+    ],
+    "contributors": [
+      "University of Pennsylvania",
+      "Comcast Corp",
+      "National Assn of Realtors",
+      "Ballard Spahr LLP",
+      "American Crystal Sugar"
+    ]
+  },
+  "repcasten.bsky.social": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Education",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "University of Chicago",
+      "JStreetPAC",
+      "Northwestern University",
+      "University of Illinois",
+      "US Dept of Energy"
+    ]
+  },
+  "summerlee.bsky.social": {
+    "industries": [
+      "Retired",
+      "Health Professionals",
+      "Education",
+      "Leadership PACs",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "JStreetPAC",
+      "University of Pittsburgh",
+      "Service Employees International Union",
+      "UPMC Health System",
+      "University of California"
+    ]
+  },
+  "repbeccab.bsky.social": {
+    "industries": [
+      "Retired",
+      "Human Rights",
+      "Democratic/Liberal",
+      "Leadership PACs",
+      "Lawyers/Law Firms"
+    ],
+    "contributors": [
+      "State of Vermont",
+      "Equality Project PAC",
+      "JStreetPAC",
+      "American Assn for Justice",
+      "Equality PAC"
+    ]
+  },
+  "repmarkpocan.bsky.social": {
+    "industries": [
+      "Retired",
+      "Health Professionals",
+      "Public Sector Unions",
+      "Building Trade Unions",
+      "Industrial Unions"
+    ],
+    "contributors": [
+      "University of Wisconsin",
+      "Service Employees International Union",
+      "National Education Assn",
+      "Operating Engineers Union",
+      "American Federation of Teachers"
+    ]
+  },
+  "repdingell.bsky.social": {
+    "industries": [
+      "Health Professionals",
+      "Lawyers/Law Firms",
+      "Automotive",
+      "Electric Utilities",
+      "Retired"
+    ],
+    "contributors": [
+      "University of Michigan",
+      "Ford Motor Co",
+      "Rock Holdings",
+      "DTE Energy",
+      "Boeing Co"
+    ]
+  },
+  "rokhanna.bsky.social": {
+    "industries": [
+      "Securities & Investment",
+      "Retired",
+      "Electronics Mfg & Equip",
+      "Lawyers/Law Firms",
+      "Internet"
+    ],
+    "contributors": [
+      "Alphabet Inc",
+      "Wilson, Sonsini et al",
+      "Stanford University",
+      "Accel Partners",
+      "University of California"
+    ]
+  },
+  "wileynickel.bsky.social": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
       "Leadership PACs",
       "Real Estate"
     ],
     "contributors": [
+      "AmeriPAC: The Fund for a Greater America",
+      "SAS Institute",
       "American Israel Public Affairs Cmte",
-      "Palantir Technologies",
-      "Patterson Planning & Services",
-      "Bain Capital",
-      "White & Case"
+      "Fair Shot PAC",
+      "North Carolina State University"
     ]
   },
-  "murray.senate.gov": {
+  "usrepkathycastor.bsky.social": {
     "industries": [
-      "Retired",
-      "Lawyers/Law Firms",
       "Health Professionals",
-      "Real Estate",
-      "Securities & Investment"
-    ],
-    "contributors": [
-      "University of Washington",
-      "Microsoft Corp",
-      "American Israel Public Affairs Cmte",
-      "Amazon.com",
-      "State of Washington"
-    ]
-  },
-  "chrisstearns.bsky.social": {
-    "industries": [
-      "Securities & Investment",
       "Lawyers/Law Firms",
-      "Insurance",
       "Real Estate",
-      "Lobbyists"
-    ],
-    "contributors": [
-      "Bear Stearns",
-      "RBS Securities",
-      "Citigroup Inc",
-      "Lehman Brothers",
-      "Goldman Sachs"
-    ]
-  },
-  "repadamsmith.bsky.social": {
-    "industries": [
-      "Pro-Israel",
-      "Misc Defense",
-      "Defense Aerospace",
-      "Air Transport",
-      "Electronics Mfg & Equip"
-    ],
-    "contributors": [
-      "American Israel Public Affairs Cmte",
-      "General Atomics",
-      "General Dynamics",
-      "SpaceX",
-      "Microsoft Corp"
-    ]
-  },
-  "pattymurray.bsky.social": {
-    "industries": [
       "Retired",
-      "Lawyers/Law Firms",
-      "Health Professionals",
-      "Real Estate",
-      "Securities & Investment"
-    ],
-    "contributors": [
-      "University of Washington",
-      "Microsoft Corp",
-      "American Israel Public Affairs Cmte",
-      "Amazon.com",
-      "State of Washington"
-    ]
-  },
-  "seancasten.bsky.social": {
-    "industries": [
-      "Retired",
-      "Securities & Investment",
-      "Lawyers/Law Firms",
-      "Education",
       "Insurance"
     ],
     "contributors": [
-      "Argonne National Laboratory",
-      "JStreetPAC",
-      "Lone Pine Capital",
-      "Grippo & Elden",
-      "CME Group"
+      "University of South Florida",
+      "National Assn of Realtors",
+      "International Brotherhood of Electrical Workers",
+      "American Hospital Assn",
+      "Service Employees International Union"
     ]
   },
-  "brotherjones.bsky.social": {
-    "industries": [],
-    "contributors": []
-  },
-  "robinlynnekelly.bsky.social": {
+  "repwilson.bsky.social": {
     "industries": [
-      "Pharmaceuticals/Health Products",
-      "Health Professionals",
-      "Lawyers/Law Firms",
-      "Building Trade Unions",
-      "Public Sector Unions"
-    ],
-    "contributors": []
-  },
-  "joaquincastrotx.bsky.social": {
-    "industries": [
-      "Lawyers/Law Firms",
-      "Retired",
       "Public Sector Unions",
-      "Health Professionals",
-      "TV/Movies/Music"
-    ],
-    "contributors": [
-      "Sean N Parker Foundation",
-      "American Federation of State/Cnty/Munic Employees",
-      "Border Health",
-      "Laborers Union/Midwest Region",
-      "Machinists/Aerospace Workers Union"
-    ]
-  },
-  "repmarcykaptur.bsky.social": {
-    "industries": [
-      "Retired",
-      "Leadership PACs",
-      "Securities & Investment",
-      "Democratic/Liberal",
-      "Lawyers/Law Firms"
-    ],
-    "contributors": [
-      "RMS Investment Group",
-      "JStreetPAC",
-      "Cleveland-Cliffs",
-      "Digidems PAC",
-      "Fair Shot PAC"
-    ]
-  },
-  "gabbygiffords.bsky.social": {
-    "industries": [
-      "Leadership PACs",
-      "Retired",
+      "Transportation Unions",
+      "Industrial Unions",
       "Lawyers/Law Firms",
-      "Candidate Committees",
-      "Women's Issues"
+      "Building Trade Unions"
     ],
     "contributors": [
-      "AmeriPAC: The Fund for a Greater America",
-      "Apollo Education Group",
-      "BRIDGE PAC",
-      "PAC to the Future",
-      "Turbine Services Ltd"
+      "American Federation of Teachers",
+      "American Federation of State/Cnty/Munic Employees",
+      "Machinists/Aerospace Workers Union",
+      "Service Employees International Union",
+      "National Education Assn"
     ]
   },
-  "aoc.bsky.social": {
+  "reploisfrankel.bsky.social": {
     "industries": [
-      "Retired",
-      "Education",
-      "Health Professionals",
-      "Civil Servants/Public Officials",
-      "Electronics Mfg & Equip"
-    ],
-    "contributors": [
-      "Google Inc",
-      "New York City Dept of Education",
-      "Kaiser Permanente",
-      "US Postal Service",
-      "Apple Inc"
-    ]
-  },
-  "ocasio-cortez.house.gov": {
-    "industries": [
-      "Retired",
-      "Education",
-      "Health Professionals",
-      "Civil Servants/Public Officials",
-      "Electronics Mfg & Equip"
-    ],
-    "contributors": [
-      "Google Inc",
-      "New York City Dept of Education",
-      "Kaiser Permanente",
-      "US Postal Service",
-      "Apple Inc"
-    ]
-  },
-  "wyden.senate.gov": {
-    "industries": [
-      "Securities & Investment",
       "Retired",
       "Lawyers/Law Firms",
       "Real Estate",
-      "Health Professionals"
+      "Pro-Israel",
+      "Securities & Investment"
     ],
     "contributors": [
-      "Nike Inc",
-      "Intel Corp",
-      "Centene Corp",
       "American Israel Public Affairs Cmte",
-      "Synergi Partners"
+      "Searcy, Denney et al",
+      "Florida Crystals",
+      "Southern Glazer's Wine & Spirits",
+      "Blackstone Group"
     ]
   },
-  "smith.senate.gov": {
+  "repgwenmoore.bsky.social": {
     "industries": [
-      "Retired",
-      "Democratic/Liberal",
+      "Insurance",
       "Securities & Investment",
-      "Lawyers/Law Firms",
-      "Women's Issues"
+      "Public Sector Unions",
+      "Commercial Banks",
+      "Real Estate"
     ],
     "contributors": [
-      "University of Minnesota",
-      "EMILY's List",
-      "Signature Bank",
-      "State of Minnesota",
-      "Mayo Clinic"
+      "American Federation of Teachers",
+      "United Auto Workers",
+      "American Bankers Assn",
+      "Machinists/Aerospace Workers Union",
+      "National Assn of Insurance & Financial Advisors"
     ]
   },
-  "markey.senate.gov": {
+  "whipkclark.bsky.social": {
+    "industries": [
+      "Securities & Investment",
+      "Pharmaceuticals/Health Products",
+      "Real Estate",
+      "Lawyers/Law Firms",
+      "Insurance"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "JStreetPAC",
+      "Capital Group Companies",
+      "RTX Corp",
+      "Liberty Mutual"
+    ]
+  },
+  "repdonbeyer.bsky.social": {
     "industries": [
       "Retired",
       "Lawyers/Law Firms",
-      "Education",
+      "Real Estate",
       "Securities & Investment",
+      "Automotive"
+    ],
+    "contributors": [
+      "Akin, Gump et al",
+      "Freedom Capital Partners",
+      "Kitebrook Partners",
+      "NVR Inc",
+      "American Institute of CPAs"
+    ]
+  },
+  "whitehouse.senate.gov": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Leadership PACs",
+      "Real Estate"
+    ],
+    "contributors": [
+      "League of Conservation Voters",
+      "American Israel Public Affairs Cmte",
+      "Technology Crossover Ventures",
+      "Motley Rice LLC",
+      "Thornton Law Firm"
+    ]
+  },
+  "edmarkey.bsky.social": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Lobbyists",
       "Real Estate"
     ],
     "contributors": [
       "WilmerHale LLP",
       "Harvard University",
-      "Google Inc",
-      "Apollo Global Management",
-      "Commonwealth of Massachusetts"
+      "League of Conservation Voters",
+      "DLA Piper",
+      "Mintz, Levin et al"
+    ]
+  },
+  "senatorheinrich.bsky.social": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Lobbyists",
+      "Leadership PACs",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "League of Conservation Voters",
+      "University of New Mexico",
+      "JStreetPAC",
+      "MMR Group",
+      "NextEra Energy"
+    ]
+  },
+  "corybooker.com": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Real Estate",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "Paul, Weiss et al",
+      "NorPAC",
+      "Gibbons PC",
+      "Sullivan & Cromwell",
+      "Stanford University"
+    ]
+  },
+  "wyden.senate.gov": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Health Professionals",
+      "Real Estate",
+      "Retired"
+    ],
+    "contributors": [
+      "Nike Inc",
+      "Blue Cross/Blue Shield",
+      "Intel Corp",
+      "Akin, Gump et al",
+      "Oregon Health & Science University"
+    ]
+  },
+  "markwarner.bsky.social": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "Lobbyists"
+    ],
+    "contributors": [
+      "Dominion Energy",
+      "Altria Group",
+      "JPMorgan Chase & Co",
+      "Norfolk Southern",
+      "McGuireWoods LLP"
+    ]
+  },
+  "padilla.senate.gov": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Real Estate",
+      "TV/Movies/Music"
+    ],
+    "contributors": [
+      "Hueston Hennigan Llp",
+      "Comcast Corp",
+      "Cotchett, Pitre & McCarthy",
+      "Edison International",
+      "E&J Gallo Winery"
+    ]
+  },
+  "jasmineforus.bsky.social": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Health Professionals",
+      "Real Estate",
+      "Civil Servants/Public Officials"
+    ],
+    "contributors": [
+      "Miller Weisbrod Olesky",
+      "American Assn for Justice",
+      "Ame Church",
+      "Karla T Jurvetson MD",
+      "Matthews Southwest"
     ]
   },
   "fetterman.senate.gov": {
@@ -529,116 +585,90 @@
     ],
     "contributors": [
       "JStreetPAC",
-      "Google Inc",
+      "Alphabet Inc",
       "University of Pennsylvania",
-      "University of Pittsburgh",
-      "Penn State University"
+      "University of California",
+      "UPMC Health System"
     ]
   },
-  "jasmineforus.bsky.social": {
-    "industries": [
-      "Retired",
-      "Lawyers/Law Firms",
-      "Health Professionals",
-      "Securities & Investment",
-      "Civil Servants/Public Officials"
-    ],
-    "contributors": [
-      "Miller Weisbrod Olesky",
-      "Doctors Hospital at Renaissance",
-      "Karla T Jurvetson MD",
-      "Matthews Southwest",
-      "Home Depot"
-    ]
-  },
-  "padilla.senate.gov": {
+  "markey.senate.gov": {
     "industries": [
       "Lawyers/Law Firms",
       "Securities & Investment",
       "Retired",
-      "Real Estate",
-      "TV/Movies/Music"
-    ],
-    "contributors": []
-  },
-  "markwarner.bsky.social": {
-    "industries": [
-      "Securities & Investment",
-      "Retired",
-      "Lawyers/Law Firms",
-      "Real Estate",
-      "Electronics Mfg & Equip"
-    ],
-    "contributors": [
-      "Apollo Global Management",
-      "Wachtell, Lipton et al                  ",
-      "C3.AI",
-      "Sullivan & Cromwell",
-      "Dominion Energy"
-    ]
-  },
-  "corybooker.com": {
-    "industries": [
-      "Retired",
-      "Securities & Investment",
-      "Lawyers/Law Firms",
-      "Democratic/Liberal",
-      "Real Estate"
-    ],
-    "contributors": [
-      "Lowenstein Sandler Llp",
-      "United Airlines",
-      "Bain Capital",
-      "Stanford University",
-      "NorPAC"
-    ]
-  },
-  "senatorheinrich.bsky.social": {
-    "industries": [
-      "Retired",
-      "Lawyers/Law Firms",
       "Lobbyists",
-      "Securities & Investment",
-      "Leadership PACs"
-    ],
-    "contributors": [
-      "Pattern Energy Group",
-      "Summit Ridge Energy",
-      "University of New Mexico",
-      "Nextera Energy",
-      "JStreetPAC"
-    ]
-  },
-  "whitehouse.senate.gov": {
-    "industries": [
-      "Lawyers/Law Firms",
-      "Retired",
-      "Securities & Investment",
-      "Leadership PACs",
-      "Democratic/Liberal"
-    ],
-    "contributors": [
-      "American Israel Public Affairs Cmte",
-      "Cotchett, Pitre & McCarthy",
-      "JStreetPAC",
-      "Chisholm, Chisholm & Kilpatrick",
-      "Clifford Law Offices"
-    ]
-  },
-  "edmarkey.bsky.social": {
-    "industries": [
-      "Retired",
-      "Lawyers/Law Firms",
-      "Education",
-      "Securities & Investment",
       "Real Estate"
     ],
     "contributors": [
       "WilmerHale LLP",
       "Harvard University",
-      "Google Inc",
-      "Apollo Global Management",
-      "Commonwealth of Massachusetts"
+      "League of Conservation Voters",
+      "DLA Piper",
+      "Mintz, Levin et al"
+    ]
+  },
+  "smith.senate.gov": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Women's Issues",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "EMILY's List",
+      "University of Minnesota",
+      "Capital Group Companies",
+      "State of Minnesota",
+      "Wells Fargo"
+    ]
+  },
+  "aoc.bsky.social": {
+    "industries": [
+      "Retired",
+      "Education",
+      "Health Professionals",
+      "Civil Servants/Public Officials",
+      "Electronics Mfg & Equip"
+    ],
+    "contributors": [
+      "University of California",
+      "Alphabet Inc",
+      "City of New York, NY",
+      "Amazon.com",
+      "City University of New York"
+    ]
+  },
+  "gabbygiffords.bsky.social": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Women's Issues",
+      "Leadership PACs",
+      "Real Estate"
+    ],
+    "contributors": [
+      "EMILY's List",
+      "University of Arizona",
+      "Democratic Congressional Campaign Cmte",
+      "Lewis & Roca",
+      "Pederson Group"
+    ]
+  },
+  "repmarcykaptur.bsky.social": {
+    "industries": [
+      "Industrial Unions",
+      "Retired",
+      "Building Trade Unions",
+      "Public Sector Unions",
+      "Transportation Unions"
+    ],
+    "contributors": [
+      "Machinists/Aerospace Workers Union",
+      "Boilermakers Union",
+      "Sheet Metal, Air, Rail & Transportation Union",
+      "United Auto Workers",
+      "Teamsters Union"
     ]
   }
 }

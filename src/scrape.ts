@@ -3,62 +3,47 @@ import "dotenv/config";
 import { chromium } from "playwright";
 import { AtpAgent } from "@atproto/api";
 import fs from "fs";
-import { DidResolver, HandleResolver } from "@atproto/identity";
+import { HandleResolver } from "@atproto/identity";
 
 const agent = new AtpAgent({ service: "https://bsky.social" });
 const outputFile = "contributions.json";
 const baseurl = "https://www.opensecrets.org/search";
 const currentOutput = fs.readFileSync(outputFile, "utf8");
 const map = JSON.parse(currentOutput || "{}");
+const browser = await chromium.launch({ headless: false });
 
 async function scrapeOpenData(name: string) {
-  const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
   try {
-    let url = `${baseurl}?q=${encodeURIComponent(name)}`;
+    const url = `${baseurl}?q=${encodeURIComponent(name)}`;
 
     await page.goto(url);
+    await page.waitForTimeout(3000);
     await page
-      .getByRole("link", { name: " - Campaign" })
+      .locator(".gsc-resultsRoot .gsc-result a")
       .first()
-      .click({ timeout: 10000 });
+      .scrollIntoViewIfNeeded();
+    await page.locator(".gsc-resultsRoot .gsc-result a").first().click();
+
+    await page.goto(`${page.url()}&cycle=CAREER&type=I`);
 
     const industryCells = page.locator(
       "#industries ~ * table tbody tr td:first-child"
     );
-
     await industryCells.first().waitFor();
     const industries = await industryCells.allTextContents();
 
     const contributorCells = page.locator(
       "#contributors ~ * table tbody tr td:first-child"
     );
-
-    await contributorCells.first().waitFor();
     const contributors = await contributorCells.allTextContents();
 
-    return { industries, contributors: contributors.slice(0, 5) };
+    return {
+      industries: industries.slice(0, 5).map((i) => i.trim()),
+      contributors: contributors.slice(0, 5).map((i) => i.trim()),
+    };
   } catch (error) {
-    try {
-      let url = `${baseurl}?q=${encodeURIComponent(name)}`;
-
-      await page.goto(url);
-      await page.waitForTimeout(1500);
-      await page.locator(".gsc-result a").first().click();
-      await page.click(".StickyFilters-cycle", {
-        force: true,
-      });
-      await page.locator('.select-items div:has-text("Career")').click();
-
-      const industryCells = page.locator("table tbody tr td:first-child");
-
-      await industryCells.first().waitFor();
-      const industries = await industryCells.allTextContents();
-
-      return { industries: industries.slice(0, 5), contributors: [] };
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
+    console.error("An error occurred:", error);
   } finally {
     await page.close();
   }
@@ -73,12 +58,7 @@ async function scrapeDataForList(list: string) {
     list,
   });
 
-  const startIndex = response.data.items.findIndex(
-    (i) => i.subject.displayName === "Joaquin Castro"
-  );
-  const items = response.data.items.slice(startIndex);
-
-  for (const representative of items) {
+  for (const representative of response.data.items) {
     if (!representative.subject.displayName) {
       console.log(`No display name for ${representative.subject.handle}`);
       continue;
@@ -137,10 +117,6 @@ async function scrapeDataForHandle(handle: string) {
   await agent.logout();
 }
 
-// scrapeDataForList(
-//   "at://did:plc:u36ag7zrabppftv6kolaedtf/app.bsky.graph.list/3lbbvkxjbk52e"
-// );
+scrapeDataForList(`at://${process.env.DID}/app.bsky.graph.list/3lbgx3lqlwk2d`);
 
-// scrapeOpenData("Pat Ryan").then(console.log);
-
-scrapeDataForHandle("edmarkey.bsky.social");
+// scrapeDataForHandle("whipkclark.bsky.social");
