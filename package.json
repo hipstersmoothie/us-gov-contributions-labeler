@@ -1,26 +1,25 @@
 {
-  "name": "github-labeler-bot",
+  "name": "us-gov-contributions-labeler",
   "version": "1.0.0",
   "type": "module",
   "engines": {
     "node": ">=22.0.0"
   },
   "scripts": {
-    "start": "tsx src/entry.ts"
+    "start": "pnpm exec playwright install chromium && tsx src/label-server.ts"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
     "typescript": "^5.5.3"
   },
   "dependencies": {
-    "@octokit/plugin-retry": "^7.1.2",
-    "@octokit/plugin-throttling": "^9.3.2",
-    "@octokit/rest": "^21.0.2",
-    "@skyware/bot": "^0.3.7",
+    "@atproto/api": "^0.13.16",
     "@skyware/labeler": "^0.1.8",
     "await-to-js": "^3.0.0",
+    "axios": "^1.7.7",
     "dedent": "^1.5.3",
     "dotenv": "^16.4.5",
+    "playwright": "^1.49.0",
     "tsx": "^4.19.2"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"

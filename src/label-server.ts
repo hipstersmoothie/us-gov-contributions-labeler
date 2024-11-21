@@ -3,7 +3,7 @@ import {
   getLabelerLabelDefinitions,
   setLabelerLabelDefinitions,
 } from "@skyware/labeler/scripts";
-import { DID, PORT, MAXLABELS, SIGNING_KEY } from "./constants.js";
+import { DID, PORT, SIGNING_KEY } from "./constants.js";
 import { LabelerServer } from "@skyware/labeler";
 
 const server = new LabelerServer({
@@ -103,7 +103,7 @@ export const addUserLabel = async (did: string, label: Label) => {
   }, new Set<string>());
 
   try {
-    if (labels.size < MAXLABELS) {
+    if (labels.size < 5) {
       server.createLabel({ uri: did, val: identifier });
       console.log(`${new Date().toISOString()} Labeled ${did}: ${identifier}`);
       return true;
@@ -113,27 +113,6 @@ export const addUserLabel = async (did: string, label: Label) => {
   }
 
   return false;
-};
-
-export const clearUserLabels = async (did: string) => {
-  // Get the current labels for the did
-  const query = server.db
-    .prepare<string[]>(`SELECT * FROM labels WHERE uri = ?`)
-    .all(did) as ComAtprotoLabelDefs.Label[];
-
-  // make a set of the current labels
-  const labels = query.reduce((set, label) => {
-    if (!label.neg) set.add(label.val);
-    else set.delete(label.val);
-    return set;
-  }, new Set<string>());
-
-  try {
-    server.createLabels({ uri: did }, { negate: [...labels] });
-    console.log(`${new Date().toISOString()} Deleted labels: ${did}`);
-  } catch (err) {
-    console.error(err);
-  }
 };
 
 interface Session {
