@@ -43,11 +43,7 @@ const numbers = [
 function getIdentifier(name: string) {
   // GitHub allows [A-Za-z0-9_.-]+ but bsky only supports ^[a-z-]+$
   let identifier = name
-    // Replace the / in org/repo
-    .replace("/", "-")
-    // Replace _ and . with -
-    .replaceAll("_", "-")
-    .replaceAll(".", "-")
+    .replaceAll(/[/._\s&]/g, "-")
     // Convert to lowercase
     .toLowerCase();
 
