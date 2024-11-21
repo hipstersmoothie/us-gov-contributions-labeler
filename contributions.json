@@ -438,5 +438,21 @@
       "PAC to the Future",
       "Turbine Services Ltd"
     ]
+  },
+  "aoc.bsky.social": {
+    "industries": [
+      "Retired",
+      "Education",
+      "Health Professionals",
+      "Civil Servants/Public Officials",
+      "Electronics Mfg & Equip"
+    ],
+    "contributors": [
+      "Google Inc",
+      "New York City Dept of Education",
+      "Kaiser Permanente",
+      "US Postal Service",
+      "Apple Inc"
+    ]
   }
 }
