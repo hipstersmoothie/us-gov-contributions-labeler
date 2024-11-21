@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@atproto/api": "^0.13.16",
+    "@atproto/identity": "^0.4.3",
     "@skyware/labeler": "^0.1.8",
     "await-to-js": "^3.0.0",
     "axios": "^1.7.7",

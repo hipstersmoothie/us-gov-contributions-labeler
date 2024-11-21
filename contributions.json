@@ -454,5 +454,21 @@
       "US Postal Service",
       "Apple Inc"
     ]
+  },
+  "wyden.senate.gov": {
+    "industries": [
+      "Securities & Investment",
+      "Retired",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "Nike Inc",
+      "Intel Corp",
+      "Centene Corp",
+      "American Israel Public Affairs Cmte",
+      "Synergi Partners"
+    ]
   }
 }

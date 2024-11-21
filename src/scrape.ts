@@ -3,14 +3,16 @@ import "dotenv/config";
 import { chromium } from "playwright";
 import { AtpAgent } from "@atproto/api";
 import fs from "fs";
+import { DidResolver, HandleResolver } from "@atproto/identity";
 
 const agent = new AtpAgent({ service: "https://bsky.social" });
 const outputFile = "contributions.json";
 const baseurl = "https://www.opensecrets.org/search";
+const currentOutput = fs.readFileSync(outputFile, "utf8");
+const map = JSON.parse(currentOutput || "{}");
 
-const browser = await chromium.launch({ headless: false });
-
-async function scrapeDataForPerson(name: string) {
+async function scrapeOpenData(name: string) {
+  const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
   try {
     let url = `${baseurl}?q=${encodeURIComponent(name)}`;
@@ -71,9 +73,6 @@ async function scrapeDataForList(list: string) {
     list,
   });
 
-  const currentOutput = fs.readFileSync(outputFile, "utf8");
-  const map = JSON.parse(currentOutput || "{}");
-
   const startIndex = response.data.items.findIndex(
     (i) => i.subject.displayName === "Joaquin Castro"
   );
@@ -92,7 +91,7 @@ async function scrapeDataForList(list: string) {
 
     console.log(`Getting data for ${representative.subject.displayName}...`);
 
-    const contributions = await scrapeDataForPerson(
+    const contributions = await scrapeOpenData(
       representative.subject.displayName
     );
 
@@ -105,8 +104,43 @@ async function scrapeDataForList(list: string) {
   // await browser.close();
 }
 
-scrapeDataForList(
-  "at://did:plc:u36ag7zrabppftv6kolaedtf/app.bsky.graph.list/3lbbvkxjbk52e"
-);
+async function scrapeDataForHandle(handle: string) {
+  await agent.login({
+    identifier: "us-gov-funding.bsky.social",
+    password: process.env.LABELER_PASSWORD!,
+  });
 
-// scrapeDataForPerson("Pat Ryan").then(console.log);
+  const hdlres = new HandleResolver({});
+  const did = await hdlres.resolve(handle);
+
+  console.log(`Resolving ${handle} to ${did}`);
+
+  if (!did) {
+    console.log(`No DID for ${handle}`);
+    return;
+  }
+
+  const response = await agent.getProfile({
+    actor: did,
+  });
+
+  if (!response.data.displayName) {
+    console.log(`No display name for ${handle}`);
+    return;
+  }
+
+  const contributions = await scrapeOpenData(response.data.displayName);
+
+  console.log(contributions);
+  map[handle] = contributions;
+  fs.writeFileSync(outputFile, JSON.stringify(map, null, 2));
+  await agent.logout();
+}
+
+// scrapeDataForList(
+//   "at://did:plc:u36ag7zrabppftv6kolaedtf/app.bsky.graph.list/3lbbvkxjbk52e"
+// );
+
+// scrapeOpenData("Pat Ryan").then(console.log);
+
+scrapeDataForHandle("wyden.senate.gov");
