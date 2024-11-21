@@ -42,7 +42,7 @@ const numbers = [
 function getIdentifier(name: string) {
   // GitHub allows [A-Za-z0-9_.-]+ but bsky only supports ^[a-z-]+$
   let identifier = name
-    .replaceAll(/[/._\s&,]/g, "-")
+    .replaceAll(/[/._\s&,'"!@#$%^*()+={}\[\]:;<>?~`]/g, "-")
     // Convert to lowercase
     .toLowerCase();
 
@@ -78,6 +78,7 @@ async function createLabel({ name, description }: Label) {
       locales: [{ lang: "en", description, name }],
     },
   ]);
+
   console.log(`Created label ${identifier}!`);
 }
 
