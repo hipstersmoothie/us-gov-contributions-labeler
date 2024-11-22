@@ -119,4 +119,4 @@ async function scrapeDataForHandle(handle: string) {
 
 // scrapeDataForList(`at://${process.env.DID}/app.bsky.graph.list/3lbgx3lqlwk2d`);
 
-scrapeDataForHandle("jahimes.bsky.social");
+scrapeDataForHandle("repcasar.bsky.social");

@@ -702,5 +702,21 @@
       "League of Conservation Voters",
       "Rutgers University"
     ]
+  },
+  "repcasar.bsky.social": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Building Trade Unions",
+      "Real Estate",
+      "Misc Unions"
+    ],
+    "contributors": [
+      "Service Employees International Union",
+      "UNITE HERE",
+      "City of Austin, TX",
+      "Carpenters & Joiners Union",
+      "Machinists/Aerospace Workers Union"
+    ]
   }
 }
