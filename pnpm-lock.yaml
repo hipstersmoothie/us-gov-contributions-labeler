@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  '@skyware/labeler@0.1.13':
-    hash: pa3lledvrujgcnonfzsngcbdby
-    path: patches/@skyware__labeler@0.1.13.patch
-
 importers:
 
   .:
@@ -21,7 +16,7 @@ importers:
         version: 0.4.3
       '@skyware/labeler':
         specifier: ^0.1.8
-        version: 0.1.13(patch_hash=pa3lledvrujgcnonfzsngcbdby)
+        version: 0.1.13
       await-to-js:
         specifier: ^3.0.0
         version: 3.0.0
@@ -866,7 +861,7 @@ snapshots:
 
   '@noble/hashes@1.5.0': {}
 
-  '@skyware/labeler@0.1.13(patch_hash=pa3lledvrujgcnonfzsngcbdby)':
+  '@skyware/labeler@0.1.13':
     dependencies:
       '@atcute/bluesky': 1.0.8(@atcute/client@2.0.4)
       '@atcute/cbor': 1.0.6
