@@ -8,7 +8,7 @@ import { LabelerServer } from "@skyware/labeler";
 const server = new LabelerServer({
   did: DID,
   signingKey: SIGNING_KEY,
-  dbPath: "labels.db",
+  dbPath: process.env.DB_PATH ?? "labels.db",
 });
 
 server.app.listen({ port: PORT, host: "::" }, (error, address) => {
