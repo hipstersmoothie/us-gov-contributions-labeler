@@ -26,3 +26,5 @@ for (const [key, value] of Object.entries(map) as [
     });
   }
 }
+
+process.exit(0);
