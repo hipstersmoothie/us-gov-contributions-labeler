@@ -686,5 +686,21 @@
       "JPMorgan Chase & Co",
       "Fermat Capital Management"
     ]
+  },
+  "andykimnj.bsky.social": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Education",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "JStreetPAC",
+      "Princeton University",
+      "Alphabet Inc",
+      "League of Conservation Voters",
+      "Rutgers University"
+    ]
   }
 }

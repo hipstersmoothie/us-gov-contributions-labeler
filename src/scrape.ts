@@ -117,6 +117,6 @@ async function scrapeDataForHandle(handle: string) {
   await agent.logout();
 }
 
-scrapeDataForList(`at://${process.env.DID}/app.bsky.graph.list/3lbgx3lqlwk2d`);
+// scrapeDataForList(`at://${process.env.DID}/app.bsky.graph.list/3lbgx3lqlwk2d`);
 
-// scrapeDataForHandle("whipkclark.bsky.social");
+scrapeDataForHandle("jahimes.bsky.social");
