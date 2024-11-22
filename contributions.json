@@ -670,5 +670,21 @@
       "United Auto Workers",
       "Teamsters Union"
     ]
+  },
+  "jahimes.bsky.social": {
+    "industries": [
+      "Securities & Investment",
+      "Insurance",
+      "Retired",
+      "Lawyers/Law Firms",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Goldman Sachs",
+      "GE Aerospace",
+      "Citigroup Inc",
+      "JPMorgan Chase & Co",
+      "Fermat Capital Management"
+    ]
   }
 }
