@@ -1,5 +1,5 @@
 diff --git a/dist/LabelerServer.js b/dist/LabelerServer.js
-index f6600d73a82fa0ceb6af4d079891b6a4a8049306..bcfee044da011a9133d7b285406be357d98caf19 100644
+index f6600d73a82fa0ceb6af4d079891b6a4a8049306..9d940f9eb117cae64a33ec5c9da10369f9bde5cb 100644
 --- a/dist/LabelerServer.js
 +++ b/dist/LabelerServer.js
 @@ -11,38 +11,35 @@ const INVALID_SIGNING_KEY_ERROR = `Make sure to provide a private signing key, n
@@ -428,7 +428,7 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..bcfee044da011a9133d7b285406be357
  			SELECT * FROM labels
  			WHERE 1 = 1
  			${patterns.length ? "AND " + patterns.map(() => "uri LIKE ?").join(" OR ") : ""}
-@@ -235,156 +250,184 @@ export class LabelerServer {
+@@ -235,156 +250,183 @@ export class LabelerServer {
  			ORDER BY id ASC
  			LIMIT ?
  		`);
@@ -466,13 +466,12 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..bcfee044da011a9133d7b285406be357
 +   * Handler for [com.atproto.label.subscribeLabels](https://github.com/bluesky-social/atproto/blob/main/lexicons/com/atproto/label/subscribeLabels.json).
 +   */
 +  subscribeLabelsHandler = (ws, req) => {
-+    let cursor = parseInt(req.query.cursor ?? "NaN", 10);
-+    console.log("cursor1", cursor);
++    const cursor = parseInt(req.query.cursor ?? "NaN", 10);
 +    if (!Number.isNaN(cursor)) {
-+      try {
-+        const latest = this.db
-+          .prepare(
-+            `
++      console.log("cursor", cursor);
++      const latest = this.db
++        .prepare(
++          `
  				SELECT MAX(id) AS id FROM labels
 -			`).get();
 -            if (cursor > (latest.id ?? 0)) {
@@ -485,19 +484,20 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..bcfee044da011a9133d7b285406be357
 -            }
 -            const stmt = this.db.prepare(`
 +			`
-+          )
-+          .get();
-+        cursor = cursor > (latest.id ?? 0) || cursor == 252 ? 1 : cursor;
-+        console.log("cursor2", cursor);
-+        // if (cursor > (latest.id ?? 0)) {
-+        //     const errorBytes = frameToBytes("error", {
-+        //         error: "FutureCursor",
-+        //         message: "Cursor is in the future",
-+        //     });
-+        //     ws.send(errorBytes);
-+        //     ws.terminate();
-+        // }
-+        const stmt = this.db.prepare(`
++        )
++        .get();
++      console.log("latest", latest.id);
++      if (cursor >= (latest.id ?? 0)) {
++        console.log("future cursor");
++        const errorBytes = frameToBytes("error", {
++          error: "FutureCursor",
++          message: "Cursor is in the future",
++        });
++        ws.send(errorBytes);
++        ws.terminate();
++        return;
++      }
++      const stmt = this.db.prepare(`
  				SELECT * FROM labels
  				WHERE id > ?
  				ORDER BY id ASC
@@ -560,17 +560,10 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..bcfee044da011a9133d7b285406be357
 -        const cid = subject.$type === "com.atproto.repo.strongRef" ? subject.cid : undefined;
 -        if (!uri) {
 -            throw new XRPCError(400, { kind: "InvalidRequest", description: "Invalid subject" });
--        }
--        const labels = this.createLabels({ uri, cid }, {
--            create: event.createLabelVals,
--            negate: event.negateLabelVals,
--        });
--        if (!labels.length || !labels[0]?.id) {
--            throw new Error(`No labels were created\nEvent:\n${JSON.stringify(event, null, 2)}`);
-+
-+        console.log("ATTEMPT");
++      try {
++        console.log("attempt");
 +        for (const row of stmt.iterate(cursor)) {
-+          console.log("Sending", row);
++          console.log("row", row);
 +          const { id: seq, ...label } = row;
 +          const bytes = frameToBytes(
 +            "message",
@@ -579,6 +572,18 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..bcfee044da011a9133d7b285406be357
 +          );
 +          ws.send(bytes);
          }
+-        const labels = this.createLabels({ uri, cid }, {
+-            create: event.createLabelVals,
+-            negate: event.negateLabelVals,
++      } catch (e) {
++        console.error(e);
++        const errorBytes = frameToBytes("error", {
++          error: "InternalServerError",
++          message: "An unknown error occurred",
+         });
+-        if (!labels.length || !labels[0]?.id) {
+-            throw new Error(`No labels were created\nEvent:\n${JSON.stringify(event, null, 2)}`);
+-        }
 -        await res.send({
 -            id: labels[0].id,
 -            event,
@@ -586,13 +591,7 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..bcfee044da011a9133d7b285406be357
 -            subjectBlobCids,
 -            createdBy,
 -            createdAt: new Date().toISOString(),
-+      } catch (e) {
-+        console.log(e);
-+        console.error(e);
-+        const errorBytes = frameToBytes("error", {
-+          error: "InternalServerError",
-+          message: "An unknown error occurred",
-         });
+-        });
 -    };
 -    /**
 -     * Catch-all handler for unknown XRPC methods.
