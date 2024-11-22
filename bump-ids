@@ -1,0 +1,15 @@
+import Database from "libsql";
+
+const db = new Database("labels.db");
+
+const baseID = 252;
+
+const rows = db.prepare("SELECT * FROM labels").all();
+// bump all ids by baseID
+for await (const row of rows) {
+  const id = row.id;
+  console.log(`Updating ${id} to ${id + baseID}`);
+  await db
+    .prepare("UPDATE labels SET id = ? WHERE id = ?")
+    .run(id + baseID, id);
+}

@@ -34,6 +34,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      libsql:
+        specifier: 0.5.0-pre.2
+        version: 0.5.0-pre.2
       playwright:
         specifier: ^1.49.0
         version: 1.49.0
@@ -261,8 +264,18 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@libsql/darwin-arm64@0.5.0-pre.2':
+    resolution: {integrity: sha512-jLKZSKM+6f/3qH12MyUGaa/zq84myQWLqsRzGkEccpKX5+xY/mYP9t9LYwDF/V8ciPQ1SvfNikkdLNkqViYYAw==}
+    cpu: [arm64]
+    os: [darwin]
+
   '@libsql/darwin-x64@0.4.7':
     resolution: {integrity: sha512-ezc7V75+eoyyH07BO9tIyJdqXXcRfZMbKcLCeF8+qWK5nP8wWuMcfOVywecsXGRbT99zc5eNra4NEx6z5PkSsA==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@libsql/darwin-x64@0.5.0-pre.2':
+    resolution: {integrity: sha512-//Iq6QSWNPN5jjTq4WvCZADW2J8p3UqSwo09qwNZGw81LheAbZYO9AVV7plxAk7wSDX4W1Ee5SgNbCYxY3HiiQ==}
     cpu: [x64]
     os: [darwin]
 
@@ -271,8 +284,18 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@libsql/linux-arm64-gnu@0.5.0-pre.2':
+    resolution: {integrity: sha512-IGA/VvRfTs1K4fxu29jHb1432qju/WFUHyEkQP8jHKsrYkorLfI/L0rlFhnLrZ61OF790c9gNM0cTtqoYnt7KQ==}
+    cpu: [arm64]
+    os: [linux]
+
   '@libsql/linux-arm64-musl@0.4.7':
     resolution: {integrity: sha512-6kK9xAArVRlTCpWeqnNMCoXW1pe7WITI378n4NpvU5EJ0Ok3aNTIC2nRPRjhro90QcnmLL1jPcrVwO4WD1U0xw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@libsql/linux-arm64-musl@0.5.0-pre.2':
+    resolution: {integrity: sha512-ythJjzqpI+TEUDc8L0frn9kKrjo+wfaqTJTXw///Cyu7kwEI0wI0GlVR0Y03pLYs1RIuirVA1FVmV3nt7fkzuA==}
     cpu: [arm64]
     os: [linux]
 
@@ -281,13 +304,28 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@libsql/linux-x64-gnu@0.5.0-pre.2':
+    resolution: {integrity: sha512-KKIM7vI15/1P0U31/eL5kgkPktarXyoKRM9meP/vNDNixlU5GL+D8GLT5FCTMNhtM+BnDiUN7umakhl5XfOqzg==}
+    cpu: [x64]
+    os: [linux]
+
   '@libsql/linux-x64-musl@0.4.7':
     resolution: {integrity: sha512-nI6tpS1t6WzGAt1Kx1n1HsvtBbZ+jHn0m7ogNNT6pQHZQj7AFFTIMeDQw/i/Nt5H38np1GVRNsFe99eSIMs9XA==}
     cpu: [x64]
     os: [linux]
 
+  '@libsql/linux-x64-musl@0.5.0-pre.2':
+    resolution: {integrity: sha512-nO9zjq6q5NKU5Hx8Mm9+Y8edxDbO7XKxPq9C7GHytu7FPxVTYrMIVioN2xWcnPhaawWS/TlZZTaJuwLbY177NQ==}
+    cpu: [x64]
+    os: [linux]
+
   '@libsql/win32-x64-msvc@0.4.7':
     resolution: {integrity: sha512-7pJzOWzPm6oJUxml+PCDRzYQ4A1hTMHAciTAHfFK4fkbDZX33nWPVG7Y3vqdKtslcwAzwmrNDc6sXy2nwWnbiw==}
+    cpu: [x64]
+    os: [win32]
+
+  '@libsql/win32-x64-msvc@0.5.0-pre.2':
+    resolution: {integrity: sha512-jaqSOTyi8r3ZgVuOzdMS1birMlj41/yFH+iW73HvWRjTAjJ5DNGpfL9r5KgnEEGxpRL8SkEUnfGJUgP9v8HQHw==}
     cpu: [x64]
     os: [win32]
 
@@ -486,6 +524,12 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
+    cpu: [x64, arm64, wasm32]
+    os: [darwin, linux, win32]
+
+  libsql@0.5.0-pre.2:
+    resolution: {integrity: sha512-6eobJ6s2jLKwkf0NrxuOr06lnEdaNOXx5lxwfPMOJm1b4mzBXPH5Mrx0TMSDYP5eAHw8LBWJGadaJtVQ72ab5g==}
+    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   light-my-request@5.14.0:
@@ -840,22 +884,43 @@ snapshots:
   '@libsql/darwin-arm64@0.4.7':
     optional: true
 
+  '@libsql/darwin-arm64@0.5.0-pre.2':
+    optional: true
+
   '@libsql/darwin-x64@0.4.7':
+    optional: true
+
+  '@libsql/darwin-x64@0.5.0-pre.2':
     optional: true
 
   '@libsql/linux-arm64-gnu@0.4.7':
     optional: true
 
+  '@libsql/linux-arm64-gnu@0.5.0-pre.2':
+    optional: true
+
   '@libsql/linux-arm64-musl@0.4.7':
+    optional: true
+
+  '@libsql/linux-arm64-musl@0.5.0-pre.2':
     optional: true
 
   '@libsql/linux-x64-gnu@0.4.7':
     optional: true
 
+  '@libsql/linux-x64-gnu@0.5.0-pre.2':
+    optional: true
+
   '@libsql/linux-x64-musl@0.4.7':
     optional: true
 
+  '@libsql/linux-x64-musl@0.5.0-pre.2':
+    optional: true
+
   '@libsql/win32-x64-msvc@0.4.7':
+    optional: true
+
+  '@libsql/win32-x64-msvc@0.5.0-pre.2':
     optional: true
 
   '@neon-rs/load@0.0.4': {}
@@ -1089,6 +1154,19 @@ snapshots:
       '@libsql/linux-x64-gnu': 0.4.7
       '@libsql/linux-x64-musl': 0.4.7
       '@libsql/win32-x64-msvc': 0.4.7
+
+  libsql@0.5.0-pre.2:
+    dependencies:
+      '@neon-rs/load': 0.0.4
+      detect-libc: 2.0.2
+    optionalDependencies:
+      '@libsql/darwin-arm64': 0.5.0-pre.2
+      '@libsql/darwin-x64': 0.5.0-pre.2
+      '@libsql/linux-arm64-gnu': 0.5.0-pre.2
+      '@libsql/linux-arm64-musl': 0.5.0-pre.2
+      '@libsql/linux-x64-gnu': 0.5.0-pre.2
+      '@libsql/linux-x64-musl': 0.5.0-pre.2
+      '@libsql/win32-x64-msvc': 0.5.0-pre.2
 
   light-my-request@5.14.0:
     dependencies:
