@@ -1134,5 +1134,21 @@
       "American Israel Public Affairs Cmte",
       "Walt Disney Co"
     ]
+  },
+  "did:plc:4lyy4pdiinlt7yau7ptcqe4z": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Securities & Investment",
+      "Real Estate",
+      "Education"
+    ],
+    "contributors": [
+      "JStreetPAC",
+      "Covington & Burling",
+      "League of Conservation Voters",
+      "University of Virginia",
+      "Akin, Gump et al"
+    ]
   }
 }
