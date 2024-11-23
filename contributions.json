@@ -798,5 +798,21 @@
       "Commonwealth of Pennsylvania",
       "United Food & Commercial Workers Union"
     ]
+  },
+  "did:plc:k4kp7p2lfe2fz6z2u26yslv4": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Real Estate",
+      "TV/Movies/Music",
+      "Lawyers/Law Firms"
+    ],
+    "contributors": [
+      "Amblin Partners",
+      "Smarthinking",
+      "Vezina, Lawrence & Piscitelli",
+      "Service Employees International Union",
+      "Communications Workers of America"
+    ]
   }
 }
