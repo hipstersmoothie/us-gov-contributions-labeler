@@ -112,7 +112,7 @@ async function scrapeDataForHandle(handle: string) {
   const contributions = await scrapeOpenData(response.data.displayName);
 
   console.log(contributions);
-  map[handle] = contributions;
+  map[did] = contributions;
   fs.writeFileSync(outputFile, JSON.stringify(map, null, 2));
   await agent.logout();
 }
