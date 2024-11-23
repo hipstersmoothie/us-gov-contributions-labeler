@@ -1118,5 +1118,21 @@
       "Swing Left",
       "Digidems PAC"
     ]
+  },
+  "did:plc:uzcbz3hsqpwdv5ulkxqa2ubn": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Leadership PACs",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "University of California",
+      "Alphabet Inc",
+      "JStreetPAC",
+      "American Israel Public Affairs Cmte",
+      "Walt Disney Co"
+    ]
   }
 }
