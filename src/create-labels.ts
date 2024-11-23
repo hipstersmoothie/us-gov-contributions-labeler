@@ -15,14 +15,14 @@ for (const [key, value] of Object.entries(map) as [
   for (const industry of value.industries.slice(0, 3)) {
     await addUserLabel(key, {
       name: industry,
-      description: `This representative is funded by the "${industry}" industry.`,
+      description: `This representative is funded by the "${industry}" industry.\n\nThe organizations themselves did not donate, rather the money came from the organizations' PACs, their individual members or employees or owners, and those individuals' immediate families. Organization totals include subsidiaries and affiliates.\n\nVisit https://www.opensecrets.org/campaign-expenditures/methodology to learn more.`,
     });
   }
 
   for (const contributor of value.contributors.slice(0, 3)) {
     await addUserLabel(key, {
       name: contributor,
-      description: `This representative is funded by "${contributor}"`,
+      description: `This representative is funded by "${contributor}".\n\nThe organizations themselves did not donate, rather the money came from the organizations' PACs, their individual members or employees or owners, and those individuals' immediate families. Organization totals include subsidiaries and affiliates.\n\nVisit https://www.opensecrets.org/campaign-expenditures/methodology to learn more.`,
     });
   }
 }

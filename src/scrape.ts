@@ -104,6 +104,7 @@ async function scrapeDataForHandle(handle: string) {
     actor: did,
   });
 
+  // response.data.displayName = "Bernie Sanders";
   if (!response.data.displayName) {
     console.log(`No display name for ${handle}`);
     return;
@@ -119,4 +120,4 @@ async function scrapeDataForHandle(handle: string) {
 
 // scrapeDataForList(`at://${process.env.DID}/app.bsky.graph.list/3lbgx3lqlwk2d`);
 
-scrapeDataForHandle("maxwellfrost.bsky.social");
+scrapeDataForHandle("ericsorensen.bsky.social");
