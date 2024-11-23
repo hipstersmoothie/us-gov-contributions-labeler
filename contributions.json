@@ -766,5 +766,21 @@
       "Karla T Jurvetson MD",
       "Matthews Southwest"
     ]
+  },
+  "did:plc:tyr7iqmghpf5qxvqvhblwj5f": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Health Professionals",
+      "Transportation Unions",
+      "Public Sector Unions"
+    ],
+    "contributors": [
+      "Machinists/Aerospace Workers Union",
+      "Sheet Metal, Air, Rail & Transportation Union",
+      "Carpenters & Joiners Union",
+      "American Crystal Sugar",
+      "Painters & Allied Trades Union"
+    ]
   }
 }
