@@ -734,5 +734,21 @@
       "Carpenters & Joiners Union",
       "Machinists/Aerospace Workers Union"
     ]
+  },
+  "did:plc:zowy6ovke2owprs5btzet3uy": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "TV/Movies/Music"
+    ],
+    "contributors": [
+      "Goldman Sachs",
+      "Paul, Weiss et al",
+      "Citigroup Inc",
+      "Blackstone Group",
+      "JPMorgan Chase & Co"
+    ]
   }
 }
