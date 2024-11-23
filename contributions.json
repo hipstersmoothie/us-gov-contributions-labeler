@@ -782,5 +782,21 @@
       "American Crystal Sugar",
       "Painters & Allied Trades Union"
     ]
+  },
+  "did:plc:hmstk6czb32dv4xjx4s3xhda": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Insurance",
+      "Building Trade Unions",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "Comcast Corp",
+      "Duane Morris LLP",
+      "Blue Cross/Blue Shield",
+      "Commonwealth of Pennsylvania",
+      "United Food & Commercial Workers Union"
+    ]
   }
 }
