@@ -22,7 +22,7 @@ for (const [key, value] of Object.entries(map) as [
   for (const contributor of value.contributors.slice(0, 3)) {
     await addUserLabel(key, {
       name: contributor,
-      description: `This representative has funded by "${contributor}"`,
+      description: `This representative is funded by "${contributor}"`,
     });
   }
 }
