@@ -750,5 +750,21 @@
       "Blackstone Group",
       "JPMorgan Chase & Co"
     ]
+  },
+  "did:plc:tax3e7cjn3dzxpgfjslqq56y": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Health Professionals",
+      "Real Estate",
+      "Civil Servants/Public Officials"
+    ],
+    "contributors": [
+      "Miller Weisbrod Olesky",
+      "American Assn for Justice",
+      "Ame Church",
+      "Karla T Jurvetson MD",
+      "Matthews Southwest"
+    ]
   }
 }
