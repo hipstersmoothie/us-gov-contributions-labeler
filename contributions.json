@@ -1166,5 +1166,37 @@
       "JStreetPAC",
       "Blue Cross/Blue Shield"
     ]
+  },
+  "did:plc:seop4aezvanh3533cevpvkfj": {
+    "industries": [
+      "Retired",
+      "Education",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "University of California",
+      "EMILY's List",
+      "J Street",
+      "State of California",
+      "Alphabet Inc"
+    ]
+  },
+  "did:plc:sjn7hfnb4paesahkhxaaa4jf": {
+    "industries": [
+      "Retired",
+      "Education",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "University of California",
+      "EMILY's List",
+      "J Street",
+      "State of California",
+      "Alphabet Inc"
+    ]
   }
 }
