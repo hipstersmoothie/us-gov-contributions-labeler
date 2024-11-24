@@ -1150,5 +1150,21 @@
       "University of Virginia",
       "Akin, Gump et al"
     ]
+  },
+  "did:plc:nu5l4hek4cifv2xim3bl6we3": {
+    "industries": [
+      "Health Professionals",
+      "Retired",
+      "Securities & Investment",
+      "Leadership PACs",
+      "Lawyers/Law Firms"
+    ],
+    "contributors": [
+      "University of California",
+      "Kaiser Permanente",
+      "State of California",
+      "JStreetPAC",
+      "Blue Cross/Blue Shield"
+    ]
   }
 }
