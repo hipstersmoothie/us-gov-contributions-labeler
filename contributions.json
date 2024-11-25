@@ -1198,5 +1198,293 @@
       "State of California",
       "Alphabet Inc"
     ]
+  },
+  "did:plc:ilmrsysdtkxmafq2m2wpndpz": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Casinos/Gambling",
+      "Leadership PACs",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "JStreetPAC",
+      "McGinn, Montoya et al",
+      "University of New Mexico",
+      "Five & Dime General Stores",
+      "State of New Mexico"
+    ]
+  },
+  "did:plc:z2fyn5xwj3buropnv5svoysn": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Lobbyists",
+      "Leadership PACs",
+      "Pro-Israel"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Operating Engineers Local 57",
+      "Narragansett Bay PAC",
+      "National Assn of Realtors",
+      "Sheet Metal, Air, Rail & Transportation Union"
+    ]
+  },
+  "did:plc:uokor2zivu6tyhj2spdo66j7": {
+    "industries": [
+      "Insurance",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Securities & Investment",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Comcast Corp",
+      "Transport Workers Union",
+      "Communications Workers of America",
+      "Machinists/Aerospace Workers Union"
+    ]
+  },
+  "did:plc:y4korqtgf2dnje45sytn4cwj": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "TV/Movies/Music",
+      "Education"
+    ],
+    "contributors": [
+      "University of California",
+      "Walt Disney Co",
+      "State of California",
+      "Quinn, Emanuel et al",
+      "Comcast Corp"
+    ]
+  },
+  "did:plc:jdme5h3puxft6r63hvbj2yxx": {
+    "industries": [
+      "Securities & Investment",
+      "Real Estate",
+      "Pro-Israel",
+      "Pharmaceuticals/Health Products",
+      "Retired"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Bain Capital",
+      "Harvard University",
+      "Mass General Brigham",
+      "Berkshire Partners"
+    ]
+  },
+  "did:plc:tum2vvmoinupccdxjiwvif2a": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Democratic/Liberal",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Holland & Hart",
+      "University of Colorado",
+      "JStreetPAC",
+      "Brownstein, Hyatt et al",
+      "University of Denver"
+    ]
+  },
+  "did:plc:wq75sxtabr36od4vty2ipg2y": {
+    "industries": [
+      "Health Professionals",
+      "Lawyers/Law Firms",
+      "Public Sector Unions",
+      "Lobbyists",
+      "Building Trade Unions"
+    ],
+    "contributors": [
+      "Yale University",
+      "RTX Corp",
+      "American Federation of State/Cnty/Munic Employees",
+      "Teamsters Union",
+      "American Federation of Teachers"
+    ]
+  },
+  "did:plc:csby5urerm7r3w5psnxscmaz": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "Qualcomm Inc",
+      "JStreetPAC",
+      "University of California",
+      "Jacobs Investment Co",
+      "JMI Realty"
+    ]
+  },
+  "did:plc:sy6bj2v2oeuqshc5zqb3tsq2": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Securities & Investment",
+      "Oil & Gas",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "Ahmad, Zavitsanos & Mensing",
+      "EMILY's List",
+      "American Israel Public Affairs Cmte",
+      "Rice University",
+      "UT MD Anderson Cancer Center"
+    ]
+  },
+  "did:plc:6bkz5metn573jkpwrnr67f7l": {
+    "industries": [
+      "Securities & Investment",
+      "Retired",
+      "Pro-Israel",
+      "Lawyers/Law Firms",
+      "Real Estate"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "EMILY's List",
+      "University of Michigan",
+      "Alphabet Inc",
+      "Henry Ford Health System"
+    ]
+  },
+  "did:plc:5m3ztlfb5emucvfci334um6n": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Pro-Israel",
+      "Real Estate",
+      "Lobbyists",
+      "Leadership PACs"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Lowenstein Sandler Llp",
+      "Blackstone Group",
+      "NorPAC",
+      "BGR Group"
+    ]
+  },
+  "did:plc:f5zbjpygz4ym6g3du53yni5t": {
+    "industries": [
+      "Securities & Investment",
+      "Retired",
+      "Lawyers/Law Firms",
+      "Education",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Harvard University",
+      "Bain Capital",
+      "Berkshire Partners",
+      "Charlesbank Capital Partners",
+      "Goldman Sachs"
+    ]
+  },
+  "did:plc:w5b63ubrl3kpz2aeqf5uyhoz": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "Pro-Israel"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Blackstone Group",
+      "Hueston Hennigan Llp",
+      "Goldman Sachs",
+      "Paul, Weiss et al"
+    ]
+  },
+  "did:plc:fuqcbv5brxa2b5vylz5bkm3j": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Leadership PACs",
+      "Democratic/Liberal",
+      "Casinos/Gambling"
+    ],
+    "contributors": [
+      "University of New Mexico",
+      "JStreetPAC",
+      "Carpenters & Joiners Union",
+      "International Brotherhood of Electrical Workers",
+      "Lobo PAC"
+    ]
+  },
+  "did:plc:pykcfgi5v464aglzjjceiyl7": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Pro-Israel"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Paul, Weiss et al",
+      "Pro-Israel America PAC",
+      "Apollo Global Management",
+      "NorPAC"
+    ]
+  },
+  "did:plc:oiuk3t7dklb4ydzgodbcub7r": {
+    "industries": [
+      "Health Professionals",
+      "Retired",
+      "Lawyers/Law Firms",
+      "Leadership PACs",
+      "Pharmaceuticals/Health Products"
+    ],
+    "contributors": [
+      "US Acute Care Solutions",
+      "Emergency Medicine Physicians",
+      "Eisenhower Health",
+      "American Israel Public Affairs Cmte",
+      "JStreetPAC"
+    ]
+  },
+  "did:plc:7m5afzoixlefac633bbn4cx7": {
+    "industries": [
+      "Leadership PACs",
+      "Democratic/Liberal",
+      "Retired",
+      "Building Trade Unions",
+      "Civil Servants/Public Officials"
+    ],
+    "contributors": [
+      "State of Illinois",
+      "City of Chicago, IL",
+      "Service Employees International Union",
+      "Machinists/Aerospace Workers Union",
+      "UFCW Local 881"
+    ]
+  },
+  "did:plc:vaxteswgbtpscgkmrwyejjii": {
+    "industries": [
+      "Retired",
+      "Health Professionals",
+      "Education",
+      "Electronics Mfg & Equip",
+      "Real Estate"
+    ],
+    "contributors": [
+      "University of California",
+      "Alphabet Inc",
+      "University of Minnesota",
+      "Apple Inc",
+      "National Education Assn"
+    ]
   }
 }
