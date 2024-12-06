@@ -1486,5 +1486,85 @@
       "Apple Inc",
       "National Education Assn"
     ]
+  },
+  "did:plc:eo7nsjwwszwn7k7smt7hhuy7": {
+    "industries": [
+      "Health Professionals",
+      "Lawyers/Law Firms",
+      "Building Trade Unions",
+      "Transportation Unions",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Ice Miller LLP",
+      "Eli Lilly & Co",
+      "Sheet Metal, Air, Rail & Transportation Union",
+      "Machinists/Aerospace Workers Union",
+      "Faegre, Drinker et al"
+    ]
+  },
+  "did:plc:tuomlekw6vdp5rs272djzjqs": {
+    "industries": [
+      "Education",
+      "Retired",
+      "Democratic/Liberal",
+      "Lawyers/Law Firms",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "University of California",
+      "Harvard University",
+      "Alphabet Inc",
+      "EMILY's List",
+      "Mass General Brigham"
+    ]
+  },
+  "did:plc:hy4kwkakey4eawsw6jjzoc3j": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Education",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "EMILY's List",
+      "University of Minnesota",
+      "Dorsey & Whitney",
+      "Wachtell, Lipton et al",
+      "Delta Air Lines"
+    ]
+  },
+  "did:plc:ornpixmpy5ts36lh7hmi7wkp": {
+    "industries": [
+      "Education",
+      "Retired",
+      "Democratic/Liberal",
+      "Lawyers/Law Firms",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "University of California",
+      "Harvard University",
+      "Alphabet Inc",
+      "EMILY's List",
+      "Mass General Brigham"
+    ]
+  },
+  "did:plc:gyl2gdob6lyckqwi5dwaehef": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Retired",
+      "Securities & Investment",
+      "Real Estate",
+      "Education"
+    ],
+    "contributors": [
+      "JStreetPAC",
+      "Covington & Burling",
+      "League of Conservation Voters",
+      "University of Virginia",
+      "Akin, Gump et al"
+    ]
   }
 }
