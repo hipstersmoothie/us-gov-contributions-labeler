@@ -1566,5 +1566,21 @@
       "University of Virginia",
       "Akin, Gump et al"
     ]
+  },
+  "did:plc:2xt2hdtthlenfivvhhfyrw23": {
+    "industries": [
+      "Electronics Mfg & Equip",
+      "Lawyers/Law Firms",
+      "Retired",
+      "Securities & Investment",
+      "Internet"
+    ],
+    "contributors": [
+      "Fragomen, Del Rey et al",
+      "Cisco Systems",
+      "Alphabet Inc",
+      "Intuit Inc",
+      "Butler Amusements"
+    ]
   }
 }
