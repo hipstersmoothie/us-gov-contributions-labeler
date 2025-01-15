@@ -1582,5 +1582,149 @@
       "Intuit Inc",
       "Butler Amusements"
     ]
+  },
+  "did:plc:zipphihu644mxj7qjafvwwun": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Pro-Israel"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Paul, Weiss et al",
+      "Pro-Israel America PAC",
+      "Apollo Global Management",
+      "NorPAC"
+    ]
+  },
+  "did:plc:slgnj2shpt4vk4cxnzgeubvj": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "Pro-Israel",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Leon Medical Centers",
+      "Southern Glazer's Wine & Spirits",
+      "Haggard Law Firm",
+      "NextEra Energy"
+    ]
+  },
+  "did:plc:7xjtx5zwz3ndizetx5csu6ga": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Human Rights",
+      "Retired",
+      "Health Professionals",
+      "Public Sector Unions"
+    ],
+    "contributors": [
+      "University of California",
+      "United Food & Commercial Workers Union",
+      "American Federation of State/Cnty/Munic Employees",
+      "American Federation of Teachers",
+      "Machinists/Aerospace Workers Union"
+    ]
+  },
+  "did:plc:tca3fzesqj6ycy3bnanctked": {
+    "industries": [
+      "Retired",
+      "Leadership PACs",
+      "Building Trade Unions",
+      "Transportation Unions",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "State of Oregon",
+      "University of Oregon",
+      "Greenbrier Companies",
+      "Communications Workers of America",
+      "Metro West Ambulance"
+    ]
+  },
+  "did:plc:rint6j2liywpxrlr2jfz3ogx": {
+    "industries": [
+      "Pro-Israel",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Lobbyists",
+      "Retired"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Lennar Corp",
+      "Capital City Consulting",
+      "Victory Wholesale Group",
+      "Liftoff Campaigns Llc"
+    ]
+  },
+  "did:plc:xu33y4y3rygak23zedn7wg5a": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Industrial Unions",
+      "Public Sector Unions",
+      "Transportation Unions",
+      "Building Trade Unions"
+    ],
+    "contributors": [
+      "International Brotherhood of Electrical Workers",
+      "American Assn for Justice",
+      "AFLAC Inc",
+      "America's Credit Unions",
+      "Machinists/Aerospace Workers Union"
+    ]
+  },
+  "did:plc:4r6ezpji23dsicgeeu4n6cws": {
+    "industries": [
+      "Health Professionals",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Building Trade Unions"
+    ],
+    "contributors": [
+      "Illinois Black Business Political Action Fund",
+      "Arista Networks",
+      "James Group International",
+      "Laborers Union",
+      "Verandah"
+    ]
+  },
+  "did:plc:wdykfpfp2yoguqk77jlshv27": {
+    "industries": [
+      "Public Sector Unions",
+      "Lawyers/Law Firms",
+      "Industrial Unions",
+      "Building Trade Unions",
+      "Transportation Unions"
+    ],
+    "contributors": [
+      "Dominion Energy",
+      "American Assn for Justice",
+      "National Education Assn",
+      "American Federation of State/Cnty/Munic Employees",
+      "Laborers Union"
+    ]
+  },
+  "did:plc:zlgotdjaxzuhw4nefvkxxvxa": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "TV/Movies/Music"
+    ],
+    "contributors": [
+      "Goldman Sachs",
+      "Paul, Weiss et al",
+      "Citigroup Inc",
+      "Blackstone Group",
+      "JPMorgan Chase & Co"
+    ]
   }
 }
