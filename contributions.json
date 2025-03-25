@@ -2046,5 +2046,21 @@
       "Wells Fargo",
       "National Assn of Realtors"
     ]
+  },
+  "did:plc:h7b64xcrlislmn5zrqgk5yok": {
+    "industries": [
+      "Leadership PACs",
+      "Health Professionals",
+      "Real Estate",
+      "Candidate Committees",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "Jobs Education & Families First",
+      "1960 Pa",
+      "Baytown Medical Center",
+      "Beta Financial Services",
+      "Law Office of Rodney Ellis"
+    ]
   }
 }
