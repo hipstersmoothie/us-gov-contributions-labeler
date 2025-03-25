@@ -1726,5 +1726,85 @@
       "Blackstone Group",
       "JPMorgan Chase & Co"
     ]
+  },
+  "did:plc:vt3xvbw22imzxfegz45wq7y5": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Education",
+      "Democratic/Liberal",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "University of California",
+      "Arizona State University",
+      "University of Arizona",
+      "Alphabet Inc",
+      "RTX Corp"
+    ]
+  },
+  "did:plc:6efcnh6vyakphqeims6sqjbm": {
+    "industries": [
+      "Retired",
+      "Democratic/Liberal",
+      "Education",
+      "Lawyers/Law Firms",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "University of California",
+      "Alphabet Inc",
+      "University of Arizona",
+      "Arizona State University",
+      "Microsoft Corp"
+    ]
+  },
+  "did:plc:4yf7jm4tvaryy572lvxtazfl": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Education",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "EMILY's List",
+      "University of Chicago",
+      "University of California",
+      "Blue Cross/Blue Shield",
+      "Northwestern University"
+    ]
+  },
+  "did:plc:yi7j3abu7n3l5me5ig47tfms": {
+    "industries": [
+      "Retired",
+      "Pro-Israel",
+      "Leadership PACs",
+      "Lawyers/Law Firms",
+      "Real Estate"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Chavez Properties",
+      "University of Cincinnati",
+      "Cincinnati Children's Hospital Medical Center",
+      "Katz, Teller et al"
+    ]
+  },
+  "did:plc:ux632osoaqigjkgvuei3m6no": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Education",
+      "TV/Movies/Music"
+    ],
+    "contributors": [
+      "University of California",
+      "American Israel Public Affairs Cmte",
+      "Walt Disney Co",
+      "State of California",
+      "Quinn, Emanuel et al"
+    ]
   }
 }
