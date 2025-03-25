@@ -460,7 +460,7 @@
       "American Israel Public Affairs Cmte",
       "Technology Crossover Ventures",
       "Motley Rice LLC",
-      "Thornton Law Firm"
+      "JStreetPAC"
     ]
   },
   "did:plc:zkegd2ivd2z6mmlfppute6zj": {
@@ -1805,6 +1805,102 @@
       "Walt Disney Co",
       "State of California",
       "Quinn, Emanuel et al"
+    ]
+  },
+  "did:plc:ih3ddrxdlgmk2gux5tntdosj": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Retired",
+      "Education",
+      "Leadership PACs"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Blackstone Group",
+      "NorPAC",
+      "Bain Capital",
+      "Freepoint Commodities"
+    ]
+  },
+  "did:plc:dvg2f2abnjz3igabhwm45q7p": {
+    "industries": [
+      "Retired",
+      "Women's Issues",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Real Estate"
+    ],
+    "contributors": [
+      "EMILY's List",
+      "State of New Hampshire",
+      "JStreetPAC",
+      "League of Conservation Voters",
+      "Harvard University"
+    ]
+  },
+  "did:plc:t56dluqkcinxwcepofodntcb": {
+    "industries": [
+      "Beer, Wine & Liquor",
+      "Health Professionals",
+      "Insurance",
+      "Securities & Investment",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Gallo Winery",
+      "National Assn of Realtors",
+      "International Brotherhood of Electrical Workers",
+      "Blue Dog PAC",
+      "Wine Institute"
+    ]
+  },
+  "did:plc:mqqonqjti5xtlvs76y2zjgok": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Building Trade Unions",
+      "Industrial Unions",
+      "Transportation Unions"
+    ],
+    "contributors": [
+      "National Assn of Realtors",
+      "International Longshoremens Assn",
+      "Laborers Union",
+      "Machinists/Aerospace Workers Union",
+      "Communications Workers of America"
+    ]
+  },
+  "did:plc:ddvwm36kmzuhykdv5oz6tqva": {
+    "industries": [
+      "Retired",
+      "Securities & Investment",
+      "Democratic/Liberal",
+      "Lawyers/Law Firms",
+      "Leadership PACs"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Alphabet Inc",
+      "AmeriPAC: The Fund for a Greater America",
+      "Apple Inc",
+      "Harvard University"
+    ]
+  },
+  "did:plc:4pypwgwx2rnmefnktrjimznx": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Education",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "EMILY's List",
+      "University of Minnesota",
+      "Dorsey & Whitney",
+      "Wachtell, Lipton et al",
+      "Delta Air Lines"
     ]
   }
 }
