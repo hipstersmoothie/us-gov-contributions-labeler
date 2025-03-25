@@ -2110,5 +2110,21 @@
       "League of Conservation Voters",
       "Democratic Congressional Campaign Cmte"
     ]
+  },
+  "did:plc:y77n77kdqzhbg647blkfypyr": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Health Professionals",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Yale University",
+      "Democratic Congressional Campaign Cmte",
+      "Paul, Weiss et al",
+      "Koskoff, Koskoff & Bieder",
+      "Hartford Financial Services"
+    ]
   }
 }
