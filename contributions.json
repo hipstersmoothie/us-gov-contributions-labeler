@@ -1660,7 +1660,7 @@
       "Lennar Corp",
       "Capital City Consulting",
       "Victory Wholesale Group",
-      "Liftoff Campaigns Llc"
+      "Liftoff Campaigns"
     ]
   },
   "did:plc:xu33y4y3rygak23zedn7wg5a": {
@@ -2013,6 +2013,22 @@
       "HA Sustainable Infrastructure Capital",
       "Perry, White et al",
       "Buch Construction"
+    ]
+  },
+  "did:plc:e3ap6sjaftiof33z6xjt54aa": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Lobbyists",
+      "Real Estate"
+    ],
+    "contributors": [
+      "Microsoft Corp",
+      "EMILY's List",
+      "University of Washington",
+      "American Israel Public Affairs Cmte",
+      "Amazon.com"
     ]
   }
 }
