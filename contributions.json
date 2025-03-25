@@ -2062,5 +2062,53 @@
       "Beta Financial Services",
       "Law Office of Rodney Ellis"
     ]
+  },
+  "did:plc:bit7oafc6sjnttnfit43vvv7": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Education",
+      "Securities & Investment"
+    ],
+    "contributors": [
+      "University of California/Irvine",
+      "Million Dollar Baby Co",
+      "WilmerHale Llp",
+      "Google Inc",
+      "AmeriPAC: The Fund for a Greater America"
+    ]
+  },
+  "did:plc:laiahnygdvnd7lqdvbem64pf": {
+    "industries": [
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Real Estate",
+      "Health Professionals"
+    ],
+    "contributors": [
+      "Simmons Hanly Conroy",
+      "State of Illinois",
+      "Kirkland & Ellis",
+      "Power Rogers LLP",
+      "Cooney & Conway"
+    ]
+  },
+  "did:plc:uk62jqyggwt4hyhrnzka34wm": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Women's Issues",
+      "Securities & Investment",
+      "Leadership PACs"
+    ],
+    "contributors": [
+      "EMILY's List",
+      "JStreetPAC",
+      "Simmons Hanly Conroy",
+      "League of Conservation Voters",
+      "Democratic Congressional Campaign Cmte"
+    ]
   }
 }
