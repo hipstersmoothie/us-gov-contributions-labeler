@@ -1950,5 +1950,69 @@
       "Goldman Sachs",
       "Paul, Weiss et al"
     ]
+  },
+  "did:plc:rkaxiiqhiponzkbmbxqugcks": {
+    "industries": [
+      "Real Estate",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Health Professionals",
+      "Accountants"
+    ],
+    "contributors": [
+      "America's Credit Unions",
+      "International Brotherhood of Electrical Workers",
+      "National Assn of Realtors",
+      "Capital Group Companies",
+      "American Assn for Justice"
+    ]
+  },
+  "did:plc:sawh4vdiw425eeshlqgzxfsd": {
+    "industries": [
+      "Securities & Investment",
+      "Electronics Mfg & Equip",
+      "Retired",
+      "Lawyers/Law Firms",
+      "Internet"
+    ],
+    "contributors": [
+      "Alphabet Inc",
+      "Wilson, Sonsini et al",
+      "Stanford University",
+      "Accel Partners",
+      "University of California"
+    ]
+  },
+  "did:plc:6radyuzljqlcie4p4lwh2zuw": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Democratic/Liberal",
+      "Education",
+      "TV/Movies/Music"
+    ],
+    "contributors": [
+      "University of California",
+      "American Israel Public Affairs Cmte",
+      "Walt Disney Co",
+      "State of California",
+      "Quinn, Emanuel et al"
+    ]
+  },
+  "did:plc:k2efp3b2feirkic73tyyidc3": {
+    "industries": [
+      "Pro-Israel",
+      "Retired",
+      "Lobbyists",
+      "Real Estate",
+      "Lawyers/Law Firms"
+    ],
+    "contributors": [
+      "Nai Michael Co",
+      "Servenco Management",
+      "HA Sustainable Infrastructure Capital",
+      "Perry, White et al",
+      "Buch Construction"
+    ]
   }
 }
