@@ -2030,5 +2030,21 @@
       "American Israel Public Affairs Cmte",
       "Amazon.com"
     ]
+  },
+  "did:plc:sp4ywsk4ykfkw2cshoqo3s7p": {
+    "industries": [
+      "Retired",
+      "Health Professionals",
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Education"
+    ],
+    "contributors": [
+      "University of California",
+      "Sheet Metal, Air, Rail & Transportation Union",
+      "American Federation of State/Cnty/Munic Employees",
+      "Wells Fargo",
+      "National Assn of Realtors"
+    ]
   }
 }
