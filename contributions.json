@@ -1902,5 +1902,53 @@
       "Wachtell, Lipton et al",
       "Delta Air Lines"
     ]
+  },
+  "did:plc:hne455ahhpnxi5vnm7a5dquz": {
+    "industries": [
+      "Retired",
+      "Lawyers/Law Firms",
+      "Education",
+      "Women's Issues",
+      "Democratic/Liberal"
+    ],
+    "contributors": [
+      "University of Wisconsin",
+      "EMILY's List",
+      "JStreetPAC",
+      "State of Wisconsin",
+      "League of Conservation Voters"
+    ]
+  },
+  "did:plc:54yntwd4c4gnp5gnlyhvzi3x": {
+    "industries": [
+      "Health Professionals",
+      "Lawyers/Law Firms",
+      "Securities & Investment",
+      "Retired",
+      "Education"
+    ],
+    "contributors": [
+      "Kirkland & Ellis",
+      "Northwestern University",
+      "Exelon Corp",
+      "UCA Group",
+      "University of Illinois"
+    ]
+  },
+  "did:plc:6tyk5jbegvwu4qt2f2m4itut": {
+    "industries": [
+      "Securities & Investment",
+      "Lawyers/Law Firms",
+      "Real Estate",
+      "Retired",
+      "Pro-Israel"
+    ],
+    "contributors": [
+      "American Israel Public Affairs Cmte",
+      "Blackstone Group",
+      "Hueston Hennigan Llp",
+      "Goldman Sachs",
+      "Paul, Weiss et al"
+    ]
   }
 }
