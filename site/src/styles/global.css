@@ -252,7 +252,7 @@ main:focus { outline: none; }
 .skip-link:focus { top: var(--sp-2); }
 
 /* --- masthead --- */
-.masthead { border-bottom: 1px solid var(--rule); box-shadow: 0 3px 0 -2px var(--rule); margin-bottom: var(--sp-7); }
+.masthead { border-bottom: 1px solid var(--hairline); margin-bottom: var(--sp-7); }
 /* The blue/red split rule from the Bluesky banner. */
 .masthead::before {
   content: ""; display: block; height: 5px;
