@@ -1,0 +1,90 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.organization",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A company, union or group behind one or more PACs that gave to current members of Congress. The record key is a slug of its name (e.g. 'lockheed-martin').",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["id", "name", "sector", "classifiedBy", "committees", "total", "byCycle", "recipients"],
+        "properties": {
+          "id": { "type": "string", "description": "Also the record key." },
+          "name": { "type": "string" },
+          "sector": { "type": "ref", "ref": "fyi.contributions.defs#sector" },
+          "industry": { "type": "string" },
+          "classifiedBy": { "type": "string", "description": "What decided the sector.", "knownValues": ["override", "fec-type", "sec", "name", "lobbying", "none"] },
+          "committees": { "type": "array", "items": { "type": "string" }, "description": "Its PACs (fyi.contributions.committee record keys)." },
+          "sec": { "type": "ref", "ref": "#sec" },
+          "lobbying": { "type": "ref", "ref": "#lobbying" },
+          "total": { "type": "integer", "description": "US dollars its PACs gave to current members." },
+          "byCycle": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#cycleAmount" } },
+          "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." },
+          "outsideGifts": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donations to super PACs and other outside spenders (FEC committee ids)." },
+          "employees": { "type": "ref", "ref": "#employees" },
+          "lobbyingSpend": { "type": "ref", "ref": "#lobbyingSpend" }
+        }
+      }
+    },
+    "sec": {
+      "type": "object",
+      "description": "SEC EDGAR registration.",
+      "required": ["cik", "name"],
+      "properties": {
+        "cik": { "type": "integer" },
+        "name": { "type": "string" },
+        "ticker": { "type": "string" },
+        "sic": { "type": "integer", "description": "Standard Industrial Classification code." },
+        "sicDescription": { "type": "string" }
+      }
+    },
+    "lobbying": {
+      "type": "object",
+      "description": "From Lobbying Disclosure Act filings.",
+      "required": ["client", "issues", "filings"],
+      "properties": {
+        "client": { "type": "string" },
+        "description": { "type": "string" },
+        "issues": { "type": "array", "items": { "type": "ref", "ref": "#issue" } },
+        "filings": { "type": "integer" },
+        "firm": { "type": "boolean", "description": "Registered as a lobbying or law firm rather than lobbying for itself." }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": ["code", "name", "count"],
+      "properties": {
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "count": { "type": "integer", "description": "Filings listing it." }
+      }
+    },
+    "employees": {
+      "type": "object",
+      "description": "Itemized donations from people who list it as their employer.",
+      "required": ["total", "recipients"],
+      "properties": {
+        "total": { "type": "integer", "description": "US dollars." },
+        "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id)." }
+      }
+    },
+    "lobbyingSpend": {
+      "type": "object",
+      "description": "Federal lobbying spending reported in the same years.",
+      "required": ["total", "byYear"],
+      "properties": {
+        "total": { "type": "integer", "description": "US dollars." },
+        "byYear": { "type": "array", "items": { "type": "ref", "ref": "#yearAmount" } }
+      }
+    },
+    "yearAmount": {
+      "type": "object",
+      "required": ["year", "amount"],
+      "properties": {
+        "year": { "type": "integer" },
+        "amount": { "type": "integer", "description": "US dollars." }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.donor",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A donor of $50,000 or more to a super PAC or other outside spender that spent on current members of Congress, as reported to the FEC. The record key is a slug of the name and state for people and organizations, or the lowercased FEC committee id for committees.",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["id", "name", "type", "total", "gifts"],
+        "properties": {
+          "id": { "type": "string", "description": "Also the record key." },
+          "name": { "type": "string" },
+          "type": { "type": "string", "knownValues": ["individual", "organization", "committee"] },
+          "state": { "type": "string" },
+          "employer": { "type": "string", "description": "As reported." },
+          "occupation": { "type": "string", "description": "As reported." },
+          "organization": { "type": "string", "description": "Matching fyi.contributions.organization record key, if any." },
+          "committee": { "type": "string", "description": "Matching fyi.contributions.committee record key, if the donor is a committee." },
+          "total": { "type": "integer", "description": "US dollars." },
+          "gifts": { "type": "array", "items": { "type": "ref", "ref": "#gift" }, "description": "Largest first." }
+        }
+      }
+    },
+    "gift": {
+      "type": "object",
+      "required": ["id", "total", "byCycle"],
+      "properties": {
+        "id": { "type": "string", "description": "Recipient's FEC committee id." },
+        "total": { "type": "integer", "description": "US dollars." },
+        "byCycle": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#cycleAmount" } }
+      }
+    }
+  }
+}
