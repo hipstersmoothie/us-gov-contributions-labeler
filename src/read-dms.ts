@@ -9,7 +9,7 @@ import "dotenv/config";
 import fs from "fs";
 import { AtpAgent, ChatBskyConvoDefs } from "@atproto/api";
 
-const identifier = process.env.BSKY_IDENTIFIER ?? "us-gov-funding.bsky.social";
+const identifier = process.env.BSKY_IDENTIFIER ?? "did:plc:ylmdlijvrvgbe4md6v4dyce6";
 const password = process.env.BSKY_DM_APP_PASSWORD;
 
 if (!password) {
