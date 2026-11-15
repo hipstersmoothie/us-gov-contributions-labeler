@@ -446,7 +446,10 @@ if (!args.apply) {
   console.log("\nDry run. Re-run with --apply to publish.");
   process.exit(0);
 }
-if (!all.length) process.exit(0);
+if (!all.length) {
+  console.log("\nNothing to change.");
+  process.exit(0);
+}
 
 // --- apply -------------------------------------------------------------------
 
