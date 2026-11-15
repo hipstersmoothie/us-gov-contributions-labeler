@@ -17,6 +17,7 @@ import {
 } from "../../lib/data";
 import { PARTY_COLOR } from "../../lib/charts";
 import { memberPoints, pacTotal, chamberName } from "../../lib/derived";
+import { moneyAuto } from "../../lib/format";
 import { shortSector } from "../../lib/format";
 
 export function getStaticPaths() {
@@ -69,7 +70,22 @@ const memberRows = seated.map((s) => ({
   value: pacTotal(s.member),
 }));
 const memberMax = Math.max(...memberRows.map((r) => r.value), 1);
+const seats = seated.map((s) => ({
+  id: s.bioguide,
+  name: s.member.name,
+  party: partyLetter(s.member.party) as "D" | "R" | "I",
+  detail: [s.title, `${s.member.party}, ${chamberName(s.member)}, ${s.member.state}`].filter(Boolean).join(" · "),
+  hi: true,
+  amount: `${moneyAuto(pacTotal(s.member))} from PACs`,
+  href: `/members/${s.bioguide}/`,
+}));
+const partyCount = (p: string) => seats.filter((s) => s.party === p).length;
 const leaders = seated.filter((s) => s.title && /^(Chair|Chairman|Ranking Member)$/i.test(s.title)).map((s) => s.bioguide);
+const leaderText = seated
+  .filter((s) => leaders.includes(s.bioguide))
+  .map((s) => `${s.title!.toLowerCase().replace("chairman", "chair")} ${s.member.name} (${partyLetter(s.member.party)})`)
+  .join(" and ")
+  .replace(/^./, (c) => c.toUpperCase());
 ---
 
 <Base title={c.name} description={`Who funds the members of the ${c.name}, ${cycleRange}.`}>
@@ -96,6 +112,33 @@ const leaders = seated.filter((s) => s.title && /^(Chair|Chairman|Ranking Member
   </dl>
 
   {c.jurisdiction && <details class="jurisdiction"><summary>What this committee oversees</summary><p>{c.jurisdiction}</p></details>}
+
+  {
+    seats.length > 1 && (
+      <section class="story makeup">
+        <h2>Who sits on it</h2>
+        <p class="chart-dek">
+          {partyCount("R") > partyCount("D") ? "Republicans" : "Democrats"} hold the majority,{" "}
+          {Math.max(partyCount("R"), partyCount("D"))} seats to {Math.min(partyCount("R"), partyCount("D"))}
+          {partyCount("I") > 0 && <>, with {partyCount("I")} {partyCount("I") === 1 ? "independent" : "independents"}</>}.{" "}
+          {leaderText && <>Ringed: {leaderText}. </>}
+          Hover or tap a seat for that member's PAC money.
+        </p>
+        <PlotFigure
+          chart="parliament"
+          width={560}
+          label={`Seats on the ${c.name} by party`}
+          data={{
+            seats,
+            center: [String(seats.length), "members"],
+            left: partyCount("D") ? `Democrats ${partyCount("D")}` : undefined,
+            right: partyCount("R") ? `Republicans ${partyCount("R")}` : undefined,
+            rings: leaders,
+          }}
+        />
+      </section>
+    )
+  }
 
   {
     shareRows.length > 0 && (
@@ -191,6 +234,7 @@ const leaders = seated.filter((s) => s.title && /^(Chair|Chairman|Ranking Member
 </Base>
 
 <style>
+  .makeup :global(plot-chart) { max-width: 560px; }
   .jurisdiction { margin: -24px 0 40px; max-width: 680px; font-size: 14px; color: var(--text-secondary); }
   .jurisdiction summary { cursor: pointer; font-weight: 600; color: var(--text-primary); }
   .stat dd.sector { font-size: 22px; line-height: 1.25; }

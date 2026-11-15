@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import RankedTable from "../../components/RankedTable.astro";
 import PartySplit from "../../components/PartySplit.astro";
+import Chambers from "../../components/Chambers.astro";
 import OutsideTable from "../../components/OutsideTable.astro";
 import {
   committees,
@@ -104,6 +105,16 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
           </section>
         )}
       </div>
+    )
+  }
+
+  {
+    c.recipients.length > 1 && (
+      <section class="story">
+        <h2>Who it gave to</h2>
+        <p class="chart-dek">Every seat in Congress, with the members this committee gave to, {cycleRange}, in their party's color.</p>
+        <Chambers recipients={c.recipients} giver={name} />
+      </section>
     )
   }
 

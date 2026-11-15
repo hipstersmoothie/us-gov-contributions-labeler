@@ -676,5 +676,104 @@ export function stripMarkLabels(root: Element) {
   for (const g of root.querySelectorAll("g[aria-label]")) g.removeAttribute("aria-label");
 }
 
-export const charts = { swarm, bars, stacked, dumbbell, histogram, diverging } as const;
+// --- parliament: seats in a hemicycle ------------------------------------------------
+
+export interface Seat {
+  id: string;
+  name: string;
+  party: Party;
+  detail: string;
+  /** Drawn in party color; the rest are gray context. */
+  hi: boolean;
+  /** Shown in the tip, e.g. "$34,000". */
+  amount?: string;
+  href?: string;
+}
+export interface ParliamentData {
+  seats: Seat[];
+  /** The big figure in the middle of the arc, and the line under it. */
+  center: [string, string];
+  /** Under the left and right ends of the arc. */
+  left?: string;
+  right?: string;
+  /** Seats to ring (chairs, ranking members); the page names them in text. */
+  rings?: string[];
+}
+
+/** Seat positions for n seats: rows of evenly spaced seats on concentric
+ *  arcs, as many rows as it takes, ordered left to right by angle. */
+export function hemicycle(n: number, inner = 0.42) {
+  let rows = 1;
+  const capacity = (k: number) => {
+    const gap = (1 - inner) / k;
+    return Array.from({ length: k }, (_, i) => Math.floor((Math.PI * (inner + gap * (i + 0.5))) / gap));
+  };
+  while (capacity(rows).reduce((a, b) => a + b, 0) < n) rows++;
+  const caps = capacity(rows);
+  const total = caps.reduce((a, b) => a + b, 0);
+  // Share the seats across rows in proportion to each row's length.
+  const counts = caps.map((c) => Math.floor((c / total) * n));
+  for (let i = rows - 1; counts.reduce((a, b) => a + b, 0) < n; i = (i - 1 + rows) % rows) counts[i]!++;
+  const gap = (1 - inner) / rows;
+  const seats = counts.flatMap((count, row) => {
+    const r = inner + gap * (row + 0.5);
+    return Array.from({ length: count }, (_, j) => {
+      const a = count === 1 ? Math.PI / 2 : Math.PI - (Math.PI * j) / (count - 1);
+      return { x: r * Math.cos(a), y: r * Math.sin(a), a, row };
+    });
+  });
+  seats.sort((p, q) => q.a - p.a || q.row - p.row);
+  return { seats, gap };
+}
+
+function parliament(d: ParliamentData, ctx: Ctx): Plot.PlotOptions {
+  const narrow = ctx.width < 420;
+  // Democrats from the left, Republicans from the right; within each party
+  // the highlighted seats sit at the outside ends, so each side reads as a share.
+  const rank = (s: Seat) =>
+    s.party === "D" ? (s.hi ? 0 : 1) : s.party === "I" ? (s.hi ? 2 : 3) : s.hi ? 5 : 4;
+  const ordered = [...d.seats].sort((a, b) => rank(a) - rank(b));
+  const { seats: pos, gap } = hemicycle(ordered.length);
+  const seats = ordered.map((s, i) => ({ ...s, ...pos[i]! }));
+  const margin = 4;
+  const plotW = ctx.width - margin * 2;
+  // Small chambers (a committee) would get huge, sparse seats: cap the seat
+  // size and shrink the arc to match, centered in the space.
+  const r = Math.min(Math.max(1.6, gap * (plotW / 2.08) * 0.4), 9);
+  const unit = Math.min(plotW / 2.08, r / (gap * 0.4)); // px per data unit
+  const half = plotW / 2 / unit;
+  const height = Math.round(unit * 1.04) + (d.left || d.right ? 30 + r : 6);
+  const rings = new Set(d.rings ?? []);
+  return base(ctx, {
+    height,
+    marginTop: 4,
+    marginLeft: margin,
+    marginRight: margin,
+    marginBottom: d.left || d.right ? 26 + r : 2,
+    x: { domain: [-half, half], axis: null },
+    y: { domain: [0, 1.04], axis: null },
+    marks: [
+      Plot.dot(seats, {
+        x: "x",
+        y: "y",
+        r,
+        fill: (s: Seat) => (s.hi ? PARTY_COLOR[s.party] : "var(--context)"),
+        stroke: "var(--page)",
+        strokeWidth: r > 3 ? 1 : 0.5,
+        channels: { Member: "name", Detail: "detail", ...(seats.some((s) => s.amount) ? { Amount: "amount" } : {}) },
+        tip: ctx.interactive ? { format: { x: false, y: false, fill: false, Member: true, Detail: true, Amount: true } } : undefined,
+      }),
+      Plot.text([d.center[0]], { x: 0, y: 0, dy: -(narrow ? 22 : 30), text: (t) => t, fontSize: narrow ? 26 : 36, fontWeight: 700, fill: "var(--text-primary)", fontFamily: FONT }),
+      Plot.text([d.center[1]], { x: 0, y: 0, dy: -4, text: (t) => t, fontSize: 12, fill: "var(--text-secondary)", ...fit(unit * 0.8, 12) }),
+      ...(d.left ? [Plot.text([d.left], { x: -1, y: 0, dy: r + 12, textAnchor: "start", text: (t) => t, fontSize: 12, fontWeight: 600, fill: "var(--text-primary)" })] : []),
+      ...(d.right ? [Plot.text([d.right], { x: 1, y: 0, dy: r + 12, textAnchor: "end", text: (t) => t, fontSize: 12, fontWeight: 600, fill: "var(--text-primary)" })] : []),
+      Plot.dot(
+        seats.filter((s) => rings.has(s.id)),
+        { x: "x", y: "y", r: r + 2.5, fill: "none", stroke: "var(--text-primary)", strokeWidth: 2 }
+      ),
+    ],
+  });
+}
+
+export const charts = { swarm, bars, stacked, dumbbell, histogram, diverging, parliament } as const;
 export type ChartName = keyof typeof charts;

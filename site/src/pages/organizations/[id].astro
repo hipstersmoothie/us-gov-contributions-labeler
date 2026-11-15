@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import PlotFigure from "../../components/PlotFigure.astro";
 import RankedTable from "../../components/RankedTable.astro";
 import MoreDisclosure from "../../islands/MoreDisclosure";
+import Chambers from "../../components/Chambers.astro";
 import { PARTY_COLOR } from "../../lib/charts";
 import { recipientPoints, pct, chamberName } from "../../lib/derived";
 import { moneyAuto } from "../../lib/format";
@@ -95,6 +96,15 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
     {o.lobbyingSpend && <div class="stat"><dt>Spent lobbying</dt><dd>{money(o.lobbyingSpend.total, true)}</dd></div>}
     {o.sec && <div class="stat"><dt>Ticker</dt><dd><a href={secUrl}>{o.sec.ticker}</a></dd></div>}
   </dl>
+
+  <section class="story">
+    <h2>Who it reached</h2>
+    <p class="chart-dek">
+      Every seat in Congress. The members {o.name} gave to, {cycleRange}, are in their party's color; everyone else is
+      gray. Hover or tap a seat for the amount.
+    </p>
+    <Chambers recipients={o.recipients} giver={name} />
+  </section>
 
   <section class="story">
     <h2>Which party got the money</h2>

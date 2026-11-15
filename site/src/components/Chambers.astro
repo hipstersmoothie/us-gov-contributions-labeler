@@ -1,0 +1,71 @@
+---
+// "Who it reached": a hemicycle per chamber with the members an organization
+// or PAC gave to in party color and everyone else in gray.
+import PlotFigure from "./PlotFigure.astro";
+import { PARTY_COLOR, type Seat } from "../lib/charts";
+import { chamberSeats } from "../lib/derived";
+
+interface Props {
+  recipients: { id: string; total: number }[];
+  /** Who gave, for labels: "the National Association of Realtors". */
+  giver: string;
+}
+const { recipients, giver } = Astro.props;
+const amounts = new Map(recipients.map((r) => [r.id, r.total]));
+
+const side = (seats: Seat[], party: Seat["party"], name: string) => {
+  const all = seats.filter((s) => s.party === party);
+  return all.length ? `${name} ${all.filter((s) => s.hi).length} of ${all.length}` : undefined;
+};
+const chambers = (["house", "senate"] as const).map((chamber) => {
+  const seats = chamberSeats(chamber, amounts);
+  const reached = seats.filter((s) => s.hi).length;
+  return {
+    chamber,
+    name: chamber === "house" ? "House" : "Senate",
+    seats,
+    reached,
+    left: side(seats, "D", "Democrats"),
+    right: side(seats, "R", "Republicans"),
+    independents: seats.filter((s) => s.party === "I"),
+  };
+});
+---
+
+<div class="chambers">
+  {
+    chambers.map((c) => (
+      <div class:list={["chamber", c.chamber]}>
+        <h3 class="kicker">{c.name}</h3>
+        <PlotFigure
+          chart="parliament"
+          width={c.chamber === "house" ? 600 : 400}
+          label={`${c.name} seats, with the ${c.reached} members ${giver} gave to in party color`}
+          data={{ seats: c.seats, center: [String(c.reached), `of ${c.seats.length} ${c.chamber === "house" ? "members" : "senators"}`], left: c.left, right: c.right }}
+        />
+        {c.independents.length > 0 && (
+          <p class="source">
+            Independents, in the middle: {c.independents.filter((s) => s.hi).length} of {c.independents.length}.
+          </p>
+        )}
+      </div>
+    ))
+  }
+</div>
+<ul class="legend" aria-label="Legend">
+  <li><span class="key" style={`--key: ${PARTY_COLOR.D}`} aria-hidden="true" />Democrat, funded</li>
+  <li><span class="key" style={`--key: ${PARTY_COLOR.R}`} aria-hidden="true" />Republican, funded</li>
+  <li><span class="key" style={`--key: ${PARTY_COLOR.I}`} aria-hidden="true" />Independent, funded</li>
+  <li><span class="key" style="--key: var(--context)" aria-hidden="true" />Not funded</li>
+</ul>
+
+<style>
+  .chambers { display: grid; grid-template-columns: 3fr 2fr; gap: var(--sp-5) var(--sp-7); align-items: end; }
+  .chamber .kicker { margin-bottom: var(--sp-2); }
+  .legend {
+    display: flex; gap: 6px 18px; flex-wrap: wrap; list-style: none; padding: 0; margin: var(--sp-4) 0 0;
+    font-size: var(--fs-sm); color: var(--text-secondary);
+  }
+  .key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--key); }
+  @media (max-width: 640px) { .chambers { grid-template-columns: 1fr; } }
+</style>

@@ -1,7 +1,8 @@
 // Views derived at build time from the existing data, for the charts and the
 // plain-language summaries. Nothing here changes the data's shape.
 import { members, memberById, partyLetter, generatedAt, type Member } from "./data";
-import type { SwarmPoint } from "./charts";
+import type { Seat, SwarmPoint } from "./charts";
+import { moneyAuto } from "./format";
 
 export const pacTotal = (m: Member) => m.committees.reduce((s, c) => s + c.total, 0);
 export const raisedTotal = (m: Member) => Object.values(m.totals).reduce((s, t) => s + t.receipts, 0);
@@ -115,4 +116,22 @@ export function cycleLabel(cycle: number) {
   // A cycle ends after its general election in November of the even year.
   const ended = generatedAt > new Date(Date.UTC(cycle, 11, 31));
   return ended ? label : `${label} (so far)`;
+}
+
+/** Every seat in a chamber, highlighted where `amounts` has the member. */
+export function chamberSeats(chamber: "house" | "senate", amounts: Map<string, number>): Seat[] {
+  return members
+    .filter((m) => m.chamber === chamber)
+    .map((m) => {
+      const amount = amounts.get(m.bioguide);
+      return {
+        id: m.bioguide,
+        name: m.name,
+        party: partyLetter(m.party) as Seat["party"],
+        detail: `${m.party}, ${m.chamber === "senate" ? m.state : shortSeat(m).slice(2)}`,
+        hi: amount !== undefined && amount > 0,
+        amount: amount ? moneyAuto(amount) : "Nothing",
+        href: `/members/${m.bioguide}/`,
+      };
+    });
 }
