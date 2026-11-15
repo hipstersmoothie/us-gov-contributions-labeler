@@ -74,10 +74,17 @@ const byCycle = (map: Record<number, number>) =>
   Object.entries(map).map(([cycle, amount]) => ({ cycle: Number(cycle), amount: usd(amount) }));
 const outsideRows = (rows: { id: string; support: number; oppose: number }[]) =>
   rows.map((r) => ({ id: r.id, support: usd(r.support), oppose: usd(r.oppose) }));
+type Outside = { support: number; oppose: number };
+// Spending on members' opponents; optional until the ingest produces it.
+type Opponents = Outside & {
+  spenders: (Outside & { id: string })[];
+  candidates: (Outside & { id: string; name: string; party?: string; office: string; state: string; district?: number })[];
+};
+const outsideTotals = (o: Outside) => ({ support: usd(o.support), oppose: usd(o.oppose) });
 // Drop undefined fields, as the PDS would.
 const compact = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 
-const toMember = (m: Member) =>
+const toMember = (m: Member & { opponents?: Opponents }) =>
   compact({
     bioguide: m.bioguide,
     name: m.name,
@@ -100,7 +107,12 @@ const toMember = (m: Member) =>
     sectors: amounts(m.sectors),
     organizations: amounts(m.organizations),
     committees: amounts(m.committees),
-    outside: { support: usd(m.outside.support), oppose: usd(m.outside.oppose), spenders: outsideRows(m.outside.spenders) },
+    outside: { ...outsideTotals(m.outside), spenders: outsideRows(m.outside.spenders) },
+    opponents: m.opponents && {
+      ...outsideTotals(m.opponents),
+      spenders: outsideRows(m.opponents.spenders),
+      candidates: m.opponents.candidates.map((c) => ({ ...c, ...outsideTotals(c) })),
+    },
     assignments: m.assignments,
     individuals: m.individuals && {
       itemized: usd(m.individuals.itemized),
@@ -138,7 +150,7 @@ const toOrganization = (o: OrganizationRecord) =>
     },
   });
 
-const toCommittee = (c: CommitteeRecord) =>
+const toCommittee = (c: CommitteeRecord & { opponents?: Outside & { targets: (Outside & { id: string })[] } }) =>
   compact({
     id: c.id,
     name: c.name,
@@ -153,7 +165,8 @@ const toCommittee = (c: CommitteeRecord) =>
     total: usd(c.total),
     byCycle: byCycle(c.byCycle),
     recipients: amounts(c.recipients),
-    outside: c.outside && { support: usd(c.outside.support), oppose: usd(c.outside.oppose), targets: outsideRows(c.outside.targets) },
+    outside: c.outside && { ...outsideTotals(c.outside), targets: outsideRows(c.outside.targets) },
+    opponents: c.opponents && { ...outsideTotals(c.opponents), targets: outsideRows(c.opponents.targets) },
     donors: amounts(c.donors),
   });
 
