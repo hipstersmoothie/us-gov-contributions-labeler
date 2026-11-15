@@ -69,16 +69,47 @@ function companyName(asset: string) {
     .replace(/\[[A-Z0-9]{2}\]\s*$/, "")
     .replace(/\([^)]*\)/g, " ")
     .replace(/\s+-\s+(Class|Series|Common|Ordinary|ADR|American Depositary|Sponsored).*$/i, "")
-    .replace(/\b(Common Stock|Ordinary Shares|Class [A-C]|Cl [A-C])\b.*$/i, "")
+    .replace(/\b(Common Stock|Ordinary Shares|Class [A-C]|Cl [A-C]|CMN|COM)\b.*$/i, "")
     .trim();
 }
 
-export async function matchAsset(asset: string, ticker?: string): Promise<Match | undefined> {
+// --- loose names, for assets read from scanned paper forms ---------------------
+
+const SEC_NAMES = [...byName.keys()].sort();
+const ABBREVIATIONS: [RegExp, string][] = [
+  [/\bINTL\b/g, "INTERNATIONAL"], [/\bPMTS\b/g, "PAYMENTS"], [/\bAPT\b/g, "APARTMENT"],
+  [/\bCMNTYS\b/g, "COMMUNITIES"], [/\bMC (?=[A-Z])/g, "MC"], [/\bHLDGCO\b/g, ""], [/\bHLDGS?\b/g, ""],
+  [/\bEXCHG\b/g, "EXCHANGE"], [/\bSVCS\b/g, "SERVICES"], [/\bTECH\b/g, "TECHNOLOGIES"],
+];
+/** Suffixes that scans cut short ("INCORPORA", "CORPORATI", "PUBLIC LIMITED COMPA"). */
+const CUT = /\s+(INCORP\w*|CORPOR\w*|COMPA\w*|PUBLIC LIMITED\w*|PUBLIC\b.*|LIMITED|IN|HOLDING\w*|N ?V|NV.*|SE|AG|PLC|ADR|SPON\w*|UNSP\w*|REG SHS|ORD|NEW|GEORGIA|DEL\w*)$/;
+
+function looseKey(asset: string) {
+  let n = normalizeOrg(companyName(asset).replace(/\/THE$|\bTHE\b/gi, ""));
+  for (const [re, to] of ABBREVIATIONS) n = n.replace(re, to);
+  n = n.replace(/\s+/g, " ").trim();
+  for (let i = 0; i < 4; i++) n = n.replace(CUT, "").trim();
+  return n;
+}
+
+/** A unique SEC company whose normalized name is, or starts with, the loose key. */
+function looseMatch(asset: string) {
+  const key = looseKey(asset);
+  if (key.length < 3) return undefined;
+  const exact = byName.get(key);
+  if (exact) return exact;
+  // Plural/singular drift ("PHARMACEUTICAL" for "PHARMACEUTICALS").
+  const starts = SEC_NAMES.filter((n) => n.startsWith(key) && (n.length === key.length || n[key.length] === " " || n[key.length] === "S"));
+  if (starts.length === 1 || (starts.length > 1 && starts.length <= 3 && key.split(" ").length >= 2)) return byName.get(starts.sort((a, b) => a.length - b.length)[0]!);
+  return undefined;
+}
+
+export async function matchAsset(asset: string, ticker?: string, loose = false): Promise<Match | undefined> {
   let hit: { cik: number; title: string; ticker?: string; how: Match["how"] } | undefined;
   const tk = ticker?.toUpperCase().replace(/-/g, ".");
   if (tk && byTicker.has(tk)) hit = { ...byTicker.get(tk)!, ticker: tk, how: "ticker" };
   if (!hit) {
-    const n = byName.get(normalizeOrg(companyName(asset)));
+    const n = byName.get(normalizeOrg(companyName(asset))) ?? (loose ? looseMatch(asset) : undefined);
     if (n) hit = { cik: n.cik, title: n.title, ticker: n.ticker, how: "name" };
   }
   if (!hit) return undefined;

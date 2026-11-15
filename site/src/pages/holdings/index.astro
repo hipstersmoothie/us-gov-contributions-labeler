@@ -15,6 +15,8 @@ const median = lags[Math.floor(lags.length / 2)] ?? 0;
 const after45 = lags.filter((l) => l > 45).length;
 const ptrs = all.reduce((s, [, d]) => s + d.ptrs.filter((p) => !p.paper).length, 0);
 const companyRows = rows.filter((r) => r.company).length;
+const scanned = rows.filter((r) => r.scanned).length;
+const unread = all.reduce((s, [, d]) => s + (d.scanUnread ?? 0), 0);
 
 // Most widely held: how many members reported each company. This is mostly a
 // picture of the market itself.
@@ -33,8 +35,8 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
     Members of Congress report what they, their spouses and dependent children own each May, and any stock trade over
     $1,000 within 45 days. These are <strong>{parsed.length} House members' 2025 annual reports</strong> and{" "}
     <strong>{rows.length.toLocaleString()} trades</strong> from {ptrs.toLocaleString()} transaction reports since
-    January 2025, all filed electronically. Senators aren't included yet, and neither are the {paper.length} House members
-    who file on paper.
+    January 2025. {scanned.toLocaleString()} of the trades were read by machine from members' scanned paper forms and are
+    marked as such. Senators aren't included yet.
   </p>
 
   <dl class="stats">
@@ -75,7 +77,11 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
     </section>
     <section class="story">
       <h2>Filed on paper</h2>
-      <p class="chart-dek">The House posts these as scanned images. They're linked here rather than read, since reading them by machine gets amounts and buy/sell marks wrong.</p>
+      <p class="chart-dek">
+        The House posts these as scanned images. Their trades are read by machine and checked against each form's grid;{" "}
+        {unread.toLocaleString()} rows that couldn't be read reliably are left out. Their annual reports are read the same
+        way, except handwritten pages and attached brokerage statements.
+      </p>
       <ul class="link-list paper">
         {paper.map(([id, d]) => {
           const m = memberById.get(id)!;
@@ -112,6 +118,10 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
   .paper { list-style: none; padding: 0; margin: 0; columns: 2 220px; }
   .paper li { margin-bottom: var(--sp-2); break-inside: avoid; }
   :global(.nowrap) { white-space: nowrap; }
+  :global(.scan-tag) {
+    display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid var(--hairline); border-radius: 2px;
+    font-size: var(--fs-label); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+  }
   /* Member, asset, whose, traded, amount, reported */
   :global(.trades-island .data-table .th:nth-child(1)) { width: 24%; }
   :global(.trades-island .data-table .th:nth-child(2)) { width: auto; }

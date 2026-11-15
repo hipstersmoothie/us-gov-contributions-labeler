@@ -27,6 +27,7 @@ const COLUMNS: ColumnDef<TradeRow>[] = [
     cell: (r) => (
       <span>
         <span className="cell-note">{r.tx}</span> {r.asset}
+        {r.scanned && <span className="scan-tag" title="Read by machine from a scanned paper form">Scan</span>}
       </span>
     ),
   },

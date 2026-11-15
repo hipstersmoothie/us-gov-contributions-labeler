@@ -48,4 +48,6 @@ export interface TradeRow {
   min: number;
   lagDays: number;
   docUrl: string;
+  /** Read by machine from a scanned paper form. */
+  scanned: boolean;
 }

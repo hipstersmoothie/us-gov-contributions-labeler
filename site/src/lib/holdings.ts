@@ -47,6 +47,8 @@ export interface Holding extends Company {
   text: string;
   account?: string;
   description?: string;
+  scanned?: boolean;
+  docUrl?: string;
 }
 export interface Trade extends Company {
   date: string;
@@ -65,6 +67,9 @@ export interface Trade extends Company {
   comments?: string;
   /** The filer noted that an adviser or manager made the trade. */
   adviser?: boolean;
+  /** Read by machine from a scanned paper form; docUrl points at the page. */
+  scanned?: boolean;
+  account?: string;
   docUrl: string;
 }
 export interface Disclosure {
@@ -72,6 +77,13 @@ export interface Disclosure {
   holdings: Holding[];
   trades: Trade[];
   ptrs: { filed: string; url: string; paper: boolean }[];
+  /** Later amendments filed on paper, which the holdings here don't reflect. */
+  paperAmendments?: { filed: string; url: string }[];
+  /** Rows on scanned forms that couldn't be read reliably, so aren't shown. */
+  scanUnread?: number;
+  /** The annual report was filed on paper and read by machine. */
+  annualScanned?: boolean;
+  annualUnread?: number;
 }
 
 const file = path.resolve(process.cwd(), "src/data/holdings.json");
@@ -242,6 +254,7 @@ export function tradeRows(): TradeRow[] {
         tx: t.tx,
         owner: t.owner === "self" ? "Member" : OWNER_LABEL[t.owner],
         amount: rangeText(t),
+        scanned: !!t.scanned,
         min: t.min,
         lagDays: t.lagDays,
         docUrl: t.docUrl,

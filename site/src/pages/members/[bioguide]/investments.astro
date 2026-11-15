@@ -50,6 +50,7 @@ const paperPtrs = d.ptrs.filter((x) => x.paper);
 const trades = d.trades.filter((t) => t.date >= "2025-01-01");
 const recent = trades.slice(0, 15);
 const adviserNoted = trades.filter((t) => t.adviser).length;
+const scannedTrades = trades.filter((t) => t.scanned).length;
 
 const span = (r: { min: number; max: number; open: boolean }) => rangeText({ ...r, text: "" });
 const share = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
@@ -81,7 +82,7 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
   <p class="prototype-flag">Prototype. Built from House financial disclosure reports on a branch; not on the live site.</p>
 
   {
-    paperAnnual || !d.annual ? (
+    (paperAnnual && !d.annualScanned) || !d.annual ? (
       <>
         <p class="dek">
           {paperAnnual ? (
@@ -99,7 +100,7 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
       <>
         <p class="dek">
           On {possessive(last)} annual report for {d.annual!.year}, filed {date(d.annual!.filed)}
-          {d.annual!.amended && " (amended)"}, {assets.length} assets add up to{" "}
+          {d.annual!.amended && " (amended)"}{d.paperAmendments && <> and amended on paper on {date(d.paperAmendments.at(-1)!.filed)} (<a href={d.paperAmendments.at(-1)!.url}>that amendment</a> isn't reflected here)</>}, {assets.length} assets add up to{" "}
           <strong>between {span({ min: total.min, max: total.max, open: false })}{total.open && " or more"}</strong>. Reports
           give each value as a range, so totals are ranges too.
           {company.length > 0 && (
@@ -109,6 +110,15 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
             </>
           )}
         </p>
+
+        {d.annualScanned && (
+          <p class="scan-note">
+            {last} filed this report on paper. Its assets were read by machine from the scan, so each links to its page;
+            check it before relying on one.
+            {d.annualUnread ? <> Another {d.annualUnread.toLocaleString()} rows couldn't be read reliably and aren't counted.</> : null}{" "}
+            Statements attached to the report aren't read.
+          </p>
+        )}
 
         <dl class="stats">
           <div class="stat">
@@ -210,6 +220,7 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
                         {companyHref(h) ? <a href={companyHref(h)}>{h.company ? companyName(h.company) : h.name}</a> : h.name}
                         {h.ticker && <span class="muted"> {h.ticker}</span>}
                         {h.kind !== "stock" && <span class="tag">{h.kind === "options" ? "Options" : "Bonds"}</span>}
+                        {h.scanned && <a class="tag" href={h.docUrl} title="Read by machine from a scanned paper form">Scan</a>}
                       </td>
                       <td><span class:list={["owner", `owner-${h.owner}`]}>{ownerOf(h.owner)}</span></td>
                       <td class="muted">{h.sector ?? "–"}</td>
@@ -287,6 +298,14 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
               </>
             )}
           </p>
+          {scannedTrades > 0 && (
+            <p class="scan-note">
+              {last} files these reports on paper. {scannedTrades === trades.length ? "All" : scannedTrades.toLocaleString()} of
+              the {trades.length.toLocaleString()} trades here were read by machine from the scans, so each links to its page;
+              check it before relying on one.
+              {d.scanUnread ? <> Another {d.scanUnread.toLocaleString()} rows couldn't be read reliably and aren't shown.</> : null}
+            </p>
+          )}
           <table class="trades">
             <thead>
               <tr>
@@ -305,6 +324,8 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
                     <span class:list={["tx", t.tx.startsWith("Bought") ? "tx-buy" : "tx-sell"]}>{t.tx}</span>{" "}
                     {companyHref(t) ? <a href={companyHref(t)}>{t.name}</a> : t.name}
                     {t.adviser && <span class="tag" title={t.comments ?? t.description}>Adviser</span>}
+                    {t.scanned && <span class="tag" title="Read by machine from a scanned paper form">Scan</span>}
+                    {t.account && <span class="account">{t.account}</span>}
                   </td>
                   <td>{ownerOf(t.owner)}</td>
                   <td class="num">{rangeText(t)}</td>
@@ -342,6 +363,11 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
   .member-head { display: flex; gap: var(--sp-4); align-items: center; margin-bottom: var(--sp-4); }
   .member-head img { border-radius: 2px; flex: none; }
   .member-head h1 { margin: 0; }
+  .account { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
+  .scan-note {
+    font-size: var(--fs-sm); color: var(--text-secondary); max-width: 680px; margin: 0 0 var(--sp-4);
+    padding: var(--sp-2) var(--sp-3); border-left: 3px solid var(--baseline); background: var(--surface-2);
+  }
   .prototype-flag {
     display: inline-block; font-size: var(--fs-sm); color: var(--text-secondary); margin: 0 0 var(--sp-5);
     padding: var(--sp-1) var(--sp-3); border-left: 3px solid var(--accent); background: var(--surface-2);

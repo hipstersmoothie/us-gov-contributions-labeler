@@ -3,9 +3,10 @@
 Can contributions.fyi add what members of Congress own and trade, from their
 financial disclosure reports, and show it fairly? Short answer: **yes for the
 House, as a narrow version; not yet for the Senate.** House e-filed reports
-parse cleanly and match to SEC companies well, but about one in eight House
-trade reports is a scanned paper form, and the Senate's search wouldn't serve
-automated requests. Numbers, legal notes and screenshots below.
+parse cleanly and match to SEC companies well. Paper filings, about half of
+all House trade lines, are now read by machine from the scans (79% of trade
+rows and 92% of asset rows read with no doubts; the rest are flagged and left
+out). The Senate's search wouldn't serve automated requests. Numbers, legal notes and screenshots below.
 
 Everything is on the `sesh/stock-holdings-exploration` branch. Nothing was
 written to Bluesky, the PDS or the labeler, and nothing here is in the CC0
@@ -47,7 +48,7 @@ filed January 2025 to November 13, 2026, unless noted.
 | Source | Verdict | Measured |
 | --- | --- | --- |
 | **House Clerk, e-filed PDFs** | **Use.** | Every e-filed PDF had a clean text layer (1,254 of 1,254). In a 48-report, 125-PTR sample, parsing got a value range and type code for every asset and an amount for every trade (checked by script, with spot checks against the PDFs). 94% of single-company holdings (89% of their value) and 95% of single-company trades match an SEC company. |
-| **House Clerk, paper filings** | **Link, don't parse.** | 7.2% of annual reports (31 of 431) and 13.1% of PTRs (124 of 944) are scanned paper with no text layer. But PTRs on paper run long: 887 pages against 2,174 for all e-filed PTRs, and an OCR count of their date lines puts **about 11,500 trade lines on paper against 11,112 e-filed**, roughly half of all House trade lines, 9,400 of them from one member (Ro Khanna) and 1,550 from another (Michael McCaul). OCR reads names and dates; it loses the X marks that encode amount and buy/sell. |
+| **House Clerk, paper filings** | **Use, read by machine, flagged and linked.** | 7.2% of annual reports (31 of 431) and 13.1% of PTRs (124 of 944) are scanned paper with no text layer, but they hold about half of all House trade lines (9,000 of them Ro Khanna's). A local pipeline (section 1a) reads **11,383 trade rows from 887 PTR pages, 79% with no doubts**, and **4,909 assets from 272 Schedule A pages, 92% with no doubts**. On fresh pages checked by eye, every unflagged row's type, amount, owner and date matched the scan. Flagged rows (2,380 trades, 395 assets) are counted and linked, not shown. |
 | **Senate eFD** | **Blocked or unavailable to automated access. Nothing measured.** | See below. |
 
 ### House Clerk (disclosures-clerk.house.gov)
@@ -166,6 +167,61 @@ a 401(k) by name, not its holdings.
 - **Concentration.** The 5 most active e-filers account for 47% of trade
   lines, one for 16%.
 
+### 1a. Paper filings, read by machine
+
+The first pass treated paper as unreadable (Vision OCR read names and dates
+but lost the X marks). The second pass reads the marks as ink in the form's
+grid, all on this machine (macOS PDFKit and Vision; no service sees the
+reports):
+
+- `scan/analyze.swift` renders each page, picks its orientation (and turns it
+  180° when the owner tags sit on the right; Vision reads upside-down text, so
+  a text score alone can't tell), OCRs every word with its position, finds the
+  table's ruling lines, and measures the ink in each cell, skipping pixel rows
+  that are ruling lines. Every date is read three times (page, 3× crop, 4×
+  binarized crop, upright and flipped) and the majority wins, which recovers
+  dates Vision reads backwards ("9ZOZ/S/E" for 3/5/2026).
+- `scan/ptr.ts` finds the two date columns, makes one row per trade date
+  (scans lose row rules, so a ruled row can hold two trades), assigns name
+  lines to the nearest date below them, and picks the transaction type and
+  amount as the cell with clearly more ink than the lower of its column's and
+  its row's typical ink (empty printed boxes aren't empty, and when every row
+  is a purchase the purchase column's typical cell is itself marked).
+- `scan/annual.ts` does the same for Schedule A: one row per ruled row with a
+  name, skipping the form's printed example rows, and Block B's 13 value
+  columns located by the A–M letters OCR reads above them (each letter votes),
+  or centered under "Value of Asset".
+- A row is flagged, and left out, when a mark is missing or two marks compete,
+  the three date readings disagree, the notification predates the trade or
+  comes more than 90 days after it, the owner tag is unreadable, or there's no
+  name. Kept rows carry a "Scan" tag and link to their page of the PDF.
+
+| | Paper PTRs | Paper annual reports (Schedule A) |
+| --- | --- | --- |
+| Documents, pages | 124, 887 | 34, 1,005 (272 Schedule A grid pages) |
+| Rows found | 11,383 (an earlier date-line count estimated ~11,500) | 4,909 |
+| No doubts | 9,003 (79.1%) | 4,514 (92.0%) |
+| Biggest filers | Khanna 6,959 of 9,017; McCaul 1,721 of 1,930; Fleischmann 111 of 115 | Khanna 3,259 of 3,475; Harshbarger 599 of 612; Guest 252 of 254 |
+| Weakest | Handwritten and check-mark forms (Self, Mann, McClain) | Handwritten forms (Craig, Thompson, Sherman, Gonzalez): a few rows each |
+| Matched to an SEC company | 76% of company-like names, by loose name (no tickers on paper PTRs); 25 random matches all right | 1,963 holdings; Harshbarger's forms carry tickers |
+| Not read at all | 100 pages with no trade table (cover pages, "nothing to report", statements) | Attached brokerage statements (~75 pages), other schedules |
+
+**Accuracy, checked by eye.** On 7 PTR pages not used for tuning (89 rows
+across Khanna, McCaul, Harshbarger, Wied and Fleischmann), after the fixes
+those pages prompted: transaction type 89/89, amount 89/89, owner 89/89,
+trade date right or flagged on every row. On three Schedule A pages (Khanna,
+Whitesides, Harshbarger; ~55 rows) every value matched after locating Block B
+by its letters. The weak spot is blurry scans: on one Khanna page I tuned
+against, 2 of 19 trade dates were read as 05/02 instead of 06/02 by all three
+readings, so they weren't flagged. Expect a small rate of silent date errors
+on the worst scans; that's why every scanned row links to its page.
+
+Fixes the checks forced, for the record: upside-down pages, overlapping date
+bands on tight forms, owner tags OCR'd as "5P"/"SE" (now matched loosely and
+flagged if unmatched, rather than called the member's), a stray rule splitting
+the owner column, trust headings read into asset names, and Block B shifted
+one column where OCR missed the "EIF" box.
+
 ### Senate eFD (efdsearch.senate.gov): blocked or unavailable to automated access
 
 **Verdict: no data measured. Don't build on it yet.**
@@ -182,6 +238,7 @@ What happened, in full (every request this exploration made to the host):
 | ~12:21 | `POST /search/report/data/` with no session, to read the error | 400 from Akamai |
 | — | *Backed off 32 minutes* | |
 | 12:54 | `GET /search/home/`, `POST` the agreement, `POST /search/report/data/` (5 s apart, user agent `contributions.fyi research (https://contributions.fyi)`, no retries) | Agreement 302; search **503**: "U.S. Senate: Site Under Maintenance … WEBSITE TEMPORARILY UNAVAILABLE DUE TO MAINTENANCE." |
+| 13:24 | The same three requests, same pacing and user agent | Same 503 maintenance page. One more attempt is scheduled for 16:24; no others. |
 
 The pages a person clicks through (home, agreement, the search form) work; the
 JSON endpoint behind the search form doesn't, twice, half an hour apart. From
@@ -241,7 +298,8 @@ range charts use Observable Plot with the site's legend and table view.
    only single-company holdings get an industry. Every holding says whose it
    is. Trades show the amount range, how many days later they were reported
    (linked to the PDF), and an "Adviser" tag where the filer said so. Paper
-   filers get a page that says so and links the scans (07).
+   filers' rows are read by machine, tagged "Scan" and linked to their page,
+   with a note saying how many rows couldn't be read (07, 09).
 2. **The index** (`/holdings/`): coverage, four "how to read these" rules,
    every trade in a filterable table (defaulting to single companies), the
    most widely held companies (which mostly mirror the stock market), and the
@@ -259,7 +317,8 @@ range charts use Observable Plot with the site's legend and table view.
 | `04-member-gottheimer-light.png` | Financial Services member with 238 single-company holdings. |
 | `05-company-rtx-{light,dark}.png` | RTX: 14 holders (7 D, 7 R), 8 traders, its PAC beside the list. |
 | `06-company-rtx-joined-NOT-RECOMMENDED-light.png` | The same page with a "From its PAC" column. |
-| `07-paper-khanna-light.png` | What a paper filer's page says. |
+| `07-paper-khanna-{light,dark}.png` | A paper filer: 3,134 assets and 6,959 trades read by machine from the scans, each tagged and linked, mostly held in family trusts. |
+| `09-paper-harshbarger-light.png` | A typed paper Schedule A with tickers: 591 assets, and municipal-bond trades read from checkbox forms. |
 | `08-member-page-link-light.png` | The one line on the member page. |
 
 ### What keeps it fair
@@ -345,10 +404,11 @@ range charts use Observable Plot with the site's legend and table view.
 - **Committee overlap**, kept on the member page, always beside the
   baseline, and never as a headline, list or label. Review whether it adds
   anything once the baseline makes most rows unremarkable.
-- **Paper filings by OCR**: names and dates read well, but amounts and
-  buy/sell need checkbox detection plus a person checking each filing. That's
-  worth it for the few heavy paper filers (Khanna, McCaul) only if done with
-  review, and labeled as transcribed.
+- **Paper filings beyond what's flagged clean**: the machine reading
+  (section 1a) ships with its "Scan" labels and page links. Before launch, a
+  person should spot-check each paper filer's newest report, especially
+  Khanna's blurriest scans, and the flagged rows (2,380 trades, 395 assets)
+  need a person to transcribe if they're to appear at all.
 - **Historical ticker matching**, to cover merged and renamed companies.
 
 **Not worth it, or not appropriate:** per-member PAC joins, "most active
@@ -456,7 +516,7 @@ reports plus 2025–26 PTRs):
 | Parse every PDF from cache | **26 s**, ~1 GB peak memory (pdf.js) | Only new PDFs | — | — |
 | Match and build (`house-build.ts`) | 79 s, mostly SEC submissions lookups for ~350 new CIKs at 5/s | Seconds (cached) | SIC cache, < 1 MB | `holdings.json` **9.6 MB** (1.0 MB gzipped) for 434 members |
 | Site build | Whole site 2 min 43 s for 20,879 pages | — | — | 434 investments pages (26 MB), 1,249 company pages (53 MB), `trades.json` 3.4 MB |
-| OCR of paper PTRs (optional) | ~3.6 s a page with macOS Vision; 887 pages ≈ 53 min on one core, ~15 min on four | Per new paper PTR | — | An estimate only; see section 1 |
+| Read paper filings (`scan/analyze.swift`, macOS only) | ~1–3 s a page with three date readings; 887 PTR pages ≈ 12 min and 1,005 annual pages ≈ 15 min on four cores | Per new paper PTR (a few a week) | 54 MB of page JSON | Parsing all of it: seconds |
 | Senate | Unknown | — | — | — |
 
 The first run fits the existing ingest pattern (budgeted minutes per run,
@@ -466,6 +526,11 @@ branch: regenerate it with
 
 ```sh
 pnpm tsx src/scripts/disclosures/house-all.ts     # ~33 min cold, 26 s cached
+# Paper filings (macOS): analyze each scanned PDF, then parse
+swiftc -O src/scripts/disclosures/scan/analyze.swift -o .cache/disclosures/scan/analyze
+#   .cache/disclosures/scan/analyze <pdf> > .cache/disclosures/scan/<DocID>.jsonl   (per paper PDF)
+pnpm tsx src/scripts/disclosures/scan/run-ptrs.ts
+pnpm tsx src/scripts/disclosures/scan/run-annuals.ts
 pnpm tsx src/scripts/disclosures/house-build.ts
 ```
 

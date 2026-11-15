@@ -11,6 +11,8 @@ import type { HouseFiling } from "./house-index.js";
 import type { Range } from "./house-parse.js";
 import type { Parsed } from "./house-all.js";
 import { matchAsset, type Match } from "./match.js";
+import type { ScannedTrade } from "./scan/ptr.js";
+import type { ScannedHolding } from "./scan/annual.js";
 
 /** What a reader needs to tell apart: one company's stock, a fund, cash, property... */
 export const KINDS = {
@@ -76,15 +78,46 @@ function company(m?: Match) {
 
 const parsed = JSON.parse(fs.readFileSync(`${CACHE}/house/${process.argv[2] ?? "all"}.json`, "utf8")) as Parsed[];
 
+/** Municipal and other government bonds, by the words their names use. */
+const MUNI = /\b(MUN|MUNI|GO|REV|REVS|BDS|SCH DIST|AUTH|TREAS(URY|RY)?|T-BILL|BILXX|ST\s+(GO|REV|HSG))\b/i;
+
+const scanned = new Map(
+  (fs.existsSync(`${CACHE}/scan/ptrs.json`)
+    ? (JSON.parse(fs.readFileSync(`${CACHE}/scan/ptrs.json`, "utf8")) as { filing: HouseFiling; trades: ScannedTrade[] }[])
+    : []
+  ).map((d) => [d.filing.docId, d])
+);
+
+const scannedAnnuals = new Map(
+  (fs.existsSync(`${CACHE}/scan/annuals.json`)
+    ? (JSON.parse(fs.readFileSync(`${CACHE}/scan/annuals.json`, "utf8")) as { filing: HouseFiling; holdings: ScannedHolding[] }[])
+    : []
+  ).map((d) => [d.filing.docId, d])
+);
+
+/** Kind from a name alone, for paper forms that carry no type codes. */
+function kindFromName(asset: string): Kind {
+  if (MUNI.test(asset) || /\b(BANK|CHECKING|SAVINGS|MONEY MARKET|MMDA|CASH)\b/i.test(asset)) return "cash";
+  if (/\b(IRA|401\s?\(?K\)?|ROTH|SEP|529|PENSION|RETIREMENT|TSP)\b/i.test(asset)) return "retirement";
+  if (FUND_NAME.test(asset) || /\b(FUND|FD|LP|L\.P\.|PARTNERS)\b/i.test(asset)) return "funds";
+  if (INDEX_PRODUCT.test(asset) || /\bannuity\b/i.test(asset)) return "other";
+  // Corporate bonds: "CITIGROUP INC 4 125 / 07/25/2028 USD SUB LIEN".
+  if (/\b(LIEN|NOTES?|DEBS?|BONDS?|CPN)\b|\d\s*%|\d{1,2}\/\d{2}\/\d{2,4}/i.test(asset)) return "bonds";
+  if (/\b(PROPERTY|FARM|LLC|LAND|RENTAL|BUILDING|REAL ESTATE|NOTE RECEIVABLE)\b/i.test(asset)) return "business";
+  return "stock";
+}
+
 const byMember = new Map<string, Parsed[]>();
 for (const p of parsed) byMember.set(p.filing.bioguide!, [...(byMember.get(p.filing.bioguide!) ?? []), p]);
 
 const members: Record<string, unknown> = {};
 for (const [bioguide, filings] of byMember) {
-  // The latest e-filed annual or amendment for 2025 replaces the original.
+  // The latest e-filed annual or amendment for 2025 replaces the original. A
+  // later amendment on paper can't be read, so it's linked instead.
   const annuals = filings.filter((p) => p.filing.type !== "P").sort((a, b) => a.filing.filed.localeCompare(b.filing.filed));
-  const annual = annuals.at(-1);
-  const holdings = [];
+  const annual = annuals.filter((p) => p.text).at(-1) ?? annuals.at(-1);
+  const paperAmendments = annual?.text ? annuals.filter((p) => !p.text && p.filing.filed >= annual.filing.filed) : [];
+  const holdings: Record<string, unknown>[] = [];
   for (const h of annual?.holdings ?? []) {
     const kind = kindOf(h.type, h.asset);
     const m = ["stock", "options", "bonds"].includes(kind) ? await matchAsset(h.asset, h.ticker) : undefined;
@@ -100,7 +133,35 @@ for (const [bioguide, filings] of byMember) {
     });
   }
 
-  const trades = [];
+  // A paper-only annual report, read by machine from the scan (scan/run-annuals.ts).
+  let annualUnread = 0;
+  const scan = annual && !annual.text ? scannedAnnuals.get(annual.filing.docId) : undefined;
+  for (const h of scan?.holdings ?? []) {
+    if (h.doubts.length || h.min === undefined || !h.asset) {
+      annualUnread++;
+      continue;
+    }
+    const kind = kindFromName(h.asset);
+    const name = h.asset.replace(/\s+(CMN|COM)\b.*$/i, "").replace(/^[A-Z]{2,5}\s+(?=\()/, "").trim();
+    // A bond's issuer is the name before its coupon and maturity.
+    const issuer = kind === "bonds" ? name.replace(/\s+\d.*$/, "").trim() : name;
+    const m = kind === "stock" || kind === "bonds" ? await matchAsset(issuer, h.ticker, true) : undefined;
+    holdings.push({
+      name: h.asset,
+      // A name that doesn't match an SEC company isn't called a stock.
+      kind: kind === "stock" && !m ? "other" : kind,
+      owner: h.owner,
+      min: h.min,
+      max: h.max ?? h.min,
+      open: h.max === null,
+      text: h.min === 0 ? "None" : "",
+      scanned: true,
+      docUrl: `${pdfUrl(annual!.filing)}#page=${h.page + 1}`,
+      ...company(m),
+    });
+  }
+
+  const trades: Record<string, unknown>[] = [];
   const ptrs = filings.filter((p) => p.filing.type === "P");
   for (const p of ptrs) {
     for (const t of p.trades ?? []) {
@@ -121,17 +182,69 @@ for (const [bioguide, filings] of byMember) {
         ...(t.description ? { description: t.description } : {}),
         ...(t.comments ? { comments: t.comments } : {}),
         ...(ADVISER.test(`${t.comments ?? ""} ${t.description ?? ""}`) ? { adviser: true } : {}),
+        ...(t.subholdingOf ? { account: t.subholdingOf } : {}),
         docUrl: pdfUrl(p.filing),
         ...company(m),
       });
     }
   }
-  trades.sort((a, b) => b.date.localeCompare(a.date));
+  // Paper PTRs, read by machine from the scans (scan/run-ptrs.ts). Only rows
+  // with no doubts are used; the rest are counted and linked.
+  let scanUnread = 0;
+  for (const p of ptrs.filter((p) => !p.text)) {
+    const scan = scanned.get(p.filing.docId);
+    if (!scan) continue;
+    for (const t of scan.trades) {
+      if (t.doubts.length || !t.date || !t.tx || t.min === undefined) {
+        scanUnread++;
+        continue;
+      }
+      // A trust's heading sometimes reads into the first asset under it:
+      // "Monte and Usha Ahuja 2010 Irrev Trust FBO INTEL CORP COM".
+      let asset = t.asset;
+      let account = t.account;
+      const split = asset.match(/^(.*\b(?:Trust|Partnership|Account)\b(?:\s+FBO(?:\s+[A-Z][a-z]+)+)?)\s+([A-Z0-9][A-Z0-9 .,&'\/()-]{3,})$/);
+      if (split && /[a-z]/.test(split[1]!)) [account, asset] = [split[1]!, split[2]!];
+      // Garbled form text ("se ame, no el vbo") isn't an account; real headings name one.
+      if (account && !/\b(trust|partnership|account|IRA|LLC|L\.?P\.?|FBO|family|investments|estate|portfolio|fund)\b/i.test(account)) account = undefined;
+      const name = asset.replace(/\s+(CMN|COM)\b.*$/i, "").trim() || asset;
+      const kind: Kind = MUNI.test(asset)
+        ? "cash"
+        : FUND_NAME.test(asset) || /\b(FUND|FD|LP|L\.P\.|PARTNERS)\b/i.test(asset)
+          ? "funds"
+          : INDEX_PRODUCT.test(asset)
+            ? "other"
+            : "stock";
+      const m = kind === "stock" ? await matchAsset(name, undefined, true) : undefined;
+      trades.push({
+        date: t.date,
+        filed: p.filing.filed,
+        lagDays: Math.round((Date.parse(p.filing.filed) - Date.parse(t.date)) / 864e5),
+        name: asset,
+        // No type code on paper forms: a name that matches an SEC company is called a stock.
+        kind: m ? kind : kind === "stock" ? "other" : kind,
+        owner: t.owner,
+        tx: t.tx,
+        min: t.min,
+        max: t.max ?? t.min,
+        open: t.max === null,
+        text: "",
+        ...(account ? { account } : {}),
+        scanned: true,
+        docUrl: `${pdfUrl(p.filing)}#page=${t.page + 1}`,
+        ...company(m),
+      });
+    }
+  }
+  trades.sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
   members[bioguide] = {
     annual: annual
       ? { year: annual.filing.year, filed: annual.filing.filed, url: pdfUrl(annual.filing), amended: annual.filing.type === "A", paper: !annual.text }
       : undefined,
+    ...(paperAmendments.length ? { paperAmendments: paperAmendments.map((p) => ({ filed: p.filing.filed, url: pdfUrl(p.filing) })) } : {}),
+    ...(scanUnread ? { scanUnread } : {}),
+    ...(scan ? { annualScanned: true, annualUnread } : {}),
     holdings,
     trades,
     ptrs: ptrs.map((p) => ({ filed: p.filing.filed, url: pdfUrl(p.filing), paper: !p.text })).sort((a, b) => b.filed.localeCompare(a.filed)),
