@@ -59,9 +59,9 @@ for (const m of members) {
     name: l.name,
     description:
       l.kind === "sector"
-        ? `One of the top ${PER_KIND} sectors funding this member of Congress's campaign, ${range}, per FEC filings.` +
+        ? `${l.fullName}: one of the top ${PER_KIND} sectors funding this member of Congress's campaign, ${range}, per FEC filings.` +
           `\n\n${METHODOLOGY}${more}`
-        : `${l.name} is one of the top ${PER_KIND} contributors to this member of Congress's campaign, ${range}, per FEC filings.` +
+        : `${l.fullName} is one of the top ${PER_KIND} contributors to this member of Congress's campaign, ${range}, per FEC filings.` +
           `\n\n${METHODOLOGY}${more}`,
   }));
 

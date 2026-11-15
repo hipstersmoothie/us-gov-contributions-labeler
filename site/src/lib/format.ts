@@ -19,14 +19,7 @@ export function percent(part: number, whole: number) {
 }
 
 /** "Finance, Insurance & Real Estate" reads fine; a few labels need a shorter form in charts. */
-export function shortSector(name: string) {
-  return name
-    .replace("Finance, Insurance & Real Estate", "Finance & real estate")
-    .replace("Communications & Technology", "Tech & communications")
-    .replace("Energy & Natural Resources", "Energy")
-    .replace("Ideological & Single-Issue", "Ideological")
-    .replace("Party & Candidate Committees", "Party & candidates");
-}
+export { shortSector } from "../../../src/lib/labels.ts";
 
 /** "Nancy Pelosi" -> "Pelosi", keeping suffixes off. */
 export function surname(name: string) {

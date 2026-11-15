@@ -59,12 +59,77 @@ export function sameOrg(a: string, b: string) {
 /** Readable display name from an ALL CAPS filing name. */
 export function titleCase(name: string) {
   const SMALL = new Set(["of", "and", "for", "the", "in", "on", "at", "to", "a", "an"]);
-  return name
-    .toLowerCase()
-    .replace(/\b[a-z][a-z']*/g, (w, i) =>
-      i > 0 && SMALL.has(w) ? w : w[0]!.toUpperCase() + w.slice(1)
-    )
-    .replace(/\b(Pac|Llc|Llp|Usa|Afl|Cio)\b/g, (w) => w.toUpperCase());
+  return fixCase(
+    name
+      .toLowerCase()
+      .replace(/\b[a-z][a-z']*/g, (w, i) => (i > 0 && SMALL.has(w) ? w : w[0]!.toUpperCase() + w.slice(1)))
+  );
+}
+
+// Acronyms that title-casing can't spot because they have vowels.
+const ACRONYMS = new Set(
+  ("Pac Llc Llp Pllc Usa Afl Cio Ubs Ups Seiu Uaw Ua Ncta Ctia Cme Cipa Basf Bae Ge Dla Saic Sabic Nreca Tma Aota " +
+    "Usaa Aarp Afscme Afge Ibew Iuoe Aig Aep Aes Hca Ibm Ey Bp Ieee Nea Aipac Ici Nahb Nrca Ahip Apta Aapa Nfib " +
+    "Nrf Api Afpm Ipaa Eei Nmha Hdma Apapo Mci").split(" ")
+);
+// Short words without vowels that aren't acronyms.
+const NOT_ACRONYMS = new Set(
+  ("Mr Mrs Ms Dr St Jr Sr Ltd Hwy Mt Ft Lt Bldg Mgmt Mggmt Mgt Mfg Mgr Ctr Cntr Cnty Fdtn Fndn Fndtn Glbl Grp Plbg " +
+    "Brthd Brhd Svc Svcs Mkt Mktg Pkwy Blvd Twp Dpt").split(" ")
+);
+// Company names written in camel case.
+const BRANDS: Record<string, string> = {
+  Jpmorgan: "JPMorgan", Netjets: "NetJets", Unitedhealth: "UnitedHealth", Unitedhealthcare: "UnitedHealthcare", Blackrock: "BlackRock",
+  Nextera: "NextEra", Davita: "DaVita", Abbvie: "AbbVie", Fedex: "FedEx", Paypal: "PayPal", Ebay: "eBay",
+  Iheartmedia: "iHeartMedia", Linkedin: "LinkedIn", Youtube: "YouTube", Doordash: "DoorDash",
+  Arcelormittal: "ArcelorMittal", Exxonmobil: "ExxonMobil", Glaxosmithkline: "GlaxoSmithKline",
+  Pricewaterhousecoopers: "PricewaterhouseCoopers", Amerisourcebergen: "AmerisourceBergen", Medstar: "MedStar",
+};
+
+/** Does `word` abbreviate the words before it? "Seiu" after "Service
+ *  Employees International Union" does; "Lisa" after "Friends of" doesn't. */
+function isAbbreviation(word: string, before: string) {
+  const w = word.toLowerCase();
+  if (/^(us|aka|fka|dba)$/.test(w)) return false;
+  if (w.endsWith("pac")) return true;
+  const initials = (before.match(/[A-Za-z]+/g) ?? []).map((t) => t[0]!.toLowerCase());
+  let i = 0;
+  let matched = 0;
+  for (const c of w) {
+    const at = initials.indexOf(c, i);
+    if (at >= 0) {
+      matched++;
+      i = at + 1;
+    }
+  }
+  return initials.includes(w[0]!) && matched >= Math.ceil(w.length * 0.6);
+}
+
+/** Fix acronyms and brand spellings in a title-cased name: "Cms Energy" →
+ *  "CMS Energy", "(Njasap)" → "(NJASAP)", "At&t" → "AT&T". Safe to re-run. */
+export function fixCase(name: string) {
+  return (
+    name
+      // A one-word abbreviation in parentheses: "Service Employees International Union (Seiu)".
+      .replace(/\(('?)([A-Za-z]{2,7})('?)\)/g, (m, a: string, w: string, b: string, at: number) =>
+        isAbbreviation(w, name.slice(0, at)) ? `(${a}${w.toUpperCase()}${b})` : m
+      )
+      // Initials joined by &: At&t, Pg&e, Bb&t.
+      .replace(/\b[A-Za-z]{1,2}&[A-Za-z]{1,2}\b/g, (w) => w.toUpperCase())
+      // Short words with no vowels (counting y) are acronyms: Cms, Kpmg, Csx, Td.
+      .replace(/\b[B-DF-HJ-NP-TV-XZ][b-df-hj-np-tv-xz]{1,4}\b/g, (w) => (NOT_ACRONYMS.has(w) ? w : w.toUpperCase()))
+      .replace(/\b[A-Z][a-z]{1,5}\b/g, (w) => (ACRONYMS.has(w) ? w.toUpperCase() : w))
+      // "Us" is the country, except as a pronoun: "Power of Us PAC", but "for US Senate".
+      .replace(/\b(of|for|with|giving|join|help|elect|lead)?(\s*)\bUs\b(?!\s+(Senate|Congress|House))/gi, (m, before, sp) =>
+        before ? m : `${sp}US`
+      )
+      .replace(/\bUs\b(?=\s+(Senate|Congress|House))/g, "US")
+      .replace(/\bMc([a-z])(?=[a-z]{2})/g, (m, c: string, at: number) =>
+        /^Mc(are|apitol)\b/.test(name.slice(at)) ? m : `Mc${c.toUpperCase()}`
+      )
+      .replace(/\b[A-Z][a-z]+\b/g, (w) => BRANDS[w] ?? w)
+      .replace(/\.Com\b/g, ".com")
+  );
 }
 
 export function slugify(name: string) {
