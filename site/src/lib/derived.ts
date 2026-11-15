@@ -23,6 +23,7 @@ export function memberPoints(hi?: (m: Member) => boolean): SwarmPoint[] {
     lane: chamberName(m),
     value: pacByMember.get(m.bioguide) ?? 0,
     detail: `${m.party}, ${m.chamber === "senate" ? `Senate, ${m.state}` : `House, ${shortSeat(m).slice(2)}`}`,
+    href: `/members/${m.bioguide}/`,
     hi: hi?.(m),
   }));
 }
@@ -64,6 +65,7 @@ export function recipientPoints(recipients: { id: string; total: number }[]): Sw
         lane: `${m.party}s`,
         value: r.total,
         detail: `${m.party}, ${chamberName(m)}, ${m.state}`,
+        href: `/members/${m.bioguide}/`,
       },
     ];
   });

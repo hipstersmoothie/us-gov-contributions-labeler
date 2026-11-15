@@ -76,7 +76,7 @@ const PARTY_SERIES = [
       table={{
         columns: ["Member", "Party", "Chamber", "PAC money"],
         numeric: [3],
-        rows: byPacMoney.map(({ m, total }) => [m.name, m.party, chamberName(m), money(total)]),
+        rows: byPacMoney.map(({ m, total }) => [{ text: m.name, href: `/members/${m.bioguide}/` }, m.party, chamberName(m), money(total)]),
       }}
     />
   </section>

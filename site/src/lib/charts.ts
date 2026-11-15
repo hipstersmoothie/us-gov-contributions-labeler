@@ -54,6 +54,8 @@ export interface SwarmPoint {
   detail: string;
   /** Highlighted (party color); others draw as gray context when `context` is set. */
   hi?: boolean;
+  /** Profile to open when the dot is clicked. */
+  href?: string;
 }
 export interface SwarmData {
   points: SwarmPoint[];
@@ -166,7 +168,7 @@ function swarm(d: SwarmData, ctx: Ctx): Plot.PlotOptions {
           strokeWidth: (p: SwarmPoint) => (p.hi && d.context ? 2 : 0.75),
           channels: { Member: "name", Detail: "detail", Amount: (p: SwarmPoint) => money(p.value) },
           tip: ctx.interactive
-            ? { format: { x: false, fy: false, fill: false, stroke: false, strokeWidth: false, Member: true, Detail: true, Amount: true } }
+            ? { format: { x: false, fy: false, r: false, fill: false, stroke: false, strokeWidth: false, Member: true, Detail: true, Amount: true } }
             : undefined,
         })
       ),

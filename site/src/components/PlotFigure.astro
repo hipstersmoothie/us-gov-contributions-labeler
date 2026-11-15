@@ -20,7 +20,8 @@ interface Props {
   width?: number;
   label: string;
   legend?: LegendItem[];
-  table?: { columns: string[]; rows: (string | number)[][]; numeric?: number[] };
+  /** Cells are text, or { text, href } for a link (the keyboard route to what a chart's marks open). */
+  table?: { columns: string[]; rows: (string | number | { text: string; href: string })[][]; numeric?: number[] };
 }
 const { chart, data, width = 1040, label, legend, table } = Astro.props;
 
@@ -59,7 +60,11 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
             </thead>
             <tbody>
               {table.rows.map((r) => (
-                <tr>{r.map((v, i) => <td class:list={{ num: table.numeric?.includes(i) }}>{v}</td>)}</tr>
+                <tr>
+                  {r.map((v, i) => (
+                    <td class:list={{ num: table.numeric?.includes(i) }}>{typeof v === "object" ? <a href={v.href}>{v.text}</a> : v}</td>
+                  ))}
+                </tr>
               ))}
             </tbody>
           </table>
@@ -116,6 +121,16 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
       const { chart, data } = this.#spec;
       const el = Plot.plot(charts[chart as keyof typeof charts](data as never, { width, interactive: true }));
       stripMarkLabels(el);
+      // Marks whose data carry an href (swarm dots) open it on click. Plot's
+      // pointer picks the nearest mark, so there's no need to hit a 6px dot.
+      const hrefOf = () => (el as unknown as { value?: { href?: string } | null }).value?.href;
+      el.addEventListener("input", () => el.classList.toggle("is-linked", !!hrefOf()));
+      el.addEventListener("click", (e) => {
+        const href = hrefOf();
+        if (!href || (e.target as Element).closest("a")) return;
+        if (e.metaKey || e.ctrlKey) window.open(href, "_blank");
+        else location.href = href;
+      });
       this.querySelector(".canvas")!.replaceChildren(el);
     }
   }
@@ -127,6 +142,7 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
   plot-chart { display: block; min-width: 0; }
   .canvas :global(svg) { display: block; max-width: 100%; height: auto; --plot-background: var(--surface); }
   .canvas :global(a:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .canvas :global(svg.is-linked) { cursor: pointer; }
   .canvas :global(svg a) { text-decoration: none; }
   .canvas :global(svg a:hover) { text-decoration: underline; }
 

@@ -265,6 +265,13 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
         { label: `${m.name} (${m.party})`, color: `var(--party-${p.toLowerCase()})`, shape: "dot" },
         { label: `Other ${peers}`, color: "var(--context)", shape: "dot" },
       ]}
+      table={{
+        columns: ["Rank", "Member", "Party", "PAC money"],
+        numeric: [0, 3],
+        rows: [...points]
+          .sort((a, b) => b.value - a.value)
+          .map((pt, i) => [i + 1, { text: pt.id === m.bioguide ? `${pt.name} (this page)` : pt.name, href: pt.href! }, pt.detail.split(",")[0]!, money(pt.value)]),
+      }}
     />
   </section>
 

@@ -123,7 +123,7 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
             numeric: [3],
             rows: o.recipients.flatMap((r) => {
               const m = memberById.get(r.id);
-              return m ? [[m.name, m.party, chamberName(m), money(r.total)]] : [];
+              return m ? [[{ text: m.name, href: `/members/${m.bioguide}/` }, m.party, chamberName(m), money(r.total)]] : [];
             }),
           }}
         />
