@@ -26,6 +26,7 @@ import { sectors } from "../src/lib/sectors";
 import { shortSector, money } from "../src/lib/format";
 import { hemicycle } from "../src/lib/charts";
 import { ogVersion } from "../src/lib/og";
+import { bills, congress, ordinal, shortStatus, fmtDate, PATTERN_LABEL, chamberLabel } from "../src/lib/legislation";
 import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
 
 const OUT_DIR = path.resolve(process.cwd(), "server/data");
@@ -170,6 +171,39 @@ for (const c of congressCommittees) {
   };
 }
 
+for (const b of bills) {
+  const v = b.votes.at(-1)!;
+  // Independents' row says who they caucus with.
+  const caucuses = [...new Set(Object.values(v.caucus ?? {}))];
+  const status = b.law ? "Became law" : shortStatus(b).replace(/^(Passed|Failed in) /, "$1 the ");
+  cards[`bill/${b.id}`] = {
+    type: "bill",
+    label: b.label,
+    name: b.name,
+    policyArea: b.policyArea,
+    status,
+    congress: `${ordinal(congress)} Congress`,
+    vote: {
+      chamber: chamberLabel(v.chamber),
+      date: fmtDate(v.date, true),
+      pattern: PATTERN_LABEL[v.pattern],
+      rows: (["D", "I", "R"] as Party[])
+        .filter((p) => v.tally[p])
+        .map((p) => ({
+          party: p,
+          ...v.tally[p]!,
+          note: p === "I" && caucuses.length === 1 ? `caucus${Object.keys(v.caucus!).length === 1 ? "es" : ""} with ${caucuses[0] === "D" ? "Democrats" : "Republicans"}` : undefined,
+        })),
+    },
+    lobbying: b.lobbying.length,
+    // Named it in the most quarterly reports.
+    top: [...b.lobbying]
+      .sort((x, y) => y.quarters.length - x.quarters.length || Number(!!y.org) - Number(!!x.org))
+      .slice(0, 3)
+      .map((c) => ({ label: c.name, reports: c.quarters.length })),
+  };
+}
+
 // --- section and static pages ------------------------------------------------------
 
 const pacMoney = members.reduce((a, m) => a + pacTotal(m), 0);
@@ -209,6 +243,19 @@ cards["page/committees"] = {
   dek: `${topCommittees.length} committees and ${congressCommittees.length - topCommittees.length} subcommittees in the House, Senate and joint.`,
   barsTitle: "PAC money to their members",
   bars: top(topCommittees, committeeMoney, 4).map((c) => ({ label: c.name.replace(/^(House|Senate) Committee on /, ""), value: committeeMoney(c), note: { house: "House", senate: "Senate", joint: "Joint" }[c.chamber] })),
+};
+const passageVotes = bills.flatMap((b) => b.votes);
+const patternShare = (p: string) => `${Math.round((100 * passageVotes.filter((v) => v.pattern === p).length) / Math.max(passageVotes.length, 1))}%`;
+cards["page/bills"] = {
+  type: "page",
+  kicker: "Bills",
+  title: "What Congress voted on",
+  dek: `Every bill the ${ordinal(congress)} Congress voted on passing, how each party voted, and who lobbied on it.`,
+  stats: [
+    { label: "Bills voted on", value: bills.length.toLocaleString() },
+    { label: "Became law", value: bills.filter((b) => b.law).length.toLocaleString() },
+    { label: "Party-line votes", value: patternShare("party-line") },
+  ],
 };
 cards["page/donors"] = {
   type: "page",

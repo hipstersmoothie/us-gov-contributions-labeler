@@ -19,6 +19,7 @@ import { getJson } from "../lib/http.js";
 import { mapLimit } from "../lib/async.js";
 import { normalizeOrg, sameOrg, titleCase } from "../lib/names.js";
 import { billRefs, introducedBy, nameAgrees } from "../lib/bill-refs.js";
+import { displayName } from "../lib/bill-names.js";
 import type { Legislator } from "../lib/legislators.js";
 import type { OrganizationRecord } from "./build.js";
 
@@ -224,16 +225,48 @@ function parseSenate(xml: string, lisToBioguide: Map<string, string>): RollCall 
   };
 }
 
-async function fetchRollCalls(congress: number, years: number[]) {
-  // Senators who left during the Congress are only in the historical file.
-  const legislators = (
+interface LegislatorRecord {
+  id: { bioguide: string; lis?: string };
+  terms: {
+    start: string;
+    end: string;
+    party?: string;
+    caucus?: string;
+    party_affiliations?: { start: string; end: string; party: string; caucus?: string }[];
+  }[];
+}
+
+/** Current and former members. Senators who left during the Congress are only in the historical file. */
+async function fetchLegislatorRecords() {
+  return (
     await Promise.all(
       ["current", "historical"].map(async (which) =>
         (await fetch(`https://unitedstates.github.io/congress-legislators/legislators-${which}.json`)).json()
       )
     )
-  ).flat() as { id: { bioguide: string; lis?: string } }[];
-  const lisToBioguide = new Map(legislators.filter((l) => l.id.lis).map((l) => [l.id.lis!, l.id.bioguide]));
+  ).flat() as LegislatorRecord[];
+}
+
+const LETTER: Record<string, string> = { Democrat: "D", Republican: "R", Independent: "I" };
+
+/** Who an independent caucused with on a date ("D" / "R"), from congress-legislators'
+ *  terms and mid-term party changes (Kevin Kiley left the Republicans in March 2026
+ *  and caucuses with them as an independent). */
+function caucusLookup(records: LegislatorRecord[]) {
+  const byId = new Map(records.map((r) => [r.id.bioguide, r]));
+  return (bioguide: string, date: string) => {
+    for (const t of byId.get(bioguide)?.terms ?? []) {
+      if (date < t.start || date > t.end) continue;
+      const spell = t.party_affiliations?.find((a) => date >= a.start && date <= a.end);
+      const caucus = spell ? (spell.caucus ?? (spell.party !== "Independent" ? spell.party : undefined)) : t.caucus;
+      return caucus ? LETTER[caucus] : undefined;
+    }
+    return undefined;
+  };
+}
+
+async function fetchRollCalls(congress: number, years: number[], records: LegislatorRecord[]) {
+  const lisToBioguide = new Map(records.filter((l) => l.id.lis).map((l) => [l.id.lis!, l.id.bioguide]));
 
   const votes: RollCall[] = [];
   for (const [i, year] of years.entries()) {
@@ -391,8 +424,12 @@ export interface LegislationVote {
   result: string;
   required?: string;
   pattern: VotePattern;
-  /** Every member who voted, current or not, by the party they voted under. */
+  /** Every member who voted, current or not, by the party recorded on the roll call. */
   tally: Record<string, { yes: number; no: number; other: number }>;
+  /** The same, with independents counted in the party they caucus with ("I" only for those who don't). */
+  byCaucus: Record<string, { yes: number; no: number; other: number }>;
+  /** Independents who voted, and the party they caucused with that day. */
+  caucus?: Record<string, string>;
   /** Current members' votes; P (present) and NV (not voting) are both "other". */
   yes: string[];
   no: string[];
@@ -415,7 +452,9 @@ export interface LobbyingClient {
 export interface LegislationBill {
   id: string;
   label: string;
+  /** Its short title, or a readable name made from the official title. */
   name: string;
+  /** The official title. */
   title: string;
   introduced: string;
   policyArea?: string;
@@ -444,6 +483,8 @@ export interface OrganizationBill {
 export interface LegislationFile {
   generatedAt: string;
   congress: number;
+  /** Current independents and who they caucus with now: { S000033: "D" }. */
+  caucus: Record<string, string>;
   quarters: string[];
   bills: LegislationBill[];
   organizations: Record<string, OrganizationBill[]>;
@@ -458,17 +499,27 @@ const isPassage = (v: RollCall) =>
   /Passage|Suspend the Rules and (Pass|Agree)|Concur|Joint Resolution|Concurrent Resolution|Agreeing to the Resolution|Conference Report|Override/i.test(v.question) &&
   !/Previous Question|Recommit|Table|Cloture|Proceed/i.test(v.question);
 
-function summarize(v: RollCall, currentParty: Map<string, string>): LegislationVote {
+function summarize(v: RollCall, currentParty: Map<string, string>, caucusAt: (id: string, date: string) => string | undefined): LegislationVote {
+  // Rows by the party recorded on the roll call; patterns and "broke with
+  // party" by caucus, so an independent counts with the party they caucus with.
   const tally: LegislationVote["tally"] = {};
-  for (const [id, p] of Object.entries(v.positions)) {
-    const party = v.parties[id] || currentParty.get(id) || "?";
-    const t = (tally[party] ??= { yes: 0, no: 0, other: 0 });
+  const byCaucus: LegislationVote["tally"] = {};
+  const caucus: Record<string, string> = {};
+  const add = (into: LegislationVote["tally"], key: string, p: Position) => {
+    const t = (into[key] ??= { yes: 0, no: 0, other: 0 });
     if (p === "Y") t.yes++;
     else if (p === "N") t.no++;
     else t.other++;
+  };
+  for (const [id, p] of Object.entries(v.positions)) {
+    const party = v.parties[id] || currentParty.get(id) || "?";
+    const group = party === "I" ? (caucusAt(id, v.date) ?? "I") : party;
+    if (party === "I" && group !== "I") caucus[id] = group;
+    add(tally, party, p);
+    add(byCaucus, group, p);
   }
   const share = (p: string) => {
-    const t = tally[p];
+    const t = byCaucus[p];
     return t && t.yes + t.no ? t.yes / (t.yes + t.no) : 0.5;
   };
   const d = share("D");
@@ -492,6 +543,8 @@ function summarize(v: RollCall, currentParty: Map<string, string>): LegislationV
     required: v.required,
     pattern,
     tally,
+    byCaucus,
+    ...(Object.keys(caucus).length ? { caucus } : {}),
     yes: current.filter(([, p]) => p === "Y").map(([id]) => id),
     no: current.filter(([, p]) => p === "N").map(([id]) => id),
     other: current.filter(([, p]) => p === "P" || p === "NV").map(([id]) => id),
@@ -529,7 +582,9 @@ export async function ingestLegislation(
 
   const bills = await fetchBills(congress);
   console.log(`  ${bills.size.toLocaleString()} bills and resolutions`);
-  const rollCalls = await fetchRollCalls(congress, years);
+  const records = await fetchLegislatorRecords();
+  const caucusAt = caucusLookup(records);
+  const rollCalls = await fetchRollCalls(congress, years, records);
   console.log(`  ${rollCalls.length} roll calls`);
   const { reports, quarters } = await lobbyingReports(years, options.lobbyingMinutes);
   console.log(`  ${reports.length.toLocaleString()} lobbying reports, ${quarters.length} quarters`);
@@ -597,7 +652,7 @@ export async function ingestLegislation(
       return {
         id,
         label: label(b.type, b.number),
-        name: b.name,
+        name: displayName(b.name),
         title: b.title,
         introduced: b.introduced,
         policyArea: b.policyArea,
@@ -609,7 +664,7 @@ export async function ingestLegislation(
         latestAction: b.latestAction,
         law: b.laws[0],
         url: `https://www.congress.gov/bill/${congress}th-congress/${URL_TYPE[b.type]}/${b.number}`,
-        votes: vs.sort((x, y) => x.date.localeCompare(y.date) || x.roll - y.roll).map((v) => summarize(v, currentParty)),
+        votes: vs.sort((x, y) => x.date.localeCompare(y.date) || x.roll - y.roll).map((v) => summarize(v, currentParty, caucusAt)),
         lobbying: clients.map((c, i) => (i < MAX_QUOTES ? c : { ...c, quote: undefined })),
       };
     })
@@ -627,7 +682,7 @@ export async function ingestLegislation(
         {
           id,
           label: label(b.type, b.number),
-          name: b.name,
+          name: displayName(b.name),
           quarters: c.quarters.size,
           stance: c.stances.size === 1 ? ([...c.stances][0] as "support" | "oppose") : undefined,
           law: b.laws[0],
@@ -644,5 +699,12 @@ export async function ingestLegislation(
   );
 
   console.log(`  ${out.length} bills with passage votes; ${byOrg.size} organizations named bills in their reports`);
-  return { generatedAt: new Date().toISOString(), congress, quarters, bills: out, organizations: orgBills };
+  const today = new Date().toISOString().slice(0, 10);
+  const caucus = Object.fromEntries(
+    legislators.filter((l) => l.party === "Independent").flatMap((l) => {
+      const c = caucusAt(l.bioguide, today);
+      return c ? [[l.bioguide, c]] : [];
+    })
+  );
+  return { generatedAt: new Date().toISOString(), congress, caucus, quarters, bills: out, organizations: orgBills };
 }

@@ -26,7 +26,8 @@ import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct, p
 import { surname, moneyAuto, candidateName, partyCode } from "../../lib/format";
 import OutsideTable from "../../components/OutsideTable.astro";
 import VotesTable from "../../components/VotesTable.astro";
-import { memberVotes, partyPlural } from "../../lib/legislation";
+import LazyDisclosure from "../../islands/LazyDisclosure";
+import { memberVotes, partyPlural, caucusOf, memberCaucusName, VOTES_SHOWN } from "../../lib/legislation";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -119,8 +120,9 @@ const votes = memberVotes(m);
 const decided = votes.filter((x) => x.position !== "O");
 const broke = votes.filter((x) => x.broke);
 const withParty = decided.filter((x) => x.t && (x.position === "Y" ? x.t.yes >= x.t.no : x.t.no >= x.t.yes)).length;
-const caucus = partyPlural(p === "I" ? "D" : p);
-const RECENT = 10;
+// Independents are compared with the party they caucus with.
+const caucusLetter = caucusOf(m);
+const caucus = memberCaucusName(m);
 
 const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
 ---
@@ -135,7 +137,7 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
       )
     }
     <div>
-      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party} · {seat(m)}</p>
+      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party}{caucusLetter && <> · caucuses with {partyPlural(caucusLetter)}</>} · {seat(m)}</p>
       <h1>{m.name}</h1>
     </div>
   </header>
@@ -313,26 +315,22 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
           ) : (
             <>, and never sided with a quarter of the party or less.</>
           )}{" "}
-          {p === "I" && "As an independent who caucuses with Democrats, they're compared with Democrats. "}
+          {caucusLetter && `As an independent who caucuses with ${caucus}, ${last} is compared with them. `}
           The last column counts organizations whose lobbying reports name each bill, on any side of it.
         </p>
         {broke.length > 0 && (
           <>
             <h3>Where {last} broke with {caucus}</h3>
-            <VotesTable rows={broke.slice(0, RECENT)} member={last} caucus={caucus} />
-            {broke.length > RECENT && (
-              <MoreDisclosure client:visible title={`All ${broke.length} votes against most ${caucus}`}>
-                <VotesTable rows={broke.slice(RECENT)} member={last} caucus={caucus} />
-              </MoreDisclosure>
+            <VotesTable rows={broke.slice(0, VOTES_SHOWN)} member={last} caucus={caucus} />
+            {broke.length > VOTES_SHOWN && (
+              <LazyDisclosure client:visible title={`${broke.length - VOTES_SHOWN} more votes against most ${caucus}`} src={`/fragments/members/${m.bioguide}/broke/`} />
             )}
           </>
         )}
         <h3 class:list={{ spaced: broke.length > 0 }}>Most recent votes</h3>
-        <VotesTable rows={votes.slice(0, RECENT)} member={last} caucus={caucus} />
-        {votes.length > RECENT && (
-          <MoreDisclosure client:visible title={`All ${votes.length} votes`}>
-            <VotesTable rows={votes.slice(RECENT)} member={last} caucus={caucus} />
-          </MoreDisclosure>
+        <VotesTable rows={votes.slice(0, VOTES_SHOWN)} member={last} caucus={caucus} />
+        {votes.length > VOTES_SHOWN && (
+          <LazyDisclosure client:visible title={`${votes.length - VOTES_SHOWN} earlier votes`} src={`/fragments/members/${m.bioguide}/votes/`} />
         )}
         <p class="source">
           Recorded votes on passing bills and resolutions, from the House Clerk and the Senate. <a href="/bills/">Every bill</a>.

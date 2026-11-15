@@ -30,6 +30,21 @@ The "ship first" scope from section 3, with no PAC money next to votes:
 - **Organization pages**: "Bills it lobbied on".
 - Bills in site search, a Bills nav item, and an About section
   (`/about/#bills`) on how bills are matched and what the reports can't say.
+- **Readable names** for resolutions with no short title
+  (`src/lib/bill-names.ts`): "Disapproving the EPA rule on “…”", "Removing
+  U.S. forces from hostilities with Iran", "Budget resolution for fiscal year
+  2026". The official title stays on the bill's page.
+- **Independents** are shown as independents but counted with the party they
+  caucus with on the day of each vote (congress-legislators' `caucus` and
+  `party_affiliations`): Sanders and King with Democrats, Kevin Kiley with
+  Republicans since March 2026, as a Republican before.
+- **Page weight**: long lists (how each member voted, every lobbying
+  organization, a member's older votes) are fragment pages under
+  `/fragments/`, fetched when the reader opens them. Bill pages are about
+  60 KB (H.R. 1: 692 → 88 KB); the votes section adds about 11 KB to a member
+  page (was up to 290 KB).
+- **Link previews**: a `bill` card (status, latest passage vote by party,
+  who named it in the most lobbying reports) and a `page/bills` card.
 
 The prototype's money-versus-vote charts (screenshots 03 and 05–08 below, and
 the money columns in 06) are not in the build.

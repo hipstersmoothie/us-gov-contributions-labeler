@@ -50,12 +50,13 @@ const WORD = { Y: "Yes", N: "No", O: "Didn't vote" } as const;
   </tbody>
 </table>
 
-<style>
+<!-- Global (keyed by .member-votes): the table is also a fragment page. -->
+<style is:global>
   .member-votes td:first-child { max-width: 420px; }
-  .broke {
+  .member-votes .broke {
     display: block; width: fit-content; margin-top: 4px; padding: 1px 6px; border-radius: 2px;
     font: 700 var(--fs-label)/1.4 var(--sans); text-transform: uppercase; letter-spacing: 0.06em;
     border: 1px solid var(--text-primary);
   }
-  @media (max-width: 640px) { .wide { display: none; } }
+  @media (max-width: 640px) { .member-votes .wide { display: none; } }
 </style>

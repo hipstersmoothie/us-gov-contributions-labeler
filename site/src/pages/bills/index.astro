@@ -11,7 +11,7 @@ const votes = bills.flatMap((b) => b.votes);
 const share = (p: string) => Math.round((100 * votes.filter((v) => v.pattern === p).length) / Math.max(votes.length, 1));
 ---
 
-<Base title="Bills" description={`Every bill the ${ordinal(congress)} Congress voted on passing: how each party voted, and which organizations reported lobbying on it.`}>
+<Base title="Bills" og={{ type: "page", id: "bills" }} description={`Every bill the ${ordinal(congress)} Congress voted on passing: how each party voted, and which organizations reported lobbying on it.`}>
   <p class="kicker">Bills</p>
   <h1>What Congress voted on</h1>
   <p class="dek">
@@ -24,5 +24,10 @@ const share = (p: string) => Math.round((100 * votes.filter((v) => v.pattern ===
     on opposite sides), {share("near-unanimous")}% <strong>near-unanimous</strong>, and {share("split")}%{" "}
     <strong>split</strong>, with at least one party divided.
   </p>
-  <BillsTable client:idle initial={rows} policyAreas={policyAreas} />
+  <BillsTable
+    client:idle
+    initial={[...rows].sort((a, b) => b.lastVote.localeCompare(a.lastVote)).slice(0, 100)}
+    src="/data/bills.json"
+    policyAreas={policyAreas}
+  />
 </Base>

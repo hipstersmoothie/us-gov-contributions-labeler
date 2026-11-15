@@ -21,12 +21,24 @@ export type { LegislationBill as Bill, LegislationVote as Vote, LobbyingClient, 
 const file = path.resolve(process.cwd(), "../data/legislation.json");
 const data: LegislationFile = fs.existsSync(file)
   ? JSON.parse(fs.readFileSync(file, "utf8"))
-  : { generatedAt: "", congress: 0, quarters: [], bills: [], organizations: {} };
+  : { generatedAt: "", congress: 0, caucus: {}, quarters: [], bills: [], organizations: {} };
 
 export const congress = data.congress;
 export const bills = data.bills;
 export const billById = new Map(bills.map((b) => [b.id, b]));
 export const organizationBills = data.organizations;
+
+/** The party a current independent caucuses with now ("D" / "R"), if any. */
+export const caucusOf = (m: Member) => (partyLetter(m.party) === "I" ? data.caucus[m.bioguide] : undefined);
+/** Who a member's votes are compared with: "Democrats", or an independent's caucus. */
+export const memberCaucusName = (m: Member) => {
+  const c = caucusOf(m) ?? partyLetter(m.party);
+  return c === "I" ? "independents" : partyPlural(c);
+};
+
+/** Rows shown on the page; the rest load when the reader opens the full list. */
+export const CLIENTS_SHOWN = 25;
+export const VOTES_SHOWN = 10;
 
 /** "January 2025 through September 2026" */
 export const lobbyingSpan = (() => {
@@ -74,49 +86,78 @@ export function voteKind(v: LegislationVote) {
 /** Results read "Passed", "Agreed to", "Bill Passed", "Failed"... */
 export const passed = (v: LegislationVote) => !/fail|reject|not (agreed|sustained)/i.test(v.result);
 
-/** One sentence on how the vote broke down, leading with the pattern. */
+/** Independents in a vote who caucus with a party: "the 2 independents who caucus with them". */
+function withIndependents(v: LegislationVote, party: string) {
+  const n = Object.values(v.caucus ?? {}).filter((c) => c === party).length;
+  return n ? ` (with ${n === 1 ? "the independent" : `the ${n} independents`} who caucus${n === 1 ? "es" : ""} with them)` : "";
+}
+
+/** One sentence on how the vote broke down, leading with the pattern. Parties
+ *  here include the independents who caucus with them. */
 export function patternSentence(v: LegislationVote) {
-  const d = v.tally.D ?? { yes: 0, no: 0, other: 0 };
-  const r = v.tally.R ?? { yes: 0, no: 0, other: 0 };
+  const zero = { yes: 0, no: 0, other: 0 };
+  const parties = [
+    { key: "D", name: "Democrats", t: v.byCaucus.D ?? zero },
+    { key: "R", name: "Republicans", t: v.byCaucus.R ?? zero },
+  ].map((x) => ({ ...x, name: x.name + withIndependents(v, x.key) }));
   const share = (t: { yes: number; no: number }) => (t.yes + t.no ? t.yes / (t.yes + t.no) : 0);
+  const [d, r] = parties as [(typeof parties)[number], (typeof parties)[number]];
   if (v.pattern === "party-line") {
-    const [yesName, yes, noName, no] = share(r) > share(d) ? ["Republicans", r, "Democrats", d] as const : ["Democrats", d, "Republicans", r] as const;
-    return `A party-line vote: ${yesName} voted ${yes.yes}–${yes.no} for it and ${noName} ${no.yes}–${no.no}.`;
+    const [yes, no] = share(r.t) > share(d.t) ? [r, d] : [d, r];
+    return `A party-line vote: ${yes.name} voted ${yes.t.yes}–${yes.t.no} for it and ${no.name} ${no.t.yes}–${no.t.no}.`;
   }
   if (v.pattern === "near-unanimous") {
-    return `Nearly everyone agreed: Democrats voted ${d.yes}–${d.no} and Republicans ${r.yes}–${r.no}.`;
+    return `Nearly everyone agreed: ${d.name} voted ${d.t.yes}–${d.t.no} and ${r.name} ${r.t.yes}–${r.t.no}.`;
   }
-  const divided = [
-    { name: "Democrats", t: d },
-    { name: "Republicans", t: r },
-  ].filter((x) => Math.min(x.t.yes, x.t.no) > 0);
+  const divided = parties.filter((x) => Math.min(x.t.yes, x.t.no) > 0);
   return `A split vote: ${divided.map((x) => `${x.name} divided ${x.t.yes}–${x.t.no}`).join(", and ")}.`;
 }
 
-/** A current member's position on a vote, and the party they voted under. */
+// Each vote's positions as one lookup, built once.
+const positions = new Map(
+  bills.flatMap((b) =>
+    b.votes.map((v) => [
+      v,
+      new Map<string, "Y" | "N" | "O">([
+        ...v.yes.map((id) => [id, "Y"] as const),
+        ...v.no.map((id) => [id, "N"] as const),
+        ...v.other.map((id) => [id, "O"] as const),
+      ]),
+    ])
+  )
+);
+
+/** A current member's position on a vote, the party they voted under, and
+ *  the party they were counted with (their caucus, for an independent). */
 export function positionOf(v: LegislationVote, m: Member) {
-  const position = v.yes.includes(m.bioguide) ? "Y" : v.no.includes(m.bioguide) ? "N" : v.other.includes(m.bioguide) ? "O" : undefined;
-  return { position, party: v.parties?.[m.bioguide] ?? partyLetter(m.party) } as const;
+  const position = positions.get(v)?.get(m.bioguide);
+  const party = v.parties?.[m.bioguide] ?? partyLetter(m.party);
+  return { position, party, group: v.caucus?.[m.bioguide] ?? party } as const;
 }
 
-/** A member's passage votes, newest first, with how their party voted. */
+const votesCache = new Map<string, ReturnType<typeof computeMemberVotes>>();
+/** A member's passage votes, newest first, with how their caucus voted. */
 export function memberVotes(m: Member) {
+  if (!votesCache.has(m.bioguide)) votesCache.set(m.bioguide, computeMemberVotes(m));
+  return votesCache.get(m.bioguide)!;
+}
+function computeMemberVotes(m: Member) {
   return bills
     .flatMap((b) =>
       b.votes
         .filter((v) => v.chamber === m.chamber)
         .flatMap((v) => {
-          const { position, party } = positionOf(v, m);
+          const { position, party, group } = positionOf(v, m);
           if (!position) return [];
-          // Independents caucus with Democrats; compare them with Democrats.
-          const t = v.tally[party === "I" ? "D" : party];
+          const t = v.byCaucus[group];
           const mine = position === "Y" ? t?.yes : position === "N" ? t?.no : undefined;
           const decided = t ? t.yes + t.no : 0;
           // Siding with 25% or less of your party is breaking ranks; a closer
-          // vote is a party split, not one member going their own way.
-          const broke = mine !== undefined && decided > 0 && mine / decided <= 0.25;
-          const partySplit = !!t && decided > 0 && Math.min(t.yes, t.no) / decided > 0.25;
-          return [{ b, v, position, party, t, broke, partySplit, alongside: broke ? mine! - 1 : 0 }];
+          // vote is a party split, not one member going their own way. An
+          // independent with no caucus has no party to break with.
+          const broke = group !== "I" && mine !== undefined && decided > 0 && mine / decided <= 0.25;
+          const partySplit = group !== "I" && !!t && decided > 0 && Math.min(t.yes, t.no) / decided > 0.25;
+          return [{ b, v, position, party, group, t, broke, partySplit, alongside: broke ? mine! - 1 : 0 }];
         })
     )
     .sort((x, y) => y.v.date.localeCompare(x.v.date));

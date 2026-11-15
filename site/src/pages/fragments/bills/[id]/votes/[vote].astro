@@ -1,0 +1,13 @@
+---
+// How each current member voted on one roll call, loaded on request.
+import RollList from "../../../../../components/RollList.astro";
+import { bills, type Vote } from "../../../../../lib/legislation";
+
+export const partial = true;
+export function getStaticPaths() {
+  return bills.flatMap((b) => b.votes.map((v) => ({ params: { id: b.id, vote: v.id }, props: { v } })));
+}
+const { v } = Astro.props as { v: Vote };
+---
+
+<RollList v={v} />

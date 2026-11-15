@@ -1,7 +1,15 @@
 ---
 import Base from "../layouts/Base.astro";
-import { cycleRange, generatedAt } from "../lib/data";
-import { congress, lobbyingSpan, ordinal } from "../lib/legislation";
+import { cycleRange, generatedAt, members, partyLetter } from "../lib/data";
+import { congress, lobbyingSpan, ordinal, caucusOf, partyPlural } from "../lib/legislation";
+
+// "Bernard Sanders and Angus S. King, Jr. with Democrats, and Kevin Kiley with Republicans"
+const independents = members.filter((m) => partyLetter(m.party) === "I" && caucusOf(m));
+const byCaucus = ["D", "R"]
+  .map((c) => ({ c, names: independents.filter((m) => caucusOf(m) === c).map((m) => m.name) }))
+  .filter((x) => x.names.length)
+  .map((x) => `${x.names.join(" and ")} with ${partyPlural(x.c)}`)
+  .join(", and ");
 ---
 
 <Base title="About the data" og={{ type: "page", id: "about" }} description="Where this data comes from, what's counted and how organizations are classified.">
@@ -66,8 +74,13 @@ import { congress, lobbyingSpan, ordinal } from "../lib/legislation";
     <p>
       Each vote is labeled <strong>party-line</strong> when 90% or more of each party voted on opposite sides,{" "}
       <strong>near-unanimous</strong> when 90% or more of both voted the same way, and <strong>split</strong> otherwise.
-      Members are counted under the party they belonged to when they voted. On member pages, "broke with party" means
-      siding with a quarter of their party or less; independents are compared with Democrats, who they caucus with.
+      Members are counted under the party they belonged to when they voted, as recorded on the roll call.{" "}
+      <strong>Independents</strong> are shown as independents, but counted with the party they caucus with on the day of
+      the vote, from the{" "}
+      <a href="https://github.com/unitedstates/congress-legislators">congress-legislators</a> project
+      {byCaucus && <>: today, {byCaucus}</>}. A member who switched to independent mid-Congress is counted under their
+      old party for the votes before the switch. An independent who caucuses with neither party would be counted on
+      their own. On member pages, "broke with party" means siding with a quarter of their party (or caucus) or less.
     </p>
     <p>
       Lobbying comes from the quarterly LD-2 reports lobbyists file on <a href="https://lda.gov/">lda.gov</a>,{" "}

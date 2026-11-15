@@ -38,8 +38,8 @@ const COLUMNS: ColumnDef<BillRow>[] = [
   { id: "lobbying", name: "Organizations lobbying", num: true, sort: (r) => r.lobbying, cell: (r) => r.lobbying.toLocaleString() },
 ];
 
-export default function BillsTable({ initial, policyAreas }: { initial: BillRow[]; policyAreas: string[] }) {
-  const { rows } = useRows(initial);
+export default function BillsTable({ initial, src, policyAreas }: { initial: BillRow[]; src: string; policyAreas: string[] }) {
+  const { rows } = useRows(initial, src);
   const [f, set] = useUrlState({ q: "", area: "", pattern: "", sort: "vote", dir: "descending" });
   const filtered = useMemo(() => {
     const q = f.q.trim().toLowerCase().replace(/\./g, "");

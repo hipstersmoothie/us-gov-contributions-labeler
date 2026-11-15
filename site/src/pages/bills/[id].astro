@@ -2,10 +2,11 @@
 // A bill: what it is, how each chamber voted on passing it, and which
 // organizations' lobbying reports name it.
 import Base from "../../layouts/Base.astro";
+import "../../styles/bill-lists.css";
 import PlotFigure from "../../components/PlotFigure.astro";
-import MoreDisclosure from "../../islands/MoreDisclosure";
+import LazyDisclosure from "../../islands/LazyDisclosure";
 import { memberById, organizationById, congressCommitteeById, partyLetter, sectorSlug } from "../../lib/data";
-import { shortSector, surname } from "../../lib/format";
+import { shortSector } from "../../lib/format";
 import {
   bills,
   chamberLabel,
@@ -19,6 +20,7 @@ import {
   ordinal,
   congress,
   PATTERN_LABEL,
+  CLIENTS_SHOWN,
   type Bill,
   type LobbyingClient,
 } from "../../lib/legislation";
@@ -42,20 +44,24 @@ const VOTE_SERIES = [
   { key: "O", label: "Didn't vote", color: "var(--context)", ink: "var(--on-context)" },
 ];
 const PARTIES = ["D", "I", "R"];
+/** " · caucus with Democrats", for the independents' row. */
+const independentCaucus = (v: Bill["votes"][number]) => {
+  const parties = [...new Set(Object.values(v.caucus ?? {}))];
+  if (!parties.length) return "";
+  return parties.length > 1 ? " · caucus with both parties" : ` · ${Object.keys(v.caucus!).length === 1 ? "caucuses" : "caucus"} with ${partyPlural(parties[0]!)}`;
+};
 const voteRows = (v: Bill["votes"][number]) =>
   PARTIES.filter((p) => v.tally[p]).map((p) => {
     const t = v.tally[p]!;
-    return { label: `${partyPlural(p)} (${t.yes}–${t.no})`, values: { Y: t.yes, N: t.no, O: t.other } };
+    return { label: `${partyPlural(p)} (${t.yes}–${t.no})${p === "I" ? independentCaucus(v) : ""}`, values: { Y: t.yes, N: t.no, O: t.other } };
   });
-const partyOf = (v: Bill["votes"][number], id: string) => v.parties?.[id] ?? partyLetter(memberById.get(id)!.party);
 
 const quarterSpan = (c: LobbyingClient) =>
   c.quarters.length === 1 ? c.quarters[0] : `${c.quarters.length} quarters, ${c.quarters[0]} to ${c.quarters.at(-1)}`;
-const SHOWN = 25;
 const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.stance === "oppose" ? "Opposes" : undefined);
 ---
 
-<Base title={`${b.name} (${b.label})`} description={`${b.label}, ${b.name}: how Congress voted on it and which organizations reported lobbying on it.`}>
+<Base title={`${b.name} (${b.label})`} og={{ type: "bill", id: b.id }} description={`${b.label}, ${b.name}: how Congress voted on it and which organizations reported lobbying on it.`}>
   <p class="kicker">
     <a href="/bills/">Bills</a> · {b.label}{b.policyArea && <> · {b.policyArea}</>}
   </p>
@@ -110,30 +116,7 @@ const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.sta
                 rows: PARTIES.filter((p) => v.tally[p]).map((p) => [partyPlural(p), v.tally[p]!.yes, v.tally[p]!.no, v.tally[p]!.other]),
               }}
             />
-            <MoreDisclosure client:visible title="How each current member voted">
-              <div class="roll">
-                {(["yes", "no", "other"] as const)
-                  .filter((k) => v[k].length)
-                  .map((k) => (
-                    <div>
-                      <h4 class="kicker">{k === "yes" ? "Yes" : k === "no" ? "No" : "Didn't vote"} ({v[k].length})</h4>
-                      <ul class="link-list">
-                        {v[k]
-                          .map((id) => memberById.get(id))
-                          .filter((m) => !!m)
-                          .sort((a, z) => surname(a.name).localeCompare(surname(z.name)))
-                          .map((m) => (
-                            <li>
-                              <span class={`ptag party-${partyOf(v, m.bioguide)}`}>{partyOf(v, m.bioguide)}</span>
-                              <a href={`/members/${m.bioguide}/`}>{m.name}</a> <span class="muted small">{m.state}</span>
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  ))}
-              </div>
-              <p class="source">Current members only, with the party each voted under.</p>
-            </MoreDisclosure>
+            <LazyDisclosure client:visible title="How each current member voted" src={`/fragments/bills/${b.id}/votes/${v.id}/`} />
           </div>
         ))
       }
@@ -178,7 +161,7 @@ const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.sta
               </tr>
             </thead>
             <tbody>
-              {clients.slice(0, SHOWN).map((c) => (
+              {clients.slice(0, CLIENTS_SHOWN).map((c) => (
                 <tr>
                   <td>
                     {c.org ? <a href={`/organizations/${c.org}/`}>{c.name}</a> : c.name}
@@ -191,17 +174,8 @@ const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.sta
               ))}
             </tbody>
           </table>
-          {clients.length > SHOWN && (
-            <MoreDisclosure client:visible title={`All ${clients.length.toLocaleString()} organizations`}>
-              <ul class="all-clients">
-                {clients.slice(SHOWN).map((c) => (
-                  <li>
-                    {c.org ? <a href={`/organizations/${c.org}/`}>{c.name}</a> : c.name}
-                    <span class="muted small"> · {c.quarters.length} report{c.quarters.length === 1 ? "" : "s"}{said(c) ? `, ${said(c)!.toLowerCase()}` : ""}</span>
-                  </li>
-                ))}
-              </ul>
-            </MoreDisclosure>
+          {clients.length > CLIENTS_SHOWN && (
+            <LazyDisclosure client:visible title={`${(clients.length - CLIENTS_SHOWN).toLocaleString()} more organizations`} src={`/fragments/bills/${b.id}/clients/`} />
           )}
         </>
       )
@@ -251,12 +225,9 @@ const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.sta
     font: 700 var(--fs-label)/1.4 var(--sans); text-transform: uppercase; letter-spacing: 0.06em;
     border: 1px solid var(--baseline); color: var(--text-primary);
   }
-  .roll { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--sp-4) var(--sp-6); }
-  .roll ul { list-style: none; padding: 0; margin: 0; font-size: var(--fs-sm); line-height: 1.9; }
   .sector-chips { margin-bottom: var(--sp-2); }
   .clients { margin-top: var(--sp-5); }
   .clients td:nth-child(2) { white-space: nowrap; color: var(--text-secondary); }
   .clients blockquote { margin: var(--sp-1) 0 0; color: var(--text-secondary); font: 400 var(--fs-sm)/1.45 var(--serif); max-width: 640px; }
-  .all-clients { columns: 2 280px; column-gap: var(--sp-6); padding: 0; margin: 0; list-style: none; font-size: var(--fs-sm); line-height: 1.8; }
   .committee-list { list-style: none; padding: 0; margin: 0; line-height: 1.9; }
 </style>
