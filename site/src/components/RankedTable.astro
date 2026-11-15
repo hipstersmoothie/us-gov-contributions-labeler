@@ -69,8 +69,6 @@ const max = Astro.props.max ?? Math.max(...rows.map((r) => r.value), 1);
   .ranked th { vertical-align: bottom; }
   .rank { width: 2.4em; padding-right: 14px; color: var(--text-muted); font-size: var(--fs-sm); }
   .name { font-weight: 500; }
-  .name a { text-decoration-color: transparent; }
-  .name a:hover { text-decoration-color: currentColor; }
   .note { display: block; font-size: var(--fs-sm); font-weight: 400; color: var(--text-muted); margin-top: 1px; }
   .extra { color: var(--text-secondary); font-size: 13px; }
   .value { width: 46%; }

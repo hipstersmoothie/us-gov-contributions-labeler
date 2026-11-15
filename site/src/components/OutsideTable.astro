@@ -7,6 +7,8 @@ interface Row {
   label: string;
   href?: string;
   note?: string;
+  /** Party letter, shown as a lettered tag like the other member tables. */
+  party?: string;
   support: number;
   oppose: number;
 }
@@ -26,8 +28,9 @@ const { rows, heading } = Astro.props;
       rows.map((r) => (
         <tr>
           <td>
+            {r.party && <span class={`ptag party-${r.party}`} title={{ D: "Democrat", R: "Republican", I: "Independent" }[r.party]}>{r.party}</span>}
             {r.href ? <a href={r.href}>{r.label}</a> : r.label}
-            {r.note && <div class="muted small">{r.note}</div>}
+            {r.note && <div class:list={["muted", "small", { indent: r.party }]}>{r.note}</div>}
           </td>
           <td class="num">{r.support ? money(r.support, true) : <span class="muted">–</span>}</td>
           <td class="num">{r.oppose ? money(r.oppose, true) : <span class="muted">–</span>}</td>
@@ -36,3 +39,7 @@ const { rows, heading } = Astro.props;
     }
   </tbody>
 </table>
+
+<style>
+  .indent { padding-left: calc(1.55em + 6px); }
+</style>

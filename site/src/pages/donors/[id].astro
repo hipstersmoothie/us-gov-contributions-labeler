@@ -7,6 +7,7 @@ import {
   committeeById,
   memberById,
   money,
+  partyLetter,
   displayName,
   committeeLabel,
   committeeHref,
@@ -14,6 +15,7 @@ import {
   MIN_DONATION,
   type Donor,
 } from "../../lib/data";
+import { chamberName } from "../../lib/derived";
 
 export function getStaticPaths() {
   return donors.map((d) => ({ params: { id: d.id }, props: { d } }));
@@ -68,7 +70,7 @@ const about =
             heading="Member"
             rows={committee.outside.targets.slice(0, 10).map((t) => {
               const m = memberById.get(t.id);
-              return { label: m?.name ?? t.id, href: `/members/${t.id}/`, note: m ? `${m.party} · ${m.state}` : undefined, support: t.support, oppose: t.oppose };
+              return { label: m?.name ?? t.id, href: `/members/${t.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined, support: t.support, oppose: t.oppose };
             })}
           />
           {committee.outside.targets.length > 10 && (

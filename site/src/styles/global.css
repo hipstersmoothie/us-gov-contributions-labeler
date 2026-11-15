@@ -137,6 +137,11 @@ a {
   text-underline-offset: 3px;
 }
 a:hover { text-decoration-color: currentColor; }
+/* Links in tables and link lists read as links by their position, so they
+   underline on hover only. Links in running text keep the hairline underline:
+   they share the text color, so it's what marks them (WCAG 1.4.1). */
+td a, .link-list a, .results a { text-decoration-color: transparent; }
+td a:hover, .link-list a:hover, .results a:hover { text-decoration-color: currentColor; }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
 main:focus { outline: none; }
 

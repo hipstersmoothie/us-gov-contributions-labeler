@@ -223,7 +223,7 @@ const leaderText = seated
         subcommittees.length > 0 && (
           <>
             <h3 class="kicker gap">Subcommittees</h3>
-            <ul class="subs">
+            <ul class="subs link-list">
               {subcommittees.map((s) => <li><a href={`/committees/${s.id}/`}>{s.name}</a></li>)}
             </ul>
           </>

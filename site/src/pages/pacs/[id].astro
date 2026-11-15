@@ -21,6 +21,7 @@ import {
   fecCandidateUrl,
   type Committee,
 } from "../../lib/data";
+import { chamberName } from "../../lib/derived";
 
 export function getStaticPaths() {
   return committees.map((c) => ({ params: { id: c.id }, props: { c } }));
@@ -80,7 +81,7 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
               heading="Member"
               rows={c.outside.targets.slice(0, 30).map((t) => {
                 const m = memberById.get(t.id);
-                return { label: m?.name ?? t.id, href: `/members/${t.id}/`, note: m ? `${m.party} · ${m.state}` : undefined, support: t.support, oppose: t.oppose };
+                return { label: m?.name ?? t.id, href: `/members/${t.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined, support: t.support, oppose: t.oppose };
               })}
             />
           </section>
@@ -126,7 +127,7 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
         valueHeading="Given"
         rows={c.recipients.slice(0, 25).map((r) => {
           const m = memberById.get(r.id);
-          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, party: m ? partyLetter(m.party) : undefined, note: m?.state };
+          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined };
         })}
       />
     </section>
