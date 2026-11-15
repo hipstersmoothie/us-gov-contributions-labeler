@@ -14,6 +14,8 @@ async function waitForSlot(host: string, interval: number) {
 interface Options {
   /** Minimum gap between requests to the same host. */
   intervalMs?: number;
+  /** Give up instead of honoring a Retry-After longer than this. */
+  maxWaitMs?: number;
   headers?: Record<string, string>;
 }
 
@@ -32,6 +34,9 @@ export async function getJson<T>(url: string, options: Options = {}): Promise<T 
       throw new Error(`${res.status} from ${url.replace(/api_key=[^&]+/, "api_key=…")}`);
     }
     const retryAfter = Number(res?.headers.get("retry-after")) || 2 ** attempt * 2;
+    if (options.maxWaitMs !== undefined && retryAfter * 1000 > options.maxWaitMs) {
+      throw new Error(`Rate limited for ${retryAfter}s by ${host}`);
+    }
     await new Promise((r) => setTimeout(r, retryAfter * 1000));
   }
 

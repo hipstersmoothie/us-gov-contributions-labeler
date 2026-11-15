@@ -111,7 +111,7 @@ for (const did of new Set([...desired.keys(), ...live.active.keys()])) {
 const handleByDid = new Map(members.flatMap((m) => m.accounts.map((a) => [a.did, `${a.handle} (${m.name})`])));
 const sum = (k: "create" | "negate") => changes.reduce((n, c) => n + c[k].length, 0);
 console.log(
-  `${desired.size} accounts should be labeled, ${live.active.size} currently are.\n` +
+  `${desired.size} accounts should be labeled, ${[...live.active.values()].filter((v) => v.size).length} currently are.\n` +
     `${changes.length} accounts change: ${sum("create")} labels to add, ${sum("negate")} to remove.\n` +
     `${definitions.size} label definitions.`
 );
@@ -143,7 +143,8 @@ const toDefinition = (d: Definition) => ({
   blurs: "none" as const,
   defaultSetting: "warn" as const,
   adultOnly: false,
-  locales: [{ lang: "en", name: d.name, description: d.description }],
+  // Bluesky caps label names at 64 graphemes.
+  locales: [{ lang: "en", name: d.name.length > 64 ? `${d.name.slice(0, 63).trimEnd()}…` : d.name, description: d.description }],
 });
 
 // Keep definitions for labels we're about to negate until they're gone, so

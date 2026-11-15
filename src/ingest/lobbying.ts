@@ -80,8 +80,11 @@ async function fetchSpend(client: string, fromYear: number): Promise<LobbyingSpe
 
 export async function fetchLobbyingSpend(
   organizations: Record<string, Organization>,
-  cycles: number[]
+  cycles: number[],
+  /** Biggest PAC givers go first; whatever doesn't fit is fetched next run. */
+  options: { budgetMinutes: number; givingById: Map<string, number> }
 ) {
+  const deadline = Date.now() + options.budgetMinutes * 60_000;
   const fromYear = cycles[0]! - 1;
   const cache: Record<string, { fetchedAt: number; value: LobbyingSpend }> = fs.existsSync(CACHE_FILE)
     ? JSON.parse(fs.readFileSync(CACHE_FILE, "utf8"))
@@ -93,14 +96,24 @@ export async function fetchLobbyingSpend(
 
   // Organizations that lobby for themselves or hire firms (not the firms).
   const lobbying = Object.values(organizations).filter((o) => o.lobbying && !o.lobbying.firm);
-  const todo = lobbying.filter((o) => {
-    const c = cache[o.lobbying!.client];
-    return !c || Date.now() - c.fetchedAt > MAX_AGE_MS;
-  });
-  console.log(`Lobbying spending for ${lobbying.length} organizations (${todo.length} to fetch)`);
+  const todo = lobbying
+    .filter((o) => {
+      const c = cache[o.lobbying!.client];
+      return !c || Date.now() - c.fetchedAt > MAX_AGE_MS;
+    })
+    .sort((a, b) => (options.givingById.get(b.id) ?? 0) - (options.givingById.get(a.id) ?? 0));
+  console.log(
+    `Lobbying spending for ${lobbying.length} organizations ` +
+      `(${todo.length} to fetch, up to ${options.budgetMinutes} min this run)`
+  );
 
   let done = 0;
+  let skipped = 0;
   await mapLimit(todo, 4, async (o) => {
+    if (Date.now() > deadline) {
+      skipped++;
+      return;
+    }
     try {
       cache[o.lobbying!.client] = { fetchedAt: Date.now(), value: await fetchSpend(o.lobbying!.client, fromYear) };
     } catch (error) {
@@ -112,6 +125,7 @@ export async function fetchLobbyingSpend(
     }
   });
   save();
+  if (skipped) console.log(`  ${skipped} left for the next run`);
 
   const result: Record<string, LobbyingSpend> = {};
   for (const o of lobbying) {

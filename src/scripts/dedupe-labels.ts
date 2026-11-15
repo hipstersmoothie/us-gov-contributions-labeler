@@ -28,6 +28,11 @@ for (const r of rows) {
   else state.set(key, r.neg);
 }
 
+// Never delete the newest event: subscribers reconnect with the last id they
+// saw, and a cursor past the newest remaining id is rejected as FutureCursor.
+const newest = rows.at(-1)?.id;
+if (newest !== undefined && redundant.at(-1) === newest) redundant.pop();
+
 console.log(`${dbPath}: ${rows.length} label events, ${redundant.length} redundant, ${rows.length - redundant.length} kept`);
 
 if (!args.apply) {

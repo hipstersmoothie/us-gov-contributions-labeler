@@ -117,7 +117,10 @@ function classify(c: Candidate, l: Legislator) {
   const s = c.sources;
   const text = `${c.profile.displayName ?? ""} ${c.profile.description ?? ""}`;
 
-  if (s.has("override") || s.has("official-domain")) return "accepted";
+  if (s.has("override")) return "accepted";
+  // House and Senate DNS isn't always right: ansari.house.gov once resolved to
+  // Rep. Tokuda's account. Trust the official domain only when the name agrees.
+  if (s.has("official-domain")) return lastMatch ? "accepted" : "review";
   if (c.profile.handle === "handle.invalid" || !lastMatch) return null;
   if (MIRROR_HANDLE.test(c.profile.handle) || NOT_OFFICIAL.test(text)) return null;
   const political = POLITICAL.test(text);

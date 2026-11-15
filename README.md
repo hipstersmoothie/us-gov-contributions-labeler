@@ -1,6 +1,6 @@
-# US Gov Contributions Labeler
+# contributions.fyi
 
-Who funds Congress: a [Bluesky labeler](https://bsky.app/profile/us-gov-funding.bsky.social) that tags members of Congress with their top funding sectors and contributors, and a website for browsing the same data.
+Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky labeler](https://bsky.app/profile/contributions.fyi) that tags members of Congress with their top funding sectors and contributors, and a website for browsing the same data.
 
 - `src/ingest/` pulls and joins the data into `data/*.json`
 - `src/label-server.ts` is the labeler service Bluesky talks to

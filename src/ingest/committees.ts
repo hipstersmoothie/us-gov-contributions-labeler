@@ -133,7 +133,12 @@ async function fetchSponsors(ids: string[], cache: Cache<string[]>) {
 
     const res = await getJson<{
       results: { committee_id: string; sponsor_candidate_ids: string[] | null }[];
-    }>(`${FEC_API}/committees/?${qs}`, { intervalMs: 1100 });
+    }>(`${FEC_API}/committees/?${qs}`, { intervalMs: 1100, maxWaitMs: 120_000 }).catch((error: Error) => {
+      // The FEC's hourly limit is low; keep what's cached and retry next run.
+      console.warn(`  sponsor lookup skipped: ${error.message}`);
+      return undefined;
+    });
+    if (!res) return;
 
     for (const id of batch) cache.set(id, []);
     for (const r of res?.results ?? []) {

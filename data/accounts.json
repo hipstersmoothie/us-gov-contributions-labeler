@@ -1,0 +1,5340 @@
+[
+  {
+    "bioguide": "C000127",
+    "name": "Maria Cantwell",
+    "chamber": "senate",
+    "state": "WA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:e3ap6sjaftiof33z6xjt54aa",
+        "handle": "cantwell.senate.gov",
+        "displayName": "Sen. Maria Cantwell",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000367",
+    "name": "Amy Klobuchar",
+    "chamber": "senate",
+    "state": "MN",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hy4kwkakey4eawsw6jjzoc3j",
+        "handle": "amyklobuchar.com",
+        "displayName": "Amy Klobuchar",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:4pypwgwx2rnmefnktrjimznx",
+        "handle": "klobuchar.senate.gov",
+        "displayName": "Senator Amy Klobuchar",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S000033",
+    "name": "Bernard Sanders",
+    "chamber": "senate",
+    "state": "VT",
+    "party": "Independent",
+    "accounts": [
+      {
+        "did": "did:plc:upw5n2uwhzubjajdtqaufsek",
+        "handle": "sanders.senate.gov",
+        "displayName": "Senator Bernie Sanders",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000802",
+    "name": "Sheldon Whitehouse",
+    "chamber": "senate",
+    "state": "RI",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:qqixzm5pwprzdnkbh2hglpax",
+        "handle": "whitehouse.senate.gov",
+        "displayName": "Senator Sheldon Whitehouse",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000563",
+    "name": "Richard J. Durbin",
+    "chamber": "senate",
+    "state": "IL",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:laiahnygdvnd7lqdvbem64pf",
+        "handle": "durbin.senate.gov",
+        "displayName": "Senator Dick Durbin",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001176",
+    "name": "Jeff Merkley",
+    "chamber": "senate",
+    "state": "OR",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:2y6zniq4p7vcbuvekjypu7we",
+        "handle": "merkley.senate.gov",
+        "displayName": "Senator Jeff Merkley",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:ukdzucjim5kavwysh3adv6rl",
+        "handle": "jeff-merkley.bsky.social",
+        "displayName": "Jeff Merkley",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000122",
+    "name": "Jack Reed",
+    "chamber": "senate",
+    "state": "RI",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:esz5zxtwgwbgkkvg7tw7zani",
+        "handle": "reed.senate.gov",
+        "displayName": "U.S. Senator Jack Reed",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001181",
+    "name": "Jeanne Shaheen",
+    "chamber": "senate",
+    "state": "NH",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:dvg2f2abnjz3igabhwm45q7p",
+        "handle": "shaheen.senate.gov",
+        "displayName": "U.S. Senator Jeanne Shaheen",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000805",
+    "name": "Mark R. Warner",
+    "chamber": "senate",
+    "state": "VA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ri2qkcjghvcwv6gsi4vglnfz",
+        "handle": "markwarner.bsky.social",
+        "displayName": "Senator Mark Warner",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000555",
+    "name": "Kirsten E. Gillibrand",
+    "chamber": "senate",
+    "state": "NY",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:e7atmcvv2bblzo6biapuzi35",
+        "handle": "kirstengillibrand.bsky.social",
+        "displayName": "Kirsten Gillibrand",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001088",
+    "name": "Christopher A. Coons",
+    "chamber": "senate",
+    "state": "DE",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:u653qd63piz6z2t6l3sd4duf",
+        "handle": "coons.senate.gov",
+        "displayName": "Senator Chris Coons",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001230",
+    "name": "Tammy Baldwin",
+    "chamber": "senate",
+    "state": "WI",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hne455ahhpnxi5vnm7a5dquz",
+        "handle": "baldwin.senate.gov",
+        "displayName": "Senator Tammy Baldwin",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001267",
+    "name": "Michael F. Bennet",
+    "chamber": "senate",
+    "state": "CO",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:wfovpxilrfvxvyecoguoza3y",
+        "handle": "bennet.senate.gov",
+        "displayName": "Michael Bennet",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B000490",
+    "name": "Sanford D. Bishop, Jr.",
+    "chamber": "house",
+    "state": "GA",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:d3p6dln7lzktc26shdjow6qf",
+        "handle": "bishop.house.gov",
+        "displayName": "Congressman Sanford D. Bishop, Jr.",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001277",
+    "name": "Richard Blumenthal",
+    "chamber": "senate",
+    "state": "CT",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:fvwtf55iqiihc7ct543i2p6u",
+        "handle": "blumenthal.senate.gov",
+        "displayName": "Richard Blumenthal",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001072",
+    "name": "André Carson",
+    "chamber": "house",
+    "state": "IN",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:eo7nsjwwszwn7k7smt7hhuy7",
+        "handle": "carson.house.gov",
+        "displayName": "Congressman André Carson ",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001066",
+    "name": "Kathy Castor",
+    "chamber": "house",
+    "state": "FL",
+    "district": 14,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:37tzj3zwbftnhhuanx57mxu2",
+        "handle": "usrepkathycastor.bsky.social",
+        "displayName": "U.S. Rep. Kathy Castor",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001080",
+    "name": "Judy Chu",
+    "chamber": "house",
+    "state": "CA",
+    "district": 28,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:22vhjo3exokuk67vyq3w4ttu",
+        "handle": "chu.house.gov",
+        "displayName": "Rep. Judy Chu",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001067",
+    "name": "Yvette D. Clarke",
+    "chamber": "house",
+    "state": "NY",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tqu6ru7kfaez47gbjv34wugu",
+        "handle": "repyvetteclarke.bsky.social",
+        "displayName": "Congresswoman Yvette D. Clarke",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:iuh5wnxhzn6fj5ehgpnvmams",
+        "handle": "voteyvette.bsky.social",
+        "displayName": "Yvette Clarke for Congress",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001061",
+    "name": "Emanuel Cleaver",
+    "chamber": "house",
+    "state": "MO",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:bxhlwlouimu2ia5hjtadzhyg",
+        "handle": "cleaver.house.gov",
+        "displayName": "Rep. Emanuel Cleaver",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C000537",
+    "name": "James E. Clyburn",
+    "chamber": "house",
+    "state": "SC",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ftkpscafzukjezpcg2fy2jya",
+        "handle": "repjamesclyburn.bsky.social",
+        "displayName": "James E. Clyburn",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001068",
+    "name": "Steve Cohen",
+    "chamber": "house",
+    "state": "TN",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:eqnxa74cjky7ulymsytom6l3",
+        "handle": "repcohen.bsky.social",
+        "displayName": "Steve Cohen",
+        "sources": [
+          "labeler-list",
+          "previous-data"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001059",
+    "name": "Jim Costa",
+    "chamber": "house",
+    "state": "CA",
+    "district": 21,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:44a4qu5i42fje4cwhp33ydup",
+        "handle": "repjimcosta.bsky.social",
+        "displayName": "Rep. Jim Costa",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001069",
+    "name": "Joe Courtney",
+    "chamber": "house",
+    "state": "CT",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ur32d4hghoookomzpnkhd42c",
+        "handle": "repjoecourtney.bsky.social",
+        "displayName": "Rep. Joe Courtney",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000197",
+    "name": "Diana DeGette",
+    "chamber": "house",
+    "state": "CO",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:knadvieuh3xnszynv67gwjck",
+        "handle": "degette.house.gov",
+        "displayName": "Rep. Diana DeGette",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000216",
+    "name": "Rosa L. DeLauro",
+    "chamber": "house",
+    "state": "CT",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:wq75sxtabr36od4vty2ipg2y",
+        "handle": "delauro.house.gov",
+        "displayName": "Rosa DeLauro",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000399",
+    "name": "Lloyd Doggett",
+    "chamber": "house",
+    "state": "TX",
+    "district": 37,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:2wi4vq2lwdfpmbxopryl5btn",
+        "handle": "doggett.house.gov",
+        "displayName": "Rep. Lloyd Doggett",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000559",
+    "name": "John Garamendi",
+    "chamber": "house",
+    "state": "CA",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:phlg2edqfqh4nscgjt5vrdtm",
+        "handle": "repgaramendi.bsky.social",
+        "displayName": "Rep. John Garamendi",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000553",
+    "name": "Al Green",
+    "chamber": "house",
+    "state": "TX",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mqqonqjti5xtlvs76y2zjgok",
+        "handle": "algreen.house.gov",
+        "displayName": "U.S. Representative Al Green ",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001046",
+    "name": "Martin Heinrich",
+    "chamber": "senate",
+    "state": "NM",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:67vugavgzxuc64jxpv4cqwbi",
+        "handle": "heinrich.senate.gov",
+        "displayName": "Senator Martin Heinrich",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001047",
+    "name": "James A. Himes",
+    "chamber": "house",
+    "state": "CT",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:doajlmltxccf7dafbcp5pj4g",
+        "handle": "jahimes.bsky.social",
+        "displayName": "Jim Himes",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001042",
+    "name": "Mazie K. Hirono",
+    "chamber": "senate",
+    "state": "HI",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:vausut42drs3hymgujs64vwj",
+        "handle": "hirono.senate.gov",
+        "displayName": "Senator Mazie K. Hirono",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H000874",
+    "name": "Steny H. Hoyer",
+    "chamber": "house",
+    "state": "MD",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:toesne2wwtcbboxgjhk65pz4",
+        "handle": "hoyer.house.gov",
+        "displayName": "Rep. Steny Hoyer",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "J000288",
+    "name": "Henry C. \"Hank\" Johnson, Jr.",
+    "chamber": "house",
+    "state": "GA",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:xu33y4y3rygak23zedn7wg5a",
+        "handle": "hankjohnson.house.gov",
+        "displayName": "Congressman Hank Johnson",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000009",
+    "name": "Marcy Kaptur",
+    "chamber": "house",
+    "state": "OH",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:asen5jbvakk5llvcgcn27h6r",
+        "handle": "repmarcykaptur.bsky.social",
+        "displayName": "Marcy Kaptur",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000375",
+    "name": "William R. Keating",
+    "chamber": "house",
+    "state": "MA",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:glntkgu7kuzue4g6ukunhvht",
+        "handle": "keating.house.gov",
+        "displayName": "Congressman Bill Keating",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000560",
+    "name": "Rick Larsen",
+    "chamber": "house",
+    "state": "WA",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:qbmfkla22voltmkf27dg4pgx",
+        "handle": "repricklarsen.bsky.social",
+        "displayName": "Representative Rick Larsen",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000397",
+    "name": "Zoe Lofgren",
+    "chamber": "house",
+    "state": "CA",
+    "district": 18,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:egb5ckycclhkoyowheivde5s",
+        "handle": "lofgren.house.gov",
+        "displayName": "Rep. Zoe Lofgren",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000570",
+    "name": "Ben Ray Luján",
+    "chamber": "senate",
+    "state": "NM",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:egu4ffq43hudoiwpfttx2eif",
+        "handle": "lujan.senate.gov",
+        "displayName": "Senator Ben Ray Luján",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000562",
+    "name": "Stephen F. Lynch",
+    "chamber": "house",
+    "state": "MA",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:o66hqxnmwmv7v5vstwxyvh5d",
+        "handle": "lynch.house.gov",
+        "displayName": "Congressman Stephen F. Lynch",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M000133",
+    "name": "Edward J. Markey",
+    "chamber": "senate",
+    "state": "MA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:wo5kzzdgqwzizeyvg5bkaswh",
+        "handle": "markey.senate.gov",
+        "displayName": "Senator Ed Markey",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:zkegd2ivd2z6mmlfppute6zj",
+        "handle": "edmarkey.bsky.social",
+        "displayName": "Ed Markey",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001163",
+    "name": "Doris O. Matsui",
+    "chamber": "house",
+    "state": "CA",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:llf4lduqc564lcsplu73mvza",
+        "handle": "dorismatsui.bsky.social",
+        "displayName": "Rep. Doris Matsui",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001143",
+    "name": "Betty McCollum",
+    "chamber": "house",
+    "state": "MN",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:xqcjwqms5kqznnnpmtrgwpno",
+        "handle": "mccollum.house.gov",
+        "displayName": "Congresswoman Betty McCollum",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:tmipn2gmrxa2bkahyebq4uhh",
+        "handle": "votebetty.bsky.social",
+        "displayName": "Betty McCollum for Congress",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M000312",
+    "name": "James P. McGovern",
+    "chamber": "house",
+    "state": "MA",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:diptjupvru2xqh6pwbrpzsz4",
+        "handle": "repmcgovern.bsky.social",
+        "displayName": "Rep. Jim McGovern",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001137",
+    "name": "Gregory W. Meeks",
+    "chamber": "house",
+    "state": "NY",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:2egngd24u4sml2ejykjyst5s",
+        "handle": "meeks.house.gov",
+        "displayName": "Rep. Gregory Meeks",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001160",
+    "name": "Gwen Moore",
+    "chamber": "house",
+    "state": "WI",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ptvnknkdb6fwpp26t5tn4nki",
+        "handle": "repgwenmoore.bsky.social",
+        "displayName": "Congresswoman Gwen Moore",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001169",
+    "name": "Christopher Murphy",
+    "chamber": "senate",
+    "state": "CT",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:y77n77kdqzhbg647blkfypyr",
+        "handle": "chrismurphyct.bsky.social",
+        "displayName": "Chris Murphy",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001111",
+    "name": "Patty Murray",
+    "chamber": "senate",
+    "state": "WA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:a23utge5gk6ckgm3ypx3weyr",
+        "handle": "murray.senate.gov",
+        "displayName": "Senator Patty Murray",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "N000002",
+    "name": "Jerrold Nadler",
+    "chamber": "house",
+    "state": "NY",
+    "district": 12,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:lawfan5jdv75zng4kwjyfzey",
+        "handle": "nadler.house.gov",
+        "displayName": "Rep. Jerry Nadler",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "N000015",
+    "name": "Richard E. Neal",
+    "chamber": "house",
+    "state": "MA",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tudh6l4dnkh52tham7uis7xo",
+        "handle": "neal.house.gov",
+        "displayName": "Rep. Richard Neal",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "N000147",
+    "name": "Eleanor Holmes Norton",
+    "chamber": "house",
+    "state": "DC",
+    "district": 0,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:zjkyqtjmcnil2trytnygclgs",
+        "handle": "eleanornorton.bsky.social",
+        "displayName": "Congresswoman Eleanor Holmes Norton (D-DC)",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000034",
+    "name": "Frank Pallone, Jr.",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:73aoo4z2kdjnukscxdcexwil",
+        "handle": "pallone.house.gov",
+        "displayName": "Rep. Frank Pallone",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000197",
+    "name": "Nancy Pelosi",
+    "chamber": "house",
+    "state": "CA",
+    "district": 11,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:sp4ywsk4ykfkw2cshoqo3s7p",
+        "handle": "pelosi.house.gov",
+        "displayName": "Nancy Pelosi ",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000595",
+    "name": "Gary C. Peters",
+    "chamber": "senate",
+    "state": "MI",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:3krwmyznkpuss7ldiiy62pjy",
+        "handle": "peters.senate.gov",
+        "displayName": "U.S. Senator Gary Peters ",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000597",
+    "name": "Chellie Pingree",
+    "chamber": "house",
+    "state": "ME",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:dgpyzapw4a7zve5qy2qjqpfx",
+        "handle": "pingree.house.gov",
+        "displayName": "Congresswoman Chellie Pingree",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "Q000023",
+    "name": "Mike Quigley",
+    "chamber": "house",
+    "state": "IL",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:o4nzn4wcjgsqdxwnduydm2a5",
+        "handle": "quigley.house.gov",
+        "displayName": "Mike Quigley",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001145",
+    "name": "Janice D. Schakowsky",
+    "chamber": "house",
+    "state": "IL",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:lqqziazfi7ipxd5snxaboq5c",
+        "handle": "schakowsky.house.gov",
+        "displayName": "Rep. Jan Schakowsky",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001150",
+    "name": "Adam B. Schiff",
+    "chamber": "senate",
+    "state": "CA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ux632osoaqigjkgvuei3m6no",
+        "handle": "schiff.senate.gov",
+        "displayName": "Sen. Adam Schiff",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:6radyuzljqlcie4p4lwh2zuw",
+        "handle": "adamschiff.com",
+        "displayName": "Adam Schiff",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S000148",
+    "name": "Charles E. Schumer",
+    "chamber": "senate",
+    "state": "NY",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:zlgotdjaxzuhw4nefvkxxvxa",
+        "handle": "schumer.senate.gov",
+        "displayName": "Chuck Schumer",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S000185",
+    "name": "Robert C. \"Bobby\" Scott",
+    "chamber": "house",
+    "state": "VA",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:wdykfpfp2yoguqk77jlshv27",
+        "handle": "bobbyscott.house.gov",
+        "displayName": "Congressman Bobby Scott",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001185",
+    "name": "Terri A. Sewell",
+    "chamber": "house",
+    "state": "AL",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:c326eu7onblcrvapgucixymw",
+        "handle": "sewell.house.gov",
+        "displayName": "Rep. Terri A. Sewell",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S000344",
+    "name": "Brad Sherman",
+    "chamber": "house",
+    "state": "CA",
+    "district": 32,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:rkaxiiqhiponzkbmbxqugcks",
+        "handle": "repbradsherman.bsky.social",
+        "displayName": "Congressman Brad Sherman",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S000510",
+    "name": "Adam Smith",
+    "chamber": "house",
+    "state": "WA",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mjobm7kwzpta3ccegkcuqlwm",
+        "handle": "adamsmith.house.gov",
+        "displayName": "Rep. Adam Smith",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001156",
+    "name": "Linda T. Sánchez",
+    "chamber": "house",
+    "state": "CA",
+    "district": 38,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:onvrkt6ptmzmxjkfwpvn33e5",
+        "handle": "replindasanchez.bsky.social",
+        "displayName": "Rep. Linda Sánchez",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000460",
+    "name": "Mike Thompson",
+    "chamber": "house",
+    "state": "CA",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:t56dluqkcinxwcepofodntcb",
+        "handle": "mikethompson.house.gov",
+        "displayName": "Rep. Mike Thompson",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000469",
+    "name": "Paul Tonko",
+    "chamber": "house",
+    "state": "NY",
+    "district": 20,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:uxhiwzsufuauabejcw775a2l",
+        "handle": "reppaultonko.bsky.social",
+        "displayName": "Rep. Paul Tonko",
+        "sources": [
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "V000128",
+    "name": "Chris Van Hollen",
+    "chamber": "senate",
+    "state": "MD",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ht3ruh74w6krts2fz4ir27pa",
+        "handle": "vanhollen.senate.gov",
+        "displayName": "Senator Chris Van Hollen",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:6vvl6yrl7g4reniqcjsq5izn",
+        "handle": "vanhollenformd.bsky.social",
+        "displayName": "Chris Van Hollen",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "V000081",
+    "name": "Nydia M. Velázquez",
+    "chamber": "house",
+    "state": "NY",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:gmvbrhlneizccy7bpqryuygw",
+        "handle": "velazquez.house.gov",
+        "displayName": "Rep. Nydia Velázquez",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000797",
+    "name": "Debbie Wasserman Schultz",
+    "chamber": "house",
+    "state": "FL",
+    "district": 25,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:slgnj2shpt4vk4cxnzgeubvj",
+        "handle": "wassermanschultz.house.gov",
+        "displayName": "Rep. Debbie Wasserman Schultz",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000187",
+    "name": "Maxine Waters",
+    "chamber": "house",
+    "state": "CA",
+    "district": 43,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:2wvr7yvkkdnylfbkuv4mcr7l",
+        "handle": "repmaxinewaters.bsky.social",
+        "displayName": "Congresswoman Maxine Waters",
+        "sources": [
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000800",
+    "name": "Peter Welch",
+    "chamber": "senate",
+    "state": "VT",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:z2wvqdvi7hukokkpe2gnnqru",
+        "handle": "welch.senate.gov",
+        "displayName": "Senator Peter Welch",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000808",
+    "name": "Frederica S. Wilson",
+    "chamber": "house",
+    "state": "FL",
+    "district": 24,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:uyfv4rcoc2v42wmconn3ln47",
+        "handle": "repwilson.bsky.social",
+        "displayName": "Rep. Frederica Wilson",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000779",
+    "name": "Ron Wyden",
+    "chamber": "senate",
+    "state": "OR",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ydtsvzzsl6nlfkmnuooeqcmc",
+        "handle": "wyden.senate.gov",
+        "displayName": "Senator Ron Wyden",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001278",
+    "name": "Suzanne Bonamici",
+    "chamber": "house",
+    "state": "OR",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:74zycyzzi7wg26nudctnc55p",
+        "handle": "repbonamici.bsky.social",
+        "displayName": "Suzanne Bonamici",
+        "sources": [
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000617",
+    "name": "Suzan K. DelBene",
+    "chamber": "house",
+    "state": "WA",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:2llddhzp7kietow3npswbcqh",
+        "handle": "repdelbene.bsky.social",
+        "displayName": "Congresswoman Suzan DelBene",
+        "sources": [
+          "dm",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001194",
+    "name": "Brian Schatz",
+    "chamber": "senate",
+    "state": "HI",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:zlekb26g7abqatkw442bq635",
+        "handle": "schatz.bsky.social",
+        "displayName": "Brian Schatz",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000454",
+    "name": "Bill Foster",
+    "chamber": "house",
+    "state": "IL",
+    "district": 11,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mu6rcpl4wx7wdcgu3eqmha3u",
+        "handle": "repbillfoster.bsky.social",
+        "displayName": "Congressman Bill Foster",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000468",
+    "name": "Dina Titus",
+    "chamber": "house",
+    "state": "NV",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:amjgn3fdbdjcs2mdm5jlaxk6",
+        "handle": "titus.house.gov",
+        "displayName": "Congresswoman Dina Titus",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001068",
+    "name": "Jared Huffman",
+    "chamber": "house",
+    "state": "CA",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tyr7iqmghpf5qxvqvhblwj5f",
+        "handle": "rephuffman.bsky.social",
+        "displayName": "Rep. Jared Huffman",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:nxrte33cwhaawrghfaoyo3up",
+        "handle": "realjaredhuffman.bsky.social",
+        "displayName": "Rep. Jared Huffman",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001287",
+    "name": "Ami Bera",
+    "chamber": "house",
+    "state": "CA",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:nu5l4hek4cifv2xim3bl6we3",
+        "handle": "bera.house.gov",
+        "displayName": "Rep. Ami Bera, M.D.",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001285",
+    "name": "Julia Brownley",
+    "chamber": "house",
+    "state": "CA",
+    "district": 26,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:7b4ba4ialztxqftfvmmqv4il",
+        "handle": "juliabrownley.house.gov",
+        "displayName": "Congresswoman Julia Brownley",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000599",
+    "name": "Raul Ruiz",
+    "chamber": "house",
+    "state": "CA",
+    "district": 25,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:oiuk3t7dklb4ydzgodbcub7r",
+        "handle": "repraulruizmd.bsky.social",
+        "displayName": "Congressman Raul Ruiz, MD",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000472",
+    "name": "Mark Takano",
+    "chamber": "house",
+    "state": "CA",
+    "district": 39,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:7xjtx5zwz3ndizetx5csu6ga",
+        "handle": "repmarktakano.bsky.social",
+        "displayName": "Rep. Mark Takano",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "V000130",
+    "name": "Juan Vargas",
+    "chamber": "house",
+    "state": "CA",
+    "district": 52,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ef4njmroevwj7uq3sp34gv4m",
+        "handle": "vargas.house.gov",
+        "displayName": "Congressman Juan Vargas",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000608",
+    "name": "Scott H. Peters",
+    "chamber": "house",
+    "state": "CA",
+    "district": 50,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:bprol46vrcgv2syyxg46jr6z",
+        "handle": "repscottpeters.bsky.social",
+        "displayName": "Rep. Scott Peters",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000462",
+    "name": "Lois Frankel",
+    "chamber": "house",
+    "state": "FL",
+    "district": 22,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:uyapb4exdlyrr6fkicrccm3v",
+        "handle": "frankel.house.gov",
+        "displayName": "Rep. Lois Frankel",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000622",
+    "name": "Tammy Duckworth",
+    "chamber": "senate",
+    "state": "IL",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:uk62jqyggwt4hyhrnzka34wm",
+        "handle": "duckworth.senate.gov",
+        "displayName": "Tammy Duckworth",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000817",
+    "name": "Elizabeth Warren",
+    "chamber": "senate",
+    "state": "MA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ornpixmpy5ts36lh7hmi7wkp",
+        "handle": "warren.senate.gov",
+        "displayName": "Elizabeth Warren",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:tuomlekw6vdp5rs272djzjqs",
+        "handle": "elizabeth-warren.bsky.social",
+        "displayName": "Elizabeth Warren",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001188",
+    "name": "Grace Meng",
+    "chamber": "house",
+    "state": "NY",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:honwu3zwt277hgg46s24amta",
+        "handle": "meng.house.gov",
+        "displayName": "Congresswoman Grace Meng",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "J000294",
+    "name": "Hakeem S. Jeffries",
+    "chamber": "house",
+    "state": "NY",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:zipphihu644mxj7qjafvwwun",
+        "handle": "hakeem-jeffries.bsky.social",
+        "displayName": "Hakeem Jeffries",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001281",
+    "name": "Joyce Beatty",
+    "chamber": "house",
+    "state": "OH",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:6droa2t2rpgkej2osl4igqwm",
+        "handle": "repbeatty.bsky.social",
+        "displayName": "Rep. Joyce Beatty",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001091",
+    "name": "Joaquin Castro",
+    "chamber": "house",
+    "state": "TX",
+    "district": 20,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:4iclppomf3wagequyumxle56",
+        "handle": "joaquincastrotx.bsky.social",
+        "displayName": "Joaquin Castro",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "V000131",
+    "name": "Marc A. Veasey",
+    "chamber": "house",
+    "state": "TX",
+    "district": 33,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:gsyjinihyktdxekmj7uajxzo",
+        "handle": "repmarcveasey.bsky.social",
+        "displayName": "Rep. Marc A. Veasey",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000384",
+    "name": "Tim Kaine",
+    "chamber": "senate",
+    "state": "VA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:gyl2gdob6lyckqwi5dwaehef",
+        "handle": "kaine.senate.gov",
+        "displayName": "Senator Tim Kaine",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000607",
+    "name": "Mark Pocan",
+    "chamber": "house",
+    "state": "WI",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:lrw4cnptopspeg5tthztcliw",
+        "handle": "pocan.house.gov",
+        "displayName": "Rep. Mark Pocan",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000385",
+    "name": "Robin L. Kelly",
+    "chamber": "house",
+    "state": "IL",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:sxlmmrg3y4vqb5uzn2rvgwhi",
+        "handle": "robinlynnekelly.bsky.social",
+        "displayName": "Robin Kelly, Ph.D.",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:sqnnthrwp3apucyy35jw4dqz",
+        "handle": "robinkelly.house.gov",
+        "displayName": "Congresswoman Robin Kelly",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001288",
+    "name": "Cory A. Booker",
+    "chamber": "senate",
+    "state": "NJ",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:6fm2lhrkemwwzxw6kejxqwtt",
+        "handle": "booker.senate.gov",
+        "displayName": "Sen. Cory Booker",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:fxlyr6bdsgo5luhsz7hzzrta",
+        "handle": "corybooker.com",
+        "displayName": "Cory Booker",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001101",
+    "name": "Katherine M. Clark",
+    "chamber": "house",
+    "state": "MA",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mnm2mri5k4vu72ld67v6fgbf",
+        "handle": "whipkclark.bsky.social",
+        "displayName": "Katherine Clark",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "A000370",
+    "name": "Alma S. Adams",
+    "chamber": "house",
+    "state": "NC",
+    "district": 12,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:vduddkj2mn6djxijte7fwtzr",
+        "handle": "adams.house.gov",
+        "displayName": "Rep. Alma S. Adams Ph.D.",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000574",
+    "name": "Ruben Gallego",
+    "chamber": "senate",
+    "state": "AZ",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:vt3xvbw22imzxfegz45wq7y5",
+        "handle": "gallego.senate.gov",
+        "displayName": "Senator Ruben Gallego",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:ar7ms2zpat4erpz444u2aady",
+        "handle": "gallegoforarizona.com",
+        "displayName": "Ruben Gallego",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000623",
+    "name": "Mark DeSaulnier",
+    "chamber": "house",
+    "state": "CA",
+    "district": 10,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:7mfh4fcxkxeq2iry3ua3u2l7",
+        "handle": "repmarkdesaulnier.bsky.social",
+        "displayName": "Mark DeSaulnier",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "A000371",
+    "name": "Pete Aguilar",
+    "chamber": "house",
+    "state": "CA",
+    "district": 33,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:zpdxvdfphblqrp4himfdg6vs",
+        "handle": "aguilar.house.gov",
+        "displayName": "Rep. Pete Aguilar",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000582",
+    "name": "Ted Lieu",
+    "chamber": "house",
+    "state": "CA",
+    "district": 36,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:5bl2qrmv4oubrlyg7eavvjm2",
+        "handle": "reptedlieu.bsky.social",
+        "displayName": "Rep. Ted Lieu",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:ep4zjgwunggbrulratfpfj7h",
+        "handle": "tedlieu.bsky.social",
+        "displayName": "Ted Lieu",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000474",
+    "name": "Norma J. Torres",
+    "chamber": "house",
+    "state": "CA",
+    "district": 35,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:2mxsnsvgzeguiyjl2finwrcn",
+        "handle": "torres.house.gov",
+        "displayName": "Rep. Norma Torres",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001196",
+    "name": "Seth Moulton",
+    "chamber": "house",
+    "state": "MA",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:f5zbjpygz4ym6g3du53yni5t",
+        "handle": "moulton.house.gov",
+        "displayName": "Rep. Seth Moulton",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000624",
+    "name": "Debbie Dingell",
+    "chamber": "house",
+    "state": "MI",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:sioeztc3ud2jotsgdgvqxbbo",
+        "handle": "debbiedingell.house.gov",
+        "displayName": "Rep. Debbie Dingell",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000822",
+    "name": "Bonnie Watson Coleman",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 12,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:3rr3qjeafotnnegr24tiwjad",
+        "handle": "repbonnie.bsky.social",
+        "displayName": "Rep. Bonnie Watson Coleman",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001296",
+    "name": "Brendan F. Boyle",
+    "chamber": "house",
+    "state": "PA",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:uokor2zivu6tyhj2spdo66j7",
+        "handle": "repbrendanboyle.bsky.social",
+        "displayName": "Congressman Brendan Boyle",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:yf3w2sjupmxwxam6mxhz2us7",
+        "handle": "congressmanboyle.bsky.social",
+        "displayName": "Rep. Brendan Boyle",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001292",
+    "name": "Donald S. Beyer, Jr.",
+    "chamber": "house",
+    "state": "VA",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:dhvvqy2dcefrk35kudxclkyd",
+        "handle": "beyer.house.gov",
+        "displayName": "Congressman Don Beyer",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000610",
+    "name": "Stacey E. Plaskett",
+    "chamber": "house",
+    "state": "VI",
+    "district": 0,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:gyfvwyusvhleykmwfinsdfho",
+        "handle": "repstaceyplaskett.bsky.social",
+        "displayName": "Representative Stacey E. Plaskett",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "E000296",
+    "name": "Dwight Evans",
+    "chamber": "house",
+    "state": "PA",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hmstk6czb32dv4xjx4s3xhda",
+        "handle": "repdwightevans.bsky.social",
+        "displayName": "Congressman Dwight Evans",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001076",
+    "name": "Margaret Wood Hassan",
+    "chamber": "senate",
+    "state": "NH",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mtwom57onohy7mymkgdwzq55",
+        "handle": "hassan.senate.gov",
+        "displayName": "Senator Maggie Hassan",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001113",
+    "name": "Catherine Cortez Masto",
+    "chamber": "senate",
+    "state": "NV",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mhwnj5sorpgujqcwolxf7znl",
+        "handle": "cortezmasto.senate.gov",
+        "displayName": "Sen. Catherine Cortez Masto",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001190",
+    "name": "Bradley Scott Schneider",
+    "chamber": "house",
+    "state": "IL",
+    "district": 10,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:xxfk24puj3dwsccb2wybfnsa",
+        "handle": "repschneider.bsky.social",
+        "displayName": "Rep. Brad Schneider",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000389",
+    "name": "Ro Khanna",
+    "chamber": "house",
+    "state": "CA",
+    "district": 17,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:3dq2yyzn4vuzpyaezxr6vtnf",
+        "handle": "rokhanna.bsky.social",
+        "displayName": "Ro Khanna",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:sawh4vdiw425eeshlqgzxfsd",
+        "handle": "khanna.house.gov",
+        "displayName": "Rep. Ro Khanna",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000613",
+    "name": "Jimmy Panetta",
+    "chamber": "house",
+    "state": "CA",
+    "district": 19,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:jajnyiri7cozd4f2luqty5ow",
+        "handle": "usrepjimmypanetta.bsky.social",
+        "displayName": "Rep. Jimmy Panetta",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:nijb7ycdy7u3vy6buzbkhpln",
+        "handle": "panettaforcongress.bsky.social",
+        "displayName": "Jimmy Panetta for Congress",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001112",
+    "name": "Salud O. Carbajal",
+    "chamber": "house",
+    "state": "CA",
+    "district": 24,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:b55chxd3vz7a6zlx55b6phib",
+        "handle": "carbajal.house.gov",
+        "displayName": "Rep. Salud Carbajal",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001300",
+    "name": "Nanette Diaz Barragán",
+    "chamber": "house",
+    "state": "CA",
+    "district": 44,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:6dm4qetyrxibxgrey6dbhtsq",
+        "handle": "repbarragan.bsky.social",
+        "displayName": "Congresswoman Nanette Barragán",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001303",
+    "name": "Lisa Blunt Rochester",
+    "chamber": "senate",
+    "state": "DE",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:5pgzf6g5p56phoxm4rk7tzjl",
+        "handle": "bluntrochester.senate.gov",
+        "displayName": "Senator Lisa Blunt Rochester",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001200",
+    "name": "Darren Soto",
+    "chamber": "house",
+    "state": "FL",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:uopgfq6djckwd6blvcyrzule",
+        "handle": "repdarrensoto.bsky.social",
+        "displayName": "Rep. Darren Soto",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000391",
+    "name": "Raja Krishnamoorthi",
+    "chamber": "house",
+    "state": "IL",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:54yntwd4c4gnp5gnlyhvzi3x",
+        "handle": "congressmanraja.bsky.social",
+        "displayName": "Congressman Raja Krishnamoorthi",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:kuzgivp4tmed6noyg2j3epaa",
+        "handle": "rajaforil.bsky.social",
+        "displayName": "Raja Krishnamoorthi",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000606",
+    "name": "Jamie Raskin",
+    "chamber": "house",
+    "state": "MD",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:snct54nd4ve2j46f5cfhlr5e",
+        "handle": "raskin.house.gov",
+        "displayName": "Rep. Jamie Raskin",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000608",
+    "name": "Jacky Rosen",
+    "chamber": "senate",
+    "state": "NV",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:264oyvyqzmzk2syvn5yulmdx",
+        "handle": "rosen.senate.gov",
+        "displayName": "Senator Jacky Rosen",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:acesiire326u4l3lqssgbdl6",
+        "handle": "senatorjackyrosen.bsky.social",
+        "displayName": "",
+        "sources": [
+          "labeler-list",
+          "previous-data"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "E000297",
+    "name": "Adriano Espaillat",
+    "chamber": "house",
+    "state": "NY",
+    "district": 13,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:y3hypa7yks2estgpmt3sansh",
+        "handle": "repespaillat.bsky.social",
+        "displayName": "Adriano Espaillat",
+        "sources": [
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "J000298",
+    "name": "Pramila Jayapal",
+    "chamber": "house",
+    "state": "WA",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:f5aicufsf2vpuwte6wizoy2v",
+        "handle": "jayapal.house.gov",
+        "displayName": "Congresswoman Pramila Jayapal",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000585",
+    "name": "Jimmy Gomez",
+    "chamber": "house",
+    "state": "CA",
+    "district": 34,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:lkmmezffdeu5tjubg65xvfz4",
+        "handle": "gomez.house.gov",
+        "displayName": "Rep. Jimmy Gomez",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001203",
+    "name": "Tina Smith",
+    "chamber": "senate",
+    "state": "MN",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:dqj6ug6nsm7giy3xd4dpuhmx",
+        "handle": "smith.senate.gov",
+        "displayName": "Tina Smith",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001206",
+    "name": "Joseph D. Morelle",
+    "chamber": "house",
+    "state": "NY",
+    "district": 25,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:llhkrgim5vl3wevm6e3dyo6u",
+        "handle": "morelle.house.gov",
+        "displayName": "Joe Morelle",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001205",
+    "name": "Mary Gay Scanlon",
+    "chamber": "house",
+    "state": "PA",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:56tgs3u2uvu3kdqsah47xfwa",
+        "handle": "scanlon.house.gov",
+        "displayName": "Congresswoman Mary Gay Scanlon",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001066",
+    "name": "Steven Horsford",
+    "chamber": "house",
+    "state": "NV",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mfarwkewbizomvmg4ea2vj5k",
+        "handle": "repstevenhorsford.bsky.social",
+        "displayName": "Rep. Steven Horsford",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001211",
+    "name": "Greg Stanton",
+    "chamber": "house",
+    "state": "AZ",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:prz5uxnf5czbjqzyi4elwatg",
+        "handle": "repgregstanton.bsky.social",
+        "displayName": "Rep. Greg Stanton",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000593",
+    "name": "Mike Levin",
+    "chamber": "house",
+    "state": "CA",
+    "district": 49,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:uzcbz3hsqpwdv5ulkxqa2ubn",
+        "handle": "mikelevin.org",
+        "displayName": "Mike Levin",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:vj2tpnbgusm3whrqrebrdqiu",
+        "handle": "levin.house.gov",
+        "displayName": "Rep. Mike Levin",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "N000191",
+    "name": "Joe Neguse",
+    "chamber": "house",
+    "state": "CO",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:yx5fgzy2nbp7afji73aio2pl",
+        "handle": "neguse.house.gov",
+        "displayName": "Rep. Joe Neguse",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:xkz7mjtnfpqhpvc57o2fqswm",
+        "handle": "joeneguse.bsky.social",
+        "displayName": "Joe Neguse",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001121",
+    "name": "Jason Crow",
+    "chamber": "house",
+    "state": "CO",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tum2vvmoinupccdxjiwvif2a",
+        "handle": "crow.house.gov",
+        "displayName": "Rep. Jason Crow",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001081",
+    "name": "Jahana Hayes",
+    "chamber": "house",
+    "state": "CT",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:l6blblgznivuftl5g35ncaw2",
+        "handle": "repjahanahayes.bsky.social",
+        "displayName": "Rep Jahana Hayes",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001208",
+    "name": "Lucy McBath",
+    "chamber": "house",
+    "state": "GA",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hbv4dtb4g7x4p7dpkoinvxjx",
+        "handle": "mcbath.house.gov",
+        "displayName": "Rep. Lucy McBath",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000586",
+    "name": "Jesús G. \"Chuy\" García",
+    "chamber": "house",
+    "state": "IL",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:vptxejchtvk7jyuug62pwsv3",
+        "handle": "chuygarcia.house.gov",
+        "displayName": "Rep. Chuy García",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001117",
+    "name": "Sean Casten",
+    "chamber": "house",
+    "state": "IL",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:jzddf45ucyezwahi5ffxjpws",
+        "handle": "casten.house.gov",
+        "displayName": "Rep. Sean Casten",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:2tjnqjbnqampayvk4hez7q3h",
+        "handle": "seancasten.bsky.social",
+        "displayName": "Sean Casten",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "U000040",
+    "name": "Lauren Underwood",
+    "chamber": "house",
+    "state": "IL",
+    "district": 14,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:4yf7jm4tvaryy572lvxtazfl",
+        "handle": "underwood.house.gov",
+        "displayName": "Rep. Lauren Underwood",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:fbgjlzt3cl3dsymw6ocsx3aw",
+        "handle": "laurenunderwood.bsky.social",
+        "displayName": "Lauren Underwood",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000629",
+    "name": "Sharice Davids",
+    "chamber": "house",
+    "state": "KS",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:bhlcopurmgmt36fgqwor6yhx",
+        "handle": "davids.house.gov",
+        "displayName": "Rep. Sharice Davids",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000482",
+    "name": "Lori Trahan",
+    "chamber": "house",
+    "state": "MA",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:trtdcixeathbv7sjjcf5xv2t",
+        "handle": "trahan.house.gov",
+        "displayName": "Congresswoman Lori Trahan",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000617",
+    "name": "Ayanna Pressley",
+    "chamber": "house",
+    "state": "MA",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:dc6lrdlvden2l2qiilmgfyk5",
+        "handle": "pressley.house.gov",
+        "displayName": "Congresswoman Ayanna Pressley",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:ppxd6gr7vnetc7lobiiqw277",
+        "handle": "ayannapressley.bsky.social",
+        "displayName": "Ayanna Pressley",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001208",
+    "name": "Elissa Slotkin",
+    "chamber": "senate",
+    "state": "MI",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:5vake3jq6c27ytc52m5rpwv5",
+        "handle": "slotkin.senate.gov",
+        "displayName": "Senator Elissa Slotkin",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001215",
+    "name": "Haley M. Stevens",
+    "chamber": "house",
+    "state": "MI",
+    "district": 11,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:6bkz5metn573jkpwrnr67f7l",
+        "handle": "rephaleystevens.bsky.social",
+        "displayName": "Rep. Haley Stevens",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:4eaefcf3e5oq5budds3eijdy",
+        "handle": "haleyformi.bsky.social",
+        "displayName": "Haley Stevens",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001119",
+    "name": "Angie Craig",
+    "chamber": "house",
+    "state": "MN",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:k6xa546qpyymflbzesnxhd5o",
+        "handle": "repangiecraig.bsky.social",
+        "displayName": "Rep. Angie Craig",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "O000173",
+    "name": "Ilhan Omar",
+    "chamber": "house",
+    "state": "MN",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:gzrecn3lwymykpn5qg47n2is",
+        "handle": "ilhanmn.bsky.social",
+        "displayName": "Ilhan Omar",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:vaxteswgbtpscgkmrwyejjii",
+        "handle": "repilhan.bsky.social",
+        "displayName": "Rep. Ilhan Omar",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000614",
+    "name": "Chris Pappas",
+    "chamber": "house",
+    "state": "NH",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:boswtxd6ufenc2g5lc7hj5iz",
+        "handle": "repchrispappas.bsky.social",
+        "displayName": "Rep. Chris Pappas",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:um5biclszhgtfziihsnqc5tt",
+        "handle": "chrispappasnh.bsky.social",
+        "displayName": "Chris Pappas",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000394",
+    "name": "Andy Kim",
+    "chamber": "senate",
+    "state": "NJ",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:rmbfqraibpzbhjghsxrvksyr",
+        "handle": "kim.senate.gov",
+        "displayName": "Senator Andy Kim",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:sev7jknumqveggon3ourlliw",
+        "handle": "andykimnj.bsky.social",
+        "displayName": "",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000590",
+    "name": "Susie Lee",
+    "chamber": "house",
+    "state": "NV",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:nzfau2n6k6p2maqox4crsdjg",
+        "handle": "susielee.house.gov",
+        "displayName": "Congresswoman Susie Lee",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "O000172",
+    "name": "Alexandria Ocasio-Cortez",
+    "chamber": "house",
+    "state": "NY",
+    "district": 14,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:p7gxyfr5vii5ntpwo7f6dhe2",
+        "handle": "aoc.bsky.social",
+        "displayName": "Alexandria Ocasio-Cortez",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:ic7n7z2yrxtl4ejl5dfjchmm",
+        "handle": "ocasio-cortez.house.gov",
+        "displayName": "Rep. Alexandria Ocasio-Cortez",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000631",
+    "name": "Madeleine Dean",
+    "chamber": "house",
+    "state": "PA",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:66gjeje75ogyx3jxfelyz47i",
+        "handle": "repdean.bsky.social",
+        "displayName": "Congresswoman Madeleine Dean",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001085",
+    "name": "Chrissy Houlahan",
+    "chamber": "house",
+    "state": "PA",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:bvs6naiqgpzbcfak6g2m4dil",
+        "handle": "houlahan.house.gov",
+        "displayName": "Rep. Chrissy Houlahan",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000468",
+    "name": "Lizzie Fletcher",
+    "chamber": "house",
+    "state": "TX",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:sy6bj2v2oeuqshc5zqb3tsq2",
+        "handle": "repfletcher.bsky.social",
+        "displayName": "Congresswoman Lizzie Fletcher",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "E000299",
+    "name": "Veronica Escobar",
+    "chamber": "house",
+    "state": "TX",
+    "district": 16,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:eiunozwxrepjs7oz7d32riwc",
+        "handle": "repescobar.bsky.social",
+        "displayName": "Rep. Veronica Escobar",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000587",
+    "name": "Sylvia R. Garcia",
+    "chamber": "house",
+    "state": "TX",
+    "district": 29,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mhesphh4ecnac43t2urp6hq3",
+        "handle": "sylviagarcia.house.gov",
+        "displayName": "Rep. Sylvia Garcia",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001216",
+    "name": "Kim Schrier",
+    "chamber": "house",
+    "state": "WA",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hhnu37zy56t7f3phrxqjiyis",
+        "handle": "repkimschrier.bsky.social",
+        "displayName": "Rep. Kim Schrier, M.D.",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000592",
+    "name": "Jared F. Golden",
+    "chamber": "house",
+    "state": "ME",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ddvwm36kmzuhykdv5oz6tqva",
+        "handle": "golden.house.gov",
+        "displayName": "Congressman Jared Golden",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M000687",
+    "name": "Kweisi Mfume",
+    "chamber": "house",
+    "state": "MD",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:gvelfxjn7kwqkbwcixfo3i3w",
+        "handle": "repkweisimfume.bsky.social",
+        "displayName": "Kweisi Mfume",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000377",
+    "name": "Mark Kelly",
+    "chamber": "senate",
+    "state": "AZ",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:6efcnh6vyakphqeims6sqjbm",
+        "handle": "captmarkkelly.bsky.social",
+        "displayName": "Captain Mark Kelly",
+        "sources": [
+          "dm",
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H000273",
+    "name": "John W. Hickenlooper",
+    "chamber": "senate",
+    "state": "CO",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:wgy2pchnptmdldcsyhmfgs5i",
+        "handle": "hickenlooper.senate.gov",
+        "displayName": "Senator John Hickenlooper",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "J000305",
+    "name": "Sara Jacobs",
+    "chamber": "house",
+    "state": "CA",
+    "district": 51,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:csby5urerm7r3w5psnxscmaz",
+        "handle": "sarajacobs.house.gov",
+        "displayName": "Congresswoman Sara Jacobs",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:vwjipmxlgo2xv3fncxqubdbg",
+        "handle": "sarajacobsca.bsky.social",
+        "displayName": "Sara Jacobs",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000788",
+    "name": "Nikema Williams",
+    "chamber": "house",
+    "state": "GA",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mkx7sqatirycowrjjtbrysme",
+        "handle": "repnikema.bsky.social",
+        "displayName": "Congresswoman Nikema Williams",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001214",
+    "name": "Frank J. Mrvan",
+    "chamber": "house",
+    "state": "IN",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:yhdcgjtwh7tl75xcvxobrbcz",
+        "handle": "repmrvan.bsky.social",
+        "displayName": "Rep. Frank Mrvan",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "A000148",
+    "name": "Jake Auchincloss",
+    "chamber": "house",
+    "state": "MA",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:jdme5h3puxft6r63hvbj2yxx",
+        "handle": "repauchincloss.bsky.social",
+        "displayName": "Rep. Jake Auchincloss",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000305",
+    "name": "Deborah K. Ross",
+    "chamber": "house",
+    "state": "NC",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:54qpdbqnhocq7yjb4ewu5io2",
+        "handle": "ross.house.gov",
+        "displayName": "Representative Deborah Ross",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000273",
+    "name": "Teresa Leger Fernandez",
+    "chamber": "house",
+    "state": "NM",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ilmrsysdtkxmafq2m2wpndpz",
+        "handle": "fernandez.house.gov",
+        "displayName": "Rep. Teresa Leger Fernández",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000486",
+    "name": "Ritchie Torres",
+    "chamber": "house",
+    "state": "NY",
+    "district": 15,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:op4eyhp6ewgdmz6wc3gop27b",
+        "handle": "ritchietorres.bsky.social",
+        "displayName": "Ritchie Torres",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001159",
+    "name": "Marilyn Strickland",
+    "chamber": "house",
+    "state": "WA",
+    "district": 10,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hacrefcawxk42sh6gw3opme7",
+        "handle": "strickland.house.gov",
+        "displayName": "Congresswoman Marilyn Strickland",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000145",
+    "name": "Alex Padilla",
+    "chamber": "senate",
+    "state": "CA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mnni4exuqf2rvvsvxc5q4pb2",
+        "handle": "padilla.senate.gov",
+        "displayName": "Senator Alex Padilla",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "O000174",
+    "name": "Jon Ossoff",
+    "chamber": "senate",
+    "state": "GA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:xb67yulaoyllzutuqjr6g5m2",
+        "handle": "ossoff.bsky.social",
+        "displayName": "Jon Ossoff",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:lx462v3tzpydnob3qpgarbcj",
+        "handle": "ossoff.senate.gov",
+        "displayName": "Ossoff's Office",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000790",
+    "name": "Raphael G. Warnock",
+    "chamber": "senate",
+    "state": "GA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:7hake53hz2iumil2uhi6kk4m",
+        "handle": "warnock.senate.gov",
+        "displayName": "Senator Reverend Raphael Warnock",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001125",
+    "name": "Troy A. Carter",
+    "chamber": "house",
+    "state": "LA",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:sym4dflzkexupizmfzdaquqs",
+        "handle": "reptroycarter.bsky.social",
+        "displayName": "Congressman Troy A. Carter, Sr.",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001218",
+    "name": "Melanie A. Stansbury",
+    "chamber": "house",
+    "state": "NM",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:fuqcbv5brxa2b5vylz5bkm3j",
+        "handle": "repstansbury.bsky.social",
+        "displayName": "Rep. Melanie Stansbury (NM-01)",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000579",
+    "name": "Patrick Ryan",
+    "chamber": "house",
+    "state": "NY",
+    "district": 18,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:fqxafj6jkzhozzdzsgrifjxo",
+        "handle": "pkryan.bsky.social",
+        "displayName": "Pat Ryan",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000479",
+    "name": "John Fetterman",
+    "chamber": "senate",
+    "state": "PA",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hmy4bopsymtjikfq5i5mekn6",
+        "handle": "fetterman.senate.gov",
+        "displayName": "U.S. Senator John Fetterman",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:risd2vx2axw5xi325knfjtsg",
+        "handle": "johnfetterman.com",
+        "displayName": "John Fetterman",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001225",
+    "name": "Kevin Mullin",
+    "chamber": "house",
+    "state": "CA",
+    "district": 15,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:jkg2d7uo25s75ufcepfhntut",
+        "handle": "kevinmullin.house.gov",
+        "displayName": "Rep. Kevin Mullin",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000400",
+    "name": "Sydney Kamlager-Dove",
+    "chamber": "house",
+    "state": "CA",
+    "district": 37,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ch7ibrae5fzvt2swovearguy",
+        "handle": "kamlager-dove.house.gov",
+        "displayName": "Congresswoman Sydney Kamlager-Dove",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000598",
+    "name": "Robert Garcia",
+    "chamber": "house",
+    "state": "CA",
+    "district": 42,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:7pneu4er4i6cilvij3mxaioj",
+        "handle": "robertgarcia.bsky.social",
+        "displayName": "Robert Garcia",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:gou6onm5jvccxt3i7ywvs7mr",
+        "handle": "robertgarcia.house.gov",
+        "displayName": "Rep. Robert Garcia",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000620",
+    "name": "Brittany Pettersen",
+    "chamber": "house",
+    "state": "CO",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:3sfvdstpll35vat2m7zvm3zt",
+        "handle": "pettersen.house.gov",
+        "displayName": "U.S. Rep. Brittany Pettersen",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000476",
+    "name": "Maxwell Frost",
+    "chamber": "house",
+    "state": "FL",
+    "district": 10,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:k4kp7p2lfe2fz6z2u26yslv4",
+        "handle": "maxwellfrost.bsky.social",
+        "displayName": "Maxwell Frost",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:zxz45rdiqhrrrjgtdrp6s5um",
+        "handle": "frost.house.gov",
+        "displayName": "Rep. Maxwell Alejandro Frost",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001217",
+    "name": "Jared Moskowitz",
+    "chamber": "house",
+    "state": "FL",
+    "district": 23,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:rint6j2liywpxrlr2jfz3ogx",
+        "handle": "repmoskowitz.bsky.social",
+        "displayName": "Congressman Jared Moskowitz",
+        "sources": [
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000487",
+    "name": "Jill N. Tokuda",
+    "chamber": "house",
+    "state": "HI",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:f5jxegk4cpobfskg3sfhu5gr",
+        "handle": "tokuda.house.gov",
+        "displayName": "Rep. Jill Tokuda",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "J000309",
+    "name": "Jonathan L. Jackson",
+    "chamber": "house",
+    "state": "IL",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:4r6ezpji23dsicgeeu4n6cws",
+        "handle": "jonathanjackson.house.gov",
+        "displayName": "Congressman Jonathan L. Jackson (D-IL 01)",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000617",
+    "name": "Delia C. Ramirez",
+    "chamber": "house",
+    "state": "IL",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:kp5qfcszvb73kuoc35hydd6i",
+        "handle": "ramirez.house.gov",
+        "displayName": "Congresswoman Delia C. Ramirez",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:7m5afzoixlefac633bbn4cx7",
+        "handle": "delia.bsky.social",
+        "displayName": "Delia Catalina Ramirez",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001315",
+    "name": "Nikki Budzinski",
+    "chamber": "house",
+    "state": "IL",
+    "district": 13,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:7yfellkekfmlvsalyywflulq",
+        "handle": "budzinski.house.gov",
+        "displayName": "Nikki Budzinski",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001225",
+    "name": "Eric Sorensen",
+    "chamber": "house",
+    "state": "IL",
+    "district": 17,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:xdnwwjadunoibq3ca75vcol6",
+        "handle": "ericsorensen.bsky.social",
+        "displayName": "Eric Sorensen",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001220",
+    "name": "Morgan McGarvey",
+    "chamber": "house",
+    "state": "KY",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ec6eemidhhmbdlftlnrkhaxj",
+        "handle": "repmcgarvey.bsky.social",
+        "displayName": "Rep. Morgan McGarvey",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "I000058",
+    "name": "Glenn Ivey",
+    "chamber": "house",
+    "state": "MD",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:qa7zjuoowrp4hfvdtne4wqiz",
+        "handle": "ivey.house.gov",
+        "displayName": "Congressman Glenn Ivey (MD-04) ",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001221",
+    "name": "Hillary J. Scholten",
+    "chamber": "house",
+    "state": "MI",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ercdwgqvacvqefgn2iq7ifjq",
+        "handle": "scholten.house.gov",
+        "displayName": "Rep. Hillary Scholten",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000488",
+    "name": "Shri Thanedar",
+    "chamber": "house",
+    "state": "MI",
+    "district": 13,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tzo735bnqahgmrb66gm4ny5s",
+        "handle": "shrithanedar.bsky.social",
+        "displayName": "Congressman Shri Thanedar",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:auzbiunuufp3fybeao2jg5zd",
+        "handle": "thanedar.house.gov",
+        "displayName": "Congressman Shri Thanedar",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000477",
+    "name": "Valerie P. Foushee",
+    "chamber": "house",
+    "state": "NC",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:lgg6brspqsio7mkxipkuhfls",
+        "handle": "foushee.house.gov",
+        "displayName": "Congresswoman Valerie Foushee",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001226",
+    "name": "Robert Menendez",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 8,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:5m3ztlfb5emucvfci334um6n",
+        "handle": "menendez.house.gov",
+        "displayName": "Rep. Rob Menendez",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "V000136",
+    "name": "Gabe Vasquez",
+    "chamber": "house",
+    "state": "NM",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tanjxx6cyzrmgykio6vw6rzp",
+        "handle": "repgabevasquez.bsky.social",
+        "displayName": "Rep. Gabe Vasquez",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000599",
+    "name": "Daniel S. Goldman",
+    "chamber": "house",
+    "state": "NY",
+    "district": 10,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:w5b63ubrl3kpz2aeqf5uyhoz",
+        "handle": "danielsgoldman.dg4ny.co",
+        "displayName": "Daniel Goldman",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:6tyk5jbegvwu4qt2f2m4itut",
+        "handle": "repdangoldman.bsky.social",
+        "displayName": "Rep. Dan Goldman",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000601",
+    "name": "Greg Landsman",
+    "chamber": "house",
+    "state": "OH",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:yi7j3abu7n3l5me5ig47tfms",
+        "handle": "repgreglandsman.bsky.social",
+        "displayName": "Congressman Greg Landsman",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001223",
+    "name": "Emilia Strong Sykes",
+    "chamber": "house",
+    "state": "OH",
+    "district": 13,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:dsltftf6fkdlloqtr2wfjb5g",
+        "handle": "repemiliasykes.bsky.social",
+        "displayName": "Rep. Emilia Strong Sykes",
+        "sources": [
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "H001094",
+    "name": "Val T. Hoyle",
+    "chamber": "house",
+    "state": "OR",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tca3fzesqj6ycy3bnanctked",
+        "handle": "repvalhoyle.bsky.social",
+        "displayName": "Representative Val Hoyle",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001226",
+    "name": "Andrea Salinas",
+    "chamber": "house",
+    "state": "OR",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:3rqh5bgggdhfpezmztzq5p2r",
+        "handle": "salinas.house.gov",
+        "displayName": "Congresswoman Andrea Salinas",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000602",
+    "name": "Summer L. Lee",
+    "chamber": "house",
+    "state": "PA",
+    "district": 12,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:y37ival3xz7gcwuvmvit7bz3",
+        "handle": "summerlee.bsky.social",
+        "displayName": "Summer Lee",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:zyr4rtmpnhhabi42g2qdweof",
+        "handle": "repsummerlee.bsky.social",
+        "displayName": "Rep. Summer Lee",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000530",
+    "name": "Christopher R. Deluzio",
+    "chamber": "house",
+    "state": "PA",
+    "district": 17,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hjp5vntka4indphaarx52hqz",
+        "handle": "deluzio.house.gov",
+        "displayName": "Congressman Chris Deluzio",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001223",
+    "name": "Seth Magaziner",
+    "chamber": "house",
+    "state": "RI",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tw3zwjmh3di37ndci56b36t6",
+        "handle": "magaziner.house.gov",
+        "displayName": "Representative Seth Magaziner",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001130",
+    "name": "Jasmine Crockett",
+    "chamber": "house",
+    "state": "TX",
+    "district": 30,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tax3e7cjn3dzxpgfjslqq56y",
+        "handle": "crockett.house.gov",
+        "displayName": "Congresswoman Jasmine Crockett ",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:kpxcztsqfrzkbd4ve3xvdzco",
+        "handle": "jasmineforus.bsky.social",
+        "displayName": "Jasmine Crockett",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001131",
+    "name": "Greg Casar",
+    "chamber": "house",
+    "state": "TX",
+    "district": 35,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:3kapv2cmc5r6ehswf6nwo5wt",
+        "handle": "repcasar.bsky.social",
+        "displayName": "Congressman Greg Casar",
+        "sources": [
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001318",
+    "name": "Becca Balint",
+    "chamber": "house",
+    "state": "VT",
+    "district": 0,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:a4vpio4bg7nnvmwolyyw5t72",
+        "handle": "balint.house.gov",
+        "displayName": "Representative Becca Balint",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000600",
+    "name": "Marie Gluesenkamp Perez",
+    "chamber": "house",
+    "state": "WA",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ts6xu3znm37aibsxok5yfxoi",
+        "handle": "gluesenkampperez.house.gov",
+        "displayName": "Rep. Marie Gluesenkamp Perez",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "V000135",
+    "name": "Derrick Van Orden",
+    "chamber": "house",
+    "state": "WI",
+    "district": 3,
+    "party": "Republican",
+    "accounts": [
+      {
+        "did": "did:plc:ozj5fvircupyggy6sleoeqpo",
+        "handle": "therealdvo.bsky.social",
+        "displayName": "Derrick Van Orden",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001227",
+    "name": "Jennifer L. McClellan",
+    "chamber": "house",
+    "state": "VA",
+    "district": 4,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tomudwgbf7754rewbwkoadhn",
+        "handle": "mcclellan.house.gov",
+        "displayName": "Rep. Jennifer McClellan",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "A000380",
+    "name": "Gabe Amo",
+    "chamber": "house",
+    "state": "RI",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:z2fyn5xwj3buropnv5svoysn",
+        "handle": "amo.house.gov",
+        "displayName": "Congressman Gabe Amo",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001229",
+    "name": "LaMonica McIver",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 10,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:srtpm6jqfeufdmfol7atlohw",
+        "handle": "replamonica.bsky.social",
+        "displayName": "Rep. LaMonica McIver",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000110",
+    "name": "Cleo Fields",
+    "chamber": "house",
+    "state": "LA",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ppfetsrcx357ivbht6r5yg4r",
+        "handle": "repfields.bsky.social",
+        "displayName": "Congressman Cleo Fields",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001123",
+    "name": "Gilbert Ray Cisneros, Jr.",
+    "chamber": "house",
+    "state": "CA",
+    "district": 31,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:l7p2mdeahq45untzsg2m3myr",
+        "handle": "cisneros.house.gov",
+        "displayName": "Rep. Gil Cisneros",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "A000382",
+    "name": "Angela D. Alsobrooks",
+    "chamber": "senate",
+    "state": "MD",
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:6srmlf7guiy534fkxhfmlubf",
+        "handle": "alsobrooks.senate.gov",
+        "displayName": "Senator Angela Alsobrooks",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "A000381",
+    "name": "Yassamin Ansari",
+    "chamber": "house",
+    "state": "AZ",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:chd4o3a3vzgdxwc6jikp2sby",
+        "handle": "yassaminansari.bsky.social",
+        "displayName": "Yassamin Ansari",
+        "sources": [
+          "labeler-list",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:f5jxegk4cpobfskg3sfhu5gr",
+        "handle": "tokuda.house.gov",
+        "displayName": "Rep. Jill Tokuda",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001231",
+    "name": "Lateefah Simon",
+    "chamber": "house",
+    "state": "CA",
+    "district": 12,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hpfcdjldj7wus5ipuaudbooe",
+        "handle": "replsimon.bsky.social",
+        "displayName": "Congresswoman Lateefah Simon",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000607",
+    "name": "Sam T. Liccardo",
+    "chamber": "house",
+    "state": "CA",
+    "district": 16,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:vssbm7r3ekpp5uxbfbemjy65",
+        "handle": "liccardo.house.gov",
+        "displayName": "Rep. Sam Liccardo",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000620",
+    "name": "Luz M. Rivas",
+    "chamber": "house",
+    "state": "CA",
+    "district": 29,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:a3ydt4aea7suvnvsvktjalrc",
+        "handle": "repluzrivas.bsky.social",
+        "displayName": "Rep. Luz Rivas",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "F000483",
+    "name": "Laura Friedman",
+    "chamber": "house",
+    "state": "CA",
+    "district": 30,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:el6yvlyawdqu3mkvinpo4lou",
+        "handle": "friedman.house.gov",
+        "displayName": "Rep. Laura Friedman",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "T000491",
+    "name": "Derek Tran",
+    "chamber": "house",
+    "state": "CA",
+    "district": 45,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:sloaj35kmff6ta32qmiqdvad",
+        "handle": "derektranforcongress.com",
+        "displayName": "Derek Tran",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001241",
+    "name": "Dave Min",
+    "chamber": "house",
+    "state": "CA",
+    "district": 47,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:bit7oafc6sjnttnfit43vvv7",
+        "handle": "daveminca.bsky.social",
+        "displayName": "Dave Min",
+        "sources": [
+          "labeler-list",
+          "previous-data",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:hzfyhtysu4sh62zfi2mhwjh7",
+        "handle": "congressmin.bsky.social",
+        "displayName": "Rep. Dave Min",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001238",
+    "name": "Sarah McBride",
+    "chamber": "house",
+    "state": "DE",
+    "district": 0,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:5hib27ud62elvyuwo225ca5s",
+        "handle": "mcbride.house.gov",
+        "displayName": "Congresswoman Sarah McBride",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "E000301",
+    "name": "Sarah Elfreth",
+    "chamber": "house",
+    "state": "MD",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:k2efp3b2feirkic73tyyidc3",
+        "handle": "elfreth.house.gov",
+        "displayName": "Congresswoman Sarah Elfreth ",
+        "sources": [
+          "dm",
+          "gov-handle",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001232",
+    "name": "April McClain Delaney",
+    "chamber": "house",
+    "state": "MD",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:hogocz7nv2t3ayyojb5ociml",
+        "handle": "repaprildelaney.bsky.social",
+        "displayName": "Rep. April McClain Delaney",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001234",
+    "name": "Kelly Morrison",
+    "chamber": "house",
+    "state": "MN",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:cbhyexjqn6oci67e25lnnwvj",
+        "handle": "kellymorrisonmn.bsky.social",
+        "displayName": "Rep. Kelly Morrison",
+        "sources": [
+          "dm",
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:f5jxegk4cpobfskg3sfhu5gr",
+        "handle": "tokuda.house.gov",
+        "displayName": "Rep. Jill Tokuda",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001324",
+    "name": "Wesley Bell",
+    "chamber": "house",
+    "state": "MO",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:b2ttaikexwgxo3m6mij2ufak",
+        "handle": "repwesleybellmo.bsky.social",
+        "displayName": "Congressman Wesley Bell",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "G000604",
+    "name": "Maggie Goodlander",
+    "chamber": "house",
+    "state": "NH",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ih3ddrxdlgmk2gux5tntdosj",
+        "handle": "goodlander.house.gov",
+        "displayName": "Congresswoman Maggie Goodlander",
+        "sources": [
+          "gov-handle",
+          "labeler-list",
+          "official-domain",
+          "previous-data",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "C001136",
+    "name": "Herbert C. Conaway, Jr.",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:layjqpiy3o73mchg4reg6kob",
+        "handle": "repherbconaway.bsky.social",
+        "displayName": "Congressman Herb Conaway",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "P000621",
+    "name": "Nellie Pou",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 9,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:nlmff7znrcvk5qeyonnnfvfr",
+        "handle": "repnellie.bsky.social",
+        "displayName": "Nellie Pou",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "L000606",
+    "name": "George Latimer",
+    "chamber": "house",
+    "state": "NY",
+    "district": 16,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:buhkduwsqc47kzmocukem4tg",
+        "handle": "repglatimer.bsky.social",
+        "displayName": "Rep. George Latimer",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000622",
+    "name": "Josh Riley",
+    "chamber": "house",
+    "state": "NY",
+    "district": 19,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:f64pkij4ld2qjefaj6q4ktnr",
+        "handle": "reprileyny.bsky.social",
+        "displayName": "Rep. Josh Riley",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001231",
+    "name": "John W. Mannion",
+    "chamber": "house",
+    "state": "NY",
+    "district": 22,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:zskouwxsyhoqrfpew66w2yqn",
+        "handle": "congressmannion.bsky.social",
+        "displayName": "Congressman John Mannion",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "D000635",
+    "name": "Maxine Dexter",
+    "chamber": "house",
+    "state": "OR",
+    "district": 3,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:7g3czbcmnjplejvw6weu6x2j",
+        "handle": "repdexteror.bsky.social",
+        "displayName": "Congresswoman Maxine Dexter, M.D.",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001326",
+    "name": "Janelle S. Bynum",
+    "chamber": "house",
+    "state": "OR",
+    "district": 5,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:izqdhfrtdyy4pb4ayfaqrc6r",
+        "handle": "bynum.house.gov",
+        "displayName": "Rep. Janelle Bynum",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "J000310",
+    "name": "Julie Johnson",
+    "chamber": "house",
+    "state": "TX",
+    "district": 32,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:ezisgga5omwhwxhe32ckactd",
+        "handle": "repjuliejohnson.bsky.social",
+        "displayName": "Congresswoman Julie Johnson",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "V000138",
+    "name": "Eugene Simon Vindman",
+    "chamber": "house",
+    "state": "VA",
+    "district": 7,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:eagv6hslaw6asaeduraokazp",
+        "handle": "gene4va.bsky.social",
+        "displayName": "Congressman Eugene Vindman (VA-07)",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:wdigctsjykjg5y36qr2d3rsk",
+        "handle": "repvindman.bsky.social",
+        "displayName": "Congressman Eugene Vindman",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000831",
+    "name": "James R. Walkinshaw",
+    "chamber": "house",
+    "state": "VA",
+    "district": 11,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:zeunvi7geiekey6ru2u6kyaz",
+        "handle": "repwalkinshaw.bsky.social",
+        "displayName": "Rep. James Walkinshaw",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      },
+      {
+        "did": "did:plc:mmtluedxckhsiy5vke727vs5",
+        "handle": "jameswalkinshaw.bsky.social",
+        "displayName": "James Walkinshaw",
+        "sources": [
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001245",
+    "name": "Christian D. Menefee",
+    "chamber": "house",
+    "state": "TX",
+    "district": 18,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:k4u4xfqxmnice5ryazs6mexn",
+        "handle": "menefee.house.gov",
+        "displayName": "Congressman Christian D. Menefee",
+        "sources": [
+          "gov-handle",
+          "official-domain",
+          "search",
+          "verified"
+        ]
+      }
+    ]
+  }
+]
