@@ -24,6 +24,7 @@ export function normalizeOrg(name: string) {
     .replace(/['’]/g, "") // LOWE'S -> LOWES
     .replace(/&/g, " AND ")
     .replace(/\([^)]*\)/g, " ")
+    .replace(/\s+A\.?\s?K\.?\s?A\.?\s.*$/, "") // "ZOETIS AKA ZOETIS" -> "ZOETIS"
     .replace(/\bASSN\b/g, "ASSOCIATION")
     .replace(/\bNATL\b/g, "NATIONAL")
     .replace(/\bAMER\b/g, "AMERICAN")

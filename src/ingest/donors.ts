@@ -6,7 +6,7 @@
 // Everything comes from FEC bulk files: donations from people and companies
 // are picked out while the individuals step streams itcont, and donations
 // from other committees come from the "other transactions" file here.
-import { slugify, titleCase } from "../lib/names.js";
+import { normalizeOrg, slugify, titleCase } from "../lib/names.js";
 import type { FecData } from "./fec.js";
 import type { Committee, Organization } from "./committees.js";
 import { download, largeReceipt, mainEntry, rows, type LargeReceipt } from "./individuals.js";
@@ -71,7 +71,8 @@ export async function collectDonors(
   for (const r of receipts) {
     const isCommittee = r.otherId.startsWith("C") || ["COM", "PAC", "PTY", "CCM"].includes(r.entityType);
     const isPerson = !isCommittee && r.entityType === "IND";
-    const name = isPerson ? personName(r.name) : titleCase(r.name);
+    const committeeName = isCommittee ? fec.committees[r.otherId]?.name : undefined;
+    const name = isPerson ? personName(r.name) : titleCase(committeeName ?? r.name);
     const state = r.state || undefined;
 
     const id =
@@ -95,6 +96,25 @@ export async function collectDonors(
     });
     const byCycle = (donor.gifts[r.recipient] ??= {});
     byCycle[r.cycle] = (byCycle[r.cycle] ?? 0) + r.amount;
+  }
+
+  // The same person often files from more than one state (they moved, or
+  // gave from a second home). Same name and same employer is the same donor;
+  // same name alone isn't, since common names belong to different people.
+  const byNameEmployer = new Map<string, Donor>();
+  for (const d of Object.values(donors)) {
+    if (d.type !== "individual" || !d.employer) continue;
+    const key = `${d.name}|${normalizeOrg(d.employer)}`;
+    const keep = byNameEmployer.get(key);
+    if (!keep) {
+      byNameEmployer.set(key, d);
+      continue;
+    }
+    for (const [spender, byCycle] of Object.entries(d.gifts)) {
+      const into = (keep.gifts[spender] ??= {});
+      for (const [cycle, amount] of Object.entries(byCycle)) into[Number(cycle)] = (into[Number(cycle)] ?? 0) + amount;
+    }
+    delete donors[d.id];
   }
 
   const list = Object.values(donors);

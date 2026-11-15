@@ -121,7 +121,7 @@ const NAME_RULES: [RegExp, Sector][] = [
   [/\b(realtor|real estate|home ?builder|mortgage|bank|banker|credit union|insur|financ|invest|securities|capital|accountant|cpa)/i, "Finance, Insurance & Real Estate"],
   [/\b(physician|medical|medicine|hospital|health|nurs|dental|dentist|pharm|surgeon|clinic|anesthesi|radiolog|optometr|chiropract|patholog|cardiolog|dermatolog|orthop|osteopath|otolaryng|surg|laborator|psychiatr|psycholog|urolog|oncolog|ophthalm|podiatr)/i, "Health"],
   [/\b(oil|gas|petroleum|energy|electric|coal|propane|pipeline|nuclear|mining|solar|wind|utilit|forest|timber|water users)/i, "Energy & Natural Resources"],
-  [/\b(farm|agri|cattle|beef|pork|dairy|sugar|cotton|soybean|corn|wheat|rice|grain|poultry|citrus|grower|food|beverage|beer|wine|spirits|restaurant|grocer)/i, "Agribusiness"],
+  [/\b(farm|agri|cattle|beef|pork|dairy|sugar|cotton|soybean|corn|wheat|rice|grain|poultry|citrus|grower|peanut|fisher|seafood|food|beverage|beer|wine|spirits|restaurant|grocer)/i, "Agribusiness"],
   [/\b(defense|aerospace|aircraft|missile)/i, "Defense"],
   [/\b(telecom|broadband|cable|wireless|broadcast|software|technology|internet|semiconductor|computer)/i, "Communications & Technology"],
   [/\b(construct|contractor|builder|engineer|architect|concrete|cement|plumb|roofing|electrical contractors)/i, "Construction"],

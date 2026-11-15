@@ -34,6 +34,7 @@ const { values: args } = parseArgs({
     steps: { type: "string", default: STEPS.join(",") },
     cycles: { type: "string", default: "3" },
     "min-total": { type: "string", default: "5000" },
+    "lobbying-minutes": { type: "string", default: "20" },
   },
 });
 
@@ -82,7 +83,18 @@ if (steps.has("committees")) {
 
 let lobbying = readJson<Awaited<ReturnType<typeof fetchLobbyingSpend>>>(LOBBYING_FILE);
 if (steps.has("lobbying")) {
-  lobbying = await fetchLobbyingSpend(required(enriched, "committees").organizations, cycles);
+  const fecData = required(fec, "fec");
+  const givingById = new Map<string, number>();
+  for (const [committeeId, byMember] of Object.entries(fecData.contributions)) {
+    const org = required(enriched, "committees").committees[committeeId]?.organization;
+    if (!org) continue;
+    const total = Object.values(byMember).flatMap((c) => Object.values(c)).reduce((a, b) => a + b, 0);
+    givingById.set(org, (givingById.get(org) ?? 0) + total);
+  }
+  lobbying = await fetchLobbyingSpend(required(enriched, "committees").organizations, cycles, {
+    budgetMinutes: Number(args["lobbying-minutes"]),
+    givingById,
+  });
   writeJson(LOBBYING_FILE, lobbying, false);
 }
 
