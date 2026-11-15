@@ -3,14 +3,19 @@ import Base from "../layouts/Base.astro";
 import { cycleRange, generatedAt } from "../lib/data";
 ---
 
-<Base title="About" description="Where this data comes from and how it is classified.">
-  <article class="card prose">
-    <h1>About this data</h1>
+<Base title="About the data" description="Where this data comes from, what's counted and how organizations are classified.">
+  <p class="kicker">About the data</p>
+  <h1>How this data works</h1>
+  <p class="dek">
+    Every number here comes from public filings: the FEC for money, SEC EDGAR and lobbying disclosures for who's
+    behind each PAC. Here's what's counted, and what isn't.
+  </p>
 
+  <article class="prose">
     <h2>What's counted</h2>
     <p>
       Direct contributions from political committees (PACs, leadership PACs, party and candidate committees)
-      to the campaigns of current members of Congress, {cycleRange}, as reported to the
+      to the campaigns of current members of Congress, {cycleRange}, as reported to the{" "}
       <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">Federal Election Commission</a>.
       Each member's page shows how much they raised from individuals in total, but individual donors are only
       named when they give large sums to outside spenders (below).
@@ -42,7 +47,7 @@ import { cycleRange, generatedAt } from "../lib/data";
       <li>Keywords in the organization's name (“Association of Realtors”, “Physicians”) for associations with no SEC or lobbying record.</li>
     </ol>
     <p>
-      These feed a fixed set of sectors. PACs with no sponsoring organization are counted as
+      These feed a fixed set of sectors. PACs with no sponsoring organization are counted as{" "}
       <em>Ideological &amp; Single-Issue</em>. Some classifications are set by hand; the rules are
       in the project's source code. Mistakes are possible, so check the linked FEC filings for anything important.
     </p>
@@ -59,7 +64,9 @@ import { cycleRange, generatedAt } from "../lib/data";
 </Base>
 
 <style>
-  .prose { max-width: 720px; }
-  .prose h2 { margin-top: 28px; }
-  .prose li { margin-bottom: 6px; }
+  .prose { max-width: 680px; font-size: var(--fs-md); line-height: 1.65; }
+  .prose h2 { margin-top: var(--sp-7); padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
+  .prose h2:first-child { margin-top: 0; }
+  .prose p, .prose ol { margin: 0 0 var(--sp-4); }
+  .prose li { margin-bottom: var(--sp-2); }
 </style>

@@ -48,7 +48,8 @@ function lastName(name: string) {
 
 export { money, percent } from "./format";
 
-export const cycleRange = `${cycles[0]! - 1}–${cycles.at(-1)}`;
+// A word joiner keeps "2021–2026" from breaking after the dash.
+export const cycleRange = `${cycles[0]! - 1}–\u2060${cycles.at(-1)}`;
 
 export function partyLetter(party: string) {
   return party[0]!;
