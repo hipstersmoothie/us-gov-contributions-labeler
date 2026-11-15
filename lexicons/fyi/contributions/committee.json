@@ -24,6 +24,7 @@
           "byCycle": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#cycleAmount" } },
           "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." },
           "outside": { "type": "ref", "ref": "#outside" },
+          "opponents": { "type": "ref", "ref": "#outside", "description": "Independent expenditures on current members' opponents; targets are the members whose races it was (bioguide ids)." },
           "donors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donors of $50,000 or more (fyi.contributions.donor record keys), largest first." }
         }
       }

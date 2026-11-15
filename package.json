@@ -15,6 +15,7 @@
     "site:build": "pnpm --filter site build",
     "sync-labels": "tsx src/sync-labels.ts",
     "publish-records": "tsx src/publish-records.ts",
+    "sync-lists": "tsx src/sync-lists.ts",
     "dedupe-labels": "tsx src/scripts/dedupe-labels.ts",
     "photos": "tsx src/scripts/fetch-photos.ts"
   },

@@ -23,6 +23,7 @@
           "organizations": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "PAC contributions by organization (fyi.contributions.organization record key), largest first, top 50." },
           "committees": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "PAC contributions by FEC committee id (fyi.contributions.committee record key), largest first, top 50." },
           "outside": { "type": "ref", "ref": "#outside" },
+          "opponents": { "type": "ref", "ref": "#opponents" },
           "assignments": { "type": "array", "items": { "type": "ref", "ref": "#assignment" }, "description": "Congressional committee seats." },
           "individuals": { "type": "ref", "ref": "#individuals" },
           "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "Top contributors, counted by organization: its PAC money plus donations from people who list it as their employer. Top 50." },
@@ -63,6 +64,31 @@
         "support": { "type": "integer", "description": "US dollars." },
         "oppose": { "type": "integer", "description": "US dollars." },
         "spenders": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#outsideAmount" }, "description": "By spender (FEC committee id), largest first, top 25." }
+      }
+    },
+    "opponents": {
+      "type": "object",
+      "description": "Independent expenditures on this member's opponents: candidates in the same race (same-party, in a primary). 'support' is money spent supporting an opponent, 'oppose' money spent opposing one. Kept apart from 'outside', which only counts spending that names the member.",
+      "required": ["support", "oppose", "spenders", "candidates"],
+      "properties": {
+        "support": { "type": "integer", "description": "US dollars." },
+        "oppose": { "type": "integer", "description": "US dollars." },
+        "spenders": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#outsideAmount" }, "description": "By spender (FEC committee id), largest first, top 25." },
+        "candidates": { "type": "array", "items": { "type": "ref", "ref": "#opponent" }, "description": "By opponent, largest first." }
+      }
+    },
+    "opponent": {
+      "type": "object",
+      "required": ["id", "name", "office", "state", "support", "oppose"],
+      "properties": {
+        "id": { "type": "string", "description": "FEC candidate id." },
+        "name": { "type": "string", "description": "As filed, e.g. 'LATIMER, GEORGE'." },
+        "party": { "type": "string" },
+        "office": { "type": "string", "knownValues": ["H", "S"] },
+        "state": { "type": "string" },
+        "district": { "type": "integer", "description": "House only; 0 for at-large seats." },
+        "support": { "type": "integer", "description": "US dollars spent supporting this opponent." },
+        "oppose": { "type": "integer", "description": "US dollars spent opposing this opponent." }
       }
     },
     "assignment": {

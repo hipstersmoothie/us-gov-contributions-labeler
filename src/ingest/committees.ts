@@ -225,6 +225,7 @@ interface LdaFiling {
 }
 
 interface LdaContribution {
+  filer_type: "organization" | "lobbyist";
   registrant: { name: string };
   pacs: string[];
 }
@@ -285,7 +286,32 @@ async function ldaRegistrant(name: string) {
   }
 }
 
-/** The organization a PAC belongs to, per lobbyists' LD-203 reports. */
+/** "DISNEYPAC AKA TWDC ENTERPRISES 18 CORP. EMPLOYEES PAC" goes by either name. */
+function samePac(a: string, b: string) {
+  const names = (n: string) => n.split(/\s+A\.?\s?K\.?\s?A\.?\s+/i);
+  return names(a).some((x) => names(b).some((y) => sameOrg(x, y)));
+}
+
+/** Do two names share a word that isn't generic ("MATSON", not "AMERICAN")? */
+function shareDistinctiveWord(a: string, b: string) {
+  const words = (n: string) =>
+    n.toUpperCase().split(/[^A-Z0-9]+/).filter((w) => w.length >= 3 && !GENERIC_WORDS.has(w));
+  const wa = new Set(words(a));
+  return words(b).some((w) => wa.has(w));
+}
+const GENERIC_WORDS = new Set([
+  ...COMMON_FIRST_WORDS,
+  "AND", "THE", "FOR", "INC", "LLC", "LLP", "CORP", "CORPORATION", "COMPANY", "GROUP",
+  "PAC", "POLITICAL", "ACTION", "FEDERAL", "FUND", "EMPLOYEES", "BROTHERHOOD", "UNION",
+  "WORKERS", "STATES", "SERVICES", "VICTORY", "FREEDOM", "FUTURE", "LEADERSHIP",
+]);
+
+/**
+ * The organization a PAC belongs to, per its LD-203 reports. An individual
+ * lobbyist's report also lists PACs the lobbyist runs on the side (a member's
+ * leadership PAC, say), so trust those only when the registrant's name
+ * resembles the PAC's: an in-house lobbyist reporting the employer's PAC.
+ */
 async function ldaRegistrantForPac(pacName: string) {
   const qs = new URLSearchParams({
     contribution_contributor: ldaSafe(pacName),
@@ -295,7 +321,11 @@ async function ldaRegistrantForPac(pacName: string) {
     `${LDA_API}/contributions/?${qs}`,
     LDA
   );
-  return res?.results.find((r) => r.pacs.some((p) => sameOrg(p, pacName)))?.registrant.name;
+  const reports = (res?.results ?? []).filter((r) => r.pacs.some((p) => samePac(p, pacName)));
+  const own =
+    reports.find((r) => r.filer_type === "organization") ??
+    reports.find((r) => shareDistinctiveWord(r.registrant.name, pacName));
+  return own?.registrant.name;
 }
 
 async function lookupLobbying(orgName: string, pacName: string, cache: Cache<Lobbying | null>) {
@@ -336,8 +366,12 @@ async function lookupLobbying(orgName: string, pacName: string, cache: Cache<Lob
         .filter((d): d is string => !!d && !GENERIC_DESCRIPTION.test(d))
         .sort((a, b) => b.length - a.length)[0];
 
+      // Names that differ only in noise words ("AMERICAN MEDICAL GROUP
+      // ASSOCIATION") match too, so name it after the most common client.
+      const counts = new Map<string, number>();
+      for (const f of filings) counts.set(f.client.name, (counts.get(f.client.name) ?? 0) + 1);
       cache.set(key, {
-        client: filings[0]!.client.name,
+        client: [...counts].sort((a, b) => b[1] - a[1])[0]![0],
         description,
         issues: [...issues.values()].sort((a, b) => b.count - a.count),
         filings: filings.length,
@@ -455,7 +489,12 @@ export async function enrichCommittees(
   await mapLimit(toLookUp, 8, async (c) => {
     const parentName = guessedParent(c)!;
     try {
-      const lobbying = await lookupLobbying(parentName, c.name, ldaCache);
+      // lda.gov's firewall rejects some names outright (e.g. ones containing
+      // "root" or "cgi"); still try SEC for those.
+      const lobbying = await lookupLobbying(parentName, c.name, ldaCache).catch((error: Error) => {
+        console.error(`  ${c.name}: ${error.message}`);
+        return undefined;
+      });
       const sec = await lookupSec(
         [parentName, lobbying?.client].filter((x): x is string => !!x),
         tickers,
@@ -478,6 +517,7 @@ export async function enrichCommittees(
 
   const committees: Record<string, Committee> = {};
   const organizations: Record<string, Organization> = {};
+  const orgIdByClient = new Map<string, string>();
 
   for (const c of all.sort((a, b) => (totals.get(b.id) ?? 0) - (totals.get(a.id) ?? 0))) {
     const override = overrides[c.id] ?? {};
@@ -491,9 +531,13 @@ export async function enrichCommittees(
     // Group PACs under the organization behind them. PACs with no parent
     // (ideological, leadership) are their own organization.
     const orgName = override.name ?? titleCase(lobbying?.client ?? parentName ?? c.name);
+    // PACs that lead to the same lobbying client ("FMR LLC PAC - FEDERAL",
+    // "FMR LLC PAC STATE FEDERAL") are one organization.
     const orgId =
       override.organization ??
+      (lobbying && orgIdByClient.get(lobbying.client)) ??
       (sec ? slugify(sec.name) : parentName ? slugify(parentName) : `${slugify(c.name)}-${c.id.toLowerCase()}`);
+    if (lobbying) orgIdByClient.set(lobbying.client, orgId);
 
     const org = (organizations[orgId] ??= {
       id: orgId,
