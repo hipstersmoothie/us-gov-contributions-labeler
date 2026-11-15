@@ -34,7 +34,7 @@ const about =
       : "Organization";
 ---
 
-<Base title={d.name} description={`${d.name}'s donations to super PACs and outside groups, ${cycleRange}.`}>
+<Base title={d.name} og={{ type: "donor", id: d.id }} description={`${d.name}'s donations to super PACs and outside groups, ${cycleRange}.`}>
   <p class="kicker"><a href="/donors/">Big donors</a></p>
   <h1>{d.name}</h1>
   <p class="dek">{about}</p>

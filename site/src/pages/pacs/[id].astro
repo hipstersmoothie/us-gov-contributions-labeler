@@ -35,7 +35,7 @@ const name = displayName(c.name);
 const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && org.name !== name);
 ---
 
-<Base title={name} description={`Which members of Congress ${name} gives to, ${cycleRange}.`}>
+<Base title={name} og={{ type: "pac", id: c.id }} description={`Which members of Congress ${name} gives to, ${cycleRange}.`}>
   <p class="kicker">
     {kindLabel(c.kind)}{orgTypeLabel(c.orgType) && <> · {orgTypeLabel(c.orgType)}</>} · <a href={fecCommitteeUrl(c.id)}>FEC {c.id}</a>
   </p>

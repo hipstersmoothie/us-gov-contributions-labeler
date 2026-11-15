@@ -7,7 +7,7 @@ import { cycleRange, money } from "../../lib/data";
 const total = sectors.reduce((s, x) => s + x.total, 0);
 ---
 
-<Base title="Sectors" description="PAC money to Congress by industry sector.">
+<Base title="Sectors" og={{ type: "page", id: "sectors" }} description="PAC money to Congress by industry sector.">
   <h1>Sectors</h1>
   <p class="dek">PAC contributions to current members by the sector of the organization behind each PAC, {cycleRange}.</p>
   <section class="story">

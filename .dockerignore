@@ -6,3 +6,5 @@ site/public/photos
 .cache
 .env*
 *.local.*
+site/server/node_modules
+site/server/data

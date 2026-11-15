@@ -7,7 +7,7 @@ import { memberRows } from "../../lib/rows";
 const states = [...new Set(members.map((m) => m.state))].sort();
 ---
 
-<Base title="Members of Congress" description={`Every current member of Congress, what they raised and how much came from PACs, ${cycleRange}.`}>
+<Base title="Members of Congress" og={{ type: "page", id: "members" }} description={`Every current member of Congress, what they raised and how much came from PACs, ${cycleRange}.`}>
   <p class="kicker">Members</p>
   <h1>Members of Congress</h1>
   <p class="dek">

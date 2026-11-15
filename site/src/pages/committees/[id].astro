@@ -88,7 +88,7 @@ const leaderText = seated
   .replace(/^./, (c) => c.toUpperCase());
 ---
 
-<Base title={c.name} description={`Who funds the members of the ${c.name}, ${cycleRange}.`}>
+<Base title={c.name} og={{ type: "committee", id: c.id }} description={`Who funds the members of the ${c.name}, ${cycleRange}.`}>
   <p class="kicker">
     {parent ? <>Subcommittee of <a href={`/committees/${parent.id}/`}>{parent.name}</a></> : `${chamberLabel} committee`} · {seated.length} members
   </p>

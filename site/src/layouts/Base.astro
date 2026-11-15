@@ -5,17 +5,18 @@ import SiteSearch from "../islands/SiteSearch";
 import Logo from "../components/Logo.astro";
 
 import { generatedAt, cycleRange } from "../lib/data";
+import { ogImage, type OgType } from "../lib/og";
 
 interface Props {
   title: string;
   description?: string;
-  /** Site-relative image for link previews, e.g. a member's portrait. */
-  image?: string;
-  /** A page's own 1200×630 link-preview card, in place of the site's. */
+  /** The page's link-preview card (see lib/og.ts), rendered on request. */
+  og?: { type: OgType; id: string };
+  /** A static 1200×630 card for a page without an og card, e.g. /bluesky/. */
   card?: { src: string; alt: string };
   ogType?: "website" | "article" | "profile";
 }
-const { title, description, image, card, ogType = "article" } = Astro.props;
+const { title, description, og, card, ogType = "article" } = Astro.props;
 const path = Astro.url.pathname;
 const NAV = [
   ["/members/", "Members"],
@@ -35,12 +36,12 @@ const desc = (
   description ?? `Campaign finance for every member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`
 ).replace(/\u2060/g, "");
 const canonical = Astro.site ? new URL(path, Astro.site).href : undefined;
-// A page's own image (a member's portrait) as a small card; otherwise a
-// 1200×630 card: the page's own, or the site's from design/og/og-card.html.
+// The page's own 1200×630 card: rendered on request by site/server, or a
+// static one; otherwise the site card from design/og/og-card.html.
 const site = Astro.site ?? new URL("https://contributions.fyi");
-const imageUrl = new URL(image ?? card?.src ?? "/og.png", site).href;
-const cardAlt =
-  card?.alt ?? "contributions.fyi: who funds your member of Congress? With every House seat colored by party.";
+const preview = (og && ogImage(og.type, og.id)) || card;
+const imageUrl = new URL(preview?.src ?? "/og.png", site).href;
+const imageAlt = preview?.alt ?? "contributions.fyi: who funds your member of Congress? With every House seat colored by party.";
 const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
 ---
 
@@ -60,18 +61,13 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
     <meta property="og:type" content={isHome ? "website" : ogType} />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={imageUrl} />
-    {
-      image ? (
-        <meta property="og:image:alt" content={`Official portrait of ${title}`} />
-      ) : (
-        <>
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-          <meta property="og:image:alt" content={cardAlt} />
-        </>
-      )
-    }
-    <meta name="twitter:card" content={image ? "summary" : "summary_large_image"} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
     <!-- The two faces every page sets text in; see the @font-face notes in global.css. -->

@@ -145,14 +145,17 @@ pnpm photos            # official portraits (not committed)
 pnpm bluesky-profiles  # members' Bluesky avatars and follower counts, for /bluesky/
 pnpm site:dev
 pnpm site:build
+pnpm --filter site start   # serve the build, with link-preview images, on :3000
 ```
 
 The `/bluesky/` page links to the lists, starter packs and feeds using the same code that publishes them (`src/lib/list-specs.ts`, `feeds/feeds.ts`), and shows each member's labels from `memberLabels()` in `src/lib/labels.ts`, so it always matches what's live. Profile data comes from the public AppView, read-only. The website's Docker build fetches it fresh on every deploy and falls back to the committed `data/bluesky-profiles.json` if that fails.
 
+In production the site is served by `site/server`, a small Node server: it serves `site/dist` the way `serve` did (same trailing-slash handling, 404 page, ETags and compression) and renders each page's link-preview card on request at `/og/<version>/<type>/<id>.png`. The build writes no images: `site/scripts/og-cards.ts` runs before `astro build` and writes a small record per page to `site/server/data/cards.json`, which the server renders with satori and resvg in the site's fonts (static instances in `site/server/fonts`). `<version>` is a hash of `data/*.json` and the card templates, so images are cached for a year and a new build gets new URLs. To look at cards without the server: `node site/server/src/sample.ts out-dir member/S000033 pac/C00504530`, or `--bench 200` to time a random sample.
+
 ## Deployment (Railway)
 
 - **Labeler** (`us-gov-contributions-labeler` service): built from the root `Dockerfile`, with the label database on the `/sqlite-data` volume (`DB_PATH`).
-- **Website** (`website` service): built from `site/Dockerfile` (`RAILWAY_DOCKERFILE_PATH=site/Dockerfile`).
+- **Website** (`website` service): built from `site/Dockerfile` (`RAILWAY_DOCKERFILE_PATH=site/Dockerfile`), running `site/server`.
 - **Feeds** (`feeds` service): built from `feeds/Dockerfile`, with its SQLite database on a volume at `/data`.
 - **Lists** (`sync-lists` service): a cron job, daily at 15:00 UTC, built from `src/sync-lists.Dockerfile` with the data baked in; `LABELER_PASSWORD` references the labeler's.
 

@@ -1,0 +1,261 @@
+// Card data for the link-preview images: one small record per page, from the
+// same data/*.json and helpers the pages use. Runs after `astro build`; the
+// server (site/server) renders a card into a PNG the first time it's asked for.
+import fs from "node:fs";
+import path from "node:path";
+import {
+  members,
+  organizations,
+  committees,
+  donors,
+  congressCommittees,
+  congressCommitteeById,
+  memberById,
+  committeeById,
+  photoUrl,
+  partyLetter,
+  partySplit,
+  seat,
+  kindLabel,
+  displayName,
+  cycleRange,
+  type Member,
+} from "../src/lib/data";
+import { pacPercentile, pacTotal, chamberName, shortSeat } from "../src/lib/derived";
+import { sectors } from "../src/lib/sectors";
+import { shortSector, money } from "../src/lib/format";
+import { hemicycle } from "../src/lib/charts";
+import { ogVersion } from "../src/lib/og";
+import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
+
+const OUT_DIR = path.resolve(process.cwd(), "server/data");
+const NOT_INDUSTRY = ["Unknown", "Party & Candidate Committees"];
+
+const cards: Record<string, Card> = {};
+const party = (m: Member) => partyLetter(m.party) as Party;
+const toSplit = (s: ReturnType<typeof partySplit>): Split => ({ D: s.Democrat, I: s.Independent, R: s.Republican });
+/** A member as a bar row: "Bernie Sanders", with "I-VT" beside it. */
+const memberBar = (r: { id: string; total: number }): Bar[] => {
+  const m = memberById.get(r.id);
+  return m ? [{ label: m.name, value: r.total, party: party(m), note: shortSeat(m) }] : [];
+};
+
+for (const m of members) {
+  const rank = pacPercentile(m);
+  cards[`member/${m.bioguide}`] = {
+    type: "member",
+    name: m.name,
+    party: party(m),
+    partyName: m.party,
+    seat: seat(m),
+    photo: photoUrl(m.bioguide) ? m.bioguide : undefined,
+    pac: pacTotal(m),
+    rank: rank.rank,
+    of: rank.of,
+    peers: m.chamber === "senate" ? "senators" : "House members",
+    sectors: m.sectors
+      .filter((s) => s.id !== "Unknown" && s.total > 0)
+      .slice(0, 4)
+      .map((s) => ({ label: shortSector(s.id), value: s.total })),
+  };
+}
+
+for (const o of organizations) {
+  cards[`organization/${o.id}`] = {
+    type: "organization",
+    name: o.name,
+    sector: o.sector,
+    total: o.total,
+    members: o.recipients.length,
+    split: toSplit(partySplit(o.recipients)),
+    top: o.recipients.slice(0, 3).flatMap(memberBar),
+  };
+}
+
+for (const c of committees) {
+  const targets = (c.outside?.targets ?? [])
+    .slice()
+    .sort((a, b) => b.support + b.oppose - (a.support + a.oppose))
+    .slice(0, 3)
+    .flatMap((t) => {
+      const m = memberById.get(t.id);
+      return m ? [{ label: m.name, note: shortSeat(m), support: t.support, oppose: t.oppose }] : [];
+    });
+  const outside = (c.outside?.support ?? 0) + (c.outside?.oppose ?? 0);
+  cards[`pac/${c.id}`] = {
+    type: "pac",
+    name: displayName(c.name),
+    kind: kindLabel(c.kind),
+    sector: c.sector,
+    total: c.total,
+    members: c.recipients.length,
+    split: toSplit(partySplit(c.recipients)),
+    support: c.outside?.support ?? 0,
+    oppose: c.outside?.oppose ?? 0,
+    targets,
+    opponents: !outside && c.opponents ? { support: c.opponents.support, oppose: c.opponents.oppose } : undefined,
+  };
+}
+
+for (const d of donors) {
+  cards[`donor/${d.id}`] = {
+    type: "donor",
+    name: d.name,
+    about:
+      d.type === "individual"
+        ? [d.occupation, d.employer, d.state].filter(Boolean).join(" · ")
+        : d.type === "committee"
+          ? "Political committee"
+          : "Organization",
+    total: d.total,
+    groups: d.gifts.length,
+    gifts: d.gifts.slice(0, 4).map((g) => {
+      const c = committeeById.get(g.id);
+      return { label: c ? displayName(c.name) : `FEC committee ${g.id}`, value: g.total };
+    }),
+  };
+}
+
+for (const s of sectors) {
+  cards[`sector/${s.slug}`] = {
+    type: "sector",
+    name: s.name,
+    total: s.total,
+    orgs: s.organizations.length,
+    members: s.recipients.length,
+    split: toSplit(s.split),
+    top: [...s.organizations]
+      .sort((a, b) => b.total - a.total)
+      .slice(0, 3)
+      .map((o) => ({ label: o.name, value: o.total })),
+  };
+}
+
+for (const c of congressCommittees) {
+  const seated = c.members.flatMap((s) => {
+    const m = memberById.get(s.bioguide);
+    return m ? [{ ...s, m }] : [];
+  });
+  const counts: Split = { D: 0, I: 0, R: 0 };
+  for (const s of seated) counts[party(s.m)]++;
+  // Same seat order as the page's hemicycle: Democrats from the left.
+  const order = { D: 0, I: 1, R: 2 };
+  const ordered = [...seated].sort((a, b) => order[party(a.m)] - order[party(b.m)]);
+  const { seats, gap } = hemicycle(ordered.length);
+  const sum = (list: Member[]) => {
+    const out = new Map<string, number>();
+    for (const m of list) for (const x of m.sectors) if (!NOT_INDUSTRY.includes(x.id)) out.set(x.id, (out.get(x.id) ?? 0) + x.total);
+    return out;
+  };
+  const mine = sum(seated.map((s) => s.m));
+  const base = sum(c.chamber === "joint" ? members : members.filter((m) => m.chamber === c.chamber));
+  const mineTotal = [...mine.values()].reduce((a, b) => a + b, 0);
+  const baseTotal = [...base.values()].reduce((a, b) => a + b, 0);
+  const top = [...mine].sort((a, b) => b[1] - a[1])[0];
+  cards[`committee/${c.id}`] = {
+    type: "committee",
+    name: c.name,
+    parent: c.parent ? congressCommitteeById.get(c.parent)?.name : undefined,
+    chamber: { house: "House", senate: "Senate", joint: "Joint" }[c.chamber],
+    seats: ordered.map((s, i) => ({
+      x: Math.round(seats[i]!.x * 1000) / 1000,
+      y: Math.round(seats[i]!.y * 1000) / 1000,
+      party: party(s.m),
+      lead: !!s.title && /^(Chair|Chairman|Ranking Member)$/i.test(s.title),
+    })),
+    gap,
+    counts,
+    total: seated.reduce((a, s) => a + pacTotal(s.m), 0),
+    lean: top && mineTotal ? { sector: shortSector(top[0]), share: top[1] / mineTotal, base: (base.get(top[0]) ?? 0) / (baseTotal || 1) } : undefined,
+  };
+}
+
+// --- section and static pages ------------------------------------------------------
+
+const pacMoney = members.reduce((a, m) => a + pacTotal(m), 0);
+const top = <T,>(list: T[], value: (x: T) => number, n = 5) => [...list].sort((a, b) => value(b) - value(a)).slice(0, n);
+
+cards["page/members"] = {
+  type: "page",
+  kicker: "Members of Congress",
+  title: "Every member, and who funds them",
+  dek: `${members.length} current members took ${money(pacMoney, true)} from PACs, ${cycleRange}.`,
+  barsTitle: "Most PAC money",
+  bars: top(members, pacTotal, 4).map((m) => ({ label: m.name, value: pacTotal(m), party: party(m), note: `${chamberName(m)}, ${m.state}` })),
+};
+cards["page/organizations"] = {
+  type: "page",
+  kicker: "Organizations",
+  title: "The companies, unions and groups that fund Congress",
+  dek: `${organizations.filter((o) => o.total > 0).length.toLocaleString()} organizations whose PACs gave to current members, ${cycleRange}.`,
+  barsTitle: "Gave the most",
+  bars: top(organizations, (o) => o.total, 4).map((o) => ({ label: o.name, value: o.total })),
+};
+cards["page/sectors"] = {
+  type: "page",
+  kicker: "Sectors",
+  title: "PAC money to Congress, by industry",
+  dek: `${money(sectors.reduce((a, s) => a + s.total, 0), true)} from ${sectors.length} sectors, ${cycleRange}.`,
+  barsTitle: "Biggest sectors",
+  bars: sectors.filter((s) => !NOT_INDUSTRY.includes(s.name)).slice(0, 4).map((s) => ({ label: shortSector(s.name), value: s.total })),
+};
+const topCommittees = congressCommittees.filter((c) => !c.parent);
+const committeeMoney = (c: (typeof congressCommittees)[number]) =>
+  c.members.reduce((a, s) => a + (memberById.has(s.bioguide) ? pacTotal(memberById.get(s.bioguide)!) : 0), 0);
+cards["page/committees"] = {
+  type: "page",
+  kicker: "Committees",
+  title: "Where members sit, and who funds them",
+  dek: `${topCommittees.length} committees and ${congressCommittees.length - topCommittees.length} subcommittees in the House, Senate and joint.`,
+  barsTitle: "PAC money to their members",
+  bars: top(topCommittees, committeeMoney, 4).map((c) => ({ label: c.name.replace(/^(House|Senate) Committee on /, ""), value: committeeMoney(c), note: { house: "House", senate: "Senate", joint: "Joint" }[c.chamber] })),
+};
+cards["page/donors"] = {
+  type: "page",
+  kicker: "Big donors",
+  title: "Who funds the super PACs",
+  dek: `${donors.length.toLocaleString()} people and groups who gave big to the super PACs that spend on Congress, ${cycleRange}.`,
+  barsTitle: "Gave the most",
+  bars: top(donors, (d) => d.total, 4).map((d) => ({ label: d.name, value: d.total })),
+};
+cards["page/about"] = {
+  type: "page",
+  kicker: "About the data",
+  title: "How this data works",
+  dek: "Where the numbers come from, what's counted and how organizations are classified.",
+  lines: [
+    { strong: "FEC filings", text: "PAC contributions, outside spending and big donors" },
+    { strong: "SEC EDGAR", text: "which industry each company is in" },
+    { strong: "lda.gov", text: "lobbying disclosures and the issues lobbied on" },
+  ],
+};
+cards["page/open-data"] = {
+  type: "page",
+  kicker: "Open data",
+  title: "Download the whole dataset",
+  dek: "Every member, organization and PAC as atproto records, readable with standard atproto tools. CC0.",
+  stats: [
+    { label: "Members", value: members.length.toLocaleString() },
+    { label: "Organizations", value: organizations.length.toLocaleString() },
+    { label: "PACs and committees", value: committees.length.toLocaleString() },
+  ],
+};
+cards["page/search"] = {
+  type: "page",
+  kicker: "Search",
+  title: "Find a member, company, PAC or donor",
+  dek: `Search everyone in the data, ${cycleRange}.`,
+  stats: [
+    { label: "Members", value: members.length.toLocaleString() },
+    { label: "Organizations", value: organizations.length.toLocaleString() },
+    { label: "PACs", value: committees.length.toLocaleString() },
+    { label: "Donors", value: donors.length.toLocaleString() },
+  ],
+};
+
+const file: CardsFile = { version: ogVersion(), cycleRange: cycleRange.replace(/\u2060/g, ""), cards };
+fs.mkdirSync(OUT_DIR, { recursive: true });
+fs.writeFileSync(path.join(OUT_DIR, "cards.json"), JSON.stringify(file));
+// The wordmark, so the server doesn't need the rest of the repo.
+fs.copyFileSync(path.resolve(process.cwd(), "../design/logo/logo-light.svg"), path.join(OUT_DIR, "logo.svg"));
+console.log(`og cards: ${Object.keys(cards).length} cards, ${(fs.statSync(path.join(OUT_DIR, "cards.json")).size / 1e6).toFixed(1)} MB, version ${file.version}`);

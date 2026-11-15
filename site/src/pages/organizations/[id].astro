@@ -76,7 +76,7 @@ const splitRows = [
 const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${o.sec.cik}`;
 ---
 
-<Base title={o.name} description={`Which members of Congress ${o.name} funds, ${cycleRange}.`}>
+<Base title={o.name} og={{ type: "organization", id: o.id }} description={`Which members of Congress ${o.name} funds, ${cycleRange}.`}>
   <p class="kicker">
     <a href={`/sectors/${sectorSlug(o.sector)}/`}>{o.sector}</a>
     {o.industry && <> · {o.industry}</>}

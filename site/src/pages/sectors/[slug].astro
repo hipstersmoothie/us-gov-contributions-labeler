@@ -13,7 +13,7 @@ export function getStaticPaths() {
 const { s } = Astro.props as { s: SectorSummary };
 ---
 
-<Base title={s.name} description={`PAC money from ${s.name} to Congress, ${cycleRange}.`}>
+<Base title={s.name} og={{ type: "sector", id: s.slug }} description={`PAC money from ${s.name} to Congress, ${cycleRange}.`}>
   <p class="kicker"><a href="/sectors/">Sectors</a></p>
   <h1>{s.name}</h1>
   <p class="dek">

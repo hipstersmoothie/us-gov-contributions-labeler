@@ -115,7 +115,7 @@ const oppCandidates = opp.candidates.map((c) => {
 const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
 ---
 
-<Base title={m.name} description={description} image={photo} ogType="profile">
+<Base title={m.name} description={description} og={{ type: "member", id: m.bioguide }} ogType="profile">
   <header class="member-head">
     {
       photo ? (

@@ -1,0 +1,19 @@
+{
+  "name": "site-server",
+  "private": true,
+  "type": "module",
+  "description": "Serves the static site and renders its link-preview images on demand.",
+  "scripts": {
+    "start": "node src/index.ts"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "compression": "^1.8.1",
+    "satori": "^0.63.2",
+    "serve-handler": "^6.1.7"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.8.1",
+    "@types/serve-handler": "^6.1.4"
+  }
+}

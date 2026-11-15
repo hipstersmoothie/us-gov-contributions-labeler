@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import { cycleRange, generatedAt } from "../lib/data";
 ---
 
-<Base title="About the data" description="Where this data comes from, what's counted and how organizations are classified.">
+<Base title="About the data" og={{ type: "page", id: "about" }} description="Where this data comes from, what's counted and how organizations are classified.">
   <p class="kicker">About the data</p>
   <h1>How this data works</h1>
   <p class="dek">

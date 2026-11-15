@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "tsx scripts/og-cards.ts && astro build",
     "preview": "astro preview",
-    "start": "serve dist --listen tcp://0.0.0.0:${PORT:-3000} --no-clipboard"
+    "start": "node server/src/index.ts"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.9",
@@ -15,11 +15,11 @@
     "linkedom": "^0.18.15",
     "react": "^19.3.1",
     "react-aria-components": "^1.22.1",
-    "react-dom": "^19.3.1",
-    "serve": "^14"
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0"
+    "@types/react-dom": "^19.3.0",
+    "tsx": "^4.19.2"
   }
 }
