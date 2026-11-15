@@ -1,0 +1,216 @@
+---
+import Base from "../../layouts/Base.astro";
+import BarList from "../../components/BarList.astro";
+import CycleBars from "../../components/CycleBars.astro";
+import OutsideTable from "../../components/OutsideTable.astro";
+import {
+  members,
+  organizationById,
+  committeeById,
+  congressCommitteeById,
+  photoUrl,
+  money,
+  seat,
+  partyLetter,
+  sectorSlug,
+  cycleRange,
+  displayName,
+  kindLabel,
+  fecCandidateUrl,
+  type Member,
+} from "../../lib/data";
+
+export function getStaticPaths() {
+  return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
+}
+
+const { m } = Astro.props as { m: Member };
+const raised = Object.values(m.totals).reduce((s, t) => s + t.receipts, 0);
+const fromPacs = m.committees.reduce((s, c) => s + c.total, 0);
+const sectorTotal = m.sectors.reduce((s, x) => s + x.total, 0);
+const photo = photoUrl(m.bioguide);
+const seats = m.assignments
+  .map((a) => ({ ...a, committee: congressCommitteeById.get(a.id) }))
+  .filter((a) => a.committee)
+  // Full committees first, then their subcommittees.
+  .sort((a, b) => Number(!!a.committee!.parent) - Number(!!b.committee!.parent));
+const ind = m.individuals;
+---
+
+<Base title={m.name} description={`Who funds ${m.name}: top industries, organizations and PACs, ${cycleRange}.`}>
+  <header class="member-head">
+    {photo && <img src={photo} alt="" width="90" height="110" />}
+    <div>
+      <h1>{m.name}</h1>
+      <p class="eyebrow">
+        <span class={`party party-${partyLetter(m.party)}`}>{m.party}</span> · {seat(m)}
+      </p>
+    </div>
+  </header>
+
+  <dl class="stats">
+    <div class="stat"><dt>Raised, {cycleRange}</dt><dd>{money(raised, true)}</dd></div>
+    <div class="stat"><dt>From PACs &amp; committees</dt><dd>{money(fromPacs, true)}</dd></div>
+    <div class="stat"><dt>Top sector</dt><dd>{m.sectors[0]?.id ?? "–"}</dd></div>
+    {m.outside.support > 0 && <div class="stat"><dt>Outside spending for</dt><dd>{money(m.outside.support, true)}</dd></div>}
+    {m.outside.oppose > 0 && <div class="stat"><dt>Outside spending against</dt><dd>{money(m.outside.oppose, true)}</dd></div>}
+  </dl>
+
+  {
+    m.accounts.length > 0 && (
+      <section class="section">
+        <ul class="chips">
+          {m.accounts.map((a) => (
+            <li><a class="chip" href={`https://bsky.app/profile/${a.handle}`}>@{a.handle}</a></li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    seats.length > 0 && (
+      <section class="section">
+        <h2 class="small muted">Committees</h2>
+        <ul class="chips">
+          {seats.map((a) => (
+            <li>
+              <a class="chip" href={`/committees/${a.id}/`}>
+                {a.committee!.parent ? `${congressCommitteeById.get(a.committee!.parent)?.name.replace(/^(House|Senate) Committee on (the )?/, "")}: ` : ""}
+                {a.committee!.name.replace(/^(House|Senate|Joint) Committee on (the )?/, "")}
+                {a.title && <strong> · {a.title}</strong>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <div class="grid-2 section">
+    <section class="card">
+      <h2>Where the money came from</h2>
+      <CycleBars totals={m.totals} />
+      <p class="muted small">
+        Totals from the FEC's candidate summaries.
+        {m.fecIds.map((id, i) => (<>{i > 0 && ", "}<a href={fecCandidateUrl(id)}>{id}</a></>))}
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>PAC money by sector</h2>
+      {
+        m.sectors.length ? (
+          <BarList
+            total={sectorTotal}
+            rows={m.sectors.map((s) => ({ label: s.id, value: s.total, href: `/sectors/${sectorSlug(s.id)}/` }))}
+          />
+        ) : (
+          <p class="muted">No PAC contributions on file.</p>
+        )
+      }
+    </section>
+  </div>
+
+  {
+    ind && (
+      <div class="grid-2 section">
+        <section class="card">
+          <h2>Individual donors by sector</h2>
+          <p class="muted small">
+            Estimated from the employer and occupation on {ind.donations.toLocaleString()} itemized donations
+            ({money(ind.itemized, true)}). Donations of $200 or less aren't itemized.
+          </p>
+          <BarList
+            total={ind.itemized}
+            rows={ind.sectors.slice(0, 15).map((s) => ({
+              label: s.id,
+              value: s.total,
+              href: ["Retired", "Not employed", "Unknown"].includes(s.id) ? undefined : `/sectors/${sectorSlug(s.id)}/`,
+            }))}
+          />
+        </section>
+        <section class="card">
+          <h2>Top employers of donors</h2>
+          <p class="muted small">Itemized donations from people who listed each employer.</p>
+          <BarList
+            total={ind.itemized}
+            rows={ind.employers.slice(0, 15).map((e) => ({
+              label: e.organization ? organizationById.get(e.organization)?.name ?? e.name : e.name,
+              value: e.total,
+              href: e.organization ? `/organizations/${e.organization}/` : undefined,
+            }))}
+          />
+        </section>
+      </div>
+    )
+  }
+
+  {
+    m.outside.spenders.length > 0 && (
+      <section class="card section">
+        <h2>Outside spending</h2>
+        <p class="muted small">
+          Super PACs and other groups can spend unlimited amounts on ads for or against a candidate, as long as they
+          don't coordinate with the campaign. This money doesn't go to {m.name}.
+        </p>
+        <OutsideTable
+          heading="Spender"
+          rows={m.outside.spenders.map((s) => {
+            const c = committeeById.get(s.id);
+            return {
+              label: c ? displayName(c.name) : s.id,
+              href: `/pacs/${s.id}/`,
+              note: c ? kindLabel(c.kind) : undefined,
+              support: s.support,
+              oppose: s.oppose,
+            };
+          })}
+        />
+      </section>
+    )
+  }
+
+  <div class="grid-2">
+    <section class="card">
+      <h2>Top contributors</h2>
+      <p class="muted small">Each organization's PAC plus donations from its employees, the way OpenSecrets counted.</p>
+      <BarList
+        rows={m.contributors.slice(0, 15).map((c) => {
+          const org = c.id.startsWith("employer:") ? undefined : organizationById.get(c.id);
+          return {
+            label: c.name,
+            value: c.total,
+            href: org ? `/organizations/${org.id}/` : undefined,
+            note: [c.pacs && `PAC ${money(c.pacs, true)}`, c.individuals && `employees ${money(c.individuals, true)}`]
+              .filter(Boolean)
+              .join(" · "),
+          };
+        })}
+      />
+    </section>
+
+    <section class="card">
+      <h2>Top PACs</h2>
+      <BarList
+        total={fromPacs}
+        rows={m.committees.slice(0, 15).map((c) => {
+          const committee = committeeById.get(c.id);
+          return {
+            label: committee ? displayName(committee.name) : c.id,
+            value: c.total,
+            href: `/pacs/${c.id}/`,
+            note: committee ? kindLabel(committee.kind) : undefined,
+          };
+        })}
+      />
+    </section>
+  </div>
+</Base>
+
+<style>
+  .member-head { display: flex; gap: 20px; align-items: center; margin-bottom: 8px; }
+  .member-head img { border-radius: 8px; object-fit: cover; background: var(--grid); }
+  .member-head .eyebrow { margin-bottom: 0; }
+  .chip strong { font-weight: 600; }
+</style>

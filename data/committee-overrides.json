@@ -1,0 +1,12 @@
+{
+  "C00236489": { "sector": "Energy & Natural Resources", "industry": "Oil refining, chemicals & manufacturing", "name": "Koch, Inc." },
+  "C00346353": { "sector": "Construction", "industry": "Building materials" },
+  "C00391979": { "sector": "Construction", "industry": "Railroad construction" },
+  "C00406215": { "sector": "Finance, Insurance & Real Estate", "industry": "Insurance" },
+  "C00442913": { "sector": "Construction", "industry": "Engineering & construction" },
+  "C00410266": { "sector": "Finance, Insurance & Real Estate", "industry": "Investment management" },
+  "C00410407": { "sector": "Finance, Insurance & Real Estate", "industry": "Securities brokerage", "name": "Edward Jones" },
+  "C00461129": { "sector": "Finance, Insurance & Real Estate", "industry": "Reinsurance", "name": "Reinsurance Group of America" },
+  "C00389403": { "sector": "Transportation", "industry": "Automotive aftermarket" },
+  "C00360362": { "sector": "Agribusiness", "industry": "Food processing" }
+}

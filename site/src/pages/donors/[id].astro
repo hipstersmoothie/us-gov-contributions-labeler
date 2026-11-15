@@ -1,0 +1,77 @@
+---
+import Base from "../../layouts/Base.astro";
+import BarList from "../../components/BarList.astro";
+import OutsideTable from "../../components/OutsideTable.astro";
+import {
+  donors,
+  committeeById,
+  memberById,
+  money,
+  displayName,
+  cycleRange,
+  MIN_DONATION,
+  type Donor,
+} from "../../lib/data";
+
+export function getStaticPaths() {
+  return donors.map((d) => ({ params: { id: d.id }, props: { d } }));
+}
+
+const { d } = Astro.props as { d: Donor };
+
+// What the groups they funded spent on members. Shown per group, never
+// attributed to the donor: money is fungible inside a super PAC.
+const funded = d.gifts.map((g) => ({ gift: g, committee: committeeById.get(g.id) }));
+const about =
+  d.type === "individual"
+    ? [d.occupation, d.employer, d.state].filter(Boolean).join(" · ")
+    : d.type === "committee"
+      ? "Political committee"
+      : "Organization";
+---
+
+<Base title={d.name} description={`${d.name}'s donations to super PACs and outside groups, ${cycleRange}.`}>
+  <h1>{d.name}</h1>
+  <p class="eyebrow">{about}</p>
+  {d.organization && <p>See also <a href={`/organizations/${d.organization}/`}>{d.name}'s PAC giving</a>.</p>}
+  {d.committee && <p>See also <a href={`/pacs/${d.committee}/`}>this committee's profile</a>.</p>}
+
+  <dl class="stats">
+    <div class="stat"><dt>Given to outside spenders, {cycleRange}</dt><dd>{money(d.total, true)}</dd></div>
+    <div class="stat"><dt>Groups funded</dt><dd>{d.gifts.length}</dd></div>
+  </dl>
+
+  <section class="card section">
+    <h2>Donations</h2>
+    <p class="muted small">Individual donations of {money(MIN_DONATION)} or more, as reported by the receiving committee.</p>
+    <BarList
+      total={d.total}
+      rows={funded.map(({ gift, committee }) => ({
+        label: committee ? displayName(committee.name) : gift.id,
+        value: gift.total,
+        href: `/pacs/${gift.id}/`,
+        note: Object.keys(gift.byCycle).map((c) => `${Number(c) - 1}–${c.slice(2)}`).join(", "),
+      }))}
+    />
+  </section>
+
+  {
+    funded.map(({ gift, committee }) =>
+      committee?.outside ? (
+        <section class="card section">
+          <h2>What {displayName(committee.name)} spent on current members</h2>
+          <OutsideTable
+            heading="Member"
+            rows={committee.outside.targets.slice(0, 10).map((t) => {
+              const m = memberById.get(t.id);
+              return { label: m?.name ?? t.id, href: `/members/${t.id}/`, note: m ? `${m.party} · ${m.state}` : undefined, support: t.support, oppose: t.oppose };
+            })}
+          />
+          {committee.outside.targets.length > 10 && (
+            <p class="small"><a href={`/pacs/${gift.id}/`}>All {committee.outside.targets.length} members</a></p>
+          )}
+        </section>
+      ) : null
+    )
+  }
+</Base>

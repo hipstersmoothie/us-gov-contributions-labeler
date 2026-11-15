@@ -1,0 +1,98 @@
+---
+import Base from "../../layouts/Base.astro";
+import BarList from "../../components/BarList.astro";
+import {
+  congressCommittees,
+  congressCommitteeById,
+  memberById,
+  organizationById,
+  money,
+  partyLetter,
+  sectorSlug,
+  cycleRange,
+  type CongressCommittee,
+} from "../../lib/data";
+
+export function getStaticPaths() {
+  return congressCommittees.map((c) => ({ params: { id: c.id }, props: { c } }));
+}
+
+const { c } = Astro.props as { c: CongressCommittee };
+const parent = c.parent ? congressCommitteeById.get(c.parent) : undefined;
+const subcommittees = congressCommittees.filter((s) => s.parent === c.id);
+const seated = c.members
+  .map((s) => ({ ...s, member: memberById.get(s.bioguide) }))
+  .filter((s) => s.member)
+  .sort((a, b) => Number(b.majority) - Number(a.majority) || (a.rank ?? 99) - (b.rank ?? 99));
+
+// PAC money to everyone on the committee, by sector and by organization.
+const sectors = new Map<string, number>();
+const orgs = new Map<string, number>();
+for (const s of seated) {
+  for (const x of s.member!.sectors) sectors.set(x.id, (sectors.get(x.id) ?? 0) + x.total);
+  for (const o of s.member!.organizations) orgs.set(o.id, (orgs.get(o.id) ?? 0) + o.total);
+}
+const sectorRows = [...sectors].sort((a, b) => b[1] - a[1]);
+const orgRows = [...orgs].sort((a, b) => b[1] - a[1]).slice(0, 20);
+const total = sectorRows.reduce((s, [, v]) => s + v, 0);
+const chamberLabel = { house: "House", senate: "Senate", joint: "Joint" }[c.chamber];
+---
+
+<Base title={c.name} description={`Who funds the members of the ${c.name}, ${cycleRange}.`}>
+  <h1>{c.name}</h1>
+  <p class="eyebrow">
+    {parent ? <>Subcommittee of <a href={`/committees/${parent.id}/`}>{parent.name}</a></> : `${chamberLabel} committee`}{" "}
+    · {seated.length} members
+  </p>
+  {c.jurisdiction && <p class="muted">{c.jurisdiction}</p>}
+
+  <div class="grid-2 section">
+    <section class="card">
+      <h2>PAC money to its members, by sector</h2>
+      <p class="muted small">Contributions to everyone currently on the committee, {cycleRange}.</p>
+      <BarList total={total} rows={sectorRows.map(([id, value]) => ({ label: id, value, href: `/sectors/${sectorSlug(id)}/` }))} />
+    </section>
+    <section class="card">
+      <h2>Top organizations giving to its members</h2>
+      <BarList
+        total={total}
+        rows={orgRows.map(([id, value]) => {
+          const o = organizationById.get(id);
+          return { label: o?.name ?? id, value, href: `/organizations/${id}/`, note: o?.sector };
+        })}
+      />
+    </section>
+  </div>
+
+  <div class="grid-2">
+    <section class="card">
+      <h2>Members</h2>
+      <table>
+        <tbody>
+          {seated.map((s) => (
+            <tr>
+              <td>
+                <span class={`party party-${partyLetter(s.member!.party)}`} />
+                <a href={`/members/${s.bioguide}/`}>{s.member!.name}</a>
+                {s.title && <span class="muted small"> · {s.title}</span>}
+              </td>
+              <td class="muted small">{s.majority ? "Majority" : "Minority"}</td>
+              <td class="num">{money(s.member!.committees.reduce((sum, x) => sum + x.total, 0), true)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="muted small">Right column: PAC money each member received, {cycleRange}.</p>
+    </section>
+    {
+      subcommittees.length > 0 && (
+        <section class="card">
+          <h2>Subcommittees</h2>
+          <ul>
+            {subcommittees.map((s) => <li><a href={`/committees/${s.id}/`}>{s.name}</a></li>)}
+          </ul>
+        </section>
+      )
+    }
+  </div>
+</Base>

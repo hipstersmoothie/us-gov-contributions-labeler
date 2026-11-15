@@ -1,0 +1,96 @@
+---
+import Base from "../../layouts/Base.astro";
+import { members, money, partyLetter, cycleRange } from "../../lib/data";
+
+const states = [...new Set(members.map((m) => m.state))].sort();
+const rows = members.map((m) => ({
+  m,
+  raised: Object.values(m.totals).reduce((s, t) => s + t.receipts, 0),
+  pacs: m.committees.reduce((s, c) => s + c.total, 0),
+}));
+---
+
+<Base title="Members" description="Every current member of Congress and who funds them.">
+  <h1>Members of Congress</h1>
+  <p class="eyebrow">{members.length} current members. Money raised {cycleRange}.</p>
+
+  <form class="filters" id="filters">
+    <input name="q" type="search" placeholder="Filter by name" aria-label="Filter by name" />
+    <select name="chamber" aria-label="Chamber">
+      <option value="">House &amp; Senate</option>
+      <option value="house">House</option>
+      <option value="senate">Senate</option>
+    </select>
+    <select name="party" aria-label="Party">
+      <option value="">All parties</option>
+      <option value="D">Democrats</option>
+      <option value="R">Republicans</option>
+      <option value="I">Independents</option>
+    </select>
+    <select name="state" aria-label="State">
+      <option value="">All states</option>
+      {states.map((s) => <option>{s}</option>)}
+    </select>
+    <select name="bsky" aria-label="Bluesky">
+      <option value="">On Bluesky or not</option>
+      <option value="1">On Bluesky</option>
+    </select>
+  </form>
+
+  <section class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Member</th><th>Seat</th><th>Top sector</th>
+          <th class="num">Raised</th><th class="num">From PACs</th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        {
+          rows.map(({ m, raised, pacs }) => (
+            <tr
+              data-name={m.name.toLowerCase()}
+              data-chamber={m.chamber}
+              data-party={partyLetter(m.party)}
+              data-state={m.state}
+              data-bsky={m.accounts.length ? "1" : ""}
+            >
+              <td><span class={`party party-${partyLetter(m.party)}`} /><a href={`/members/${m.bioguide}/`}>{m.name}</a></td>
+              <td>{m.chamber === "senate" ? `Sen. ${m.state}` : `${m.state}-${m.district ?? "AL"}`}</td>
+              <td>{m.sectors[0]?.id ?? "–"}</td>
+              <td class="num">{money(raised, true)}</td>
+              <td class="num">{money(pacs, true)}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+    <p class="muted small" id="count"></p>
+  </section>
+
+  <script is:inline>
+    const form = document.getElementById("filters");
+    const rows = [...document.querySelectorAll("#rows tr")];
+    const count = document.getElementById("count");
+    const apply = () => {
+      const f = Object.fromEntries(new FormData(form));
+      const q = f.q.trim().toLowerCase();
+      let shown = 0;
+      for (const r of rows) {
+        const d = r.dataset;
+        const ok =
+          (!q || d.name.includes(q)) &&
+          (!f.chamber || d.chamber === f.chamber) &&
+          (!f.party || d.party === f.party) &&
+          (!f.state || d.state === f.state) &&
+          (!f.bsky || d.bsky === f.bsky);
+        r.hidden = !ok;
+        if (ok) shown++;
+      }
+      count.textContent = `${shown} of ${rows.length} members`;
+    };
+    form.addEventListener("input", apply);
+    form.addEventListener("submit", (e) => e.preventDefault());
+    apply();
+  </script>
+</Base>

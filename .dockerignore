@@ -1,0 +1,8 @@
+node_modules
+site/node_modules
+site/dist
+site/.astro
+site/public/photos
+.cache
+.env*
+*.local.*

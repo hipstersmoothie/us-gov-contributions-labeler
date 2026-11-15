@@ -1,0 +1,60 @@
+---
+// Ranked horizontal bars, one series. Label and value are always visible
+// text, so the list doubles as its own table view.
+import { money } from "../lib/data";
+
+interface Row {
+  label: string;
+  value: number;
+  href?: string;
+  /** Secondary text under the label (party, sector, ...). */
+  note?: string;
+  noteClass?: string;
+}
+interface Props {
+  rows: Row[];
+  /** Share-of-total shown in the tooltip. */
+  total?: number;
+}
+const { rows, total } = Astro.props;
+const max = Math.max(...rows.map((r) => r.value), 1);
+---
+
+<ol class="bar-list">
+  {
+    rows.map((r) => (
+      <li>
+        <div class="label">
+          {r.href ? <a href={r.href}>{r.label}</a> : r.label}
+          {r.note && <span class:list={["note", r.noteClass]}>{r.note}</span>}
+        </div>
+        <div
+          class="track"
+          tabindex="0"
+          data-tip={`${r.label}: ${money(r.value)}${total ? ` (${Math.round((r.value / total) * 100)}% of total)` : ""}`}
+        >
+          <div class="bar" style={`width: calc((100% - 64px) * ${Math.max(r.value / max, 0.005)})`} />
+          <span class="value">{money(r.value, true)}</span>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .bar-list { list-style: none; margin: 0; padding: 0; }
+  li {
+    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 12px; align-items: center; padding: 5px 0;
+  }
+  .label { font-size: 14px; min-width: 0; overflow-wrap: anywhere; }
+  .note { display: block; font-size: 12px; color: var(--text-muted); }
+  .track { display: flex; align-items: center; gap: 8px; min-height: 24px; }
+  .track:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 4px; }
+  .bar {
+    height: 14px; background: var(--bar);
+    border-radius: 0 4px 4px 0; /* square at the baseline, rounded data end */
+    flex: none;
+  }
+  .value { font-size: 13px; color: var(--text-secondary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+</style>

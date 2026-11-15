@@ -1,0 +1,65 @@
+---
+import Base from "../layouts/Base.astro";
+import { cycleRange, generatedAt } from "../lib/data";
+---
+
+<Base title="About" description="Where this data comes from and how it is classified.">
+  <article class="card prose">
+    <h1>About this data</h1>
+
+    <h2>What's counted</h2>
+    <p>
+      Direct contributions from political committees (PACs, leadership PACs, party and candidate committees)
+      to the campaigns of current members of Congress, {cycleRange}, as reported to the
+      <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">Federal Election Commission</a>.
+      Each member's page shows how much they raised from individuals in total, but individual donors are only
+      named when they give large sums to outside spenders (below).
+    </p>
+    <p>
+      A PAC's money comes from the employees, members or owners of the organization that sponsors it,
+      not from the organization's treasury. Corporations can't give directly to federal candidates.
+    </p>
+
+    <h2>Outside spending and big donors</h2>
+    <p>
+      Super PACs and other groups can raise and spend unlimited amounts for or against candidates, as long as they
+      don't coordinate with the campaign. These <em>independent expenditures</em> are shown separately from
+      contributions, split into spending supporting and opposing each member, because money spent attacking
+      someone isn't money given to them.
+    </p>
+    <p>
+      For every group that spent on current members (other than party committees and campaigns), donations of
+      $50,000 or more are listed as reported to the FEC. A donor's money isn't traced to particular ads: once given, it's pooled with
+      everyone else's.
+    </p>
+
+    <h2>Who is behind each PAC</h2>
+    <p>Each PAC is traced to the organization behind it, in this order:</p>
+    <ol>
+      <li><strong>FEC filings</strong> name a PAC's connected organization and its type (corporation, labor union, trade association, membership group), and the members of Congress who run leadership PACs.</li>
+      <li><strong><a href="https://www.sec.gov/edgar">SEC EDGAR</a></strong> gives an industry code for publicly traded companies.</li>
+      <li><strong><a href="https://lda.gov/">Lobbying disclosures</a></strong> list the issues an organization lobbies on, and which PACs belong to which lobbying registrants.</li>
+      <li>Keywords in the organization's name (“Association of Realtors”, “Physicians”) for associations with no SEC or lobbying record.</li>
+    </ol>
+    <p>
+      These feed a fixed set of sectors. PACs with no sponsoring organization are counted as
+      <em>Ideological &amp; Single-Issue</em>. Some classifications are set by hand; the rules are
+      in the project's source code. Mistakes are possible, so check the linked FEC filings for anything important.
+    </p>
+
+    <h2 id="labeler">The Bluesky labeler</h2>
+    <p>
+      Members of Congress with a Bluesky account are labeled with their top funding sectors and organizations
+      by the <a href="https://bsky.app/profile/us-gov-funding.bsky.social">@us-gov-funding.bsky.social</a> labeler.
+      Subscribe to it to see the labels on their posts.
+    </p>
+
+    <p class="muted small">Data last updated {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}.</p>
+  </article>
+</Base>
+
+<style>
+  .prose { max-width: 720px; }
+  .prose h2 { margin-top: 28px; }
+  .prose li { margin-bottom: 6px; }
+</style>

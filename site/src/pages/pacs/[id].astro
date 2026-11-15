@@ -1,0 +1,130 @@
+---
+import Base from "../../layouts/Base.astro";
+import BarList from "../../components/BarList.astro";
+import SplitBar from "../../components/SplitBar.astro";
+import OutsideTable from "../../components/OutsideTable.astro";
+import {
+  committees,
+  organizationById,
+  memberById,
+  donorById,
+  MIN_DONATION,
+  money,
+  partySplit,
+  cycleRange,
+  displayName,
+  kindLabel,
+  orgTypeLabel,
+  fecCommitteeUrl,
+  fecCandidateUrl,
+  type Committee,
+} from "../../lib/data";
+
+export function getStaticPaths() {
+  return committees.map((c) => ({ params: { id: c.id }, props: { c } }));
+}
+
+const { c } = Astro.props as { c: Committee };
+const org = organizationById.get(c.organization);
+const split = partySplit(c.recipients);
+const name = displayName(c.name);
+// A PAC that is its own organization doesn't need a link back to itself.
+const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && org.name !== name);
+---
+
+<Base title={name} description={`Which members of Congress ${name} gives to, ${cycleRange}.`}>
+  <h1>{name}</h1>
+  <p class="eyebrow">
+    {kindLabel(c.kind)}{orgTypeLabel(c.orgType) && <> · {orgTypeLabel(c.orgType)}</>} · <a href={fecCommitteeUrl(c.id)}>FEC {c.id}</a>
+  </p>
+
+  {
+    showOrg && (
+      <p>Affiliated with <a href={`/organizations/${org.id}/`}>{org.name}</a> ({org.sector}).</p>
+    )
+  }
+  {
+    c.sponsors && (
+      <p>
+        Leadership PAC of{" "}
+        {c.sponsors.map((s, i) => {
+          const m = s.bioguide && memberById.get(s.bioguide);
+          return (
+            <>
+              {i > 0 && ", "}
+              {m ? <a href={`/members/${m.bioguide}/`}>{m.name}</a> : <a href={fecCandidateUrl(s.fecId)}>{s.fecId}</a>}
+            </>
+          );
+        })}
+        .
+      </p>
+    )
+  }
+
+  <dl class="stats">
+    {c.total > 0 && <div class="stat"><dt>Given to current members, {cycleRange}</dt><dd>{money(c.total, true)}</dd></div>}
+    {c.total > 0 && <div class="stat"><dt>Members funded</dt><dd>{c.recipients.length}</dd></div>}
+    {c.outside && c.outside.support > 0 && <div class="stat"><dt>Spent supporting members</dt><dd>{money(c.outside.support, true)}</dd></div>}
+    {c.outside && c.outside.oppose > 0 && <div class="stat"><dt>Spent opposing members</dt><dd>{money(c.outside.oppose, true)}</dd></div>}
+  </dl>
+
+  {
+    (c.outside || c.donors) && (
+      <div class="grid-2 section">
+        {c.outside && (
+          <section class="card">
+            <h2>Outside spending on current members</h2>
+            <OutsideTable
+              heading="Member"
+              rows={c.outside.targets.slice(0, 30).map((t) => {
+                const m = memberById.get(t.id);
+                return { label: m?.name ?? t.id, href: `/members/${t.id}/`, note: m ? `${m.party} · ${m.state}` : undefined, support: t.support, oppose: t.oppose };
+              })}
+            />
+          </section>
+        )}
+        {c.donors && (
+          <section class="card">
+            <h2>Biggest donors</h2>
+            <p class="muted small">Donations of {money(MIN_DONATION)} or more, {cycleRange}.</p>
+            <BarList
+              rows={c.donors.slice(0, 30).map((d) => {
+                const donor = donorById.get(d.id);
+                return {
+                  label: donor?.name ?? d.id,
+                  value: d.total,
+                  href: `/donors/${d.id}/`,
+                  note: donor && (donor.type === "individual" ? [donor.occupation, donor.employer].filter(Boolean).join(", ") : donor.type === "committee" ? "Committee" : "Organization"),
+                };
+              })}
+            />
+          </section>
+        )}
+      </div>
+    )
+  }
+
+  {c.total > 0 && <div class="grid-2">
+    <section class="card">
+      <h2>Top recipients</h2>
+      <BarList
+        total={c.total}
+        rows={c.recipients.slice(0, 25).map((r) => {
+          const m = memberById.get(r.id);
+          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, note: m ? `${m.party} · ${m.state}` : undefined };
+        })}
+      />
+    </section>
+    <section class="card">
+      <h2>Split by party</h2>
+      <SplitBar
+        label="Contributions by recipient party"
+        segments={[
+          { label: "Democrats", value: split.Democrat, color: "--party-d" },
+          { label: "Independents", value: split.Independent, color: "--party-i" },
+          { label: "Republicans", value: split.Republican, color: "--party-r" },
+        ]}
+      />
+    </section>
+  </div>}
+</Base>

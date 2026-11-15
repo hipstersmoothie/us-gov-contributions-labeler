@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.23.4"
   },
   "scripts": {
     "start": "tsx src/label-server.ts",
-    "create-labels": "tsx src/create-labels.ts"
+    "discover": "tsx src/ingest.ts --steps=accounts",
+    "read-dms": "tsx src/read-dms.ts",
+    "typecheck": "tsc --noEmit",
+    "ingest": "tsx src/ingest.ts",
+    "site:dev": "pnpm --filter site dev",
+    "site:build": "pnpm --filter site build",
+    "sync-labels": "tsx src/sync-labels.ts",
+    "dedupe-labels": "tsx src/scripts/dedupe-labels.ts",
+    "photos": "tsx src/scripts/fetch-photos.ts"
   },
   "devDependencies": {
-    "@types/node": "^22.7.5",
+    "@types/node": "^24.19.2",
     "typescript": "^5.5.3"
   },
   "dependencies": {
@@ -22,7 +30,6 @@
     "dedent": "^1.5.3",
     "dotenv": "^16.4.5",
     "libsql": "0.5.0-pre.2",
-    "playwright": "^1.49.0",
     "tsx": "^4.19.2"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",

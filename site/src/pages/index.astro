@@ -1,0 +1,80 @@
+---
+import Base from "../layouts/Base.astro";
+import BarList from "../components/BarList.astro";
+import { sectors } from "../lib/sectors";
+import { members, organizations, committees, donors, money, cycleRange, displayName } from "../lib/data";
+
+const total = sectors.reduce((s, x) => s + x.total, 0);
+const byPacMoney = members
+  .map((m) => ({ m, total: m.committees.reduce((s, c) => s + c.total, 0) }))
+  .sort((a, b) => b.total - a.total)
+  .slice(0, 10);
+const onBluesky = members.filter((m) => m.accounts.length).length;
+const outsideSpenders = committees
+  .filter((c) => c.outside)
+  .map((c) => ({ c, spent: c.outside!.support + c.outside!.oppose }))
+  .sort((a, b) => b.spent - a.spent);
+const outsideTotal = outsideSpenders.reduce((s, x) => s + x.spent, 0);
+---
+
+<Base title="Home" description={`Who funds each member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`}>
+  <h1>Who funds Congress</h1>
+  <p class="eyebrow">
+    PAC money to the {members.length} current members of Congress, {cycleRange}, traced back to the companies,
+    unions and causes behind it.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>PAC &amp; committee money</dt><dd>{money(total, true)}</dd></div>
+    <div class="stat"><dt>Outside spending for &amp; against</dt><dd>{money(outsideTotal, true)}</dd></div>
+    <div class="stat"><dt>Organizations</dt><dd>{organizations.length.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Members on Bluesky</dt><dd><a href="/about/#labeler">{onBluesky}</a></dd></div>
+  </dl>
+
+  <div class="grid-2">
+    <section class="card">
+      <h2>By sector</h2>
+      <BarList total={total} rows={sectors.map((s) => ({ label: s.name, value: s.total, href: `/sectors/${s.slug}/` }))} />
+    </section>
+
+    <section class="card">
+      <h2>Biggest givers</h2>
+      <BarList
+        total={total}
+        rows={organizations.slice(0, 15).map((o) => ({ label: o.name, value: o.total, href: `/organizations/${o.id}/`, note: o.sector }))}
+      />
+      <p class="small"><a href="/organizations/">All organizations</a></p>
+    </section>
+  </div>
+
+  <div class="grid-2" style="margin-top: 20px">
+    <section class="card">
+      <h2>Biggest outside spenders</h2>
+      <p class="muted small">Super PACs and other groups' ads for and against current members.</p>
+      <BarList
+        total={outsideTotal}
+        rows={outsideSpenders.slice(0, 12).map(({ c, spent }) => ({ label: displayName(c.name), value: spent, href: `/pacs/${c.id}/` }))}
+      />
+    </section>
+    <section class="card">
+      <h2>Biggest donors to outside spenders</h2>
+      <BarList
+        rows={donors.slice(0, 12).map((d) => ({ label: d.name, value: d.total, href: `/donors/${d.id}/`, note: d.type === "individual" ? d.employer : d.type }))}
+      />
+      <p class="small"><a href="/donors/">All big donors</a></p>
+    </section>
+  </div>
+
+  <section class="card section" style="margin-top: 20px">
+    <h2>Most PAC money received</h2>
+    <BarList
+      rows={byPacMoney.map(({ m, total }) => ({
+        label: m.name,
+        value: total,
+        href: `/members/${m.bioguide}/`,
+        note: `${m.party} · ${m.chamber === "senate" ? "Senate" : "House"} · ${m.state}`,
+      }))}
+    />
+    <p class="small"><a href="/members/">All members</a></p>
+  </section>
+</Base>

@@ -1,0 +1,57 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Search">
+  <h1>Search</h1>
+  <p class="eyebrow" id="summary">Members of Congress, organizations and PACs.</p>
+  <section class="card">
+    <ol id="results" class="results"></ol>
+  </section>
+
+  <script is:inline>
+    const q = new URLSearchParams(location.search).get("q")?.trim() ?? "";
+    const input = document.getElementById("site-search");
+    input.value = q;
+    const results = document.getElementById("results");
+    const summary = document.getElementById("summary");
+
+    const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    const terms = norm(q).split(/\s+/).filter(Boolean);
+
+    fetch("/search-index.json")
+      .then((r) => r.json())
+      .then((rows) => {
+        if (!terms.length) return;
+        const hits = rows
+          .map(([label, detail, url]) => {
+            const n = norm(label);
+            if (!terms.every((t) => n.includes(t))) return null;
+            // Prefix matches and members first.
+            const score = (n.startsWith(terms[0]) ? 0 : 1) + (url.startsWith("/members/") ? 0 : 0.5);
+            return { label, detail, url, score };
+          })
+          .filter(Boolean)
+          .sort((a, b) => a.score - b.score || a.label.length - b.label.length)
+          .slice(0, 100);
+
+        summary.textContent = `${hits.length === 100 ? "Top 100" : hits.length} results for “${q}”`;
+        for (const h of hits) {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = h.url;
+          a.textContent = h.label;
+          const d = document.createElement("span");
+          d.className = "muted small";
+          d.textContent = h.detail;
+          li.append(a, d);
+          results.append(li);
+        }
+      });
+  </script>
+
+  <style>
+    .results { list-style: none; margin: 0; padding: 0; }
+    .results :global(li) { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--grid); }
+  </style>
+</Base>

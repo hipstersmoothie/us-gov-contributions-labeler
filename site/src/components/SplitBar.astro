@@ -1,0 +1,60 @@
+---
+// One 100% stacked bar plus a legend that carries every value as text, so
+// identity never rests on color alone.
+import { money, percent } from "../lib/data";
+
+interface Segment {
+  label: string;
+  value: number;
+  /** CSS custom property holding the color, e.g. "--party-d". */
+  color: string;
+}
+interface Props {
+  segments: Segment[];
+  label: string;
+}
+const { segments, label } = Astro.props;
+const shown = segments.filter((s) => s.value > 0);
+const total = shown.reduce((sum, s) => sum + s.value, 0);
+---
+
+{
+  total > 0 && (
+    <figure class="split" aria-label={label}>
+      <div class="bar">
+        {shown.map((s) => (
+          <div
+            class="segment"
+            tabindex="0"
+            style={`flex-grow: ${s.value}; background: var(${s.color})`}
+            data-tip={`${s.label}: ${money(s.value)} (${percent(s.value, total)})`}
+          />
+        ))}
+      </div>
+      <figcaption>
+        <ul class="legend">
+          {shown.map((s) => (
+            <li>
+              <span class="swatch" style={`background: var(${s.color})`} />
+              {s.label} <strong>{money(s.value, true)}</strong>
+              <span class="muted">{percent(s.value, total)}</span>
+            </li>
+          ))}
+        </ul>
+      </figcaption>
+    </figure>
+  )
+}
+
+<style>
+  .split { margin: 0; }
+  .bar { display: flex; gap: 2px; height: 16px; }
+  .segment { flex-basis: 0; min-width: 3px; }
+  .segment:first-child { border-radius: 4px 0 0 4px; }
+  .segment:last-child { border-radius: 0 4px 4px 0; }
+  .segment:only-child { border-radius: 4px; }
+  .segment:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; list-style: none; padding: 0; margin: 10px 0 0; font-size: 14px; }
+  .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  strong { font-weight: 600; margin: 0 4px; }
+</style>

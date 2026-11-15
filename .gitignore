@@ -3,3 +3,10 @@ node_modules
 cursor.txt
 *.log
 labels.*
+*.local.*
+data/review.json
+.cache
+site/public/photos
+site/dist
+site/.astro
+!.env.example

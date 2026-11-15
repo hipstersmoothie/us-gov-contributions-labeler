@@ -1,0 +1,38 @@
+---
+// Independent expenditures, for and against, as a plain table. Support and
+// opposition are different acts, so they get separate columns, never a sum.
+import { money } from "../lib/data";
+
+interface Row {
+  label: string;
+  href?: string;
+  note?: string;
+  support: number;
+  oppose: number;
+}
+interface Props {
+  rows: Row[];
+  heading: string;
+}
+const { rows, heading } = Astro.props;
+---
+
+<table>
+  <thead>
+    <tr><th>{heading}</th><th class="num">Supporting</th><th class="num">Opposing</th></tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((r) => (
+        <tr>
+          <td>
+            {r.href ? <a href={r.href}>{r.label}</a> : r.label}
+            {r.note && <div class="muted small">{r.note}</div>}
+          </td>
+          <td class="num">{r.support ? money(r.support, true) : <span class="muted">–</span>}</td>
+          <td class="num">{r.oppose ? money(r.oppose, true) : <span class="muted">–</span>}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

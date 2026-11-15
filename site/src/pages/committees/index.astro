@@ -1,0 +1,47 @@
+---
+import Base from "../../layouts/Base.astro";
+import { congressCommittees, memberById } from "../../lib/data";
+
+const top = congressCommittees.filter((c) => !c.parent);
+const groups = [
+  { label: "House", list: top.filter((c) => c.chamber === "house") },
+  { label: "Senate", list: top.filter((c) => c.chamber === "senate") },
+  { label: "Joint", list: top.filter((c) => c.chamber === "joint") },
+].filter((g) => g.list.length);
+
+const topSector = (id: string) => {
+  const c = congressCommittees.find((x) => x.id === id)!;
+  const sectors = new Map<string, number>();
+  for (const s of c.members) {
+    for (const x of memberById.get(s.bioguide)?.sectors ?? []) {
+      if (x.id === "Party & Candidate Committees" || x.id === "Unknown") continue;
+      sectors.set(x.id, (sectors.get(x.id) ?? 0) + x.total);
+    }
+  }
+  return [...sectors].sort((a, b) => b[1] - a[1])[0]?.[0];
+};
+---
+
+<Base title="Committees" description="Congressional committees and who funds their members.">
+  <h1>Committees</h1>
+  <p class="eyebrow">Where members sit, and which industries fund the people on each committee.</p>
+  {
+    groups.map((g) => (
+      <section class="card section">
+        <h2>{g.label}</h2>
+        <table>
+          <thead><tr><th>Committee</th><th>Top funding sector</th><th class="num">Members</th></tr></thead>
+          <tbody>
+            {g.list.map((c) => (
+              <tr>
+                <td><a href={`/committees/${c.id}/`}>{c.name.replace(/^(House|Senate|Joint) Committee on (the )?/, "")}</a></td>
+                <td>{topSector(c.id) ?? "–"}</td>
+                <td class="num">{c.members.length}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    ))
+  }
+</Base>

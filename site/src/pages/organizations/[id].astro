@@ -1,0 +1,191 @@
+---
+import Base from "../../layouts/Base.astro";
+import BarList from "../../components/BarList.astro";
+import SplitBar from "../../components/SplitBar.astro";
+import {
+  organizations,
+  committeeById,
+  memberById,
+  MIN_DONATION,
+  money,
+  partyLetter,
+  partySplit,
+  sectorSlug,
+  cycleRange,
+  displayName,
+  kindLabel,
+  type Organization,
+} from "../../lib/data";
+
+export function getStaticPaths() {
+  return organizations.map((o) => ({ params: { id: o.id }, props: { o } }));
+}
+
+const { o } = Astro.props as { o: Organization };
+const split = partySplit(o.recipients);
+const pacs = o.committees.map((id) => committeeById.get(id)).filter((c) => !!c);
+const issues = o.lobbying?.issues.slice(0, 10) ?? [];
+const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${o.sec.cik}`;
+---
+
+<Base title={o.name} description={`Which members of Congress ${o.name} funds, ${cycleRange}.`}>
+  <h1>{o.name}</h1>
+  <p class="eyebrow">
+    <a href={`/sectors/${sectorSlug(o.sector)}/`}>{o.sector}</a>
+    {o.industry && <> · {o.industry}</>}
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Given to current members, {cycleRange}</dt><dd>{money(o.total, true)}</dd></div>
+    <div class="stat"><dt>Members funded</dt><dd>{o.recipients.length}</dd></div>
+    {o.employees && <div class="stat"><dt>From its employees</dt><dd>{money(o.employees.total, true)}</dd></div>}
+    {o.lobbyingSpend && <div class="stat"><dt>Spent lobbying, {cycleRange}</dt><dd>{money(o.lobbyingSpend.total, true)}</dd></div>}
+    {o.sec && <div class="stat"><dt>Ticker</dt><dd><a href={secUrl}>{o.sec.ticker}</a></dd></div>}
+  </dl>
+
+  <div class="grid-2 section">
+    <section class="card">
+      <h2>Split by party</h2>
+      <SplitBar
+        label="Contributions by recipient party"
+        segments={[
+          { label: "Democrats", value: split.Democrat, color: "--party-d" },
+          { label: "Independents", value: split.Independent, color: "--party-i" },
+          { label: "Republicans", value: split.Republican, color: "--party-r" },
+        ]}
+      />
+    </section>
+
+    <section class="card">
+      <h2>What they lobby on</h2>
+      {
+        o.lobbyingSpend && (
+          <p>
+            Spent {money(o.lobbyingSpend.total)} on federal lobbying{" "}
+            ({Object.entries(o.lobbyingSpend.byYear).map(([y, v], i) => <>{i > 0 && ", "}{y}: {money(v, true)}</>)}).
+          </p>
+        )
+      }
+      {o.lobbying?.description && <p>{o.lobbying.description}</p>}
+      {
+        issues.length ? (
+          <ul class="chips">{issues.map((i) => <li class="chip">{i.name}</li>)}</ul>
+        ) : (
+          <p class="muted">{o.lobbying?.firm ? "Registered as a lobbying firm." : "No lobbying disclosures matched."}</p>
+        )
+      }
+      {
+        o.lobbying && (
+          <p class="muted small">
+            From <a href="https://lda.gov/filings/public/filing/search/">lobbying disclosures</a> filed
+            for {displayName(o.lobbying.client)}.
+          </p>
+        )
+      }
+    </section>
+  </div>
+
+  {
+    o.employees && (
+      <section class="card section">
+        <h2>Donations from its employees</h2>
+        <p class="muted small">
+          Itemized donations from people who listed {o.name} as their employer, to current members' campaigns,
+          {cycleRange}. These are personal donations, separate from the PAC.
+        </p>
+        <BarList
+          total={o.employees.total}
+          rows={o.employees.recipients.slice(0, 10).map((r) => {
+            const m = memberById.get(r.id);
+            return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, note: m ? `${m.party} · ${m.state}` : undefined };
+          })}
+        />
+      </section>
+    )
+  }
+
+  <div class="grid-2">
+    <section class="card">
+      <h2>Top recipients</h2>
+      <BarList
+        total={o.total}
+        rows={o.recipients.slice(0, 20).map((r) => {
+          const m = memberById.get(r.id);
+          return {
+            label: m?.name ?? r.id,
+            value: r.total,
+            href: `/members/${r.id}/`,
+            note: m ? `${m.party} · ${m.state}` : undefined,
+          };
+        })}
+      />
+      {
+        o.recipients.length > 20 && (
+          <details>
+            <summary class="small">All {o.recipients.length} recipients</summary>
+            <table>
+              <tbody>
+                {o.recipients.map((r) => {
+                  const m = memberById.get(r.id);
+                  return (
+                    <tr>
+                      <td>{m && <span class={`party party-${partyLetter(m.party)}`} />}<a href={`/members/${r.id}/`}>{m?.name ?? r.id}</a></td>
+                      <td class="num">{money(r.total)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </details>
+        )
+      }
+    </section>
+
+    <section class="card">
+      <h2>{pacs.length === 1 ? "PAC" : "PACs"}</h2>
+      <table>
+        <tbody>
+          {pacs.map((c) => (
+            <tr>
+              <td><a href={`/pacs/${c.id}/`}>{displayName(c.name)}</a><div class="muted small">{kindLabel(c.kind)} · {c.id}</div></td>
+              <td class="num">{money(c.total, true)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {
+        o.outsideGifts && (
+          <>
+            <h2 style="margin-top: 20px">Gifts to super PACs</h2>
+            <p class="muted small">Donations of {money(MIN_DONATION)} or more to groups that spent on current members.</p>
+            <table>
+              <tbody>
+                {o.outsideGifts.map((g) => {
+                  const c = committeeById.get(g.id);
+                  return (
+                    <tr>
+                      <td><a href={`/pacs/${g.id}/`}>{c ? displayName(c.name) : g.id}</a></td>
+                      <td class="num">{money(g.total, true)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </>
+        )
+      }
+      {
+        o.sec && (
+          <p class="muted small">
+            SEC: <a href={secUrl}>{o.sec.name}</a>{o.sec.sicDescription && <>, {o.sec.sicDescription} (SIC {o.sec.sic})</>}
+          </p>
+        )
+      }
+    </section>
+  </div>
+</Base>
+
+<style>
+  details { margin-top: 12px; }
+  summary { cursor: pointer; color: var(--link); }
+</style>

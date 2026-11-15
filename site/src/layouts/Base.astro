@@ -1,0 +1,58 @@
+---
+import "../styles/global.css";
+import { generatedAt, cycleRange } from "../lib/data";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+const fullTitle = title === "Home" ? "Who funds Congress" : `${title} · Who funds Congress`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap header-row">
+        <a class="brand" href="/">Who funds Congress</a>
+        <nav aria-label="Main">
+          <a href="/members/">Members</a>
+          <a href="/organizations/">Organizations</a>
+          <a href="/donors/">Big donors</a>
+          <a href="/sectors/">Sectors</a>
+          <a href="/committees/">Committees</a>
+          <a href="/about/">About</a>
+        </nav>
+        <form class="search" action="/search/" role="search">
+          <label class="visually-hidden" for="site-search">Search</label>
+          <input id="site-search" name="q" type="search" placeholder="Search members, companies, PACs…" autocomplete="off" />
+        </form>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <slot />
+    </main>
+
+    <footer class="site-footer wrap">
+      <p>
+        PAC contributions to current members of Congress, {cycleRange}, from{" "}
+        <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">FEC filings</a>. Industries from{" "}
+        <a href="https://www.sec.gov/edgar">SEC EDGAR</a> and{" "}
+        <a href="https://lda.gov/">lobbying disclosures</a>. Data as of{" "}
+        {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}.{" "}
+        <a href="/about/">Methodology</a>
+      </p>
+    </footer>
+    <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+    <script src="/tooltip.js" is:inline defer></script>
+  </body>
+</html>
