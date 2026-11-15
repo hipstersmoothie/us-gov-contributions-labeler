@@ -56,3 +56,32 @@ export async function labelerServiceUrl(did: string) {
   if (!service) throw new Error(`${did} has no labeler service`);
   return service.serviceEndpoint;
 }
+
+export const PER_KIND = 3;
+// Not industries, or not informative as a label.
+const SKIP_SECTORS = new Set(["Unknown", "Party & Candidate Committees", "Retired", "Not employed"]);
+
+export interface MemberLabel {
+  kind: "sector" | "contributor";
+  value: string;
+  name: string;
+  /** The sector name, or the contributor's organization id. */
+  id: string;
+}
+
+/** The labels the labeler puts on a member's accounts: their top 3 sectors
+ *  and top 3 contributors, counting an organization's PAC plus its employees. */
+export function memberLabels(
+  m: { combinedSectors: { id: string }[]; contributors: { id: string; name: string }[] },
+  orgById: Map<string, { sector?: string }>
+): MemberLabel[] {
+  const sectors = m.combinedSectors
+    .filter((s) => !SKIP_SECTORS.has(s.id))
+    .slice(0, PER_KIND)
+    .map((s) => ({ kind: "sector" as const, value: labelValue(s.id), name: s.id, id: s.id }));
+  const contributors = m.contributors
+    .filter((c) => orgById.get(c.id)?.sector !== "Party & Candidate Committees")
+    .slice(0, PER_KIND)
+    .map((c) => ({ kind: "contributor" as const, value: labelValue(c.name), name: c.name, id: c.id }));
+  return [...sectors, ...contributors].filter((l) => l.value);
+}

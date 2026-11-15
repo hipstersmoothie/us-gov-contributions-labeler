@@ -1,0 +1,2478 @@
+{
+ "fetchedAt": "2026-11-15T18:01:40.607Z",
+ "labeler": {
+  "likeCount": 1661
+ },
+ "profiles": {
+  "did:plc:ylmdlijvrvgbe4md6v4dyce6": {
+   "did": "did:plc:ylmdlijvrvgbe4md6v4dyce6",
+   "handle": "contributions.fyi",
+   "displayName": "contributions.fyi",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ylmdlijvrvgbe4md6v4dyce6/bafkreihdjursbbvpu2afqtwmyayk5ngn6xvouz7ktdxbl2drsgc7a3flgu",
+   "followersCount": 427,
+   "postsCount": 30
+  },
+  "did:plc:ej5cllsvxdrzdsweyfgr2nge": {
+   "did": "did:plc:ej5cllsvxdrzdsweyfgr2nge",
+   "handle": "data.contributions.fyi",
+   "displayName": "contributions.fyi data",
+   "followersCount": 0,
+   "postsCount": 0
+  },
+  "did:plc:e3ap6sjaftiof33z6xjt54aa": {
+   "did": "did:plc:e3ap6sjaftiof33z6xjt54aa",
+   "handle": "cantwell.senate.gov",
+   "displayName": "Sen. Maria Cantwell",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:e3ap6sjaftiof33z6xjt54aa/bafkreiavvmyiq56izjv5k3hcah3a3yzgz5mfdelg6gya6fyfdmkjlbhdqe",
+   "followersCount": 29228,
+   "postsCount": 766
+  },
+  "did:plc:hy4kwkakey4eawsw6jjzoc3j": {
+   "did": "did:plc:hy4kwkakey4eawsw6jjzoc3j",
+   "handle": "amyklobuchar.com",
+   "displayName": "Amy Klobuchar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hy4kwkakey4eawsw6jjzoc3j/bafkreien5wupqsnk5y4dxvhvx4vmq6envh56okiz5kvtdthoeuyp6t3hpe",
+   "followersCount": 117607,
+   "postsCount": 3523
+  },
+  "did:plc:4pypwgwx2rnmefnktrjimznx": {
+   "did": "did:plc:4pypwgwx2rnmefnktrjimznx",
+   "handle": "klobuchar.senate.gov",
+   "displayName": "Senator Amy Klobuchar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4pypwgwx2rnmefnktrjimznx/bafkreidg3zezurwz42nbdea6uo76zip7qllgb7clczppm3n2n3or2iucku",
+   "followersCount": 41240,
+   "postsCount": 1382
+  },
+  "did:plc:upw5n2uwhzubjajdtqaufsek": {
+   "did": "did:plc:upw5n2uwhzubjajdtqaufsek",
+   "handle": "sanders.senate.gov",
+   "displayName": "Senator Bernie Sanders",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:upw5n2uwhzubjajdtqaufsek/bafkreifmgzlvh3kntajq37dht3jxifypustrnpu7wsiuxz3inu2jfojp7m",
+   "followersCount": 575571,
+   "postsCount": 726
+  },
+  "did:plc:qqixzm5pwprzdnkbh2hglpax": {
+   "did": "did:plc:qqixzm5pwprzdnkbh2hglpax",
+   "handle": "whitehouse.senate.gov",
+   "displayName": "Senator Sheldon Whitehouse",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qqixzm5pwprzdnkbh2hglpax/bafkreifiivniqxkrqfmbgflrue54jmakys2uifwvr7hwga7lcf5d6xz5c4",
+   "followersCount": 156525,
+   "postsCount": 3760
+  },
+  "did:plc:laiahnygdvnd7lqdvbem64pf": {
+   "did": "did:plc:laiahnygdvnd7lqdvbem64pf",
+   "handle": "durbin.senate.gov",
+   "displayName": "Senator Dick Durbin",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:laiahnygdvnd7lqdvbem64pf/bafkreiaztgrd2ssvks3kyrisue6wfbystrzeskkwglis7a6nud3becm4y4",
+   "followersCount": 18547,
+   "postsCount": 2164
+  },
+  "did:plc:2y6zniq4p7vcbuvekjypu7we": {
+   "did": "did:plc:2y6zniq4p7vcbuvekjypu7we",
+   "handle": "merkley.senate.gov",
+   "displayName": "Senator Jeff Merkley",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2y6zniq4p7vcbuvekjypu7we/bafkreidxbtswmlbrvo22eplzzqnjpt6rx7racrp4fjuep7k435kkry42ke",
+   "followersCount": 11704,
+   "postsCount": 1087
+  },
+  "did:plc:ukdzucjim5kavwysh3adv6rl": {
+   "did": "did:plc:ukdzucjim5kavwysh3adv6rl",
+   "handle": "jeff-merkley.bsky.social",
+   "displayName": "Jeff Merkley",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ukdzucjim5kavwysh3adv6rl/bafkreiclkpij7uolrgyrf7p5osiv3fe2i753mfjf6cfnvrwk62nyrzzqvm",
+   "followersCount": 29522,
+   "postsCount": 318
+  },
+  "did:plc:esz5zxtwgwbgkkvg7tw7zani": {
+   "did": "did:plc:esz5zxtwgwbgkkvg7tw7zani",
+   "handle": "reed.senate.gov",
+   "displayName": "U.S. Senator Jack Reed",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:esz5zxtwgwbgkkvg7tw7zani/bafkreicvzzl25ckn23pdwne24xlhv43qksq2cllfwitsepduuqc44wzkte",
+   "followersCount": 20128,
+   "postsCount": 1177
+  },
+  "did:plc:dvg2f2abnjz3igabhwm45q7p": {
+   "did": "did:plc:dvg2f2abnjz3igabhwm45q7p",
+   "handle": "shaheen.senate.gov",
+   "displayName": "U.S. Senator Jeanne Shaheen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:dvg2f2abnjz3igabhwm45q7p/bafkreicuard2tdhbrvnr4ijhqmrzwjvtnzd4fplivyjlxhoctfmspg7vwi",
+   "followersCount": 14073,
+   "postsCount": 1189
+  },
+  "did:plc:ri2qkcjghvcwv6gsi4vglnfz": {
+   "did": "did:plc:ri2qkcjghvcwv6gsi4vglnfz",
+   "handle": "markwarner.bsky.social",
+   "displayName": "Senator Mark Warner",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ri2qkcjghvcwv6gsi4vglnfz/bafkreifosl27xvu7l3734rcmmhtj7blzjpgmce4xl3vhplhfsb66fo4hiu",
+   "followersCount": 95740,
+   "postsCount": 1907
+  },
+  "did:plc:e7atmcvv2bblzo6biapuzi35": {
+   "did": "did:plc:e7atmcvv2bblzo6biapuzi35",
+   "handle": "kirstengillibrand.bsky.social",
+   "displayName": "Kirsten Gillibrand",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:e7atmcvv2bblzo6biapuzi35/bafkreidku6brf34jufxfq4hbp52lopojoqbdmzkvlgmyrmz5corouyybia",
+   "followersCount": 8618,
+   "postsCount": 918
+  },
+  "did:plc:u653qd63piz6z2t6l3sd4duf": {
+   "did": "did:plc:u653qd63piz6z2t6l3sd4duf",
+   "handle": "coons.senate.gov",
+   "displayName": "Senator Chris Coons",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:u653qd63piz6z2t6l3sd4duf/bafkreigywr6repi3itr3rx3muoxqkkh4swjmj4qjvst4lfhmmhnxaa3dzy",
+   "followersCount": 9719,
+   "postsCount": 1348
+  },
+  "did:plc:hne455ahhpnxi5vnm7a5dquz": {
+   "did": "did:plc:hne455ahhpnxi5vnm7a5dquz",
+   "handle": "baldwin.senate.gov",
+   "displayName": "Senator Tammy Baldwin",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hne455ahhpnxi5vnm7a5dquz/bafkreighmvdaz2szwg76wsbrwq7ul65wise2tv4hsc3wlh7s7clvcduljq",
+   "followersCount": 33092,
+   "postsCount": 943
+  },
+  "did:plc:wfovpxilrfvxvyecoguoza3y": {
+   "did": "did:plc:wfovpxilrfvxvyecoguoza3y",
+   "handle": "bennet.senate.gov",
+   "displayName": "Michael Bennet",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:wfovpxilrfvxvyecoguoza3y/bafkreib3oc4jpflq3ky4ncbngf2ftiihyq7af5w637hzytpgasmz37kvjy",
+   "followersCount": 38143,
+   "postsCount": 1520
+  },
+  "did:plc:d3p6dln7lzktc26shdjow6qf": {
+   "did": "did:plc:d3p6dln7lzktc26shdjow6qf",
+   "handle": "bishop.house.gov",
+   "displayName": "Congressman Sanford D. Bishop, Jr.",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:d3p6dln7lzktc26shdjow6qf/bafkreibukkmj43ilwdv2kzsk2jzpaqsqdtxyturmornwtryy2jtczyrmqu",
+   "followersCount": 3561,
+   "postsCount": 775
+  },
+  "did:plc:fvwtf55iqiihc7ct543i2p6u": {
+   "did": "did:plc:fvwtf55iqiihc7ct543i2p6u",
+   "handle": "blumenthal.senate.gov",
+   "displayName": "Richard Blumenthal",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:fvwtf55iqiihc7ct543i2p6u/bafkreiglkgctulugof74xzmabnhp4oasirjglmkhfmqsurs6s76staqwri",
+   "followersCount": 25914,
+   "postsCount": 1273
+  },
+  "did:plc:eo7nsjwwszwn7k7smt7hhuy7": {
+   "did": "did:plc:eo7nsjwwszwn7k7smt7hhuy7",
+   "handle": "carson.house.gov",
+   "displayName": "Congressman André Carson ",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:eo7nsjwwszwn7k7smt7hhuy7/bafkreih4xr5qyos7vzjh2k546xaao43x2poixpbxpvbydmq5bsuf27qpzi",
+   "followersCount": 22442,
+   "postsCount": 693
+  },
+  "did:plc:37tzj3zwbftnhhuanx57mxu2": {
+   "did": "did:plc:37tzj3zwbftnhhuanx57mxu2",
+   "handle": "usrepkathycastor.bsky.social",
+   "displayName": "U.S. Rep. Kathy Castor",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:37tzj3zwbftnhhuanx57mxu2/bafkreig5bahqoiczd7bprhglmske2mfsy72ntank7wv4fpzphyy3gdlye4",
+   "followersCount": 35913,
+   "postsCount": 1029
+  },
+  "did:plc:22vhjo3exokuk67vyq3w4ttu": {
+   "did": "did:plc:22vhjo3exokuk67vyq3w4ttu",
+   "handle": "chu.house.gov",
+   "displayName": "Rep. Judy Chu",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:22vhjo3exokuk67vyq3w4ttu/bafkreigjhdyii6vzc6ndyzyvhiplmagz3bqzg3laepd3s7emg462c3yvra",
+   "followersCount": 15171,
+   "postsCount": 1491
+  },
+  "did:plc:tqu6ru7kfaez47gbjv34wugu": {
+   "did": "did:plc:tqu6ru7kfaez47gbjv34wugu",
+   "handle": "repyvetteclarke.bsky.social",
+   "displayName": "Congresswoman Yvette D. Clarke",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tqu6ru7kfaez47gbjv34wugu/bafkreiht2mgfe3uny2kifeh7aojrfzncg4ya6bhgggg5hjhfyzk2msmkam",
+   "followersCount": 17015,
+   "postsCount": 702
+  },
+  "did:plc:iuh5wnxhzn6fj5ehgpnvmams": {
+   "did": "did:plc:iuh5wnxhzn6fj5ehgpnvmams",
+   "handle": "voteyvette.bsky.social",
+   "displayName": "Yvette Clarke for Congress",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:iuh5wnxhzn6fj5ehgpnvmams/bafkreie74wgmm3oxneo4b6mywh7655zjemem673zenoehzkorrtickb65i",
+   "followersCount": 3847,
+   "postsCount": 183
+  },
+  "did:plc:bxhlwlouimu2ia5hjtadzhyg": {
+   "did": "did:plc:bxhlwlouimu2ia5hjtadzhyg",
+   "handle": "cleaver.house.gov",
+   "displayName": "Rep. Emanuel Cleaver",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bxhlwlouimu2ia5hjtadzhyg/bafkreidu7z7tmpotyqahpobvzvnt5u4niq5yetqacecwtpjx6kbzkzycoi",
+   "followersCount": 8339,
+   "postsCount": 2232
+  },
+  "did:plc:ftkpscafzukjezpcg2fy2jya": {
+   "did": "did:plc:ftkpscafzukjezpcg2fy2jya",
+   "handle": "repjamesclyburn.bsky.social",
+   "displayName": "James E. Clyburn",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ftkpscafzukjezpcg2fy2jya/bafkreigppfkdu6nf4uktzgv2kr67kwjeg6fzbqx2pfrrcacatzjof6feaa",
+   "followersCount": 9716,
+   "postsCount": 934
+  },
+  "did:plc:eqnxa74cjky7ulymsytom6l3": {
+   "did": "did:plc:eqnxa74cjky7ulymsytom6l3",
+   "handle": "repcohen.bsky.social",
+   "displayName": "Steve Cohen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:eqnxa74cjky7ulymsytom6l3/bafkreicp6gmmgnp3azgpf2bowc7dijxswn5c3zyzoxx2fwzwkjzpsgyci4",
+   "followersCount": 39492,
+   "postsCount": 1055
+  },
+  "did:plc:44a4qu5i42fje4cwhp33ydup": {
+   "did": "did:plc:44a4qu5i42fje4cwhp33ydup",
+   "handle": "repjimcosta.bsky.social",
+   "displayName": "Rep. Jim Costa",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:44a4qu5i42fje4cwhp33ydup/bafkreicmvbcpy5tt2tbxflngabfxerfrewefe6myhyczv46pyqzi3zteoa",
+   "followersCount": 1300,
+   "postsCount": 1166
+  },
+  "did:plc:ur32d4hghoookomzpnkhd42c": {
+   "did": "did:plc:ur32d4hghoookomzpnkhd42c",
+   "handle": "repjoecourtney.bsky.social",
+   "displayName": "Rep. Joe Courtney",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ur32d4hghoookomzpnkhd42c/bafkreig4vr643wdld5t2bfrpzrfdz52y3zwrnmonnlac6ej4zlarjetqgq",
+   "followersCount": 1007,
+   "postsCount": 832
+  },
+  "did:plc:knadvieuh3xnszynv67gwjck": {
+   "did": "did:plc:knadvieuh3xnszynv67gwjck",
+   "handle": "degette.house.gov",
+   "displayName": "Rep. Diana DeGette",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:knadvieuh3xnszynv67gwjck/bafkreiawovisfufvq62rmt6ecwtayiw6bmrpni2342bhcofozocy6p6sz4",
+   "followersCount": 18567,
+   "postsCount": 982
+  },
+  "did:plc:wq75sxtabr36od4vty2ipg2y": {
+   "did": "did:plc:wq75sxtabr36od4vty2ipg2y",
+   "handle": "delauro.house.gov",
+   "displayName": "Rosa DeLauro",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:wq75sxtabr36od4vty2ipg2y/bafkreidtvrlpz6hkc3z3zmgpttk44mhavdc5njybmpxb6eb2mfx54lv4nq",
+   "followersCount": 39620,
+   "postsCount": 1280
+  },
+  "did:plc:2wi4vq2lwdfpmbxopryl5btn": {
+   "did": "did:plc:2wi4vq2lwdfpmbxopryl5btn",
+   "handle": "doggett.house.gov",
+   "displayName": "Rep. Lloyd Doggett",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2wi4vq2lwdfpmbxopryl5btn/bafkreiatwi2snrugymulpebuqp254q6qtrnd45pltdvn4ywkikj66uowcq",
+   "followersCount": 26484,
+   "postsCount": 2421
+  },
+  "did:plc:phlg2edqfqh4nscgjt5vrdtm": {
+   "did": "did:plc:phlg2edqfqh4nscgjt5vrdtm",
+   "handle": "repgaramendi.bsky.social",
+   "displayName": "Rep. John Garamendi",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:phlg2edqfqh4nscgjt5vrdtm/bafkreihnblm6v7v5axt7tjfdtdjkrzkz5bpa2nbj4q6kw5uwqj66im4xg4",
+   "followersCount": 4850,
+   "postsCount": 640
+  },
+  "did:plc:mqqonqjti5xtlvs76y2zjgok": {
+   "did": "did:plc:mqqonqjti5xtlvs76y2zjgok",
+   "handle": "algreen.house.gov",
+   "displayName": "U.S. Representative Al Green ",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mqqonqjti5xtlvs76y2zjgok/bafkreihimbx3sfu42sxxipleno7kevqdfwphehqhdkwhm76uwp2cz6nhm4",
+   "followersCount": 137140,
+   "postsCount": 754
+  },
+  "did:plc:67vugavgzxuc64jxpv4cqwbi": {
+   "did": "did:plc:67vugavgzxuc64jxpv4cqwbi",
+   "handle": "heinrich.senate.gov",
+   "displayName": "Senator Martin Heinrich",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:67vugavgzxuc64jxpv4cqwbi/bafkreibhimrx5h3wwnwtu76x7rqnsqkhz7bbmpp5j4kzidzx4xai2msosu",
+   "followersCount": 53440,
+   "postsCount": 1460
+  },
+  "did:plc:doajlmltxccf7dafbcp5pj4g": {
+   "did": "did:plc:doajlmltxccf7dafbcp5pj4g",
+   "handle": "jahimes.bsky.social",
+   "displayName": "Jim Himes",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:doajlmltxccf7dafbcp5pj4g/bafkreicvwzgrfnbzsoohhspog3xsrutnij6ufcbe3mhxi6hpc5ncnllecq",
+   "followersCount": 26296,
+   "postsCount": 129
+  },
+  "did:plc:vausut42drs3hymgujs64vwj": {
+   "did": "did:plc:vausut42drs3hymgujs64vwj",
+   "handle": "hirono.senate.gov",
+   "displayName": "Senator Mazie K. Hirono",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vausut42drs3hymgujs64vwj/bafkreifpgc4uqx7lqwoy6rpxgrk2a3hrtzodif4ltvetimjnf7r63vfcyu",
+   "followersCount": 15964,
+   "postsCount": 658
+  },
+  "did:plc:toesne2wwtcbboxgjhk65pz4": {
+   "did": "did:plc:toesne2wwtcbboxgjhk65pz4",
+   "handle": "hoyer.house.gov",
+   "displayName": "Rep. Steny Hoyer",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:toesne2wwtcbboxgjhk65pz4/bafkreifmmjx4edftfjt4biqvl6zabwdzkbc2ho5qv5de2b5i2cmcqg6nxa",
+   "followersCount": 3265,
+   "postsCount": 891
+  },
+  "did:plc:xu33y4y3rygak23zedn7wg5a": {
+   "did": "did:plc:xu33y4y3rygak23zedn7wg5a",
+   "handle": "hankjohnson.house.gov",
+   "displayName": "Congressman Hank Johnson",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xu33y4y3rygak23zedn7wg5a/bafkreigxmah3bxyk36r6n7uldiz3gz7u3r2saq32oj4clmu24runyt7cui",
+   "followersCount": 17226,
+   "postsCount": 426
+  },
+  "did:plc:asen5jbvakk5llvcgcn27h6r": {
+   "did": "did:plc:asen5jbvakk5llvcgcn27h6r",
+   "handle": "repmarcykaptur.bsky.social",
+   "displayName": "Marcy Kaptur",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:asen5jbvakk5llvcgcn27h6r/bafkreicsgkkitb7q7ksydaw3dj3ux56fnhri5shmqiojbdmxmstym5nb2u",
+   "followersCount": 44418,
+   "postsCount": 2110
+  },
+  "did:plc:glntkgu7kuzue4g6ukunhvht": {
+   "did": "did:plc:glntkgu7kuzue4g6ukunhvht",
+   "handle": "keating.house.gov",
+   "displayName": "Congressman Bill Keating",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:glntkgu7kuzue4g6ukunhvht/bafkreifsweiqrbu6dmydn7degbwyzmv66ydwjrxkg3vk3tz4zkygxwf3xu",
+   "followersCount": 27518,
+   "postsCount": 194
+  },
+  "did:plc:qbmfkla22voltmkf27dg4pgx": {
+   "did": "did:plc:qbmfkla22voltmkf27dg4pgx",
+   "handle": "repricklarsen.bsky.social",
+   "displayName": "Representative Rick Larsen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qbmfkla22voltmkf27dg4pgx/bafkreiajnluo7sv7xutpiusf3qecpwblvkikrvq3szccdx3n34tum45qni",
+   "followersCount": 23454,
+   "postsCount": 998
+  },
+  "did:plc:l4r4znkwcam5yrkgspi3mpru": {
+   "did": "did:plc:l4r4znkwcam5yrkgspi3mpru",
+   "handle": "johnlarsonct.bsky.social",
+   "displayName": "John Larson",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:l4r4znkwcam5yrkgspi3mpru/bafkreia3ili7aevbaq5a5cobx62shr6hdkdhwfxycabvywgca2sflio2yy",
+   "followersCount": 399,
+   "postsCount": 165
+  },
+  "did:plc:egb5ckycclhkoyowheivde5s": {
+   "did": "did:plc:egb5ckycclhkoyowheivde5s",
+   "handle": "lofgren.house.gov",
+   "displayName": "Rep. Zoe Lofgren",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:egb5ckycclhkoyowheivde5s/bafkreibptb5ddv3y56d7ql6orxhytfiwhbt2sa5cl4fkjir4jbfwll4wce",
+   "followersCount": 3092,
+   "postsCount": 690
+  },
+  "did:plc:egu4ffq43hudoiwpfttx2eif": {
+   "did": "did:plc:egu4ffq43hudoiwpfttx2eif",
+   "handle": "lujan.senate.gov",
+   "displayName": "Senator Ben Ray Luján",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:egu4ffq43hudoiwpfttx2eif/bafkreicvdxnbdz5ctskiefeyokdd2cxdypu3asz7glf7uwysbqnxhuo5te",
+   "followersCount": 18060,
+   "postsCount": 394
+  },
+  "did:plc:o66hqxnmwmv7v5vstwxyvh5d": {
+   "did": "did:plc:o66hqxnmwmv7v5vstwxyvh5d",
+   "handle": "lynch.house.gov",
+   "displayName": "Congressman Stephen F. Lynch",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:o66hqxnmwmv7v5vstwxyvh5d/bafkreidi4bwt2a2j2ur7qbv54pmibipyqpf6grj4vnsph5kls2l6udeba4",
+   "followersCount": 19344,
+   "postsCount": 391
+  },
+  "did:plc:wo5kzzdgqwzizeyvg5bkaswh": {
+   "did": "did:plc:wo5kzzdgqwzizeyvg5bkaswh",
+   "handle": "markey.senate.gov",
+   "displayName": "Senator Ed Markey",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:wo5kzzdgqwzizeyvg5bkaswh/bafkreidopbnyct37ebzwktpziatxgejgjbdcmnot772fe3ntdxvmgkdxcy",
+   "followersCount": 90356,
+   "postsCount": 2978
+  },
+  "did:plc:zkegd2ivd2z6mmlfppute6zj": {
+   "did": "did:plc:zkegd2ivd2z6mmlfppute6zj",
+   "handle": "edmarkey.bsky.social",
+   "displayName": "Ed Markey",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zkegd2ivd2z6mmlfppute6zj/bafkreigydw5lqihadpn52gqucpqzpf5pxk4w5otevlzfkrhid4qguzwqfi",
+   "followersCount": 102856,
+   "postsCount": 1324
+  },
+  "did:plc:llf4lduqc564lcsplu73mvza": {
+   "did": "did:plc:llf4lduqc564lcsplu73mvza",
+   "handle": "dorismatsui.bsky.social",
+   "displayName": "Rep. Doris Matsui",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:llf4lduqc564lcsplu73mvza/bafkreidwoqsrp3ez2k3fw3lb5nekvrfvjhfmob7uebwxcapede5t6f4l4e",
+   "followersCount": 10081,
+   "postsCount": 1301
+  },
+  "did:plc:xqcjwqms5kqznnnpmtrgwpno": {
+   "did": "did:plc:xqcjwqms5kqznnnpmtrgwpno",
+   "handle": "mccollum.house.gov",
+   "displayName": "Congresswoman Betty McCollum",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xqcjwqms5kqznnnpmtrgwpno/bafkreictnzwqgv4f3mrydm7gqyilrffz43raevev23gnzahm7zmlw55g64",
+   "followersCount": 6018,
+   "postsCount": 1375
+  },
+  "did:plc:tmipn2gmrxa2bkahyebq4uhh": {
+   "did": "did:plc:tmipn2gmrxa2bkahyebq4uhh",
+   "handle": "votebetty.bsky.social",
+   "displayName": "Betty McCollum for Congress",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tmipn2gmrxa2bkahyebq4uhh/bafkreihmortpibnmfxesy6zmjafrbaggi34tkr43adkaaiwx7jc44qatt4",
+   "followersCount": 592,
+   "postsCount": 220
+  },
+  "did:plc:diptjupvru2xqh6pwbrpzsz4": {
+   "did": "did:plc:diptjupvru2xqh6pwbrpzsz4",
+   "handle": "repmcgovern.bsky.social",
+   "displayName": "Rep. Jim McGovern",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:diptjupvru2xqh6pwbrpzsz4/bafkreibavh23lbeu2tqao7et5jj5cc73lya3kfxsfmx4p3yyn6puztlnba",
+   "followersCount": 22206,
+   "postsCount": 1829
+  },
+  "did:plc:2egngd24u4sml2ejykjyst5s": {
+   "did": "did:plc:2egngd24u4sml2ejykjyst5s",
+   "handle": "meeks.house.gov",
+   "displayName": "Rep. Gregory Meeks",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2egngd24u4sml2ejykjyst5s/bafkreicfrf5uuiqwje5ddjgzrgjjgfy5sjx3admngd6yb2pltvzxdia3m4",
+   "followersCount": 20498,
+   "postsCount": 509
+  },
+  "did:plc:ptvnknkdb6fwpp26t5tn4nki": {
+   "did": "did:plc:ptvnknkdb6fwpp26t5tn4nki",
+   "handle": "repgwenmoore.bsky.social",
+   "displayName": "Congresswoman Gwen Moore",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ptvnknkdb6fwpp26t5tn4nki/bafkreignftweu7vu5k7zhboe3qobauz7rklqhfvapvesvjsq6wnz5332lu",
+   "followersCount": 58725,
+   "postsCount": 1239
+  },
+  "did:plc:y77n77kdqzhbg647blkfypyr": {
+   "did": "did:plc:y77n77kdqzhbg647blkfypyr",
+   "handle": "chrismurphyct.bsky.social",
+   "displayName": "Chris Murphy",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:y77n77kdqzhbg647blkfypyr/bafkreicytlijcszuoppa4qoydfcrdt7a2jwfod43vv53m657pwfwjrcwci",
+   "followersCount": 234239,
+   "postsCount": 1196
+  },
+  "did:plc:a23utge5gk6ckgm3ypx3weyr": {
+   "did": "did:plc:a23utge5gk6ckgm3ypx3weyr",
+   "handle": "murray.senate.gov",
+   "displayName": "Senator Patty Murray",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:a23utge5gk6ckgm3ypx3weyr/bafkreidemk242dcwi6z6ezb7iqkqwmemhdmvsxbykj2xturbx3kglitohi",
+   "followersCount": 85598,
+   "postsCount": 2572
+  },
+  "did:plc:lawfan5jdv75zng4kwjyfzey": {
+   "did": "did:plc:lawfan5jdv75zng4kwjyfzey",
+   "handle": "nadler.house.gov",
+   "displayName": "Rep. Jerry Nadler",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lawfan5jdv75zng4kwjyfzey/bafkreifjnk5673fk57hibopqq5pcdws7aufuujyuzrzevtkce73lthv5a4",
+   "followersCount": 24475,
+   "postsCount": 1364
+  },
+  "did:plc:tudh6l4dnkh52tham7uis7xo": {
+   "did": "did:plc:tudh6l4dnkh52tham7uis7xo",
+   "handle": "neal.house.gov",
+   "displayName": "Rep. Richard Neal",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tudh6l4dnkh52tham7uis7xo/bafkreiaid42vxeft45d7wcf5kor64bogy2wcvsfgz76lwflv6ob2hqxk6e",
+   "followersCount": 6437,
+   "postsCount": 336
+  },
+  "did:plc:zjkyqtjmcnil2trytnygclgs": {
+   "did": "did:plc:zjkyqtjmcnil2trytnygclgs",
+   "handle": "eleanornorton.bsky.social",
+   "displayName": "Congresswoman Eleanor Holmes Norton (D-DC)",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zjkyqtjmcnil2trytnygclgs/bafkreigkxeo75uq2ibupj7zlvvumo3rivtdjwsho5dseeigm6bv3umxtdu",
+   "followersCount": 4948,
+   "postsCount": 512
+  },
+  "did:plc:73aoo4z2kdjnukscxdcexwil": {
+   "did": "did:plc:73aoo4z2kdjnukscxdcexwil",
+   "handle": "pallone.house.gov",
+   "displayName": "Rep. Frank Pallone",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:73aoo4z2kdjnukscxdcexwil/bafkreih2kkrojsvvhffv3q6wsg5cnpzcohq3ty44hz4pzpskrjfad3foxy",
+   "followersCount": 930,
+   "postsCount": 825
+  },
+  "did:plc:sp4ywsk4ykfkw2cshoqo3s7p": {
+   "did": "did:plc:sp4ywsk4ykfkw2cshoqo3s7p",
+   "handle": "pelosi.house.gov",
+   "displayName": "Nancy Pelosi ",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sp4ywsk4ykfkw2cshoqo3s7p/bafkreidadx2byvvxn7ixg5nzoq4z52x4xapwvqdwegi45v75mlcpx6kjdy",
+   "followersCount": 18315,
+   "postsCount": 617
+  },
+  "did:plc:3krwmyznkpuss7ldiiy62pjy": {
+   "did": "did:plc:3krwmyznkpuss7ldiiy62pjy",
+   "handle": "peters.senate.gov",
+   "displayName": "U.S. Senator Gary Peters ",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3krwmyznkpuss7ldiiy62pjy/bafkreia4aox4llzozn24impidxc7ple77sfrx2unit752nvvruqtpdcfhu",
+   "followersCount": 11253,
+   "postsCount": 550
+  },
+  "did:plc:dgpyzapw4a7zve5qy2qjqpfx": {
+   "did": "did:plc:dgpyzapw4a7zve5qy2qjqpfx",
+   "handle": "pingree.house.gov",
+   "displayName": "Congresswoman Chellie Pingree",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:dgpyzapw4a7zve5qy2qjqpfx/bafkreihpwzv7epc664pio32kkmdnl6sbrgtxc2xyiyxbeqww2b5antxylu",
+   "followersCount": 42349,
+   "postsCount": 2845
+  },
+  "did:plc:o4nzn4wcjgsqdxwnduydm2a5": {
+   "did": "did:plc:o4nzn4wcjgsqdxwnduydm2a5",
+   "handle": "quigley.house.gov",
+   "displayName": "Mike Quigley",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:o4nzn4wcjgsqdxwnduydm2a5/bafkreigzt5zlidxuh3rv6tyj2zc4s3qzbhyjkguyywbutbg4cuy4on3vti",
+   "followersCount": 35073,
+   "postsCount": 2059
+  },
+  "did:plc:lqqziazfi7ipxd5snxaboq5c": {
+   "did": "did:plc:lqqziazfi7ipxd5snxaboq5c",
+   "handle": "schakowsky.house.gov",
+   "displayName": "Rep. Jan Schakowsky",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lqqziazfi7ipxd5snxaboq5c/bafkreid5zzrpfnvqnhjlj4473oiudptyqu4zuvnnppzecvszvld4crjgdm",
+   "followersCount": 4882,
+   "postsCount": 625
+  },
+  "did:plc:ux632osoaqigjkgvuei3m6no": {
+   "did": "did:plc:ux632osoaqigjkgvuei3m6no",
+   "handle": "schiff.senate.gov",
+   "displayName": "Sen. Adam Schiff",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ux632osoaqigjkgvuei3m6no/bafkreicqvwdsmoe6mge4lyjuytbdaz5gd52lviakmeplawquvrxn4zz7jy",
+   "followersCount": 236016,
+   "postsCount": 2107
+  },
+  "did:plc:6radyuzljqlcie4p4lwh2zuw": {
+   "did": "did:plc:6radyuzljqlcie4p4lwh2zuw",
+   "handle": "adamschiff.com",
+   "displayName": "Adam Schiff",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6radyuzljqlcie4p4lwh2zuw/bafkreifu3fnj5fwd43qttcmybr5kqod5ddsklgrq472lpgj2hl2uh5jtpe",
+   "followersCount": 41131,
+   "postsCount": 103
+  },
+  "did:plc:zlgotdjaxzuhw4nefvkxxvxa": {
+   "did": "did:plc:zlgotdjaxzuhw4nefvkxxvxa",
+   "handle": "schumer.senate.gov",
+   "displayName": "Chuck Schumer",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zlgotdjaxzuhw4nefvkxxvxa/bafkreiemhvqwhehlw3wxmlggvxgwho7akrvgdw6ajjhziz7dnmjfbwc74a",
+   "followersCount": 105195,
+   "postsCount": 2264
+  },
+  "did:plc:wdykfpfp2yoguqk77jlshv27": {
+   "did": "did:plc:wdykfpfp2yoguqk77jlshv27",
+   "handle": "bobbyscott.house.gov",
+   "displayName": "Congressman Bobby Scott",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:wdykfpfp2yoguqk77jlshv27/bafkreiftztpnrchpxeepx5iutxgzsm2r3ptvquuzc6mrrzvs2s26k6cjxy",
+   "followersCount": 25526,
+   "postsCount": 1018
+  },
+  "did:plc:c326eu7onblcrvapgucixymw": {
+   "did": "did:plc:c326eu7onblcrvapgucixymw",
+   "handle": "sewell.house.gov",
+   "displayName": "Rep. Terri A. Sewell",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:c326eu7onblcrvapgucixymw/bafkreihbbflmte7fpmbdb4rrb27i6uzbb74vo2yxmqxzyzokmlo4xtlusy",
+   "followersCount": 2447,
+   "postsCount": 237
+  },
+  "did:plc:rkaxiiqhiponzkbmbxqugcks": {
+   "did": "did:plc:rkaxiiqhiponzkbmbxqugcks",
+   "handle": "repbradsherman.bsky.social",
+   "displayName": "Congressman Brad Sherman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:rkaxiiqhiponzkbmbxqugcks/bafkreihebajt265ubzmnpxojhxech3qa4dedsblriwqaqpmf7dkdf5play",
+   "followersCount": 26906,
+   "postsCount": 1203
+  },
+  "did:plc:mjobm7kwzpta3ccegkcuqlwm": {
+   "did": "did:plc:mjobm7kwzpta3ccegkcuqlwm",
+   "handle": "adamsmith.house.gov",
+   "displayName": "Rep. Adam Smith",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mjobm7kwzpta3ccegkcuqlwm/bafkreid457vxrlmd6bj76vsvvd6mgepbhjzsivjbtwqgenb2li2ozy5hy4",
+   "followersCount": 31573,
+   "postsCount": 2533
+  },
+  "did:plc:onvrkt6ptmzmxjkfwpvn33e5": {
+   "did": "did:plc:onvrkt6ptmzmxjkfwpvn33e5",
+   "handle": "replindasanchez.bsky.social",
+   "displayName": "Rep. Linda Sánchez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:onvrkt6ptmzmxjkfwpvn33e5/bafkreifsz5r7m24qej4spoqagrulfldpohes57glesgyl2vh7me2myxd4e",
+   "followersCount": 13774,
+   "postsCount": 646
+  },
+  "did:plc:k5x57l4okndlgqhohmh5cywq": {
+   "did": "did:plc:k5x57l4okndlgqhohmh5cywq",
+   "handle": "benniethompson.bsky.social",
+   "displayName": "Bennie Thompson",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:k5x57l4okndlgqhohmh5cywq/bafkreibfkfa5et65cwo6xvzmntvivdbsqicji4fhobg6oh4ypggmpgmth4",
+   "followersCount": 25762,
+   "postsCount": 199
+  },
+  "did:plc:t56dluqkcinxwcepofodntcb": {
+   "did": "did:plc:t56dluqkcinxwcepofodntcb",
+   "handle": "mikethompson.house.gov",
+   "displayName": "Rep. Mike Thompson",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:t56dluqkcinxwcepofodntcb/bafkreihrudn5l476kikqhtjrn3y3epgbjeceigxzewssx5f5iw6pohewb4",
+   "followersCount": 5387,
+   "postsCount": 2039
+  },
+  "did:plc:uxhiwzsufuauabejcw775a2l": {
+   "did": "did:plc:uxhiwzsufuauabejcw775a2l",
+   "handle": "reppaultonko.bsky.social",
+   "displayName": "Rep. Paul Tonko",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:uxhiwzsufuauabejcw775a2l/bafkreiekt3oskrwhqy2c4xf2nzn7odzrblmrk4zbajeeodzd7bgrkw5d6q",
+   "followersCount": 9439,
+   "postsCount": 819
+  },
+  "did:plc:ht3ruh74w6krts2fz4ir27pa": {
+   "did": "did:plc:ht3ruh74w6krts2fz4ir27pa",
+   "handle": "vanhollen.senate.gov",
+   "displayName": "Senator Chris Van Hollen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ht3ruh74w6krts2fz4ir27pa/bafkreido6tkptn3icyswjx4ug5erg2jnulby54unucpbvmfh6yjn24y5dq",
+   "followersCount": 140227,
+   "postsCount": 1681
+  },
+  "did:plc:6vvl6yrl7g4reniqcjsq5izn": {
+   "did": "did:plc:6vvl6yrl7g4reniqcjsq5izn",
+   "handle": "vanhollenformd.bsky.social",
+   "displayName": "Chris Van Hollen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6vvl6yrl7g4reniqcjsq5izn/bafkreicgsxfvunrutyyijv2in53y4wvmuqrlob3ll4d2roci5fdqj6f7na",
+   "followersCount": 4695,
+   "postsCount": 182
+  },
+  "did:plc:gmvbrhlneizccy7bpqryuygw": {
+   "did": "did:plc:gmvbrhlneizccy7bpqryuygw",
+   "handle": "velazquez.house.gov",
+   "displayName": "Rep. Nydia Velázquez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gmvbrhlneizccy7bpqryuygw/bafkreihmfevihdyo3skxbb75lcrvs3blmc5erxhr245m7rcwcn7buf2lii",
+   "followersCount": 9148,
+   "postsCount": 107
+  },
+  "did:plc:slgnj2shpt4vk4cxnzgeubvj": {
+   "did": "did:plc:slgnj2shpt4vk4cxnzgeubvj",
+   "handle": "wassermanschultz.house.gov",
+   "displayName": "Rep. Debbie Wasserman Schultz",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:slgnj2shpt4vk4cxnzgeubvj/bafkreic5okpllzfhhfy4tcudnhhpvsbhbcjsacnbj6ixrtwbcz3u3iylwy",
+   "followersCount": 23956,
+   "postsCount": 1803
+  },
+  "did:plc:2wvr7yvkkdnylfbkuv4mcr7l": {
+   "did": "did:plc:2wvr7yvkkdnylfbkuv4mcr7l",
+   "handle": "repmaxinewaters.bsky.social",
+   "displayName": "Congresswoman Maxine Waters",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2wvr7yvkkdnylfbkuv4mcr7l/bafkreifbx7cs2jcibeg74lb23jc47qwgbjyho4o4a4goe3myutm3lyd6ky",
+   "followersCount": 2965,
+   "postsCount": 120
+  },
+  "did:plc:z2wvqdvi7hukokkpe2gnnqru": {
+   "did": "did:plc:z2wvqdvi7hukokkpe2gnnqru",
+   "handle": "welch.senate.gov",
+   "displayName": "Senator Peter Welch",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:z2wvqdvi7hukokkpe2gnnqru/bafkreigzzc2x7gih7v4sk5vmxzbbkvcff32wo2w5yckvmlcsx3bawwo7zi",
+   "followersCount": 3869,
+   "postsCount": 987
+  },
+  "did:plc:uyfv4rcoc2v42wmconn3ln47": {
+   "did": "did:plc:uyfv4rcoc2v42wmconn3ln47",
+   "handle": "repwilson.bsky.social",
+   "displayName": "Rep. Frederica Wilson",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:uyfv4rcoc2v42wmconn3ln47/bafkreigr2xkulg3jv3xn4nj6aslbgrhiagr6sdr5la44pmryeu5jmqis64",
+   "followersCount": 37008,
+   "postsCount": 561
+  },
+  "did:plc:ydtsvzzsl6nlfkmnuooeqcmc": {
+   "did": "did:plc:ydtsvzzsl6nlfkmnuooeqcmc",
+   "handle": "wyden.senate.gov",
+   "displayName": "Senator Ron Wyden",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ydtsvzzsl6nlfkmnuooeqcmc/bafkreiaowfsrnaqxawsjzgf2nkkpfzyy3hibcwzxmvfmfb3bypp46ukkt4",
+   "followersCount": 211585,
+   "postsCount": 1917
+  },
+  "did:plc:cecd5ju73ilt7ntzyygkusgp": {
+   "did": "did:plc:cecd5ju73ilt7ntzyygkusgp",
+   "handle": "wydenpress.bsky.social",
+   "displayName": "Wyden Press",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:cecd5ju73ilt7ntzyygkusgp/bafkreia3gd2nkftoqsnffilz2qezs3mdpmoftzxbe4f6ri4xtt4pykqyzi",
+   "followersCount": 8335,
+   "postsCount": 4
+  },
+  "did:plc:74zycyzzi7wg26nudctnc55p": {
+   "did": "did:plc:74zycyzzi7wg26nudctnc55p",
+   "handle": "repbonamici.bsky.social",
+   "displayName": "Suzanne Bonamici",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:74zycyzzi7wg26nudctnc55p/bafkreiergp2hvnenfwbpeoq75wf63juhupzhawinbghhd43kierbe3mwii",
+   "followersCount": 38851,
+   "postsCount": 2398
+  },
+  "did:plc:2llddhzp7kietow3npswbcqh": {
+   "did": "did:plc:2llddhzp7kietow3npswbcqh",
+   "handle": "repdelbene.bsky.social",
+   "displayName": "Congresswoman Suzan DelBene",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2llddhzp7kietow3npswbcqh/bafkreicfbeu3r6p3vvptk6ji52nx3hv72xlkydtbxmqustevtfjfkpolfq",
+   "followersCount": 19499,
+   "postsCount": 1436
+  },
+  "did:plc:zlekb26g7abqatkw442bq635": {
+   "did": "did:plc:zlekb26g7abqatkw442bq635",
+   "handle": "schatz.bsky.social",
+   "displayName": "Brian Schatz",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zlekb26g7abqatkw442bq635/bafkreigewpo4sforcn4ehpdqba3opfckbke3wij2iylirtnf7yta3w5ywq",
+   "followersCount": 223778,
+   "postsCount": 507
+  },
+  "did:plc:mu6rcpl4wx7wdcgu3eqmha3u": {
+   "did": "did:plc:mu6rcpl4wx7wdcgu3eqmha3u",
+   "handle": "repbillfoster.bsky.social",
+   "displayName": "Congressman Bill Foster",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mu6rcpl4wx7wdcgu3eqmha3u/bafkreid6fyenqpnvzgqrbi7jzxriredxuif232q7xdszo3cjpgti3jucri",
+   "followersCount": 39854,
+   "postsCount": 832
+  },
+  "did:plc:amjgn3fdbdjcs2mdm5jlaxk6": {
+   "did": "did:plc:amjgn3fdbdjcs2mdm5jlaxk6",
+   "handle": "titus.house.gov",
+   "displayName": "Congresswoman Dina Titus",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:amjgn3fdbdjcs2mdm5jlaxk6/bafkreihrgvjhp2gvxkogalaotinifulzgw74m3bl7ceqpzug2wvojg6hlm",
+   "followersCount": 4484,
+   "postsCount": 653
+  },
+  "did:plc:tyr7iqmghpf5qxvqvhblwj5f": {
+   "did": "did:plc:tyr7iqmghpf5qxvqvhblwj5f",
+   "handle": "rephuffman.bsky.social",
+   "displayName": "Rep. Jared Huffman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tyr7iqmghpf5qxvqvhblwj5f/bafkreigmxkbsfq435775ionwtcybwqtyrbj7563qcptyedxa4e55ocoeja",
+   "followersCount": 42527,
+   "postsCount": 633
+  },
+  "did:plc:nxrte33cwhaawrghfaoyo3up": {
+   "did": "did:plc:nxrte33cwhaawrghfaoyo3up",
+   "handle": "realjaredhuffman.bsky.social",
+   "displayName": "Rep. Jared Huffman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:nxrte33cwhaawrghfaoyo3up/bafkreie72ris3yy5yutbq7tipxuu3betw4dbiu66c6vejzpqnjmrvhqepy",
+   "followersCount": 4727,
+   "postsCount": 368
+  },
+  "did:plc:nu5l4hek4cifv2xim3bl6we3": {
+   "did": "did:plc:nu5l4hek4cifv2xim3bl6we3",
+   "handle": "bera.house.gov",
+   "displayName": "Rep. Ami Bera, M.D.",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:nu5l4hek4cifv2xim3bl6we3/bafkreigb5ew6aueqev6nkri2yubngf5ksjkzbdiafvugfmbi5zxvp5fmp4",
+   "followersCount": 16692,
+   "postsCount": 1028
+  },
+  "did:plc:7b4ba4ialztxqftfvmmqv4il": {
+   "did": "did:plc:7b4ba4ialztxqftfvmmqv4il",
+   "handle": "juliabrownley.house.gov",
+   "displayName": "Congresswoman Julia Brownley",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7b4ba4ialztxqftfvmmqv4il/bafkreiggsnc4bvv65faasbislbfthg5bfz2qp7jqrfo7kidtyjcy3za3iu",
+   "followersCount": 37543,
+   "postsCount": 1923
+  },
+  "did:plc:oiuk3t7dklb4ydzgodbcub7r": {
+   "did": "did:plc:oiuk3t7dklb4ydzgodbcub7r",
+   "handle": "repraulruizmd.bsky.social",
+   "displayName": "Congressman Raul Ruiz, MD",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:oiuk3t7dklb4ydzgodbcub7r/bafkreiajfhbvf5yvamwmmrxdplmhyxdpl4p4ypvb2etskdgnyso5au7taq",
+   "followersCount": 40404,
+   "postsCount": 678
+  },
+  "did:plc:7xjtx5zwz3ndizetx5csu6ga": {
+   "did": "did:plc:7xjtx5zwz3ndizetx5csu6ga",
+   "handle": "repmarktakano.bsky.social",
+   "displayName": "Rep. Mark Takano",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7xjtx5zwz3ndizetx5csu6ga/bafkreig4h3jqpgaiv2m7mcpydzjxyavggn3fmyqtzylkgpokxp5dxh55g4",
+   "followersCount": 26793,
+   "postsCount": 156
+  },
+  "did:plc:ef4njmroevwj7uq3sp34gv4m": {
+   "did": "did:plc:ef4njmroevwj7uq3sp34gv4m",
+   "handle": "vargas.house.gov",
+   "displayName": "Congressman Juan Vargas",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ef4njmroevwj7uq3sp34gv4m/bafkreifsps5nhekruzdv2e2l2f6vvbu565yvasj52nfghos73gafo2evha",
+   "followersCount": 12467,
+   "postsCount": 540
+  },
+  "did:plc:bprol46vrcgv2syyxg46jr6z": {
+   "did": "did:plc:bprol46vrcgv2syyxg46jr6z",
+   "handle": "repscottpeters.bsky.social",
+   "displayName": "Rep. Scott Peters",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bprol46vrcgv2syyxg46jr6z/bafkreigwyb74q26puoot7n3tulcvypfee6im42taepaca3onpvbodkuotq",
+   "followersCount": 3362,
+   "postsCount": 1074
+  },
+  "did:plc:uyapb4exdlyrr6fkicrccm3v": {
+   "did": "did:plc:uyapb4exdlyrr6fkicrccm3v",
+   "handle": "frankel.house.gov",
+   "displayName": "Rep. Lois Frankel",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:uyapb4exdlyrr6fkicrccm3v/bafkreidgtf34qzjfzfci44fxb3p3h7rsewsl23fa3aa3deic5bqv2tc32m",
+   "followersCount": 30506,
+   "postsCount": 298
+  },
+  "did:plc:uk62jqyggwt4hyhrnzka34wm": {
+   "did": "did:plc:uk62jqyggwt4hyhrnzka34wm",
+   "handle": "duckworth.senate.gov",
+   "displayName": "Tammy Duckworth",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:uk62jqyggwt4hyhrnzka34wm/bafkreibfjn76xroibuc47jbeq6dceefkufl5purw5a6egt5eegzcoef3hy",
+   "followersCount": 73763,
+   "postsCount": 970
+  },
+  "did:plc:ornpixmpy5ts36lh7hmi7wkp": {
+   "did": "did:plc:ornpixmpy5ts36lh7hmi7wkp",
+   "handle": "warren.senate.gov",
+   "displayName": "Elizabeth Warren",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ornpixmpy5ts36lh7hmi7wkp/bafkreichdolnrvokumwknhqossytfzqdwqc3py4lgdpdzp35u7vec7hwei",
+   "followersCount": 425223,
+   "postsCount": 2720
+  },
+  "did:plc:tuomlekw6vdp5rs272djzjqs": {
+   "did": "did:plc:tuomlekw6vdp5rs272djzjqs",
+   "handle": "elizabeth-warren.bsky.social",
+   "displayName": "Elizabeth Warren",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tuomlekw6vdp5rs272djzjqs/bafkreidesfwhyirp37jfm3q2xcyrmvhnmylgjfiwsonhmwg7xpzk5m4hj4",
+   "followersCount": 102587,
+   "postsCount": 1270
+  },
+  "did:plc:qsnuephkmovdh2u4c2u336qr": {
+   "did": "did:plc:qsnuephkmovdh2u4c2u336qr",
+   "handle": "senangusking.bsky.social",
+   "displayName": "Senator Angus King",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qsnuephkmovdh2u4c2u336qr/bafkreiay4oticolwslrfpltf6inri6rsktnfenzguq6fjbn34gnxrti36a",
+   "followersCount": 3148,
+   "postsCount": 174
+  },
+  "did:plc:honwu3zwt277hgg46s24amta": {
+   "did": "did:plc:honwu3zwt277hgg46s24amta",
+   "handle": "meng.house.gov",
+   "displayName": "Congresswoman Grace Meng",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:honwu3zwt277hgg46s24amta/bafkreifglnrowvut2gm4us2cppwskdg6cukdgta6i7vp5jf3uhcym7676u",
+   "followersCount": 10755,
+   "postsCount": 1857
+  },
+  "did:plc:zipphihu644mxj7qjafvwwun": {
+   "did": "did:plc:zipphihu644mxj7qjafvwwun",
+   "handle": "hakeem-jeffries.bsky.social",
+   "displayName": "Hakeem Jeffries",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zipphihu644mxj7qjafvwwun/bafkreihdztjmd62ma4l54irbsweems6dzsrm2u6yzyp23sbrskeaybhg5u",
+   "followersCount": 267021,
+   "postsCount": 427
+  },
+  "did:plc:6droa2t2rpgkej2osl4igqwm": {
+   "did": "did:plc:6droa2t2rpgkej2osl4igqwm",
+   "handle": "repbeatty.bsky.social",
+   "displayName": "Rep. Joyce Beatty",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6droa2t2rpgkej2osl4igqwm/bafkreiezjaoj7mrwgathea2xkusgv6pqbxs27mqsu26qux7lrsdb2wkzq4",
+   "followersCount": 9574,
+   "postsCount": 609
+  },
+  "did:plc:4iclppomf3wagequyumxle56": {
+   "did": "did:plc:4iclppomf3wagequyumxle56",
+   "handle": "joaquincastrotx.bsky.social",
+   "displayName": "Joaquin Castro",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4iclppomf3wagequyumxle56/bafkreig3jwyijv34ubze5g6anfx5h4hgwnobjmlemmxem4ubnvsreqbypu",
+   "followersCount": 103217,
+   "postsCount": 1306
+  },
+  "did:plc:gsyjinihyktdxekmj7uajxzo": {
+   "did": "did:plc:gsyjinihyktdxekmj7uajxzo",
+   "handle": "repmarcveasey.bsky.social",
+   "displayName": "Rep. Marc A. Veasey",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gsyjinihyktdxekmj7uajxzo/bafkreicwzlnbb63tcn3nfjjpfbnjui3erogqurpohgam2gyrnjdhvxaasa",
+   "followersCount": 713,
+   "postsCount": 26
+  },
+  "did:plc:gyl2gdob6lyckqwi5dwaehef": {
+   "did": "did:plc:gyl2gdob6lyckqwi5dwaehef",
+   "handle": "kaine.senate.gov",
+   "displayName": "Senator Tim Kaine",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gyl2gdob6lyckqwi5dwaehef/bafkreihcieee6uocc6o3bxjvhpq3wkallggh6adhygid5rsv7lgjp3tzau",
+   "followersCount": 85295,
+   "postsCount": 1348
+  },
+  "did:plc:lrw4cnptopspeg5tthztcliw": {
+   "did": "did:plc:lrw4cnptopspeg5tthztcliw",
+   "handle": "pocan.house.gov",
+   "displayName": "Rep. Mark Pocan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lrw4cnptopspeg5tthztcliw/bafkreidsvc3jor7ue4zol6qhhxnncqg44zmlbz7s4xll53rdzfkho4brpy",
+   "followersCount": 51479,
+   "postsCount": 2107
+  },
+  "did:plc:c23lm7asfzxtpn6kyz6hcf5z": {
+   "did": "did:plc:c23lm7asfzxtpn6kyz6hcf5z",
+   "handle": "markpocan.bsky.social",
+   "displayName": "Mark Pocan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:c23lm7asfzxtpn6kyz6hcf5z/bafkreigc37fsztvxvfv3zr6ne3jlvg3cyzsjbyvkyowzryqatbq33pyh2y",
+   "followersCount": 11242,
+   "postsCount": 193
+  },
+  "did:plc:sxlmmrg3y4vqb5uzn2rvgwhi": {
+   "did": "did:plc:sxlmmrg3y4vqb5uzn2rvgwhi",
+   "handle": "robinlynnekelly.bsky.social",
+   "displayName": "Robin Kelly, Ph.D.",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sxlmmrg3y4vqb5uzn2rvgwhi/bafkreic3kcdnnd5aqnildmgiut2622i56jnnpwxsojstryppiovslwfssi",
+   "followersCount": 32429,
+   "postsCount": 765
+  },
+  "did:plc:sqnnthrwp3apucyy35jw4dqz": {
+   "did": "did:plc:sqnnthrwp3apucyy35jw4dqz",
+   "handle": "robinkelly.house.gov",
+   "displayName": "Congresswoman Robin Kelly",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sqnnthrwp3apucyy35jw4dqz/bafkreicwdnuwlpqxrfdvxebulwcekkfxo2lv2ugp7utxhawfpbc3wzg73y",
+   "followersCount": 20397,
+   "postsCount": 1796
+  },
+  "did:plc:6fm2lhrkemwwzxw6kejxqwtt": {
+   "did": "did:plc:6fm2lhrkemwwzxw6kejxqwtt",
+   "handle": "booker.senate.gov",
+   "displayName": "Sen. Cory Booker",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6fm2lhrkemwwzxw6kejxqwtt/bafkreidry5xjej6tdzqyd2wd5azdfokdo5fcfczu3k4f7vuqvvu6ucqcqu",
+   "followersCount": 248282,
+   "postsCount": 701
+  },
+  "did:plc:fxlyr6bdsgo5luhsz7hzzrta": {
+   "did": "did:plc:fxlyr6bdsgo5luhsz7hzzrta",
+   "handle": "corybooker.com",
+   "displayName": "Cory Booker",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:fxlyr6bdsgo5luhsz7hzzrta/bafkreih5y7ozn5eiah6b7e7se2yknz3f6fqvkf2gelzicbouzq2wn6qyoy",
+   "followersCount": 193460,
+   "postsCount": 1375
+  },
+  "did:plc:mnm2mri5k4vu72ld67v6fgbf": {
+   "did": "did:plc:mnm2mri5k4vu72ld67v6fgbf",
+   "handle": "whipkclark.bsky.social",
+   "displayName": "Katherine Clark",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mnm2mri5k4vu72ld67v6fgbf/bafkreie52jhxu4nfreqw6svxpavlkxkowkfuk6gxyt4hdrq7wlo3il6tdm",
+   "followersCount": 71348,
+   "postsCount": 1183
+  },
+  "did:plc:lwhbdld4x7c557vszdr2qyvq": {
+   "did": "did:plc:lwhbdld4x7c557vszdr2qyvq",
+   "handle": "handle.invalid",
+   "displayName": "Congressman Donald Norcross",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lwhbdld4x7c557vszdr2qyvq/bafkreidrcv6qqpzsswmoxtfauqtuzwbo7wo2qmy2yvzb7eqaajybg5y4ce",
+   "followersCount": 30811,
+   "postsCount": 1444
+  },
+  "did:plc:vduddkj2mn6djxijte7fwtzr": {
+   "did": "did:plc:vduddkj2mn6djxijte7fwtzr",
+   "handle": "adams.house.gov",
+   "displayName": "Rep. Alma S. Adams Ph.D.",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vduddkj2mn6djxijte7fwtzr/bafkreihtq6tlmafr5vselc3s5l66fi7zt5tqsb5lvbzcy4wkd3fn7qvc6e",
+   "followersCount": 12477,
+   "postsCount": 41
+  },
+  "did:plc:vt3xvbw22imzxfegz45wq7y5": {
+   "did": "did:plc:vt3xvbw22imzxfegz45wq7y5",
+   "handle": "gallego.senate.gov",
+   "displayName": "Senator Ruben Gallego",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vt3xvbw22imzxfegz45wq7y5/bafkreiflvzveymjd4bac3feo5ibq46rj75kj2vc4ptdvp75dubbe5xuwkq",
+   "followersCount": 33702,
+   "postsCount": 933
+  },
+  "did:plc:ar7ms2zpat4erpz444u2aady": {
+   "did": "did:plc:ar7ms2zpat4erpz444u2aady",
+   "handle": "gallegoforarizona.com",
+   "displayName": "Ruben Gallego",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ar7ms2zpat4erpz444u2aady/bafkreifkgdv4xgl7mciwr7f43f5ocyfjwwdgqslswysqrz5b334ncy5tzm",
+   "followersCount": 340,
+   "postsCount": 297
+  },
+  "did:plc:7mfh4fcxkxeq2iry3ua3u2l7": {
+   "did": "did:plc:7mfh4fcxkxeq2iry3ua3u2l7",
+   "handle": "repmarkdesaulnier.bsky.social",
+   "displayName": "Mark DeSaulnier",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7mfh4fcxkxeq2iry3ua3u2l7/bafkreiflk2csjf6nwhw7ycflop47udnjghy4id5lxmyr7d7z7yodirczri",
+   "followersCount": 3406,
+   "postsCount": 2007
+  },
+  "did:plc:zpdxvdfphblqrp4himfdg6vs": {
+   "did": "did:plc:zpdxvdfphblqrp4himfdg6vs",
+   "handle": "aguilar.house.gov",
+   "displayName": "Rep. Pete Aguilar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zpdxvdfphblqrp4himfdg6vs/bafkreieykmdq2ngxzqnjvpb75frb7s67wzjqcqbmjaf4bx5tkwg4qb57wu",
+   "followersCount": 22577,
+   "postsCount": 539
+  },
+  "did:plc:5bl2qrmv4oubrlyg7eavvjm2": {
+   "did": "did:plc:5bl2qrmv4oubrlyg7eavvjm2",
+   "handle": "reptedlieu.bsky.social",
+   "displayName": "Rep. Ted Lieu",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:5bl2qrmv4oubrlyg7eavvjm2/bafkreidgduft4qo53tztrawhlr327m3bq6jio5ksnmf2vy4o6nmqdv2lhu",
+   "followersCount": 122634,
+   "postsCount": 1045
+  },
+  "did:plc:ep4zjgwunggbrulratfpfj7h": {
+   "did": "did:plc:ep4zjgwunggbrulratfpfj7h",
+   "handle": "tedlieu.bsky.social",
+   "displayName": "Ted Lieu",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ep4zjgwunggbrulratfpfj7h/bafkreie6ojholvn6kev33hatgwhwwdvausetkkgz3utyl5blmu2u4w2paq",
+   "followersCount": 105887,
+   "postsCount": 483
+  },
+  "did:plc:2mxsnsvgzeguiyjl2finwrcn": {
+   "did": "did:plc:2mxsnsvgzeguiyjl2finwrcn",
+   "handle": "torres.house.gov",
+   "displayName": "Rep. Norma Torres",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2mxsnsvgzeguiyjl2finwrcn/bafkreib5uhhx6c5v6zfrtdq2spdbvfwoc4oi6n3i65r72j6cwsklweocr4",
+   "followersCount": 2036,
+   "postsCount": 523
+  },
+  "did:plc:f5zbjpygz4ym6g3du53yni5t": {
+   "did": "did:plc:f5zbjpygz4ym6g3du53yni5t",
+   "handle": "moulton.house.gov",
+   "displayName": "Rep. Seth Moulton",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:f5zbjpygz4ym6g3du53yni5t/bafkreibwqh4q25kc5plps4j6wcmbh6yxivqclth7l2pykahyj2zkloj3ru",
+   "followersCount": 34434,
+   "postsCount": 395
+  },
+  "did:plc:iudave7o5abb2nxlo4ambbp7": {
+   "did": "did:plc:iudave7o5abb2nxlo4ambbp7",
+   "handle": "sethmoulton.bsky.social",
+   "displayName": "Seth Moulton",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:iudave7o5abb2nxlo4ambbp7/bafkreifkcavwgilqech3och5pna3arnj4ptwhx4oszhnff6c5nfhxdyn5u",
+   "followersCount": 13465,
+   "postsCount": 588
+  },
+  "did:plc:sioeztc3ud2jotsgdgvqxbbo": {
+   "did": "did:plc:sioeztc3ud2jotsgdgvqxbbo",
+   "handle": "debbiedingell.house.gov",
+   "displayName": "Rep. Debbie Dingell",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sioeztc3ud2jotsgdgvqxbbo/bafkreibe4empeqwwfs43rjja32xqel2uc4oqijylmmqsr75gsrxruv35ge",
+   "followersCount": 45759,
+   "postsCount": 673
+  },
+  "did:plc:3rr3qjeafotnnegr24tiwjad": {
+   "did": "did:plc:3rr3qjeafotnnegr24tiwjad",
+   "handle": "repbonnie.bsky.social",
+   "displayName": "Rep. Bonnie Watson Coleman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3rr3qjeafotnnegr24tiwjad/bafkreidjzzqdo3opnhorvfgjoxrekad3dzcbx5tpmkjqnxg6dao5usqd2a",
+   "followersCount": 20098,
+   "postsCount": 230
+  },
+  "did:plc:uokor2zivu6tyhj2spdo66j7": {
+   "did": "did:plc:uokor2zivu6tyhj2spdo66j7",
+   "handle": "repbrendanboyle.bsky.social",
+   "displayName": "Congressman Brendan Boyle",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:uokor2zivu6tyhj2spdo66j7/bafkreigt4ty5cs5oki6dejxhymemj6u6k5bmid24l64272urcq4pkemcqy",
+   "followersCount": 29520,
+   "postsCount": 103
+  },
+  "did:plc:yf3w2sjupmxwxam6mxhz2us7": {
+   "did": "did:plc:yf3w2sjupmxwxam6mxhz2us7",
+   "handle": "congressmanboyle.bsky.social",
+   "displayName": "Rep. Brendan Boyle",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:yf3w2sjupmxwxam6mxhz2us7/bafkreiaby2r7c4w5wuf4pgfbburdo4epruut6qdmq5ac3wk3lzukedzdfu",
+   "followersCount": 14601,
+   "postsCount": 992
+  },
+  "did:plc:dhvvqy2dcefrk35kudxclkyd": {
+   "did": "did:plc:dhvvqy2dcefrk35kudxclkyd",
+   "handle": "beyer.house.gov",
+   "displayName": "Congressman Don Beyer",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:dhvvqy2dcefrk35kudxclkyd/bafkreigfxexb55k5b6dwcjdnfmdio4wlxlb7gonkvvnknmbtwcozvenqre",
+   "followersCount": 84510,
+   "postsCount": 2047
+  },
+  "did:plc:gyfvwyusvhleykmwfinsdfho": {
+   "did": "did:plc:gyfvwyusvhleykmwfinsdfho",
+   "handle": "repstaceyplaskett.bsky.social",
+   "displayName": "Representative Stacey E. Plaskett",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gyfvwyusvhleykmwfinsdfho/bafkreichvgctrmt4nepvv7hdzotg74mi2z3githf4t3zmrsvjuwrn7ty2a",
+   "followersCount": 6278,
+   "postsCount": 127
+  },
+  "did:plc:hmstk6czb32dv4xjx4s3xhda": {
+   "did": "did:plc:hmstk6czb32dv4xjx4s3xhda",
+   "handle": "repdwightevans.bsky.social",
+   "displayName": "Congressman Dwight Evans",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hmstk6czb32dv4xjx4s3xhda/bafkreigazpmantpzns6sx65jjkm2meck4hfh2lr2lybhf54wztt7gx5vb4",
+   "followersCount": 41932,
+   "postsCount": 1755
+  },
+  "did:plc:mtwom57onohy7mymkgdwzq55": {
+   "did": "did:plc:mtwom57onohy7mymkgdwzq55",
+   "handle": "hassan.senate.gov",
+   "displayName": "Senator Maggie Hassan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mtwom57onohy7mymkgdwzq55/bafkreihmvywnifk6oks6m3x7q3txh5tymczxvf2obc4gbkzvmuryrjpwri",
+   "followersCount": 11659,
+   "postsCount": 417
+  },
+  "did:plc:mhwnj5sorpgujqcwolxf7znl": {
+   "did": "did:plc:mhwnj5sorpgujqcwolxf7znl",
+   "handle": "cortezmasto.senate.gov",
+   "displayName": "Sen. Catherine Cortez Masto",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mhwnj5sorpgujqcwolxf7znl/bafkreihiimc52nvuwv56otnylnxqgwzpjyk2w4fyrubvx63yoazmpt5qy4",
+   "followersCount": 5339,
+   "postsCount": 711
+  },
+  "did:plc:xxfk24puj3dwsccb2wybfnsa": {
+   "did": "did:plc:xxfk24puj3dwsccb2wybfnsa",
+   "handle": "repschneider.bsky.social",
+   "displayName": "Rep. Brad Schneider",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xxfk24puj3dwsccb2wybfnsa/bafkreia3zrbr7xuobetwc45yf5kt3kjtcffy2tyhsguf6fpfbkbygdq72m",
+   "followersCount": 16081,
+   "postsCount": 337
+  },
+  "did:plc:3dq2yyzn4vuzpyaezxr6vtnf": {
+   "did": "did:plc:3dq2yyzn4vuzpyaezxr6vtnf",
+   "handle": "rokhanna.bsky.social",
+   "displayName": "Ro Khanna",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3dq2yyzn4vuzpyaezxr6vtnf/bafkreif6ufcbwfggspupbf4k7epmha5slx6laoni4rxw3ozmgpwniyvrue",
+   "followersCount": 95765,
+   "postsCount": 1233
+  },
+  "did:plc:sawh4vdiw425eeshlqgzxfsd": {
+   "did": "did:plc:sawh4vdiw425eeshlqgzxfsd",
+   "handle": "khanna.house.gov",
+   "displayName": "Rep. Ro Khanna",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sawh4vdiw425eeshlqgzxfsd/bafkreigq2ysmceoskdbbivsykkiba2jot7fdf4ddhse4y5olqjx2sdd274",
+   "followersCount": 36705,
+   "postsCount": 497
+  },
+  "did:plc:jajnyiri7cozd4f2luqty5ow": {
+   "did": "did:plc:jajnyiri7cozd4f2luqty5ow",
+   "handle": "usrepjimmypanetta.bsky.social",
+   "displayName": "Rep. Jimmy Panetta",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:jajnyiri7cozd4f2luqty5ow/bafkreiea7ff5kpygdafk2v23ozupf6k7oxwebpcbgt3i4aaivtby5zepuu",
+   "followersCount": 2609,
+   "postsCount": 2859
+  },
+  "did:plc:nijb7ycdy7u3vy6buzbkhpln": {
+   "did": "did:plc:nijb7ycdy7u3vy6buzbkhpln",
+   "handle": "panettaforcongress.bsky.social",
+   "displayName": "Jimmy Panetta for Congress",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:nijb7ycdy7u3vy6buzbkhpln/bafkreif7dp26p44sgaew777g5vneow3jap536mxnhxk3vqjbb5zxehte3u",
+   "followersCount": 168,
+   "postsCount": 50
+  },
+  "did:plc:b55chxd3vz7a6zlx55b6phib": {
+   "did": "did:plc:b55chxd3vz7a6zlx55b6phib",
+   "handle": "carbajal.house.gov",
+   "displayName": "Rep. Salud Carbajal",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:b55chxd3vz7a6zlx55b6phib/bafkreictlirrhjqf24oeuyajx3tmnzclkgjdyeer4my2mzeo7psoeylseq",
+   "followersCount": 22514,
+   "postsCount": 1087
+  },
+  "did:plc:6dm4qetyrxibxgrey6dbhtsq": {
+   "did": "did:plc:6dm4qetyrxibxgrey6dbhtsq",
+   "handle": "repbarragan.bsky.social",
+   "displayName": "Congresswoman Nanette Barragán",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6dm4qetyrxibxgrey6dbhtsq/bafkreibdzctn2iabybyawsnwiuzbd2vav4n6aguri2t2t2mxn4h4zf5tvq",
+   "followersCount": 28308,
+   "postsCount": 1473
+  },
+  "did:plc:5pgzf6g5p56phoxm4rk7tzjl": {
+   "did": "did:plc:5pgzf6g5p56phoxm4rk7tzjl",
+   "handle": "bluntrochester.senate.gov",
+   "displayName": "Senator Lisa Blunt Rochester",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:5pgzf6g5p56phoxm4rk7tzjl/bafkreiei7kn6rhvswszbuajo35g5hy2i2xxacccb24ej57qp23kw6fqqta",
+   "followersCount": 14363,
+   "postsCount": 790
+  },
+  "did:plc:uopgfq6djckwd6blvcyrzule": {
+   "did": "did:plc:uopgfq6djckwd6blvcyrzule",
+   "handle": "repdarrensoto.bsky.social",
+   "displayName": "Rep. Darren Soto",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:uopgfq6djckwd6blvcyrzule/bafkreiek24lu3bv3yoysr342652cs2f36eat55ju5uhri3s2duxxab5ldq",
+   "followersCount": 1875,
+   "postsCount": 543
+  },
+  "did:plc:54yntwd4c4gnp5gnlyhvzi3x": {
+   "did": "did:plc:54yntwd4c4gnp5gnlyhvzi3x",
+   "handle": "congressmanraja.bsky.social",
+   "displayName": "Congressman Raja Krishnamoorthi",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:54yntwd4c4gnp5gnlyhvzi3x/bafkreih625g7iyqsydqlcv3qw3gyjzz6fbnhvay6x64klqg6qcyjgzo6su",
+   "followersCount": 6454,
+   "postsCount": 857
+  },
+  "did:plc:kuzgivp4tmed6noyg2j3epaa": {
+   "did": "did:plc:kuzgivp4tmed6noyg2j3epaa",
+   "handle": "rajaforil.bsky.social",
+   "displayName": "Raja Krishnamoorthi",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:kuzgivp4tmed6noyg2j3epaa/bafkreicg5y3l4uhwrjgau2kaxehtlgpnl5vqs6wlslsyqs7422drfmfgmu",
+   "followersCount": 265,
+   "postsCount": 708
+  },
+  "did:plc:snct54nd4ve2j46f5cfhlr5e": {
+   "did": "did:plc:snct54nd4ve2j46f5cfhlr5e",
+   "handle": "raskin.house.gov",
+   "displayName": "Rep. Jamie Raskin",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:snct54nd4ve2j46f5cfhlr5e/bafkreiauqbrwv4wy4oiidx35472mkpa5g5ypoo5krjpaqz3s4qfvt7ohb4",
+   "followersCount": 270012,
+   "postsCount": 802
+  },
+  "did:plc:264oyvyqzmzk2syvn5yulmdx": {
+   "did": "did:plc:264oyvyqzmzk2syvn5yulmdx",
+   "handle": "rosen.senate.gov",
+   "displayName": "Senator Jacky Rosen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:264oyvyqzmzk2syvn5yulmdx/bafkreifxgdeeqcpqau7wfb66knykeiroh6ocg6gs4rnqyej47if7onfhoq",
+   "followersCount": 9010,
+   "postsCount": 1296
+  },
+  "did:plc:acesiire326u4l3lqssgbdl6": {
+   "did": "did:plc:acesiire326u4l3lqssgbdl6",
+   "handle": "senatorjackyrosen.bsky.social",
+   "displayName": "",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:acesiire326u4l3lqssgbdl6/bafkreih5xf4n275ydjsw2ggcms3azulatnypepzrfhweoys63dlld7lfgu",
+   "followersCount": 25226,
+   "postsCount": 0
+  },
+  "did:plc:y3hypa7yks2estgpmt3sansh": {
+   "did": "did:plc:y3hypa7yks2estgpmt3sansh",
+   "handle": "repespaillat.bsky.social",
+   "displayName": "Adriano Espaillat",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:y3hypa7yks2estgpmt3sansh/bafkreih5yencpuc7bw62elbkwdej3j5krp6p6ym34lzdo5h23om2kfmjdm",
+   "followersCount": 10027,
+   "postsCount": 460
+  },
+  "did:plc:f5aicufsf2vpuwte6wizoy2v": {
+   "did": "did:plc:f5aicufsf2vpuwte6wizoy2v",
+   "handle": "jayapal.house.gov",
+   "displayName": "Congresswoman Pramila Jayapal",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:f5aicufsf2vpuwte6wizoy2v/bafkreifgdzdwxbg6eoqhbdnnnjbyxx4nwiaojzyq6vy3gjk7bex6ohymam",
+   "followersCount": 77462,
+   "postsCount": 3727
+  },
+  "did:plc:lkmmezffdeu5tjubg65xvfz4": {
+   "did": "did:plc:lkmmezffdeu5tjubg65xvfz4",
+   "handle": "gomez.house.gov",
+   "displayName": "Rep. Jimmy Gomez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lkmmezffdeu5tjubg65xvfz4/bafkreibrr7hsxecewt62wohwhxiyhqcia74ykebvxnxhme7agij6mfg5de",
+   "followersCount": 24714,
+   "postsCount": 1076
+  },
+  "did:plc:dqj6ug6nsm7giy3xd4dpuhmx": {
+   "did": "did:plc:dqj6ug6nsm7giy3xd4dpuhmx",
+   "handle": "smith.senate.gov",
+   "displayName": "Tina Smith",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:dqj6ug6nsm7giy3xd4dpuhmx/bafkreiazeyf7o3emrs6m6yfujuea7akh3tjq3a2n64faq6wpl2o5agfspi",
+   "followersCount": 145028,
+   "postsCount": 1530
+  },
+  "did:plc:llhkrgim5vl3wevm6e3dyo6u": {
+   "did": "did:plc:llhkrgim5vl3wevm6e3dyo6u",
+   "handle": "morelle.house.gov",
+   "displayName": "Joe Morelle",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:llhkrgim5vl3wevm6e3dyo6u/bafkreifw464lwre626mxiiqdibhq2brfzwylauzrf5yddl47ypgy4kuxsy",
+   "followersCount": 2473,
+   "postsCount": 1835
+  },
+  "did:plc:56tgs3u2uvu3kdqsah47xfwa": {
+   "did": "did:plc:56tgs3u2uvu3kdqsah47xfwa",
+   "handle": "scanlon.house.gov",
+   "displayName": "Congresswoman Mary Gay Scanlon",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:56tgs3u2uvu3kdqsah47xfwa/bafkreidcr26uhl4rnftxclq36lyf2timsbcbv6yv4db2z4r6i37oasyfje",
+   "followersCount": 10459,
+   "postsCount": 1539
+  },
+  "did:plc:mfarwkewbizomvmg4ea2vj5k": {
+   "did": "did:plc:mfarwkewbizomvmg4ea2vj5k",
+   "handle": "repstevenhorsford.bsky.social",
+   "displayName": "Rep. Steven Horsford",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mfarwkewbizomvmg4ea2vj5k/bafkreig2soo4o6ijpbm57yxv3ci3i6ad2dut3adxj4h7iojvjohumuinpq",
+   "followersCount": 7747,
+   "postsCount": 476
+  },
+  "did:plc:prz5uxnf5czbjqzyi4elwatg": {
+   "did": "did:plc:prz5uxnf5czbjqzyi4elwatg",
+   "handle": "repgregstanton.bsky.social",
+   "displayName": "Rep. Greg Stanton",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:prz5uxnf5czbjqzyi4elwatg/bafkreiayikrm6tbyd3d3fck3ygcvjk4bmbelebp5bkexlod4r4nyzagnry",
+   "followersCount": 43519,
+   "postsCount": 2669
+  },
+  "did:plc:uzcbz3hsqpwdv5ulkxqa2ubn": {
+   "did": "did:plc:uzcbz3hsqpwdv5ulkxqa2ubn",
+   "handle": "mikelevin.org",
+   "displayName": "Mike Levin",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:uzcbz3hsqpwdv5ulkxqa2ubn/bafkreiejzvm2lve5pofgyikmjcfrns7je35f7q2avhzckt44zqdomzqqnu",
+   "followersCount": 112152,
+   "postsCount": 3256
+  },
+  "did:plc:vj2tpnbgusm3whrqrebrdqiu": {
+   "did": "did:plc:vj2tpnbgusm3whrqrebrdqiu",
+   "handle": "levin.house.gov",
+   "displayName": "Rep. Mike Levin",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vj2tpnbgusm3whrqrebrdqiu/bafkreicvk5vzececogzsnengni4zsitkp2d6ovtam4mr67xkgmogukwhwy",
+   "followersCount": 38657,
+   "postsCount": 4570
+  },
+  "did:plc:yx5fgzy2nbp7afji73aio2pl": {
+   "did": "did:plc:yx5fgzy2nbp7afji73aio2pl",
+   "handle": "neguse.house.gov",
+   "displayName": "Rep. Joe Neguse",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:yx5fgzy2nbp7afji73aio2pl/bafkreifxfhomtszh7jldafbyyijgvedajkceq7ovxejewsiqlma66mfepq",
+   "followersCount": 33663,
+   "postsCount": 881
+  },
+  "did:plc:xkz7mjtnfpqhpvc57o2fqswm": {
+   "did": "did:plc:xkz7mjtnfpqhpvc57o2fqswm",
+   "handle": "joeneguse.bsky.social",
+   "displayName": "Joe Neguse",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xkz7mjtnfpqhpvc57o2fqswm/bafkreib6sf4rlboudena7rvc2f6jjkifuoievh7idkqcgkwwkg2bmyrioq",
+   "followersCount": 30497,
+   "postsCount": 352
+  },
+  "did:plc:tum2vvmoinupccdxjiwvif2a": {
+   "did": "did:plc:tum2vvmoinupccdxjiwvif2a",
+   "handle": "crow.house.gov",
+   "displayName": "Rep. Jason Crow",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tum2vvmoinupccdxjiwvif2a/bafkreidid6ghyku4uerdfttwtmpnlthqpeb74cpz4rx7cla3sv4gqeaxqu",
+   "followersCount": 43886,
+   "postsCount": 1067
+  },
+  "did:plc:l6blblgznivuftl5g35ncaw2": {
+   "did": "did:plc:l6blblgznivuftl5g35ncaw2",
+   "handle": "repjahanahayes.bsky.social",
+   "displayName": "Rep Jahana Hayes",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:l6blblgznivuftl5g35ncaw2/bafkreiec6txnglpfi4zifjro6uwmpgym3s4s5v6trbzlysgkzeodowqahi",
+   "followersCount": 3391,
+   "postsCount": 1160
+  },
+  "did:plc:hbv4dtb4g7x4p7dpkoinvxjx": {
+   "did": "did:plc:hbv4dtb4g7x4p7dpkoinvxjx",
+   "handle": "mcbath.house.gov",
+   "displayName": "Rep. Lucy McBath",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hbv4dtb4g7x4p7dpkoinvxjx/bafkreienj5g4dedwwvpjg7bgvo4jlxig46ovpfwewokrraeof4d54pbeee",
+   "followersCount": 9263,
+   "postsCount": 416
+  },
+  "did:plc:vptxejchtvk7jyuug62pwsv3": {
+   "did": "did:plc:vptxejchtvk7jyuug62pwsv3",
+   "handle": "chuygarcia.house.gov",
+   "displayName": "Rep. Chuy García",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vptxejchtvk7jyuug62pwsv3/bafkreibdrvllgdykfs447ck5vare4jsp2r62t2cak7mc7dankvgcqal5vq",
+   "followersCount": 9802,
+   "postsCount": 441
+  },
+  "did:plc:jzddf45ucyezwahi5ffxjpws": {
+   "did": "did:plc:jzddf45ucyezwahi5ffxjpws",
+   "handle": "casten.house.gov",
+   "displayName": "Rep. Sean Casten",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:jzddf45ucyezwahi5ffxjpws/bafkreibfibjyhnth475ojtsxb3ao4on5vaz74hlwy2725ezvm2izdec6bi",
+   "followersCount": 46142,
+   "postsCount": 924
+  },
+  "did:plc:2tjnqjbnqampayvk4hez7q3h": {
+   "did": "did:plc:2tjnqjbnqampayvk4hez7q3h",
+   "handle": "seancasten.bsky.social",
+   "displayName": "Sean Casten",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:2tjnqjbnqampayvk4hez7q3h/bafkreigfgnmfydpobrmfw2xczm4eq3tdjqv7wyhzqxfm62r56eheauuwjq",
+   "followersCount": 35854,
+   "postsCount": 5377
+  },
+  "did:plc:4yf7jm4tvaryy572lvxtazfl": {
+   "did": "did:plc:4yf7jm4tvaryy572lvxtazfl",
+   "handle": "underwood.house.gov",
+   "displayName": "Rep. Lauren Underwood",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4yf7jm4tvaryy572lvxtazfl/bafkreibermxczssqe3ut6b6k5iwzidginxvj3aysnqqhkgwxfatkwdvrom",
+   "followersCount": 33717,
+   "postsCount": 266
+  },
+  "did:plc:fbgjlzt3cl3dsymw6ocsx3aw": {
+   "did": "did:plc:fbgjlzt3cl3dsymw6ocsx3aw",
+   "handle": "laurenunderwood.bsky.social",
+   "displayName": "Lauren Underwood",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:fbgjlzt3cl3dsymw6ocsx3aw/bafkreigd32smyy7oxhb6j6ncud66zufh365zubfn36xzwvatv2ovjcslly",
+   "followersCount": 6799,
+   "postsCount": 410
+  },
+  "did:plc:bhlcopurmgmt36fgqwor6yhx": {
+   "did": "did:plc:bhlcopurmgmt36fgqwor6yhx",
+   "handle": "davids.house.gov",
+   "displayName": "Rep. Sharice Davids",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bhlcopurmgmt36fgqwor6yhx/bafkreihiekkqsa5qeees635eegrhlmks7gebq5tv4vgs4fjx4zktbmhohi",
+   "followersCount": 13303,
+   "postsCount": 0
+  },
+  "did:plc:trtdcixeathbv7sjjcf5xv2t": {
+   "did": "did:plc:trtdcixeathbv7sjjcf5xv2t",
+   "handle": "trahan.house.gov",
+   "displayName": "Congresswoman Lori Trahan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:trtdcixeathbv7sjjcf5xv2t/bafkreidrvokkanwrmijqstvgvy5wogek7vp2m4ymzyuwoglx2niazbuliu",
+   "followersCount": 13859,
+   "postsCount": 1933
+  },
+  "did:plc:dc6lrdlvden2l2qiilmgfyk5": {
+   "did": "did:plc:dc6lrdlvden2l2qiilmgfyk5",
+   "handle": "pressley.house.gov",
+   "displayName": "Congresswoman Ayanna Pressley",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:dc6lrdlvden2l2qiilmgfyk5/bafkreify72hks3bo5rmjagskbadtwknbweoe5vq7asgdgpp6hdjbqqfu7e",
+   "followersCount": 107012,
+   "postsCount": 1784
+  },
+  "did:plc:ppxd6gr7vnetc7lobiiqw277": {
+   "did": "did:plc:ppxd6gr7vnetc7lobiiqw277",
+   "handle": "ayannapressley.bsky.social",
+   "displayName": "Ayanna Pressley",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ppxd6gr7vnetc7lobiiqw277/bafkreihctrrieymxbxg4tjgrgi6d6pqf7cjynwwot7um6qgpt5da2nrllq",
+   "followersCount": 37459,
+   "postsCount": 494
+  },
+  "did:plc:5vake3jq6c27ytc52m5rpwv5": {
+   "did": "did:plc:5vake3jq6c27ytc52m5rpwv5",
+   "handle": "slotkin.senate.gov",
+   "displayName": "Senator Elissa Slotkin",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:5vake3jq6c27ytc52m5rpwv5/bafkreiganoguxzozxh7bsvozydx3rf2dxm3emwhfosjgkfzzfpczhitavu",
+   "followersCount": 38410,
+   "postsCount": 2460
+  },
+  "did:plc:6bkz5metn573jkpwrnr67f7l": {
+   "did": "did:plc:6bkz5metn573jkpwrnr67f7l",
+   "handle": "rephaleystevens.bsky.social",
+   "displayName": "Rep. Haley Stevens",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6bkz5metn573jkpwrnr67f7l/bafkreidmdh3esazocirmjkxekplzg6quc3lgbrjpiznbfrusxot2vo35qi",
+   "followersCount": 25111,
+   "postsCount": 670
+  },
+  "did:plc:4eaefcf3e5oq5budds3eijdy": {
+   "did": "did:plc:4eaefcf3e5oq5budds3eijdy",
+   "handle": "haleyformi.bsky.social",
+   "displayName": "Haley Stevens",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4eaefcf3e5oq5budds3eijdy/bafkreibhmkfszgsl5a4ckca5ojhwt3uxryvidorajyebja5apyzdapfada",
+   "followersCount": 2682,
+   "postsCount": 1508
+  },
+  "did:plc:k6xa546qpyymflbzesnxhd5o": {
+   "did": "did:plc:k6xa546qpyymflbzesnxhd5o",
+   "handle": "repangiecraig.bsky.social",
+   "displayName": "Rep. Angie Craig",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:k6xa546qpyymflbzesnxhd5o/bafkreiedabjpf5lsgo3vz4us2k7n2zisjarfqs3mtoq6cl63h2ltcvb3x4",
+   "followersCount": 5720,
+   "postsCount": 1471
+  },
+  "did:plc:gzrecn3lwymykpn5qg47n2is": {
+   "did": "did:plc:gzrecn3lwymykpn5qg47n2is",
+   "handle": "ilhanmn.bsky.social",
+   "displayName": "Ilhan Omar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gzrecn3lwymykpn5qg47n2is/bafkreigkk66cfjf2hxrbkkrbmtc3zt53p7ncz7mjrifnabymuk5wegkpvm",
+   "followersCount": 222559,
+   "postsCount": 331
+  },
+  "did:plc:vaxteswgbtpscgkmrwyejjii": {
+   "did": "did:plc:vaxteswgbtpscgkmrwyejjii",
+   "handle": "repilhan.bsky.social",
+   "displayName": "Rep. Ilhan Omar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vaxteswgbtpscgkmrwyejjii/bafkreihch6bs2agyzhxxrcy7r3pstyssd3ktjmjcc4sfi3l74bv5fg24zq",
+   "followersCount": 52490,
+   "postsCount": 680
+  },
+  "did:plc:boswtxd6ufenc2g5lc7hj5iz": {
+   "did": "did:plc:boswtxd6ufenc2g5lc7hj5iz",
+   "handle": "repchrispappas.bsky.social",
+   "displayName": "Rep. Chris Pappas",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:boswtxd6ufenc2g5lc7hj5iz/bafkreiehfe3kn532ynwt73wf7p2ng53hqh2vegjlli44bpi5y323b74whq",
+   "followersCount": 4615,
+   "postsCount": 1484
+  },
+  "did:plc:um5biclszhgtfziihsnqc5tt": {
+   "did": "did:plc:um5biclszhgtfziihsnqc5tt",
+   "handle": "chrispappasnh.bsky.social",
+   "displayName": "Chris Pappas",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:um5biclszhgtfziihsnqc5tt/bafkreicvl4xycckw7q2tfnvzjufsdfacrmpiic7g5vf7kc3lwjjpb5xvsm",
+   "followersCount": 3584,
+   "postsCount": 1225
+  },
+  "did:plc:rmbfqraibpzbhjghsxrvksyr": {
+   "did": "did:plc:rmbfqraibpzbhjghsxrvksyr",
+   "handle": "kim.senate.gov",
+   "displayName": "Senator Andy Kim",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:rmbfqraibpzbhjghsxrvksyr/bafkreiavz5kcofars67ifzoaql6pwj7usfji3lfr6fv5aald7fgojgw66y",
+   "followersCount": 35663,
+   "postsCount": 2438
+  },
+  "did:plc:sev7jknumqveggon3ourlliw": {
+   "did": "did:plc:sev7jknumqveggon3ourlliw",
+   "handle": "andykimnj.bsky.social",
+   "displayName": "",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sev7jknumqveggon3ourlliw/bafkreifnukz4jiwlqjdm2mbtgleosf7gjaiw5orjmkmzjmklsr4vtj476y",
+   "followersCount": 14719,
+   "postsCount": 979
+  },
+  "did:plc:nzfau2n6k6p2maqox4crsdjg": {
+   "did": "did:plc:nzfau2n6k6p2maqox4crsdjg",
+   "handle": "susielee.house.gov",
+   "displayName": "Congresswoman Susie Lee",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:nzfau2n6k6p2maqox4crsdjg/bafkreiavphvbzdq63e3qbokwodl3n65mm2i6yjcippgelrtd3wbwnxcfte",
+   "followersCount": 7920,
+   "postsCount": 1721
+  },
+  "did:plc:p7gxyfr5vii5ntpwo7f6dhe2": {
+   "did": "did:plc:p7gxyfr5vii5ntpwo7f6dhe2",
+   "handle": "aoc.bsky.social",
+   "displayName": "Alexandria Ocasio-Cortez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:p7gxyfr5vii5ntpwo7f6dhe2/bafkreia7pjciqmezep36yotfgas23eie47sy5ymcorzd7exejlxtiox6by",
+   "followersCount": 2210910,
+   "postsCount": 611
+  },
+  "did:plc:ic7n7z2yrxtl4ejl5dfjchmm": {
+   "did": "did:plc:ic7n7z2yrxtl4ejl5dfjchmm",
+   "handle": "ocasio-cortez.house.gov",
+   "displayName": "Rep. Alexandria Ocasio-Cortez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ic7n7z2yrxtl4ejl5dfjchmm/bafkreianxsptbosfmqg4vikteavli3typpmelrrrgotevncgozxi74upna",
+   "followersCount": 296741,
+   "postsCount": 284
+  },
+  "did:plc:66gjeje75ogyx3jxfelyz47i": {
+   "did": "did:plc:66gjeje75ogyx3jxfelyz47i",
+   "handle": "repdean.bsky.social",
+   "displayName": "Congresswoman Madeleine Dean",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:66gjeje75ogyx3jxfelyz47i/bafkreidve4jadtpxop2mo2br2pogfioca2pe7qfox6q3ag7mn2u2righ7u",
+   "followersCount": 55166,
+   "postsCount": 740
+  },
+  "did:plc:bvs6naiqgpzbcfak6g2m4dil": {
+   "did": "did:plc:bvs6naiqgpzbcfak6g2m4dil",
+   "handle": "houlahan.house.gov",
+   "displayName": "Rep. Chrissy Houlahan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bvs6naiqgpzbcfak6g2m4dil/bafkreialvui7aaknbj5u4rmpweszasjxh7iokqvvigfdzqdarhxcnjbzpa",
+   "followersCount": 23815,
+   "postsCount": 1651
+  },
+  "did:plc:sy6bj2v2oeuqshc5zqb3tsq2": {
+   "did": "did:plc:sy6bj2v2oeuqshc5zqb3tsq2",
+   "handle": "repfletcher.bsky.social",
+   "displayName": "Congresswoman Lizzie Fletcher",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sy6bj2v2oeuqshc5zqb3tsq2/bafkreifvaxdohcxgvain62yztcuxetrwqidmhcm23mmrs432t2wbx54rbu",
+   "followersCount": 31873,
+   "postsCount": 769
+  },
+  "did:plc:eiunozwxrepjs7oz7d32riwc": {
+   "did": "did:plc:eiunozwxrepjs7oz7d32riwc",
+   "handle": "repescobar.bsky.social",
+   "displayName": "Rep. Veronica Escobar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:eiunozwxrepjs7oz7d32riwc/bafkreidjmkmmcixkrrevc56e35xrnokonkpf6oi7ijtbjqtmqn3oyx5s2e",
+   "followersCount": 27623,
+   "postsCount": 1069
+  },
+  "did:plc:xxndlw6cvaepxdlfksjaofnp": {
+   "did": "did:plc:xxndlw6cvaepxdlfksjaofnp",
+   "handle": "veronicaescobartx.bsky.social",
+   "displayName": "Veronica Escobar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xxndlw6cvaepxdlfksjaofnp/bafkreibl26uldn3ibbmuvn6x2zcjwlnaw5gonnw5g2zbhawlml3dwc3hoe",
+   "followersCount": 8798,
+   "postsCount": 59
+  },
+  "did:plc:mhesphh4ecnac43t2urp6hq3": {
+   "did": "did:plc:mhesphh4ecnac43t2urp6hq3",
+   "handle": "sylviagarcia.house.gov",
+   "displayName": "Rep. Sylvia Garcia",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mhesphh4ecnac43t2urp6hq3/bafkreiej6aodmj4aot5x44oah6mscl756cvgxlxjup4kshps46wbrzek5m",
+   "followersCount": 2340,
+   "postsCount": 118
+  },
+  "did:plc:hhnu37zy56t7f3phrxqjiyis": {
+   "did": "did:plc:hhnu37zy56t7f3phrxqjiyis",
+   "handle": "repkimschrier.bsky.social",
+   "displayName": "Rep. Kim Schrier, M.D.",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hhnu37zy56t7f3phrxqjiyis/bafkreicwmnzrmha6htx2ridx3lqtyoeumj4325f6zoibumvslilw3nlvge",
+   "followersCount": 12414,
+   "postsCount": 1476
+  },
+  "did:plc:ddvwm36kmzuhykdv5oz6tqva": {
+   "did": "did:plc:ddvwm36kmzuhykdv5oz6tqva",
+   "handle": "golden.house.gov",
+   "displayName": "Congressman Jared Golden",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ddvwm36kmzuhykdv5oz6tqva/bafkreie2hmvfvi7bij45jndbgoydlrda3ktrcp5ri5sx7k6c6io3lgcuju",
+   "followersCount": 13391,
+   "postsCount": 197
+  },
+  "did:plc:gvelfxjn7kwqkbwcixfo3i3w": {
+   "did": "did:plc:gvelfxjn7kwqkbwcixfo3i3w",
+   "handle": "repkweisimfume.bsky.social",
+   "displayName": "Kweisi Mfume",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gvelfxjn7kwqkbwcixfo3i3w/bafkreih2slb6ips2are3yz7wcxqxv337ql5kc2q3npmxvnisbh44vsqozu",
+   "followersCount": 4148,
+   "postsCount": 456
+  },
+  "did:plc:6efcnh6vyakphqeims6sqjbm": {
+   "did": "did:plc:6efcnh6vyakphqeims6sqjbm",
+   "handle": "captmarkkelly.bsky.social",
+   "displayName": "Captain Mark Kelly",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6efcnh6vyakphqeims6sqjbm/bafkreiagxifccafhc7cuppj25nzdrcflx6negmiwxrcjjyvwqfmdqnn6vm",
+   "followersCount": 141089,
+   "postsCount": 927
+  },
+  "did:plc:wgy2pchnptmdldcsyhmfgs5i": {
+   "did": "did:plc:wgy2pchnptmdldcsyhmfgs5i",
+   "handle": "hickenlooper.senate.gov",
+   "displayName": "Senator John Hickenlooper",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:wgy2pchnptmdldcsyhmfgs5i/bafkreiacqjopergv2xignu7cen4yegsfqrryznxoanvxbolaepvmmlbhlm",
+   "followersCount": 3268,
+   "postsCount": 1432
+  },
+  "did:plc:csby5urerm7r3w5psnxscmaz": {
+   "did": "did:plc:csby5urerm7r3w5psnxscmaz",
+   "handle": "sarajacobs.house.gov",
+   "displayName": "Congresswoman Sara Jacobs",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:csby5urerm7r3w5psnxscmaz/bafkreigoyzyuphha3mj6mka5ktn56kkwqagllho47khtsxrykxu7o6jms4",
+   "followersCount": 54350,
+   "postsCount": 1623
+  },
+  "did:plc:vwjipmxlgo2xv3fncxqubdbg": {
+   "did": "did:plc:vwjipmxlgo2xv3fncxqubdbg",
+   "handle": "sarajacobsca.bsky.social",
+   "displayName": "Sara Jacobs",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vwjipmxlgo2xv3fncxqubdbg/bafkreig5hbccxx7iuksy76kzrxq7udaia4rg22bdhyhbtt3m52zonerkny",
+   "followersCount": 1064,
+   "postsCount": 232
+  },
+  "did:plc:mkx7sqatirycowrjjtbrysme": {
+   "did": "did:plc:mkx7sqatirycowrjjtbrysme",
+   "handle": "repnikema.bsky.social",
+   "displayName": "Congresswoman Nikema Williams",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mkx7sqatirycowrjjtbrysme/bafkreihc53rd733sojl4jzns6fftby5plsgkelawkd4oso3cxhmzapjtk4",
+   "followersCount": 8399,
+   "postsCount": 1657
+  },
+  "did:plc:yhdcgjtwh7tl75xcvxobrbcz": {
+   "did": "did:plc:yhdcgjtwh7tl75xcvxobrbcz",
+   "handle": "repmrvan.bsky.social",
+   "displayName": "Rep. Frank Mrvan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:yhdcgjtwh7tl75xcvxobrbcz/bafkreib5htiv6tngz2z7i33bkqcpiuokai6bzcrmhrkndltf3nk2kikr5i",
+   "followersCount": 401,
+   "postsCount": 396
+  },
+  "did:plc:jdme5h3puxft6r63hvbj2yxx": {
+   "did": "did:plc:jdme5h3puxft6r63hvbj2yxx",
+   "handle": "repauchincloss.bsky.social",
+   "displayName": "Rep. Jake Auchincloss",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:jdme5h3puxft6r63hvbj2yxx/bafkreibwsmjhdpxsnzsln5s6uyydn426k2nvyq7slb6amlpoauxt6kle5q",
+   "followersCount": 33432,
+   "postsCount": 448
+  },
+  "did:plc:54qpdbqnhocq7yjb4ewu5io2": {
+   "did": "did:plc:54qpdbqnhocq7yjb4ewu5io2",
+   "handle": "ross.house.gov",
+   "displayName": "Representative Deborah Ross",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:54qpdbqnhocq7yjb4ewu5io2/bafkreigcslfcme3o6mqd3b3mbhnbi2y4aujff2kn2zd6uaf5c67ep3yuoq",
+   "followersCount": 15484,
+   "postsCount": 1028
+  },
+  "did:plc:ilmrsysdtkxmafq2m2wpndpz": {
+   "did": "did:plc:ilmrsysdtkxmafq2m2wpndpz",
+   "handle": "fernandez.house.gov",
+   "displayName": "Rep. Teresa Leger Fernández",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ilmrsysdtkxmafq2m2wpndpz/bafkreicqun7w4had7vyb7s6v6mcxfsfww2qdsfpxutmgj6cwnn6lwu6ciy",
+   "followersCount": 30034,
+   "postsCount": 1077
+  },
+  "did:plc:op4eyhp6ewgdmz6wc3gop27b": {
+   "did": "did:plc:op4eyhp6ewgdmz6wc3gop27b",
+   "handle": "ritchietorres.bsky.social",
+   "displayName": "Ritchie Torres",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:op4eyhp6ewgdmz6wc3gop27b/bafkreicf22zmaxzikfzxhoymaaivwa7wbcfqugbcpp5xovojmrg2l7w2xy",
+   "followersCount": 81542,
+   "postsCount": 617
+  },
+  "did:plc:ulquedxocwtoitir2w4ucsbn": {
+   "did": "did:plc:ulquedxocwtoitir2w4ucsbn",
+   "handle": "repritchie.bsky.social",
+   "displayName": "Rep. Ritchie Torres",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ulquedxocwtoitir2w4ucsbn/bafkreifmmyyvj4upbn42o33fiijxsgwdwwobjgbrqjlefbmva23o2d5gqy",
+   "followersCount": 2576,
+   "postsCount": 365
+  },
+  "did:plc:hacrefcawxk42sh6gw3opme7": {
+   "did": "did:plc:hacrefcawxk42sh6gw3opme7",
+   "handle": "strickland.house.gov",
+   "displayName": "Congresswoman Marilyn Strickland",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hacrefcawxk42sh6gw3opme7/bafkreifwqmn342xze7rdy5asjr2x2g5qxasw73gyycakzij4x4doagwhpa",
+   "followersCount": 155,
+   "postsCount": 0
+  },
+  "did:plc:mnni4exuqf2rvvsvxc5q4pb2": {
+   "did": "did:plc:mnni4exuqf2rvvsvxc5q4pb2",
+   "handle": "padilla.senate.gov",
+   "displayName": "Senator Alex Padilla",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mnni4exuqf2rvvsvxc5q4pb2/bafkreieg5bohtvrawn7cy7rfh647bguvauxkteemmhsnmmwp5kiwbqevpu",
+   "followersCount": 84181,
+   "postsCount": 149
+  },
+  "did:plc:xb67yulaoyllzutuqjr6g5m2": {
+   "did": "did:plc:xb67yulaoyllzutuqjr6g5m2",
+   "handle": "ossoff.bsky.social",
+   "displayName": "Jon Ossoff",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xb67yulaoyllzutuqjr6g5m2/bafkreifqzais6qtqkub565hdwwilpgntubkg4z6qfzj5lxzjj3fy2fim7q",
+   "followersCount": 64637,
+   "postsCount": 249
+  },
+  "did:plc:lx462v3tzpydnob3qpgarbcj": {
+   "did": "did:plc:lx462v3tzpydnob3qpgarbcj",
+   "handle": "ossoff.senate.gov",
+   "displayName": "Ossoff's Office",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lx462v3tzpydnob3qpgarbcj/bafkreiexiozlzvf4dwktf273u2ssbobpybhxeopuqoauy7bazy3nbnoijm",
+   "followersCount": 35292,
+   "postsCount": 237
+  },
+  "did:plc:7hake53hz2iumil2uhi6kk4m": {
+   "did": "did:plc:7hake53hz2iumil2uhi6kk4m",
+   "handle": "warnock.senate.gov",
+   "displayName": "Senator Reverend Raphael Warnock",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7hake53hz2iumil2uhi6kk4m/bafkreigyhkpfjqxnfml3de6foh36mzqn7bq2jfsp4uf2p45hep6jhpz3e4",
+   "followersCount": 35193,
+   "postsCount": 1083
+  },
+  "did:plc:sym4dflzkexupizmfzdaquqs": {
+   "did": "did:plc:sym4dflzkexupizmfzdaquqs",
+   "handle": "reptroycarter.bsky.social",
+   "displayName": "Congressman Troy A. Carter, Sr.",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sym4dflzkexupizmfzdaquqs/bafkreiezr4twyvp2pa57uz3si2ahzt5mgyoirkm727r6chrhg7tia2glci",
+   "followersCount": 10395,
+   "postsCount": 1595
+  },
+  "did:plc:fuqcbv5brxa2b5vylz5bkm3j": {
+   "did": "did:plc:fuqcbv5brxa2b5vylz5bkm3j",
+   "handle": "repstansbury.bsky.social",
+   "displayName": "Rep. Melanie Stansbury (NM-01)",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:fuqcbv5brxa2b5vylz5bkm3j/bafkreicigqcpcf2hrvi56fa2osaj6pjygf34ci5njuysdj56k4s3pt2w4m",
+   "followersCount": 106015,
+   "postsCount": 2182
+  },
+  "did:plc:mhtg7vfga5jftbaoviu4ajza": {
+   "did": "did:plc:mhtg7vfga5jftbaoviu4ajza",
+   "handle": "repshontelbrown.bsky.social",
+   "displayName": "Rep. Shontel Brown",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mhtg7vfga5jftbaoviu4ajza/bafkreig37ugefkdoppbygrr3hsrklwwuz4nunto7det7b3jyovpdcrvmoy",
+   "followersCount": 27622,
+   "postsCount": 1311
+  },
+  "did:plc:obcayzxqn4fm37w3k2k4rmvf": {
+   "did": "did:plc:obcayzxqn4fm37w3k2k4rmvf",
+   "handle": "shontelbrown.bsky.social",
+   "displayName": "Shontel Brown",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:obcayzxqn4fm37w3k2k4rmvf/bafkreihjjfddttfhc627pkmqbhwgm4r5pd6icvrgaekc526gej6epg5eiy",
+   "followersCount": 389,
+   "postsCount": 12
+  },
+  "did:plc:fqxafj6jkzhozzdzsgrifjxo": {
+   "did": "did:plc:fqxafj6jkzhozzdzsgrifjxo",
+   "handle": "pkryan.bsky.social",
+   "displayName": "Pat Ryan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:fqxafj6jkzhozzdzsgrifjxo/bafkreibzw7pvkpgvndovgqsxr74uau64atfnmkqev7a443p3yi54a4yrra",
+   "followersCount": 36609,
+   "postsCount": 384
+  },
+  "did:plc:hmy4bopsymtjikfq5i5mekn6": {
+   "did": "did:plc:hmy4bopsymtjikfq5i5mekn6",
+   "handle": "fetterman.senate.gov",
+   "displayName": "U.S. Senator John Fetterman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hmy4bopsymtjikfq5i5mekn6/bafkreifwcwityj5oxgdz3x3wc2mxjet7sdgvmp2inzcnh6pywjwhfugoiq",
+   "followersCount": 112242,
+   "postsCount": 117
+  },
+  "did:plc:risd2vx2axw5xi325knfjtsg": {
+   "did": "did:plc:risd2vx2axw5xi325knfjtsg",
+   "handle": "johnfetterman.com",
+   "displayName": "John Fetterman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:risd2vx2axw5xi325knfjtsg/bafkreib7h5apbs7julrnyvc6ul6wienkedzq562mimphy55555rcsvoeea",
+   "followersCount": 8383,
+   "postsCount": 4
+  },
+  "did:plc:jkg2d7uo25s75ufcepfhntut": {
+   "did": "did:plc:jkg2d7uo25s75ufcepfhntut",
+   "handle": "kevinmullin.house.gov",
+   "displayName": "Rep. Kevin Mullin",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:jkg2d7uo25s75ufcepfhntut/bafkreibafxl3v4gyvqjuhluj2mftlp4swj4tkqdzlkszyn43ycu7msqoym",
+   "followersCount": 22694,
+   "postsCount": 776
+  },
+  "did:plc:ch7ibrae5fzvt2swovearguy": {
+   "did": "did:plc:ch7ibrae5fzvt2swovearguy",
+   "handle": "kamlager-dove.house.gov",
+   "displayName": "Congresswoman Sydney Kamlager-Dove",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ch7ibrae5fzvt2swovearguy/bafkreigwryf77oyrg4zumhz5lmz3l6bj5rmd3xpode3taokf2isndk5hz4",
+   "followersCount": 37443,
+   "postsCount": 1684
+  },
+  "did:plc:7pneu4er4i6cilvij3mxaioj": {
+   "did": "did:plc:7pneu4er4i6cilvij3mxaioj",
+   "handle": "robertgarcia.bsky.social",
+   "displayName": "Robert Garcia",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7pneu4er4i6cilvij3mxaioj/bafkreifcnhe44ue3q6dczfqf6ftg4bu7krfgxruioxrfttowwtbspe3liq",
+   "followersCount": 135103,
+   "postsCount": 1053
+  },
+  "did:plc:gou6onm5jvccxt3i7ywvs7mr": {
+   "did": "did:plc:gou6onm5jvccxt3i7ywvs7mr",
+   "handle": "robertgarcia.house.gov",
+   "displayName": "Rep. Robert Garcia",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gou6onm5jvccxt3i7ywvs7mr/bafkreig5gerjbbtsscqgllwzbxgahowxrab5ux77uoiormaqq72t5bzn2a",
+   "followersCount": 21513,
+   "postsCount": 700
+  },
+  "did:plc:3sfvdstpll35vat2m7zvm3zt": {
+   "did": "did:plc:3sfvdstpll35vat2m7zvm3zt",
+   "handle": "pettersen.house.gov",
+   "displayName": "U.S. Rep. Brittany Pettersen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3sfvdstpll35vat2m7zvm3zt/bafkreigd3vcvlmsclgzlhzmno63itxanmvdbog42alwebn7donuiwqamgy",
+   "followersCount": 8522,
+   "postsCount": 416
+  },
+  "did:plc:k4kp7p2lfe2fz6z2u26yslv4": {
+   "did": "did:plc:k4kp7p2lfe2fz6z2u26yslv4",
+   "handle": "maxwellfrost.bsky.social",
+   "displayName": "Maxwell Frost",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:k4kp7p2lfe2fz6z2u26yslv4/bafkreiaxusm3ot6r5rf4mykz6mcgflibdrekznl3vwgwdinpmmya55hqau",
+   "followersCount": 264837,
+   "postsCount": 469
+  },
+  "did:plc:zxz45rdiqhrrrjgtdrp6s5um": {
+   "did": "did:plc:zxz45rdiqhrrrjgtdrp6s5um",
+   "handle": "frost.house.gov",
+   "displayName": "Rep. Maxwell Alejandro Frost",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zxz45rdiqhrrrjgtdrp6s5um/bafkreiemaihzq6wh6bnk5enjvyktilp7dgjgwzifoori74kkyb63zomdxa",
+   "followersCount": 25093,
+   "postsCount": 434
+  },
+  "did:plc:rint6j2liywpxrlr2jfz3ogx": {
+   "did": "did:plc:rint6j2liywpxrlr2jfz3ogx",
+   "handle": "repmoskowitz.bsky.social",
+   "displayName": "Congressman Jared Moskowitz",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:rint6j2liywpxrlr2jfz3ogx/bafkreieco2bqxhmkda46rx7ornguhu4pmexo5pqhlklp73u6xidhigwzf4",
+   "followersCount": 36840,
+   "postsCount": 381
+  },
+  "did:plc:f5jxegk4cpobfskg3sfhu5gr": {
+   "did": "did:plc:f5jxegk4cpobfskg3sfhu5gr",
+   "handle": "tokuda.house.gov",
+   "displayName": "Rep. Jill Tokuda",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:f5jxegk4cpobfskg3sfhu5gr/bafkreibfezx6cbz2f25ggfdhsr4pqs3uqhik5i2ls7byvobv6u4o3gc2my",
+   "followersCount": 16483,
+   "postsCount": 656
+  },
+  "did:plc:4r6ezpji23dsicgeeu4n6cws": {
+   "did": "did:plc:4r6ezpji23dsicgeeu4n6cws",
+   "handle": "jonathanjackson.house.gov",
+   "displayName": "Congressman Jonathan L. Jackson (D-IL 01)",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4r6ezpji23dsicgeeu4n6cws/bafkreicaegvr5ltvvt7ihqxylgx6lzl7mwgjfgdxe6a2cjzlcaet7xped4",
+   "followersCount": 25486,
+   "postsCount": 587
+  },
+  "did:plc:kp5qfcszvb73kuoc35hydd6i": {
+   "did": "did:plc:kp5qfcszvb73kuoc35hydd6i",
+   "handle": "ramirez.house.gov",
+   "displayName": "Congresswoman Delia C. Ramirez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:kp5qfcszvb73kuoc35hydd6i/bafkreieewnlbaznrwrrvs6r7gqyazt3pzznukdkd65pld74zqc53wnxqsq",
+   "followersCount": 16037,
+   "postsCount": 3569
+  },
+  "did:plc:7m5afzoixlefac633bbn4cx7": {
+   "did": "did:plc:7m5afzoixlefac633bbn4cx7",
+   "handle": "delia.bsky.social",
+   "displayName": "Delia Catalina Ramirez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7m5afzoixlefac633bbn4cx7/bafkreiaemnp6ajsa4yzijzrglg26yczw26oo2bsjxi66vd2zlfhyntc5vu",
+   "followersCount": 36460,
+   "postsCount": 265
+  },
+  "did:plc:7yfellkekfmlvsalyywflulq": {
+   "did": "did:plc:7yfellkekfmlvsalyywflulq",
+   "handle": "budzinski.house.gov",
+   "displayName": "Nikki Budzinski",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7yfellkekfmlvsalyywflulq/bafkreiegy23gs2cu22e65pjzgw25wx5iexro3yppdmlpilkxnjwtjdmwpm",
+   "followersCount": 22269,
+   "postsCount": 1801
+  },
+  "did:plc:xdnwwjadunoibq3ca75vcol6": {
+   "did": "did:plc:xdnwwjadunoibq3ca75vcol6",
+   "handle": "ericsorensen.bsky.social",
+   "displayName": "Eric Sorensen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:xdnwwjadunoibq3ca75vcol6/bafkreibninjkqwqce6fo2p562qy67botj3kskaex7flbinj3fu3iq3dqty",
+   "followersCount": 25825,
+   "postsCount": 370
+  },
+  "did:plc:mudv7ufccpcccm74msp24lkc": {
+   "did": "did:plc:mudv7ufccpcccm74msp24lkc",
+   "handle": "repericsorensen.bsky.social",
+   "displayName": "Congressman Eric Sorensen",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mudv7ufccpcccm74msp24lkc/bafkreicdkvesavvx77evm3caknqj55taem2felod5huwegbdisdiqu2jby",
+   "followersCount": 1371,
+   "postsCount": 607
+  },
+  "did:plc:ec6eemidhhmbdlftlnrkhaxj": {
+   "did": "did:plc:ec6eemidhhmbdlftlnrkhaxj",
+   "handle": "repmcgarvey.bsky.social",
+   "displayName": "Rep. Morgan McGarvey",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ec6eemidhhmbdlftlnrkhaxj/bafkreigcyof5wvwhohd3r7hbpywxvbtrgsfomwk3beyqgjangy3zfepms4",
+   "followersCount": 34041,
+   "postsCount": 994
+  },
+  "did:plc:qa7zjuoowrp4hfvdtne4wqiz": {
+   "did": "did:plc:qa7zjuoowrp4hfvdtne4wqiz",
+   "handle": "ivey.house.gov",
+   "displayName": "Congressman Glenn Ivey (MD-04) ",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qa7zjuoowrp4hfvdtne4wqiz/bafkreibdm4thaxorn4nikyafqddqwqar6dq2of6xkshe74vx42qoywzwq4",
+   "followersCount": 10996,
+   "postsCount": 790
+  },
+  "did:plc:ercdwgqvacvqefgn2iq7ifjq": {
+   "did": "did:plc:ercdwgqvacvqefgn2iq7ifjq",
+   "handle": "scholten.house.gov",
+   "displayName": "Rep. Hillary Scholten",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ercdwgqvacvqefgn2iq7ifjq/bafkreialjhuvawlhnqibl4qjmnz36tdblgg6d5eskz473seyywioso64ye",
+   "followersCount": 15802,
+   "postsCount": 1572
+  },
+  "did:plc:tzo735bnqahgmrb66gm4ny5s": {
+   "did": "did:plc:tzo735bnqahgmrb66gm4ny5s",
+   "handle": "shrithanedar.bsky.social",
+   "displayName": "Congressman Shri Thanedar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tzo735bnqahgmrb66gm4ny5s/bafkreib5x6k3ewr4pzcfntrqqy2fx7fodwrxxq4orojambfv5mxlv24fwq",
+   "followersCount": 80989,
+   "postsCount": 226
+  },
+  "did:plc:auzbiunuufp3fybeao2jg5zd": {
+   "did": "did:plc:auzbiunuufp3fybeao2jg5zd",
+   "handle": "thanedar.house.gov",
+   "displayName": "Congressman Shri Thanedar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:auzbiunuufp3fybeao2jg5zd/bafkreidot3is6rt5yigfjorn4hpnff56ehac3pijk27ggk4d4dhr3wpg6i",
+   "followersCount": 9682,
+   "postsCount": 638
+  },
+  "did:plc:lgg6brspqsio7mkxipkuhfls": {
+   "did": "did:plc:lgg6brspqsio7mkxipkuhfls",
+   "handle": "foushee.house.gov",
+   "displayName": "Congresswoman Valerie Foushee",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:lgg6brspqsio7mkxipkuhfls/bafkreiegftb4xfyfnb7s4y7gkmfhofsdqmbiymgg44a5n2czzpifwvrjuy",
+   "followersCount": 11526,
+   "postsCount": 1341
+  },
+  "did:plc:5m3ztlfb5emucvfci334um6n": {
+   "did": "did:plc:5m3ztlfb5emucvfci334um6n",
+   "handle": "menendez.house.gov",
+   "displayName": "Rep. Rob Menendez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:5m3ztlfb5emucvfci334um6n/bafkreihp4bnsjns7awkkiqk7ge5kjthz2hvixfgu6hshyqh5ek6yjlwtnm",
+   "followersCount": 26680,
+   "postsCount": 2392
+  },
+  "did:plc:tanjxx6cyzrmgykio6vw6rzp": {
+   "did": "did:plc:tanjxx6cyzrmgykio6vw6rzp",
+   "handle": "repgabevasquez.bsky.social",
+   "displayName": "Rep. Gabe Vasquez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tanjxx6cyzrmgykio6vw6rzp/bafkreiaomqt3ibsti6es2h6mvp2hp5bu7u2m3bkwwbfzkiyfpvvmswdxsu",
+   "followersCount": 19956,
+   "postsCount": 437
+  },
+  "did:plc:w5b63ubrl3kpz2aeqf5uyhoz": {
+   "did": "did:plc:w5b63ubrl3kpz2aeqf5uyhoz",
+   "handle": "danielsgoldman.dg4ny.co",
+   "displayName": "Daniel Goldman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:w5b63ubrl3kpz2aeqf5uyhoz/bafkreigctosuexfqwnwtf2eryirb2gjdmhgat2fwqumfw3a32sqiquitue",
+   "followersCount": 75880,
+   "postsCount": 674
+  },
+  "did:plc:6tyk5jbegvwu4qt2f2m4itut": {
+   "did": "did:plc:6tyk5jbegvwu4qt2f2m4itut",
+   "handle": "repdangoldman.bsky.social",
+   "displayName": "Rep. Dan Goldman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6tyk5jbegvwu4qt2f2m4itut/bafkreihcw4zevb3ncwtw773qyasnrdcollq3ecmu7aiusvni5xbh7ha4mm",
+   "followersCount": 50131,
+   "postsCount": 1474
+  },
+  "did:plc:yi7j3abu7n3l5me5ig47tfms": {
+   "did": "did:plc:yi7j3abu7n3l5me5ig47tfms",
+   "handle": "repgreglandsman.bsky.social",
+   "displayName": "Congressman Greg Landsman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:yi7j3abu7n3l5me5ig47tfms/bafkreie3lfyypp6xwyuibnysd74bpc62bxozoaapesigkytjtrdvt26u6i",
+   "followersCount": 25307,
+   "postsCount": 2247
+  },
+  "did:plc:dsltftf6fkdlloqtr2wfjb5g": {
+   "did": "did:plc:dsltftf6fkdlloqtr2wfjb5g",
+   "handle": "repemiliasykes.bsky.social",
+   "displayName": "Rep. Emilia Strong Sykes",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:dsltftf6fkdlloqtr2wfjb5g/bafkreig2sjik2kgdsgq5bmfkgwhei4kq2tefmkdny326mw3n3sadegx6py",
+   "followersCount": 2441,
+   "postsCount": 1168
+  },
+  "did:plc:tca3fzesqj6ycy3bnanctked": {
+   "did": "did:plc:tca3fzesqj6ycy3bnanctked",
+   "handle": "repvalhoyle.bsky.social",
+   "displayName": "Representative Val Hoyle",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tca3fzesqj6ycy3bnanctked/bafkreialthshp6dcxu5det3v6tg4r7bzadhbc2drkbdqoi35psi3hf2kyi",
+   "followersCount": 29826,
+   "postsCount": 902
+  },
+  "did:plc:3rqh5bgggdhfpezmztzq5p2r": {
+   "did": "did:plc:3rqh5bgggdhfpezmztzq5p2r",
+   "handle": "salinas.house.gov",
+   "displayName": "Congresswoman Andrea Salinas",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3rqh5bgggdhfpezmztzq5p2r/bafkreieyhmwtitqtgr3xafu3pufcgebeb4cheznbsp2ma6du3sdpybzxu4",
+   "followersCount": 35011,
+   "postsCount": 2530
+  },
+  "did:plc:y37ival3xz7gcwuvmvit7bz3": {
+   "did": "did:plc:y37ival3xz7gcwuvmvit7bz3",
+   "handle": "summerlee.bsky.social",
+   "displayName": "Summer Lee",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:y37ival3xz7gcwuvmvit7bz3/bafkreib2ijoimemiwnhq6gw6dspgu4iuxclcxu4yx52uvxqaisywhfnwqa",
+   "followersCount": 45048,
+   "postsCount": 37
+  },
+  "did:plc:zyr4rtmpnhhabi42g2qdweof": {
+   "did": "did:plc:zyr4rtmpnhhabi42g2qdweof",
+   "handle": "repsummerlee.bsky.social",
+   "displayName": "Rep. Summer Lee",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zyr4rtmpnhhabi42g2qdweof/bafkreifhh346ypfobh4ho6i7pr2kbwqbq7flbhxygv6cosh52psdfchoo4",
+   "followersCount": 13448,
+   "postsCount": 1034
+  },
+  "did:plc:hjp5vntka4indphaarx52hqz": {
+   "did": "did:plc:hjp5vntka4indphaarx52hqz",
+   "handle": "deluzio.house.gov",
+   "displayName": "Congressman Chris Deluzio",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hjp5vntka4indphaarx52hqz/bafkreidkpk5m6sstusmftumosybnns7rofashiyydlq3oyiwxyg7zenhla",
+   "followersCount": 14022,
+   "postsCount": 1331
+  },
+  "did:plc:tw3zwjmh3di37ndci56b36t6": {
+   "did": "did:plc:tw3zwjmh3di37ndci56b36t6",
+   "handle": "magaziner.house.gov",
+   "displayName": "Representative Seth Magaziner",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tw3zwjmh3di37ndci56b36t6/bafkreicmq6fmpobtsfqg7ddzmvvghhmaosgirssqhpowzsrdo3m323aobe",
+   "followersCount": 27983,
+   "postsCount": 1706
+  },
+  "did:plc:35gaaw3izth3m3n6dea77udt": {
+   "did": "did:plc:35gaaw3izth3m3n6dea77udt",
+   "handle": "sethmagaziner.bsky.social",
+   "displayName": "Seth Magaziner",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:35gaaw3izth3m3n6dea77udt/bafkreie474adgedo4vm4t3l4qqwla64iev7eiekizk4mh2fk6og6tyng6i",
+   "followersCount": 10855,
+   "postsCount": 84
+  },
+  "did:plc:tax3e7cjn3dzxpgfjslqq56y": {
+   "did": "did:plc:tax3e7cjn3dzxpgfjslqq56y",
+   "handle": "crockett.house.gov",
+   "displayName": "Congresswoman Jasmine Crockett ",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tax3e7cjn3dzxpgfjslqq56y/bafkreiglcxfkqd2xkupd53kg7bd3llbbq2dv7u7igsyu53uydpg3jj6r4y",
+   "followersCount": 564546,
+   "postsCount": 1002
+  },
+  "did:plc:kpxcztsqfrzkbd4ve3xvdzco": {
+   "did": "did:plc:kpxcztsqfrzkbd4ve3xvdzco",
+   "handle": "jasmineforus.bsky.social",
+   "displayName": "Jasmine Crockett",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:kpxcztsqfrzkbd4ve3xvdzco/bafkreidqjwskyiwi73mcvi6zaykywndq3ixq7b2oalrohitilohius4rvq",
+   "followersCount": 257112,
+   "postsCount": 185
+  },
+  "did:plc:3kapv2cmc5r6ehswf6nwo5wt": {
+   "did": "did:plc:3kapv2cmc5r6ehswf6nwo5wt",
+   "handle": "repcasar.bsky.social",
+   "displayName": "Congressman Greg Casar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:3kapv2cmc5r6ehswf6nwo5wt/bafkreidozf3zveljjckjchwikv5yl3gdud6ud3opj4csmo74hgd4wbqlrm",
+   "followersCount": 91922,
+   "postsCount": 1107
+  },
+  "did:plc:qmrd2hmucin2ucnfb36hry3y": {
+   "did": "did:plc:qmrd2hmucin2ucnfb36hry3y",
+   "handle": "gregcasar.bsky.social",
+   "displayName": "Greg Casar",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:qmrd2hmucin2ucnfb36hry3y/bafkreidmkns26voa5u77ad2oodvvaut2soqmkfpimqngbqgmzv3qxzvtv4",
+   "followersCount": 36101,
+   "postsCount": 56
+  },
+  "did:plc:a4vpio4bg7nnvmwolyyw5t72": {
+   "did": "did:plc:a4vpio4bg7nnvmwolyyw5t72",
+   "handle": "balint.house.gov",
+   "displayName": "Representative Becca Balint",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:a4vpio4bg7nnvmwolyyw5t72/bafkreidxruzuaetoxmqg7tbzqnd5axmfzmydffqxw7ffinm7rkav6l4izy",
+   "followersCount": 66373,
+   "postsCount": 1464
+  },
+  "did:plc:ts6xu3znm37aibsxok5yfxoi": {
+   "did": "did:plc:ts6xu3znm37aibsxok5yfxoi",
+   "handle": "gluesenkampperez.house.gov",
+   "displayName": "Rep. Marie Gluesenkamp Perez",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ts6xu3znm37aibsxok5yfxoi/bafkreiahu2zvgjfgtlsbq5hswu3dopoqeitonkxqjx3jrg77rcbo77v47m",
+   "followersCount": 22877,
+   "postsCount": 610
+  },
+  "did:plc:ozj5fvircupyggy6sleoeqpo": {
+   "did": "did:plc:ozj5fvircupyggy6sleoeqpo",
+   "handle": "therealdvo.bsky.social",
+   "displayName": "Derrick Van Orden",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ozj5fvircupyggy6sleoeqpo/bafkreifubw236rv4yi4zd42yn3q3ahf2juiaqdeq63njprbtt7r75ca7xa",
+   "followersCount": 85,
+   "postsCount": 173
+  },
+  "did:plc:tomudwgbf7754rewbwkoadhn": {
+   "did": "did:plc:tomudwgbf7754rewbwkoadhn",
+   "handle": "mcclellan.house.gov",
+   "displayName": "Rep. Jennifer McClellan",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tomudwgbf7754rewbwkoadhn/bafkreigig5ucycyr3sx5rpfigc4sjia52bkltpyrswmxpw2ph6ut5hdlji",
+   "followersCount": 16222,
+   "postsCount": 2282
+  },
+  "did:plc:z2fyn5xwj3buropnv5svoysn": {
+   "did": "did:plc:z2fyn5xwj3buropnv5svoysn",
+   "handle": "amo.house.gov",
+   "displayName": "Congressman Gabe Amo",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:z2fyn5xwj3buropnv5svoysn/bafkreieuq3rxy7qmigag3tvbk4clwb6mjkieuzt6f2m46miloivgoi3lx4",
+   "followersCount": 30858,
+   "postsCount": 2365
+  },
+  "did:plc:37vi2ubqe3f4g56is536342f": {
+   "did": "did:plc:37vi2ubqe3f4g56is536342f",
+   "handle": "reptimkennedy.bsky.social",
+   "displayName": "Rep. Tim Kennedy",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:37vi2ubqe3f4g56is536342f/bafkreicr7ddcpzzbrrtdubsq557d52msfm5j6smz3jwbz36eq2b2h55oom",
+   "followersCount": 8127,
+   "postsCount": 261
+  },
+  "did:plc:srtpm6jqfeufdmfol7atlohw": {
+   "did": "did:plc:srtpm6jqfeufdmfol7atlohw",
+   "handle": "replamonica.bsky.social",
+   "displayName": "Rep. LaMonica McIver",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:srtpm6jqfeufdmfol7atlohw/bafkreifjmmrolz3r3m3honv7au4dhtos5rphakabix7hjivt4zyjqprkiu",
+   "followersCount": 27715,
+   "postsCount": 1617
+  },
+  "did:plc:ppfetsrcx357ivbht6r5yg4r": {
+   "did": "did:plc:ppfetsrcx357ivbht6r5yg4r",
+   "handle": "repfields.bsky.social",
+   "displayName": "Congressman Cleo Fields",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ppfetsrcx357ivbht6r5yg4r/bafkreihkepw5xcvlzveokb3gpnfr2mpvo7qmum6emp2dkpuebsnlh2o5d4",
+   "followersCount": 695,
+   "postsCount": 61
+  },
+  "did:plc:l7p2mdeahq45untzsg2m3myr": {
+   "did": "did:plc:l7p2mdeahq45untzsg2m3myr",
+   "handle": "cisneros.house.gov",
+   "displayName": "Rep. Gil Cisneros",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:l7p2mdeahq45untzsg2m3myr/bafkreievcblpgrz23oacrlx7dn2srzfopz7p4nhi7yiyirzga7xqr5asge",
+   "followersCount": 6153,
+   "postsCount": 1479
+  },
+  "did:plc:6srmlf7guiy534fkxhfmlubf": {
+   "did": "did:plc:6srmlf7guiy534fkxhfmlubf",
+   "handle": "alsobrooks.senate.gov",
+   "displayName": "Senator Angela Alsobrooks",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:6srmlf7guiy534fkxhfmlubf/bafkreihm5x7jmfuzgmpydijsl3cjarrmxs5jqvkqluckg622jy6iznmyje",
+   "followersCount": 25824,
+   "postsCount": 805
+  },
+  "did:plc:bpmqnn3ungi5m7wcjbnrv6m5": {
+   "did": "did:plc:bpmqnn3ungi5m7wcjbnrv6m5",
+   "handle": "repscfigures.bsky.social",
+   "displayName": "Rep. Shomari C. Figures",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bpmqnn3ungi5m7wcjbnrv6m5/bafkreibgx5c5zlr4to6h76yhxtck2ejk3nz2x6zmhx2gsv2ftfttadfeg4",
+   "followersCount": 2872,
+   "postsCount": 281
+  },
+  "did:plc:4w4ex7k2tlpwa3phwwp7ea7a": {
+   "did": "did:plc:4w4ex7k2tlpwa3phwwp7ea7a",
+   "handle": "repyassansari.bsky.social",
+   "displayName": "Congresswoman Yassamin Ansari",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:4w4ex7k2tlpwa3phwwp7ea7a/bafkreifprrgog5si4mrsghttty2kmwshxw23mdu3foax7uezsdeqmflwi4",
+   "followersCount": 27943,
+   "postsCount": 1074
+  },
+  "did:plc:chd4o3a3vzgdxwc6jikp2sby": {
+   "did": "did:plc:chd4o3a3vzgdxwc6jikp2sby",
+   "handle": "yassaminansari.bsky.social",
+   "displayName": "Yassamin Ansari",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:chd4o3a3vzgdxwc6jikp2sby/bafkreibqontf4hfea7vwf5jhakwoldugsocvvc5qpihfqpqc2p4raqdqg4",
+   "followersCount": 11910,
+   "postsCount": 203
+  },
+  "did:plc:hpfcdjldj7wus5ipuaudbooe": {
+   "did": "did:plc:hpfcdjldj7wus5ipuaudbooe",
+   "handle": "replsimon.bsky.social",
+   "displayName": "Congresswoman Lateefah Simon",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hpfcdjldj7wus5ipuaudbooe/bafkreie4kqmhsitznz22lrapz3so2wsxi5zxy54ofykm7acgslgb3tbygm",
+   "followersCount": 12785,
+   "postsCount": 1651
+  },
+  "did:plc:vssbm7r3ekpp5uxbfbemjy65": {
+   "did": "did:plc:vssbm7r3ekpp5uxbfbemjy65",
+   "handle": "liccardo.house.gov",
+   "displayName": "Rep. Sam Liccardo",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:vssbm7r3ekpp5uxbfbemjy65/bafkreiefujcjijluc2rvltyy6vctlb5luqfvfp4etqapdeztenigclztg4",
+   "followersCount": 4760,
+   "postsCount": 1222
+  },
+  "did:plc:evlfwdjjcyxesb6jvhczcnm5": {
+   "did": "did:plc:evlfwdjjcyxesb6jvhczcnm5",
+   "handle": "georgewhitesides.bsky.social",
+   "displayName": "Rep. George Whitesides",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:evlfwdjjcyxesb6jvhczcnm5/bafkreig2fcezji5zkeuivodoscdpcgoetkwxujokugvl6luzlshjteelha",
+   "followersCount": 11451,
+   "postsCount": 293
+  },
+  "did:plc:a3ydt4aea7suvnvsvktjalrc": {
+   "did": "did:plc:a3ydt4aea7suvnvsvktjalrc",
+   "handle": "repluzrivas.bsky.social",
+   "displayName": "Rep. Luz Rivas",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:a3ydt4aea7suvnvsvktjalrc/bafkreiczrwi27nme3thf3duzmebcpvnseeypdlckfebi7t4yalrd342qie",
+   "followersCount": 7143,
+   "postsCount": 39
+  },
+  "did:plc:el6yvlyawdqu3mkvinpo4lou": {
+   "did": "did:plc:el6yvlyawdqu3mkvinpo4lou",
+   "handle": "friedman.house.gov",
+   "displayName": "Rep. Laura Friedman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:el6yvlyawdqu3mkvinpo4lou/bafkreieh6xduhab2awmgdnjyzcyfyjgdlscwkmeuv4gc5hw5zqvwcqcyuu",
+   "followersCount": 3489,
+   "postsCount": 1613
+  },
+  "did:plc:sloaj35kmff6ta32qmiqdvad": {
+   "did": "did:plc:sloaj35kmff6ta32qmiqdvad",
+   "handle": "derektranforcongress.com",
+   "displayName": "Derek Tran",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:sloaj35kmff6ta32qmiqdvad/bafkreic67x6ywwc6lfzxtyr22t6dyutznmjqx7ihs3mbrw566tvgowb5eu",
+   "followersCount": 811,
+   "postsCount": 193
+  },
+  "did:plc:bit7oafc6sjnttnfit43vvv7": {
+   "did": "did:plc:bit7oafc6sjnttnfit43vvv7",
+   "handle": "daveminca.bsky.social",
+   "displayName": "Dave Min",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bit7oafc6sjnttnfit43vvv7/bafkreiguz2jg3nmci6zco2u7fdx6jpcrid2rhy65rcqqp4s4tpga3wus5u",
+   "followersCount": 41086,
+   "postsCount": 857
+  },
+  "did:plc:hzfyhtysu4sh62zfi2mhwjh7": {
+   "did": "did:plc:hzfyhtysu4sh62zfi2mhwjh7",
+   "handle": "congressmin.bsky.social",
+   "displayName": "Rep. Dave Min",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hzfyhtysu4sh62zfi2mhwjh7/bafkreiaczj55icnvleu2l3vhzb7baktrs5yelnt7x2gofnvumzysti4t4a",
+   "followersCount": 8957,
+   "postsCount": 1142
+  },
+  "did:plc:5hib27ud62elvyuwo225ca5s": {
+   "did": "did:plc:5hib27ud62elvyuwo225ca5s",
+   "handle": "mcbride.house.gov",
+   "displayName": "Congresswoman Sarah McBride",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:5hib27ud62elvyuwo225ca5s/bafkreih2phuajfrpb4y747tk7yy6iaq7sz3bir4v3k74a46vqx4ob2pcs4",
+   "followersCount": 32202,
+   "postsCount": 1170
+  },
+  "did:plc:jl6bnuiemddpm3orm2kcedxh": {
+   "did": "did:plc:jl6bnuiemddpm3orm2kcedxh",
+   "handle": "repjohnnyo.bsky.social",
+   "displayName": "Rep. Johnny Olszewski",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:jl6bnuiemddpm3orm2kcedxh/bafkreieyfdidbehudz6xqrul4eizlyqblblok6e56ywrrls732fm2dmksm",
+   "followersCount": 8792,
+   "postsCount": 1163
+  },
+  "did:plc:i7xmmzkr5wvaywe64v2ydrmh": {
+   "did": "did:plc:i7xmmzkr5wvaywe64v2ydrmh",
+   "handle": "gojohnnyo.bsky.social",
+   "displayName": "Johnny Olszewski",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:i7xmmzkr5wvaywe64v2ydrmh/bafkreigowv3k35sdqjkl6ytv7mml7eweiw5d45xo3yv6asnheefra576c4",
+   "followersCount": 1988,
+   "postsCount": 236
+  },
+  "did:plc:k2efp3b2feirkic73tyyidc3": {
+   "did": "did:plc:k2efp3b2feirkic73tyyidc3",
+   "handle": "elfreth.house.gov",
+   "displayName": "Congresswoman Sarah Elfreth ",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:k2efp3b2feirkic73tyyidc3/bafkreigkdqlmm74k7yka4yjtoicmnznqsialrwj7iz5j7jiosfnkb46tm4",
+   "followersCount": 6871,
+   "postsCount": 3567
+  },
+  "did:plc:hogocz7nv2t3ayyojb5ociml": {
+   "did": "did:plc:hogocz7nv2t3ayyojb5ociml",
+   "handle": "repaprildelaney.bsky.social",
+   "displayName": "Rep. April McClain Delaney",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hogocz7nv2t3ayyojb5ociml/bafkreidpc2lhak2qhutk3pt4pplmn2ngtpta5rk73hpjjrqawf4cfwf4ze",
+   "followersCount": 10422,
+   "postsCount": 1585
+  },
+  "did:plc:cbhyexjqn6oci67e25lnnwvj": {
+   "did": "did:plc:cbhyexjqn6oci67e25lnnwvj",
+   "handle": "kellymorrisonmn.bsky.social",
+   "displayName": "Rep. Kelly Morrison",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:cbhyexjqn6oci67e25lnnwvj/bafkreidvu3lczihqkv3hgnmr4crl2rprl6zpv6yh2izk2skinml6nyoppq",
+   "followersCount": 8829,
+   "postsCount": 1605
+  },
+  "did:plc:b2ttaikexwgxo3m6mij2ufak": {
+   "did": "did:plc:b2ttaikexwgxo3m6mij2ufak",
+   "handle": "repwesleybellmo.bsky.social",
+   "displayName": "Congressman Wesley Bell",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:b2ttaikexwgxo3m6mij2ufak/bafkreie6lakgs7g3tw7guepfk5mnbou4ggtnodyrb5vcewkgcvcpn63rbq",
+   "followersCount": 5409,
+   "postsCount": 1014
+  },
+  "did:plc:ih3ddrxdlgmk2gux5tntdosj": {
+   "did": "did:plc:ih3ddrxdlgmk2gux5tntdosj",
+   "handle": "goodlander.house.gov",
+   "displayName": "Congresswoman Maggie Goodlander",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ih3ddrxdlgmk2gux5tntdosj/bafkreierex2oh7sljnedotljhzk5nriw3fpe2sekwecxmi7lemmsnqo2sa",
+   "followersCount": 8612,
+   "postsCount": 1704
+  },
+  "did:plc:hluq3iv4rk3iyn2opmf4jnsu": {
+   "did": "did:plc:hluq3iv4rk3iyn2opmf4jnsu",
+   "handle": "maggiefornh.com",
+   "displayName": "Maggie Goodlander",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:hluq3iv4rk3iyn2opmf4jnsu/bafkreibj4byloxhjldec7fq5dhfkmyfc44whvyxlbjl2rj2pjo2qkjnfdu",
+   "followersCount": 676,
+   "postsCount": 604
+  },
+  "did:plc:layjqpiy3o73mchg4reg6kob": {
+   "did": "did:plc:layjqpiy3o73mchg4reg6kob",
+   "handle": "repherbconaway.bsky.social",
+   "displayName": "Congressman Herb Conaway",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:layjqpiy3o73mchg4reg6kob/bafkreiayppx5xzdubboikl5qgvzvw6ljv7lnlkoakc6k2nvmww6sumv3jy",
+   "followersCount": 3357,
+   "postsCount": 137
+  },
+  "did:plc:nlmff7znrcvk5qeyonnnfvfr": {
+   "did": "did:plc:nlmff7znrcvk5qeyonnnfvfr",
+   "handle": "repnellie.bsky.social",
+   "displayName": "Nellie Pou",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:nlmff7znrcvk5qeyonnnfvfr/bafkreicfrac3ukwquoa3mpms5m6wfdv44cjajpdqa2hofea5fck6zcu77e",
+   "followersCount": 547,
+   "postsCount": 390
+  },
+  "did:plc:buhkduwsqc47kzmocukem4tg": {
+   "did": "did:plc:buhkduwsqc47kzmocukem4tg",
+   "handle": "repglatimer.bsky.social",
+   "displayName": "Rep. George Latimer",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:buhkduwsqc47kzmocukem4tg/bafkreigx4z5cs5wjsagdvhovh5wfw3xttm3mwrmll7syvvya2ridx7uaee",
+   "followersCount": 1127,
+   "postsCount": 658
+  },
+  "did:plc:f64pkij4ld2qjefaj6q4ktnr": {
+   "did": "did:plc:f64pkij4ld2qjefaj6q4ktnr",
+   "handle": "reprileyny.bsky.social",
+   "displayName": "Rep. Josh Riley",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:f64pkij4ld2qjefaj6q4ktnr/bafkreia36tofzgxwkbveuyqjacxte5f3ninla4mf54u42apt4iag62figa",
+   "followersCount": 910,
+   "postsCount": 100
+  },
+  "did:plc:zskouwxsyhoqrfpew66w2yqn": {
+   "did": "did:plc:zskouwxsyhoqrfpew66w2yqn",
+   "handle": "congressmannion.bsky.social",
+   "displayName": "Congressman John Mannion",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zskouwxsyhoqrfpew66w2yqn/bafkreidrn5t4iwbt7sqhoepldnz45fhuj6d5cc3fe4kogslz6wdf5xlo74",
+   "followersCount": 2781,
+   "postsCount": 306
+  },
+  "did:plc:7g3czbcmnjplejvw6weu6x2j": {
+   "did": "did:plc:7g3czbcmnjplejvw6weu6x2j",
+   "handle": "repdexteror.bsky.social",
+   "displayName": "Congresswoman Maxine Dexter, M.D.",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:7g3czbcmnjplejvw6weu6x2j/bafkreidh5pzthkjwfumtte7wsbcspv74rc4qox4eoakz4f27zg64swqy4m",
+   "followersCount": 21165,
+   "postsCount": 1483
+  },
+  "did:plc:izqdhfrtdyy4pb4ayfaqrc6r": {
+   "did": "did:plc:izqdhfrtdyy4pb4ayfaqrc6r",
+   "handle": "bynum.house.gov",
+   "displayName": "Rep. Janelle Bynum",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:izqdhfrtdyy4pb4ayfaqrc6r/bafkreifsvmbyivmzwhae5lixm26ad4kkkjsov5tqbop2fglk5457sfqqdu",
+   "followersCount": 11311,
+   "postsCount": 1287
+  },
+  "did:plc:45v2c3555bls7em62fsmuaql": {
+   "did": "did:plc:45v2c3555bls7em62fsmuaql",
+   "handle": "juliejohnsontx.bsky.social",
+   "displayName": "Julie Johnson",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:45v2c3555bls7em62fsmuaql/bafkreiaioxw2lopqmxfbwp7jjm7p3cxcqykuiabu3xq5hcxcfxi5d6wuby",
+   "followersCount": 23837,
+   "postsCount": 393
+  },
+  "did:plc:ezisgga5omwhwxhe32ckactd": {
+   "did": "did:plc:ezisgga5omwhwxhe32ckactd",
+   "handle": "repjuliejohnson.bsky.social",
+   "displayName": "Congresswoman Julie Johnson",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:ezisgga5omwhwxhe32ckactd/bafkreicq6feuq6hrwgdqb6blevoqtyh55otqxundbbtv2jbamjkbpa4hze",
+   "followersCount": 6830,
+   "postsCount": 644
+  },
+  "did:plc:eagv6hslaw6asaeduraokazp": {
+   "did": "did:plc:eagv6hslaw6asaeduraokazp",
+   "handle": "gene4va.bsky.social",
+   "displayName": "Congressman Eugene Vindman (VA-07)",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:eagv6hslaw6asaeduraokazp/bafkreiceftprp3gdpsiqwceqd57hkswuoopieq3vikgbx4u3mm4kfsbyiy",
+   "followersCount": 106389,
+   "postsCount": 967
+  },
+  "did:plc:wdigctsjykjg5y36qr2d3rsk": {
+   "did": "did:plc:wdigctsjykjg5y36qr2d3rsk",
+   "handle": "repvindman.bsky.social",
+   "displayName": "Congressman Eugene Vindman",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:wdigctsjykjg5y36qr2d3rsk/bafkreicxyeyvelqcn4faser2qdxojmds2zthc2pgeufkvcms3oukf2eyyq",
+   "followersCount": 20542,
+   "postsCount": 1947
+  },
+  "did:plc:olqojaxxuu6yjqfhiwbuware": {
+   "did": "did:plc:olqojaxxuu6yjqfhiwbuware",
+   "handle": "repsuhas.bsky.social",
+   "displayName": "Rep. Suhas Subramanyam",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:olqojaxxuu6yjqfhiwbuware/bafkreigznziad3wh5es3h5z5c6pr5wyrr7ye5gg7zqpovrhxqsgvlwwata",
+   "followersCount": 14679,
+   "postsCount": 842
+  },
+  "did:plc:kopzf6vrl4ipn2z6zf2fxzs4": {
+   "did": "did:plc:kopzf6vrl4ipn2z6zf2fxzs4",
+   "handle": "suhasforvirginia.bsky.social",
+   "displayName": "Suhas Subramanyam",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:kopzf6vrl4ipn2z6zf2fxzs4/bafkreifj27dqe2guia4yhjea5prkanmwmkl6vhq3mwlvxfwycf43h25itm",
+   "followersCount": 125,
+   "postsCount": 140
+  },
+  "did:plc:smytu5uz6vbwevh67i4mnokg": {
+   "did": "did:plc:smytu5uz6vbwevh67i4mnokg",
+   "handle": "emilyrandallwa.bsky.social",
+   "displayName": "Emily Randall",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:smytu5uz6vbwevh67i4mnokg/bafkreih6rvhokveqeaurkqxgujfanf3zv6itugrs63ph2ee3qbvibigfpe",
+   "followersCount": 23523,
+   "postsCount": 81
+  },
+  "did:plc:irfwoem27gack6d6erxuc74l": {
+   "did": "did:plc:irfwoem27gack6d6erxuc74l",
+   "handle": "repemilyrandall.bsky.social",
+   "displayName": "Rep. Emily Randall",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:irfwoem27gack6d6erxuc74l/bafkreidrzjnw6q4pf66i2kitxupmxby5jqt6iiap7ic5yomu45tznmua5i",
+   "followersCount": 6095,
+   "postsCount": 1150
+  },
+  "did:plc:zeunvi7geiekey6ru2u6kyaz": {
+   "did": "did:plc:zeunvi7geiekey6ru2u6kyaz",
+   "handle": "repwalkinshaw.bsky.social",
+   "displayName": "Rep. James Walkinshaw",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:zeunvi7geiekey6ru2u6kyaz/bafkreibgucjogzitbvjagutirrfce2krzcb2qvdmclkydxt4a35l44km2e",
+   "followersCount": 4523,
+   "postsCount": 1784
+  },
+  "did:plc:mmtluedxckhsiy5vke727vs5": {
+   "did": "did:plc:mmtluedxckhsiy5vke727vs5",
+   "handle": "jameswalkinshaw.bsky.social",
+   "displayName": "James Walkinshaw",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:mmtluedxckhsiy5vke727vs5/bafkreihcpyszhztmslzx2vq5wzsswvujfxo25kibnfg4fkrf37k3fcnzhu",
+   "followersCount": 1613,
+   "postsCount": 656
+  },
+  "did:plc:gd53ke3rcoptyiib6jkslloh": {
+   "did": "did:plc:gd53ke3rcoptyiib6jkslloh",
+   "handle": "cdmenefee.bsky.social",
+   "displayName": "Christian D. Menefee",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:gd53ke3rcoptyiib6jkslloh/bafkreielky3p44ea4qwbi3n5sgg6rbma5srfuknq63esmyz2wk4yexzubq",
+   "followersCount": 2142,
+   "postsCount": 537
+  },
+  "did:plc:k4u4xfqxmnice5ryazs6mexn": {
+   "did": "did:plc:k4u4xfqxmnice5ryazs6mexn",
+   "handle": "menefee.house.gov",
+   "displayName": "Congressman Christian D. Menefee",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:k4u4xfqxmnice5ryazs6mexn/bafkreifoleoq4o5pu6yzzeg54gk4iktayzkadc6xrlh4mi7qvqichl3ntu",
+   "followersCount": 789,
+   "postsCount": 338
+  },
+  "did:plc:bgnw7btv6mv3jcdicj6yrekr": {
+   "did": "did:plc:bgnw7btv6mv3jcdicj6yrekr",
+   "handle": "repanalilia.bsky.social",
+   "displayName": "Congresswoman Analilia Mejia",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:bgnw7btv6mv3jcdicj6yrekr/bafkreiafeecivcrlddyjffdadkf7esi7ptfhdqrlkwrvlapjgrity7ulfu",
+   "followersCount": 1221,
+   "postsCount": 377
+  },
+  "did:plc:tjjtaowbajgby5ukoo2k4chp": {
+   "did": "did:plc:tjjtaowbajgby5ukoo2k4chp",
+   "handle": "evertonblair.bsky.social",
+   "displayName": "Everton Blair",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:tjjtaowbajgby5ukoo2k4chp/bafkreidw63jlv3oqouvt4tng6et7atisih4qqa5zntpuaneoiymc7ueqwa",
+   "followersCount": 271,
+   "postsCount": 173
+  },
+  "did:plc:kevfmn3yvafggysqyfbvdwpn": {
+   "did": "did:plc:kevfmn3yvafggysqyfbvdwpn",
+   "handle": "congressmanblair.bsky.social",
+   "avatar": "https://cdn.bsky.app/img/avatar/plain/did:plc:kevfmn3yvafggysqyfbvdwpn/bafkreigfij2oor5eoc7iu65qapruc6lp4cr6e3um2drg2bbqhi5aokyqae",
+   "followersCount": 54,
+   "postsCount": 42
+  }
+ }
+}

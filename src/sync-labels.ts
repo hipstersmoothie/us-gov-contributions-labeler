@@ -20,13 +20,10 @@ import {
   getLabelerLabelDefinitions,
   setLabelerLabelDefinitions,
 } from "@skyware/labeler/scripts";
-import { fetchLiveLabels, labelerServiceUrl, labelValue } from "./lib/labels.js";
+import { fetchLiveLabels, labelerServiceUrl, memberLabels, PER_KIND } from "./lib/labels.js";
 import type { Member, OrganizationRecord } from "./ingest/build.js";
 
 const LABELER_DID = (process.env.LABELER_DID ?? process.env.DID ?? "did:plc:ylmdlijvrvgbe4md6v4dyce6") as `did:${string}`;
-const PER_KIND = 3;
-// Not industries, or not informative as a label.
-const SKIP_SECTORS = new Set(["Unknown", "Party & Candidate Committees", "Retired", "Not employed"]);
 const METHODOLOGY =
   "The organizations themselves did not donate; the money came from their PACs and from their employees, " +
   "members or owners. Individual donations are counted by the employer donors listed.";
@@ -57,33 +54,18 @@ const desired = new Map<string, Set<string>>();
 
 for (const m of members) {
   if (!m.accounts.length) continue;
-  const labels: Definition[] = [];
-
-  for (const s of m.combinedSectors.filter((s) => !SKIP_SECTORS.has(s.id)).slice(0, PER_KIND)) {
-    labels.push({
-      value: labelValue(s.id),
-      name: s.id,
-      description:
-        `One of the top ${PER_KIND} sectors funding this member of Congress's campaign, ${range}, per FEC filings.` +
-        `\n\n${METHODOLOGY}${more}`,
-    });
-  }
-
-  const contributors = m.contributors
-    .filter((c) => orgById.get(c.id)?.sector !== "Party & Candidate Committees")
-    .slice(0, PER_KIND);
-  for (const c of contributors) {
-    labels.push({
-      value: labelValue(c.name),
-      name: c.name,
-      description:
-        `${c.name} is one of the top ${PER_KIND} contributors to this member of Congress's campaign, ${range}, per FEC filings.` +
-        `\n\n${METHODOLOGY}${more}`,
-    });
-  }
+  const labels: Definition[] = memberLabels(m, orgById).map((l) => ({
+    value: l.value,
+    name: l.name,
+    description:
+      l.kind === "sector"
+        ? `One of the top ${PER_KIND} sectors funding this member of Congress's campaign, ${range}, per FEC filings.` +
+          `\n\n${METHODOLOGY}${more}`
+        : `${l.name} is one of the top ${PER_KIND} contributors to this member of Congress's campaign, ${range}, per FEC filings.` +
+          `\n\n${METHODOLOGY}${more}`,
+  }));
 
   for (const l of labels) {
-    if (!l.value) continue;
     definitions.set(l.value, l);
     for (const account of m.accounts) {
       const vals = desired.get(account.did) ?? new Set<string>();

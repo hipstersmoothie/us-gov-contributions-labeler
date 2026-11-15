@@ -20,7 +20,8 @@
     "photos": "tsx src/scripts/fetch-photos.ts",
     "feeds": "tsx feeds/server.ts",
     "feeds:publish": "tsx feeds/publish.ts",
-    "open-data-examples": "tsx src/scripts/open-data-examples.ts"
+    "open-data-examples": "tsx src/scripts/open-data-examples.ts",
+    "bluesky-profiles": "tsx src/scripts/fetch-bluesky-profiles.ts"
   },
   "devDependencies": {
     "@types/node": "^24.19.2",
