@@ -6,7 +6,7 @@ House, as a narrow version; not yet for the Senate.** House e-filed reports
 parse cleanly and match to SEC companies well. Paper filings, about half of
 all House trade lines, are now read by machine from the scans (79% of trade
 rows and 92% of asset rows read with no doubts; the rest are flagged and left
-out). The Senate's search wouldn't serve automated requests. Numbers, legal notes and screenshots below.
+out). The Senate's search is down for maintenance, so it's still to come. Numbers, legal notes and screenshots below.
 
 Everything is on the `sesh/stock-holdings-exploration` branch. Nothing was
 written to Bluesky, the PDS or the labeler, and nothing here is in the CC0
@@ -49,7 +49,7 @@ filed January 2025 to November 13, 2026, unless noted.
 | --- | --- | --- |
 | **House Clerk, e-filed PDFs** | **Use.** | Every e-filed PDF had a clean text layer (1,254 of 1,254). In a 48-report, 125-PTR sample, parsing got a value range and type code for every asset and an amount for every trade (checked by script, with spot checks against the PDFs). 94% of single-company holdings (89% of their value) and 95% of single-company trades match an SEC company. |
 | **House Clerk, paper filings** | **Use, read by machine, flagged and linked.** | 7.2% of annual reports (31 of 431) and 13.1% of PTRs (124 of 944) are scanned paper with no text layer, but they hold about half of all House trade lines (9,000 of them Ro Khanna's). A local pipeline (section 1a) reads **11,383 trade rows from 887 PTR pages, 79% with no doubts**, and **4,909 assets from 272 Schedule A pages, 92% with no doubts**. On fresh pages checked by eye, every unflagged row's type, amount, owner and date matched the scan. Flagged rows (2,380 trades, 395 assets) are counted and linked, not shown. |
-| **Senate eFD** | **Blocked or unavailable to automated access. Nothing measured.** | See below. |
+| **Senate eFD** | **Down for maintenance. Nothing measured yet.** | Confirmed in a browser: search shows the same maintenance page to people. Retrying slowly; see below. |
 
 ### House Clerk (disclosures-clerk.house.gov)
 
@@ -222,7 +222,7 @@ flagged if unmatched, rather than called the member's), a stray rule splitting
 the owner column, trust headings read into asset names, and Block B shifted
 one column where OCR missed the "EIF" box.
 
-### Senate eFD (efdsearch.senate.gov): blocked or unavailable to automated access
+### Senate eFD (efdsearch.senate.gov): down for maintenance
 
 **Verdict: no data measured. Don't build on it yet.**
 
@@ -238,14 +238,17 @@ What happened, in full (every request this exploration made to the host):
 | ~12:21 | `POST /search/report/data/` with no session, to read the error | 400 from Akamai |
 | — | *Backed off 32 minutes* | |
 | 12:54 | `GET /search/home/`, `POST` the agreement, `POST /search/report/data/` (5 s apart, user agent `contributions.fyi research (https://contributions.fyi)`, no retries) | Agreement 302; search **503**: "U.S. Senate: Site Under Maintenance … WEBSITE TEMPORARILY UNAVAILABLE DUE TO MAINTENANCE." |
-| 13:24 | The same three requests, same pacing and user agent | Same 503 maintenance page. One more attempt is scheduled for 16:24; no others. |
+| 13:24 | The same three requests, same pacing and user agent | Same 503 maintenance page. |
+| ~14:40 | The user ran a search on efdsearch.senate.gov in a browser | "Down for maintenance": a real outage, not a block on automated access. |
 
-The pages a person clicks through (home, agreement, the search form) work; the
-JSON endpoint behind the search form doesn't, twice, half an hour apart. From
-here we can't tell real maintenance from a block that shows a maintenance page
-to non-browser clients. Either way, nothing about the Senate's coverage,
-electronic-versus-paper rate or parse quality was measured, and none of the
-Senate claims below are numbers.
+The home page and the agreement step work, but search is down for maintenance
+for everyone: the user saw the same page in a browser. So this is an outage to
+wait out, not automated access being refused. One slow attempt (the same
+three requests, 5 s apart, same user agent, no retries) runs every 6 hours
+until November 17; when search answers, the plan is to list senators' 2025–26
+reports, measure the electronic-versus-paper rate, parse a handful of
+senators first, and check back before fetching all 100. Nothing about the
+Senate's coverage or parse quality has been measured yet.
 
 What's known about the format without fetching, from the eFD site's public
 pages and URL scheme; unverified here, to check when it's reachable:
@@ -260,14 +263,14 @@ pages and URL scheme; unverified here, to check when it's reachable:
   DataTables backend behind a CSRF token and the agreement cookie.
 - Reports are taken down six years after a senator leaves office.
 
-**Alternatives**, in order of how much I'd recommend them:
+**If the outage drags on, or search comes back but refuses automated
+requests**, the alternatives, in order:
 
 1. **Contact the Senate Office of Public Records** (Office of Public Records,
    144 Hart Senate Office Building, Washington, D.C. 20510-7116; (202)
    224-0322, per the eFD home page). Ask whether automated access to eFD
    search and report pages is permitted, at what rate, and whether there's a
-   bulk export. This is the honest route and the only one that settles the
-   maintenance-or-block question.
+   bulk export.
 2. **A much slower schedule**, if they say it's fine or the endpoint comes
    back: one search request and a few report pages per minute, run weekly. A
    full Senate refresh is ~100 senators × (1 annual + a few PTRs), a few
@@ -398,8 +401,9 @@ range charts use Observable Plot with the site's legend and table view.
 
 *Later, only if each prerequisite is met*
 
-- **The Senate**, once the Senate Office of Public Records says automated
-  access is fine (or offers an export). eFD's HTML reports would likely parse
+- **The Senate**, once eFD search is back from maintenance (or, if it then
+  refuses automated requests, once the Senate Office of Public Records says
+  automated access is fine or offers an export). eFD's HTML reports would likely parse
   better than House PDFs.
 - **Committee overlap**, kept on the member page, always beside the
   baseline, and never as a headline, list or label. Review whether it adds
