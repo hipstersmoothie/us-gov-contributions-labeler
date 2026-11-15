@@ -25,6 +25,8 @@ interface Props {
   max?: number;
 }
 const { rows, heading, valueHeading, extraHeadings = [], caption, rank = true } = Astro.props;
+// Let "Institutions/Investments/Securities" wrap at its slashes.
+const breakable = (text: string) => text.replace(/\//g, "/\u200b");
 const max = Astro.props.max ?? Math.max(...rows.map((r) => r.value), 1);
 ---
 
@@ -46,7 +48,7 @@ const max = Astro.props.max ?? Math.max(...rows.map((r) => r.value), 1);
           <td class="name">
             {r.party && <span class={`ptag party-${r.party}`} title={{ D: "Democrat", R: "Republican", I: "Independent" }[r.party]}>{r.party}</span>}
             {r.href ? <a href={r.href}>{r.label}</a> : r.label}
-            {r.note && <span class="note">{r.note}</span>}
+            {r.note && <span class="note">{breakable(r.note)}</span>}
           </td>
           {r.cells?.map((c) => <td class="extra">{c}</td>)}
           <td class:list={["num", "value", { em: r.value === max }]}>
@@ -62,19 +64,21 @@ const max = Astro.props.max ?? Math.max(...rows.map((r) => r.value), 1);
 </table>
 
 <style>
-  .ranked td { padding-top: 7px; padding-bottom: 7px; vertical-align: middle; }
-  .rank { width: 2.2em; color: var(--text-muted); font-size: 12px; padding-right: 8px; }
+  /* Rank, name and amount share the first line's baseline, however the name wraps. */
+  .ranked td { padding-top: 9px; padding-bottom: 9px; vertical-align: baseline; }
+  .ranked th { vertical-align: bottom; }
+  .rank { width: 2.4em; padding-right: 14px; color: var(--text-muted); font-size: var(--fs-sm); }
   .name { font-weight: 500; }
   .name a { text-decoration-color: transparent; }
   .name a:hover { text-decoration-color: currentColor; }
-  .note { display: block; font-size: 12px; font-weight: 400; color: var(--text-muted); }
+  .note { display: block; font-size: var(--fs-sm); font-weight: 400; color: var(--text-muted); margin-top: 1px; }
   .extra { color: var(--text-secondary); font-size: 13px; }
   .value { width: 46%; }
   .value-h { width: 46%; }
-  .cell { display: flex; align-items: center; gap: 10px; }
+  .cell { display: inline-flex; align-items: baseline; gap: 10px; width: 100%; }
   .amount { flex: none; width: 58px; text-align: right; }
   .bar {
-    flex: none; height: 10px; width: calc((100% - 68px) * var(--w));
+    flex: none; align-self: center; height: 10px; width: calc((100% - 68px) * var(--w));
     background: var(--bar); border-radius: 0 2px 2px 0; /* square at the baseline */
   }
   .em .bar { background: var(--bar-strong); }
