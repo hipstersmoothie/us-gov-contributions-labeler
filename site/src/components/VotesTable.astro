@@ -1,0 +1,62 @@
+---
+// A member's passage votes: the bill, how they voted, how their party voted.
+import { fmtDate, voteKind, PATTERN_LABEL, type memberVotes } from "../lib/legislation";
+
+interface Props {
+  rows: ReturnType<typeof memberVotes>;
+  /** Surname, for the column heading. */
+  member: string;
+  /** "Democrats" / "Republicans". */
+  caucus: string;
+}
+const { rows, member, caucus } = Astro.props;
+const WORD = { Y: "Yes", N: "No", O: "Didn't vote" } as const;
+---
+
+<table class="member-votes">
+  <thead>
+    <tr>
+      <th scope="col">Bill</th>
+      <th scope="col">{member}</th>
+      <th scope="col">{caucus}, yes–no</th>
+      <th scope="col" class="num wide">Organizations lobbying</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map(({ b, v, position, t, broke, partySplit, alongside }) => (
+        <tr>
+          <td>
+            <a href={`/bills/${b.id}/`}>{b.name}</a>
+            <span class="muted small"> · {b.label}</span>
+            <div class="muted small">{voteKind(v)}, {fmtDate(v.date, true)}</div>
+          </td>
+          <td>
+            <strong class:list={{ muted: position === "O" }}>{WORD[position]}</strong>
+            {broke && (
+              <div class="broke">
+                Broke with party{alongside > 0 ? `, with ${alongside} other${alongside === 1 ? "" : "s"}` : ", alone"}
+              </div>
+            )}
+          </td>
+          <td class="small">
+            {t ? `${t.yes}–${t.no}` : "—"}
+            <div class="muted">{partySplit ? "Party split" : PATTERN_LABEL[v.pattern] === "Party line" ? "Party-line vote" : PATTERN_LABEL[v.pattern]}</div>
+          </td>
+          <td class="num wide">{b.lobbying.length ? b.lobbying.length.toLocaleString() : <span class="muted">—</span>}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<!-- Global (keyed by .member-votes): the table is also a fragment page. -->
+<style is:global>
+  .member-votes td:first-child { max-width: 420px; }
+  .member-votes .broke {
+    display: block; width: fit-content; margin-top: 4px; padding: 1px 6px; border-radius: 2px;
+    font: 700 var(--fs-label)/1.4 var(--sans); text-transform: uppercase; letter-spacing: 0.06em;
+    border: 1px solid var(--text-primary);
+  }
+  @media (max-width: 640px) { .member-votes .wide { display: none; } }
+</style>

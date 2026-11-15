@@ -32,7 +32,7 @@ export interface DonorRow {
   total: number;
 }
 
-/** Prototype: one reported trade, from House periodic transaction reports. */
+/** One reported trade, from House periodic transaction reports. */
 export interface TradeRow {
   id: string;
   member: string;
@@ -50,4 +50,17 @@ export interface TradeRow {
   docUrl: string;
   /** Read by machine from a scanned paper form. */
   scanned: boolean;
+}
+
+export interface BillRow {
+  id: string;
+  label: string;
+  name: string;
+  policyArea: string;
+  status: string;
+  law: boolean;
+  /** Date and pattern of its latest passage vote. */
+  lastVote: string;
+  pattern: "party-line" | "near-unanimous" | "split";
+  lobbying: number;
 }

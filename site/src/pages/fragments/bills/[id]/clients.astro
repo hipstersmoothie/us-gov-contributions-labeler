@@ -1,0 +1,14 @@
+---
+// The organizations on a bill's page past the first few, loaded when the
+// reader opens the full list.
+import ClientList from "../../../../components/ClientList.astro";
+import { bills, CLIENTS_SHOWN, type Bill } from "../../../../lib/legislation";
+
+export const partial = true;
+export function getStaticPaths() {
+  return bills.filter((b) => b.lobbying.length > CLIENTS_SHOWN).map((b) => ({ params: { id: b.id }, props: { b } }));
+}
+const { b } = Astro.props as { b: Bill };
+---
+
+<ClientList clients={b.lobbying.slice(CLIENTS_SHOWN)} />

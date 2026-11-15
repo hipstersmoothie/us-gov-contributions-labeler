@@ -25,6 +25,9 @@ import {
 import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct, possessive, backersPhrase, cycleLabel } from "../../lib/derived";
 import { surname, moneyAuto, candidateName, partyCode } from "../../lib/format";
 import OutsideTable from "../../components/OutsideTable.astro";
+import VotesTable from "../../components/VotesTable.astro";
+import LazyDisclosure from "../../islands/LazyDisclosure";
+import { memberVotes, partyPlural, caucusOf, memberCaucusName, VOTES_SHOWN } from "../../lib/legislation";
 import { disclosures } from "../../lib/holdings";
 
 export function getStaticPaths() {
@@ -113,6 +116,14 @@ const oppCandidates = opp.candidates.map((c) => {
   };
 });
 
+// Passage votes, and where they broke with their party.
+const votes = memberVotes(m);
+const decided = votes.filter((x) => x.position !== "O");
+const broke = votes.filter((x) => x.broke);
+const withParty = decided.filter((x) => x.t && (x.position === "Y" ? x.t.yes >= x.t.no : x.t.no >= x.t.yes)).length;
+// Independents are compared with the party they caucus with.
+const caucusLetter = caucusOf(m);
+const caucus = memberCaucusName(m);
 const hasDisclosure = disclosures.has(m.bioguide);
 
 const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
@@ -128,7 +139,7 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
       )
     }
     <div>
-      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party} · {seat(m)}</p>
+      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party}{caucusLetter && <> · caucuses with {partyPlural(caucusLetter)}</>} · {seat(m)}</p>
       <h1>{m.name}</h1>
     </div>
   </header>
@@ -212,7 +223,7 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
     hasDisclosure && (
       <p class="investments-link">
         <a href={`/members/${m.bioguide}/investments/`}>What {last} reported owning and trading</a>
-        <span class="muted"> · from House financial disclosures (prototype)</span>
+        <span class="muted"> · from House financial disclosures</span>
       </p>
     )
   }
@@ -302,6 +313,42 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
       }}
     />
   </section>
+
+  {
+    votes.length > 0 && (
+      <section class="story">
+        <h2>How {last} votes</h2>
+        <p class="chart-dek">
+          On the {votes.length} votes on passing a bill that {last} took part in this Congress, {last} voted with most{" "}
+          {caucus} {withParty} times of {decided.length}
+          {broke.length > 0 ? (
+            <>, and broke with them {broke.length === 1 ? "once" : `${broke.length} times`}: siding with a quarter of the party or less.</>
+          ) : (
+            <>, and never sided with a quarter of the party or less.</>
+          )}{" "}
+          {caucusLetter && `As an independent who caucuses with ${caucus}, ${last} is compared with them. `}
+          The last column counts organizations whose lobbying reports name each bill, on any side of it.
+        </p>
+        {broke.length > 0 && (
+          <>
+            <h3>Where {last} broke with {caucus}</h3>
+            <VotesTable rows={broke.slice(0, VOTES_SHOWN)} member={last} caucus={caucus} />
+            {broke.length > VOTES_SHOWN && (
+              <LazyDisclosure client:visible title={`${broke.length - VOTES_SHOWN} more votes against most ${caucus}`} src={`/fragments/members/${m.bioguide}/broke/`} />
+            )}
+          </>
+        )}
+        <h3 class:list={{ spaced: broke.length > 0 }}>Most recent votes</h3>
+        <VotesTable rows={votes.slice(0, VOTES_SHOWN)} member={last} caucus={caucus} />
+        {votes.length > VOTES_SHOWN && (
+          <LazyDisclosure client:visible title={`${votes.length - VOTES_SHOWN} earlier votes`} src={`/fragments/members/${m.bioguide}/votes/`} />
+        )}
+        <p class="source">
+          Recorded votes on passing bills and resolutions, from the House Clerk and the Senate. <a href="/bills/">Every bill</a>.
+        </p>
+      </section>
+    )
+  }
 
   {
     topContributors.length > 0 && (
@@ -496,4 +543,5 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
     .member-head { gap: var(--sp-4); }
     .member-head img, .portrait-empty { width: 72px; height: 88px; margin-bottom: var(--sp-3); }
   }
+  .spaced { margin-top: var(--sp-6); }
 </style>

@@ -1,4 +1,4 @@
-// Prototype: members' financial disclosures (House e-filed reports only).
+// Members' financial disclosures: House reports, e-filed or read from scans.
 // Values are always ranges; nothing here should ever print a single figure for
 // a holding unless the filer reported one.
 import fs from "node:fs";

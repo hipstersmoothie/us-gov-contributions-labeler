@@ -1,0 +1,40 @@
+---
+// Every current member's position on one vote, in three columns. Rendered
+// on its own as a fragment page; its styles are in styles/bill-lists.css.
+import { memberById, partyLetter } from "../lib/data";
+import { surname } from "../lib/format";
+import type { Vote } from "../lib/legislation";
+
+interface Props {
+  v: Vote;
+}
+const { v } = Astro.props;
+const partyOf = (id: string) => v.parties?.[id] ?? partyLetter(memberById.get(id)!.party);
+const HEADS = { yes: "Yes", no: "No", other: "Didn't vote" } as const;
+---
+
+<div class="roll-list">
+  {
+    (["yes", "no", "other"] as const)
+      .filter((k) => v[k].length)
+      .map((k) => (
+        <div>
+          <h4 class="kicker">{HEADS[k]} ({v[k].length})</h4>
+          <ul class="link-list">
+            {v[k]
+              .map((id) => memberById.get(id))
+              .filter((m) => !!m)
+              .sort((a, z) => surname(a.name).localeCompare(surname(z.name)))
+              .map((m) => (
+                <li>
+                  <span class={`ptag party-${partyOf(m.bioguide)}`}>{partyOf(m.bioguide)}</span>
+                  <a href={`/members/${m.bioguide}/`}>{m.name}</a> <span class="muted small">{m.state}</span>
+                </li>
+              ))}
+          </ul>
+        </div>
+      ))
+  }
+</div>
+<p class="source">Current members only, with the party each voted under.</p>
+

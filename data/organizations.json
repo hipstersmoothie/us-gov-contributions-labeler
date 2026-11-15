@@ -26345,7 +26345,7 @@
     },
     {
       "id": "at-and-t",
-      "name": "At&T",
+      "name": "AT&T",
       "sector": "Communications & Technology",
       "industry": "Telephone Communications (No Radiotelephone)",
       "classifiedBy": "sec",
@@ -34987,7 +34987,7 @@
     },
     {
       "id": "national-rural-electric-cooperative-association",
-      "name": "National Rural Electric Cooperative Association (Nreca)",
+      "name": "National Rural Electric Cooperative Association (NRECA)",
       "sector": "Energy & Natural Resources",
       "industry": "Energy/Nuclear",
       "classifiedBy": "name",
@@ -44652,7 +44652,7 @@
     },
     {
       "id": "ubs-americas",
-      "name": "Ubs Americas Inc",
+      "name": "UBS Americas Inc",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "classifiedBy": "lobbying",
@@ -49666,7 +49666,7 @@
     },
     {
       "id": "united-parcel-service",
-      "name": "United Parcel Service (Ups)",
+      "name": "United Parcel Service (UPS)",
       "sector": "Transportation",
       "industry": "Trucking & Courier Services (No Air)",
       "classifiedBy": "sec",
@@ -68058,7 +68058,7 @@
     },
     {
       "id": "rtx",
-      "name": "Rtx Corporation and Affiliates",
+      "name": "RTX Corporation and Affiliates",
       "sector": "Defense",
       "industry": "Aircraft Engines & Engine Parts",
       "classifiedBy": "sec",
@@ -72666,7 +72666,7 @@
     },
     {
       "id": "pricewaterhousecoopers-i",
-      "name": "Pricewaterhousecoopers",
+      "name": "PricewaterhouseCoopers",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Accounting",
       "classifiedBy": "lobbying",
@@ -91955,7 +91955,7 @@
     },
     {
       "id": "service-international-union",
-      "name": "Service Employees International Union (Seiu)",
+      "name": "Service Employees International Union (SEIU)",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -94149,7 +94149,7 @@
     },
     {
       "id": "ua-union-plumbers-and-pipefitters-vote",
-      "name": "Ua Union Plumbers and Pipefitters Vote",
+      "name": "UA Union Plumbers and Pipefitters Vote",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -96069,7 +96069,7 @@
     },
     {
       "id": "toyota-motor",
-      "name": "Toyota Motor North America Inc (Tma)",
+      "name": "Toyota Motor North America Inc (TMA)",
       "sector": "Transportation",
       "industry": "Motor Vehicles & Passenger Car Bodies",
       "classifiedBy": "sec",
@@ -109283,7 +109283,7 @@
     },
     {
       "id": "majority-mc-c00428052",
-      "name": "Majority Committee PAC--Mc PAC",
+      "name": "Majority Committee PAC--MC PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -110052,7 +110052,7 @@
     },
     {
       "id": "amazon-com",
-      "name": "Amazon.Com Services LLC",
+      "name": "Amazon.com Services LLC",
       "sector": "Misc Business",
       "industry": "Retail-Catalog & Mail-Order Houses",
       "classifiedBy": "sec",
@@ -134032,7 +134032,7 @@
     },
     {
       "id": "unitedhealth",
-      "name": "Unitedhealth Group Inc",
+      "name": "UnitedHealth Group Inc",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Hospital & Medical Service Plans",
       "classifiedBy": "sec",
@@ -141626,7 +141626,7 @@
     },
     {
       "id": "t-mobile-us",
-      "name": "T-Mobile Us, Inc.",
+      "name": "T-Mobile US, Inc.",
       "sector": "Communications & Technology",
       "industry": "Radiotelephone Communications",
       "classifiedBy": "sec",
@@ -145194,7 +145194,7 @@
     },
     {
       "id": "nrsc-c00027466",
-      "name": "Nrsc",
+      "name": "NRSC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -156342,7 +156342,7 @@
     },
     {
       "id": "fedex",
-      "name": "Fedex Corporation",
+      "name": "FedEx Corporation",
       "sector": "Transportation",
       "industry": "Air Courier Services",
       "classifiedBy": "sec",
@@ -157919,7 +157919,7 @@
     },
     {
       "id": "ncta-internet-and-television-association",
-      "name": "Ncta - the Internet and Television Association",
+      "name": "NCTA - the Internet and Television Association",
       "sector": "Communications & Technology",
       "industry": "Telecommunications",
       "classifiedBy": "name",
@@ -165262,7 +165262,7 @@
     },
     {
       "id": "abbvie",
-      "name": "Abbvie Inc.",
+      "name": "AbbVie Inc.",
       "sector": "Health",
       "industry": "Pharmaceutical Preparations",
       "classifiedBy": "sec",
@@ -171360,7 +171360,7 @@
     },
     {
       "id": "bae-systems",
-      "name": "Bae Systems (Formerly Known As United Defense)",
+      "name": "BAE Systems (Formerly Known As United Defense)",
       "sector": "Defense",
       "industry": "Defense",
       "classifiedBy": "lobbying",
@@ -172531,7 +172531,7 @@
     },
     {
       "id": "bnsf-railway",
-      "name": "Bnsf Railway Company",
+      "name": "BNSF Railway Company",
       "sector": "Transportation",
       "industry": "Railroads",
       "classifiedBy": "name",
@@ -175701,7 +175701,7 @@
     },
     {
       "id": "kpmg-partners-principals-c00280222",
-      "name": "Kpmg Partners/Principals and Employees PAC",
+      "name": "KPMG Partners/Principals and Employees PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -189642,7 +189642,7 @@
     },
     {
       "id": "fmr",
-      "name": "Fmr LLC",
+      "name": "FMR LLC",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "classifiedBy": "lobbying",
@@ -190499,7 +190499,7 @@
     },
     {
       "id": "jpmorgan-chase",
-      "name": "Jpmorgan Chase & Co",
+      "name": "JPMorgan Chase & Co",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "National Commercial Banks",
       "classifiedBy": "sec",
@@ -191936,7 +191936,7 @@
     },
     {
       "id": "blackrock-funds-services",
-      "name": "Blackrock Funds Services Group LLC (Formerly Blackrock Capital Management Inc.)",
+      "name": "BlackRock Funds Services Group LLC (Formerly BlackRock Capital Management Inc.)",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "classifiedBy": "lobbying",
@@ -193877,7 +193877,7 @@
     },
     {
       "id": "davita",
-      "name": "Davita, Inc.",
+      "name": "DaVita, Inc.",
       "sector": "Health",
       "industry": "Services-Misc Health & Allied Services, NEC",
       "classifiedBy": "sec",
@@ -196569,7 +196569,7 @@
     },
     {
       "id": "crh-americas",
-      "name": "Crh Americas, Inc.",
+      "name": "CRH Americas, Inc.",
       "sector": "Construction",
       "classifiedBy": "override",
       "industry": "Building materials",
@@ -202145,7 +202145,7 @@
     },
     {
       "id": "nextera-energy",
-      "name": "Nextera Energy Inc",
+      "name": "NextEra Energy Inc",
       "sector": "Energy & Natural Resources",
       "industry": "Electric Services",
       "classifiedBy": "sec",
@@ -208055,7 +208055,7 @@
     },
     {
       "id": "truist-financial",
-      "name": "Truist Financial Corporation (Formerly Known As Bb&T)",
+      "name": "Truist Financial Corporation (Formerly Known As BB&T)",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "National Commercial Banks",
       "classifiedBy": "sec",
@@ -212991,7 +212991,7 @@
     },
     {
       "id": "team-mccormick-c00852012",
-      "name": "Team Mccormick",
+      "name": "Team McCormick",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -221426,7 +221426,7 @@
     },
     {
       "id": "intl-union-united-automobile-aerospace-and-agricultural-implement-workers-of-america-uaw",
-      "name": "Int'l Union United Automobile Aerospace & Agricultural Implement Workers of America Uaw",
+      "name": "Int'l Union United Automobile Aerospace & Agricultural Implement Workers of America UAW",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -222792,7 +222792,7 @@
     },
     {
       "id": "lpl-financial",
-      "name": "Lpl Financial Corporation",
+      "name": "LPL Financial Corporation",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Security & Commodity Brokers, Dealers, Exchanges & Services",
       "classifiedBy": "sec",
@@ -225143,7 +225143,7 @@
     },
     {
       "id": "cme",
-      "name": "Cme Group Inc",
+      "name": "CME Group Inc",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Security & Commodity Brokers, Dealers, Exchanges & Services",
       "classifiedBy": "sec",
@@ -231058,7 +231058,7 @@
     },
     {
       "id": "cvs-health",
-      "name": "Cvs Health Inc",
+      "name": "CVS Health Inc",
       "sector": "Health",
       "industry": "Retail-Drug Stores and Proprietary Stores",
       "classifiedBy": "sec",
@@ -241143,7 +241143,7 @@
     },
     {
       "id": "csx",
-      "name": "Csx Corp",
+      "name": "CSX Corp",
       "sector": "Transportation",
       "industry": "Railroads, Line-Haul Operating",
       "classifiedBy": "sec",
@@ -262806,7 +262806,7 @@
     },
     {
       "id": "td-bank-us",
-      "name": "Td Bank Us Holding Company",
+      "name": "TD Bank US Holding Company",
       "sector": "Finance, Insurance & Real Estate",
       "classifiedBy": "name",
       "committees": [
@@ -266275,7 +266275,7 @@
     },
     {
       "id": "crop-insurance-professionals-association-cipa",
-      "name": "Crop Insurance Professionals Association Cipa",
+      "name": "Crop Insurance Professionals Association CIPA",
       "sector": "Finance, Insurance & Real Estate",
       "classifiedBy": "name",
       "committees": [
@@ -271144,7 +271144,7 @@
     },
     {
       "id": "smart-td",
-      "name": "Smart Td",
+      "name": "Smart TD",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -281404,7 +281404,7 @@
     },
     {
       "id": "ctia-wireless-association",
-      "name": "Ctia the Wireless Association",
+      "name": "CTIA the Wireless Association",
       "sector": "Communications & Technology",
       "industry": "Telecommunications",
       "classifiedBy": "name",
@@ -291190,7 +291190,7 @@
     },
     {
       "id": "pnc-financial-services",
-      "name": "The Pnc Financial Services Group",
+      "name": "The PNC Financial Services Group",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "National Commercial Banks",
       "classifiedBy": "sec",
@@ -300957,7 +300957,7 @@
     },
     {
       "id": "us-bancorp",
-      "name": "Us Bancorp",
+      "name": "US Bancorp",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Banking",
       "classifiedBy": "lobbying",
@@ -308899,7 +308899,7 @@
     },
     {
       "id": "netjets-association-of-shared-aircraft-pilots-njasap",
-      "name": "Netjets Association of Shared Aircraft Pilots (Njasap)",
+      "name": "NetJets Association of Shared Aircraft Pilots (NJASAP)",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -311361,7 +311361,7 @@
     },
     {
       "id": "basf",
-      "name": "Basf Corp",
+      "name": "BASF Corp",
       "sector": "Transportation",
       "industry": "Railroads",
       "classifiedBy": "lobbying",
@@ -325282,7 +325282,7 @@
     },
     {
       "id": "us-oncology-network",
-      "name": "Mckesson Corpation and Its Affiliate Us Oncology (Formerly Us Oncology)",
+      "name": "McKesson Corpation and Its Affiliate US Oncology (Formerly US Oncology)",
       "sector": "Health",
       "industry": "Medicare/Medicaid",
       "classifiedBy": "name",
@@ -337178,7 +337178,7 @@
     },
     {
       "id": "pg-and-e",
-      "name": "Pg&E Corporation",
+      "name": "PG&E Corporation",
       "sector": "Energy & Natural Resources",
       "industry": "Electric & Other Services Combined",
       "classifiedBy": "sec",
@@ -339835,7 +339835,7 @@
     },
     {
       "id": "clf-c00504530",
-      "name": "Clf",
+      "name": "CLF",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -344438,7 +344438,7 @@
     },
     {
       "id": "dccc-c00000935",
-      "name": "Dccc",
+      "name": "DCCC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -345623,7 +345623,7 @@
     },
     {
       "id": "iheartmedia",
-      "name": "Iheartmedia Inc",
+      "name": "iHeartMedia Inc",
       "sector": "Communications & Technology",
       "industry": "Radio Broadcasting Stations",
       "classifiedBy": "sec",
@@ -353007,7 +353007,7 @@
     },
     {
       "id": "bwx-technologies",
-      "name": "Bwx Technologies",
+      "name": "BWX Technologies",
       "sector": "Misc Business",
       "industry": "Engines & Turbines",
       "classifiedBy": "sec",
@@ -355471,7 +355471,7 @@
     },
     {
       "id": "mcdonalds",
-      "name": "Mcdonalds Corp",
+      "name": "McDonalds Corp",
       "sector": "Misc Business",
       "industry": "Retail-Eating  Places",
       "classifiedBy": "sec",
@@ -360404,7 +360404,7 @@
     },
     {
       "id": "science-applications-international",
-      "name": "Science Applications International Corporation (Saic)",
+      "name": "Science Applications International Corporation (SAIC)",
       "sector": "Communications & Technology",
       "industry": "Services-Computer Integrated Systems Design",
       "classifiedBy": "sec",
@@ -364386,7 +364386,7 @@
     },
     {
       "id": "chc-bold-c00365536",
-      "name": "Chc Bold PAC",
+      "name": "CHC Bold PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -365399,7 +365399,7 @@
     },
     {
       "id": "mvl-c00817338",
-      "name": "Mvl PAC",
+      "name": "MVL PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -368408,7 +368408,7 @@
     },
     {
       "id": "burns-and-mcdonnell",
-      "name": "Burns & Mcdonnell, Inc.",
+      "name": "Burns & McDonnell, Inc.",
       "sector": "Construction",
       "classifiedBy": "override",
       "industry": "Engineering & construction",
@@ -370894,7 +370894,7 @@
     },
     {
       "id": "hmp-c00495028",
-      "name": "Hmp",
+      "name": "HMP",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -375269,7 +375269,7 @@
     },
     {
       "id": "marsh-and-mclennan",
-      "name": "Marsh & Mclennan Inc",
+      "name": "Marsh & McLennan Inc",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Insurance Agents, Brokers & Service",
       "classifiedBy": "sec",
@@ -378086,7 +378086,7 @@
     },
     {
       "id": "hdr",
-      "name": "Hdr Inc",
+      "name": "HDR Inc",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -383692,7 +383692,7 @@
     },
     {
       "id": "hca-healthcare",
-      "name": "Hca Healthcare",
+      "name": "HCA Healthcare",
       "sector": "Health",
       "industry": "Services-General Medical & Surgical Hospitals, NEC",
       "classifiedBy": "sec",
@@ -387382,7 +387382,7 @@
     },
     {
       "id": "mckesson",
-      "name": "Mckesson Corporation",
+      "name": "McKesson Corporation",
       "sector": "Health",
       "industry": "Wholesale-Drugs, Proprietaries & Druggists' Sundries",
       "classifiedBy": "sec",
@@ -397586,7 +397586,7 @@
     },
     {
       "id": "dscc-c00042366",
-      "name": "Dscc",
+      "name": "DSCC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -398312,7 +398312,7 @@
     },
     {
       "id": "mcguirewoods",
-      "name": "Mcguirewoods LLP",
+      "name": "McGuirewoods LLP",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm",
       "classifiedBy": "lobbying",
@@ -404192,7 +404192,7 @@
     },
     {
       "id": "ppl",
-      "name": "Ppl Corp",
+      "name": "PPL Corp",
       "sector": "Energy & Natural Resources",
       "industry": "Electric Services",
       "classifiedBy": "sec",
@@ -407373,7 +407373,7 @@
     },
     {
       "id": "american-occupational-therapy-association",
-      "name": "The American Occupational Therapy Association, Inc. (Aota)",
+      "name": "The American Occupational Therapy Association, Inc. (AOTA)",
       "sector": "Health",
       "industry": "Medicare/Medicaid",
       "classifiedBy": "lobbying",
@@ -410109,7 +410109,7 @@
     },
     {
       "id": "chs",
-      "name": "Chs, Inc",
+      "name": "CHS, Inc",
       "sector": "Misc Business",
       "industry": "Wholesale-Farm Product Raw Materials",
       "classifiedBy": "sec",
@@ -416699,7 +416699,7 @@
     },
     {
       "id": "us-travel-association",
-      "name": "Us Travel Association (Formerly Travel Business Roundtable)",
+      "name": "US Travel Association (Formerly Travel Business Roundtable)",
       "sector": "Misc Business",
       "industry": "Travel/Tourism",
       "classifiedBy": "name",
@@ -427292,7 +427292,7 @@
     },
     {
       "id": "united-states-peanut-c00502807",
-      "name": "United States Peanut Political Action Committee (Us Peanut PAC)",
+      "name": "United States Peanut Political Action Committee (US Peanut PAC)",
       "sector": "Agribusiness",
       "classifiedBy": "name",
       "committees": [
@@ -427613,7 +427613,7 @@
     },
     {
       "id": "lkq",
-      "name": "Lkq Corporation",
+      "name": "LKQ Corporation",
       "sector": "Misc Business",
       "industry": "Wholesale-Motor Vehicles & Motor Vehicle Parts & Supplies",
       "classifiedBy": "sec",
@@ -428290,7 +428290,7 @@
     },
     {
       "id": "cmr-c00469429",
-      "name": "Cmr Political Action Committee",
+      "name": "CMR Political Action Committee",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -429094,7 +429094,7 @@
     },
     {
       "id": "sanofi-us-services",
-      "name": "Sanofi Us Services Inc (Formerly Known As Sanofi-Aventis U S Inc )",
+      "name": "Sanofi US Services Inc (Formerly Known As Sanofi-Aventis U S Inc )",
       "sector": "Health",
       "industry": "Pharmacy",
       "classifiedBy": "lobbying",
@@ -431207,7 +431207,7 @@
     },
     {
       "id": "leonardo-drs",
-      "name": "Leonardo Drs Inc",
+      "name": "Leonardo DRS Inc",
       "sector": "Defense",
       "industry": "Search, Detection, Navigation, Guidance, Aeronautical Sys",
       "classifiedBy": "sec",
@@ -432023,7 +432023,7 @@
     },
     {
       "id": "alzheimers-impact-movement",
-      "name": "Alzheimers Impact Movement (Aim)",
+      "name": "Alzheimers Impact Movement (AIM)",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -451710,7 +451710,7 @@
     },
     {
       "id": "bayer-us",
-      "name": "Bayer Us LLC",
+      "name": "Bayer US LLC",
       "sector": "Agribusiness",
       "industry": "Agriculture",
       "classifiedBy": "lobbying",
@@ -453382,7 +453382,7 @@
     },
     {
       "id": "nrcc-c00075820",
-      "name": "Nrcc",
+      "name": "NRCC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -465476,7 +465476,7 @@
     },
     {
       "id": "supporting-house-problem-solvers-shp-c00563601",
-      "name": "Supporting House Problem Solvers - Shp PAC",
+      "name": "Supporting House Problem Solvers - SHP PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -469112,7 +469112,7 @@
     },
     {
       "id": "ge-healthcare-technologies",
-      "name": "Ge Healthcare Technologies Inc.",
+      "name": "GE Healthcare Technologies Inc.",
       "sector": "Health",
       "industry": "X-Ray Apparatus & Tubes & Related Irradiation Apparatus",
       "classifiedBy": "sec",
@@ -469657,7 +469657,7 @@
     },
     {
       "id": "aes",
-      "name": "Aes",
+      "name": "AES",
       "sector": "Energy & Natural Resources",
       "industry": "Cogeneration Services & Small Power Producers",
       "classifiedBy": "sec",
@@ -473036,7 +473036,7 @@
     },
     {
       "id": "american-psychological-association-services",
-      "name": "American Psychological Association Services Inc (Formerly Apapo)",
+      "name": "American Psychological Association Services Inc (Formerly APAPO)",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "name",
@@ -476152,7 +476152,7 @@
     },
     {
       "id": "arkansas-for-leadership-c00413948",
-      "name": "Arkansas for Leadership Political Action Committee (Arkpac)",
+      "name": "Arkansas for Leadership Political Action Committee (ARKPAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -487438,7 +487438,7 @@
     },
     {
       "id": "responsibility-and-freedom-work-c00368696",
-      "name": "Responsibility and Freedom Work PAC (Rfwpac)",
+      "name": "Responsibility and Freedom Work PAC (RFWPAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -487671,7 +487671,7 @@
     },
     {
       "id": "healthcare-distribution-alliance",
-      "name": "Healthcare Distribution Alliance (Formerly - Hdma)",
+      "name": "Healthcare Distribution Alliance (Formerly - HDMA)",
       "sector": "Health",
       "industry": "Pharmacy",
       "classifiedBy": "name",
@@ -495025,7 +495025,7 @@
     },
     {
       "id": "chs-community-health-systems-cmte",
-      "name": "Chs Community Health Systems Cmte",
+      "name": "CHS Community Health Systems Cmte",
       "sector": "Health",
       "classifiedBy": "name",
       "committees": [
@@ -495759,7 +495759,7 @@
     },
     {
       "id": "maynard-nexsen",
-      "name": "Maynard Nexsen Pc",
+      "name": "Maynard Nexsen PC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm",
       "classifiedBy": "lobbying",
@@ -499044,7 +499044,7 @@
     },
     {
       "id": "barclays-us",
-      "name": "Barclays Plc and Its Us Affiliates",
+      "name": "Barclays PLC and Its US Affiliates",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Banking",
       "classifiedBy": "lobbying",
@@ -506700,7 +506700,7 @@
     },
     {
       "id": "glaxosmithkline",
-      "name": "Glaxosmithkline",
+      "name": "GlaxoSmithKline",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -507332,7 +507332,7 @@
     },
     {
       "id": "hf-sinclair",
-      "name": "Hf Sinclair Corporation",
+      "name": "HF Sinclair Corporation",
       "sector": "Transportation",
       "industry": "Pipe Lines (No Natural Gas)",
       "classifiedBy": "sec",
@@ -526569,7 +526569,7 @@
     },
     {
       "id": "hall-render-killian-heath-and-lyman",
-      "name": "Hall Render Killian Heath and Lyman, Pc",
+      "name": "Hall Render Killian Heath and Lyman, PC",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -529845,7 +529845,7 @@
     },
     {
       "id": "plains-all-american-gp",
-      "name": "Plains All American Gp LLC",
+      "name": "Plains All American GP LLC",
       "sector": "Energy & Natural Resources",
       "industry": "Environment/Superfund",
       "classifiedBy": "lobbying",
@@ -537898,7 +537898,7 @@
     },
     {
       "id": "lifepoint-corporate-services-general-partnership-and-facilities-which-are-subsidiaries-of-lifepoint-health",
-      "name": "Lifepoint Corporate Services, General Partnership (Lcsgp) and Facilities Which Are Subsidiaries of Lifepoint Health (Collectively Lifepoint)",
+      "name": "Lifepoint Corporate Services, General Partnership (LCSGP) and Facilities Which Are Subsidiaries of Lifepoint Health (Collectively Lifepoint)",
       "sector": "Health",
       "classifiedBy": "name",
       "committees": [
@@ -570502,7 +570502,7 @@
     },
     {
       "id": "cms-energy",
-      "name": "Cms Energy Corp",
+      "name": "CMS Energy Corp",
       "sector": "Energy & Natural Resources",
       "industry": "Electric & Other Services Combined",
       "classifiedBy": "sec",
@@ -571510,7 +571510,7 @@
     },
     {
       "id": "astellas-us",
-      "name": "Astellas Pharma Us",
+      "name": "Astellas Pharma US",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -572779,7 +572779,7 @@
     },
     {
       "id": "vpp-c00692319",
-      "name": "Vpp",
+      "name": "VPP",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -573084,7 +573084,7 @@
     },
     {
       "id": "fgs-global",
-      "name": "Fgs Global (Us) LLC (Fka Fgh Holdings LLC)",
+      "name": "FGS Global (US) LLC (Fka FGH Holdings LLC)",
       "sector": "Lawyers & Lobbyists",
       "industry": "Legislative and public affairs firm.",
       "classifiedBy": "lobbying",
@@ -574486,7 +574486,7 @@
     },
     {
       "id": "ebay",
-      "name": "Ebay",
+      "name": "eBay",
       "sector": "Misc Business",
       "industry": "Services-Business Services, NEC",
       "classifiedBy": "sec",
@@ -579140,7 +579140,7 @@
     },
     {
       "id": "dykema-gossett-pllc",
-      "name": "Dykema Gossett Pllc (on Behalf of the Robert Bosch Corporation)",
+      "name": "Dykema Gossett PLLC (on Behalf of the Robert Bosch Corporation)",
       "sector": "Energy & Natural Resources",
       "industry": "Energy/Nuclear",
       "classifiedBy": "lobbying",
@@ -584042,7 +584042,7 @@
     },
     {
       "id": "sd-c00757419",
-      "name": "Sd PAC",
+      "name": "SD PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -584653,7 +584653,7 @@
     },
     {
       "id": "dla-piper",
-      "name": "Dla Piper LLP (Us) (for the Medicines Company)",
+      "name": "DLA Piper LLP (US) (for the Medicines Company)",
       "sector": "Communications & Technology",
       "industry": "Copyright/Patent/Trademark",
       "classifiedBy": "lobbying",
@@ -588913,7 +588913,7 @@
     },
     {
       "id": "hms-scrap-c00746735",
-      "name": "Hms Scrap PAC",
+      "name": "HMS Scrap PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -597440,7 +597440,7 @@
     },
     {
       "id": "jbs-usa-food",
-      "name": "Jbs USA Food Company Holdings (Previously Registered As Jbs USA Food Company)",
+      "name": "JBS USA Food Company Holdings (Previously Registered As JBS USA Food Company)",
       "sector": "Agribusiness",
       "industry": "Food Industry (safety, labeling, etc.)",
       "classifiedBy": "name",
@@ -597819,7 +597819,7 @@
     },
     {
       "id": "hsbc-technology-and-services-usa",
-      "name": "Hsbc Technology and Services USA Inc.",
+      "name": "HSBC Technology and Services USA Inc.",
       "sector": "Communications & Technology",
       "industry": "Computer Industry",
       "classifiedBy": "name",
@@ -598230,7 +598230,7 @@
     },
     {
       "id": "dentons-us",
-      "name": "Dentons Us LLP",
+      "name": "Dentons US LLP",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm",
       "classifiedBy": "lobbying",
@@ -599120,7 +599120,7 @@
     },
     {
       "id": "mgm-resorts-international",
-      "name": "Mgm Resorts International",
+      "name": "MGM Resorts International",
       "sector": "Misc Business",
       "industry": "Hotels & Motels",
       "classifiedBy": "sec",
@@ -600778,7 +600778,7 @@
     },
     {
       "id": "wsp-usa",
-      "name": "Wsp USA (Fka As Parsons Brinckerhoff, Inc.)",
+      "name": "WSP USA (Fka As Parsons Brinckerhoff, Inc.)",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -602246,7 +602246,7 @@
     },
     {
       "id": "jm-family-enterprises",
-      "name": "Jm Family Enterprises Inc",
+      "name": "JM Family Enterprises Inc",
       "sector": "Transportation",
       "industry": "Automotive Industry",
       "classifiedBy": "lobbying",
@@ -606391,7 +606391,7 @@
     },
     {
       "id": "ttm-technologies",
-      "name": "Ttm Technologies, Inc.",
+      "name": "TTM Technologies, Inc.",
       "sector": "Communications & Technology",
       "industry": "Printed Circuit Boards",
       "classifiedBy": "sec",
@@ -614245,7 +614245,7 @@
     },
     {
       "id": "fs-c00559302",
-      "name": "Fs PAC",
+      "name": "FS PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -614458,7 +614458,7 @@
     },
     {
       "id": "democrats-win-seats-c00425470",
-      "name": "Democrats Win Seats (Dws PAC)",
+      "name": "Democrats Win Seats (DWS PAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -615180,7 +615180,7 @@
     },
     {
       "id": "bnsf-railway-railpac",
-      "name": "Netjets",
+      "name": "NetJets",
       "sector": "Transportation",
       "industry": "Aviation/Airlines/Airports",
       "classifiedBy": "name",
@@ -615902,7 +615902,7 @@
     },
     {
       "id": "serving-our-country-c00656132",
-      "name": "Serving Our Country (Soc) PAC",
+      "name": "Serving Our Country (SOC) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -622646,7 +622646,7 @@
     },
     {
       "id": "hntb",
-      "name": "Hntb Companies (the)",
+      "name": "HNTB Companies (the)",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -625634,7 +625634,7 @@
     },
     {
       "id": "heidelberg-materials-us",
-      "name": "Heidelberg Materials, Us, Inc., (Formerly Lehigh Hanson, Inc.)",
+      "name": "Heidelberg Materials, US, Inc., (Formerly Lehigh Hanson, Inc.)",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -627531,7 +627531,7 @@
     },
     {
       "id": "sc-johnson-and-son",
-      "name": "Johnson & Son Sc",
+      "name": "Johnson & Son SC",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -630606,7 +630606,7 @@
     },
     {
       "id": "ptc-therapeutics",
-      "name": "Ptc Therapeutics Inc.",
+      "name": "PTC Therapeutics Inc.",
       "sector": "Health",
       "industry": "Pharmaceutical Preparations",
       "classifiedBy": "sec",
@@ -632586,7 +632586,7 @@
     },
     {
       "id": "rbc-usa-holdco",
-      "name": "Rbc Capital Markets, LLC",
+      "name": "RBC Capital Markets, LLC",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Banking",
       "classifiedBy": "lobbying",
@@ -634834,7 +634834,7 @@
     },
     {
       "id": "s-and-p-global",
-      "name": "S&P Global Inc. (F/K/a Mcgraw Hill Financial Inc.)",
+      "name": "S&P Global Inc. (F/K/a McGraw Hill Financial Inc.)",
       "sector": "Misc Business",
       "industry": "Services-Consumer Credit Reporting, Collection Agencies",
       "classifiedBy": "sec",
@@ -636643,7 +636643,7 @@
     },
     {
       "id": "nutrien-ag-solutions",
-      "name": "Nutrien Us LLC (Formerly Known As Agrium U.S. Inc.) (a Nutrien Ltd Subsidiary)",
+      "name": "Nutrien US LLC (Formerly Known As Agrium U.S. Inc.) (a Nutrien Ltd Subsidiary)",
       "sector": "Agribusiness",
       "industry": "Agriculture",
       "classifiedBy": "lobbying",
@@ -652698,7 +652698,7 @@
     },
     {
       "id": "office-and-professional-international-union-jb-moss-voice-of-electorate",
-      "name": "Office and Professional International Union Jb Moss Voice of Electorate",
+      "name": "Office and Professional International Union JB Moss Voice of Electorate",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -654586,7 +654586,7 @@
     },
     {
       "id": "arentfox-schiff-civic-participation-c00241380",
-      "name": "Arentfox Schiff Civic Participation Fund (Afspac)",
+      "name": "Arentfox Schiff Civic Participation Fund (AFSPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -659598,7 +659598,7 @@
     },
     {
       "id": "vsp",
-      "name": "Vsp",
+      "name": "VSP",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -660042,7 +660042,7 @@
     },
     {
       "id": "cgcn",
-      "name": "Cgcn Group, LLC",
+      "name": "CGCN Group, LLC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Public Affairs Consultants",
       "classifiedBy": "lobbying",
@@ -668773,7 +668773,7 @@
     },
     {
       "id": "tkj-c00784694",
-      "name": "Tkj PAC",
+      "name": "TKJ PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -672877,7 +672877,7 @@
     },
     {
       "id": "us-renal-care",
-      "name": "Us Renal Care",
+      "name": "US Renal Care",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -681723,7 +681723,7 @@
     },
     {
       "id": "polsinelli",
-      "name": "Polsinelli Pc",
+      "name": "Polsinelli PC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm",
       "classifiedBy": "lobbying",
@@ -686131,7 +686131,7 @@
     },
     {
       "id": "american-academy-of-emergency-medicine-aaem",
-      "name": "American Academy of Emergency Medicine (Aaem)",
+      "name": "American Academy of Emergency Medicine (AAEM)",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "name",
@@ -693976,7 +693976,7 @@
     },
     {
       "id": "national-association-of-farm-service-agency-county-office",
-      "name": "National Association of Farm Service Agency County Office Employees (Nascoe)",
+      "name": "National Association of Farm Service Agency County Office Employees (NASCOE)",
       "sector": "Agribusiness",
       "industry": "Agriculture",
       "classifiedBy": "name",
@@ -695106,7 +695106,7 @@
     },
     {
       "id": "nrg-energy",
-      "name": "Nrg Energy",
+      "name": "NRG Energy",
       "sector": "Energy & Natural Resources",
       "industry": "Electric Services",
       "classifiedBy": "sec",
@@ -701841,7 +701841,7 @@
     },
     {
       "id": "freeport-mcmoran",
-      "name": "Freeport-Mcmoran Inc.",
+      "name": "Freeport-McMoran Inc.",
       "sector": "Energy & Natural Resources",
       "industry": "Metal Mining",
       "classifiedBy": "sec",
@@ -709831,7 +709831,7 @@
     },
     {
       "id": "gw-c00333427",
-      "name": "Gw PAC",
+      "name": "GW PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -719304,7 +719304,7 @@
     },
     {
       "id": "bgr",
-      "name": "Bgr Holdings, LLC",
+      "name": "BGR Holdings, LLC",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -727426,7 +727426,7 @@
     },
     {
       "id": "nrdc-action",
-      "name": "Nrdc Action Fund, Inc.",
+      "name": "NRDC Action Fund, Inc.",
       "sector": "Energy & Natural Resources",
       "industry": "Environment/Superfund",
       "classifiedBy": "lobbying",
@@ -730803,7 +730803,7 @@
     },
     {
       "id": "mckinsey-and-united-states",
-      "name": "Mckinsey and United States",
+      "name": "McKinsey and United States",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -733115,7 +733115,7 @@
     },
     {
       "id": "delivering-american-values-in-dc-c00635219",
-      "name": "Delivering American Values in Dc PAC",
+      "name": "Delivering American Values in DC PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -735818,7 +735818,7 @@
     },
     {
       "id": "enterprise-products-partners",
-      "name": "Enterprise Products Partners Lp (Formerly Known As Enterprise Products Company O",
+      "name": "Enterprise Products Partners LP (Formerly Known As Enterprise Products Company O",
       "sector": "Energy & Natural Resources",
       "industry": "Natural Gas Transmission",
       "classifiedBy": "sec",
@@ -736076,7 +736076,7 @@
     },
     {
       "id": "elanco-us",
-      "name": "Elanco Us Inc",
+      "name": "Elanco US Inc",
       "sector": "Agribusiness",
       "industry": "Animals",
       "classifiedBy": "lobbying",
@@ -739039,7 +739039,7 @@
     },
     {
       "id": "doordash",
-      "name": "Doordash",
+      "name": "DoorDash",
       "sector": "Misc Business",
       "industry": "Services-Business Services, NEC",
       "classifiedBy": "sec",
@@ -739923,7 +739923,7 @@
     },
     {
       "id": "ppg-industries",
-      "name": "Ppg Industries, Inc",
+      "name": "PPG Industries, Inc",
       "sector": "Misc Business",
       "industry": "Paints, Varnishes, Lacquers, Enamels & Allied Prods",
       "classifiedBy": "sec",
@@ -740255,7 +740255,7 @@
     },
     {
       "id": "bp-north-america",
-      "name": "Bp Corporation North America Inc.",
+      "name": "BP Corporation North America Inc.",
       "sector": "Ideological & Single-Issue",
       "industry": "Foreign Relations",
       "classifiedBy": "lobbying",
@@ -748058,7 +748058,7 @@
     },
     {
       "id": "broker-action-coalition-c00820712",
-      "name": "Broker Action Coalition PAC (Bacpac)",
+      "name": "Broker Action Coalition PAC (BACPAC)",
       "sector": "Energy & Natural Resources",
       "classifiedBy": "name",
       "committees": [
@@ -749061,7 +749061,7 @@
     },
     {
       "id": "lhc",
-      "name": "Lhc Group (Louisiana Health Care Group)",
+      "name": "LHC Group (Louisiana Health Care Group)",
       "sector": "Health",
       "industry": "Medicare/Medicaid",
       "classifiedBy": "lobbying",
@@ -759787,7 +759787,7 @@
     },
     {
       "id": "conservative-service-action-results-c00880724",
-      "name": "Conservative Service Action Results (Csar) PAC",
+      "name": "Conservative Service Action Results (CSAR) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -763943,7 +763943,7 @@
     },
     {
       "id": "american-homes-4-rent",
-      "name": "American Homes 4 Rent Trs",
+      "name": "American Homes 4 Rent TRS",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Real Estate Investment Trusts",
       "classifiedBy": "sec",
@@ -770046,7 +770046,7 @@
     },
     {
       "id": "people-in-rural-areas-transform-elections-c00854430",
-      "name": "People in Rural Areas Transform Elections (Pirate) PAC",
+      "name": "People in Rural Areas Transform Elections (PIRATE) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -771192,7 +771192,7 @@
     },
     {
       "id": "csl-behring",
-      "name": "Csl Behring LLC (Formerly Zlb Behring)",
+      "name": "CSL Behring LLC (Formerly ZLB Behring)",
       "sector": "Health",
       "industry": "Medicare/Medicaid",
       "classifiedBy": "lobbying",
@@ -771429,7 +771429,7 @@
     },
     {
       "id": "lgbtq-victory-c00476978",
-      "name": "Lgbtq Victory Fund Federal PAC",
+      "name": "LGBTQ Victory Fund Federal PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -774036,7 +774036,7 @@
     },
     {
       "id": "john-mcguire-for-virginia-c00793505",
-      "name": "John Mcguire for Virginia",
+      "name": "John McGuire for Virginia",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -775714,7 +775714,7 @@
     },
     {
       "id": "kevin-mccarthy-for-congress-c00420935",
-      "name": "Kevin Mccarthy for Congress",
+      "name": "Kevin McCarthy for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -779397,7 +779397,7 @@
     },
     {
       "id": "kbr",
-      "name": "Kbr, Inc.",
+      "name": "KBR, Inc.",
       "sector": "Construction",
       "industry": "Heavy Construction Other Than Bldg Const - Contractors",
       "classifiedBy": "sec",
@@ -779954,7 +779954,7 @@
     },
     {
       "id": "guarding-our-lasting-democracy-c00881268",
-      "name": "Guarding Our Lasting Democracy (Gold) PAC",
+      "name": "Guarding Our Lasting Democracy (GOLD) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -782602,7 +782602,7 @@
     },
     {
       "id": "slm",
-      "name": "Slm Holding Corp",
+      "name": "SLM Holding Corp",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Personal Credit Institutions",
       "classifiedBy": "sec",
@@ -788566,7 +788566,7 @@
     },
     {
       "id": "security-finance-of-spartanburg",
-      "name": "Security Finance Corporation of Spartanburg, Sc",
+      "name": "Security Finance Corporation of Spartanburg, SC",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "classifiedBy": "name",
@@ -791445,7 +791445,7 @@
     },
     {
       "id": "bbva-of-pnc-financial-services",
-      "name": "Bbva of Pnc Financial Services",
+      "name": "Bbva of PNC Financial Services",
       "sector": "Finance, Insurance & Real Estate",
       "classifiedBy": "name",
       "committees": [
@@ -793950,7 +793950,7 @@
     },
     {
       "id": "us-venture",
-      "name": "Us Venture Inc.",
+      "name": "US Venture Inc.",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -795459,7 +795459,7 @@
     },
     {
       "id": "cng",
-      "name": "Cng",
+      "name": "CNG",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -805185,7 +805185,7 @@
     },
     {
       "id": "getting-stuff-done-c00571182",
-      "name": "Getting Stuff Done PAC (Gsd-PAC)",
+      "name": "Getting Stuff Done PAC (GSD-PAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -805506,7 +805506,7 @@
     },
     {
       "id": "mid-continent",
-      "name": "Us Oil & Gas Association",
+      "name": "US Oil & Gas Association",
       "sector": "Energy & Natural Resources",
       "industry": "Energy/Nuclear",
       "classifiedBy": "lobbying",
@@ -809314,7 +809314,7 @@
     },
     {
       "id": "boardwalk-gp-public-affairs",
-      "name": "Boardwalk Gp Public Affairs",
+      "name": "Boardwalk GP Public Affairs",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -809419,7 +809419,7 @@
     },
     {
       "id": "ge-vernova",
-      "name": "Ge Vernova International LLC",
+      "name": "GE Vernova International LLC",
       "sector": "Communications & Technology",
       "industry": "Electronic & Other Electrical Equipment (No Computer Equip)",
       "classifiedBy": "sec",
@@ -814686,7 +814686,7 @@
     },
     {
       "id": "jaime-harrison-for-us-senate-c00696153",
-      "name": "Jaime Harrison for Us Senate",
+      "name": "Jaime Harrison for US Senate",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -814878,7 +814878,7 @@
     },
     {
       "id": "optiver-americas",
-      "name": "Optiver Services Us LLC",
+      "name": "Optiver Services US LLC",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "classifiedBy": "lobbying",
@@ -819886,7 +819886,7 @@
     },
     {
       "id": "cgb-enterprises",
-      "name": "Cgb Enterprises, Inc.",
+      "name": "CGB Enterprises, Inc.",
       "sector": "Agribusiness",
       "industry": "Agriculture",
       "classifiedBy": "lobbying",
@@ -822709,7 +822709,7 @@
     },
     {
       "id": "vgm",
-      "name": "Vgm Group, Inc.",
+      "name": "VGM Group, Inc.",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -824567,7 +824567,7 @@
     },
     {
       "id": "nv-energy",
-      "name": "Nv Energy",
+      "name": "NV Energy",
       "sector": "Energy & Natural Resources",
       "industry": "Energy/Nuclear",
       "classifiedBy": "name",
@@ -828579,7 +828579,7 @@
     },
     {
       "id": "lisa-mcclain-for-congress-c00726042",
-      "name": "Lisa Mcclain for Congress",
+      "name": "Lisa McClain for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -833155,7 +833155,7 @@
     },
     {
       "id": "delek-us",
-      "name": "Delek Us Holdings, Inc.",
+      "name": "Delek US Holdings, Inc.",
       "sector": "Energy & Natural Resources",
       "industry": "Petroleum Refining",
       "classifiedBy": "sec",
@@ -833646,7 +833646,7 @@
     },
     {
       "id": "morgan-mcgarvey-for-congress-c00791392",
-      "name": "Morgan Mcgarvey for Congress",
+      "name": "Morgan McGarvey for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -834473,7 +834473,7 @@
     },
     {
       "id": "williams-and-jensen-pllc",
-      "name": "Williams and Jensen, Pllc",
+      "name": "Williams and Jensen, PLLC",
       "sector": "Defense",
       "industry": "Defense",
       "classifiedBy": "lobbying",
@@ -835260,7 +835260,7 @@
     },
     {
       "id": "haleon-us",
-      "name": "Haleon Us Holdings LLC",
+      "name": "Haleon US Holdings LLC",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -835912,7 +835912,7 @@
     },
     {
       "id": "us-campaign-c00575662",
-      "name": "The Us Campaign Fund",
+      "name": "The US Campaign Fund",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -840155,7 +840155,7 @@
     },
     {
       "id": "gsl-c00820019",
-      "name": "Gsl PAC",
+      "name": "GSL PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -843415,7 +843415,7 @@
     },
     {
       "id": "buchanan-ingersoll-and-rooney",
-      "name": "Buchanan Ingersoll & Rooney Pc",
+      "name": "Buchanan Ingersoll & Rooney PC",
       "sector": "Lawyers & Lobbyists",
       "industry": "law firm",
       "classifiedBy": "lobbying",
@@ -846290,7 +846290,7 @@
     },
     {
       "id": "united-states-beet-sugar-association",
-      "name": "U.S. Beet Sugar Association (Usbsa)",
+      "name": "U.S. Beet Sugar Association (USBSA)",
       "sector": "Agribusiness",
       "industry": "Agriculture",
       "classifiedBy": "name",
@@ -849889,7 +849889,7 @@
     },
     {
       "id": "christopher-street-project-c00893461",
-      "name": "Christopher Street Project PAC (Csp PAC)",
+      "name": "Christopher Street Project PAC (CSP PAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -850451,7 +850451,7 @@
     },
     {
       "id": "ch-robinson-worldwide",
-      "name": "Ch Robinson Worldwide",
+      "name": "CH Robinson Worldwide",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -850520,7 +850520,7 @@
     },
     {
       "id": "fmc",
-      "name": "Fmc Corp",
+      "name": "FMC Corp",
       "sector": "Misc Business",
       "industry": "Chemicals & Allied Products",
       "classifiedBy": "sec",
@@ -852735,7 +852735,7 @@
     },
     {
       "id": "ses-americom",
-      "name": "Intelsat Us LLC",
+      "name": "Intelsat US LLC",
       "sector": "Communications & Technology",
       "industry": "Telecommunications",
       "classifiedBy": "lobbying",
@@ -853637,7 +853637,7 @@
     },
     {
       "id": "bose-public-affairs-bose-mckinney-and-evans-c00615690",
-      "name": "Bose Public Affairs Group LLC/Bose Mckinney & Evans LLP PAC",
+      "name": "Bose Public Affairs Group LLC/Bose McKinney & Evans LLP PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -854190,7 +854190,7 @@
     },
     {
       "id": "lumexa-imaging",
-      "name": "Lumexa Imaging, Inc. (Fka Us Radiology Specialists)",
+      "name": "Lumexa Imaging, Inc. (Fka US Radiology Specialists)",
       "sector": "Health",
       "industry": "Services-Medical Laboratories",
       "classifiedBy": "sec",
@@ -856956,7 +856956,7 @@
     },
     {
       "id": "us-apple-association",
-      "name": "Us Apple Association",
+      "name": "US Apple Association",
       "sector": "Agribusiness",
       "industry": "Agriculture",
       "classifiedBy": "lobbying",
@@ -859735,7 +859735,7 @@
     },
     {
       "id": "cnx-resources",
-      "name": "Cnx Resources Corporation",
+      "name": "CNX Resources Corporation",
       "sector": "Energy & Natural Resources",
       "industry": "Crude Petroleum & Natural Gas",
       "classifiedBy": "sec",
@@ -862083,7 +862083,7 @@
     },
     {
       "id": "rv-industry-association",
-      "name": "Rv Industry Association",
+      "name": "RV Industry Association",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -865653,7 +865653,7 @@
     },
     {
       "id": "fc-compassus",
-      "name": "Fc Compassus, LLC",
+      "name": "FC Compassus, LLC",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -866151,7 +866151,7 @@
     },
     {
       "id": "qc",
-      "name": "Qc Holdings, Inc.",
+      "name": "QC Holdings, Inc.",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -868807,7 +868807,7 @@
     },
     {
       "id": "turkish-coaliton-usa-c00432526",
-      "name": "Turkish Coaliton USA PAC (Tc-USA PAC)",
+      "name": "Turkish Coaliton USA PAC (TC-USA PAC)",
       "sector": "Energy & Natural Resources",
       "classifiedBy": "name",
       "committees": [
@@ -871818,7 +871818,7 @@
     },
     {
       "id": "mcdermott",
-      "name": "Mcdermott Inc",
+      "name": "McDermott Inc",
       "sector": "Defense",
       "industry": "Defense",
       "classifiedBy": "lobbying",
@@ -872463,7 +872463,7 @@
     },
     {
       "id": "national-tooling-and-machining-assoc",
-      "name": "National Tooling & Machining Assoc. (Ntma)",
+      "name": "National Tooling & Machining Assoc. (NTMA)",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -872883,7 +872883,7 @@
     },
     {
       "id": "van-ness-feldman",
-      "name": "Van Ness Feldman Pc",
+      "name": "Van Ness Feldman PC",
       "sector": "Energy & Natural Resources",
       "industry": "Energy/Nuclear",
       "classifiedBy": "lobbying",
@@ -876339,7 +876339,7 @@
     },
     {
       "id": "anthropic-pbc",
-      "name": "Anthropic, Pbc",
+      "name": "Anthropic, PBC",
       "sector": "Communications & Technology",
       "industry": "Services-Prepackaged Software",
       "classifiedBy": "sec",
@@ -879759,7 +879759,7 @@
     },
     {
       "id": "public-service-of-nm",
-      "name": "Public Service Co of Nm",
+      "name": "Public Service Co of NM",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -880079,7 +880079,7 @@
     },
     {
       "id": "honeywell-aerospace",
-      "name": "Honeywell Aerospace Us Public Affairs Council",
+      "name": "Honeywell Aerospace US Public Affairs Council",
       "sector": "Defense",
       "industry": "Aircraft Engines & Engine Parts",
       "classifiedBy": "sec",
@@ -882997,7 +882997,7 @@
     },
     {
       "id": "stv",
-      "name": "Stv Group",
+      "name": "STV Group",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -887873,7 +887873,7 @@
     },
     {
       "id": "leaders-in-life-acting-cooperatively-c00714501",
-      "name": "Leaders in Life Acting Cooperatively (Lilac) PAC",
+      "name": "Leaders in Life Acting Cooperatively (LILAC) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -888039,7 +888039,7 @@
     },
     {
       "id": "mckenzie-river-c00848556",
-      "name": "Mckenzie River PAC",
+      "name": "McKenzie River PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -888641,7 +888641,7 @@
     },
     {
       "id": "ibew-local-103",
-      "name": "Ibew Local 103",
+      "name": "IBEW Local 103",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -889851,7 +889851,7 @@
     },
     {
       "id": "fueling-individual-rights-everywhere-c00829655",
-      "name": "Fueling Individual Rights Everywhere (Fire) PAC",
+      "name": "Fueling Individual Rights Everywhere (FIRE) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -892719,7 +892719,7 @@
     },
     {
       "id": "ttx",
-      "name": "Ttx Company",
+      "name": "TTX Company",
       "sector": "Transportation",
       "industry": "Railroads",
       "classifiedBy": "lobbying",
@@ -894361,7 +894361,7 @@
     },
     {
       "id": "hb-strategies",
-      "name": "Hb Strategies",
+      "name": "HB Strategies",
       "sector": "Lawyers & Lobbyists",
       "industry": "Government Affairs Consulting",
       "classifiedBy": "lobbying",
@@ -898699,7 +898699,7 @@
     },
     {
       "id": "nbt",
-      "name": "Nbt",
+      "name": "NBT",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -898819,7 +898819,7 @@
     },
     {
       "id": "fedorchak-for-nd-c00869370",
-      "name": "Fedorchak for Nd",
+      "name": "Fedorchak for ND",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -901326,7 +901326,7 @@
     },
     {
       "id": "local-98-ibew",
-      "name": "Local 98 Ibew",
+      "name": "Local 98 IBEW",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -908929,7 +908929,7 @@
     },
     {
       "id": "mcguire-for-virginia-c00856831",
-      "name": "Mcguire for Virginia",
+      "name": "McGuire for Virginia",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -909496,7 +909496,7 @@
     },
     {
       "id": "strengthening-american-republic-c00687020",
-      "name": "Strengthening the American Republic (Star) PAC",
+      "name": "Strengthening the American Republic (STAR) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -909577,7 +909577,7 @@
     },
     {
       "id": "pls-financial-services",
-      "name": "Pls Financial Services",
+      "name": "PLS Financial Services",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "classifiedBy": "name",
@@ -910061,7 +910061,7 @@
     },
     {
       "id": "vanteo",
-      "name": "Vanteo (Formerly Known As Bdv Solutions)",
+      "name": "Vanteo (Formerly Known As BDV Solutions)",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -910521,7 +910521,7 @@
     },
     {
       "id": "upstate-sc-c00703173",
-      "name": "Upstate Sc PAC",
+      "name": "Upstate SC PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -910955,7 +910955,7 @@
     },
     {
       "id": "mvp-health-care",
-      "name": "Mvp Health Care Inc.",
+      "name": "MVP Health Care Inc.",
       "sector": "Health",
       "classifiedBy": "name",
       "committees": [
@@ -911013,7 +911013,7 @@
     },
     {
       "id": "iowa-farm-bureau-federation-fb",
-      "name": "Iowa Farm Bureau Federation Fb",
+      "name": "Iowa Farm Bureau Federation FB",
       "sector": "Agribusiness",
       "classifiedBy": "name",
       "committees": [
@@ -911049,7 +911049,7 @@
     },
     {
       "id": "bfb-c00584805",
-      "name": "Bfb PAC",
+      "name": "BFB PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -912252,7 +912252,7 @@
     },
     {
       "id": "mj-for-texas-c00649350",
-      "name": "Mj for Texas",
+      "name": "MJ for Texas",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -912818,7 +912818,7 @@
     },
     {
       "id": "galaxy-digital",
-      "name": "Galaxy Digital Holdings Lp",
+      "name": "Galaxy Digital Holdings LP",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Security Brokers, Dealers & Flotation Companies",
       "classifiedBy": "sec",
@@ -916141,7 +916141,7 @@
     },
     {
       "id": "cjs-c00777391",
-      "name": "Cjs PAC",
+      "name": "CJS PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -918949,7 +918949,7 @@
     },
     {
       "id": "iuoe-operating-engineers",
-      "name": "Iuoe Operating Engineers",
+      "name": "IUOE Operating Engineers",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -919173,7 +919173,7 @@
     },
     {
       "id": "dscc-wi-victory-2022-c00822189",
-      "name": "Dscc Pa Wi Victory 2022",
+      "name": "DSCC Pa Wi Victory 2022",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -920138,7 +920138,7 @@
     },
     {
       "id": "seal-team-pt-c00856849",
-      "name": "Seal Team Pt PAC",
+      "name": "Seal Team PT PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -921757,7 +921757,7 @@
     },
     {
       "id": "leadership-in-saving-america-c00808139",
-      "name": "Leadership in Saving America (Lisa) PAC",
+      "name": "Leadership in Saving America (LISA) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -922559,7 +922559,7 @@
     },
     {
       "id": "friends-of-mccormick-c00706747",
-      "name": "Friends of Mccormick",
+      "name": "Friends of McCormick",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -922974,7 +922974,7 @@
     },
     {
       "id": "tcf-financial",
-      "name": "Tcf Financial Corp",
+      "name": "TCF Financial Corp",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Banking",
       "classifiedBy": "name",
@@ -926181,7 +926181,7 @@
     },
     {
       "id": "us-rice-producers-association",
-      "name": "Us Rice Producers Association",
+      "name": "US Rice Producers Association",
       "sector": "Agribusiness",
       "industry": "Agriculture",
       "classifiedBy": "name",
@@ -926745,7 +926745,7 @@
     },
     {
       "id": "gerdau-ameristeel-us",
-      "name": "Gerdau Ameristeel Us Inc.",
+      "name": "Gerdau Ameristeel US Inc.",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -930939,7 +930939,7 @@
     },
     {
       "id": "cf-industries",
-      "name": "Cf Industries Inc",
+      "name": "CF Industries Inc",
       "sector": "Misc Business",
       "industry": "Agricultural Chemicals",
       "classifiedBy": "sec",
@@ -934477,7 +934477,7 @@
     },
     {
       "id": "jackson-lewis",
-      "name": "Jackson Lewis Pc",
+      "name": "Jackson Lewis PC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm",
       "classifiedBy": "lobbying",
@@ -935492,7 +935492,7 @@
     },
     {
       "id": "gft-infrastructure",
-      "name": "Gft Infrastructure, Inc.",
+      "name": "GFT Infrastructure, Inc.",
       "sector": "Transportation",
       "industry": "Railroads",
       "classifiedBy": "lobbying",
@@ -936085,7 +936085,7 @@
     },
     {
       "id": "empower-clinic-services-empower-pharmacy",
-      "name": "Empower Clinic Services, LLC Dbd Empower Pharmacy",
+      "name": "Empower Clinic Services, LLC DBD Empower Pharmacy",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "name",
@@ -939019,7 +939019,7 @@
     },
     {
       "id": "wfw-action-c00698936",
-      "name": "Wfw Action Fund Inc",
+      "name": "WFW Action Fund Inc",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -939071,7 +939071,7 @@
     },
     {
       "id": "magellan-midstream-gp",
-      "name": "Magellan Midstream Gp",
+      "name": "Magellan Midstream GP",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -939805,7 +939805,7 @@
     },
     {
       "id": "essent-us",
-      "name": "Essent Us Holdings, Inc.",
+      "name": "Essent US Holdings, Inc.",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Housing",
       "classifiedBy": "lobbying",
@@ -940505,7 +940505,7 @@
     },
     {
       "id": "north-carolina-soybean-producers-association-nc-soypac",
-      "name": "North Carolina Soybean Producers Association Nc Soypac",
+      "name": "North Carolina Soybean Producers Association NC Soypac",
       "sector": "Agribusiness",
       "classifiedBy": "name",
       "committees": [
@@ -948236,7 +948236,7 @@
     },
     {
       "id": "rpm-international",
-      "name": "Rpm International Manufacturing in America Dba Rpm Manufacturing in America",
+      "name": "RPM International Manufacturing in America Dba RPM Manufacturing in America",
       "sector": "Misc Business",
       "industry": "Paints, Varnishes, Lacquers, Enamels & Allied Prods",
       "classifiedBy": "sec",
@@ -951291,7 +951291,7 @@
     },
     {
       "id": "american-intellectual-property-law-association",
-      "name": "American Intellectual Property Law Association (Aipla)",
+      "name": "American Intellectual Property Law Association (AIPLA)",
       "sector": "Communications & Technology",
       "industry": "Copyright/Patent/Trademark",
       "classifiedBy": "lobbying",
@@ -952369,7 +952369,7 @@
     },
     {
       "id": "haier-us-appliance-solutions-dba-ge-appliances",
-      "name": "Haier Us Appliance Solution, Inc. Dba Ge Appliances",
+      "name": "Haier US Appliance Solution, Inc. Dba GE Appliances",
       "sector": "Energy & Natural Resources",
       "industry": "Energy/Nuclear",
       "classifiedBy": "lobbying",
@@ -953555,7 +953555,7 @@
     },
     {
       "id": "alliance-for-water-resources-for-ventura-county-c00680231",
-      "name": "Alliance for Water Resources for Ventura County Political Action Committee (Awrpac)",
+      "name": "Alliance for Water Resources for Ventura County Political Action Committee (AWRPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -953830,7 +953830,7 @@
     },
     {
       "id": "cdm-smith-national",
-      "name": "Cdm Smith National",
+      "name": "CDM Smith National",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -958125,7 +958125,7 @@
     },
     {
       "id": "fbb-relations",
-      "name": "Fbb Federal Relations",
+      "name": "FBB Federal Relations",
       "sector": "Lawyers & Lobbyists",
       "industry": "Lobbying Services",
       "classifiedBy": "lobbying",
@@ -961635,7 +961635,7 @@
     },
     {
       "id": "ae-industrial-partners",
-      "name": "Ae Industrial Partners, Lp",
+      "name": "Ae Industrial Partners, LP",
       "sector": "Defense",
       "industry": "Defense",
       "classifiedBy": "lobbying",
@@ -962256,7 +962256,7 @@
     },
     {
       "id": "justice-opportunity-strength-honor-c00608505",
-      "name": "Justice Opportunity Strength Honor PAC (Joshpac)",
+      "name": "Justice Opportunity Strength Honor PAC (JOSHPAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -962712,7 +962712,7 @@
     },
     {
       "id": "local-18-water-and-power-defense-league-c00869768",
-      "name": "Local 18 Water and Power Defense League (Ibew)",
+      "name": "Local 18 Water and Power Defense League (IBEW)",
       "sector": "Defense",
       "classifiedBy": "name",
       "committees": [
@@ -963633,7 +963633,7 @@
     },
     {
       "id": "arcelormittal-sales-and-administration",
-      "name": "Arcelormittal North America Holdings LLC and Its Us Subsidiaries",
+      "name": "ArcelorMittal North America Holdings LLC and Its US Subsidiaries",
       "sector": "Energy & Natural Resources",
       "industry": "Environment/Superfund",
       "classifiedBy": "lobbying",
@@ -963930,7 +963930,7 @@
     },
     {
       "id": "dbm-c00540393",
-      "name": "Dbm PAC",
+      "name": "DBM PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -965166,7 +965166,7 @@
     },
     {
       "id": "clark-hill",
-      "name": "Clark Hill, Plc",
+      "name": "Clark Hill, PLC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law firm",
       "classifiedBy": "lobbying",
@@ -965564,7 +965564,7 @@
     },
     {
       "id": "association-for-materials-protection-and-performance",
-      "name": "Association for Materials Protection and Performance (Ampp)",
+      "name": "Association for Materials Protection and Performance (AMPP)",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -973859,7 +973859,7 @@
     },
     {
       "id": "tds-telecommunications",
-      "name": "Tds Telecommunications",
+      "name": "TDS Telecommunications",
       "sector": "Communications & Technology",
       "industry": "Telecommunications",
       "classifiedBy": "name",
@@ -976349,7 +976349,7 @@
     },
     {
       "id": "mww",
-      "name": "Mww Group",
+      "name": "MWW Group",
       "sector": "Misc Business",
       "industry": "Consumer Issues/Safety/Products",
       "classifiedBy": "lobbying",
@@ -978438,7 +978438,7 @@
     },
     {
       "id": "smallbizpros-padgett-business-services-sbp-padgett-business-services",
-      "name": "Smallbizpros Padgett Business Services Sbp Padgett Business Services",
+      "name": "Smallbizpros Padgett Business Services SBP Padgett Business Services",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -981053,7 +981053,7 @@
     },
     {
       "id": "vss-and-p-fedpac-c00220764",
-      "name": "Vss&P Fedpac",
+      "name": "VSS&P Fedpac",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -982364,7 +982364,7 @@
     },
     {
       "id": "preserving-americas-traditions-c00383869",
-      "name": "Preserving America's Traditions (Patpac)",
+      "name": "Preserving America's Traditions (PATPAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -982990,7 +982990,7 @@
     },
     {
       "id": "val-arkoosh-for-us-senate-c00775510",
-      "name": "Val Arkoosh for Us Senate",
+      "name": "Val Arkoosh for US Senate",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -983566,7 +983566,7 @@
     },
     {
       "id": "wk-kellogg",
-      "name": "Wk Kellogg Co (Fka Kellogg Company)",
+      "name": "WK Kellogg Co (Fka Kellogg Company)",
       "sector": "Agribusiness",
       "industry": "Food Industry (safety, labeling, etc.)",
       "classifiedBy": "lobbying",
@@ -984099,7 +984099,7 @@
     },
     {
       "id": "jjf-management-services",
-      "name": "Jjf Management Services, Inc.",
+      "name": "JJF Management Services, Inc.",
       "sector": "Transportation",
       "industry": "Automotive Industry",
       "classifiedBy": "lobbying",
@@ -984873,7 +984873,7 @@
     },
     {
       "id": "iuoe-membership",
-      "name": "Iuoe Membership",
+      "name": "IUOE Membership",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -986986,7 +986986,7 @@
     },
     {
       "id": "md-c00911321",
-      "name": "Md PAC",
+      "name": "MD PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -988246,7 +988246,7 @@
     },
     {
       "id": "sirius-xm",
-      "name": "Sirius Xm Radio and Pandora Media",
+      "name": "Sirius XM Radio and Pandora Media",
       "sector": "Communications & Technology",
       "industry": "Radio Broadcasting Stations",
       "classifiedBy": "sec",
@@ -988326,7 +988326,7 @@
     },
     {
       "id": "sabic-innovative-plastics-us",
-      "name": "Nexpoint Materials LLC, Formerly Reporting As Sabic Innovative Plastics Us LLC",
+      "name": "Nexpoint Materials LLC, Formerly Reporting As SABIC Innovative Plastics US LLC",
       "sector": "Misc Business",
       "industry": "Chemicals/Chemical Industry",
       "classifiedBy": "lobbying",
@@ -992215,7 +992215,7 @@
     },
     {
       "id": "mcclellan-for-congress-c00829812",
-      "name": "Mcclellan for Congress",
+      "name": "McClellan for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -992604,7 +992604,7 @@
     },
     {
       "id": "stand-tall-america-c00404418",
-      "name": "Stand Tall America PAC (Stapac)",
+      "name": "Stand Tall America PAC (STAPAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -992880,7 +992880,7 @@
     },
     {
       "id": "protecting-integrity-and-truth-together-c00305052",
-      "name": "Protecting Integrity and Truth Together PAC (Pittpac)",
+      "name": "Protecting Integrity and Truth Together PAC (PITTPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -996679,7 +996679,7 @@
     },
     {
       "id": "macedonia-c00681627",
-      "name": "Macedonia PAC (Macpac)",
+      "name": "Macedonia PAC (MACPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1000406,7 +1000406,7 @@
     },
     {
       "id": "us-ecology",
-      "name": "Us Ecology",
+      "name": "US Ecology",
       "sector": "Energy & Natural Resources",
       "industry": "Waste (hazardous/solid/interstate/nuclear)",
       "classifiedBy": "lobbying",
@@ -1001071,7 +1001071,7 @@
     },
     {
       "id": "iuoe-epec",
-      "name": "Iuoe/Epec",
+      "name": "IUOE/Epec",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1001140,7 +1001140,7 @@
     },
     {
       "id": "mcdowell-for-congress-c00860064",
-      "name": "Mcdowell for Congress",
+      "name": "McDowell for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1001932,7 +1001932,7 @@
     },
     {
       "id": "hinman-straub",
-      "name": "Hinman Straub, Pc",
+      "name": "Hinman Straub, PC",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1002062,7 +1002062,7 @@
     },
     {
       "id": "national-action-c00147983",
-      "name": "National Action Committee (Nacpac)",
+      "name": "National Action Committee (NACPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1002564,7 +1002564,7 @@
     },
     {
       "id": "mcclintock-for-congress-c00446815",
-      "name": "Mcclintock for Congress",
+      "name": "McClintock for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1003900,7 +1003900,7 @@
     },
     {
       "id": "dscc-chair-victory-c00771063",
-      "name": "Dscc Chair Victory Fund",
+      "name": "DSCC Chair Victory Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1004231,7 +1004231,7 @@
     },
     {
       "id": "olsson-frank-weeda-terman-matz",
-      "name": "Olsson, Frank, Weeda, Terman & Matz, Pc",
+      "name": "Olsson, Frank, Weeda, Terman & Matz, PC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm, Government Relations",
       "classifiedBy": "lobbying",
@@ -1004784,7 +1004784,7 @@
     },
     {
       "id": "keep-us-posted",
-      "name": "Keep Us Posted",
+      "name": "Keep US Posted",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1005151,7 +1005151,7 @@
     },
     {
       "id": "move-us-forward-c00867192",
-      "name": "Move Us Forward PAC",
+      "name": "Move US Forward PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1006048,7 +1006048,7 @@
     },
     {
       "id": "vt-halter-marine",
-      "name": "Vt Halter Marine Inc",
+      "name": "VT Halter Marine Inc",
       "sector": "Transportation",
       "industry": "Marine/Maritime/Boating/Fisheries",
       "classifiedBy": "lobbying",
@@ -1006235,7 +1006235,7 @@
     },
     {
       "id": "norton-rose-fulbright-us",
-      "name": "Norton Rose Fulbright Us LLP",
+      "name": "Norton Rose Fulbright US LLP",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Retirement",
       "classifiedBy": "lobbying",
@@ -1006774,7 +1006774,7 @@
     },
     {
       "id": "foundations-based-on-integrity-c00831503",
-      "name": "Foundations Based on Integrity Political Action Committee (Fbipac)",
+      "name": "Foundations Based on Integrity Political Action Committee (FBIPAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1008068,7 +1008068,7 @@
     },
     {
       "id": "american-multi-cinema-theatres",
-      "name": "American Multi-Cinema, Inc. (Amc) Theatres",
+      "name": "American Multi-Cinema, Inc. (AMC) Theatres",
       "sector": "Communications & Technology",
       "industry": "Arts/Entertainment",
       "classifiedBy": "lobbying",
@@ -1008325,7 +1008325,7 @@
     },
     {
       "id": "calgon-carbon-dba-ccc-or-calgon-carbon",
-      "name": "Calgon Carbon Dba Ccc Or Calgon Carbon",
+      "name": "Calgon Carbon Dba CCC Or Calgon Carbon",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1008862,7 +1008862,7 @@
     },
     {
       "id": "cfd-research",
-      "name": "Cfd Research Corporation",
+      "name": "CFD Research Corporation",
       "sector": "Defense",
       "industry": "Defense",
       "classifiedBy": "lobbying",
@@ -1009404,7 +1009404,7 @@
     },
     {
       "id": "aptiv",
-      "name": "Aptiv Plc",
+      "name": "Aptiv PLC",
       "sector": "Transportation",
       "industry": "Motor Vehicle Parts & Accessories",
       "classifiedBy": "sec",
@@ -1009788,7 +1009788,7 @@
     },
     {
       "id": "babst-calland-clements-and-zomnir",
-      "name": "Babst Calland Clements & Zomnir Pc",
+      "name": "Babst Calland Clements & Zomnir PC",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1010732,7 +1010732,7 @@
     },
     {
       "id": "dfc",
-      "name": "Dfc Group, Inc.",
+      "name": "DFC Group, Inc.",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Housing",
       "classifiedBy": "lobbying",
@@ -1011666,7 +1011666,7 @@
     },
     {
       "id": "hsp-direct-hsp",
-      "name": "Hsp Direct Hsp",
+      "name": "HSP Direct HSP",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1012275,7 +1012275,7 @@
     },
     {
       "id": "dlz",
-      "name": "Dlz Corporation",
+      "name": "DLZ Corporation",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -1012463,7 +1012463,7 @@
     },
     {
       "id": "ua-local-85",
-      "name": "Ua Local 85",
+      "name": "UA Local 85",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1016014,7 +1016014,7 @@
     },
     {
       "id": "harris-beach-murtha-cullina-pllc",
-      "name": "Harris Beach Murtha Cullina Pllc",
+      "name": "Harris Beach Murtha Cullina PLLC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1016480,7 +1016480,7 @@
     },
     {
       "id": "health-education-and-learning-c00478362",
-      "name": "Health Education and Learning Political Action Committee (Healpac)-Federal",
+      "name": "Health Education and Learning Political Action Committee (HEALPAC)-Federal",
       "sector": "Health",
       "classifiedBy": "name",
       "committees": [
@@ -1017345,7 +1017345,7 @@
     },
     {
       "id": "stand-with-americas-team-c00881979",
-      "name": "Stand With America's Team (Swat) PAC",
+      "name": "Stand With America's Team (SWAT) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1018467,7 +1018467,7 @@
     },
     {
       "id": "electgabeevans-com-c00849844",
-      "name": "Electgabeevans.Com",
+      "name": "Electgabeevans.com",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1021294,7 +1021294,7 @@
     },
     {
       "id": "california-association-of-mortgage-professionals",
-      "name": "California Association of Mortgage Professionals (Camp)",
+      "name": "California Association of Mortgage Professionals (CAMP)",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Housing",
       "classifiedBy": "name",
@@ -1021799,7 +1021799,7 @@
     },
     {
       "id": "1199-seiu-united-healthcare-workers-east",
-      "name": "1199 Seiu United Healthcare Workers East",
+      "name": "1199 SEIU United Healthcare Workers East",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1023621,7 +1023621,7 @@
     },
     {
       "id": "river-financial",
-      "name": "River Financial  Corporation (Rfc)",
+      "name": "River Financial  Corporation (RFC)",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "State Commercial Banks",
       "classifiedBy": "sec",
@@ -1024430,7 +1024430,7 @@
     },
     {
       "id": "california-nations-indian-gaming-association",
-      "name": "California Nations Indian Gaming Association (Cniga)",
+      "name": "California Nations Indian Gaming Association (CNIGA)",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1027259,7 +1027259,7 @@
     },
     {
       "id": "mi7th-cdrc-account-c00859173",
-      "name": "Mi7th Cdrc Federal Account",
+      "name": "Mi7th CDRC Federal Account",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1027697,7 +1027697,7 @@
     },
     {
       "id": "ocean-state-c00397067",
-      "name": "Ocean State Political Action Committee (Ospac)",
+      "name": "Ocean State Political Action Committee (OSPAC)",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1027897,7 +1027897,7 @@
     },
     {
       "id": "winstead",
-      "name": "Winstead Pc",
+      "name": "Winstead PC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm",
       "classifiedBy": "lobbying",
@@ -1028185,7 +1028185,7 @@
     },
     {
       "id": "complete-parachute-solutions-cps-c00778548",
-      "name": "Complete Parachute Solutions Inc Political Action Committee Cps PAC",
+      "name": "Complete Parachute Solutions Inc Political Action Committee CPS PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1028688,7 +1028688,7 @@
     },
     {
       "id": "ktmc-c00843599",
-      "name": "Ktmc Federal PAC",
+      "name": "KTMC Federal PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1029114,7 +1029114,7 @@
     },
     {
       "id": "mcgowan-for-iowa-c00909788",
-      "name": "Mcgowan for Iowa",
+      "name": "McGowan for Iowa",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1029960,7 +1029960,7 @@
     },
     {
       "id": "kph-healthcare-services",
-      "name": "Kph Healthcare Services",
+      "name": "KPH Healthcare Services",
       "sector": "Health",
       "classifiedBy": "name",
       "committees": [
@@ -1030062,7 +1030062,7 @@
     },
     {
       "id": "lscp",
-      "name": "Lscp LLC",
+      "name": "LSCP LLC",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1030237,7 +1030237,7 @@
     },
     {
       "id": "dc-statehood-c00800227",
-      "name": "Dc Statehood PAC",
+      "name": "DC Statehood PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1030368,7 +1030368,7 @@
     },
     {
       "id": "democrats-making-progress-dmp-jr-c00565226",
-      "name": "Democrats Making Progress PAC Dmp Jr PAC",
+      "name": "Democrats Making Progress PAC DMP Jr PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1030731,7 +1030731,7 @@
     },
     {
       "id": "democracy-mobilization-project-c00848648",
-      "name": "Democracy Mobilization Project PAC (Dmp)",
+      "name": "Democracy Mobilization Project PAC (DMP)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1031168,7 +1031168,7 @@
     },
     {
       "id": "ssl",
-      "name": "Maxar Technologies Holdings Inc F/K/a Ssl Mda Holdings",
+      "name": "Maxar Technologies Holdings Inc F/K/a SSL Mda Holdings",
       "sector": "Defense",
       "industry": "Defense",
       "classifiedBy": "lobbying",
@@ -1031268,7 +1031268,7 @@
     },
     {
       "id": "because-i-care-c00381624",
-      "name": "Because I Care Political Action Committee (Bicpac)",
+      "name": "Because I Care Political Action Committee (BICPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1031873,7 +1031873,7 @@
     },
     {
       "id": "qsr-leaders-c00560821",
-      "name": "Qsr Leaders Political Action Committee Inc",
+      "name": "QSR Leaders Political Action Committee Inc",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1031892,7 +1031892,7 @@
     },
     {
       "id": "tsvc",
-      "name": "Tsvc, Inc.",
+      "name": "TSVC, Inc.",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1032285,7 +1032285,7 @@
     },
     {
       "id": "nc-red-c00768085",
-      "name": "Nc Red",
+      "name": "NC Red",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1032921,7 +1032921,7 @@
     },
     {
       "id": "seiu-cope",
-      "name": "Seiu Cope (Service Employees International Union Committee on Political Education)",
+      "name": "SEIU Cope (Service Employees International Union Committee on Political Education)",
       "sector": "Labor",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1033089,7 +1033089,7 @@
     },
     {
       "id": "sheila-cherfilus-mccormick-for-congress-c00677492",
-      "name": "Sheila Cherfilus Mccormick for Congress, Inc",
+      "name": "Sheila Cherfilus McCormick for Congress, Inc",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1033108,7 +1033108,7 @@
     },
     {
       "id": "combat-anti-semitism-everywhere-c00731489",
-      "name": "Combat Anti-Semitism Everywhere Political Action Committee (Casepac)",
+      "name": "Combat Anti-Semitism Everywhere Political Action Committee (CASEPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1035579,7 +1035579,7 @@
     },
     {
       "id": "missouri-frb-c00304758",
-      "name": "Missouri Frb PAC",
+      "name": "Missouri FRB PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1036021,7 +1036021,7 @@
     },
     {
       "id": "re-elect-mcgovern-c00285171",
-      "name": "Re-Elect Mcgovern Committee",
+      "name": "Re-Elect McGovern Committee",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1036086,7 +1036086,7 @@
     },
     {
       "id": "fbl-financial",
-      "name": "Fbl Financial Group, Inc.",
+      "name": "FBL Financial Group, Inc.",
       "sector": "Finance, Insurance & Real Estate",
       "classifiedBy": "name",
       "committees": [
@@ -1036668,7 +1036668,7 @@
     },
     {
       "id": "sf-properties-aka-schostak-family-c00458406",
-      "name": "Sf Properties LLC Federal Political Action Committee a/K/a Schostak Family Federal PAC",
+      "name": "SF Properties LLC Federal Political Action Committee a/K/a Schostak Family Federal PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1036715,7 +1036715,7 @@
     },
     {
       "id": "lamonica-mciver-for-congress-c00878603",
-      "name": "Lamonica Mciver for Congress",
+      "name": "Lamonica McIver for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1037171,7 +1037171,7 @@
     },
     {
       "id": "mcdonald-hopkins",
-      "name": "Mcdonald Hopkins LLC",
+      "name": "McDonald Hopkins LLC",
       "sector": "Lawyers & Lobbyists",
       "industry": "law firm",
       "classifiedBy": "lobbying",
@@ -1038105,7 +1038105,7 @@
     },
     {
       "id": "maggie-for-nh-c00588772",
-      "name": "Maggie for Nh",
+      "name": "Maggie for NH",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1038256,7 +1038256,7 @@
     },
     {
       "id": "mccaul-for-congress-c00392688",
-      "name": "Mccaul for Congress, Inc",
+      "name": "McCaul for Congress, Inc",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1038841,7 +1038841,7 @@
     },
     {
       "id": "rand-paul-for-us-senate-c00496075",
-      "name": "Rand Paul for Us Senate",
+      "name": "Rand Paul for US Senate",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1040039,7 +1040039,7 @@
     },
     {
       "id": "safeguarding-american-liberties-morals-and-opportunities-now-c00534032",
-      "name": "Safeguarding American Liberties Morals & Opportunities Now (Salmon) PAC",
+      "name": "Safeguarding American Liberties Morals & Opportunities Now (SALMON) PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1040716,7 +1040716,7 @@
     },
     {
       "id": "jaffe-raitt-heuer-and-weiss",
-      "name": "Jaffe Raitt Heuer & Weiss, Pc",
+      "name": "Jaffe Raitt Heuer & Weiss, PC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law Firm",
       "classifiedBy": "lobbying",
@@ -1041054,7 +1041054,7 @@
     },
     {
       "id": "academy-of-managed-care-pharmacy-a-new-jersey-nonprofit-organization",
-      "name": "Academy of Managed Care Pharmacy a New Jersey Nonprofit Organization (Amcp)",
+      "name": "Academy of Managed Care Pharmacy a New Jersey Nonprofit Organization (AMCP)",
       "sector": "Health",
       "classifiedBy": "name",
       "committees": [
@@ -1041165,7 +1041165,7 @@
     },
     {
       "id": "sm-energy",
-      "name": "Sm Energy (Aka Civitas Resources, Inc.)",
+      "name": "SM Energy (Aka Civitas Resources, Inc.)",
       "sector": "Energy & Natural Resources",
       "industry": "Crude Petroleum & Natural Gas",
       "classifiedBy": "sec",
@@ -1042094,7 +1042094,7 @@
     },
     {
       "id": "nj-health-innovation-c00958314",
-      "name": "Nj Health Innovation Federal PAC Inc",
+      "name": "NJ Health Innovation Federal PAC Inc",
       "sector": "Health",
       "classifiedBy": "name",
       "committees": [
@@ -1043818,7 +1043818,7 @@
     },
     {
       "id": "wl-and-j-c00600692",
-      "name": "Wl&J Federal PAC Inc",
+      "name": "WL&J Federal PAC Inc",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1044704,7 +1044704,7 @@
     },
     {
       "id": "dt-midstream",
-      "name": "Dt Midstream Holdings, LLC",
+      "name": "DT Midstream Holdings, LLC",
       "sector": "Energy & Natural Resources",
       "industry": "Natural Gas Transmission",
       "classifiedBy": "sec",
@@ -1044815,7 +1044815,7 @@
     },
     {
       "id": "corn",
-      "name": "Corn, Lp",
+      "name": "Corn, LP",
       "sector": "Agribusiness",
       "classifiedBy": "name",
       "committees": [
@@ -1045130,7 +1045130,7 @@
     },
     {
       "id": "cal-for-nc-c00709410",
-      "name": "Cal for Nc",
+      "name": "Cal for NC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1046717,7 +1046717,7 @@
     },
     {
       "id": "friends-of-lucy-mcbath-c00672295",
-      "name": "Friends of Lucy Mcbath",
+      "name": "Friends of Lucy McBath",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1046741,7 +1046741,7 @@
     },
     {
       "id": "pat-roberts-for-us-senate-c00128876",
-      "name": "Pat Roberts for Us Senate Inc",
+      "name": "Pat Roberts for US Senate Inc",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1047121,7 +1047121,7 @@
     },
     {
       "id": "cotton-growers-of-virginia-c00609206",
-      "name": "Cotton Growers of Virginia (Cgva)",
+      "name": "Cotton Growers of Virginia (CGVA)",
       "sector": "Agribusiness",
       "classifiedBy": "name",
       "committees": [
@@ -1047342,7 +1047342,7 @@
     },
     {
       "id": "national-society-of-genetic-counselors",
-      "name": "National Society of Genetic Counselors Nsgc",
+      "name": "National Society of Genetic Counselors NSGC",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "lobbying",
@@ -1047435,7 +1047435,7 @@
     },
     {
       "id": "mcnerney-for-congress-c00398644",
-      "name": "Mcnerney for Congress",
+      "name": "McNerney for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1047537,7 +1047537,7 @@
     },
     {
       "id": "gj-c00722967",
-      "name": "Gj Political Action Committee Inc.",
+      "name": "GJ Political Action Committee Inc.",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1048253,7 +1048253,7 @@
     },
     {
       "id": "hgs-c00857664",
-      "name": "Hgs Political Action Committee",
+      "name": "HGS Political Action Committee",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1049124,7 +1049124,7 @@
     },
     {
       "id": "vantive-us-healthcare",
-      "name": "Vantive Us Healthcare LLC",
+      "name": "Vantive US Healthcare LLC",
       "sector": "Health",
       "industry": "Health Issues",
       "classifiedBy": "name",
@@ -1049999,7 +1049999,7 @@
     },
     {
       "id": "hf-responsibility-c00466334",
-      "name": "Hf Responsibility Fund",
+      "name": "HF Responsibility Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1051266,7 +1051266,7 @@
     },
     {
       "id": "cmr-wa-c00390476",
-      "name": "Cmr Wa PAC",
+      "name": "CMR Wa PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1052087,7 +1052087,7 @@
     },
     {
       "id": "central-pacific-bank-fed",
-      "name": "Central Pacific Bank Fed Aka Cpb Fed",
+      "name": "Central Pacific Bank Fed Aka CPB Fed",
       "sector": "Finance, Insurance & Real Estate",
       "classifiedBy": "name",
       "committees": [
@@ -1052138,7 +1052138,7 @@
     },
     {
       "id": "kb-home",
-      "name": "Kb Home",
+      "name": "KB Home",
       "sector": "Construction",
       "industry": "Operative Builders",
       "classifiedBy": "sec",
@@ -1052691,7 +1052691,7 @@
     },
     {
       "id": "pat-mccrory-c00776757",
-      "name": "The Pat Mccrory Committee",
+      "name": "The Pat McCrory Committee",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1052775,7 +1052775,7 @@
     },
     {
       "id": "farmers-educational-and-cooperative-union-of-america-rocky-mtn-division",
-      "name": "Farmers Educational & Cooperative Union of America Rocky Mtn Division",
+      "name": "Farmers Educational & Cooperative Union of America Rocky MTN Division",
       "sector": "Agribusiness",
       "classifiedBy": "name",
       "committees": [
@@ -1054296,7 +1054296,7 @@
     },
     {
       "id": "mccollum-for-congress-c00354688",
-      "name": "Mccollum for Congress",
+      "name": "McCollum for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1054381,7 +1054381,7 @@
     },
     {
       "id": "dljcc-c00736983",
-      "name": "Dljcc PAC (Daring Leadership Jumpstarting Conservative Causes PAC)",
+      "name": "DLJCC PAC (Daring Leadership Jumpstarting Conservative Causes PAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1054744,7 +1054744,7 @@
     },
     {
       "id": "mclane",
-      "name": "Mclane Co",
+      "name": "McLane Co",
       "sector": "Agribusiness",
       "industry": "Tobacco",
       "classifiedBy": "lobbying",
@@ -1055548,7 +1055548,7 @@
     },
     {
       "id": "dickinson-wright-pllc",
-      "name": "Dickinson Wright Pllc",
+      "name": "Dickinson Wright PLLC",
       "sector": "Lawyers & Lobbyists",
       "industry": "Law firm",
       "classifiedBy": "lobbying",
@@ -1056449,7 +1056449,7 @@
     },
     {
       "id": "us-transportation-energy-and-technology-alliance",
-      "name": "Us Transportation, Energy & Technology Alliance",
+      "name": "US Transportation, Energy & Technology Alliance",
       "sector": "Energy & Natural Resources",
       "classifiedBy": "name",
       "committees": [
@@ -1056637,7 +1056637,7 @@
     },
     {
       "id": "turkish-coalition-california-c00489898",
-      "name": "Turkish Coalition California PAC (Tc-Cal PAC)",
+      "name": "Turkish Coalition California PAC (TC-Cal PAC)",
       "sector": "Energy & Natural Resources",
       "classifiedBy": "name",
       "committees": [
@@ -1057827,7 +1057827,7 @@
     },
     {
       "id": "tcb-enterprise",
-      "name": "Tcb Enterprise",
+      "name": "TCB Enterprise",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1058114,7 +1058114,7 @@
     },
     {
       "id": "piedmont-stone-center-pllc",
-      "name": "Piedmont Stone Center Pllc",
+      "name": "Piedmont Stone Center PLLC",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1058152,7 +1058152,7 @@
     },
     {
       "id": "cbc",
-      "name": "Cbc",
+      "name": "CBC",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1058208,7 +1058208,7 @@
     },
     {
       "id": "mcglinchey-stafford",
-      "name": "Mcglinchey Stafford (on Behalf of Sgs North America, Inc.)",
+      "name": "McGlinchey Stafford (on Behalf of SGS North America, Inc.)",
       "sector": "Communications & Technology",
       "industry": "Telecommunications",
       "classifiedBy": "lobbying",
@@ -1058303,7 +1058303,7 @@
     },
     {
       "id": "thompson-hine-and-flory-national",
-      "name": "Thompson Hine LLP (on Behalf of Csg Partners, LLC)",
+      "name": "Thompson Hine LLP (on Behalf of CSG Partners, LLC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1058402,7 +1058402,7 @@
     },
     {
       "id": "jcm-properties",
-      "name": "Jcm Properties",
+      "name": "JCM Properties",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1058952,7 +1058952,7 @@
     },
     {
       "id": "mceachin-for-congress-c00610964",
-      "name": "Mceachin for Congress",
+      "name": "McEachin for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1059104,7 +1059104,7 @@
     },
     {
       "id": "kathy-salvi-for-us-senate-c00807222",
-      "name": "Kathy Salvi for Us Senate",
+      "name": "Kathy Salvi for US Senate",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1059551,7 +1059551,7 @@
     },
     {
       "id": "mcconkey-for-congress-c00833889",
-      "name": "Mcconkey for Congress",
+      "name": "McConkey for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1060287,7 +1060287,7 @@
     },
     {
       "id": "dpwn-dhl",
-      "name": "Dpwn Holdings (USA) Inc. (Formerly Known As Deutsche Post World Net-USA, Inc.)",
+      "name": "DPWN Holdings (USA) Inc. (Formerly Known As Deutsche Post World Net-USA, Inc.)",
       "sector": "Transportation",
       "industry": "Transportation",
       "classifiedBy": "lobbying",
@@ -1060511,7 +1060511,7 @@
     },
     {
       "id": "cchn",
-      "name": "Cchn Group Holdings, Inc.",
+      "name": "CCHN Group Holdings, Inc.",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1060530,7 +1060530,7 @@
     },
     {
       "id": "tremco-cpg-dba-tremco",
-      "name": "Tremco Cpg Dba Tremco",
+      "name": "Tremco CPG Dba Tremco",
       "sector": "Unknown",
       "classifiedBy": "none",
       "committees": [
@@ -1061138,7 +1061138,7 @@
     },
     {
       "id": "national-japanese-american-c00386136",
-      "name": "National Japanese American Political Action Committee (Jaampac)",
+      "name": "National Japanese American Political Action Committee (JAAMPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1061273,7 +1061273,7 @@
     },
     {
       "id": "bwc-because-women-can-c00610840",
-      "name": "Bwc-Because Women Can PAC",
+      "name": "BWC-Because Women Can PAC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1062496,7 +1062496,7 @@
     },
     {
       "id": "nh-leadership-c00767616",
-      "name": "Nh Leadership PAC",
+      "name": "NH Leadership PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1063555,7 +1063555,7 @@
     },
     {
       "id": "us-christian-citizens-c00874966",
-      "name": "Us Christian Citizens PAC",
+      "name": "US Christian Citizens PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1063578,7 +1063578,7 @@
     },
     {
       "id": "dnc-services-democratic-national-c00010603",
-      "name": "Dnc Services Corp / Democratic National Committee",
+      "name": "DNC Services Corp / Democratic National Committee",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1063880,7 +1063880,7 @@
     },
     {
       "id": "gps-conservatives-for-action-c00493841",
-      "name": "Gps Conservatives for Action",
+      "name": "GPS Conservatives for Action",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1064167,7 +1064167,7 @@
     },
     {
       "id": "holly-mccormack-for-congress-c00767798",
-      "name": "Holly Mccormack for Congress",
+      "name": "Holly McCormack for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1064875,7 +1064875,7 @@
     },
     {
       "id": "dtr-damn-road-c00796359",
-      "name": "Dtr-Damn the Road",
+      "name": "DTR-Damn the Road",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1064941,7 +1064941,7 @@
     },
     {
       "id": "don-davis-for-nc-c00795211",
-      "name": "Don Davis for Nc",
+      "name": "Don Davis for NC",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1065162,7 +1065162,7 @@
     },
     {
       "id": "mcbride-for-delaware-c00843763",
-      "name": "Mcbride for Delaware Inc.",
+      "name": "McBride for Delaware Inc.",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1065371,7 +1065371,7 @@
     },
     {
       "id": "sean-mccann-for-congress-c00911784",
-      "name": "Sean Mccann for Congress",
+      "name": "Sean McCann for Congress",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1065466,7 +1065466,7 @@
     },
     {
       "id": "ff-c00669259",
-      "name": "Ff PAC",
+      "name": "FF PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1065675,7 +1065675,7 @@
     },
     {
       "id": "fpc-american-victory-c00760454",
-      "name": "Fpc American Victory Fund",
+      "name": "FPC American Victory Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1066371,7 +1066371,7 @@
     },
     {
       "id": "dreams-in-action-nm-c90020306",
-      "name": "Dreams in Action Nm",
+      "name": "Dreams in Action NM",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1066635,7 +1066635,7 @@
     },
     {
       "id": "defend-us-c00634261",
-      "name": "Defend Us PAC",
+      "name": "Defend US PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1066947,7 +1066947,7 @@
     },
     {
       "id": "drain-dc-swamp-c00662072",
-      "name": "Drain the Dc Swamp PAC",
+      "name": "Drain the DC Swamp PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1067043,7 +1067043,7 @@
     },
     {
       "id": "smp-c00484642",
-      "name": "Smp",
+      "name": "SMP",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1067139,7 +1067139,7 @@
     },
     {
       "id": "autism-hear-us-now-c00671685",
-      "name": "Autism Hear Us Now PAC",
+      "name": "Autism Hear US Now PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1067199,7 +1067199,7 @@
     },
     {
       "id": "us-veterans-assistance-foundation-c00653386",
-      "name": "Us Veterans Assistance Foundation, PAC",
+      "name": "US Veterans Assistance Foundation, PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1067247,7 +1067247,7 @@
     },
     {
       "id": "alabama-christian-conservatives-c00782656",
-      "name": "Alabama Christian Conservatives (Acc)",
+      "name": "Alabama Christian Conservatives (ACC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1067499,7 +1067499,7 @@
     },
     {
       "id": "wfp-ie-c00626861",
-      "name": "Wfp Ie Committee",
+      "name": "WFP Ie Committee",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1067571,7 +1067571,7 @@
     },
     {
       "id": "lcv-victory-c00486845",
-      "name": "Lcv Victory Fund",
+      "name": "LCV Victory Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1068027,7 +1068027,7 @@
     },
     {
       "id": "alice-b-toklas-lgbtq-democratic-club-c00705277",
-      "name": "Alice B. Toklas Lgbtq Democratic Club Federal PAC",
+      "name": "Alice B. Toklas LGBTQ Democratic Club Federal PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1068099,7 +1068099,7 @@
     },
     {
       "id": "united-democracy-project-c00799031",
-      "name": "United Democracy Project ('Udp')",
+      "name": "United Democracy Project ('UDP')",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1068135,7 +1068135,7 @@
     },
     {
       "id": "results-for-nc-c00545152",
-      "name": "Results for Nc, Inc.",
+      "name": "Results for NC, Inc.",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1068315,7 +1068315,7 @@
     },
     {
       "id": "nrdc-action-votes-c00740225",
-      "name": "Nrdc Action Votes",
+      "name": "NRDC Action Votes",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1068327,7 +1068327,7 @@
     },
     {
       "id": "takeaction-mn-c00738815",
-      "name": "Takeaction Mn Federal Fund",
+      "name": "Takeaction MN Federal Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1068495,7 +1068495,7 @@
     },
     {
       "id": "coalition-to-grow-san-francisco-grow-sf-c90021387",
-      "name": "Coalition to Grow San Francisco - Grow Sf PAC",
+      "name": "Coalition to Grow San Francisco - Grow SF PAC",
       "sector": "Energy & Natural Resources",
       "classifiedBy": "name",
       "committees": [
@@ -1068855,7 +1068855,7 @@
     },
     {
       "id": "stand-for-fl-c00804617",
-      "name": "Stand for Fl",
+      "name": "Stand for FL",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1069383,7 +1069383,7 @@
     },
     {
       "id": "lv-strong-c00743377",
-      "name": "Lv Strong",
+      "name": "LV Strong",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1069575,7 +1069575,7 @@
     },
     {
       "id": "hunter-action-c00541433",
-      "name": "Hunter Action Fund (Haf)",
+      "name": "Hunter Action Fund (HAF)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1069647,7 +1069647,7 @@
     },
     {
       "id": "rjc-victory-c00528554",
-      "name": "Rjc Victory Fund",
+      "name": "RJC Victory Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1069875,7 +1069875,7 @@
     },
     {
       "id": "rhr-c00824318",
-      "name": "Rhr PAC",
+      "name": "RHR PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1069995,7 +1069995,7 @@
     },
     {
       "id": "lf-c00804856",
-      "name": "Lf PAC",
+      "name": "LF PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1070211,7 +1070211,7 @@
     },
     {
       "id": "afscme-working-families-c90011172",
-      "name": "Afscme Working Families Fund",
+      "name": "AFSCME Working Families Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1070655,7 +1070655,7 @@
     },
     {
       "id": "nea-advocacy-c00489815",
-      "name": "Nea Advocacy Fund",
+      "name": "NEA Advocacy Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1070691,7 +1070691,7 @@
     },
     {
       "id": "grassroots-organizing-wins-c00776823",
-      "name": "Grassroots Organizing Wins (Growpac)",
+      "name": "Grassroots Organizing Wins (GROWPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1070907,7 +1070907,7 @@
     },
     {
       "id": "api-votes-c00761064",
-      "name": "Api Pa Votes",
+      "name": "API Pa Votes",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1071219,7 +1071219,7 @@
     },
     {
       "id": "seiu-district-1199-pce-c90013228",
-      "name": "Seiu District 1199 Pce",
+      "name": "SEIU District 1199 Pce",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1071447,7 +1071447,7 @@
     },
     {
       "id": "slf-c00571703",
-      "name": "Slf PAC",
+      "name": "SLF PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1072464,7 +1072464,7 @@
     },
     {
       "id": "grassroots-democrats-hq-c00707091",
-      "name": "Grassroots Democrats Hq",
+      "name": "Grassroots Democrats HQ",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1073124,7 +1073124,7 @@
     },
     {
       "id": "right-for-nc-c00864215",
-      "name": "Right for Nc",
+      "name": "Right for NC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1073268,7 +1073268,7 @@
     },
     {
       "id": "principled-veterans-c00780841",
-      "name": "Principled Veterans Fund (Pv Fund)",
+      "name": "Principled Veterans Fund (PV Fund)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1073640,7 +1073640,7 @@
     },
     {
       "id": "center-forward-initiative-c00875450",
-      "name": "Center Forward Initiative Inc (Cfi)",
+      "name": "Center Forward Initiative Inc (CFI)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1073952,7 +1073952,7 @@
     },
     {
       "id": "defending-nc-c00889535",
-      "name": "Defending Nc PAC",
+      "name": "Defending NC PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1074024,7 +1074024,7 @@
     },
     {
       "id": "safer-nm-communities-c00886929",
-      "name": "Safer Nm Communities",
+      "name": "Safer NM Communities",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1074624,7 +1074624,7 @@
     },
     {
       "id": "make-dc-listen-c00875526",
-      "name": "Make Dc Listen PAC",
+      "name": "Make DC Listen PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1074876,7 +1074876,7 @@
     },
     {
       "id": "glcf-c00853861",
-      "name": "Glcf, Inc.",
+      "name": "GLCF, Inc.",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1074984,7 +1074984,7 @@
     },
     {
       "id": "citizens-against-aipac-corruption-c00879080",
-      "name": "Citizens Against Aipac Corruption",
+      "name": "Citizens Against AIPAC Corruption",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1075020,7 +1075020,7 @@
     },
     {
       "id": "make-a-difference-mn-c00884395",
-      "name": "Make a Difference Mn",
+      "name": "Make a Difference MN",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1075056,7 +1075056,7 @@
     },
     {
       "id": "american-freedom-c00877753",
-      "name": "American Freedom PAC (Afpac)",
+      "name": "American Freedom PAC (AFPAC)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1075152,7 +1075152,7 @@
     },
     {
       "id": "fc-c00882555",
-      "name": "Fc PAC",
+      "name": "FC PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1075476,7 +1075476,7 @@
     },
     {
       "id": "vote-planned-parenthood-northern-california-a-project-of-planned-parenthood-northern-california-action-c00853523",
-      "name": "Vote Planned Parenthood Northern California, a Project of Planned Parenthood Northern California (Ca) Action Fund",
+      "name": "Vote Planned Parenthood Northern California, a Project of Planned Parenthood Northern California (CA) Action Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1075824,7 +1075824,7 @@
     },
     {
       "id": "nrrc-c00858852",
-      "name": "Nrrc",
+      "name": "NRRC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1076148,7 +1076148,7 @@
     },
     {
       "id": "1199-seiu-new-york-state-c90022559",
-      "name": "1199 Seiu New York State Political Action Fund",
+      "name": "1199 SEIU New York State Political Action Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1076256,7 +1076256,7 @@
     },
     {
       "id": "center-for-voter-information-c90009317",
-      "name": "Center for Voter Information (Cvi)",
+      "name": "Center for Voter Information (CVI)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1076304,7 +1076304,7 @@
     },
     {
       "id": "take-me-home-wv-action-c00905612",
-      "name": "Take Me Home Wv Action",
+      "name": "Take Me Home WV Action",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1076808,7 +1076808,7 @@
     },
     {
       "id": "lgbtq-connection-c00722884",
-      "name": "Lgbtq Connection PAC",
+      "name": "LGBTQ Connection PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1076928,7 +1076928,7 @@
     },
     {
       "id": "rnj-2-save-america-ta-rnj-2-sa-c00868984",
-      "name": "Rnj 2 Save America T/a Rnj 2 Sa",
+      "name": "RNJ 2 Save America T/a RNJ 2 Sa",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1076976,7 +1076976,7 @@
     },
     {
       "id": "cff-c00927426",
-      "name": "Cff",
+      "name": "CFF",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1077084,7 +1077084,7 @@
     },
     {
       "id": "american-priorities-c00932723",
-      "name": "American Priorities (Ap)",
+      "name": "American Priorities (AP)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1077144,7 +1077144,7 @@
     },
     {
       "id": "new-yorkers-fighting-back-c00932897",
-      "name": "New Yorkers Fighting Back (Nyfb)",
+      "name": "New Yorkers Fighting Back (NYFB)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1077708,7 +1077708,7 @@
     },
     {
       "id": "dont-mess-with-tx-c00938589",
-      "name": "Don't Mess With Tx PAC",
+      "name": "Don't Mess With TX PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1078068,7 +1078068,7 @@
     },
     {
       "id": "sd-2026-c00935015",
-      "name": "Sd 2026",
+      "name": "SD 2026",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1078788,7 +1078788,7 @@
     },
     {
       "id": "reset-dc-c00798363",
-      "name": "Reset Dc",
+      "name": "Reset DC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1078980,7 +1078980,7 @@
     },
     {
       "id": "justice-unites-us-c00810606",
-      "name": "Justice Unites Us PAC",
+      "name": "Justice Unites US PAC",
       "sector": "Lawyers & Lobbyists",
       "classifiedBy": "name",
       "committees": [
@@ -1079946,7 +1079946,7 @@
     },
     {
       "id": "a-better-nc-c90021676",
-      "name": "A Better Nc",
+      "name": "A Better NC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1080270,7 +1080270,7 @@
     },
     {
       "id": "brighter-future-nd-c00872507",
-      "name": "Brighter Future Nd",
+      "name": "Brighter Future ND",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1080318,7 +1080318,7 @@
     },
     {
       "id": "voters-for-responsive-government-c00874875",
-      "name": "Voters for Responsive Government (Vrg)",
+      "name": "Voters for Responsive Government (VRG)",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1080558,7 +1080558,7 @@
     },
     {
       "id": "lv-republican-leadership-c00875674",
-      "name": "Lv Republican Leadership Fund",
+      "name": "LV Republican Leadership Fund",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1080906,7 +1080906,7 @@
     },
     {
       "id": "mcminn-county-democratic-party-c00888446",
-      "name": "Mcminn County Democratic Party",
+      "name": "McMinn County Democratic Party",
       "sector": "Party & Candidate Committees",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1080954,7 +1080954,7 @@
     },
     {
       "id": "ibew-educational-c90022351",
-      "name": "Ibew PAC Educational Fund",
+      "name": "IBEW PAC Educational Fund",
       "sector": "Education",
       "classifiedBy": "name",
       "committees": [
@@ -1081038,7 +1081038,7 @@
     },
     {
       "id": "liberty-gold-nj-c00889402",
-      "name": "Liberty Gold Nj",
+      "name": "Liberty Gold NJ",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1081638,7 +1081638,7 @@
     },
     {
       "id": "sc-rising-c00939678",
-      "name": "Sc Rising",
+      "name": "SC Rising",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1081698,7 +1081698,7 @@
     },
     {
       "id": "sf-solidarity-c00897314",
-      "name": "Sf Solidarity PAC",
+      "name": "SF Solidarity PAC",
       "sector": "Ideological & Single-Issue",
       "classifiedBy": "fec-type",
       "committees": [
@@ -1081902,7 +1081902,7 @@
     },
     {
       "id": "united-for-water-justice-sponsored-by-cwc-actionfund-c00957357",
-      "name": "United for Water Justice, Sponsored By Cwc Actionfund",
+      "name": "United for Water Justice, Sponsored By CWC Actionfund",
       "sector": "Lawyers & Lobbyists",
       "classifiedBy": "name",
       "committees": [

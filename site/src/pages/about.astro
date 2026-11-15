@@ -1,6 +1,15 @@
 ---
 import Base from "../layouts/Base.astro";
-import { cycleRange, generatedAt } from "../lib/data";
+import { cycleRange, generatedAt, members, partyLetter } from "../lib/data";
+import { congress, lobbyingSpan, ordinal, caucusOf, partyPlural } from "../lib/legislation";
+
+// "Bernard Sanders and Angus S. King, Jr. with Democrats, and Kevin Kiley with Republicans"
+const independents = members.filter((m) => partyLetter(m.party) === "I" && caucusOf(m));
+const byCaucus = ["D", "R"]
+  .map((c) => ({ c, names: independents.filter((m) => caucusOf(m) === c).map((m) => m.name) }))
+  .filter((x) => x.names.length)
+  .map((x) => `${x.names.join(" and ")} with ${partyPlural(x.c)}`)
+  .join(", and ");
 ---
 
 <Base title="About the data" og={{ type: "page", id: "about" }} description="Where this data comes from, what's counted and how organizations are classified.">
@@ -50,6 +59,74 @@ import { cycleRange, generatedAt } from "../lib/data";
       These feed a fixed set of sectors. PACs with no sponsoring organization are counted as{" "}
       <em>Ideological &amp; Single-Issue</em>. Some classifications are set by hand; the rules are
       in the project's source code. Mistakes are possible, so check the linked FEC filings for anything important.
+    </p>
+
+    <h2 id="bills">Bills, votes and lobbying</h2>
+    <p>
+      <a href="/bills/">Bills</a> covers every bill and joint or concurrent resolution the House or Senate held a recorded
+      vote on passing in the {ordinal(congress)} Congress. Bill details come from the Government Publishing Office's{" "}
+      <a href="https://www.govinfo.gov/bulkdata/BILLSTATUS">bill status data</a> (the same records behind congress.gov),
+      and votes from the <a href="https://clerk.house.gov/Votes">House Clerk</a> and the{" "}
+      <a href="https://www.senate.gov/legislative/votes_new.htm">Senate</a>. Only votes on passing a measure are shown,
+      including agreeing to the other chamber's version and veto overrides. Procedural votes and amendments are left out:
+      they mostly follow party lines whatever the bill says.
+    </p>
+    <p>
+      Each vote is labeled <strong>party-line</strong> when 90% or more of each party voted on opposite sides,{" "}
+      <strong>near-unanimous</strong> when 90% or more of both voted the same way, and <strong>split</strong> otherwise.
+      Members are counted under the party they belonged to when they voted, as recorded on the roll call.{" "}
+      <strong>Independents</strong> are shown as independents, but counted with the party they caucus with on the day of
+      the vote, from the{" "}
+      <a href="https://github.com/unitedstates/congress-legislators">congress-legislators</a> project
+      {byCaucus && <>: today, {byCaucus}</>}. A member who switched to independent mid-Congress is counted under their
+      old party for the votes before the switch. An independent who caucuses with neither party would be counted on
+      their own. On member pages, "broke with party" means siding with a quarter of their party (or caucus) or less.
+    </p>
+    <p>
+      Lobbying comes from the quarterly LD-2 reports lobbyists file on <a href="https://lda.gov/">lda.gov</a>,{" "}
+      {lobbyingSpan}. Each report describes the issues lobbied on in free text, and about a quarter of them name bills by
+      number ("H.R. 3633", "S.1582"). An organization is listed on a bill's page when one of its reports names the bill.
+      A citation is dropped when the bill hadn't been introduced by the end of the report's quarter (bill numbers start
+      over every Congress, so that's an older bill with the same number), or when the filer wrote a name beside the
+      number that's plainly a different bill. Some typos will still get through.
+    </p>
+    <p>
+      Two things the reports don't say. They don't say <strong>which side</strong> an organization took: an organization
+      listed on a bill may have backed it, opposed it, or wanted part of it changed, and fewer than one in ten reports say
+      which. And they don't say <strong>how much was spent on any one bill</strong>: a report's spending covers every
+      issue lobbied on that quarter. So this site doesn't put an organization's PAC money next to how members voted on
+      the bills it lobbied on. Reports name what was lobbied on, not what was paid for.
+    </p>
+
+    <h2 id="investments">Investments</h2>
+    <p>
+      <a href="/holdings/">Investments</a> comes from the financial disclosure reports House members file with the{" "}
+      <a href="https://disclosures-clerk.house.gov/FinancialDisclosure">Clerk of the House</a>: an annual report each May
+      (or August, with an extension) listing what they, their spouses and dependent children owned at the end of the
+      year, and a transaction report within 45 days of any stock or bond trade over $1,000. Senators file with the Senate,
+      whose search is not yet included.
+    </p>
+    <p>
+      Reports give a <strong>range</strong> for every value, like $15,001–$50,000, never a figure, so totals here are
+      ranges too: the low ends added up, and the high ends. Each holding and trade says <strong>whose</strong> it is.
+      Mutual funds, ETFs and retirement accounts are listed by name only, so they aren't counted toward any company or
+      industry, and their trades don't have to be reported. Companies and industries come from matching names and tickers
+      to SEC filings.
+    </p>
+    <p>
+      Most members file online. Some file on <strong>paper</strong>, which the House posts as scanned images. Those are
+      read by machine: the text is recognized and each checkbox is judged by how much ink is in it. A row is left out when
+      a mark is missing or ambiguous, its dates don't read the same way twice, or its owner is unreadable. Rows read
+      this way are tagged <strong>Scan</strong> and link to their page of the original, and may still contain mistakes,
+      so check the original before relying on one. Handwritten pages and attached brokerage statements aren't read.
+    </p>
+    <p>
+      Owning a stock isn't a conflict of interest by itself, and a company's PAC money and members' holdings of its stock
+      are shown separately. Under{" "}
+      <a href="https://www.law.cornell.edu/uscode/text/5/13107">5 U.S.C. § 13107</a>, these reports may not be obtained or
+      used for any unlawful or commercial purpose (other than by news media), to determine a credit rating, or to solicit
+      money for any political, charitable or other purpose. This data is not part of this site's{" "}
+      <a href="/open-data/">open data</a>.
     </p>
 
     <h2 id="labeler">The Bluesky labeler</h2>

@@ -105,6 +105,30 @@ export interface CommitteeCard {
   lean?: { sector: string; share: number; base: number };
 }
 
+export interface BillCard {
+  type: "bill";
+  /** "H.R. 3633" */
+  label: string;
+  name: string;
+  policyArea?: string;
+  /** "Became law" / "Passed the House" / "Failed in the Senate" */
+  status: string;
+  /** The latest passage vote. */
+  vote: {
+    chamber: string;
+    /** "Jul 17, 2025" */
+    date: string;
+    /** "Party line" / "Split" / "Near-unanimous" */
+    pattern: string;
+    rows: { party: Party; yes: number; no: number; other: number; note?: string }[];
+  };
+  /** "119th Congress", for the footer. */
+  congress: string;
+  /** How many organizations' lobbying reports name it, and the ones that named it most. */
+  lobbying: number;
+  top: { label: string; reports: number }[];
+}
+
 export interface PageCard {
   type: "page";
   kicker: string;
@@ -117,7 +141,7 @@ export interface PageCard {
   lines?: { strong: string; text: string }[];
 }
 
-export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | PageCard;
+export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | PageCard;
 
 export interface CardsFile {
   version: string;

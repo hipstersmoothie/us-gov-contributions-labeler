@@ -1,5 +1,5 @@
 ---
-// Prototype: what a member reported owning and trading, from House financial
+// What a member reported owning and trading, from House financial
 // disclosures. Its own page, apart from the campaign money, so holdings never
 // sit beside "biggest backers" as if one explained the other.
 import Base from "../../../layouts/Base.astro";
@@ -79,7 +79,6 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
     </div>
   </header>
 
-  <p class="prototype-flag">Prototype. Built from House financial disclosure reports on a branch; not on the live site.</p>
 
   {
     (paperAnnual && !d.annualScanned) || !d.annual ? (
@@ -367,10 +366,6 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
   .scan-note {
     font-size: var(--fs-sm); color: var(--text-secondary); max-width: 680px; margin: 0 0 var(--sp-4);
     padding: var(--sp-2) var(--sp-3); border-left: 3px solid var(--baseline); background: var(--surface-2);
-  }
-  .prototype-flag {
-    display: inline-block; font-size: var(--fs-sm); color: var(--text-secondary); margin: 0 0 var(--sp-5);
-    padding: var(--sp-1) var(--sp-3); border-left: 3px solid var(--accent); background: var(--surface-2);
   }
   .holdings td, .trades td, .overlap td { font-size: var(--fs-base); }
   .nowrap { white-space: nowrap; }

@@ -7,10 +7,11 @@ export const TYPE_LABEL: Record<SearchType, string> = {
   o: "Organizations",
   p: "PACs and outside groups",
   d: "Big donors",
+  b: "Bills",
 };
-export const TYPE_ORDER: SearchType[] = ["m", "o", "p", "d", "c"];
+export const TYPE_ORDER: SearchType[] = ["m", "o", "p", "d", "b", "c"];
 
-const PATH: Record<SearchType, string> = { m: "members", c: "committees", o: "organizations", p: "pacs", d: "donors" };
+const PATH: Record<SearchType, string> = { m: "members", c: "committees", o: "organizations", p: "pacs", d: "donors", b: "bills" };
 export const urlFor = (type: SearchType, id: string) => `/${PATH[type]}/${id}/`;
 
 export interface Hit {

@@ -3,8 +3,9 @@
 // prominent entries rank first) is rounded to keep the file small.
 import { members, organizations, committees, donors, congressCommittees, displayName, kindLabel } from "./data";
 import { pacTotal } from "./derived";
+import { bills, shortStatus } from "./legislation";
 
-export type SearchType = "m" | "c" | "o" | "p" | "d";
+export type SearchType = "m" | "c" | "o" | "p" | "d" | "b";
 export type SearchRow = [type: SearchType, id: string, label: string, detail: string, weight: number];
 
 const w = (n: number) => Math.round(n / 1000);
@@ -32,6 +33,8 @@ function rows(limit?: number): SearchRow[] {
       kindLabel(c.kind),
       w(c.total + (c.outside ? c.outside.support + c.outside.oppose : 0)),
     ]),
+    // The number is part of the label so "H.R. 1" finds it too.
+    ...bills.map((b): SearchRow => ["b", b.id, `${b.name} (${b.label})`, [b.policyArea, shortStatus(b)].filter(Boolean).join(" · "), b.lobbying.length]),
     ...top(donors, (d) => d.total).map((d): SearchRow => [
       "d",
       d.id,

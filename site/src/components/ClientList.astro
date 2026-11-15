@@ -1,0 +1,26 @@
+---
+// Organizations whose lobbying reports name a bill, as a compact list.
+// Rendered on its own as a fragment page; its styles are in styles/bill-lists.css.
+import type { LobbyingClient } from "../lib/legislation";
+
+interface Props {
+  clients: LobbyingClient[];
+}
+const { clients } = Astro.props;
+const said = (c: LobbyingClient) => (c.stance === "support" ? ", supports" : c.stance === "oppose" ? ", opposes" : "");
+---
+
+<ul class="client-list">
+  {
+    clients.map((c) => (
+      <li>
+        {c.org ? <a href={`/organizations/${c.org}/`}>{c.name}</a> : c.name}
+        <span class="muted small">
+          {" "}· {c.quarters.length} report{c.quarters.length === 1 ? "" : "s"}
+          {said(c)}
+        </span>
+      </li>
+    ))
+  }
+</ul>
+

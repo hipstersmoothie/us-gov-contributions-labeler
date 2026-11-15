@@ -2,7 +2,8 @@
 import { members, organizations, donors, committeeById, displayName, partyLetter } from "./data";
 import { pacTotal, raisedTotal, shortSeat } from "./derived";
 import { surname } from "./format";
-import type { DonorRow, MemberRow, OrgRow } from "../islands/types";
+import { bills, shortStatus } from "./legislation";
+import type { BillRow, DonorRow, MemberRow, OrgRow } from "../islands/types";
 
 export const memberRows = (): MemberRow[] =>
   members.map((m) => ({
@@ -35,5 +36,21 @@ export const donorRows = (): DonorRow[] =>
       about: d.type === "individual" ? [d.occupation, d.employer].filter(Boolean).join(", ") : "",
       top: top ? displayName(top.name) : "",
       total: Math.round(d.total),
+    };
+  });
+
+export const billRows = (): BillRow[] =>
+  bills.map((b) => {
+    const last = b.votes.at(-1)!;
+    return {
+      id: b.id,
+      label: b.label,
+      name: b.name,
+      policyArea: b.policyArea ?? "",
+      status: shortStatus(b),
+      law: !!b.law,
+      lastVote: last.date,
+      pattern: last.pattern,
+      lobbying: b.lobbying.length,
     };
   });

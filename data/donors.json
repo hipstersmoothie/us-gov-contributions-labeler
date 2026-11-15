@@ -8,7 +8,7 @@
   "donors": [
     {
       "id": "c00484642",
-      "name": "Smp",
+      "name": "SMP",
       "type": "committee",
       "state": "DC",
       "committee": "C00484642",
@@ -1825,7 +1825,7 @@
       "name": "Association Nea Advocacy Fund",
       "type": "individual",
       "state": "DC",
-      "employer": "Nea",
+      "employer": "NEA",
       "occupation": "Not Applicable",
       "gifts": [
         {
@@ -2285,7 +2285,7 @@
     },
     {
       "id": "smp",
-      "name": "Smp",
+      "name": "SMP",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -3203,7 +3203,7 @@
     },
     {
       "id": "c00348540",
-      "name": "1199 Seiu United Healthcare Workers East Federal Political Action Fund",
+      "name": "1199 SEIU United Healthcare Workers East Federal Political Action Fund",
       "type": "committee",
       "state": "NY",
       "committee": "C00348540",
@@ -3834,7 +3834,7 @@
       "name": "Thomas Klingenstein",
       "type": "individual",
       "state": "NY",
-      "employer": "Cohen Klingenstein Ll",
+      "employer": "Cohen Klingenstein LL",
       "occupation": "Investment Counselor",
       "gifts": [
         {
@@ -4034,7 +4034,7 @@
       "id": "samuel-bankman-fried-us",
       "name": "Samuel Bankman-Fried",
       "type": "individual",
-      "employer": "Ftx",
+      "employer": "FTX",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -4250,7 +4250,7 @@
     },
     {
       "id": "c00669259",
-      "name": "Ff PAC",
+      "name": "FF PAC",
       "type": "committee",
       "state": "DC",
       "committee": "C00669259",
@@ -4281,7 +4281,7 @@
     },
     {
       "id": "lcv-victory",
-      "name": "Lcv Victory Fund",
+      "name": "LCV Victory Fund",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -4675,7 +4675,7 @@
     },
     {
       "id": "seiu-cope",
-      "name": "Seiu Cope (Service Employees International Union Committee on Political Education)",
+      "name": "SEIU Cope (Service Employees International Union Committee on Political Education)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -4946,7 +4946,7 @@
     },
     {
       "id": "ibew-educational",
-      "name": "Ibew PAC Educational Fund",
+      "name": "IBEW PAC Educational Fund",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -5099,7 +5099,7 @@
     },
     {
       "id": "nea-advocacy",
-      "name": "Nea Advocacy Fund",
+      "name": "NEA Advocacy Fund",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -6446,7 +6446,7 @@
     },
     {
       "id": "energy-transfer",
-      "name": "Energy Transfer Lp",
+      "name": "Energy Transfer LP",
       "type": "organization",
       "state": "TX",
       "organization": "energy-transfer",
@@ -6603,7 +6603,7 @@
     },
     {
       "id": "hmp",
-      "name": "Hmp",
+      "name": "HMP",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -6869,7 +6869,7 @@
     },
     {
       "id": "seiu-general",
-      "name": "Seiu General Fund",
+      "name": "SEIU General Fund",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -7375,7 +7375,7 @@
       "name": "Ronald Conway",
       "type": "individual",
       "state": "CA",
-      "employer": "Sv Angel, LLC",
+      "employer": "SV Angel, LLC",
       "occupation": "Investor",
       "gifts": [
         {
@@ -8007,7 +8007,7 @@
       "name": "Ryan Salame",
       "type": "individual",
       "state": "MA",
-      "employer": "Ftx Digital Markets",
+      "employer": "FTX Digital Markets",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -8046,7 +8046,7 @@
       "name": "Michael Rydin",
       "type": "individual",
       "state": "TX",
-      "employer": "Hcss",
+      "employer": "HCSS",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -8132,7 +8132,7 @@
     },
     {
       "id": "c00489815",
-      "name": "Nea Advocacy Fund",
+      "name": "NEA Advocacy Fund",
       "type": "committee",
       "state": "DC",
       "committee": "C00489815",
@@ -8376,7 +8376,7 @@
     },
     {
       "id": "nrdc-action",
-      "name": "Nrdc Action Fund",
+      "name": "NRDC Action Fund",
       "type": "organization",
       "state": "DC",
       "organization": "nrdc-action",
@@ -9277,7 +9277,7 @@
     },
     {
       "id": "c00004036",
-      "name": "Seiu Cope (Service Employees International Union Committee on Political Education)",
+      "name": "SEIU Cope (Service Employees International Union Committee on Political Education)",
       "type": "committee",
       "state": "DC",
       "committee": "C00004036",
@@ -9752,7 +9752,7 @@
     },
     {
       "id": "united-democracy-project",
-      "name": "United Democracy Project (Udp)",
+      "name": "United Democracy Project (UDP)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -9797,7 +9797,7 @@
     },
     {
       "id": "ua-union-plumbers-and-pipefitters-vote",
-      "name": "Ua Union Plumbers & Pipefitters Vote! PAC (United Association of Journeymen and Apprentices of the Plumbing & Pipefitting Industry of the United States and Canada)",
+      "name": "UA Union Plumbers & Pipefitters Vote! PAC (United Association of Journeymen and Apprentices of the Plumbing & Pipefitting Industry of the United States and Canada)",
       "type": "committee",
       "state": "MD",
       "gifts": [
@@ -10028,7 +10028,7 @@
     },
     {
       "id": "c00799031",
-      "name": "United Democracy Project ('Udp')",
+      "name": "United Democracy Project ('UDP')",
       "type": "committee",
       "state": "DC",
       "committee": "C00799031",
@@ -10228,7 +10228,7 @@
     },
     {
       "id": "defending-democracy-together",
-      "name": "Defending Democracy Together (Ddt)",
+      "name": "Defending Democracy Together (DDT)",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -11239,7 +11239,7 @@
     },
     {
       "id": "afscme-working-families",
-      "name": "Afscme Working Families Fund",
+      "name": "AFSCME Working Families Fund",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -11546,7 +11546,7 @@
     },
     {
       "id": "c00782656",
-      "name": "Alabama Christian Conservatives (Acc)",
+      "name": "Alabama Christian Conservatives (ACC)",
       "type": "committee",
       "state": "TX",
       "committee": "C00782656",
@@ -11751,7 +11751,7 @@
     },
     {
       "id": "ff",
-      "name": "Ff PAC",
+      "name": "FF PAC",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -12357,7 +12357,7 @@
       "name": "Walter Schlaepfer",
       "type": "individual",
       "state": "CO",
-      "employer": "Jpm",
+      "employer": "JPM",
       "occupation": "Advisor",
       "gifts": [
         {
@@ -12380,7 +12380,7 @@
     },
     {
       "id": "paradigm-operations",
-      "name": "Paradigm Operations Lp",
+      "name": "Paradigm Operations LP",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -12811,7 +12811,7 @@
     },
     {
       "id": "c00486845",
-      "name": "Lcv Victory Fund",
+      "name": "LCV Victory Fund",
       "type": "committee",
       "state": "DC",
       "committee": "C00486845",
@@ -13387,7 +13387,7 @@
     },
     {
       "id": "slf",
-      "name": "Slf PAC",
+      "name": "SLF PAC",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -13426,7 +13426,7 @@
     },
     {
       "id": "blockchain-com",
-      "name": "Blockchain.Com, Inc.",
+      "name": "Blockchain.com, Inc.",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -13643,7 +13643,7 @@
     },
     {
       "id": "trt",
-      "name": "Trt Holdings Inc.",
+      "name": "TRT Holdings Inc.",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -13855,7 +13855,7 @@
     },
     {
       "id": "c00495028",
-      "name": "Hmp",
+      "name": "HMP",
       "type": "committee",
       "state": "DC",
       "committee": "C00495028",
@@ -15114,7 +15114,7 @@
     },
     {
       "id": "uaw-v-cap",
-      "name": "Uaw - V - Cap",
+      "name": "UAW - V - Cap",
       "type": "committee",
       "state": "MI",
       "gifts": [
@@ -15352,7 +15352,7 @@
     },
     {
       "id": "energy-transfer-partners",
-      "name": "Energy Transfer Partners Lp",
+      "name": "Energy Transfer Partners LP",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -15630,7 +15630,7 @@
     },
     {
       "id": "c00007922",
-      "name": "Laborers' International Union of North America (Liuna) PAC",
+      "name": "Laborers' International Union of North America (LIUNA) PAC",
       "type": "committee",
       "state": "DC",
       "committee": "C00007922",
@@ -15949,7 +15949,7 @@
     },
     {
       "id": "c00214643",
-      "name": "Nj State Laborers PAC/ Laborers' International Union of North America (Liuna) PAC",
+      "name": "NJ State Laborers PAC/ Laborers' International Union of North America (LIUNA) PAC",
       "type": "committee",
       "state": "NJ",
       "gifts": [
@@ -18303,7 +18303,7 @@
     },
     {
       "id": "civitech-pbc",
-      "name": "Civitech, Pbc",
+      "name": "Civitech, PBC",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -18474,7 +18474,7 @@
       "name": "Joseph Kaempfer",
       "type": "individual",
       "state": "VA",
-      "employer": "Mcarthur Glen Group",
+      "employer": "McArthur Glen Group",
       "occupation": "Executive",
       "gifts": [
         {
@@ -18977,7 +18977,7 @@
     },
     {
       "id": "communications-workers-of-america-cope-pcc",
-      "name": "Communications Workers of America Cope Pcc",
+      "name": "Communications Workers of America Cope PCC",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -19232,7 +19232,7 @@
     },
     {
       "id": "defend-us",
-      "name": "Defend Us Inc",
+      "name": "Defend US Inc",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -19395,7 +19395,7 @@
     },
     {
       "id": "ibew-voluntary",
-      "name": "Ibew PAC Voluntary Fund",
+      "name": "IBEW PAC Voluntary Fund",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -19486,7 +19486,7 @@
     },
     {
       "id": "sd",
-      "name": "Sd PAC",
+      "name": "SD PAC",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -20450,7 +20450,7 @@
     },
     {
       "id": "afscme-special-account",
-      "name": "Afscme Special Account",
+      "name": "AFSCME Special Account",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -20912,7 +20912,7 @@
     },
     {
       "id": "devon-energy-production",
-      "name": "Devon Energy Production Co. Lp",
+      "name": "Devon Energy Production Co. LP",
       "type": "organization",
       "state": "OK",
       "gifts": [
@@ -21311,7 +21311,7 @@
     },
     {
       "id": "c00029504",
-      "name": "Engineers Political Education Committee (Epec)/International Union of Operating Engineers",
+      "name": "Engineers Political Education Committee (EPEC)/International Union of Operating Engineers",
       "type": "committee",
       "state": "DC",
       "committee": "C00029504",
@@ -21336,7 +21336,7 @@
     },
     {
       "id": "seiu-california-state-council-for-working-people",
-      "name": "Seiu California State Council for Working People",
+      "name": "SEIU California State Council for Working People",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -21389,7 +21389,7 @@
       "name": "Geoffrey Palmer",
       "type": "individual",
       "state": "CA",
-      "employer": "Gh Palmer Assoc.",
+      "employer": "GH Palmer Assoc.",
       "occupation": "Partner",
       "gifts": [
         {
@@ -21414,7 +21414,7 @@
       "name": "Larry Mizel",
       "type": "individual",
       "state": "CO",
-      "employer": "Mdc Holdings",
+      "employer": "MDC Holdings",
       "occupation": "Executive Chairman",
       "gifts": [
         {
@@ -21651,7 +21651,7 @@
     },
     {
       "id": "engineers-education-international-union-of-operating-engineers",
-      "name": "Engineers Political Education Committee (Epec) / International Union of Operating Engineers",
+      "name": "Engineers Political Education Committee (EPEC) / International Union of Operating Engineers",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -21855,7 +21855,7 @@
     },
     {
       "id": "c00426163",
-      "name": "Nys Conference Iuoe Federal Vpaf",
+      "name": "Nys Conference IUOE Federal Vpaf",
       "type": "committee",
       "state": "NY",
       "gifts": [
@@ -22530,7 +22530,7 @@
       "name": "Robert Rowling",
       "type": "individual",
       "state": "TX",
-      "employer": "Trt Holdings",
+      "employer": "TRT Holdings",
       "occupation": "Attorney Executive",
       "gifts": [
         {
@@ -23277,7 +23277,7 @@
       "name": "Suzanne Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -23748,7 +23748,7 @@
       "name": "Daniel Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -24057,7 +24057,7 @@
     },
     {
       "id": "rjc-victory",
-      "name": "Rjc Victory Fund",
+      "name": "RJC Victory Fund",
       "type": "committee",
       "state": "VA",
       "gifts": [
@@ -24401,7 +24401,7 @@
       "name": "Scott Wagner",
       "type": "individual",
       "state": "MD",
-      "employer": "Kbs Capital, LLC",
+      "employer": "KBS Capital, LLC",
       "occupation": "Investor",
       "gifts": [
         {
@@ -25147,7 +25147,7 @@
       "name": "Byron Trott",
       "type": "individual",
       "state": "FL",
-      "employer": "Bdt & Msd Partners",
+      "employer": "BDT & MSD Partners",
       "occupation": "Chairman and Co-Ceo",
       "gifts": [
         {
@@ -25163,7 +25163,7 @@
     },
     {
       "id": "keep-florida-free",
-      "name": "Keep Florida Free Pc",
+      "name": "Keep Florida Free PC",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -25285,7 +25285,7 @@
     },
     {
       "id": "c00780841",
-      "name": "Principled Veterans Fund (Pv Fund)",
+      "name": "Principled Veterans Fund (PV Fund)",
       "type": "committee",
       "state": "VA",
       "committee": "C00780841",
@@ -25380,7 +25380,7 @@
       "name": "Clive Fields",
       "type": "individual",
       "state": "TX",
-      "employer": "Village Md",
+      "employer": "Village MD",
       "occupation": "Co-Founder",
       "gifts": [
         {
@@ -25892,7 +25892,7 @@
       "name": "Donald Wilson",
       "type": "individual",
       "state": "IL",
-      "employer": "Drw",
+      "employer": "DRW",
       "occupation": "Founder and Ceo, Drw",
       "gifts": [
         {
@@ -26178,7 +26178,7 @@
       "name": "Doug Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -26531,7 +26531,7 @@
     },
     {
       "id": "cvs-health",
-      "name": "Cvs Health",
+      "name": "CVS Health",
       "type": "organization",
       "state": "DC",
       "organization": "cvs-health",
@@ -26636,7 +26636,7 @@
       "name": "Joseph Craft",
       "type": "individual",
       "state": "OK",
-      "employer": "Alliance Resource Partners Lp",
+      "employer": "Alliance Resource Partners LP",
       "occupation": "Executive",
       "gifts": [
         {
@@ -27492,7 +27492,7 @@
     },
     {
       "id": "service-international-union-education-and-action",
-      "name": "Service Employees International Union Political Education and Action Fund (Seiu Pea) (Mpo)",
+      "name": "Service Employees International Union Political Education and Action Fund (SEIU Pea) (Mpo)",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -27522,7 +27522,7 @@
     },
     {
       "id": "multicoin-capital-gp",
-      "name": "Multicoin Capital Gp LLC",
+      "name": "Multicoin Capital GP LLC",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -27895,7 +27895,7 @@
       "name": "Joe Craft",
       "type": "individual",
       "state": "OK",
-      "employer": "Alliance Resource Partners Lp",
+      "employer": "Alliance Resource Partners LP",
       "occupation": "Executive",
       "gifts": [
         {
@@ -28379,7 +28379,7 @@
       "name": "Suzanne Cheryl Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -28477,7 +28477,7 @@
     },
     {
       "id": "jp-morgan-chase-bank",
-      "name": "Jp Morgan Chase Bank, N.a.",
+      "name": "JP Morgan Chase Bank, N.a.",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -28641,7 +28641,7 @@
     },
     {
       "id": "splc-action",
-      "name": "Splc Action Fund",
+      "name": "SPLC Action Fund",
       "type": "organization",
       "state": "AL",
       "gifts": [
@@ -30391,7 +30391,7 @@
       "name": "Paul Levy",
       "type": "individual",
       "state": "NY",
-      "employer": "Jll Partners",
+      "employer": "JLL Partners",
       "occupation": "Managing Director",
       "gifts": [
         {
@@ -30409,7 +30409,7 @@
       "name": "Walter Schlaepfer",
       "type": "individual",
       "state": "WA",
-      "employer": "Jp Morgan",
+      "employer": "JP Morgan",
       "occupation": "Wealth Advisor",
       "gifts": [
         {
@@ -30783,7 +30783,7 @@
     },
     {
       "id": "lrf-jr",
-      "name": "Lrf Jr, LLC",
+      "name": "LRF Jr, LLC",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -31376,7 +31376,7 @@
       "name": "William Reily",
       "type": "individual",
       "state": "LA",
-      "employer": "Wm B Reily & Co. Inc.",
+      "employer": "WM B Reily & Co. Inc.",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -31407,7 +31407,7 @@
     },
     {
       "id": "jwc-iii-revocable-trust",
-      "name": "Jwc Iii Revocable Trust",
+      "name": "JWC Iii Revocable Trust",
       "type": "organization",
       "state": "OK",
       "gifts": [
@@ -31717,7 +31717,7 @@
       "name": "Jeffrey Skoll",
       "type": "individual",
       "state": "FL",
-      "employer": "Goodlands Florida Property Mgm",
+      "employer": "Goodlands Florida Property MGM",
       "occupation": "Businessman",
       "gifts": [
         {
@@ -31833,7 +31833,7 @@
     },
     {
       "id": "tg",
-      "name": "Tg Holdings LLC",
+      "name": "TG Holdings LLC",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -32018,7 +32018,7 @@
     },
     {
       "id": "c00012476",
-      "name": "Ua Union Plumbers & Pipefitters Vote! PAC (United Association of Journeymen and Apprentices of the Plumbing & Pipefitting Industry of the United States and Canada)",
+      "name": "UA Union Plumbers & Pipefitters Vote! PAC (United Association of Journeymen and Apprentices of the Plumbing & Pipefitting Industry of the United States and Canada)",
       "type": "committee",
       "state": "MD",
       "committee": "C00012476",
@@ -32138,7 +32138,7 @@
       "name": "Jacob Brodie",
       "type": "individual",
       "state": "PA",
-      "employer": "Bgcp",
+      "employer": "BGCP",
       "occupation": "Executive",
       "gifts": [
         {
@@ -32819,7 +32819,7 @@
       "name": "Maria Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -33335,7 +33335,7 @@
     },
     {
       "id": "afscme",
-      "name": "Afscme PAC",
+      "name": "AFSCME PAC",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -33731,7 +33731,7 @@
       "name": "Richard Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -34649,7 +34649,7 @@
     },
     {
       "id": "afscme-people",
-      "name": "Afscme People",
+      "name": "AFSCME People",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -34998,7 +34998,7 @@
     },
     {
       "id": "pattern-energy",
-      "name": "Pattern Energy Group, Lp",
+      "name": "Pattern Energy Group, LP",
       "type": "organization",
       "state": "CA",
       "organization": "pattern-energy",
@@ -35269,7 +35269,7 @@
     },
     {
       "id": "institute-for-middle-east-understanding-policy-project",
-      "name": "The Institute for Middle East Understanding (Imeu) Policy Project",
+      "name": "The Institute for Middle East Understanding (IMEU) Policy Project",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -35710,7 +35710,7 @@
       "name": "Nishad Singh",
       "type": "individual",
       "state": "AA",
-      "employer": "Ftx",
+      "employer": "FTX",
       "occupation": "Director of Engineering",
       "gifts": [
         {
@@ -36114,7 +36114,7 @@
     },
     {
       "id": "shg-management",
-      "name": "Shg Management LLC",
+      "name": "SHG Management LLC",
       "type": "organization",
       "state": "OH",
       "gifts": [
@@ -36180,7 +36180,7 @@
     },
     {
       "id": "dk-crown",
-      "name": "Dk Crown Holdings Inc.",
+      "name": "DK Crown Holdings Inc.",
       "type": "organization",
       "state": "MA",
       "gifts": [
@@ -36203,7 +36203,7 @@
     },
     {
       "id": "delek-us-energy",
-      "name": "Delek Us Energy Inc",
+      "name": "Delek US Energy Inc",
       "type": "organization",
       "state": "TN",
       "gifts": [
@@ -36365,7 +36365,7 @@
     },
     {
       "id": "dm-impact-summer",
-      "name": "Dm Impact Summer Fund",
+      "name": "DM Impact Summer Fund",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -36437,7 +36437,7 @@
     },
     {
       "id": "planned-parenthood-mn-nd-sd-action",
-      "name": "Planned Parenthood Mn Nd Sd Action Fund",
+      "name": "Planned Parenthood MN ND SD Action Fund",
       "type": "organization",
       "state": "MN",
       "gifts": [
@@ -36719,7 +36719,7 @@
     },
     {
       "id": "doordash",
-      "name": "Doordash Inc.",
+      "name": "DoorDash Inc.",
       "type": "organization",
       "state": "CA",
       "organization": "doordash",
@@ -36908,7 +36908,7 @@
     },
     {
       "id": "c00002840",
-      "name": "Uaw - V - Cap (Uaw Voluntary Community Action Program) 'Int'l Union United Automobile Aerospace & Agricultural Implement Workers of America Uaw",
+      "name": "UAW - V - Cap (UAW Voluntary Community Action Program) 'Int'l Union United Automobile Aerospace & Agricultural Implement Workers of America UAW",
       "type": "committee",
       "state": "MI",
       "committee": "C00002840",
@@ -37150,7 +37150,7 @@
       "name": "Leslie Bluhm",
       "type": "individual",
       "state": "IL",
-      "employer": "Jmb",
+      "employer": "JMB",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -37560,7 +37560,7 @@
     },
     {
       "id": "dignity-ca-service-international-union-seiu-local-2015",
-      "name": "Dignity Ca Service Employees International Union Seiu Local 2015",
+      "name": "Dignity Ca Service Employees International Union SEIU Local 2015",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -37609,7 +37609,7 @@
     },
     {
       "id": "pmi-us-corporate-services",
-      "name": "Pmi Us Corporate Services",
+      "name": "Pmi US Corporate Services",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -37714,7 +37714,7 @@
     },
     {
       "id": "thomas-j-henry-law-pllc",
-      "name": "Thomas J Henry Law Pllc",
+      "name": "Thomas J Henry Law PLLC",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -38112,7 +38112,7 @@
     },
     {
       "id": "c00432815",
-      "name": "Local 399 International Union of Operating Engineers Federal PAC (Local 399 Iuoe Fed PAC)",
+      "name": "Local 399 International Union of Operating Engineers Federal PAC (Local 399 IUOE Fed PAC)",
       "type": "committee",
       "state": "IL",
       "committee": "C00432815",
@@ -38696,7 +38696,7 @@
     },
     {
       "id": "chc-bold",
-      "name": "Chc Bold PAC",
+      "name": "CHC Bold PAC",
       "type": "committee",
       "state": "TX",
       "gifts": [
@@ -38893,7 +38893,7 @@
       "name": "Ron Conway",
       "type": "individual",
       "state": "CA",
-      "employer": "Sv Angel, LLC",
+      "employer": "SV Angel, LLC",
       "occupation": "Investor",
       "gifts": [
         {
@@ -39371,7 +39371,7 @@
       "name": "Douglas Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -39396,7 +39396,7 @@
       "name": "Elisabeth Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -39426,7 +39426,7 @@
     },
     {
       "id": "c00874875",
-      "name": "Voters for Responsive Government (Vrg)",
+      "name": "Voters for Responsive Government (VRG)",
       "type": "committee",
       "state": "CA",
       "committee": "C00874875",
@@ -39459,7 +39459,7 @@
     },
     {
       "id": "c00757419",
-      "name": "Sd PAC",
+      "name": "SD PAC",
       "type": "committee",
       "state": "DC",
       "committee": "C00757419",
@@ -39599,7 +39599,7 @@
     },
     {
       "id": "arkansas-for-leadership",
-      "name": "Arkansas for Leadership Political Action Committee (Arkpac)",
+      "name": "Arkansas for Leadership Political Action Committee (ARKPAC)",
       "type": "committee",
       "state": "VA",
       "gifts": [
@@ -40071,7 +40071,7 @@
       "name": "Andrew Mckenna",
       "type": "individual",
       "state": "VA",
-      "employer": "Mckenna Associates",
+      "employer": "McKenna Associates",
       "occupation": "Finance Consulting",
       "gifts": [
         {
@@ -40119,7 +40119,7 @@
     },
     {
       "id": "cfg-community-bank",
-      "name": "Cfg Community Bank",
+      "name": "CFG Community Bank",
       "type": "organization",
       "state": "MD",
       "gifts": [
@@ -40646,7 +40646,7 @@
     },
     {
       "id": "1199-seiu-united-healthcare-workers-east",
-      "name": "1199 Seiu United Healthcare Workers East",
+      "name": "1199 SEIU United Healthcare Workers East",
       "type": "organization",
       "state": "NY",
       "organization": "1199-seiu-united-healthcare-workers-east",
@@ -40734,7 +40734,7 @@
     },
     {
       "id": "ua-union-plumber-and-pipefitters-vote",
-      "name": "Ua Union Plumber & Pipefitters Vote! PAC",
+      "name": "UA Union Plumber & Pipefitters Vote! PAC",
       "type": "committee",
       "state": "MD",
       "gifts": [
@@ -40844,7 +40844,7 @@
       "name": "Henry Kravis",
       "type": "individual",
       "state": "NY",
-      "employer": "Kkr",
+      "employer": "KKR",
       "occupation": "Co-Executive Chairman",
       "gifts": [
         {
@@ -41004,7 +41004,7 @@
     },
     {
       "id": "seiu-education-and-action",
-      "name": "Seiu Political Education and Action Fund",
+      "name": "SEIU Political Education and Action Fund",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -41146,7 +41146,7 @@
       "name": "Steve Zelin",
       "type": "individual",
       "state": "NY",
-      "employer": "Pjt Partners",
+      "employer": "PJT Partners",
       "occupation": "Restructuring",
       "gifts": [
         {
@@ -41212,7 +41212,7 @@
     },
     {
       "id": "ngb-2016-revocable-trust",
-      "name": "Ngb 2016 Revocable Trust",
+      "name": "NGB 2016 Revocable Trust",
       "type": "organization",
       "state": "IL",
       "gifts": [
@@ -41294,7 +41294,7 @@
       "name": "Thomas Axon",
       "type": "individual",
       "state": "NJ",
-      "employer": "Rmts LLC",
+      "employer": "RMTS LLC",
       "occupation": "Chairman",
       "gifts": [
         {
@@ -41445,7 +41445,7 @@
     },
     {
       "id": "1199-seiu-united-healthcare-workers",
-      "name": "1199 Seiu United Healthcare Workers",
+      "name": "1199 SEIU United Healthcare Workers",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -41559,7 +41559,7 @@
       "name": "James Coulter",
       "type": "individual",
       "state": "TX",
-      "employer": "Tpg",
+      "employer": "TPG",
       "occupation": "Founding Partner & Co-Ceo",
       "gifts": [
         {
@@ -41789,7 +41789,7 @@
     },
     {
       "id": "1000-trt",
-      "name": "1000- Trt Holdings Inc",
+      "name": "1000- TRT Holdings Inc",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -42346,7 +42346,7 @@
     },
     {
       "id": "republican-attorney-general-association",
-      "name": "Republican Attorney General Association (Raga)",
+      "name": "Republican Attorney General Association (RAGA)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -42390,7 +42390,7 @@
       "name": "Dan Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -42556,7 +42556,7 @@
       "name": "Matt Huang",
       "type": "individual",
       "state": "CA",
-      "employer": "Paradigm Operations Lp",
+      "employer": "Paradigm Operations LP",
       "occupation": "Co-Founder and Managing Partner",
       "gifts": [
         {
@@ -42802,7 +42802,7 @@
       "name": "Edward Shaw",
       "type": "individual",
       "state": "AL",
-      "employer": "Llh Healthcare",
+      "employer": "LLH Healthcare",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -42876,7 +42876,7 @@
     },
     {
       "id": "commonwealth-lng",
-      "name": "Commonwealth Lng",
+      "name": "Commonwealth LNG",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -43102,7 +43102,7 @@
     },
     {
       "id": "c00608505",
-      "name": "Justice Opportunity Strength Honor PAC (Joshpac)",
+      "name": "Justice Opportunity Strength Honor PAC (JOSHPAC)",
       "type": "committee",
       "state": "OH",
       "committee": "C00608505",
@@ -43190,7 +43190,7 @@
       "name": "Paul Segal",
       "type": "individual",
       "state": "CA",
-      "employer": "Ls Power Development, LLC",
+      "employer": "LS Power Development, LLC",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -43226,7 +43226,7 @@
       "name": "Julia Kauffman",
       "type": "individual",
       "state": "KS",
-      "employer": "Murial Mcbrien Kauffman Fndn",
+      "employer": "Murial McBrien Kauffman Fndn",
       "occupation": "Chairman/Ceo",
       "gifts": [
         {
@@ -43310,7 +43310,7 @@
     },
     {
       "id": "seiu-state-council",
-      "name": "Seiu Pa State Council",
+      "name": "SEIU Pa State Council",
       "type": "organization",
       "state": "PA",
       "gifts": [
@@ -43500,7 +43500,7 @@
     },
     {
       "id": "dignity-ca-seiu-local-2015",
-      "name": "Dignity Ca Seiu Local 2015",
+      "name": "Dignity Ca SEIU Local 2015",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -43975,7 +43975,7 @@
     },
     {
       "id": "mgt-hdl",
-      "name": "Mgt Hdl Holdings LLC",
+      "name": "Mgt HDL Holdings LLC",
       "type": "organization",
       "state": "AZ",
       "gifts": [
@@ -44039,7 +44039,7 @@
     },
     {
       "id": "seiu-california-state-council-small-contributor",
-      "name": "Seiu California State Council Small Contributor Committee",
+      "name": "SEIU California State Council Small Contributor Committee",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -44350,7 +44350,7 @@
     },
     {
       "id": "nhs-management",
-      "name": "Nhs Management LLC",
+      "name": "NHS Management LLC",
       "type": "organization",
       "state": "AL",
       "gifts": [
@@ -44407,7 +44407,7 @@
     },
     {
       "id": "wfp-ie",
-      "name": "Wfp Ie Committee",
+      "name": "WFP Ie Committee",
       "type": "committee",
       "state": "NY",
       "gifts": [
@@ -44586,7 +44586,7 @@
       "name": "Richard Devos Jr",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -45327,7 +45327,7 @@
       "name": "David Herro",
       "type": "individual",
       "state": "FL",
-      "employer": "Harris Associates Lp",
+      "employer": "Harris Associates LP",
       "occupation": "Investment Mgmt",
       "gifts": [
         {
@@ -45705,7 +45705,7 @@
       "name": "Jeffrey Hammes",
       "type": "individual",
       "state": "IL",
-      "employer": "Msbd Capital Management Corp.",
+      "employer": "MSBD Capital Management Corp.",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -46531,7 +46531,7 @@
     },
     {
       "id": "c00365536",
-      "name": "Chc Bold PAC",
+      "name": "CHC Bold PAC",
       "type": "committee",
       "state": "DC",
       "committee": "C00365536",
@@ -46719,7 +46719,7 @@
     },
     {
       "id": "take-me-home-wv",
-      "name": "Take Me Home Wv Inc.",
+      "name": "Take Me Home WV Inc.",
       "type": "organization",
       "state": "VA",
       "gifts": [
@@ -46811,7 +46811,7 @@
     },
     {
       "id": "markmessmer-com",
-      "name": "Markmessmer.Com",
+      "name": "Markmessmer.com",
       "type": "committee",
       "state": "IN",
       "gifts": [
@@ -46903,7 +46903,7 @@
     },
     {
       "id": "c00149211",
-      "name": "District Council 37 Afscme Public Employees Organized for Pol & Leg Equality (Dc37people)",
+      "name": "District Council 37 AFSCME Public Employees Organized for Pol & Leg Equality (Dc37people)",
       "type": "committee",
       "state": "NY",
       "gifts": [
@@ -47104,7 +47104,7 @@
       "name": "Betsy Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -47161,7 +47161,7 @@
       "name": "Andrea Wynn",
       "type": "individual",
       "state": "NV",
-      "employer": "Valmore Gp",
+      "employer": "Valmore GP",
       "occupation": "Entrepreneur",
       "gifts": [
         {
@@ -47307,7 +47307,7 @@
       "name": "Ryan David Salame",
       "type": "individual",
       "state": "NY",
-      "employer": "Ftx",
+      "employer": "FTX",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -47412,7 +47412,7 @@
     },
     {
       "id": "bico-associates-gp",
-      "name": "Bico Associates Gp",
+      "name": "Bico Associates GP",
       "type": "organization",
       "state": "TN",
       "gifts": [
@@ -47556,7 +47556,7 @@
     },
     {
       "id": "seiu-caregivers",
-      "name": "Seiu Caregivers",
+      "name": "SEIU Caregivers",
       "type": "organization",
       "state": "PA",
       "gifts": [
@@ -47717,7 +47717,7 @@
     },
     {
       "id": "mccormick-drive",
-      "name": "Mccormick Drive",
+      "name": "McCormick Drive",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -48175,7 +48175,7 @@
       "name": "Bruce Ratchford",
       "type": "individual",
       "state": "WA",
-      "employer": "Bwr Holdings, Lllp",
+      "employer": "BWR Holdings, LLLP",
       "occupation": "Owner",
       "gifts": [
         {
@@ -48305,7 +48305,7 @@
     },
     {
       "id": "uaw-v-cap-intl-union-united-automobile-aero",
-      "name": "Uaw - V - Cap (Uaw Voluntary Community Action Program) 'Int'l Union United Automobile Aero",
+      "name": "UAW - V - Cap (UAW Voluntary Community Action Program) 'Int'l Union United Automobile Aero",
       "type": "committee",
       "state": "MI",
       "gifts": [
@@ -48437,7 +48437,7 @@
     },
     {
       "id": "ibew-education",
-      "name": "Ibew PAC Education Fund",
+      "name": "IBEW PAC Education Fund",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -48561,7 +48561,7 @@
     },
     {
       "id": "c00096156",
-      "name": "Honeywell International Inc. Technologies Public Affairs Council (Honpac)",
+      "name": "Honeywell International Inc. Technologies Public Affairs Council (HONPAC)",
       "type": "committee",
       "state": "DC",
       "committee": "C00096156",
@@ -48765,7 +48765,7 @@
     },
     {
       "id": "1199-seiu-new-york-state",
-      "name": "1199 Seiu New York State Political Action Fund",
+      "name": "1199 SEIU New York State Political Action Fund",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -49010,7 +49010,7 @@
       "name": "Eric Chern",
       "type": "individual",
       "state": "IL",
-      "employer": "Ctc",
+      "employer": "CTC",
       "occupation": "Manager",
       "gifts": [
         {
@@ -49029,7 +49029,7 @@
       "name": "Jeff Horing",
       "type": "individual",
       "state": "NY",
-      "employer": "Jph Private Investments, LLC",
+      "employer": "JPH Private Investments, LLC",
       "occupation": "Member",
       "gifts": [
         {
@@ -49324,7 +49324,7 @@
     },
     {
       "id": "sf-properties",
-      "name": "Sf Properties LLC",
+      "name": "SF Properties LLC",
       "type": "organization",
       "state": "MI",
       "gifts": [
@@ -49469,7 +49469,7 @@
     },
     {
       "id": "c00752543",
-      "name": "Mvp Justice Fund",
+      "name": "MVP Justice Fund",
       "type": "committee",
       "state": "MA",
       "gifts": [
@@ -49507,7 +49507,7 @@
       "name": "Pam Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Dp Fox Ventures LLC",
+      "employer": "DP Fox Ventures LLC",
       "occupation": "Co-Founder",
       "gifts": [
         {
@@ -50582,7 +50582,7 @@
       "name": "Steven Hefter",
       "type": "individual",
       "state": "IL",
-      "employer": "Hlm Capital",
+      "employer": "HLM Capital",
       "occupation": "Investment Manager",
       "gifts": [
         {
@@ -50623,7 +50623,7 @@
     },
     {
       "id": "bharatwaj",
-      "name": "Bharatwaj Holdings Lp",
+      "name": "Bharatwaj Holdings LP",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -50780,7 +50780,7 @@
     },
     {
       "id": "uaw-international",
-      "name": "Uaw International",
+      "name": "UAW International",
       "type": "committee",
       "state": "MI",
       "gifts": [
@@ -50967,7 +50967,7 @@
     },
     {
       "id": "afscme-special-payables",
-      "name": "Afscme Special Payables",
+      "name": "AFSCME Special Payables",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -51361,7 +51361,7 @@
     },
     {
       "id": "1199-seiu-united-healthcare-workers-east-home-care",
-      "name": "1199 Seiu United Healthcare Workers East Home Care Political Action Fund",
+      "name": "1199 SEIU United Healthcare Workers East Home Care Political Action Fund",
       "type": "committee",
       "state": "NY",
       "gifts": [
@@ -51549,7 +51549,7 @@
     },
     {
       "id": "uaw-v-cap-intl-union-united-automobile-aerospace-and-agricultural-implement-workers-of-america-uaw",
-      "name": "Uaw - V - Cap (Uaw Voluntary Community Action Program) 'Int'l Union United Automobile Aerospace & Agricultural Implement Workers of America Uaw",
+      "name": "UAW - V - Cap (UAW Voluntary Community Action Program) 'Int'l Union United Automobile Aerospace & Agricultural Implement Workers of America UAW",
       "type": "committee",
       "state": "MI",
       "gifts": [
@@ -51933,7 +51933,7 @@
     },
     {
       "id": "seiu-united-healthcare-workers-west",
-      "name": "Seiu United Healthcare Workers West",
+      "name": "SEIU United Healthcare Workers West",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -52037,7 +52037,7 @@
     },
     {
       "id": "morgan-global-pllc",
-      "name": "Morgan Global Pllc",
+      "name": "Morgan Global PLLC",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -52117,7 +52117,7 @@
     },
     {
       "id": "seiu-local-509",
-      "name": "Seiu Local 509",
+      "name": "SEIU Local 509",
       "type": "organization",
       "state": "MA",
       "gifts": [
@@ -52240,7 +52240,7 @@
     },
     {
       "id": "principled-veterans",
-      "name": "Principled Veterans Fund (Pv Fund)",
+      "name": "Principled Veterans Fund (PV Fund)",
       "type": "organization",
       "state": "VA",
       "gifts": [
@@ -52460,7 +52460,7 @@
       "name": "George Rohr",
       "type": "individual",
       "state": "NY",
-      "employer": "Nch Capital",
+      "employer": "NCH Capital",
       "occupation": "Finance Executive",
       "gifts": [
         {
@@ -52615,7 +52615,7 @@
     },
     {
       "id": "excelsior-gsc",
-      "name": "Excelsior Gsc Inc.",
+      "name": "Excelsior GSC Inc.",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -52723,7 +52723,7 @@
       "name": "Matthew Bayer",
       "type": "individual",
       "state": "IL",
-      "employer": "Mj Holding",
+      "employer": "MJ Holding",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -53493,7 +53493,7 @@
       "name": "Nathan Lindenbaum",
       "type": "individual",
       "state": "NJ",
-      "employer": "Mgs Corp.",
+      "employer": "MGS Corp.",
       "occupation": "Propane Marketer",
       "gifts": [
         {
@@ -53650,7 +53650,7 @@
       "name": "John Thaler",
       "type": "individual",
       "state": "CT",
-      "employer": "Jat Capital Management Lp",
+      "employer": "Jat Capital Management LP",
       "occupation": "Founder/Portfolio Manager",
       "gifts": [
         {
@@ -54055,7 +54055,7 @@
     },
     {
       "id": "dfx",
-      "name": "Dfx LLC",
+      "name": "DFX LLC",
       "type": "organization",
       "state": "AZ",
       "gifts": [
@@ -54078,7 +54078,7 @@
     },
     {
       "id": "pepper-hill-snf-operations",
-      "name": "Pepper Hill Snf Operations  LLC",
+      "name": "Pepper Hill SNF Operations  LLC",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -54323,7 +54323,7 @@
     },
     {
       "id": "djd-creative",
-      "name": "Djd Creative LLC",
+      "name": "DJD Creative LLC",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -54371,7 +54371,7 @@
     },
     {
       "id": "majority-mc",
-      "name": "Majority Committee PAC--Mc PAC",
+      "name": "Majority Committee PAC--MC PAC",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -54830,7 +54830,7 @@
       "name": "Bruce Kovner",
       "type": "individual",
       "state": "NJ",
-      "employer": "Caxton Alternative Management Lp",
+      "employer": "Caxton Alternative Management LP",
       "occupation": "Chairman",
       "gifts": [
         {
@@ -55106,7 +55106,7 @@
       "name": "Manoj Shekar",
       "type": "individual",
       "state": "NY",
-      "employer": "Tcs Industries",
+      "employer": "TCS Industries",
       "occupation": "President",
       "gifts": [
         {
@@ -55155,7 +55155,7 @@
     },
     {
       "id": "international-union-of-operating-engineers-engineers-education",
-      "name": "International Union of Operating Engineers Engineers Political Education Committee (Epec)",
+      "name": "International Union of Operating Engineers Engineers Political Education Committee (EPEC)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -55788,7 +55788,7 @@
     },
     {
       "id": "grassroots-democrats-hq",
-      "name": "Grassroots Democrats Hq",
+      "name": "Grassroots Democrats HQ",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -55822,7 +55822,7 @@
     },
     {
       "id": "aes-clean-energy",
-      "name": "Aes Clean Energy",
+      "name": "AES Clean Energy",
       "type": "organization",
       "state": "UT",
       "gifts": [
@@ -55874,7 +55874,7 @@
     },
     {
       "id": "32bj-seiu",
-      "name": "32bj Seiu",
+      "name": "32bj SEIU",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -56074,7 +56074,7 @@
     },
     {
       "id": "greater-nj-carpenters-pec",
-      "name": "Greater Nj Carpenters Pec",
+      "name": "Greater NJ Carpenters Pec",
       "type": "organization",
       "state": "PA",
       "gifts": [
@@ -56181,7 +56181,7 @@
     },
     {
       "id": "stw",
-      "name": "Stw PAC Inc.",
+      "name": "STW PAC Inc.",
       "type": "committee",
       "state": "VA",
       "gifts": [
@@ -56417,7 +56417,7 @@
     },
     {
       "id": "american-federation-of-state-county-and-municipal-ohio-pce",
-      "name": "American Federation of State, County and Municipal Employees (Afscme) Ohio Pce",
+      "name": "American Federation of State, County and Municipal Employees (AFSCME) Ohio Pce",
       "type": "committee",
       "state": "OH",
       "gifts": [
@@ -56733,7 +56733,7 @@
     },
     {
       "id": "paul-mclaren-revocable-trust",
-      "name": "Paul Mclaren Revocable Trust",
+      "name": "Paul McLaren Revocable Trust",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -56824,7 +56824,7 @@
       "name": "Joseph Bae",
       "type": "individual",
       "state": "NY",
-      "employer": "Kkr",
+      "employer": "KKR",
       "occupation": "Finance",
       "gifts": [
         {
@@ -56871,7 +56871,7 @@
     },
     {
       "id": "sv-angel-management",
-      "name": "Sv Angel Management LLC",
+      "name": "SV Angel Management LLC",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -56996,7 +56996,7 @@
     },
     {
       "id": "cenovus-energy-us",
-      "name": "Cenovus Energy Us LLC",
+      "name": "Cenovus Energy US LLC",
       "type": "organization",
       "state": "OH",
       "gifts": [
@@ -57099,7 +57099,7 @@
       "name": "Scott Charles Nuttall",
       "type": "individual",
       "state": "NY",
-      "employer": "Kkr",
+      "employer": "KKR",
       "occupation": "Co-Ceo",
       "gifts": [
         {
@@ -57363,7 +57363,7 @@
     },
     {
       "id": "c00528554",
-      "name": "Rjc Victory Fund",
+      "name": "RJC Victory Fund",
       "type": "committee",
       "state": "VA",
       "committee": "C00528554",
@@ -57430,7 +57430,7 @@
     },
     {
       "id": "ksl",
-      "name": "Ksl Inc.",
+      "name": "KSL Inc.",
       "type": "committee",
       "state": "KY",
       "gifts": [
@@ -58171,7 +58171,7 @@
     },
     {
       "id": "seiu-california-state-council",
-      "name": "Seiu California State Council",
+      "name": "SEIU California State Council",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -58251,7 +58251,7 @@
       "name": "Bernard Schwartz",
       "type": "individual",
       "state": "NY",
-      "employer": "Bls Investments LLC",
+      "employer": "BLS Investments LLC",
       "occupation": "Chairman & Ceo",
       "gifts": [
         {
@@ -58519,7 +58519,7 @@
     },
     {
       "id": "seiu-local-32bj",
-      "name": "Seiu Local 32bj",
+      "name": "SEIU Local 32bj",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -58685,7 +58685,7 @@
     },
     {
       "id": "c00468801",
-      "name": "Road Sprinkler Fitters Local Union No. 669, Ua, AFL-CIO PAC",
+      "name": "Road Sprinkler Fitters Local Union No. 669, UA, AFL-CIO PAC",
       "type": "committee",
       "state": "MD",
       "gifts": [
@@ -58727,7 +58727,7 @@
     },
     {
       "id": "ssc",
-      "name": "Ssc Inc",
+      "name": "SSC Inc",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -58984,7 +58984,7 @@
       "name": "Anthony Davis",
       "type": "individual",
       "state": "CT",
-      "employer": "Inherent Group, Lp",
+      "employer": "Inherent Group, LP",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -59187,7 +59187,7 @@
       "name": "Thomas Lewis",
       "type": "individual",
       "state": "AZ",
-      "employer": "Tw Lewis Company",
+      "employer": "TW Lewis Company",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -59261,7 +59261,7 @@
     },
     {
       "id": "rms-investment",
-      "name": "Rms Investment Group, LLC",
+      "name": "RMS Investment Group, LLC",
       "type": "organization",
       "state": "OH",
       "gifts": [
@@ -59760,7 +59760,7 @@
       "name": "Benjamin Klubes",
       "type": "individual",
       "state": "PA",
-      "employer": "Us Dpt of Housing and Development",
+      "employer": "US Dpt of Housing and Development",
       "occupation": "Deputy General",
       "gifts": [
         {
@@ -59866,7 +59866,7 @@
       "name": "Moses Libitzky",
       "type": "individual",
       "state": "CA",
-      "employer": "Lpc Real Estate Corp",
+      "employer": "LPC Real Estate Corp",
       "occupation": "Chairman",
       "gifts": [
         {
@@ -60366,7 +60366,7 @@
       "name": "Marc Spilker",
       "type": "individual",
       "state": "NY",
-      "employer": "Gps Investment Partners",
+      "employer": "GPS Investment Partners",
       "occupation": "Finance",
       "gifts": [
         {
@@ -60744,7 +60744,7 @@
     },
     {
       "id": "liberty-view-associates",
-      "name": "Liberty View Associates, Lp",
+      "name": "Liberty View Associates, LP",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -60957,7 +60957,7 @@
     },
     {
       "id": "texas-democratic-majority-tdm",
-      "name": "Texas Democratic Majority Political Action Committee/Tdm-PAC",
+      "name": "Texas Democratic Majority Political Action Committee/TDM-PAC",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -61201,7 +61201,7 @@
       "name": "Tushar Shah",
       "type": "individual",
       "state": "NY",
-      "employer": "Pdt Partners",
+      "employer": "PDT Partners",
       "occupation": "Finance",
       "gifts": [
         {
@@ -61263,7 +61263,7 @@
       "name": "Robert Diener",
       "type": "individual",
       "state": "FL",
-      "employer": "Tfn",
+      "employer": "TFN",
       "occupation": "Executive",
       "gifts": [
         {
@@ -61572,7 +61572,7 @@
     },
     {
       "id": "gj-grewe",
-      "name": "Gj Grewe Inc",
+      "name": "GJ Grewe Inc",
       "type": "organization",
       "state": "MO",
       "gifts": [
@@ -61741,7 +61741,7 @@
       "name": "Steven Lavin",
       "type": "individual",
       "state": "IL",
-      "employer": "Lavin and Gedville Pc",
+      "employer": "Lavin and Gedville PC",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -61808,7 +61808,7 @@
     },
     {
       "id": "seiu-wisconsin-state-council",
-      "name": "Seiu Wisconsin State Council",
+      "name": "SEIU Wisconsin State Council",
       "type": "organization",
       "state": "WI",
       "gifts": [
@@ -62132,7 +62132,7 @@
       "name": "James Barnette",
       "type": "individual",
       "state": "LA",
-      "employer": "Psls",
+      "employer": "PSLS",
       "occupation": "Engineer",
       "gifts": [
         {
@@ -62233,7 +62233,7 @@
     },
     {
       "id": "rnl-vpc",
-      "name": "Rnl Vpc LLC",
+      "name": "RNL VPC LLC",
       "type": "organization",
       "state": "IL",
       "gifts": [
@@ -62277,7 +62277,7 @@
       "name": "Pete Ricketts",
       "type": "individual",
       "state": "NE",
-      "employer": "Us",
+      "employer": "US",
       "occupation": "Senator",
       "gifts": [
         {
@@ -62346,7 +62346,7 @@
     },
     {
       "id": "amber-irrev-trust-ddt-10-22-19-amber-enterprises",
-      "name": "Amber Irrev Trust Ddt 10/22/19 Amber Enterprises LLC",
+      "name": "Amber Irrev Trust DDT 10/22/19 Amber Enterprises LLC",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -62614,7 +62614,7 @@
     },
     {
       "id": "c00428052",
-      "name": "Majority Committee PAC--Mc PAC",
+      "name": "Majority Committee PAC--MC PAC",
       "type": "committee",
       "state": "CA",
       "committee": "C00428052",
@@ -62756,7 +62756,7 @@
     },
     {
       "id": "community-forward-initiative",
-      "name": "Community Forward Initiative (Cfi)",
+      "name": "Community Forward Initiative (CFI)",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -62947,7 +62947,7 @@
     },
     {
       "id": "seiu-oregon-state-council",
-      "name": "Seiu Oregon State Council",
+      "name": "SEIU Oregon State Council",
       "type": "organization",
       "state": "OR",
       "gifts": [
@@ -63057,7 +63057,7 @@
       "name": "Wendy Eisenshtadt",
       "type": "individual",
       "state": "MI",
-      "employer": "Jfs",
+      "employer": "JFS",
       "occupation": "Development",
       "gifts": [
         {
@@ -63872,7 +63872,7 @@
       "name": "Scott Copeland",
       "type": "individual",
       "state": "MD",
-      "employer": "Rst Development",
+      "employer": "RST Development",
       "occupation": "Real Estate",
       "gifts": [
         {
@@ -64824,7 +64824,7 @@
       "name": "Teresa Klingessrow",
       "type": "individual",
       "state": "DC",
-      "employer": "Dc Public Schools",
+      "employer": "DC Public Schools",
       "occupation": "Speech Language Pathologist",
       "gifts": [
         {
@@ -65577,7 +65577,7 @@
       "name": "David Rosen",
       "type": "individual",
       "state": "NY",
-      "employer": "Rubric Capital Management Lp",
+      "employer": "Rubric Capital Management LP",
       "occupation": "Founder",
       "gifts": [
         {
@@ -65788,7 +65788,7 @@
       "name": "Charles Ledley",
       "type": "individual",
       "state": "MA",
-      "employer": "Liminality Capital Lp",
+      "employer": "Liminality Capital LP",
       "occupation": "Investor",
       "gifts": [
         {
@@ -66215,7 +66215,7 @@
       "name": "Aaron Yaffa",
       "type": "individual",
       "state": "IL",
-      "employer": "Drw Holdings",
+      "employer": "DRW Holdings",
       "occupation": "Partner/Trader",
       "gifts": [
         {
@@ -66535,7 +66535,7 @@
     },
     {
       "id": "nextera",
-      "name": "Nextera",
+      "name": "NextEra",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -66741,7 +66741,7 @@
       "name": "Julius Trump",
       "type": "individual",
       "state": "FL",
-      "employer": "Tg Holdings, LLC",
+      "employer": "TG Holdings, LLC",
       "occupation": "Principal",
       "gifts": [
         {
@@ -67344,7 +67344,7 @@
       "name": "George Kaiser",
       "type": "individual",
       "state": "OK",
-      "employer": "Gbk Corporation",
+      "employer": "GBK Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -67671,7 +67671,7 @@
     },
     {
       "id": "bfpcc",
-      "name": "Bfpcc, Inc.",
+      "name": "BFPCC, Inc.",
       "type": "organization",
       "state": "DE",
       "gifts": [
@@ -67774,7 +67774,7 @@
       "name": "Robin Richards Donohoe",
       "type": "individual",
       "state": "CA",
-      "employer": "Drk Board",
+      "employer": "DRK Board",
       "occupation": "Co-Chair",
       "gifts": [
         {
@@ -67945,7 +67945,7 @@
       "name": "Matthew Ocko",
       "type": "individual",
       "state": "TX",
-      "employer": "Dcvc",
+      "employer": "DCVC",
       "occupation": "Co-Founder and Managing Partner",
       "gifts": [
         {
@@ -68000,7 +68000,7 @@
       "name": "Brett Barth",
       "type": "individual",
       "state": "NY",
-      "employer": "Bbr Partners",
+      "employer": "BBR Partners",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -68220,7 +68220,7 @@
       "name": "Eli Luberoff",
       "type": "individual",
       "state": "OR",
-      "employer": "Desmos Studio Pbc",
+      "employer": "Desmos Studio PBC",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -68238,7 +68238,7 @@
       "name": "Michael Psaros",
       "type": "individual",
       "state": "NY",
-      "employer": "Kps Capital Partners",
+      "employer": "KPS Capital Partners",
       "occupation": "Equity Fund Manager",
       "gifts": [
         {
@@ -68373,7 +68373,7 @@
     },
     {
       "id": "seiu-illinois-council",
-      "name": "Seiu Illinois Council PAC",
+      "name": "SEIU Illinois Council PAC",
       "type": "committee",
       "state": "IL",
       "gifts": [
@@ -68730,7 +68730,7 @@
     },
     {
       "id": "a-coal-of-1st-responders-healthcare-wrkrs-drs-non-profit-community-health-centers",
-      "name": "A Coal. of 1st Responders, Healthcare Wrkrs, Drs, Non-Profit Community Health Centers and",
+      "name": "A Coal. of 1st Responders, Healthcare WRKRS, DRS, Non-Profit Community Health Centers and",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -68826,7 +68826,7 @@
       "name": "Josh Astrof",
       "type": "individual",
       "state": "NY",
-      "employer": "Darsana Capital Partners Lp",
+      "employer": "Darsana Capital Partners LP",
       "occupation": "Investment Manager",
       "gifts": [
         {
@@ -69562,7 +69562,7 @@
     },
     {
       "id": "durst-organization",
-      "name": "The Durst Organization Lp",
+      "name": "The Durst Organization LP",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -69935,7 +69935,7 @@
       "name": "Mitchell Roberts",
       "type": "individual",
       "state": "MA",
-      "employer": "Pr Management",
+      "employer": "PR Management",
       "occupation": "Restaurants",
       "gifts": [
         {
@@ -69954,7 +69954,7 @@
       "name": "Pamella Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -70285,7 +70285,7 @@
       "name": "David Zapolsky",
       "type": "individual",
       "state": "WA",
-      "employer": "Amazon.Com",
+      "employer": "Amazon.com",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -70303,7 +70303,7 @@
       "name": "David Baum",
       "type": "individual",
       "state": "CO",
-      "employer": "Dsb Technologies LLC",
+      "employer": "DSB Technologies LLC",
       "occupation": "Founder/Ceo",
       "gifts": [
         {
@@ -70463,7 +70463,7 @@
     },
     {
       "id": "1199-seiu-ma",
-      "name": "1199 Seiu - Ma PAC",
+      "name": "1199 SEIU - Ma PAC",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -70583,7 +70583,7 @@
     },
     {
       "id": "local-32bj-seiu",
-      "name": "Local 32bj Seiu Holding",
+      "name": "Local 32bj SEIU Holding",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -70768,7 +70768,7 @@
     },
     {
       "id": "pennsylvania-seiu-cope",
-      "name": "Pennsylvania Seiu Cope",
+      "name": "Pennsylvania SEIU Cope",
       "type": "organization",
       "state": "PA",
       "gifts": [
@@ -71102,7 +71102,7 @@
       "name": "Don Dyer",
       "type": "individual",
       "state": "TX",
-      "employer": "Pjs",
+      "employer": "PJS",
       "occupation": "Owner",
       "gifts": [
         {
@@ -71360,7 +71360,7 @@
     },
     {
       "id": "seiu-local-99",
-      "name": "Seiu Local 99",
+      "name": "SEIU Local 99",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -71483,7 +71483,7 @@
     },
     {
       "id": "grassroots-organizing-wins",
-      "name": "Grassroots Organizing Wins (Growpac)",
+      "name": "Grassroots Organizing Wins (GROWPAC)",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -71605,7 +71605,7 @@
     },
     {
       "id": "hsl-properties",
-      "name": "Hsl Properties Inc.",
+      "name": "HSL Properties Inc.",
       "type": "organization",
       "state": "AZ",
       "gifts": [
@@ -71640,7 +71640,7 @@
     },
     {
       "id": "msg-entertainment",
-      "name": "Msg Entertainment Group (Madison Square Garden)",
+      "name": "MSG Entertainment Group (Madison Square Garden)",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -71887,7 +71887,7 @@
       "name": "Paul Raether",
       "type": "individual",
       "state": "NY",
-      "employer": "Kkr",
+      "employer": "KKR",
       "occupation": "Senior Advisory Partner",
       "gifts": [
         {
@@ -72212,7 +72212,7 @@
       "name": "Edward Rosenwald",
       "type": "individual",
       "state": "NY",
-      "employer": "Jp Morgan Chase & Company",
+      "employer": "JP Morgan Chase & Company",
       "occupation": "Banker",
       "gifts": [
         {
@@ -72496,7 +72496,7 @@
       "name": "David Trone",
       "type": "individual",
       "state": "MD",
-      "employer": "Us House of Representatives",
+      "employer": "US House of Representatives",
       "occupation": "Congressman",
       "gifts": [
         {
@@ -72579,7 +72579,7 @@
     },
     {
       "id": "wdn-action",
-      "name": "Wdn Action",
+      "name": "WDN Action",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -72706,7 +72706,7 @@
     },
     {
       "id": "blh-construction",
-      "name": "Blh Construction Company",
+      "name": "BLH Construction Company",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -72825,7 +72825,7 @@
       "name": "Dong Koo Kim",
       "type": "individual",
       "state": "CA",
-      "employer": "Bp Industries",
+      "employer": "BP Industries",
       "occupation": "President",
       "gifts": [
         {
@@ -73682,7 +73682,7 @@
       "name": "Christian Briggs",
       "type": "individual",
       "state": "TN",
-      "employer": "Bmc Capital Inc",
+      "employer": "BMC Capital Inc",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -74603,7 +74603,7 @@
       "name": "Jeffrey Kelter",
       "type": "individual",
       "state": "NY",
-      "employer": "Ksh Capital Partners",
+      "employer": "KSH Capital Partners",
       "occupation": "Executive",
       "gifts": [
         {
@@ -74998,7 +74998,7 @@
     },
     {
       "id": "np-consulting",
-      "name": "Np Consulting Inc",
+      "name": "NP Consulting Inc",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -75856,7 +75856,7 @@
     },
     {
       "id": "seiu-united-service-workers-west",
-      "name": "Seiu United Service Workers West",
+      "name": "SEIU United Service Workers West",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -76133,7 +76133,7 @@
       "name": "Lance Hirt",
       "type": "individual",
       "state": "NY",
-      "employer": "Stonecourt Capital Lp",
+      "employer": "Stonecourt Capital LP",
       "occupation": "Investor",
       "gifts": [
         {
@@ -76183,7 +76183,7 @@
     },
     {
       "id": "cdr-enterprises",
-      "name": "Cdr Enterprises Inc",
+      "name": "CDR Enterprises Inc",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -76236,7 +76236,7 @@
       "name": "Joshua Steiner",
       "type": "individual",
       "state": "NY",
-      "employer": "Ssw Partners",
+      "employer": "SSW Partners",
       "occupation": "Private Investor",
       "gifts": [
         {
@@ -76254,7 +76254,7 @@
       "name": "Steven Laufer",
       "type": "individual",
       "state": "MD",
-      "employer": "Myers-Jdc-Brookdale Institute",
+      "employer": "Myers-JDC-Brookdale Institute",
       "occupation": "Researcher",
       "gifts": [
         {
@@ -76444,7 +76444,7 @@
       "name": "Rajiv Lochan Gupta",
       "type": "individual",
       "state": "PA",
-      "employer": "Aptiv Plc",
+      "employer": "Aptiv PLC",
       "occupation": "Board Member",
       "gifts": [
         {
@@ -76661,7 +76661,7 @@
     },
     {
       "id": "tcs",
-      "name": "Tcs Group LLC",
+      "name": "TCS Group LLC",
       "type": "organization",
       "state": "IL",
       "gifts": [
@@ -76880,7 +76880,7 @@
       "name": "Michael Bonderman",
       "type": "individual",
       "state": "TX",
-      "employer": "Tpg Capital",
+      "employer": "TPG Capital",
       "occupation": "Founder",
       "gifts": [
         {
@@ -77239,7 +77239,7 @@
       "name": "George Roberts",
       "type": "individual",
       "state": "NY",
-      "employer": "Kkr",
+      "employer": "KKR",
       "occupation": "Co-Chairman and Coceo",
       "gifts": [
         {
@@ -77422,7 +77422,7 @@
       "name": "Israel Ashkenazi",
       "type": "individual",
       "state": "NY",
-      "employer": "Srs Investment Management",
+      "employer": "SRS Investment Management",
       "occupation": "Analyst",
       "gifts": [
         {
@@ -77614,7 +77614,7 @@
       "name": "Carl Buckner",
       "type": "individual",
       "state": "TX",
-      "employer": "Tcb Rental, Inc",
+      "employer": "TCB Rental, Inc",
       "occupation": "Owner",
       "gifts": [
         {
@@ -77737,7 +77737,7 @@
     },
     {
       "id": "hcfm",
-      "name": "Hcfm",
+      "name": "HCFM",
       "type": "organization",
       "state": "OH",
       "gifts": [
@@ -77874,7 +77874,7 @@
     },
     {
       "id": "bcn",
-      "name": "Bcn Holdings Inc",
+      "name": "BCN Holdings Inc",
       "type": "organization",
       "state": "SC",
       "gifts": [
@@ -78341,7 +78341,7 @@
     },
     {
       "id": "nea-for-children-and-public-education",
-      "name": "The Nea Fund for Children & Public Education",
+      "name": "The NEA Fund for Children & Public Education",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -78614,7 +78614,7 @@
     },
     {
       "id": "crk",
-      "name": "Crk Holding LLC",
+      "name": "CRK Holding LLC",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -79119,7 +79119,7 @@
     },
     {
       "id": "don-davis-for-nc",
-      "name": "Don Davis for Nc",
+      "name": "Don Davis for NC",
       "type": "committee",
       "state": "NC",
       "gifts": [
@@ -79572,7 +79572,7 @@
       "name": "James Lippman",
       "type": "individual",
       "state": "CA",
-      "employer": "Jrk Property Holdings",
+      "employer": "JRK Property Holdings",
       "occupation": "Real Estate Private Equity",
       "gifts": [
         {
@@ -79676,7 +79676,7 @@
       "name": "Kourosh Moghadam",
       "type": "individual",
       "state": "CA",
-      "employer": "B D & J, Pc",
+      "employer": "B D & J, PC",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -79833,7 +79833,7 @@
       "name": "David Heller",
       "type": "individual",
       "state": "OH",
-      "employer": "The Nrp Group LLC",
+      "employer": "The NRP Group LLC",
       "occupation": "Real Estate",
       "gifts": [
         {
@@ -79935,7 +79935,7 @@
       "name": "Margaret Molleston",
       "type": "individual",
       "state": "TX",
-      "employer": "Geosouthern Energy Gp, LLC",
+      "employer": "Geosouthern Energy GP, LLC",
       "occupation": "President",
       "gifts": [
         {
@@ -80073,7 +80073,7 @@
     },
     {
       "id": "rally-by-relentless-pbc",
-      "name": "Rally By Relentless Pbc",
+      "name": "Rally By Relentless PBC",
       "type": "organization",
       "state": "DE",
       "gifts": [
@@ -80293,7 +80293,7 @@
       "name": "Andrew Byrd",
       "type": "individual",
       "state": "TN",
-      "employer": "Tvv Capital",
+      "employer": "TVV Capital",
       "occupation": "Associate",
       "gifts": [
         {
@@ -80411,7 +80411,7 @@
     },
     {
       "id": "gtc-solutions",
-      "name": "Gtc Solutions LLC",
+      "name": "GTC Solutions LLC",
       "type": "organization",
       "state": "FL",
       "gifts": [
@@ -80763,7 +80763,7 @@
       "name": "Ronald Weiser",
       "type": "individual",
       "state": "MI",
-      "employer": "Mckinley Associates Inc",
+      "employer": "McKinley Associates Inc",
       "occupation": "Founder/Ceo",
       "gifts": [
         {
@@ -80835,7 +80835,7 @@
     },
     {
       "id": "seiu-local-healthcare-illinois-indiana-missouri-kansas",
-      "name": "Seiu Local Healthcare Illinois Indiana Missouri Kansas",
+      "name": "SEIU Local Healthcare Illinois Indiana Missouri Kansas",
       "type": "organization",
       "state": "IL",
       "gifts": [
@@ -81128,7 +81128,7 @@
       "name": "Pete Hon. Ricketts",
       "type": "individual",
       "state": "NE",
-      "employer": "Us",
+      "employer": "US",
       "occupation": "Senator",
       "gifts": [
         {
@@ -81230,7 +81230,7 @@
       "name": "Jamiel Akhtar",
       "type": "individual",
       "state": "TX",
-      "employer": "Hbk Capital Management",
+      "employer": "HBK Capital Management",
       "occupation": "Managing Director",
       "gifts": [
         {
@@ -81245,7 +81245,7 @@
     },
     {
       "id": "jnp-capital-resources",
-      "name": "Jnp Capital Resources LLC",
+      "name": "JNP Capital Resources LLC",
       "type": "organization",
       "state": "IL",
       "gifts": [
@@ -81844,7 +81844,7 @@
     },
     {
       "id": "lsp-operations",
-      "name": "Lsp Operations LLC",
+      "name": "LSP Operations LLC",
       "type": "organization",
       "state": "MO",
       "gifts": [
@@ -81930,7 +81930,7 @@
     },
     {
       "id": "mclane",
-      "name": "Mclane Group Lp",
+      "name": "McLane Group LP",
       "type": "organization",
       "state": "TX",
       "organization": "mclane",
@@ -82088,7 +82088,7 @@
     },
     {
       "id": "amazon-com-services",
-      "name": "Amazon.Com Services LLC Separate Segregated Fund (Amazon PAC)",
+      "name": "Amazon.com Services LLC Separate Segregated Fund (Amazon PAC)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -82385,7 +82385,7 @@
     },
     {
       "id": "progressive-era-issues-supporting-yes-on-proposition-50",
-      "name": "Progressive Era Issues Committee Supporting Yes on Proposition 50 (Fppc Id #1465256)",
+      "name": "Progressive Era Issues Committee Supporting Yes on Proposition 50 (FPPC Id #1465256)",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -82453,7 +82453,7 @@
     },
     {
       "id": "new-yorkers-fighting-back",
-      "name": "New Yorkers Fighting Back (Nyfb)",
+      "name": "New Yorkers Fighting Back (NYFB)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -82490,7 +82490,7 @@
       "name": "David Trujillo",
       "type": "individual",
       "state": "CA",
-      "employer": "Tpg",
+      "employer": "TPG",
       "occupation": "Partner",
       "gifts": [
         {
@@ -82526,7 +82526,7 @@
       "name": "Jim Coulter",
       "type": "individual",
       "state": "TX",
-      "employer": "Tpg",
+      "employer": "TPG",
       "occupation": "Founding Partner",
       "gifts": [
         {
@@ -82614,7 +82614,7 @@
       "name": "Jonathan Bruser",
       "type": "individual",
       "state": "LA",
-      "employer": "Mmr Group Industrial",
+      "employer": "MMR Group Industrial",
       "occupation": "Construction",
       "gifts": [
         {
@@ -82977,7 +82977,7 @@
     },
     {
       "id": "chamber-of-commerce-of-united-states-of-america",
-      "name": "Chamber of Commerce of the United States of America PAC (Us Chamber PAC)",
+      "name": "Chamber of Commerce of the United States of America PAC (US Chamber PAC)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -83192,7 +83192,7 @@
       "name": "Leslie Weisbrod",
       "type": "individual",
       "state": "TX",
-      "employer": "Weisbrod and Weisbrod Pc",
+      "employer": "Weisbrod and Weisbrod PC",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -83327,7 +83327,7 @@
     },
     {
       "id": "darco-capital",
-      "name": "Darco Capital Lp",
+      "name": "Darco Capital LP",
       "type": "organization",
       "state": "PA",
       "gifts": [
@@ -83548,7 +83548,7 @@
     },
     {
       "id": "c00804856",
-      "name": "Lf PAC",
+      "name": "LF PAC",
       "type": "committee",
       "state": "DC",
       "committee": "C00804856",
@@ -83633,7 +83633,7 @@
     },
     {
       "id": "c00136739",
-      "name": "Iuoe Operating Engineers",
+      "name": "IUOE Operating Engineers",
       "type": "committee",
       "state": "PA",
       "committee": "C00136739",
@@ -83878,7 +83878,7 @@
     },
     {
       "id": "ps",
-      "name": "Ps Group LLC",
+      "name": "PS Group LLC",
       "type": "organization",
       "state": "VA",
       "gifts": [
@@ -84248,7 +84248,7 @@
     },
     {
       "id": "seiu-local-721-workers-strength",
-      "name": "Seiu Local 721 Workers Strength Committee",
+      "name": "SEIU Local 721 Workers Strength Committee",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -84710,7 +84710,7 @@
     },
     {
       "id": "belz-investment",
-      "name": "Belz Investment Company Lp",
+      "name": "Belz Investment Company LP",
       "type": "organization",
       "state": "TN",
       "gifts": [
@@ -85250,7 +85250,7 @@
     },
     {
       "id": "nurses-and-educators-supporting-swalwell-for-governor-2026-sponsored-by-seiu-california-state-council",
-      "name": "Nurses and Educators Supporting Swalwell for Governor 2026 Sponsored By Seiu California State Council",
+      "name": "Nurses and Educators Supporting Swalwell for Governor 2026 Sponsored By SEIU California State Council",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -85333,7 +85333,7 @@
       "name": "Curtis Lane",
       "type": "individual",
       "state": "NY",
-      "employer": "Mts Health Partners",
+      "employer": "MTS Health Partners",
       "occupation": "Investment Banking",
       "gifts": [
         {
@@ -85397,7 +85397,7 @@
     },
     {
       "id": "c00428581",
-      "name": "Iuoe Local 965 Pef",
+      "name": "IUOE Local 965 Pef",
       "type": "committee",
       "state": "IL",
       "gifts": [
@@ -85757,7 +85757,7 @@
       "name": "Stephen Sherrill",
       "type": "individual",
       "state": "NY",
-      "employer": "Brs & Co.",
+      "employer": "BRS & Co.",
       "occupation": "Managing Director",
       "gifts": [
         {
@@ -85806,7 +85806,7 @@
     },
     {
       "id": "ua-union-plumbers-and-pipefitters-vote-united-association-of-journeymen-and-apprentice",
-      "name": "Ua Union Plumbers & Pipefitters Vote! PAC (United Association of Journeymen and Apprentice",
+      "name": "UA Union Plumbers & Pipefitters Vote! PAC (United Association of Journeymen and Apprentice",
       "type": "committee",
       "state": "MD",
       "gifts": [
@@ -85911,7 +85911,7 @@
       "name": "Judd Malkin",
       "type": "individual",
       "state": "IL",
-      "employer": "Jmb Realty",
+      "employer": "JMB Realty",
       "occupation": "Real Estate",
       "gifts": [
         {
@@ -85965,7 +85965,7 @@
       "name": "David Schostak",
       "type": "individual",
       "state": "MI",
-      "employer": "Sf Properties LLC",
+      "employer": "SF Properties LLC",
       "occupation": "Real Estate",
       "gifts": [
         {
@@ -86277,7 +86277,7 @@
       "name": "Steve Keadle",
       "type": "individual",
       "state": "GA",
-      "employer": "Keadle Land Co. Llcp",
+      "employer": "Keadle Land Co. LLCP",
       "occupation": "Timberland",
       "gifts": [
         {
@@ -86360,7 +86360,7 @@
     },
     {
       "id": "wfp-national",
-      "name": "Wfp National PAC",
+      "name": "WFP National PAC",
       "type": "committee",
       "state": "NY",
       "gifts": [
@@ -86376,7 +86376,7 @@
     },
     {
       "id": "for-floridas-future",
-      "name": "For Florida's Future Pc",
+      "name": "For Florida's Future PC",
       "type": "committee",
       "state": "FL",
       "gifts": [
@@ -86392,7 +86392,7 @@
     },
     {
       "id": "make-nc-first",
-      "name": "Make Nc First",
+      "name": "Make NC First",
       "type": "committee",
       "state": "NC",
       "gifts": [
@@ -87239,7 +87239,7 @@
       "name": "Scott Becker",
       "type": "individual",
       "state": "IL",
-      "employer": "Mcguirewoods LLP",
+      "employer": "McGuirewoods LLP",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -87550,7 +87550,7 @@
     },
     {
       "id": "cascadia-hc",
-      "name": "Cascadia Hc Group LLC",
+      "name": "Cascadia HC Group LLC",
       "type": "organization",
       "state": "ID",
       "gifts": [
@@ -87704,7 +87704,7 @@
     },
     {
       "id": "seiu-local-503-opeu",
-      "name": "Seiu Local 503 Opeu",
+      "name": "SEIU Local 503 Opeu",
       "type": "organization",
       "state": "OR",
       "gifts": [
@@ -87836,7 +87836,7 @@
     },
     {
       "id": "seiu-local-1000-ucsw-candidate",
-      "name": "Seiu Local 1000 Ucsw Candidate PAC",
+      "name": "SEIU Local 1000 Ucsw Candidate PAC",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -88037,7 +88037,7 @@
     },
     {
       "id": "afscme-polling-center",
-      "name": "Afscme Polling Center",
+      "name": "AFSCME Polling Center",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -88156,7 +88156,7 @@
     },
     {
       "id": "cfg-action-tennessee",
-      "name": "Cfg Action Tennessee",
+      "name": "CFG Action Tennessee",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -88172,7 +88172,7 @@
     },
     {
       "id": "dccc",
-      "name": "Dccc",
+      "name": "DCCC",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -88257,7 +88257,7 @@
       "name": "Pamela Devos",
       "type": "individual",
       "state": "MI",
-      "employer": "Rdv Corporation",
+      "employer": "RDV Corporation",
       "occupation": "Executive",
       "gifts": [
         {
@@ -88406,7 +88406,7 @@
     },
     {
       "id": "hmh-construction",
-      "name": "Hmh Construction LLC",
+      "name": "HMH Construction LLC",
       "type": "organization",
       "state": "ID",
       "gifts": [
@@ -88461,7 +88461,7 @@
       "name": "Michael Tang",
       "type": "individual",
       "state": "NV",
-      "employer": "National Material Lp",
+      "employer": "National Material LP",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -88701,7 +88701,7 @@
       "name": "Vaughn Vennerberg",
       "type": "individual",
       "state": "TX",
-      "employer": "Morningstar Partners Lp",
+      "employer": "Morningstar Partners LP",
       "occupation": "President",
       "gifts": [
         {
@@ -88890,7 +88890,7 @@
       "name": "Jon Hirschtick",
       "type": "individual",
       "state": "MA",
-      "employer": "Ptc",
+      "employer": "PTC",
       "occupation": "Evp",
       "gifts": [
         {
@@ -89093,7 +89093,7 @@
       "name": "David Nguyen",
       "type": "individual",
       "state": "MD",
-      "employer": "United Solutions D/B/a Us a1",
+      "employer": "United Solutions D/B/a US a1",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -89256,7 +89256,7 @@
     },
     {
       "id": "local-32bj-seiu-account",
-      "name": "Local 32bj Seiu Holding Account",
+      "name": "Local 32bj SEIU Holding Account",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -89275,7 +89275,7 @@
       "name": "Seikaly Rudy",
       "type": "individual",
       "state": "DC",
-      "employer": "Mcn Build Inc.",
+      "employer": "MCN Build Inc.",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -89433,7 +89433,7 @@
       "name": "Zachary Lembke",
       "type": "individual",
       "state": "NY",
-      "employer": "Zc Consulting LLC",
+      "employer": "ZC Consulting LLC",
       "occupation": "Consultant, Self-Employed",
       "gifts": [
         {
@@ -89553,7 +89553,7 @@
       "name": "Jennifer Kaplan",
       "type": "individual",
       "state": "NY",
-      "employer": "Msk",
+      "employer": "MSK",
       "occupation": "Md",
       "gifts": [
         {
@@ -89601,7 +89601,7 @@
     },
     {
       "id": "california-state-council-seiu",
-      "name": "California State Council Seiu",
+      "name": "California State Council SEIU",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -89633,7 +89633,7 @@
     },
     {
       "id": "seiu-local-775",
-      "name": "Seiu Local 775",
+      "name": "SEIU Local 775",
       "type": "organization",
       "state": "WA",
       "gifts": [
@@ -90046,7 +90046,7 @@
       "name": "Sam Bankman Fried",
       "type": "individual",
       "state": "CA",
-      "employer": "Ftx",
+      "employer": "FTX",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -90453,7 +90453,7 @@
       "name": "Carlos Duart",
       "type": "individual",
       "state": "FL",
-      "employer": "Cdr Maguire",
+      "employer": "CDR Maguire",
       "occupation": "President",
       "gifts": [
         {
@@ -90907,7 +90907,7 @@
       "name": "John Odom",
       "type": "individual",
       "state": "DE",
-      "employer": "Hmh Construction LLC",
+      "employer": "HMH Construction LLC",
       "occupation": "Business Owner",
       "gifts": [
         {
@@ -90990,7 +90990,7 @@
     },
     {
       "id": "cotchett-pitre-and-mccarthy",
-      "name": "Cotchett, Pitre & Mccarthy, LLP",
+      "name": "Cotchett, Pitre & McCarthy, LLP",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -91181,7 +91181,7 @@
       "name": "David Thompson",
       "type": "individual",
       "state": "OR",
-      "employer": "Dtp, Inc",
+      "employer": "DTP, Inc",
       "occupation": "Executive",
       "gifts": [
         {
@@ -91214,7 +91214,7 @@
     },
     {
       "id": "seiu-heathcare",
-      "name": "Seiu Heathcare",
+      "name": "SEIU Heathcare",
       "type": "organization",
       "state": "PA",
       "gifts": [
@@ -91579,7 +91579,7 @@
       "name": "Marc Stern",
       "type": "individual",
       "state": "CA",
-      "employer": "The Tcw Group Inc",
+      "employer": "The TCW Group Inc",
       "occupation": "Executive",
       "gifts": [
         {
@@ -91792,7 +91792,7 @@
       "name": "John Cafaro",
       "type": "individual",
       "state": "OH",
-      "employer": "Jj Cafaro Investment Trust",
+      "employer": "JJ Cafaro Investment Trust",
       "occupation": "Ceo & President",
       "gifts": [
         {
@@ -92334,7 +92334,7 @@
       "name": "Nasser Kazeminy",
       "type": "individual",
       "state": "FL",
-      "employer": "Njk Holding Corporation",
+      "employer": "NJK Holding Corporation",
       "occupation": "Chairman",
       "gifts": [
         {
@@ -92368,7 +92368,7 @@
       "name": "David Hamilton",
       "type": "individual",
       "state": "WY",
-      "employer": "Ngp",
+      "employer": "NGP",
       "occupation": "Owner",
       "gifts": [
         {
@@ -92383,7 +92383,7 @@
     },
     {
       "id": "pr-usa-concentration",
-      "name": "Pr USA LLC Concentration",
+      "name": "PR USA LLC Concentration",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -92537,7 +92537,7 @@
     },
     {
       "id": "mj-tuchman-partners",
-      "name": "Mj Tuchman Partners LLC",
+      "name": "MJ Tuchman Partners LLC",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -92750,7 +92750,7 @@
       "name": "Keith Myers",
       "type": "individual",
       "state": "LA",
-      "employer": "Lhc Group Inc",
+      "employer": "LHC Group Inc",
       "occupation": "Chairman / Ceo",
       "gifts": [
         {
@@ -92837,7 +92837,7 @@
     },
     {
       "id": "nbv",
-      "name": "Nbv, Inc.",
+      "name": "NBV, Inc.",
       "type": "organization",
       "state": "NJ",
       "gifts": [
@@ -92953,7 +92953,7 @@
     },
     {
       "id": "edj-consulting",
-      "name": "Edj Consulting Lp",
+      "name": "Edj Consulting LP",
       "type": "organization",
       "state": "MN",
       "gifts": [
@@ -92987,7 +92987,7 @@
     },
     {
       "id": "cohen-placitella-and-roth",
-      "name": "Cohen, Placitella & Roth, Pc",
+      "name": "Cohen, Placitella & Roth, PC",
       "type": "organization",
       "state": "PA",
       "gifts": [
@@ -93300,7 +93300,7 @@
       "name": "Manuel Rajunov",
       "type": "individual",
       "state": "TX",
-      "employer": "Mcdermott Will & Emery",
+      "employer": "McDermott Will & Emery",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -93318,7 +93318,7 @@
       "name": "David Litman",
       "type": "individual",
       "state": "TX",
-      "employer": "Tfn",
+      "employer": "TFN",
       "occupation": "Executive",
       "gifts": [
         {
@@ -94237,7 +94237,7 @@
       "name": "Philip Friedman",
       "type": "individual",
       "state": "DC",
-      "employer": "Aipac",
+      "employer": "AIPAC",
       "occupation": "General Counsel",
       "gifts": [
         {
@@ -94783,7 +94783,7 @@
     },
     {
       "id": "pattern-energy-services",
-      "name": "Pattern Energy Group Services Lp",
+      "name": "Pattern Energy Group Services LP",
       "type": "organization",
       "state": "CA",
       "gifts": [
@@ -94976,7 +94976,7 @@
       "name": "Todd Schaub",
       "type": "individual",
       "state": "OH",
-      "employer": "Ss Volvo",
+      "employer": "SS Volvo",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -95012,7 +95012,7 @@
       "name": "Tucker Knott",
       "type": "individual",
       "state": "DC",
-      "employer": "Us Senate",
+      "employer": "US Senate",
       "occupation": "Chief of Staff",
       "gifts": [
         {
@@ -95048,7 +95048,7 @@
       "name": "Scott Nuttall",
       "type": "individual",
       "state": "NY",
-      "employer": "Kkr & Co., Inc",
+      "employer": "KKR & Co., Inc",
       "occupation": "Ceo",
       "gifts": [
         {
@@ -95493,7 +95493,7 @@
       "name": "Kevin Conway",
       "type": "individual",
       "state": "NY",
-      "employer": "Cd&R",
+      "employer": "CD&R",
       "occupation": "Investments",
       "gifts": [
         {
@@ -95596,7 +95596,7 @@
     },
     {
       "id": "jnp-investments",
-      "name": "Jnp Investments LLC",
+      "name": "JNP Investments LLC",
       "type": "organization",
       "state": "IL",
       "gifts": [
@@ -95615,7 +95615,7 @@
       "name": "Scott Rechler",
       "type": "individual",
       "state": "NY",
-      "employer": "Rxr Realty LLC",
+      "employer": "RXR Realty LLC",
       "occupation": "Chairman",
       "gifts": [
         {
@@ -95702,7 +95702,7 @@
     },
     {
       "id": "mckinley-paper",
-      "name": "Mckinley Paper",
+      "name": "McKinley Paper",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -95931,7 +95931,7 @@
       "name": "Jillian Gliksberg",
       "type": "individual",
       "state": "FL",
-      "employer": "Js Diamond Enterprises",
+      "employer": "JS Diamond Enterprises",
       "occupation": "Managing Partner",
       "gifts": [
         {
@@ -95949,7 +95949,7 @@
       "name": "Jon Diamond",
       "type": "individual",
       "state": "FL",
-      "employer": "Js Diamond Enterprises",
+      "employer": "JS Diamond Enterprises",
       "occupation": "Managing Partner",
       "gifts": [
         {
@@ -95967,7 +95967,7 @@
       "name": "Susan Diamond",
       "type": "individual",
       "state": "FL",
-      "employer": "Js Diamond Enterprises",
+      "employer": "JS Diamond Enterprises",
       "occupation": "Managing Partner",
       "gifts": [
         {
@@ -96021,7 +96021,7 @@
       "name": "Jacob Diamond",
       "type": "individual",
       "state": "IL",
-      "employer": "Js Diamond Enterprises",
+      "employer": "JS Diamond Enterprises",
       "occupation": "Managing Partner",
       "gifts": [
         {
@@ -96039,7 +96039,7 @@
       "name": "Joshua Diamond",
       "type": "individual",
       "state": "IL",
-      "employer": "Js Diamond Enterprises",
+      "employer": "JS Diamond Enterprises",
       "occupation": "Managing Partner",
       "gifts": [
         {
@@ -96214,7 +96214,7 @@
     },
     {
       "id": "mnc-general-contractors",
-      "name": "Mnc General Contractors Corp",
+      "name": "MNC General Contractors Corp",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -96300,7 +96300,7 @@
     },
     {
       "id": "kp-trust",
-      "name": "Kp Trust",
+      "name": "KP Trust",
       "type": "organization",
       "state": "MO",
       "gifts": [
@@ -96476,7 +96476,7 @@
     },
     {
       "id": "pbf",
-      "name": "Pbf Holding Company LLC",
+      "name": "PBF Holding Company LLC",
       "type": "organization",
       "state": "NJ",
       "gifts": [
@@ -96634,7 +96634,7 @@
     },
     {
       "id": "local-102-ibew",
-      "name": "Local 102 Ibew PAC",
+      "name": "Local 102 IBEW PAC",
       "type": "committee",
       "state": "NJ",
       "gifts": [
@@ -96881,7 +96881,7 @@
       "name": "Fred Taylor",
       "type": "individual",
       "state": "CA",
-      "employer": "Tgs Management Corporation",
+      "employer": "TGS Management Corporation",
       "occupation": "Programmer",
       "gifts": [
         {
@@ -96899,7 +96899,7 @@
       "name": "Charles Fred Taylor",
       "type": "individual",
       "state": "CA",
-      "employer": "Tgs Management",
+      "employer": "TGS Management",
       "occupation": "Co-Owner",
       "gifts": [
         {
@@ -97071,7 +97071,7 @@
       "name": "Jeffrey Gural",
       "type": "individual",
       "state": "NY",
-      "employer": "Gfp Real Estate",
+      "employer": "GFP Real Estate",
       "occupation": "Real  Estate",
       "gifts": [
         {
@@ -97086,7 +97086,7 @@
     },
     {
       "id": "harlan-r-crow-family-branch-partnership",
-      "name": "Harlan R Crow Family Branch Partnership Lp",
+      "name": "Harlan R Crow Family Branch Partnership LP",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -97102,7 +97102,7 @@
     },
     {
       "id": "egis-bln-consulting",
-      "name": "Egis Bln Consulting",
+      "name": "Egis BLN Consulting",
       "type": "organization",
       "state": "IN",
       "gifts": [
@@ -97277,7 +97277,7 @@
       "name": "Michael Farber",
       "type": "individual",
       "state": "NY",
-      "employer": "Dpw",
+      "employer": "DPW",
       "occupation": "Lawyer",
       "gifts": [
         {
@@ -97310,7 +97310,7 @@
     },
     {
       "id": "nevada-advocates-for-planned-parenthood-affiliates",
-      "name": "Nevada Advocates for Planned Parenthood Affiliates (Nv State PAC)",
+      "name": "Nevada Advocates for Planned Parenthood Affiliates (NV State PAC)",
       "type": "committee",
       "state": "NV",
       "gifts": [
@@ -97411,7 +97411,7 @@
       "name": "David Morgan",
       "type": "individual",
       "state": "MA",
-      "employer": "Self-Employed / Nfsl LLC",
+      "employer": "Self-Employed / NFSL LLC",
       "occupation": "Financial Advisor",
       "gifts": [
         {
@@ -97724,7 +97724,7 @@
     },
     {
       "id": "mmr",
-      "name": "Mmr Group, Inc.",
+      "name": "MMR Group, Inc.",
       "type": "organization",
       "state": "LA",
       "gifts": [
@@ -97846,7 +97846,7 @@
     },
     {
       "id": "gps-impact",
-      "name": "Gps Impact",
+      "name": "GPS Impact",
       "type": "organization",
       "state": "IA",
       "gifts": [
@@ -98095,7 +98095,7 @@
       "name": "Frank Pitre",
       "type": "individual",
       "state": "CA",
-      "employer": "Cotchett, Pitre & Mccarthy",
+      "employer": "Cotchett, Pitre & McCarthy",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -98113,7 +98113,7 @@
       "name": "Mark Molumphy",
       "type": "individual",
       "state": "CA",
-      "employer": "Cotchett, Pitre & Mccarthy",
+      "employer": "Cotchett, Pitre & McCarthy",
       "occupation": "Attorney",
       "gifts": [
         {
@@ -98721,7 +98721,7 @@
       "name": "David Herche",
       "type": "individual",
       "state": "OH",
-      "employer": "Hbh Holdings Inc.",
+      "employer": "HBH Holdings Inc.",
       "occupation": "Chairman",
       "gifts": [
         {
@@ -99765,7 +99765,7 @@
       "name": "Tony Byrd",
       "type": "individual",
       "state": "VA",
-      "employer": "Jblc",
+      "employer": "JBLC",
       "occupation": "Owner",
       "gifts": [
         {
@@ -99992,7 +99992,7 @@
     },
     {
       "id": "ibew-local-union-164",
-      "name": "Ibew Local Union 164",
+      "name": "IBEW Local Union 164",
       "type": "organization",
       "state": "NJ",
       "gifts": [
@@ -100063,7 +100063,7 @@
       "name": "Patrick Curran",
       "type": "individual",
       "state": "MO",
-      "employer": "Cpc Management LLC",
+      "employer": "CPC Management LLC",
       "occupation": "Founder & Principal",
       "gifts": [
         {
@@ -100409,7 +100409,7 @@
       "name": "Miriam Sternlicht",
       "type": "individual",
       "state": "CT",
-      "employer": "Mk Reichert Sternlicht Foundation",
+      "employer": "MK Reichert Sternlicht Foundation",
       "occupation": "Founder",
       "gifts": [
         {
@@ -100443,7 +100443,7 @@
       "name": "John Drew",
       "type": "individual",
       "state": "CA",
-      "employer": "Tcv",
+      "employer": "TCV",
       "occupation": "Venture Capitalist",
       "gifts": [
         {
@@ -100740,7 +100740,7 @@
       "name": "Robert Johnson",
       "type": "individual",
       "state": "MD",
-      "employer": "The Rlj Companies",
+      "employer": "The RLJ Companies",
       "occupation": "Executive",
       "gifts": [
         {
@@ -100791,7 +100791,7 @@
     },
     {
       "id": "ibew",
-      "name": "Ibew PAC",
+      "name": "IBEW PAC",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -101155,7 +101155,7 @@
     },
     {
       "id": "united-food-and-commercial-workers-international-union-afl-cio-clc",
-      "name": "United Food and Commercial Workers International Union, AFL-CIO, Clc",
+      "name": "United Food and Commercial Workers International Union, AFL-CIO, CLC",
       "type": "organization",
       "state": "DC",
       "gifts": [
@@ -101382,7 +101382,7 @@
     },
     {
       "id": "golden-state-leadership",
-      "name": "Golden State Leadership Fund PAC (Fppc Id #1281772)",
+      "name": "Golden State Leadership Fund PAC (FPPC Id #1281772)",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -101480,7 +101480,7 @@
     },
     {
       "id": "tgs-cedar-port-partners",
-      "name": "Tgs Cedar Port Partners",
+      "name": "TGS Cedar Port Partners",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -101859,7 +101859,7 @@
       "name": "Joseph Kaempfer Jr.",
       "type": "individual",
       "state": "VA",
-      "employer": "Mcarthurglen",
+      "employer": "McArthurglen",
       "occupation": "Construction",
       "gifts": [
         {
@@ -102200,7 +102200,7 @@
     },
     {
       "id": "hds-hercules",
-      "name": "Hds Hercules",
+      "name": "HDS Hercules",
       "type": "organization",
       "state": "MI",
       "gifts": [
@@ -102359,7 +102359,7 @@
       "name": "Terry Matlack",
       "type": "individual",
       "state": "KS",
-      "employer": "Kc Royals",
+      "employer": "KC Royals",
       "occupation": "Owner",
       "gifts": [
         {
@@ -102374,7 +102374,7 @@
     },
     {
       "id": "intl-assoc-of-bridge-structural-ornamental-and-reinforcing-iron-workers-league",
-      "name": "Intl Assoc of Bridge Structural Ornamental & Reinforcing Iron Workers Political Action League (Ipal)",
+      "name": "Intl Assoc of Bridge Structural Ornamental & Reinforcing Iron Workers Political Action League (IPAL)",
       "type": "committee",
       "state": "DC",
       "gifts": [
@@ -102447,7 +102447,7 @@
       "name": "Werner Minshall",
       "type": "individual",
       "state": "WY",
-      "employer": "Mdc Inc",
+      "employer": "MDC Inc",
       "occupation": "Real Estate",
       "gifts": [
         {
@@ -102605,7 +102605,7 @@
       "name": "Robin Arkley",
       "type": "individual",
       "state": "CA",
-      "employer": "Sn Servicing Corp",
+      "employer": "SN Servicing Corp",
       "occupation": "President",
       "gifts": [
         {
@@ -102957,7 +102957,7 @@
       "name": "Michael Olshan",
       "type": "individual",
       "state": "NY",
-      "employer": "O-Corp Investments Lllc",
+      "employer": "O-Corp Investments LLLC",
       "occupation": "Investor",
       "gifts": [
         {
@@ -103026,7 +103026,7 @@
       "name": "Daniel Benedict",
       "type": "individual",
       "state": "NY",
-      "employer": "Brg",
+      "employer": "BRG",
       "occupation": "Investments",
       "gifts": [
         {
@@ -103621,7 +103621,7 @@
     },
     {
       "id": "ncp-finance-limited-partnership",
-      "name": "Ncp Finance Limited Partnership",
+      "name": "NCP Finance Limited Partnership",
       "type": "organization",
       "state": "OH",
       "gifts": [
@@ -103782,7 +103782,7 @@
       "name": "Bill Byler",
       "type": "individual",
       "state": "TX",
-      "employer": "Wt Byler",
+      "employer": "WT Byler",
       "occupation": "Construction",
       "gifts": [
         {
@@ -103955,7 +103955,7 @@
     },
     {
       "id": "cbkm",
-      "name": "Cbkm LLC",
+      "name": "CBKM LLC",
       "type": "organization",
       "state": "LA",
       "gifts": [
@@ -104123,7 +104123,7 @@
     },
     {
       "id": "hmg-partners-iii",
-      "name": "Hmg Partners Iii LLC",
+      "name": "HMG Partners Iii LLC",
       "type": "organization",
       "state": "TX",
       "gifts": [
@@ -104344,7 +104344,7 @@
       "name": "Daniel Schwartz",
       "type": "individual",
       "state": "NY",
-      "employer": "Nms Capital",
+      "employer": "NMS Capital",
       "occupation": "Private Equity",
       "gifts": [
         {
@@ -104520,7 +104520,7 @@
       "name": "David Wasserman",
       "type": "individual",
       "state": "NY",
-      "employer": "Recognize Lp",
+      "employer": "Recognize LP",
       "occupation": "Finance",
       "gifts": [
         {
@@ -104747,7 +104747,7 @@
     },
     {
       "id": "united-healthcare-workers-west-seiu",
-      "name": "United Healthcare Workers West PAC, Seiu",
+      "name": "United Healthcare Workers West PAC, SEIU",
       "type": "committee",
       "state": "CA",
       "gifts": [
@@ -104990,7 +104990,7 @@
       "name": "Anthony Pritzker",
       "type": "individual",
       "state": "CA",
-      "employer": "Ppc",
+      "employer": "PPC",
       "occupation": "Chairman & Ceo",
       "gifts": [
         {
@@ -105217,7 +105217,7 @@
     },
     {
       "id": "nrdc-action-votes",
-      "name": "Nrdc Action Votes",
+      "name": "NRDC Action Votes",
       "type": "committee",
       "state": "NY",
       "gifts": [
@@ -105249,7 +105249,7 @@
     },
     {
       "id": "my-25-lawyer",
-      "name": "My 25% Lawyer Pc",
+      "name": "My 25% Lawyer PC",
       "type": "organization",
       "state": "GA",
       "gifts": [
@@ -105319,7 +105319,7 @@
     },
     {
       "id": "jl-2002",
-      "name": "Jl Holdings 2002 LLC",
+      "name": "JL Holdings 2002 LLC",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -105607,7 +105607,7 @@
     },
     {
       "id": "gsb",
-      "name": "Gsb Holdings LLC",
+      "name": "GSB Holdings LLC",
       "type": "organization",
       "state": "LA",
       "gifts": [
@@ -105678,7 +105678,7 @@
       "name": "Jason Sweitzer",
       "type": "individual",
       "state": "IN",
-      "employer": "Pnc Bank",
+      "employer": "PNC Bank",
       "occupation": "Evp",
       "gifts": [
         {
@@ -105778,7 +105778,7 @@
     },
     {
       "id": "xp-aerospace",
-      "name": "Xp Aerospace",
+      "name": "XP Aerospace",
       "type": "organization",
       "state": "TN",
       "gifts": [
@@ -105810,7 +105810,7 @@
     },
     {
       "id": "gordon-mckernan-injury-attorneys",
-      "name": "Gordon Mckernan Injury Attorneys LLC",
+      "name": "Gordon McKernan Injury Attorneys LLC",
       "type": "organization",
       "state": "LA",
       "gifts": [
@@ -106383,7 +106383,7 @@
     },
     {
       "id": "gmm-capital",
-      "name": "Gmm Capital LLC",
+      "name": "GMM Capital LLC",
       "type": "organization",
       "state": "NY",
       "gifts": [
@@ -107273,7 +107273,7 @@
     },
     {
       "id": "c00843599",
-      "name": "Ktmc Federal PAC",
+      "name": "KTMC Federal PAC",
       "type": "committee",
       "state": "PA",
       "committee": "C00843599",

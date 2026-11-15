@@ -1,4 +1,4 @@
-// Prototype: every reported House trade, filterable. Amounts are ranges, so
+// Every reported House trade, filterable. Amounts are ranges, so
 // the amount column sorts by the low end of each range.
 import { useMemo } from "react";
 import { FilterSearch, ListTable, PartyTag, Segmented, ShareView, useRows, type ColumnDef } from "./controls";
@@ -38,7 +38,8 @@ const COLUMNS: ColumnDef<TradeRow>[] = [
 ];
 
 export default function TradesTable({ initial, src }: { initial: TradeRow[]; src: string }) {
-  const { rows, loading } = useRows(initial, src);
+  // The JSON carries the § 13107 notice beside its rows.
+  const { rows, loading } = useRows(initial, src, (json: { rows: TradeRow[] }) => json.rows);
   const [f, set] = useUrlState({ q: "", owner: "", party: "", kind: "company", sort: "date", dir: "descending" });
   const filtered = useMemo(() => {
     const q = f.q.trim().toLowerCase();

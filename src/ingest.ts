@@ -4,6 +4,7 @@
 //   pnpm ingest --steps=accounts     just re-match Bluesky accounts
 //   pnpm ingest --cycles=5           go further back
 //   pnpm ingest --min-total=1000     look up more (smaller) PACs
+//   pnpm ingest --steps=legislation  just bills, votes and lobbying reports
 //
 // Needs FEC_API_KEY and SEC_USER_AGENT in .env. Every step caches to .cache/,
 // so an interrupted run picks up where it stopped.
@@ -19,9 +20,10 @@ import { collectDonors, outsideSpenders } from "./ingest/donors.js";
 import { fetchAssignments, fetchPhotos } from "./ingest/assignments.js";
 import { ingestIndividuals } from "./ingest/individuals.js";
 import { fetchLobbyingSpend } from "./ingest/lobbying.js";
-import { buildData, type Account } from "./ingest/build.js";
+import { buildData, type Account, type OrganizationRecord } from "./ingest/build.js";
+import { ingestLegislation } from "./ingest/legislation.js";
 
-const STEPS = ["accounts", "assignments", "fec", "committees", "lobbying", "individuals", "donors"] as const;
+const STEPS = ["accounts", "assignments", "fec", "committees", "lobbying", "individuals", "donors", "legislation"] as const;
 const FEC_FILE = ".cache/fec/data.json";
 const ENRICHED_FILE = ".cache/enrich/result.json";
 const DONORS_FILE = ".cache/donors/result.json";
@@ -35,6 +37,8 @@ const { values: args } = parseArgs({
     cycles: { type: "string", default: "3" },
     "min-total": { type: "string", default: "5000" },
     "lobbying-minutes": { type: "string", default: "20" },
+    // A full Congress of lobbying reports is about an hour the first time.
+    "legislation-minutes": { type: "string", default: "90" },
   },
 });
 
@@ -55,6 +59,20 @@ function required<T>(value: T | undefined, step: string): T {
 
 const legislators = await getCurrentLegislators();
 console.log(`Cycles ${cycles.join(", ")}; ${legislators.length} current members`);
+
+// Bills and votes only need the organizations already in data/, so they can
+// be refreshed on their own without rebuilding everything else.
+if (steps.size === 1 && steps.has("legislation")) {
+  const { organizations } = required(readJson<{ organizations: OrganizationRecord[] }>("data/organizations.json"), "committees");
+  await writeLegislation(organizations);
+  process.exit(0);
+}
+async function writeLegislation(organizations: OrganizationRecord[]) {
+  const legislation = await ingestLegislation(legislators, organizations, {
+    lobbyingMinutes: Number(args["legislation-minutes"]),
+  });
+  writeJson("data/legislation.json", legislation, false);
+}
 
 const accounts = steps.has("accounts")
   ? await discoverAccounts(legislators)
@@ -136,6 +154,7 @@ writeJson("data/committees.json", data.committees);
 writeJson("data/organizations.json", data.organizations);
 writeJson("data/donors.json", data.donors);
 writeJson("data/congress-committees.json", data.congressCommittees);
+if (steps.has("legislation")) await writeLegislation(data.organizations.organizations);
 console.log(
   `Wrote ${data.members.members.length} members, ` +
     `${data.organizations.organizations.length} organizations, ` +

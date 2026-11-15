@@ -10,6 +10,9 @@ COPY site/package.json ./site/
 COPY site/server/package.json ./site/server/
 RUN pnpm install --frozen-lockfile
 COPY . .
+# Decrypts data/holdings.json.enc for the investments pages; the key is the
+# website service's HOLDINGS_KEY variable (see src/scripts/disclosures/seal.ts).
+ARG HOLDINGS_KEY
 # Current follower counts and avatars; on failure, the committed copy.
 RUN pnpm photos && (pnpm bluesky-profiles || echo "Keeping data/bluesky-profiles.json") && pnpm site:build
 # The server and only its own dependencies, without the site's build tooling.

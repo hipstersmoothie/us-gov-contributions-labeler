@@ -1,7 +1,7 @@
 ---
-// Prototype: which House members reported owning or trading one company's
+// Which House members reported owning or trading one company's
 // stock. The company's PAC money is shown beside the list, deliberately not
-// joined to it member by member (see design/holdings/README.md).
+// joined to it member by member: that reads as "owns it and is paid by it" (design/holdings/README.md).
 import Base from "../../../layouts/Base.astro";
 import { partyLetter, money, cycleRange } from "../../../lib/data";
 import { surname } from "../../../lib/format";
@@ -12,8 +12,6 @@ export function getStaticPaths() {
 }
 
 const { c } = Astro.props as { c: CompanyEntry };
-// The joined view, for the exploration's screenshots only.
-const RISKY = process.env.HOLDINGS_RISKY === "1";
 
 const name = companyName(c.name);
 const org = companyOrg(c);
@@ -28,7 +26,6 @@ const parties = (xs: { member: { party: string } }[]) => {
   const n = (p: string) => xs.filter((x) => partyLetter(x.member.party) === p).length;
   return `${n("D")} Democrats, ${n("R")} Republicans${n("I") ? `, ${n("I")} independents` : ""}`;
 };
-const pacTo = new Map((org?.recipients ?? []).map((r) => [r.id, r.total]));
 const date = (iso: string) => new Date(`${iso}T12:00:00`).toLocaleDateString("en-US", { month: "short", year: "numeric" });
 const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" : OWNER_LABEL[o as keyof typeof OWNER_LABEL])).join(", ");
 ---
@@ -36,7 +33,6 @@ const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" :
 <Base title={`${name}: members' holdings`} description={`House members who reported owning or trading ${name} stock.`}>
   <p class="kicker">{c.industry ?? c.sector ?? "Company"}{c.ticker && <> · {c.ticker}</>}</p>
   <h1>{name}</h1>
-  <p class="prototype-flag">Prototype. Built from House financial disclosure reports on a branch; not on the live site.</p>
 
   <p class="dek">
     {holders.length > 0 ? (
@@ -62,7 +58,6 @@ const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" :
               <th scope="col">Member</th>
               <th scope="col">Whose</th>
               <th scope="col" class="num">Value</th>
-              {RISKY && <th scope="col" class="num">From its PAC</th>}
             </tr>
           </thead>
           <tbody>
@@ -74,7 +69,6 @@ const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" :
                 </td>
                 <td>{whose(h.owners)}</td>
                 <td class="num">{h.holdings.length === 1 ? rangeText(h.holdings[0]!) : rangeText({ ...h, text: "" })}</td>
-                {RISKY && <td class="num">{pacTo.get(h.member.bioguide) ? money(pacTo.get(h.member.bioguide)!) : "–"}</td>}
               </tr>
             ))}
           </tbody>
@@ -125,16 +119,6 @@ const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" :
     )
   }
 
-  {
-    RISKY && org && (
-      <p class="risky-flag">
-        Not recommended: the "From its PAC" column joins the two lists. Of the {holders.length} holders,{" "}
-        {holders.filter((h) => pacTo.has(h.member.bioguide)).length} also got money from its PAC. Read as "owns it and is paid
-        by it", which neither report says.
-      </p>
-    )
-  }
-
   <p class="source">
     Source: <a href="https://disclosures-clerk.house.gov/FinancialDisclosure">U.S. House Clerk financial disclosure reports</a>;
     company and industry from SEC EDGAR. Values are the ranges members report, added up when a member reported more than
@@ -143,10 +127,5 @@ const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" :
 </Base>
 
 <style>
-  .prototype-flag, .risky-flag {
-    display: inline-block; font-size: var(--fs-sm); color: var(--text-secondary); margin: 0 0 var(--sp-5);
-    padding: var(--sp-1) var(--sp-3); border-left: 3px solid var(--accent); background: var(--surface-2);
-  }
-  .risky-flag { display: block; max-width: 680px; }
   .pac-aside { max-width: 760px; }
 </style>

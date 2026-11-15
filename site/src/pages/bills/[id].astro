@@ -1,0 +1,233 @@
+---
+// A bill: what it is, how each chamber voted on passing it, and which
+// organizations' lobbying reports name it.
+import Base from "../../layouts/Base.astro";
+import "../../styles/bill-lists.css";
+import PlotFigure from "../../components/PlotFigure.astro";
+import LazyDisclosure from "../../islands/LazyDisclosure";
+import { memberById, organizationById, congressCommitteeById, partyLetter, sectorSlug } from "../../lib/data";
+import { shortSector } from "../../lib/format";
+import {
+  bills,
+  chamberLabel,
+  fmtDate,
+  patternSentence,
+  partyPlural,
+  voteKind,
+  clientSectors,
+  status,
+  lobbyingSpan,
+  ordinal,
+  congress,
+  PATTERN_LABEL,
+  CLIENTS_SHOWN,
+  type Bill,
+  type LobbyingClient,
+} from "../../lib/legislation";
+
+export function getStaticPaths() {
+  return bills.map((b) => ({ params: { id: b.id }, props: { b } }));
+}
+const { b } = Astro.props as { b: Bill };
+
+const sponsor = b.sponsor ? memberById.get(b.sponsor) : undefined;
+const clients = b.lobbying;
+const onSite = clients.filter((c) => c.org);
+const withStance = clients.filter((c) => c.stance);
+const sectors = clientSectors(b, (id) => organizationById.get(id)?.sector);
+const committees = b.committees.map((id) => ({ id, c: congressCommitteeById.get(id) })).filter((x) => x.c && !x.c.parent);
+const officialTitle = b.title !== b.name && !/^(An act|A bill)/i.test(b.title) ? b.title : undefined;
+
+const VOTE_SERIES = [
+  { key: "Y", label: "Yes", color: "var(--bar)", ink: "var(--on-bar)" },
+  { key: "N", label: "No", color: "var(--bar-muted)", ink: "var(--on-bar-muted)" },
+  { key: "O", label: "Didn't vote", color: "var(--context)", ink: "var(--on-context)" },
+];
+const PARTIES = ["D", "I", "R"];
+/** " · caucus with Democrats", for the independents' row. */
+const independentCaucus = (v: Bill["votes"][number]) => {
+  const parties = [...new Set(Object.values(v.caucus ?? {}))];
+  if (!parties.length) return "";
+  return parties.length > 1 ? " · caucus with both parties" : ` · ${Object.keys(v.caucus!).length === 1 ? "caucuses" : "caucus"} with ${partyPlural(parties[0]!)}`;
+};
+const voteRows = (v: Bill["votes"][number]) =>
+  PARTIES.filter((p) => v.tally[p]).map((p) => {
+    const t = v.tally[p]!;
+    return { label: `${partyPlural(p)} (${t.yes}–${t.no})${p === "I" ? independentCaucus(v) : ""}`, values: { Y: t.yes, N: t.no, O: t.other } };
+  });
+
+const quarterSpan = (c: LobbyingClient) =>
+  c.quarters.length === 1 ? c.quarters[0] : `${c.quarters.length} quarters, ${c.quarters[0]} to ${c.quarters.at(-1)}`;
+const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.stance === "oppose" ? "Opposes" : undefined);
+---
+
+<Base title={`${b.name} (${b.label})`} og={{ type: "bill", id: b.id }} description={`${b.label}, ${b.name}: how Congress voted on it and which organizations reported lobbying on it.`}>
+  <p class="kicker">
+    <a href="/bills/">Bills</a> · {b.label}{b.policyArea && <> · {b.policyArea}</>}
+  </p>
+  <h1>{b.name}</h1>
+  <p class="dek">
+    {b.label}, introduced {fmtDate(b.introduced)}
+    {sponsor && <> by <a href={`/members/${sponsor.bioguide}/`}>{sponsor.name}</a> ({partyLetter(sponsor.party)}-{sponsor.state})</>}
+    {b.cosponsors.length > 0 && <> with {b.cosponsors.length} cosponsor{b.cosponsors.length === 1 ? "" : "s"}</>}. {status(b)}.{" "}
+    {
+      clients.length > 0 ? (
+        <><strong>{clients.length.toLocaleString()}</strong> organization{clients.length === 1 ? "" : "s"} reported lobbying on it from {lobbyingSpan}.</>
+      ) : (
+        <>No lobbying report from {lobbyingSpan} names it.</>
+      )
+    }
+  </p>
+  {officialTitle && <p class="official-title"><span class="kicker">Official title</span> {officialTitle}</p>}
+
+  <dl class="stats">
+    <div class="stat"><dt>Passage votes</dt><dd>{b.votes.length}<small>{b.votes.map((v) => PATTERN_LABEL[v.pattern]).join(", ")}</small></dd></div>
+    <div class="stat"><dt>Organizations lobbying on it</dt><dd>{clients.length.toLocaleString()}</dd></div>
+    {clients.length > 0 && <div class="stat"><dt>Said where they stood</dt><dd>{withStance.length}<small>of {clients.length.toLocaleString()}, in their reports</small></dd></div>}
+    <div class="stat"><dt>Cosponsors</dt><dd>{b.cosponsors.length}</dd></div>
+  </dl>
+
+  <section class="story">
+    <h2>How Congress voted</h2>
+    <p class="chart-dek">
+      Each recorded vote on passing the bill, by party. Procedural votes (rules, motions to recommit, cloture) and
+      amendments aren't shown: they mostly follow party lines whatever the bill says.
+    </p>
+    <div class="votes">
+      {
+        b.votes.map((v) => (
+          <div class="vote">
+            <h3>
+              {chamberLabel(v.chamber)}, {fmtDate(v.date)} · <span class="muted">{voteKind(v)}</span>
+            </h3>
+            <p class="pattern">
+              <span class="pattern-tag">{PATTERN_LABEL[v.pattern]}</span>
+              {patternSentence(v)} <span class="muted">{v.result}{v.required && v.required !== "1/2" ? `, ${v.required} needed` : ""}.</span>
+            </p>
+            <PlotFigure
+              chart="stacked"
+              width={640}
+              label={`${chamberLabel(v.chamber)} vote on ${b.label}, ${fmtDate(v.date)}, by party`}
+              legend={VOTE_SERIES.map((s) => ({ label: s.label, color: s.color }))}
+              data={{ mode: "share", series: VOTE_SERIES, rows: voteRows(v), insideLabels: true, unit: "members" }}
+              table={{
+                columns: ["Party", "Yes", "No", "Didn't vote"],
+                numeric: [1, 2, 3],
+                rows: PARTIES.filter((p) => v.tally[p]).map((p) => [partyPlural(p), v.tally[p]!.yes, v.tally[p]!.no, v.tally[p]!.other]),
+              }}
+            />
+            <LazyDisclosure client:visible title="How each current member voted" src={`/fragments/bills/${b.id}/votes/${v.id}/`} />
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="story">
+    <h2>Who lobbied on it</h2>
+    {
+      clients.length === 0 ? (
+        <p class="empty-note">No quarterly lobbying report filed from {lobbyingSpan} names {b.label}.</p>
+      ) : (
+        <>
+          <p class="chart-dek">
+            Organizations whose quarterly lobbying reports name {b.label}, {lobbyingSpan}. Reports list what was lobbied
+            on, not the position taken: <strong>an organization here may have backed the bill, opposed it, or wanted one
+            part of it changed.</strong> {withStance.length === 0 ? "None" : `Only ${withStance.length}`} of{" "}
+            {clients.length.toLocaleString()} said which in the report. Reports don't break spending down by bill, so
+            there's no dollar figure for this one.
+          </p>
+          {sectors.length > 0 && (
+            <>
+              <h3>By industry</h3>
+              <ul class="chips sector-chips">
+                {sectors.map(([s, n]) => (
+                  <li><a class="chip" href={`/sectors/${sectorSlug(s)}/`}>{shortSector(s)} <strong>{n}</strong></a></li>
+                ))}
+              </ul>
+              <p class="source">
+                For the {onSite.length} organization{onSite.length === 1 ? "" : "s"} with a PAC on this site
+                {clients.length > onSite.length && <>; the other {(clients.length - onSite.length).toLocaleString()} don't have one</>}.
+              </p>
+            </>
+          )}
+          <table class="clients">
+            <caption class="visually-hidden">Organizations whose lobbying reports name {b.label}</caption>
+            <thead>
+              <tr>
+                <th scope="col">Organization, and what its report says</th>
+                <th scope="col">Reports</th>
+                <th scope="col">Said</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clients.slice(0, CLIENTS_SHOWN).map((c) => (
+                <tr>
+                  <td>
+                    {c.org ? <a href={`/organizations/${c.org}/`}>{c.name}</a> : c.name}
+                    {c.org && <span class="muted small"> · {shortSector(organizationById.get(c.org)!.sector)}</span>}
+                    {c.quote && <blockquote>{c.quote}</blockquote>}
+                  </td>
+                  <td class="small">{quarterSpan(c)}</td>
+                  <td class="small">{said(c) ?? <span class="muted">—</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {clients.length > CLIENTS_SHOWN && (
+            <LazyDisclosure client:visible title={`${(clients.length - CLIENTS_SHOWN).toLocaleString()} more organizations`} src={`/fragments/bills/${b.id}/clients/`} />
+          )}
+        </>
+      )
+    }
+  </section>
+
+  {
+    (committees.length > 0 || b.subjects.length > 0) && (
+      <div class="grid-2">
+        {committees.length > 0 && (
+          <section class="story">
+            <h2>Committees</h2>
+            <p class="chart-dek">Where it was referred or reported from.</p>
+            <ul class="link-list committee-list">
+              {committees.map(({ id, c }) => <li><a href={`/committees/${id}/`}>{c!.name}</a></li>)}
+            </ul>
+          </section>
+        )}
+        {b.subjects.length > 0 && (
+          <section class="story">
+            <h2>Subjects</h2>
+            <p class="chart-dek">As indexed by the Library of Congress.</p>
+            <ul class="chips">{b.subjects.map((s) => <li class="chip">{s}</li>)}</ul>
+          </section>
+        )}
+      </div>
+    )
+  }
+
+  <p class="source">
+    Bill details from <a href={b.url}>congress.gov</a> (GovInfo bill status data, {ordinal(congress)} Congress). Votes from
+    the <a href="https://clerk.house.gov/Votes">House Clerk</a> and the{" "}
+    <a href="https://www.senate.gov/legislative/votes_new.htm">Senate</a>. Lobbying from quarterly LD-2 reports on{" "}
+    <a href="https://lda.gov/">lda.gov</a>, matched by the bill number written in each report.{" "}
+    <a href="/about/#bills">How bills are matched</a>.
+  </p>
+</Base>
+
+<style>
+  .official-title { margin: calc(-1 * var(--sp-4)) 0 var(--sp-6); max-width: 700px; color: var(--text-secondary); font-size: var(--fs-sm); }
+  .official-title .kicker { display: inline; margin-right: var(--sp-2); }
+  .votes { display: grid; gap: var(--sp-7); }
+  .vote h3 { margin-bottom: var(--sp-1); }
+  .pattern { margin: 0 0 var(--sp-3); font-size: var(--fs-base); color: var(--text-secondary); max-width: 720px; }
+  .pattern-tag {
+    display: inline-block; margin-right: 8px; padding: 1px 6px; border-radius: 2px; vertical-align: 1px;
+    font: 700 var(--fs-label)/1.4 var(--sans); text-transform: uppercase; letter-spacing: 0.06em;
+    border: 1px solid var(--baseline); color: var(--text-primary);
+  }
+  .sector-chips { margin-bottom: var(--sp-2); }
+  .clients { margin-top: var(--sp-5); }
+  .clients td:nth-child(2) { white-space: nowrap; color: var(--text-secondary); }
+  .clients blockquote { margin: var(--sp-1) 0 0; color: var(--text-secondary); font: 400 var(--fs-sm)/1.45 var(--serif); max-width: 640px; }
+  .committee-list { list-style: none; padding: 0; margin: 0; line-height: 1.9; }
+</style>

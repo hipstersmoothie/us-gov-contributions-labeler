@@ -6,7 +6,7 @@
 // drawn size, so nothing here is set smaller than 22px and the one number
 // the card is about is the biggest thing on it. Party is never color alone:
 // every party fill sits next to its letter or name.
-import type { Bar, Card, CommitteeCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, SectorCard, Split, Target } from "./types.ts";
+import type { Bar, BillCard, Card, CommitteeCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, SectorCard, Split, Target } from "./types.ts";
 
 export const WIDTH = 1200;
 export const HEIGHT = 630;
@@ -87,7 +87,7 @@ const plural = (n: number, one: string, many: string) => `${n.toLocaleString()} 
 
 // --- shared pieces ---------------------------------------------------------------------
 
-function frame(assets: Assets, footLeft: string, body: Node) {
+function frame(assets: Assets, footLeft: string, body: Node, span = assets.cycleRange) {
   return div(
     { width: WIDTH, height: HEIGHT, flexDirection: "column", background: C.page, color: C.text, fontFamily: SANS },
     // The party split from the banner and the site card: the brand, not data.
@@ -102,7 +102,7 @@ function frame(assets: Assets, footLeft: string, body: Node) {
         justifyContent: "space-between",
       },
       img(assets.logo, { width: 247, height: 49 }),
-      div({ fontSize: 22, fontWeight: 600, color: C.secondary }, `${footLeft}, ${assets.cycleRange}`)
+      div({ fontSize: 22, fontWeight: 600, color: C.secondary }, `${footLeft}, ${span}`)
     )
   );
 }
@@ -449,6 +449,76 @@ function committee(c: CommitteeCard, a: Assets) {
   );
 }
 
+/** A vote by party: a 100% bar per party, yes in black and no in gray, the
+ *  same as the bill page. Party is named in text beside its letter. */
+function voteRows(rows: BillCard["vote"]["rows"], width: number) {
+  return div(
+    { flexDirection: "column", width, gap: 16 },
+    ...rows.map((r) => {
+      const total = r.yes + r.no + r.other || 1;
+      return div(
+        { flexDirection: "column" },
+        div(
+          { alignItems: "center", gap: 10 },
+          partyChip(r.party, 26),
+          div({ fontSize: 24, fontWeight: 700 }, `${PARTY_NAMES[r.party]} ${r.yes}–${r.no}`),
+          r.note ? div({ fontSize: 21, fontWeight: 500, color: C.muted }, r.note) : null
+        ),
+        div(
+          { height: 22, width, marginTop: 8, borderRadius: 3, overflow: "hidden" },
+          r.yes ? div({ width: (r.yes / total) * width, height: 22, background: C.bar }) : null,
+          r.no ? div({ width: (r.no / total) * width, height: 22, background: C.barMuted, borderLeft: r.yes ? `2px solid ${C.page}` : "none" }) : null,
+          r.other ? div({ width: (r.other / total) * width, height: 22, background: C.context, borderLeft: `2px solid ${C.page}` }) : null
+        )
+      );
+    })
+  );
+}
+
+function bill(c: BillCard, a: Assets) {
+  const W = 560;
+  const lobbying =
+    c.top.length > 0
+      ? div(
+          { flexDirection: "column", marginTop: 22 },
+          div({ fontSize: 24, fontWeight: 700 }, `${plural(c.lobbying, "organization", "organizations")} lobbied on it`),
+          ...c.top.slice(0, 2).map((t) =>
+            div(
+              { alignItems: "center", gap: 10, marginTop: 6 },
+              line(t.label, { fontSize: 23, fontWeight: 500, color: C.secondary, maxWidth: 300 }),
+              div({ fontSize: 21, color: C.muted }, `${t.reports} ${t.reports === 1 ? "report" : "reports"}`)
+            )
+          )
+        )
+      : div({ fontSize: 24, fontWeight: 600, color: C.secondary, marginTop: 22 }, "No lobbying reports name it");
+  return frame(
+    a,
+    "Votes and lobbying reports",
+    twoColumn(
+      div({ flexDirection: "column" }, kicker([c.label, c.policyArea].filter(Boolean).join(" · ")), title(c.name, 1072, [60, 54, 46, 40])),
+      div(
+        { flexDirection: "column" },
+        div({ display: "block", fontSize: 50, fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.05 }, c.status),
+        div({ display: "block", fontSize: 24, fontWeight: 500, color: C.secondary, marginTop: 10, lineHeight: 1.3 }, `${c.vote.chamber} vote, ${c.vote.date}: ${c.vote.pattern.toLowerCase()}`),
+        lobbying
+      ),
+      div(
+        { flexDirection: "column" },
+        sectionLabel(`${c.vote.chamber} vote by party · yes–no`),
+        voteRows(c.vote.rows, W),
+        div(
+          { gap: 18, marginTop: 14, fontSize: 20, fontWeight: 600, color: C.secondary },
+          div({ alignItems: "center", gap: 8 }, div({ width: 16, height: 16, background: C.bar, borderRadius: 2 }), "Yes"),
+          div({ alignItems: "center", gap: 8 }, div({ width: 16, height: 16, background: C.barMuted, borderRadius: 2 }), "No"),
+          div({ alignItems: "center", gap: 8 }, div({ width: 16, height: 16, background: C.context, borderRadius: 2 }), "Didn't vote")
+        )
+      ),
+      430
+    ),
+    c.congress
+  );
+}
+
 function page(c: PageCard, a: Assets) {
   const W = 520;
   let right: Node | null = null;
@@ -511,6 +581,8 @@ export function cardTree(card: Card, assets: Assets): Node {
       return sector(card, assets);
     case "committee":
       return committee(card, assets);
+    case "bill":
+      return bill(card, assets);
     case "page":
       return page(card, assets);
   }
@@ -532,6 +604,10 @@ export function altText(card: Card): string {
       return `${card.name}: ${money(card.total)} to super PACs and outside groups${card.gifts[0] ? `, most to ${card.gifts[0].label}` : ""}.`;
     case "committee":
       return `${card.name}: ${card.counts.D} Democrats and ${card.counts.R} Republicans, who took ${money(card.total)} from PACs.`;
+    case "bill":
+      return `${card.label}, ${card.name}: ${card.status}. ${card.vote.chamber} vote by party: ${card.vote.rows
+        .map((r) => `${PARTY_NAMES[r.party]} ${r.yes}–${r.no}`)
+        .join(", ")}. ${card.lobbying.toLocaleString()} organizations reported lobbying on it.`;
     case "page":
       return `${card.title}. ${card.dek}`;
   }

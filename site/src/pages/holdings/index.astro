@@ -1,5 +1,5 @@
 ---
-// Prototype: an index of what House members reported owning and trading.
+// An index of what House members reported owning and trading.
 import Base from "../../layouts/Base.astro";
 import TradesTable from "../../islands/TradesTable";
 import { memberById, partyLetter } from "../../lib/data";
@@ -30,7 +30,7 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
 <Base title="What members own and trade" description="House members' reported investments and stock trades, from their financial disclosure reports. Values are ranges.">
   <p class="kicker">Investments</p>
   <h1>What members own and trade</h1>
-  <p class="prototype-flag">Prototype. Built from House financial disclosure reports on a branch; not on the live site.</p>
+  {all.length === 0 && <p class="empty-note">This build doesn't include the disclosure data.</p>}
   <p class="dek">
     Members of Congress report what they, their spouses and dependent children own each May, and any stock trade over
     $1,000 within 45 days. These are <strong>{parsed.length} House members' 2025 annual reports</strong> and{" "}
@@ -108,10 +108,6 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
 </Base>
 
 <style>
-  .prototype-flag {
-    display: inline-block; font-size: var(--fs-sm); color: var(--text-secondary); margin: 0 0 var(--sp-5);
-    padding: var(--sp-1) var(--sp-3); border-left: 3px solid var(--accent); background: var(--surface-2);
-  }
   .how ul { margin: 0; padding-left: 1.1em; max-width: 720px; }
   .how li { margin-bottom: var(--sp-2); color: var(--text-secondary); }
   .how li strong { color: var(--text-primary); }

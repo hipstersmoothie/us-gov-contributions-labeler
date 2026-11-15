@@ -1,6 +1,7 @@
 // Build-time access to ../data/*.json, produced by `pnpm ingest`.
 import fs from "node:fs";
 import path from "node:path";
+import { titleCase } from "../../../src/lib/names.ts";
 import type { Member, CommitteeRecord, OrganizationRecord, DonorRecord } from "../../../src/ingest/build.ts";
 import type { CongressCommittee } from "../../../src/ingest/assignments.ts";
 
@@ -110,20 +111,9 @@ const ORG_TYPES: Record<string, string> = {
 };
 export const orgTypeLabel = (t?: string) => (t ? ORG_TYPES[t] : undefined);
 
-/** Title-case the ALL CAPS names FEC files under. */
+/** Title-case the ALL CAPS names FEC files under, with acronyms kept: "CMS Energy". */
 export function displayName(name: string) {
-  if (name !== name.toUpperCase()) return name;
-  const SMALL = new Set(["of", "and", "for", "the", "in", "on", "at", "to", "a", "an"]);
-  return name
-    .toLowerCase()
-    .replace(/\b[a-z][a-z']*/g, (w, i) => (i > 0 && SMALL.has(w) ? w : w[0]!.toUpperCase() + w.slice(1)))
-    .replace(/\b(Pac|Llc|Afl|Cio|Usa)\b/g, (w) => w.toUpperCase())
-    // Vowel-less short words are acronyms: Nrcc, Dscc, Clf, Smp.
-    // An abbreviation in parentheses: "United Democracy Project ('UDP')".
-    .replace(/\(('?)([A-Za-z]{2,6})('?)\)/g, (_, a: string, w: string, b: string) => `(${a}${w.toUpperCase()}${b})`)
-    .replace(/\b[B-DF-HJ-NP-TV-XZ][b-df-hj-np-tv-xz]{1,4}\b/g, (w) =>
-      ["Mr", "Mrs", "Dr", "St", "Jr", "Sr", "Ltd"].includes(w) ? w : w.toUpperCase()
-    );
+  return name === name.toUpperCase() ? titleCase(name) : name;
 }
 
 export const fecCommitteeUrl = (id: string) => `https://www.fec.gov/data/committee/${id}/`;

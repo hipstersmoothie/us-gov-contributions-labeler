@@ -1,0 +1,15 @@
+---
+// A member's passage votes past the most recent few, loaded on request.
+import VotesTable from "../../../../components/VotesTable.astro";
+import { members, type Member } from "../../../../lib/data";
+import { memberVotes, memberCaucusName, VOTES_SHOWN } from "../../../../lib/legislation";
+import { surname } from "../../../../lib/format";
+
+export const partial = true;
+export function getStaticPaths() {
+  return members.filter((m) => memberVotes(m).length > VOTES_SHOWN).map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
+}
+const { m } = Astro.props as { m: Member };
+---
+
+<VotesTable rows={memberVotes(m).slice(VOTES_SHOWN)} member={surname(m.name)} caucus={memberCaucusName(m)} />
