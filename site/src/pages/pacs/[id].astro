@@ -1,7 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
-import BarList from "../../components/BarList.astro";
-import SplitBar from "../../components/SplitBar.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import PartySplit from "../../components/PartySplit.astro";
 import OutsideTable from "../../components/OutsideTable.astro";
 import {
   committees,
@@ -11,6 +11,7 @@ import {
   MIN_DONATION,
   money,
   partySplit,
+  partyLetter,
   cycleRange,
   displayName,
   kindLabel,
@@ -33,10 +34,10 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
 ---
 
 <Base title={name} description={`Which members of Congress ${name} gives to, ${cycleRange}.`}>
-  <h1>{name}</h1>
-  <p class="eyebrow">
+  <p class="kicker">
     {kindLabel(c.kind)}{orgTypeLabel(c.orgType) && <> · {orgTypeLabel(c.orgType)}</>} · <a href={fecCommitteeUrl(c.id)}>FEC {c.id}</a>
   </p>
+  <h1>{name}</h1>
 
   {
     showOrg && (
@@ -87,7 +88,9 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
           <section class="card">
             <h2>Biggest donors</h2>
             <p class="muted small">Donations of {money(MIN_DONATION)} or more, {cycleRange}.</p>
-            <BarList
+            <RankedTable
+              heading="Donor"
+              valueHeading="Given"
               rows={c.donors.slice(0, 30).map((d) => {
                 const donor = donorById.get(d.id);
                 return {
@@ -107,24 +110,18 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
   {c.total > 0 && <div class="grid-2">
     <section class="card">
       <h2>Top recipients</h2>
-      <BarList
-        total={c.total}
+      <RankedTable
+        heading="Member"
+        valueHeading="Given"
         rows={c.recipients.slice(0, 25).map((r) => {
           const m = memberById.get(r.id);
-          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, note: m ? `${m.party} · ${m.state}` : undefined };
+          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, party: m ? partyLetter(m.party) : undefined, note: m?.state };
         })}
       />
     </section>
     <section class="card">
       <h2>Split by party</h2>
-      <SplitBar
-        label="Contributions by recipient party"
-        segments={[
-          { label: "Democrats", value: split.Democrat, color: "--party-d" },
-          { label: "Independents", value: split.Independent, color: "--party-i" },
-          { label: "Republicans", value: split.Republican, color: "--party-r" },
-        ]}
-      />
+      <PartySplit split={split} label="Contributions by recipient party" />
     </section>
   </div>}
 </Base>

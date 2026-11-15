@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import BarList from "../../components/BarList.astro";
+import RankedTable from "../../components/RankedTable.astro";
 import OutsideTable from "../../components/OutsideTable.astro";
 import {
   donors,
@@ -31,8 +31,9 @@ const about =
 ---
 
 <Base title={d.name} description={`${d.name}'s donations to super PACs and outside groups, ${cycleRange}.`}>
+  <p class="kicker"><a href="/donors/">Big donors</a></p>
   <h1>{d.name}</h1>
-  <p class="eyebrow">{about}</p>
+  <p class="dek">{about}</p>
   {d.organization && <p>See also <a href={`/organizations/${d.organization}/`}>{d.name}'s PAC giving</a>.</p>}
   {d.committee && <p>See also <a href={`/pacs/${d.committee}/`}>this committee's profile</a>.</p>}
 
@@ -44,8 +45,9 @@ const about =
   <section class="card section">
     <h2>Donations</h2>
     <p class="muted small">Individual donations of {money(MIN_DONATION)} or more, as reported by the receiving committee.</p>
-    <BarList
-      total={d.total}
+    <RankedTable
+      heading="Group"
+      valueHeading="Given"
       rows={funded.map(({ gift, committee }) => ({
         label: committee ? displayName(committee.name) : gift.id,
         value: gift.total,

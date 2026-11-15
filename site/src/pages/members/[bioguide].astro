@@ -1,7 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
-import BarList from "../../components/BarList.astro";
-import CycleBars from "../../components/CycleBars.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import RankedTable from "../../components/RankedTable.astro";
 import OutsideTable from "../../components/OutsideTable.astro";
 import {
   members,
@@ -19,14 +19,16 @@ import {
   fecCandidateUrl,
   type Member,
 } from "../../lib/data";
+import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct } from "../../lib/derived";
+import { surname } from "../../lib/format";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
 }
 
 const { m } = Astro.props as { m: Member };
-const raised = Object.values(m.totals).reduce((s, t) => s + t.receipts, 0);
-const fromPacs = m.committees.reduce((s, c) => s + c.total, 0);
+const raised = raisedTotal(m);
+const fromPacs = pacTotal(m);
 const sectorTotal = m.sectors.reduce((s, x) => s + x.total, 0);
 const photo = photoUrl(m.bioguide);
 const seats = m.assignments
@@ -35,76 +37,149 @@ const seats = m.assignments
   // Full committees first, then their subcommittees.
   .sort((a, b) => Number(!!a.committee!.parent) - Number(!!b.committee!.parent));
 const ind = m.individuals;
+const contributors = m.contributors ?? [];
+const p = partyLetter(m.party);
+const last = surname(m.name);
+const chamber = chamberName(m);
+
+// Plain-language summary.
+const allCycles = Object.values(m.totals);
+const fromIndividuals = allCycles.reduce((s, t) => s + t.individual, 0);
+const rank = pacPercentile(m);
+const topSector = m.sectors.find((s) => !["Unknown", "Party & Candidate Committees"].includes(s.id));
+const peers = chamber === "Senate" ? "senators" : "House members";
+const individualShare = raised > 0 ? `, ${pct(fromIndividuals, raised)}% of it from individual donors` : "";
+const chamberPac = members.filter((x) => x.chamber === m.chamber).map(pacTotal).sort((a, b) => a - b);
+const median = chamberPac[Math.floor(chamberPac.length / 2)] ?? 0;
+const comparison =
+  Math.abs(fromPacs - median) < median * 0.05
+    ? `about what the typical ${chamber === "Senate" ? "senator" : "House member"} took`
+    : `${fromPacs > median ? "above" : "below"} the ${money(median, true)} the typical ${chamber === "Senate" ? "senator" : "House member"} took`;
+
+const SOURCES = [
+  { key: "individual", label: "Individuals", color: "var(--bar)", ink: "var(--on-bar)" },
+  { key: "pac", label: "PACs", color: "var(--accent)", ink: "var(--on-accent)" },
+  { key: "other", label: "Party, self & other", color: "var(--context)", ink: "var(--on-context)" },
+];
+const cycleRows = Object.entries(m.totals)
+  .map(([cycle, t]) => ({
+    label: `${Number(cycle) - 1}–${cycle.slice(2)} cycle`,
+    values: { individual: t.individual, pac: t.pac, other: Math.max(t.receipts - t.individual - t.pac, 0) },
+  }))
+  .reverse();
+const points = memberPoints((x) => x.bioguide === m.bioguide).filter((x) => x.lane === chamber);
+const chamberTop = [...points].sort((a, b) => b.value - a.value)[0]!;
 ---
 
 <Base title={m.name} description={`Who funds ${m.name}: top industries, organizations and PACs, ${cycleRange}.`}>
   <header class="member-head">
-    {photo && <img src={photo} alt="" width="90" height="110" />}
+    {photo && <img src={photo} alt="" width="96" height="118" />}
     <div>
+      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party} · {seat(m)}</p>
       <h1>{m.name}</h1>
-      <p class="eyebrow">
-        <span class={`party party-${partyLetter(m.party)}`}>{m.party}</span> · {seat(m)}
-      </p>
     </div>
   </header>
+  <p class="dek">
+    {last} raised <strong>{money(raised, true)}</strong> from {cycleRange.replace("–", " to ")}{individualShare}.{" "}
+    PACs and other committees gave <strong>{money(fromPacs, true)}</strong>, {comparison}.{" "}
+    {topSector && <>The biggest share of that came from <strong>{topSector.id.toLowerCase()}</strong>.</>}
+  </p>
 
   <dl class="stats">
     <div class="stat"><dt>Raised, {cycleRange}</dt><dd>{money(raised, true)}</dd></div>
-    <div class="stat"><dt>From PACs &amp; committees</dt><dd>{money(fromPacs, true)}</dd></div>
-    <div class="stat"><dt>Top sector</dt><dd>{m.sectors[0]?.id ?? "–"}</dd></div>
+    <div class="stat"><dt>From PACs &amp; committees</dt><dd>{money(fromPacs, true)}<small>No. {rank.rank} of {rank.of} in the {chamber}</small></dd></div>
     {m.outside.support > 0 && <div class="stat"><dt>Outside spending for</dt><dd>{money(m.outside.support, true)}</dd></div>}
     {m.outside.oppose > 0 && <div class="stat"><dt>Outside spending against</dt><dd>{money(m.outside.oppose, true)}</dd></div>}
   </dl>
 
   {
-    m.accounts.length > 0 && (
-      <section class="section">
-        <ul class="chips">
-          {m.accounts.map((a) => (
-            <li><a class="chip" href={`https://bsky.app/profile/${a.handle}`}>@{a.handle}</a></li>
-          ))}
-        </ul>
+    (seats.length > 0 || m.accounts.length > 0) && (
+      <section class="meta">
+        {seats.length > 0 && (
+          <div>
+            <h3 class="kicker">Committees</h3>
+            <ul class="chips">
+              {seats.map((a) => (
+                <li>
+                  <a class="chip" href={`/committees/${a.id}/`}>
+                    {a.committee!.parent ? `${congressCommitteeById.get(a.committee!.parent)?.name.replace(/^(House|Senate) Committee on (the )?/, "")}: ` : ""}
+                    {a.committee!.name.replace(/^(House|Senate|Joint) Committee on (the )?/, "")}
+                    {a.title && <strong> · {a.title}</strong>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {m.accounts.length > 0 && (
+          <div>
+            <h3 class="kicker">On Bluesky</h3>
+            <ul class="chips">
+              {m.accounts.map((a) => <li><a class="chip" href={`https://bsky.app/profile/${a.handle}`}>@{a.handle}</a></li>)}
+            </ul>
+          </div>
+        )}
       </section>
     )
   }
 
-  {
-    seats.length > 0 && (
-      <section class="section">
-        <h2 class="small muted">Committees</h2>
-        <ul class="chips">
-          {seats.map((a) => (
-            <li>
-              <a class="chip" href={`/committees/${a.id}/`}>
-                {a.committee!.parent ? `${congressCommitteeById.get(a.committee!.parent)?.name.replace(/^(House|Senate) Committee on (the )?/, "")}: ` : ""}
-                {a.committee!.name.replace(/^(House|Senate|Joint) Committee on (the )?/, "")}
-                {a.title && <strong> · {a.title}</strong>}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  <section class="story">
+    <h2>How {last} compares</h2>
+    <p class="chart-dek">
+      PAC and committee money to every member of the {chamber}, {cycleRange}. {last} is highlighted; each gray dot
+      is another member.
+    </p>
+    <PlotFigure
+      chart="swarm"
+      label={`${m.name}'s PAC money compared with every ${chamber} member`}
+      data={{ points, lanes: [chamber], labels: [m.bioguide, ...(chamberTop.id === m.bioguide ? [] : [chamberTop.id])], medians: true, context: true, xLabel: "PAC money" }}
+      legend={[
+        { label: `${m.name} (${m.party})`, color: `var(--party-${p.toLowerCase()})`, shape: "dot" },
+        { label: `Other ${peers}`, color: "var(--context)", shape: "dot" },
+      ]}
+    />
+  </section>
 
-  <div class="grid-2 section">
-    <section class="card">
+  <div class="grid-2">
+    <section class="story">
       <h2>Where the money came from</h2>
-      <CycleBars totals={m.totals} />
-      <p class="muted small">
-        Totals from the FEC's candidate summaries.
+      <p class="chart-dek">Everything the campaign raised, by source and election cycle.</p>
+      <PlotFigure
+        chart="stacked"
+        width={500}
+        label="Money raised by election cycle and source"
+        legend={SOURCES.map((s) => ({ label: s.label, color: s.color }))}
+        data={{ mode: "amount", series: SOURCES, rows: cycleRows }}
+        table={{
+          columns: ["Cycle", ...SOURCES.map((s) => s.label)],
+          numeric: [1, 2, 3],
+          rows: cycleRows.map((r) => [r.label, money(r.values.individual), money(r.values.pac), money(r.values.other)]),
+        }}
+      />
+      <p class="source">
+        Source: FEC candidate summaries,{" "}
         {m.fecIds.map((id, i) => (<>{i > 0 && ", "}<a href={fecCandidateUrl(id)}>{id}</a></>))}
       </p>
     </section>
 
-    <section class="card">
+    <section class="story">
       <h2>PAC money by sector</h2>
       {
         m.sectors.length ? (
-          <BarList
-            total={sectorTotal}
-            rows={m.sectors.map((s) => ({ label: s.id, value: s.total, href: `/sectors/${sectorSlug(s.id)}/` }))}
-          />
+          <>
+            <p class="chart-dek">Contributions from PACs, grouped by the industry of the organization behind each one.</p>
+            <PlotFigure
+              chart="bars"
+              width={500}
+              label="PAC money by sector"
+              data={{
+                rows: m.sectors.slice(0, 10).map((s) => ({ label: s.id, value: s.total, href: `/sectors/${sectorSlug(s.id)}/` })),
+                emphasize: [0],
+                total: sectorTotal,
+              }}
+              table={{ columns: ["Sector", "Amount"], numeric: [1], rows: m.sectors.map((s) => [s.id, money(s.total)]) }}
+            />
+          </>
         ) : (
           <p class="muted">No PAC contributions on file.</p>
         )
@@ -114,28 +189,35 @@ const ind = m.individuals;
 
   {
     ind && (
-      <div class="grid-2 section">
-        <section class="card">
+      <div class="grid-2">
+        <section class="story">
           <h2>Individual donors by sector</h2>
-          <p class="muted small">
+          <p class="chart-dek">
             Estimated from the employer and occupation on {ind.donations.toLocaleString()} itemized donations
             ({money(ind.itemized, true)}). Donations of $200 or less aren't itemized.
           </p>
-          <BarList
-            total={ind.itemized}
-            rows={ind.sectors.slice(0, 15).map((s) => ({
-              label: s.id,
-              value: s.total,
-              href: ["Retired", "Not employed", "Unknown"].includes(s.id) ? undefined : `/sectors/${sectorSlug(s.id)}/`,
-            }))}
+          <PlotFigure
+            chart="bars"
+            width={500}
+            label="Itemized individual donations by sector"
+            data={{
+              rows: ind.sectors.slice(0, 10).map((s) => ({
+                label: s.id,
+                value: s.total,
+                href: ["Retired", "Not employed", "Unknown"].includes(s.id) ? undefined : `/sectors/${sectorSlug(s.id)}/`,
+              })),
+              total: ind.itemized,
+            }}
+            table={{ columns: ["Sector", "Amount"], numeric: [1], rows: ind.sectors.map((s) => [s.id, money(s.total)]) }}
           />
         </section>
-        <section class="card">
+        <section class="story">
           <h2>Top employers of donors</h2>
-          <p class="muted small">Itemized donations from people who listed each employer.</p>
-          <BarList
-            total={ind.itemized}
-            rows={ind.employers.slice(0, 15).map((e) => ({
+          <p class="chart-dek">Itemized donations from people who listed each employer.</p>
+          <RankedTable
+            heading="Employer"
+            valueHeading="Donated"
+            rows={ind.employers.slice(0, 10).map((e) => ({
               label: e.organization ? organizationById.get(e.organization)?.name ?? e.name : e.name,
               value: e.total,
               href: e.organization ? `/organizations/${e.organization}/` : undefined,
@@ -148,11 +230,11 @@ const ind = m.individuals;
 
   {
     m.outside.spenders.length > 0 && (
-      <section class="card section">
+      <section class="story">
         <h2>Outside spending</h2>
-        <p class="muted small">
+        <p class="chart-dek">
           Super PACs and other groups can spend unlimited amounts on ads for or against a candidate, as long as they
-          don't coordinate with the campaign. This money doesn't go to {m.name}.
+          don't coordinate with the campaign. This money doesn't go to {last}.
         </p>
         <OutsideTable
           heading="Spender"
@@ -172,29 +254,35 @@ const ind = m.individuals;
   }
 
   <div class="grid-2">
-    <section class="card">
-      <h2>Top contributors</h2>
-      <p class="muted small">Each organization's PAC plus donations from its employees, the way OpenSecrets counted.</p>
-      <BarList
-        rows={m.contributors.slice(0, 15).map((c) => {
-          const org = c.id.startsWith("employer:") ? undefined : organizationById.get(c.id);
-          return {
-            label: c.name,
-            value: c.total,
-            href: org ? `/organizations/${org.id}/` : undefined,
-            note: [c.pacs && `PAC ${money(c.pacs, true)}`, c.individuals && `employees ${money(c.individuals, true)}`]
-              .filter(Boolean)
-              .join(" · "),
-          };
-        })}
-      />
-    </section>
+    {
+      contributors.length > 0 && (
+        <section class="story">
+          <h2>Top contributors</h2>
+          <p class="chart-dek">Each organization's PAC plus donations from its employees, the way OpenSecrets counts them.</p>
+          <RankedTable
+            heading="Organization"
+            valueHeading="Total"
+            rows={contributors.slice(0, 12).map((c) => {
+              const org = c.id.startsWith("employer:") ? undefined : organizationById.get(c.id);
+              return {
+                label: c.name,
+                value: c.total,
+                href: org ? `/organizations/${org.id}/` : undefined,
+                note: [c.pacs && `PAC ${money(c.pacs, true)}`, c.individuals && `employees ${money(c.individuals, true)}`].filter(Boolean).join(" · "),
+              };
+            })}
+          />
+        </section>
+      )
+    }
 
-    <section class="card">
+    <section class="story">
       <h2>Top PACs</h2>
-      <BarList
-        total={fromPacs}
-        rows={m.committees.slice(0, 15).map((c) => {
+      <p class="chart-dek">The committees that gave {last} the most.</p>
+      <RankedTable
+        heading="PAC"
+        valueHeading="Given"
+        rows={m.committees.slice(0, 12).map((c) => {
           const committee = committeeById.get(c.id);
           return {
             label: committee ? displayName(committee.name) : c.id,
@@ -209,8 +297,9 @@ const ind = m.individuals;
 </Base>
 
 <style>
-  .member-head { display: flex; gap: 20px; align-items: center; margin-bottom: 8px; }
-  .member-head img { border-radius: 8px; object-fit: cover; background: var(--grid); }
-  .member-head .eyebrow { margin-bottom: 0; }
+  .member-head { display: flex; gap: 20px; align-items: flex-end; }
+  .member-head img { border-radius: 2px; object-fit: cover; background: var(--grid); margin-bottom: 14px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 20px 48px; margin: -20px 0 44px; }
+  .meta .kicker { margin-bottom: 8px; }
   .chip strong { font-weight: 600; }
 </style>

@@ -1,7 +1,9 @@
 ---
 import Base from "../../layouts/Base.astro";
-import BarList from "../../components/BarList.astro";
-import SplitBar from "../../components/SplitBar.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import { PARTY_COLOR } from "../../lib/charts";
+import { recipientPoints, pct, chamberName } from "../../lib/derived";
 import {
   organizations,
   committeeById,
@@ -25,124 +27,130 @@ const { o } = Astro.props as { o: Organization };
 const split = partySplit(o.recipients);
 const pacs = o.committees.map((id) => committeeById.get(id)).filter((c) => !!c);
 const issues = o.lobbying?.issues.slice(0, 10) ?? [];
+const name = o.name.startsWith("The ") ? o.name : o.name.match(/^(National|American|International)\b/) ? `The ${o.name}` : o.name;
+
+// Plain-language summary: party lean, and what a typical gift looked like.
+const amounts = o.recipients.map((r) => r.total).sort((a, b) => a - b);
+const q = (f: number) => amounts[Math.floor((amounts.length - 1) * f)] ?? 0;
+const repShare = pct(split.Republican, o.total);
+const demShare = pct(split.Democrat, o.total);
+const leanText =
+  Math.abs(repShare - demShare) <= 6
+    ? `It split its money almost evenly between the parties`
+    : repShare > demShare
+      ? `${repShare}% went to Republicans`
+      : `${demShare}% went to Democrats`;
+const topRecipient = memberById.get(o.recipients[0]?.id ?? "");
+
+const points = recipientPoints(o.recipients);
+const lanes = ["Democrats", "Republicans", "Independents"].filter((l) => points.some((p) => p.lane === l));
+const PARTY_SERIES = [
+  { key: "D", label: "Democrats", color: PARTY_COLOR.D, ink: "var(--on-d)" },
+  { key: "I", label: "Independents", color: PARTY_COLOR.I, ink: "var(--on-i)" },
+  { key: "R", label: "Republicans", color: PARTY_COLOR.R, ink: "var(--on-r)" },
+];
+const byChamber = (ch?: "house" | "senate") => {
+  const v = { D: 0, I: 0, R: 0 };
+  for (const r of o.recipients) {
+    const m = memberById.get(r.id);
+    if (m && (!ch || m.chamber === ch)) v[partyLetter(m.party) as keyof typeof v] += r.total;
+  }
+  return v;
+};
+const splitRows = [
+  { label: "All recipients", values: byChamber() },
+  { label: "House", values: byChamber("house") },
+  { label: "Senate", values: byChamber("senate") },
+].filter((r) => r.values.D + r.values.I + r.values.R > 0);
+
 const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${o.sec.cik}`;
 ---
 
 <Base title={o.name} description={`Which members of Congress ${o.name} funds, ${cycleRange}.`}>
-  <h1>{o.name}</h1>
-  <p class="eyebrow">
+  <p class="kicker">
     <a href={`/sectors/${sectorSlug(o.sector)}/`}>{o.sector}</a>
     {o.industry && <> · {o.industry}</>}
   </p>
+  <h1>{o.name}</h1>
+  <p class="dek">
+    {name}{o.name.endsWith("PAC") ? "" : o.name.endsWith("s") ? "' PAC" : "'s PAC"} gave <strong>{money(o.total, true)}</strong> to{" "}
+    <strong>{o.recipients.length}</strong> current members of Congress from {cycleRange.replace("–", " to ")}. {leanText}.{" "}
+    {amounts.length > 4 && <>The typical member got between {money(q(0.25), true)} and {money(q(0.75), true)}</>}
+    {topRecipient && <>; {topRecipient.name} got the most, {money(o.recipients[0]!.total, true)}</>}.
+  </p>
 
   <dl class="stats">
-    <div class="stat"><dt>Given to current members, {cycleRange}</dt><dd>{money(o.total, true)}</dd></div>
+    <div class="stat"><dt>Given to current members</dt><dd>{money(o.total, true)}</dd></div>
     <div class="stat"><dt>Members funded</dt><dd>{o.recipients.length}</dd></div>
     {o.employees && <div class="stat"><dt>From its employees</dt><dd>{money(o.employees.total, true)}</dd></div>}
-    {o.lobbyingSpend && <div class="stat"><dt>Spent lobbying, {cycleRange}</dt><dd>{money(o.lobbyingSpend.total, true)}</dd></div>}
+    {o.lobbyingSpend && <div class="stat"><dt>Spent lobbying</dt><dd>{money(o.lobbyingSpend.total, true)}</dd></div>}
     {o.sec && <div class="stat"><dt>Ticker</dt><dd><a href={secUrl}>{o.sec.ticker}</a></dd></div>}
   </dl>
 
-  <div class="grid-2 section">
-    <section class="card">
-      <h2>Split by party</h2>
-      <SplitBar
-        label="Contributions by recipient party"
-        segments={[
-          { label: "Democrats", value: split.Democrat, color: "--party-d" },
-          { label: "Independents", value: split.Independent, color: "--party-i" },
-          { label: "Republicans", value: split.Republican, color: "--party-r" },
-        ]}
-      />
-    </section>
-
-    <section class="card">
-      <h2>What they lobby on</h2>
-      {
-        o.lobbyingSpend && (
-          <p>
-            Spent {money(o.lobbyingSpend.total)} on federal lobbying{" "}
-            ({Object.entries(o.lobbyingSpend.byYear).map(([y, v], i) => <>{i > 0 && ", "}{y}: {money(v, true)}</>)}).
-          </p>
-        )
-      }
-      {o.lobbying?.description && <p>{o.lobbying.description}</p>}
-      {
-        issues.length ? (
-          <ul class="chips">{issues.map((i) => <li class="chip">{i.name}</li>)}</ul>
-        ) : (
-          <p class="muted">{o.lobbying?.firm ? "Registered as a lobbying firm." : "No lobbying disclosures matched."}</p>
-        )
-      }
-      {
-        o.lobbying && (
-          <p class="muted small">
-            From <a href="https://lda.gov/filings/public/filing/search/">lobbying disclosures</a> filed
-            for {displayName(o.lobbying.client)}.
-          </p>
-        )
-      }
-    </section>
-  </div>
+  <section class="story">
+    <h2>Which party got the money</h2>
+    <p class="chart-dek">Contributions split by the recipient's party, overall and in each chamber.</p>
+    <PlotFigure
+      chart="stacked"
+      label="Contributions by recipient party and chamber"
+      legend={PARTY_SERIES.filter((s) => splitRows.some((r) => r.values[s.key as "D"] > 0)).map((s) => ({ label: s.label, color: s.color }))}
+      data={{ mode: "share", series: PARTY_SERIES, rows: splitRows }}
+      table={{
+        columns: ["", "Democrats", "Independents", "Republicans"],
+        numeric: [1, 2, 3],
+        rows: splitRows.map((r) => [r.label, money(r.values.D), money(r.values.I), money(r.values.R)]),
+      }}
+    />
+  </section>
 
   {
-    o.employees && (
-      <section class="card section">
-        <h2>Donations from its employees</h2>
-        <p class="muted small">
-          Itemized donations from people who listed {o.name} as their employer, to current members' campaigns,
-          {cycleRange}. These are personal donations, separate from the PAC.
+    points.length > 1 && (
+      <section class="story">
+        <h2>How much each member got</h2>
+        <p class="chart-dek">
+          Number of members of Congress by the total {o.name} gave them, {cycleRange}. PACs can give a candidate
+          $5,000 per election, so totals cluster at round numbers.
         </p>
-        <BarList
-          total={o.employees.total}
-          rows={o.employees.recipients.slice(0, 10).map((r) => {
-            const m = memberById.get(r.id);
-            return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, note: m ? `${m.party} · ${m.state}` : undefined };
-          })}
+        <PlotFigure
+          chart="histogram"
+          label={`How much ${o.name} gave each member, by party`}
+          data={{ points, lanes, unit: "members" }}
+          legend={lanes.map((l) => ({ label: l, color: PARTY_COLOR[l[0] as "D"] }))}
+          table={{
+            columns: ["Member", "Party", "Chamber", "Given"],
+            numeric: [3],
+            rows: o.recipients.flatMap((r) => {
+              const m = memberById.get(r.id);
+              return m ? [[m.name, m.party, chamberName(m), money(r.total)]] : [];
+            }),
+          }}
         />
       </section>
     )
   }
 
   <div class="grid-2">
-    <section class="card">
+    <section class="story">
       <h2>Top recipients</h2>
-      <BarList
-        total={o.total}
-        rows={o.recipients.slice(0, 20).map((r) => {
+      <p class="chart-dek">The members {o.name} gave the most.</p>
+      <RankedTable
+        heading="Member"
+        valueHeading="Given"
+        rows={o.recipients.slice(0, 15).map((r) => {
           const m = memberById.get(r.id);
           return {
             label: m?.name ?? r.id,
             value: r.total,
             href: `/members/${r.id}/`,
-            note: m ? `${m.party} · ${m.state}` : undefined,
+            party: m ? partyLetter(m.party) : undefined,
+            note: m ? `${chamberName(m)}, ${m.state}` : undefined,
           };
         })}
       />
-      {
-        o.recipients.length > 20 && (
-          <details>
-            <summary class="small">All {o.recipients.length} recipients</summary>
-            <table>
-              <tbody>
-                {o.recipients.map((r) => {
-                  const m = memberById.get(r.id);
-                  return (
-                    <tr>
-                      <td>{m && <span class={`party party-${partyLetter(m.party)}`} />}<a href={`/members/${r.id}/`}>{m?.name ?? r.id}</a></td>
-                      <td class="num">{money(r.total)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </details>
-        )
-      }
     </section>
 
-    <section class="card">
-      <h2>{pacs.length === 1 ? "PAC" : "PACs"}</h2>
+    <section class="story">
+      <h2>{pacs.length === 1 ? "Its PAC" : "Its PACs"}</h2>
       <table>
         <tbody>
           {pacs.map((c) => (
@@ -156,7 +164,7 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
       {
         o.outsideGifts && (
           <>
-            <h2 style="margin-top: 20px">Gifts to super PACs</h2>
+            <h3 class="kicker gap">Gifts to super PACs</h3>
             <p class="muted small">Donations of {money(MIN_DONATION)} or more to groups that spent on current members.</p>
             <table>
               <tbody>
@@ -174,18 +182,62 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
           </>
         )
       }
+      <h3 class="kicker gap">What it lobbies on</h3>
+      {
+        o.lobbyingSpend && (
+          <p class="small">
+            Spent {money(o.lobbyingSpend.total)} on federal lobbying{" "}
+            ({Object.entries(o.lobbyingSpend.byYear).map(([y, v], i) => <>{i > 0 && ", "}{y}: {money(v, true)}</>)}).
+          </p>
+        )
+      }
+      {o.lobbying?.description && <p class="small">{o.lobbying.description}</p>}
+      {
+        issues.length ? (
+          <ul class="chips">{issues.map((i) => <li class="chip">{i.name}</li>)}</ul>
+        ) : (
+          <p class="muted small">{o.lobbying?.firm ? "Registered as a lobbying firm." : "No lobbying disclosures matched."}</p>
+        )
+      }
+      {
+        o.lobbying && (
+          <p class="source">
+            From <a href="https://lda.gov/filings/public/filing/search/">lobbying disclosures</a> filed
+            for {displayName(o.lobbying.client)}.
+          </p>
+        )
+      }
       {
         o.sec && (
-          <p class="muted small">
+          <p class="source">
             SEC: <a href={secUrl}>{o.sec.name}</a>{o.sec.sicDescription && <>, {o.sec.sicDescription} (SIC {o.sec.sic})</>}
           </p>
         )
       }
     </section>
   </div>
+
+  {
+    o.employees && (
+      <section class="story">
+        <h2>Donations from its employees</h2>
+        <p class="chart-dek">
+          Itemized donations from people who listed {o.name} as their employer, to current members' campaigns,{" "}
+          {cycleRange}. These are personal donations, separate from the PAC.
+        </p>
+        <RankedTable
+          heading="Member"
+          valueHeading="Donated"
+          rows={o.employees.recipients.slice(0, 10).map((r) => {
+            const m = memberById.get(r.id);
+            return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined };
+          })}
+        />
+      </section>
+    )
+  }
 </Base>
 
 <style>
-  details { margin-top: 12px; }
-  summary { cursor: pointer; color: var(--link); }
+  .gap { margin-top: 28px; }
 </style>

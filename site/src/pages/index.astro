@@ -1,80 +1,163 @@
 ---
 import Base from "../layouts/Base.astro";
-import BarList from "../components/BarList.astro";
+import PlotFigure from "../components/PlotFigure.astro";
+import RankedTable from "../components/RankedTable.astro";
 import { sectors } from "../lib/sectors";
-import { members, organizations, committees, donors, money, cycleRange, displayName } from "../lib/data";
+import { members, organizations, committees, donors, money, cycleRange, displayName, partyLetter } from "../lib/data";
+import { PARTY_COLOR } from "../lib/charts";
+import { memberPoints, topIds, pacTotal, inEvery, pct, shortSeat, chamberName } from "../lib/derived";
+import { shortSector } from "../lib/format";
 
 const total = sectors.reduce((s, x) => s + x.total, 0);
 const byPacMoney = members
-  .map((m) => ({ m, total: m.committees.reduce((s, c) => s + c.total, 0) }))
-  .sort((a, b) => b.total - a.total)
-  .slice(0, 10);
+  .map((m) => ({ m, total: pacTotal(m) }))
+  .sort((a, b) => b.total - a.total);
 const onBluesky = members.filter((m) => m.accounts.length).length;
 const outsideSpenders = committees
   .filter((c) => c.outside)
   .map((c) => ({ c, spent: c.outside!.support + c.outside!.oppose }))
   .sort((a, b) => b.spent - a.spent);
 const outsideTotal = outsideSpenders.reduce((s, x) => s + x.spent, 0);
+
+const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)] ?? 0;
+const houseMedian = median(byPacMoney.filter((x) => x.m.chamber === "house").map((x) => x.total));
+const senateMedian = median(byPacMoney.filter((x) => x.m.chamber === "senate").map((x) => x.total));
+
+const points = memberPoints();
+const lanes = ["House", "Senate"];
+
+// The sectors that lean hardest each way, among those big enough to matter.
+const real = sectors.filter((s) => !["Unknown", "Party & Candidate Committees"].includes(s.name));
+const top = real[0]!;
+const lean = (s: (typeof sectors)[number]) => s.split.Republican / Math.max(s.total, 1);
+const sizable = real.filter((s) => s.total > total * 0.02);
+const mostR = [...sizable].sort((a, b) => lean(b) - lean(a))[0]!;
+const mostD = [...sizable].sort((a, b) => lean(a) - lean(b))[0]!;
+
+const PARTY_SERIES = [
+  { key: "D", label: "To Democrats", color: PARTY_COLOR.D, ink: "var(--on-d)" },
+  { key: "I", label: "To independents", color: PARTY_COLOR.I, ink: "var(--on-i)" },
+  { key: "R", label: "To Republicans", color: PARTY_COLOR.R, ink: "var(--on-r)" },
+];
 ---
 
 <Base title="Home" description={`Who funds each member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`}>
+  <p class="kicker">Campaign finance tracker · {cycleRange}</p>
   <h1>Who funds Congress</h1>
-  <p class="eyebrow">
-    PAC money to the {members.length} current members of Congress, {cycleRange}, traced back to the companies,
-    unions and causes behind it.
+  <p class="dek">
+    PACs and other committees gave <strong>{money(total, true)}</strong> to the {members.length} current members of
+    Congress from {cycleRange.replace("–", " to ")}. <strong>{top.name}</strong> gave the most, {inEvery(top.total / total)}.
+    The typical House member took <strong>{money(houseMedian, true)}</strong>; the typical senator,
+    <strong>{money(senateMedian, true)}</strong>.
   </p>
 
   <dl class="stats">
     <div class="stat"><dt>PAC &amp; committee money</dt><dd>{money(total, true)}</dd></div>
-    <div class="stat"><dt>Outside spending for &amp; against</dt><dd>{money(outsideTotal, true)}</dd></div>
-    <div class="stat"><dt>Organizations</dt><dd>{organizations.length.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Outside spending, for &amp; against</dt><dd>{money(outsideTotal, true)}</dd></div>
+    <div class="stat"><dt>Organizations traced</dt><dd>{organizations.length.toLocaleString()}</dd></div>
     <div class="stat"><dt>Members on Bluesky</dt><dd><a href="/about/#labeler">{onBluesky}</a></dd></div>
   </dl>
 
-  <div class="grid-2">
-    <section class="card">
-      <h2>By sector</h2>
-      <BarList total={total} rows={sectors.map((s) => ({ label: s.name, value: s.total, href: `/sectors/${s.slug}/` }))} />
-    </section>
-
-    <section class="card">
-      <h2>Biggest givers</h2>
-      <BarList
-        total={total}
-        rows={organizations.slice(0, 15).map((o) => ({ label: o.name, value: o.total, href: `/organizations/${o.id}/`, note: o.sector }))}
-      />
-      <p class="small"><a href="/organizations/">All organizations</a></p>
-    </section>
-  </div>
-
-  <div class="grid-2" style="margin-top: 20px">
-    <section class="card">
-      <h2>Biggest outside spenders</h2>
-      <p class="muted small">Super PACs and other groups' ads for and against current members.</p>
-      <BarList
-        total={outsideTotal}
-        rows={outsideSpenders.slice(0, 12).map(({ c, spent }) => ({ label: displayName(c.name), value: spent, href: `/pacs/${c.id}/` }))}
-      />
-    </section>
-    <section class="card">
-      <h2>Biggest donors to outside spenders</h2>
-      <BarList
-        rows={donors.slice(0, 12).map((d) => ({ label: d.name, value: d.total, href: `/donors/${d.id}/`, note: d.type === "individual" ? d.employer : d.type }))}
-      />
-      <p class="small"><a href="/donors/">All big donors</a></p>
-    </section>
-  </div>
-
-  <section class="card section" style="margin-top: 20px">
-    <h2>Most PAC money received</h2>
-    <BarList
-      rows={byPacMoney.map(({ m, total }) => ({
-        label: m.name,
-        value: total,
-        href: `/members/${m.bioguide}/`,
-        note: `${m.party} · ${m.chamber === "senate" ? "Senate" : "House"} · ${m.state}`,
-      }))}
+  <section class="story">
+    <h2>Every member of Congress, by the PAC money they took</h2>
+    <p class="chart-dek">
+      Each dot is one member, placed by total contributions from PACs and other committees, {cycleRange}. Senators
+      run for six-year terms, so most raise across more cycles than House members.
+    </p>
+    <PlotFigure
+      chart="swarm"
+      label="Beeswarm of every member of Congress by PAC money received, colored by party"
+      data={{ points, lanes, labels: topIds(points, 3, lanes), medians: true, xLabel: "PAC money" }}
+      legend={[
+        { label: "Democrat", color: PARTY_COLOR.D, shape: "dot" },
+        { label: "Republican", color: PARTY_COLOR.R, shape: "dot" },
+        { label: "Independent", color: PARTY_COLOR.I, shape: "dot" },
+      ]}
+      table={{
+        columns: ["Member", "Party", "Chamber", "PAC money"],
+        numeric: [3],
+        rows: byPacMoney.map(({ m, total }) => [m.name, m.party, chamberName(m), money(total)]),
+      }}
     />
-    <p class="small"><a href="/members/">All members</a></p>
   </section>
+
+  <section class="story">
+    <h2>Where the money comes from</h2>
+    <p class="chart-dek">
+      PAC money by the sector of the organization behind it, split by the party of the member who got it.{" "}
+      {shortSector(mostD.name)} money went <strong>{pct(mostD.split.Democrat, mostD.total)}%</strong> to Democrats;{" "}
+      {shortSector(mostR.name).toLowerCase()} money went <strong>{pct(mostR.split.Republican, mostR.total)}%</strong> to Republicans.
+    </p>
+    <PlotFigure
+      chart="stacked"
+      label="PAC money by sector, split by recipient party"
+      legend={PARTY_SERIES.map((s) => ({ label: s.label, color: s.color }))}
+      data={{
+        mode: "amount",
+        series: PARTY_SERIES,
+        rows: sectors.map((s) => ({
+          label: s.name,
+          href: `/sectors/${s.slug}/`,
+          values: { D: s.split.Democrat, I: s.split.Independent, R: s.split.Republican },
+        })),
+      }}
+      table={{
+        columns: ["Sector", "To Democrats", "To independents", "To Republicans", "Total"],
+        numeric: [1, 2, 3, 4],
+        rows: sectors.map((s) => [s.name, money(s.split.Democrat), money(s.split.Independent), money(s.split.Republican), money(s.total)]),
+      }}
+    />
+  </section>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>The biggest givers</h2>
+      <p class="chart-dek">Organizations whose PACs gave the most to current members.</p>
+      <RankedTable
+        heading="Organization"
+        valueHeading="Given"
+        rows={organizations.slice(0, 12).map((o) => ({ label: o.name, value: o.total, href: `/organizations/${o.id}/`, note: o.sector }))}
+      />
+      <p class="source"><a href="/organizations/">All organizations</a></p>
+    </section>
+
+    <section class="story">
+      <h2>The biggest takers</h2>
+      <p class="chart-dek">Members who received the most from PACs and other committees.</p>
+      <RankedTable
+        heading="Member"
+        valueHeading="Received"
+        rows={byPacMoney.slice(0, 12).map(({ m, total }) => ({
+          label: m.name,
+          party: partyLetter(m.party),
+          value: total,
+          href: `/members/${m.bioguide}/`,
+          note: `${m.party}, ${chamberName(m)}, ${shortSeat(m).slice(2)}`,
+        }))}
+      />
+      <p class="source"><a href="/members/">All members</a></p>
+    </section>
+  </div>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Outside spenders</h2>
+      <p class="chart-dek">Super PACs and other groups' ads for and against current members.</p>
+      <RankedTable
+        heading="Group"
+        valueHeading="Spent"
+        rows={outsideSpenders.slice(0, 10).map(({ c, spent }) => ({ label: displayName(c.name), value: spent, href: `/pacs/${c.id}/` }))}
+      />
+    </section>
+    <section class="story">
+      <h2>Who funds the outside spenders</h2>
+      <p class="chart-dek">The biggest donors to those groups.</p>
+      <RankedTable
+        heading="Donor"
+        valueHeading="Given"
+        rows={donors.slice(0, 10).map((d) => ({ label: d.name, value: d.total, href: `/donors/${d.id}/`, note: d.type === "individual" ? d.employer : d.type }))}
+      />
+      <p class="source"><a href="/donors/">All big donors</a></p>
+    </section>
+  </div>
 </Base>

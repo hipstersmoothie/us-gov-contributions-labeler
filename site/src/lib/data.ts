@@ -46,22 +46,7 @@ function lastName(name: string) {
   return name.replace(/,? (Jr\.|Sr\.|II|III|IV)$/, "").split(" ").at(-1)!;
 }
 
-// --- formatting -------------------------------------------------------------
-
-export function money(amount: number, compact = false) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: compact && Math.abs(amount) >= 1000 ? 1 : 0,
-    notation: compact ? "compact" : "standard",
-  }).format(amount);
-}
-
-export function percent(part: number, whole: number) {
-  if (!whole) return "–";
-  const pct = (part / whole) * 100;
-  return pct > 0 && pct < 1 ? "<1%" : `${Math.round(pct)}%`;
-}
+export { money, percent } from "./format";
 
 export const cycleRange = `${cycles[0]! - 1}–${cycles.at(-1)}`;
 
@@ -105,7 +90,11 @@ export function displayName(name: string) {
   return name
     .toLowerCase()
     .replace(/\b[a-z][a-z']*/g, (w, i) => (i > 0 && SMALL.has(w) ? w : w[0]!.toUpperCase() + w.slice(1)))
-    .replace(/\b(Pac|Llc|Afl|Cio|Usa)\b/g, (w) => w.toUpperCase());
+    .replace(/\b(Pac|Llc|Afl|Cio|Usa)\b/g, (w) => w.toUpperCase())
+    // Vowel-less short words are acronyms: Nrcc, Dscc, Clf, Smp.
+    .replace(/\b[B-DF-HJ-NP-TV-XZ][b-df-hj-np-tv-xz]{1,4}\b/g, (w) =>
+      ["Mr", "Mrs", "Dr", "St", "Jr", "Sr", "Ltd"].includes(w) ? w : w.toUpperCase()
+    );
 }
 
 export const fecCommitteeUrl = (id: string) => `https://www.fec.gov/data/committee/${id}/`;

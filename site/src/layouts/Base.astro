@@ -1,4 +1,6 @@
 ---
+import "@fontsource-variable/libre-franklin";
+import "@fontsource-variable/source-serif-4";
 import "../styles/global.css";
 import { generatedAt, cycleRange } from "../lib/data";
 
@@ -7,6 +9,15 @@ interface Props {
   description?: string;
 }
 const { title, description } = Astro.props;
+const path = Astro.url.pathname;
+const NAV = [
+  ["/members/", "Members"],
+  ["/organizations/", "Organizations"],
+  ["/donors/", "Big donors"],
+  ["/sectors/", "Sectors"],
+  ["/committees/", "Committees"],
+  ["/about/", "About"],
+];
 const fullTitle = title === "Home" ? "Who funds Congress" : `${title} · Who funds Congress`;
 ---
 
@@ -24,12 +35,7 @@ const fullTitle = title === "Home" ? "Who funds Congress" : `${title} · Who fun
       <div class="wrap header-row">
         <a class="brand" href="/">Who funds Congress</a>
         <nav aria-label="Main">
-          <a href="/members/">Members</a>
-          <a href="/organizations/">Organizations</a>
-          <a href="/donors/">Big donors</a>
-          <a href="/sectors/">Sectors</a>
-          <a href="/committees/">Committees</a>
-          <a href="/about/">About</a>
+          {NAV.map(([href, text]) => <a href={href} aria-current={path.startsWith(href!) ? "page" : undefined}>{text}</a>)}
         </nav>
         <form class="search" action="/search/" role="search">
           <label class="visually-hidden" for="site-search">Search</label>
@@ -52,7 +58,5 @@ const fullTitle = title === "Home" ? "Who funds Congress" : `${title} · Who fun
         <a href="/about/">Methodology</a>
       </p>
     </footer>
-    <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
-    <script src="/tooltip.js" is:inline defer></script>
   </body>
 </html>

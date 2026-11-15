@@ -1,24 +1,30 @@
 ---
 import Base from "../../layouts/Base.astro";
-import BarList from "../../components/BarList.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
 import { sectors } from "../../lib/sectors";
-import { cycleRange } from "../../lib/data";
+import { cycleRange, money } from "../../lib/data";
 
 const total = sectors.reduce((s, x) => s + x.total, 0);
 ---
 
 <Base title="Sectors" description="PAC money to Congress by industry sector.">
   <h1>Sectors</h1>
-  <p class="eyebrow">PAC contributions to current members by sector, {cycleRange}.</p>
-  <section class="card">
-    <BarList
-      total={total}
-      rows={sectors.map((s) => ({
-        label: s.name,
-        value: s.total,
-        href: `/sectors/${s.slug}/`,
-        note: `${s.organizations.length.toLocaleString()} organizations`,
-      }))}
+  <p class="dek">PAC contributions to current members by the sector of the organization behind each PAC, {cycleRange}.</p>
+  <section class="story">
+    <PlotFigure
+      chart="bars"
+      label="PAC money by sector"
+      data={{
+        rows: sectors.map((s) => ({
+          label: s.name,
+          value: s.total,
+          href: `/sectors/${s.slug}/`,
+          note: `${s.organizations.length.toLocaleString()} organizations`,
+        })),
+        emphasize: [0],
+        total,
+      }}
+      table={{ columns: ["Sector", "Organizations", "PAC money"], numeric: [1, 2], rows: sectors.map((s) => [s.name, s.organizations.length, money(s.total)]) }}
     />
   </section>
 </Base>

@@ -1,9 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
-import BarList from "../../components/BarList.astro";
-import SplitBar from "../../components/SplitBar.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import PartySplit from "../../components/PartySplit.astro";
 import { sectors, type SectorSummary } from "../../lib/sectors";
-import { memberById, money, cycleRange } from "../../lib/data";
+import { memberById, money, cycleRange, partyLetter } from "../../lib/data";
+import { pct, chamberName } from "../../lib/derived";
 
 export function getStaticPaths() {
   return sectors.map((s) => ({ params: { slug: s.slug }, props: { s } }));
@@ -13,8 +14,13 @@ const { s } = Astro.props as { s: SectorSummary };
 ---
 
 <Base title={s.name} description={`PAC money from ${s.name} to Congress, ${cycleRange}.`}>
+  <p class="kicker"><a href="/sectors/">Sectors</a></p>
   <h1>{s.name}</h1>
-  <p class="eyebrow">PAC contributions to current members, {cycleRange}.</p>
+  <p class="dek">
+    PACs tied to {s.organizations.length.toLocaleString()} {s.name.toLowerCase()} organizations gave{" "}
+    <strong>{money(s.total, true)}</strong> to {s.recipients.length} current members of Congress, {cycleRange}.{" "}
+    {pct(s.split.Republican, s.total)}% went to Republicans and {pct(s.split.Democrat, s.total)}% to Democrats.
+  </p>
 
   <dl class="stats">
     <div class="stat"><dt>Given</dt><dd>{money(s.total, true)}</dd></div>
@@ -22,23 +28,17 @@ const { s } = Astro.props as { s: SectorSummary };
     <div class="stat"><dt>Members funded</dt><dd>{s.recipients.length}</dd></div>
   </dl>
 
-  <section class="card">
-    <h2>Split by party</h2>
-    <SplitBar
-      label="Sector contributions by recipient party"
-      segments={[
-        { label: "Democrats", value: s.split.Democrat, color: "--party-d" },
-        { label: "Independents", value: s.split.Independent, color: "--party-i" },
-        { label: "Republicans", value: s.split.Republican, color: "--party-r" },
-      ]}
-    />
+  <section class="story">
+    <h2>Which party got the money</h2>
+    <PartySplit split={s.split} label="Sector contributions by recipient party" />
   </section>
 
   <div class="grid-2">
     <section class="card">
       <h2>Biggest givers</h2>
-      <BarList
-        total={s.total}
+      <RankedTable
+        heading="Organization"
+        valueHeading="Given"
         rows={s.organizations.slice(0, 25).map((o) => ({
           label: o.name,
           value: o.total,
@@ -51,11 +51,12 @@ const { s } = Astro.props as { s: SectorSummary };
 
     <section class="card">
       <h2>Top recipients</h2>
-      <BarList
-        total={s.total}
+      <RankedTable
+        heading="Member"
+        valueHeading="Received"
         rows={s.recipients.slice(0, 25).map((r) => {
           const m = memberById.get(r.id);
-          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, note: m ? `${m.party} · ${m.state}` : undefined };
+          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined };
         })}
       />
     </section>

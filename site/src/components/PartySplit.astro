@@ -1,0 +1,30 @@
+---
+// A 100% bar of money by recipient party, drawn with Plot.
+import PlotFigure from "./PlotFigure.astro";
+import { PARTY_COLOR } from "../lib/charts";
+import { money } from "../lib/format";
+
+interface Props {
+  split: { Democrat: number; Independent: number; Republican: number };
+  label: string;
+}
+const { split, label } = Astro.props;
+const SERIES = [
+  { key: "D", label: "Democrats", color: PARTY_COLOR.D, ink: "var(--on-d)" },
+  { key: "I", label: "Independents", color: PARTY_COLOR.I, ink: "var(--on-i)" },
+  { key: "R", label: "Republicans", color: PARTY_COLOR.R, ink: "var(--on-r)" },
+];
+const values = { D: split.Democrat, I: split.Independent, R: split.Republican };
+const shown = SERIES.filter((s) => values[s.key as keyof typeof values] > 0);
+---
+
+{
+  shown.length > 0 && (
+    <PlotFigure
+      chart="stacked"
+      label={label}
+      legend={shown.map((s) => ({ label: `${s.label} ${money(values[s.key as keyof typeof values], true)}`, color: s.color }))}
+      data={{ mode: "share", series: SERIES, rows: [{ label: "All recipients", values }] }}
+    />
+  )
+}

@@ -1,0 +1,83 @@
+---
+// A ranked table with an inline bar beside each value: the table is the data,
+// the bar is just a reading aid, so it stays a real <table> for screen readers.
+import { money } from "../lib/format";
+
+interface Row {
+  label: string;
+  href?: string;
+  /** Party letter, shown as a lettered tag. */
+  party?: string;
+  note?: string;
+  value: number;
+  /** Extra text columns after the name. */
+  cells?: string[];
+}
+interface Props {
+  rows: Row[];
+  heading: string;
+  valueHeading: string;
+  extraHeadings?: string[];
+  caption?: string;
+  /** Show the rank number column. */
+  rank?: boolean;
+}
+const { rows, heading, valueHeading, extraHeadings = [], caption, rank = true } = Astro.props;
+const max = Math.max(...rows.map((r) => r.value), 1);
+---
+
+<table class="ranked">
+  {caption && <caption class="visually-hidden">{caption}</caption>}
+  <thead>
+    <tr>
+      {rank && <th class="rank num" scope="col"><span class="visually-hidden">Rank</span></th>}
+      <th scope="col">{heading}</th>
+      {extraHeadings.map((h) => <th scope="col" class="extra">{h}</th>)}
+      <th scope="col" class="value-h">{valueHeading}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((r, i) => (
+        <tr>
+          {rank && <td class="rank num">{i + 1}</td>}
+          <td class="name">
+            {r.party && <span class={`ptag party-${r.party}`} title={{ D: "Democrat", R: "Republican", I: "Independent" }[r.party]}>{r.party}</span>}
+            {r.href ? <a href={r.href}>{r.label}</a> : r.label}
+            {r.note && <span class="note">{r.note}</span>}
+          </td>
+          {r.cells?.map((c) => <td class="extra">{c}</td>)}
+          <td class:list={["num", "value", { em: r.value === max }]}>
+            <div class="cell">
+              <span class="amount">{money(r.value, r.value >= 100_000)}</span>
+              <span class="bar" style={`--w: ${Math.max(r.value / max, 0.004)}`} aria-hidden="true" />
+            </div>
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  .ranked td { padding-top: 7px; padding-bottom: 7px; vertical-align: middle; }
+  .rank { width: 2.2em; color: var(--text-muted); font-size: 12px; padding-right: 8px; }
+  .name { font-weight: 500; }
+  .name a { text-decoration-color: transparent; }
+  .name a:hover { text-decoration-color: currentColor; }
+  .note { display: block; font-size: 12px; font-weight: 400; color: var(--text-muted); }
+  .extra { color: var(--text-secondary); font-size: 13px; }
+  .value { width: 46%; }
+  .value-h { width: 46%; }
+  .cell { display: flex; align-items: center; gap: 10px; }
+  .amount { flex: none; width: 58px; text-align: right; }
+  .bar {
+    flex: none; height: 10px; width: calc((100% - 68px) * var(--w));
+    background: var(--bar); border-radius: 0 2px 2px 0; /* square at the baseline */
+  }
+  .em .bar { background: var(--bar-strong); }
+  @media (max-width: 640px) {
+    .extra { display: none; }
+    .value, .value-h { width: 38%; }
+  }
+</style>
