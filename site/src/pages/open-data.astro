@@ -1,11 +1,33 @@
 ---
+import { Code } from "astro:components";
 import Base from "../layouts/Base.astro";
 import { generatedAt } from "../lib/data";
+import examples from "../data/open-data-examples.json";
 
 const DID = "did:plc:ej5cllsvxdrzdsweyfgr2nge";
 const XRPC = "https://pds.contributions.fyi/xrpc";
 
-const account = `${XRPC}/com.atproto.repo.getRecord?repo=${DID}&collection=fyi.contributions.account&rkey=<the account's DID>`;
+// Highlighted at build time with Shiki; colors follow the site's light/dark mode.
+const themes = { light: "github-light", dark: "github-dark" } as const;
+const json = (value: unknown) => JSON.stringify(value, null, 2);
+
+// curl -G turns each -d into a query parameter, which reads better than one long URL.
+const request = (method: string, params: Record<string, string>, comment: string) =>
+  `# ${comment}\ncurl -sG ${XRPC}/${method} \\\n` +
+  Object.entries({ repo: DID, ...params })
+    .map(([k, v]) => `  -d ${k}=${v}`)
+    .join(" \\\n");
+
+const account = request(
+  "com.atproto.repo.getRecord",
+  { collection: "fyi.contributions.account", rkey: "did:plc:sp4ywsk4ykfkw2cshoqo3s7p" },
+  "Nancy Pelosi's account (@pelosi.house.gov), by its DID"
+);
+const dataset = request(
+  "com.atproto.repo.getRecord",
+  { collection: "fyi.contributions.dataset", rkey: "self" },
+  "the dataset record and its file list"
+);
 
 const files = `DID=${DID}
 curl -s "${XRPC}/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.dataset&rkey=self" |
@@ -19,9 +41,16 @@ goat record ls data.contributions.fyi --collection fyi.contributions.member
 goat repo export data.contributions.fyi -o contributions.car
 goat repo unpack contributions.car -o contributions   # one JSON file per record`;
 
-const xrpc = `${XRPC}/com.atproto.repo.getRecord?repo=${DID}&collection=fyi.contributions.member&rkey=C000127
-${XRPC}/com.atproto.repo.listRecords?repo=${DID}&collection=fyi.contributions.committee&limit=100&cursor=…
-${XRPC}/com.atproto.sync.getBlob?did=${DID}&cid=…`;
+const member = request(
+  "com.atproto.repo.getRecord",
+  { collection: "fyi.contributions.member", rkey: "C000127" },
+  "one record: Maria Cantwell, by bioguide id"
+);
+const list = request(
+  "com.atproto.repo.listRecords",
+  { collection: "fyi.contributions.committee", limit: "100" },
+  "a page of a collection; add -d cursor=… with the returned cursor for the next page"
+);
 
 const collections = [
   ["fyi.contributions.dataset", "self", "Generation time, election cycles, sources, methodology, license, and the complete data files as gzipped JSON blobs"],
@@ -56,21 +85,30 @@ const collections = [
       with a single request. It answers with their totals, top sectors and top contributors, and a link to the full
       member record. Accounts that aren't a member's get <code>RecordNotFound</code>.
     </p>
-    <pre><code set:text={account} /></pre>
+    <Code code={account} lang="sh" themes={themes} defaultColor={false} />
+    <details open>
+      <summary>Example response</summary>
+      <Code code={json(examples.account)} lang="json" themes={themes} defaultColor={false} />
+    </details>
 
     <h2>Everything at once</h2>
     <p>
       The <code>fyi.contributions.dataset</code> record links the complete data files as gzipped JSON, the same
       files this site is built from. This downloads all of them (needs <code>curl</code> and <code>jq</code>):
     </p>
-    <pre><code set:text={files} /></pre>
+    <Code code={files} lang="sh" themes={themes} defaultColor={false} />
+    <Code code={dataset} lang="sh" themes={themes} defaultColor={false} />
+    <details>
+      <summary>Example response</summary>
+      <Code code={json(examples.dataset)} lang="json" themes={themes} defaultColor={false} />
+    </details>
 
     <h2>With goat</h2>
     <p>
       <a href="https://github.com/bluesky-social/goat">goat</a> fetches single records, lists them, or exports the
       whole repository as a CAR file:
     </p>
-    <pre><code set:text={goat} /></pre>
+    <Code code={goat} lang="sh" themes={themes} defaultColor={false} />
 
     <h2>Over HTTP</h2>
     <p>
@@ -79,7 +117,20 @@ const collections = [
       outside spenders; a PAC to its organization, sponsor and recipients; a donor to the PACs it gave to), so a tool
       can walk from any record to the rest. <code>listRecords</code> pages through a collection, 100 at a time:
     </p>
-    <pre><code set:text={xrpc} /></pre>
+    <Code code={member} lang="sh" themes={themes} defaultColor={false} />
+    <details>
+      <summary>Example response</summary>
+      <Code code={json(examples.member)} lang="json" themes={themes} defaultColor={false} />
+    </details>
+    <Code code={list} lang="sh" themes={themes} defaultColor={false} />
+    <details>
+      <summary>Example response</summary>
+      <Code code={json(examples.list)} lang="json" themes={themes} defaultColor={false} />
+    </details>
+    <p class="note">
+      Example responses are real records, fetched {new Date(examples.fetchedAt).toLocaleDateString("en-US", { dateStyle: "long" })},
+      with long lists cut to their first few entries.
+    </p>
 
     <h2>Collections</h2>
     <table>
@@ -115,10 +166,20 @@ const collections = [
   .prose p { margin: 0 0 var(--sp-4); }
   code { font: 0.875em/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
   p code { padding: 1px 4px; border-radius: 2px; background: var(--surface-2); overflow-wrap: anywhere; }
-  pre {
-    overflow-x: auto; margin: 0 0 var(--sp-5); padding: var(--sp-4); background: var(--surface-2);
-    border-left: 3px solid var(--baseline); font-size: var(--fs-sm);
+  .prose :global(pre.astro-code) {
+    overflow-x: auto; margin: 0 0 var(--sp-4); padding: var(--sp-4); border-left: 3px solid var(--baseline);
+    background-color: var(--surface-2) !important; font-size: var(--fs-sm); line-height: 1.5;
   }
+  .prose :global(pre.astro-code code) { font: inherit; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  /* Shiki writes both themes' colors as variables; pick one per color scheme. */
+  .prose :global(.astro-code span) { color: var(--shiki-light); }
+  @media (prefers-color-scheme: dark) {
+    .prose :global(.astro-code span) { color: var(--shiki-dark); }
+  }
+  details { margin: calc(-1 * var(--sp-2)) 0 var(--sp-5); }
+  details summary { cursor: pointer; font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: var(--sp-2); }
+  details :global(pre.astro-code) { max-height: 28rem; }
+  .note { font-size: var(--fs-sm); color: var(--text-muted); }
   table { font-size: var(--fs-sm); }
   td code { overflow-wrap: anywhere; }
 </style>

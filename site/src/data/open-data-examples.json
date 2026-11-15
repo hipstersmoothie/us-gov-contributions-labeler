@@ -1,0 +1,438 @@
+{
+  "fetchedAt": "2026-11-15T17:45:24.708Z",
+  "account": {
+    "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.account/did:plc:sp4ywsk4ykfkw2cshoqo3s7p",
+    "cid": "bafyreibjxxs64qtb2ose73hcy7knzn6x6frl6nkzwinn4kazmry3iophhe",
+    "value": {
+      "did": "did:plc:sp4ywsk4ykfkw2cshoqo3s7p",
+      "url": "https://contributions.fyi/members/P000197/",
+      "name": "Nancy Pelosi",
+      "$type": "fyi.contributions.account",
+      "party": "Democrat",
+      "state": "CA",
+      "cycles": [
+        2022,
+        2024,
+        2026
+      ],
+      "handle": "pelosi.house.gov",
+      "member": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/P000197",
+      "totals": {
+        "pac": 1738919,
+        "receipts": 38268871,
+        "individual": 34099838,
+        "outsideOppose": 52501,
+        "outsideSupport": 17648
+      },
+      "chamber": "house",
+      "bioguide": "P000197",
+      "district": 11,
+      "topSectors": [
+        {
+          "id": "Health",
+          "total": 701610
+        },
+        {
+          "id": "Finance, Insurance & Real Estate",
+          "total": 627239
+        },
+        {
+          "id": "Labor",
+          "total": 445999
+        }
+      ],
+      "topContributors": [
+        {
+          "id": "american-crystal-sugar-compay",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/american-crystal-sugar-compay",
+          "name": "American Crystal Sugar Company",
+          "pacs": 25000,
+          "total": 25000,
+          "individuals": 0
+        },
+        {
+          "id": "american-federation-of-state-county-and-municipal-afl-cio",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/american-federation-of-state-county-and-municipal-afl-cio",
+          "name": "American Federation of State, County and Municipal Employees, AFL-CIO",
+          "pacs": 25000,
+          "total": 25000,
+          "individuals": 0
+        },
+        {
+          "id": "international-association-of-machinists-and-aerospace-workers",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/international-association-of-machinists-and-aerospace-workers",
+          "name": "International Association of Machinists and Aerospace Workers",
+          "pacs": 25000,
+          "total": 25000,
+          "individuals": 0
+        }
+      ]
+    }
+  },
+  "dataset": {
+    "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.dataset/self",
+    "cid": "bafyreicbqvnvxbzovip7hj655fab5erl73w33umc5zijpn7wof52fclbwa",
+    "value": {
+      "name": "contributions.fyi",
+      "$type": "fyi.contributions.dataset",
+      "files": [
+        {
+          "blob": {
+            "ref": {
+              "$link": "bafkreihr2b5pqrsgbqszkp4yyycxucc6rileijuvnizztntunm6bp7bxc4"
+            },
+            "size": 1873469,
+            "$type": "blob",
+            "mimeType": "application/gzip"
+          },
+          "name": "members.json.gz",
+          "sha256": "479b6da0a9f5ad21395ed4682c74d9cbbb67747febf86a6502c0f76276090a6e",
+          "records": 539,
+          "description": "Members of Congress, with sectors, contributors, outside spending, committee seats and individual donations."
+        },
+        {
+          "blob": {
+            "ref": {
+              "$link": "bafkreifauibyiq5hxg5nkyv7kjkm3sicn5waezy7lmat3xkga765iqpu2m"
+            },
+            "size": 1392334,
+            "$type": "blob",
+            "mimeType": "application/gzip"
+          },
+          "name": "organizations.json.gz",
+          "sha256": "0c131815476ad2be737c33dd87d700216b17add6aea04b00d8cf5bdbaee9d564",
+          "records": 6684,
+          "description": "Companies, unions and groups behind PACs."
+        }
+      ],
+      "links": [
+        {
+          "url": "https://contributions.fyi",
+          "name": "Website"
+        },
+        {
+          "url": "https://contributions.fyi/open-data/",
+          "name": "How to download"
+        }
+      ],
+      "cycles": [
+        2022,
+        2024
+      ],
+      "license": "The FEC, SEC and Lobbying Disclosure Act records this is built from are US government works in the public domain. contributions.fyi's own additions (sector and industry classifications, organization matching, Bluesky account matching and the compiled totals) are dedicated to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Attribution to contributions.fyi is appreciated, not required.",
+      "sources": [
+        {
+          "url": "https://www.fec.gov/data/browse-data/?tab=bulk-data",
+          "name": "FEC bulk data",
+          "usedFor": "Campaign totals, PAC contributions, outside spending, individual and super PAC donations"
+        },
+        {
+          "url": "https://api.open.fec.gov/developers/",
+          "name": "FEC API",
+          "usedFor": "Leadership PAC sponsors"
+        }
+      ],
+      "updatedAt": "2026-11-15T16:40:09.092Z",
+      "collections": [
+        {
+          "nsid": "fyi.contributions.member",
+          "records": 539
+        },
+        {
+          "nsid": "fyi.contributions.account",
+          "records": 307
+        }
+      ],
+      "description": "Who funds Congress: campaign contributions, outside spending and big donors for current members of Congress.",
+      "generatedAt": "2026-11-15T16:36:18.228Z",
+      "methodology": "Direct contributions from PACs and other political committees to current members of Congress, plus independent expenditures for and against them and donations of $50,000 or more to the outside spenders, from FEC bulk data. Each PAC is traced to the organization behind it (FEC connected organization, SEC EDGAR industry codes, lobbying disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted by organization: an organization's PAC money plus itemized donations from people who list it as their employer. Details: https://contributions.fyi/about/",
+      "recordsComplete": true
+    }
+  },
+  "member": {
+    "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C000127",
+    "cid": "bafyreihk7y26rcarqvaxvpw5uh7ih75x2d35qhaf3isqqvbhdtrufwwsp4",
+    "value": {
+      "name": "Maria Cantwell",
+      "$type": "fyi.contributions.member",
+      "party": "Democrat",
+      "state": "WA",
+      "fecIds": [
+        "S8WA00194",
+        "H2WA01054"
+      ],
+      "totals": [
+        {
+          "pac": 0,
+          "cycle": 2022,
+          "party": 0,
+          "receipts": 921937,
+          "candidate": 0,
+          "cashOnHand": 189631,
+          "individual": 786963,
+          "disbursements": 1127914
+        },
+        {
+          "pac": 76800,
+          "cycle": 2024,
+          "party": 0,
+          "receipts": 11147596,
+          "candidate": 0,
+          "cashOnHand": 611211,
+          "individual": 10134573,
+          "disbursements": 10726016
+        }
+      ],
+      "chamber": "senate",
+      "outside": {
+        "oppose": 0,
+        "support": 9829,
+        "spenders": [
+          {
+            "id": "C00742080",
+            "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C00742080",
+            "oppose": 0,
+            "support": 5738
+          },
+          {
+            "id": "C00873679",
+            "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C00873679",
+            "oppose": 0,
+            "support": 3857
+          }
+        ]
+      },
+      "sectors": [
+        {
+          "id": "Party & Candidate Committees",
+          "total": 68500
+        },
+        {
+          "id": "Labor",
+          "total": 25000
+        }
+      ],
+      "accounts": [
+        {
+          "did": "did:plc:e3ap6sjaftiof33z6xjt54aa",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.account/did:plc:e3ap6sjaftiof33z6xjt54aa",
+          "handle": "cantwell.senate.gov",
+          "sources": [
+            "gov-handle",
+            "labeler-list"
+          ],
+          "displayName": "Sen. Maria Cantwell"
+        }
+      ],
+      "bioguide": "C000127",
+      "opponents": {
+        "oppose": 0,
+        "support": 0,
+        "spenders": [],
+        "candidates": []
+      },
+      "committees": [
+        {
+          "id": "C00002766",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C00002766",
+          "total": 10000
+        },
+        {
+          "id": "C00255752",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C00255752",
+          "total": 7500
+        }
+      ],
+      "assignments": [
+        {
+          "id": "JSTX",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.congressCommittee/JSTX"
+        },
+        {
+          "id": "SLIA",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.congressCommittee/SLIA"
+        }
+      ],
+      "individuals": {
+        "sectors": [
+          {
+            "id": "Unknown",
+            "total": 2979582
+          },
+          {
+            "id": "Not employed",
+            "total": 2901719
+          }
+        ],
+        "itemized": 9293275,
+        "donations": 25482,
+        "employers": [
+          {
+            "id": "T MOBILE",
+            "name": "T-Mobile",
+            "total": 99262
+          },
+          {
+            "id": "MICROSOFT",
+            "name": "Microsoft",
+            "total": 94763,
+            "organization": "microsoft",
+            "organizationUri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/microsoft"
+          }
+        ]
+      },
+      "contributors": [
+        {
+          "id": "employer:T MOBILE",
+          "name": "T-Mobile",
+          "pacs": 0,
+          "total": 99262,
+          "individuals": 99262
+        },
+        {
+          "id": "microsoft",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/microsoft",
+          "name": "Microsoft Corp",
+          "pacs": 0,
+          "total": 94763,
+          "individuals": 94763
+        }
+      ],
+      "organizations": [
+        {
+          "id": "united-food-and-commercial-workers-international-union-active-ballot-club",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/united-food-and-commercial-workers-international-union-active-ballot-club",
+          "total": 10000
+        },
+        {
+          "id": "american-society-of-anesthesiologists",
+          "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/american-society-of-anesthesiologists",
+          "total": 7500
+        }
+      ],
+      "combinedSectors": [
+        {
+          "id": "Unknown",
+          "total": 2991082
+        },
+        {
+          "id": "Not employed",
+          "total": 2901719
+        }
+      ]
+    }
+  },
+  "list": {
+    "records": [
+      {
+        "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C99002396",
+        "cid": "bafyreifbqlhn75hw7syne7ftdln3mrnsufxllkqjxej6j4egkkrrh7lkpe",
+        "value": {
+          "id": "C99002396",
+          "kind": "super-pac",
+          "name": "AMERICAN POLITICAL ACTION COMMITTEE",
+          "$type": "fyi.contributions.committee",
+          "state": "WA",
+          "total": 30000,
+          "sector": "Ideological & Single-Issue",
+          "byCycle": [
+            {
+              "cycle": 2024,
+              "amount": 20000
+            },
+            {
+              "cycle": 2026,
+              "amount": 10000
+            }
+          ],
+          "outside": {
+            "oppose": 88472,
+            "support": 0,
+            "targets": [
+              {
+                "id": "P000614",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/P000614",
+                "oppose": 50972,
+                "support": 0
+              },
+              {
+                "id": "O000174",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/O000174",
+                "oppose": 37500,
+                "support": 0
+              }
+            ]
+          },
+          "opponents": {
+            "oppose": 2243624,
+            "support": 0,
+            "targets": [
+              {
+                "id": "C001056",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C001056",
+                "oppose": 533069,
+                "support": 0
+              },
+              {
+                "id": "C001130",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C001130",
+                "oppose": 533069,
+                "support": 0
+              }
+            ]
+          },
+          "recipients": [
+            {
+              "id": "M001242",
+              "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/M001242",
+              "total": 5000
+            },
+            {
+              "id": "M001243",
+              "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/M001243",
+              "total": 5000
+            }
+          ],
+          "organization": "american-c99002396",
+          "organizationUri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/american-c99002396"
+        }
+      },
+      {
+        "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C90023821",
+        "cid": "bafyreibgzmddgyuxgq33phfwj335ruyylr2vafyp6r7xeadjjyoquzmyou",
+        "value": {
+          "id": "C90023821",
+          "kind": "other",
+          "name": "CLIMATE LEADERSHIP ACTION",
+          "$type": "fyi.contributions.committee",
+          "state": "DC",
+          "total": 0,
+          "sector": "Ideological & Single-Issue",
+          "byCycle": [],
+          "opponents": {
+            "oppose": 0,
+            "support": 3862,
+            "targets": [
+              {
+                "id": "S001215",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/S001215",
+                "oppose": 0,
+                "support": 2053
+              },
+              {
+                "id": "C001056",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C001056",
+                "oppose": 0,
+                "support": 603
+              }
+            ]
+          },
+          "recipients": [],
+          "organization": "climate-leadership-action-c90023821",
+          "organizationUri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/climate-leadership-action-c90023821"
+        }
+      }
+    ],
+    "cursor": "C90023821"
+  }
+}
