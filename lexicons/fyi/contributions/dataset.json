@@ -1,0 +1,65 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.dataset",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Describes the contributions.fyi dataset and links the complete data files, so one getRecord and one getBlob per file downloads everything.",
+      "key": "literal:self",
+      "record": {
+        "type": "object",
+        "required": ["name", "description", "generatedAt", "cycles", "files", "collections", "sources", "license", "updatedAt"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "generatedAt": { "type": "string", "format": "datetime", "description": "When the data was built." },
+          "cycles": { "type": "array", "items": { "type": "integer" }, "description": "Election cycles covered, named for the year each ends." },
+          "methodology": { "type": "string" },
+          "files": { "type": "array", "items": { "type": "ref", "ref": "#file" }, "description": "The complete data files, gzipped JSON." },
+          "collections": { "type": "array", "items": { "type": "ref", "ref": "#collection" }, "description": "The per-entity record collections in this repository." },
+          "recordsComplete": { "type": "boolean", "description": "False while the per-entity records are still being brought in line with this generation of the data; the files are always complete." },
+          "sources": { "type": "array", "items": { "type": "ref", "ref": "#source" } },
+          "license": { "type": "string" },
+          "links": { "type": "array", "items": { "type": "ref", "ref": "#link" } },
+          "updatedAt": { "type": "string", "format": "datetime" }
+        }
+      }
+    },
+    "file": {
+      "type": "object",
+      "required": ["name", "blob", "records", "sha256"],
+      "properties": {
+        "name": { "type": "string", "description": "e.g. 'members.json.gz'." },
+        "description": { "type": "string" },
+        "blob": { "type": "blob", "accept": ["application/gzip"] },
+        "records": { "type": "integer", "description": "Entities in the file." },
+        "sha256": { "type": "string", "description": "Hex SHA-256 of the uncompressed JSON." }
+      }
+    },
+    "collection": {
+      "type": "object",
+      "required": ["nsid", "records"],
+      "properties": {
+        "nsid": { "type": "string", "format": "nsid" },
+        "records": { "type": "integer" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["name", "url"],
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "usedFor": { "type": "string" }
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": ["name", "url"],
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

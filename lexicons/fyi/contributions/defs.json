@@ -1,0 +1,67 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.defs",
+  "description": "Shared types for the contributions.fyi dataset. All amounts are whole US dollars, rounded to the nearest dollar (the atproto data model has no floating-point numbers); the JSON files referenced from fyi.contributions.dataset keep exact cents.",
+  "defs": {
+    "sector": {
+      "type": "string",
+      "description": "One of a fixed set of sectors, roughly OpenSecrets' sectors. Individual donations also use 'Retired' and 'Not employed'.",
+      "knownValues": [
+        "Agribusiness",
+        "Communications & Technology",
+        "Construction",
+        "Defense",
+        "Education",
+        "Energy & Natural Resources",
+        "Finance, Insurance & Real Estate",
+        "Health",
+        "Ideological & Single-Issue",
+        "Labor",
+        "Lawyers & Lobbyists",
+        "Misc Business",
+        "Party & Candidate Committees",
+        "Transportation",
+        "Unknown",
+        "Retired",
+        "Not employed"
+      ]
+    },
+    "amount": {
+      "type": "object",
+      "description": "Money attributed to an entity. What 'id' refers to depends on the field: a bioguide id (fyi.contributions.member), FEC committee id (fyi.contributions.committee), organization id (fyi.contributions.organization), donor id (fyi.contributions.donor) or a sector name.",
+      "required": ["id", "total"],
+      "properties": {
+        "id": { "type": "string" },
+        "total": { "type": "integer", "description": "US dollars." }
+      }
+    },
+    "cycleAmount": {
+      "type": "object",
+      "description": "Money in one two-year election cycle, named for the year it ends (2024 = 2023-2024).",
+      "required": ["cycle", "amount"],
+      "properties": {
+        "cycle": { "type": "integer" },
+        "amount": { "type": "integer", "description": "US dollars." }
+      }
+    },
+    "outside": {
+      "type": "object",
+      "description": "Independent expenditures: money spent for or against a candidate without coordinating with the campaign.",
+      "required": ["support", "oppose"],
+      "properties": {
+        "support": { "type": "integer", "description": "US dollars spent supporting." },
+        "oppose": { "type": "integer", "description": "US dollars spent opposing." }
+      }
+    },
+    "outsideAmount": {
+      "type": "object",
+      "description": "Independent expenditures involving one other entity: a spender (FEC committee id) on a member's record, or a target (bioguide id) on a committee's record.",
+      "required": ["id", "support", "oppose"],
+      "properties": {
+        "id": { "type": "string" },
+        "support": { "type": "integer", "description": "US dollars." },
+        "oppose": { "type": "integer", "description": "US dollars." }
+      }
+    }
+  }
+}

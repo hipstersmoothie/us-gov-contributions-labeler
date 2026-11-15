@@ -1,0 +1,34 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.congressCommittee",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A current committee or subcommittee of Congress and its members, from the congress-legislators project. The record key is its Thomas id (e.g. 'HSAG'); subcommittee ids are the parent id plus the subcommittee's own (e.g. 'HSAG15').",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["id", "name", "chamber", "members"],
+        "properties": {
+          "id": { "type": "string", "description": "Also the record key." },
+          "name": { "type": "string" },
+          "chamber": { "type": "string", "knownValues": ["house", "senate", "joint"] },
+          "url": { "type": "string", "format": "uri" },
+          "jurisdiction": { "type": "string" },
+          "parent": { "type": "string", "description": "Parent committee's record key, for subcommittees." },
+          "members": { "type": "array", "items": { "type": "ref", "ref": "#seat" } }
+        }
+      }
+    },
+    "seat": {
+      "type": "object",
+      "required": ["bioguide", "majority"],
+      "properties": {
+        "bioguide": { "type": "string", "description": "fyi.contributions.member record key." },
+        "title": { "type": "string" },
+        "rank": { "type": "integer" },
+        "majority": { "type": "boolean" }
+      }
+    }
+  }
+}

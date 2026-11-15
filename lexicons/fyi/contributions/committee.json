@@ -1,0 +1,50 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.committee",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A political committee registered with the FEC (PAC, super PAC, party or campaign committee) that gave to or spent on current members of Congress. The record key is the FEC committee id (e.g. 'C00030718').",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["id", "name", "kind", "organization", "sector", "total", "byCycle", "recipients"],
+        "properties": {
+          "id": { "type": "string", "description": "FEC committee id; also the record key." },
+          "name": { "type": "string" },
+          "connectedOrg": { "type": "string", "description": "Connected organization as filed with the FEC." },
+          "orgType": { "type": "string", "description": "FEC organization type: C corporation, L labor, M membership, T trade, V cooperative, W corporation without stock." },
+          "kind": { "type": "string", "knownValues": ["pac", "leadership-pac", "candidate", "party", "super-pac", "other"] },
+          "state": { "type": "string" },
+          "organization": { "type": "string", "description": "fyi.contributions.organization record key." },
+          "sector": { "type": "ref", "ref": "fyi.contributions.defs#sector" },
+          "industry": { "type": "string" },
+          "sponsors": { "type": "array", "items": { "type": "ref", "ref": "#sponsor" }, "description": "Leadership PACs: the members of Congress who run them." },
+          "total": { "type": "integer", "description": "US dollars given to current members." },
+          "byCycle": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#cycleAmount" } },
+          "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." },
+          "outside": { "type": "ref", "ref": "#outside" },
+          "donors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donors of $50,000 or more (fyi.contributions.donor record keys), largest first." }
+        }
+      }
+    },
+    "sponsor": {
+      "type": "object",
+      "required": ["fecId"],
+      "properties": {
+        "fecId": { "type": "string", "description": "FEC candidate id." },
+        "bioguide": { "type": "string" }
+      }
+    },
+    "outside": {
+      "type": "object",
+      "description": "Independent expenditures on current members.",
+      "required": ["support", "oppose", "targets"],
+      "properties": {
+        "support": { "type": "integer", "description": "US dollars." },
+        "oppose": { "type": "integer", "description": "US dollars." },
+        "targets": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#outsideAmount" }, "description": "By member (bioguide id), largest first." }
+      }
+    }
+  }
+}

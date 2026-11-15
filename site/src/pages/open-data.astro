@@ -1,0 +1,110 @@
+---
+import Base from "../layouts/Base.astro";
+import { generatedAt } from "../lib/data";
+
+const DID = "did:plc:ylmdlijvrvgbe4md6v4dyce6";
+const XRPC = "https://bsky.social/xrpc";
+
+const files = `DID=${DID}
+curl -s "${XRPC}/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.dataset&rkey=self" |
+  jq -r '.value.files[] | "\\(.name) \\(.blob.ref["$link"])"' |
+  while read -r name cid; do
+    curl -sL "${XRPC}/com.atproto.sync.getBlob?did=$DID&cid=$cid" | gunzip > "\${name%.gz}"
+  done`;
+
+const goat = `goat get at://contributions.fyi/fyi.contributions.member/C000127
+goat record ls contributions.fyi --collection fyi.contributions.member
+goat repo export contributions.fyi -o contributions.car
+goat repo unpack contributions.car -o contributions   # one JSON file per record`;
+
+const xrpc = `${XRPC}/com.atproto.repo.getRecord?repo=${DID}&collection=fyi.contributions.member&rkey=C000127
+${XRPC}/com.atproto.repo.listRecords?repo=${DID}&collection=fyi.contributions.committee&limit=100&cursor=…
+${XRPC}/com.atproto.sync.getBlob?did=${DID}&cid=…`;
+
+const collections = [
+  ["fyi.contributions.dataset", "self", "Generation time, election cycles, sources, methodology, license, and the complete data files as gzipped JSON blobs"],
+  ["fyi.contributions.member", "bioguide id, e.g. C000127", "Members of Congress: campaign totals, sectors, top contributors, outside spending, committee seats, individual donations"],
+  ["fyi.contributions.committee", "FEC committee id, e.g. C00030718", "PACs and other FEC committees: who they gave to, outside spending, big donors"],
+  ["fyi.contributions.organization", "slug, e.g. lockheed-martin", "The companies, unions and groups behind PACs: sector, SEC and lobbying records, recipients"],
+  ["fyi.contributions.donor", "slug, e.g. elon-musk-tx", "Donors of $50,000 or more to super PACs and other outside spenders"],
+  ["fyi.contributions.congressCommittee", "Thomas id, e.g. HSAG", "Committees of Congress and their members"],
+];
+---
+
+<Base title="Open data" description="Download the whole dataset with standard atproto tools.">
+  <p class="kicker">Open data</p>
+  <h1>Take the data with you</h1>
+  <p class="dek">
+    Everything on this site is published as open data in the <a href="https://atproto.com">AT Protocol</a>{" "}
+    repository of <a href="https://bsky.app/profile/contributions.fyi">@contributions.fyi</a>. There's no API key
+    to request and no terms to agree to.
+  </p>
+
+  <article class="prose">
+    <h2>Where it lives</h2>
+    <p>
+      The repository's DID is <code>{DID}</code>. Download it with any atproto tool, or with plain HTTP as below.
+    </p>
+
+    <h2>Everything at once</h2>
+    <p>
+      The <code>fyi.contributions.dataset</code> record links the complete data files as gzipped JSON, the same
+      files this site is built from. This downloads all of them (needs <code>curl</code> and <code>jq</code>):
+    </p>
+    <pre><code set:text={files} /></pre>
+
+    <h2>With goat</h2>
+    <p>
+      <a href="https://github.com/bluesky-social/goat">goat</a> fetches single records, lists them, or exports the
+      whole repository as a CAR file:
+    </p>
+    <pre><code set:text={goat} /></pre>
+
+    <h2>Over HTTP</h2>
+    <p>
+      Each entity is also its own record, readable with the standard XRPC endpoints. <code>listRecords</code> pages
+      through a collection, 100 at a time:
+    </p>
+    <pre><code set:text={xrpc} /></pre>
+
+    <h2>Collections</h2>
+    <table>
+      <thead><tr><th>NSID</th><th>Record key</th><th>Contents</th></tr></thead>
+      <tbody>
+        {collections.map(([nsid, key, what]) => <tr><td><code>{nsid}</code></td><td>{key}</td><td>{what}</td></tr>)}
+      </tbody>
+    </table>
+    <p>
+      The lexicons are in the <a href="https://github.com/hipstersmoothie/us-gov-contributions-labeler/tree/main/lexicons">project's source</a>
+      and published as <code>com.atproto.lexicon.schema</code> records in the same repository. In records, amounts
+      are whole US dollars, because the atproto data model has no fractions; the files keep exact cents.
+    </p>
+
+    <h2>License</h2>
+    <p>
+      The FEC, SEC and lobbying disclosure records this is built from are US government works in the public domain.
+      Our additions (sector and industry classifications, organization matching, Bluesky account matching and the
+      compiled totals) are dedicated to the public domain under
+      <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. Use them for anything. Credit to
+      contributions.fyi is appreciated but not required. See <a href="/about/">About</a> for how the data is
+      classified, and check FEC filings before relying on any single number.
+    </p>
+
+    <p class="source">Data last updated {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}.</p>
+  </article>
+</Base>
+
+<style>
+  .prose { max-width: 760px; font-size: var(--fs-md); line-height: 1.65; }
+  .prose h2 { margin-top: var(--sp-7); padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
+  .prose h2:first-child { margin-top: 0; }
+  .prose p { margin: 0 0 var(--sp-4); }
+  code { font: 0.875em/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
+  p code { padding: 1px 4px; border-radius: 2px; background: var(--surface-2); overflow-wrap: anywhere; }
+  pre {
+    overflow-x: auto; margin: 0 0 var(--sp-5); padding: var(--sp-4); background: var(--surface-2);
+    border-left: 3px solid var(--baseline); font-size: var(--fs-sm);
+  }
+  table { font-size: var(--fs-sm); }
+  td code { overflow-wrap: anywhere; }
+</style>

@@ -59,6 +59,51 @@ Manual corrections:
 
 Accounts the matcher wasn't sure about, and PACs it couldn't classify, are listed in `data/review.json` and the ingest output.
 
+## Open data
+
+The dataset is published in the labeler's atproto repo (`did:plc:ylmdlijvrvgbe4md6v4dyce6`), so anyone can download it with standard atproto tooling and no API key. Lexicons are in `lexicons/fyi/contributions/`; see [contributions.fyi/open-data](https://contributions.fyi/open-data/) for the user-facing version.
+
+| Collection | Record key | |
+|---|---|---|
+| `fyi.contributions.dataset` | `self` | metadata, plus the complete `data/*.json` files as gzipped blobs |
+| `fyi.contributions.member` | bioguide id | |
+| `fyi.contributions.committee` | FEC committee id | |
+| `fyi.contributions.organization` | organization id | |
+| `fyi.contributions.donor` | donor id | |
+| `fyi.contributions.congressCommittee` | Thomas id | |
+| `com.atproto.lexicon.schema` | NSID | the lexicons, for [resolution](https://atproto.com/specs/lexicon#lexicon-publication-and-resolution) |
+
+Amounts in records are whole dollars (the atproto data model has no floats); the files keep cents. FEC, SEC and LDA data are public domain; our classifications and matching are CC0.
+
+Getting it:
+
+```sh
+# everything: the dataset record, then each file it links
+DID=did:plc:ylmdlijvrvgbe4md6v4dyce6
+curl -s "https://bsky.social/xrpc/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.dataset&rkey=self" |
+  jq -r '.value.files[] | "\(.name) \(.blob.ref["$link"])"' |
+  while read -r name cid; do
+    curl -sL "https://bsky.social/xrpc/com.atproto.sync.getBlob?did=$DID&cid=$cid" | gunzip > "${name%.gz}"
+  done
+
+# single records, or the whole repo, with goat
+goat get at://contributions.fyi/fyi.contributions.member/C000127
+goat repo export contributions.fyi -o contributions.car && goat repo unpack contributions.car
+
+# plain XRPC
+curl "https://bsky.social/xrpc/com.atproto.repo.listRecords?repo=$DID&collection=fyi.contributions.member&limit=100"
+```
+
+Publishing, after an ingest:
+
+```sh
+pnpm publish-records                  # dry run: what would change, and how many rate-limit points it costs
+pnpm publish-records --apply          # write it; stops at the rate limit, re-run to continue
+pnpm publish-records --apply --wait   # or wait out each hourly window
+```
+
+It writes only records whose content changed and deletes records for entities that are gone. The PDS allows 5,000 write points an hour and 35,000 a day (create 3, update 2, delete 1), shared with the labeler's own writes, so the script always leaves `--reserve` (default 1,000) points unspent. A first publish of all ~18,500 records is ~55,000 points: about 14 hours over 2 days. For testing, `--collections=schema,dataset,member --limit=5` publishes 5 members and never deletes. Needs `LABELER_PASSWORD`, e.g. `railway run --service us-gov-contributions-labeler -- pnpm publish-records --apply`.
+
 ## Website
 
 ```sh

@@ -1,0 +1,109 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.member",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A current member of Congress and the money funding their campaigns over the dataset's election cycles. The record key is the member's bioguide id (e.g. 'C000127').",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["bioguide", "name", "chamber", "state", "party", "fecIds", "accounts", "totals", "sectors", "organizations", "committees", "outside", "assignments", "contributors", "combinedSectors"],
+        "properties": {
+          "bioguide": { "type": "string", "description": "Biographical Directory of the US Congress id; also the record key." },
+          "name": { "type": "string" },
+          "chamber": { "type": "string", "knownValues": ["house", "senate"] },
+          "state": { "type": "string", "description": "Two-letter postal code." },
+          "district": { "type": "integer", "description": "House district; 0 for at-large seats. Absent for senators." },
+          "party": { "type": "string" },
+          "fecIds": { "type": "array", "items": { "type": "string" }, "description": "FEC candidate ids." },
+          "accounts": { "type": "array", "items": { "type": "ref", "ref": "#account" }, "description": "Bluesky accounts matched to this member." },
+          "totals": { "type": "array", "items": { "type": "ref", "ref": "#cycleTotals" }, "description": "Campaign totals reported to the FEC, by cycle." },
+          "sectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "PAC contributions by sector (id is the sector), largest first." },
+          "organizations": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "PAC contributions by organization (fyi.contributions.organization record key), largest first, top 50." },
+          "committees": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "PAC contributions by FEC committee id (fyi.contributions.committee record key), largest first, top 50." },
+          "outside": { "type": "ref", "ref": "#outside" },
+          "assignments": { "type": "array", "items": { "type": "ref", "ref": "#assignment" }, "description": "Congressional committee seats." },
+          "individuals": { "type": "ref", "ref": "#individuals" },
+          "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "OpenSecrets-style top contributors: an organization's PAC money plus donations from people who list it as their employer. Top 50." },
+          "combinedSectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Sectors from PAC and individual money combined (id is the sector), largest first." }
+        }
+      }
+    },
+    "account": {
+      "type": "object",
+      "required": ["did", "handle", "sources"],
+      "properties": {
+        "did": { "type": "string", "format": "did" },
+        "handle": { "type": "string", "format": "handle" },
+        "displayName": { "type": "string" },
+        "sources": { "type": "array", "items": { "type": "string" }, "description": "How the account was matched (e.g. 'verified', 'official-domain')." }
+      }
+    },
+    "cycleTotals": {
+      "type": "object",
+      "description": "Totals from the FEC's candidate summary for one cycle, in US dollars.",
+      "required": ["cycle", "receipts", "disbursements", "cashOnHand", "individual", "pac", "party", "candidate"],
+      "properties": {
+        "cycle": { "type": "integer" },
+        "receipts": { "type": "integer" },
+        "disbursements": { "type": "integer" },
+        "cashOnHand": { "type": "integer" },
+        "individual": { "type": "integer", "description": "From individuals." },
+        "pac": { "type": "integer", "description": "From PACs and other non-party committees." },
+        "party": { "type": "integer", "description": "From party committees." },
+        "candidate": { "type": "integer", "description": "From the candidate." }
+      }
+    },
+    "outside": {
+      "type": "object",
+      "description": "Independent expenditures for and against this member.",
+      "required": ["support", "oppose", "spenders"],
+      "properties": {
+        "support": { "type": "integer", "description": "US dollars." },
+        "oppose": { "type": "integer", "description": "US dollars." },
+        "spenders": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#outsideAmount" }, "description": "By spender (FEC committee id), largest first, top 25." }
+      }
+    },
+    "assignment": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "description": "fyi.contributions.congressCommittee record key." },
+        "title": { "type": "string", "description": "e.g. 'Chair', 'Ranking Member'." }
+      }
+    },
+    "individuals": {
+      "type": "object",
+      "description": "Itemized (over $200) donations from individuals.",
+      "required": ["itemized", "donations", "employers", "sectors"],
+      "properties": {
+        "itemized": { "type": "integer", "description": "US dollars." },
+        "donations": { "type": "integer", "description": "Number of itemized donations." },
+        "employers": { "type": "array", "items": { "type": "ref", "ref": "#employer" }, "description": "By the employer donors listed, largest first." },
+        "sectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By the employer's estimated sector (id is the sector)." }
+      }
+    },
+    "employer": {
+      "type": "object",
+      "required": ["id", "name", "total"],
+      "properties": {
+        "id": { "type": "string", "description": "Normalized employer name as reported." },
+        "name": { "type": "string" },
+        "total": { "type": "integer", "description": "US dollars." },
+        "organization": { "type": "string", "description": "Matching fyi.contributions.organization record key, if any." }
+      }
+    },
+    "contributor": {
+      "type": "object",
+      "required": ["id", "name", "total", "pacs", "individuals"],
+      "properties": {
+        "id": { "type": "string", "description": "fyi.contributions.organization record key, or 'employer:<name>' for employers without a PAC." },
+        "name": { "type": "string" },
+        "total": { "type": "integer", "description": "US dollars: pacs + individuals." },
+        "pacs": { "type": "integer", "description": "US dollars from the organization's PACs." },
+        "individuals": { "type": "integer", "description": "US dollars from people listing it as their employer." }
+      }
+    }
+  }
+}
