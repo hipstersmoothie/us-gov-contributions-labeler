@@ -296,6 +296,7 @@ const profile: Collection = {
       {
         $type: PROFILE,
         displayName: "contributions.fyi data",
+        createdAt: "2026-11-15T16:20:00.000Z",
         description:
           "Open data: who funds Congress. Campaign contributions, outside spending and big donors for every member, " +
           `as fyi.contributions.* records in this repo. How to download: ${SITE}/open-data/ · Labels: @contributions.fyi`,
