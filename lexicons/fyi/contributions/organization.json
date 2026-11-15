@@ -16,6 +16,7 @@
           "industry": { "type": "string" },
           "classifiedBy": { "type": "string", "description": "What decided the sector.", "knownValues": ["override", "fec-type", "sec", "name", "lobbying", "none"] },
           "committees": { "type": "array", "items": { "type": "string" }, "description": "Its PACs (fyi.contributions.committee record keys)." },
+          "committeeUris": { "type": "array", "items": { "type": "string", "format": "at-uri" }, "description": "Its PACs' fyi.contributions.committee records." },
           "sec": { "type": "ref", "ref": "#sec" },
           "lobbying": { "type": "ref", "ref": "#lobbying" },
           "total": { "type": "integer", "description": "US dollars its PACs gave to current members." },

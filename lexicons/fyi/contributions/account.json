@@ -1,0 +1,43 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.account",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Who funds this Bluesky account: a member of Congress's account, with a summary of their campaign money. The record key is the account's DID, so getRecord with any DID answers the question, or returns RecordNotFound if it isn't a member's account.",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["did", "handle", "member", "bioguide", "name", "chamber", "state", "party", "cycles", "totals", "topSectors", "topContributors", "url"],
+        "properties": {
+          "did": { "type": "string", "format": "did", "description": "Also the record key." },
+          "handle": { "type": "string", "format": "handle", "description": "As of when the data was built." },
+          "member": { "type": "string", "format": "at-uri", "description": "The full fyi.contributions.member record." },
+          "bioguide": { "type": "string" },
+          "name": { "type": "string" },
+          "chamber": { "type": "string", "knownValues": ["house", "senate"] },
+          "state": { "type": "string" },
+          "district": { "type": "integer" },
+          "party": { "type": "string" },
+          "cycles": { "type": "array", "items": { "type": "integer" }, "description": "Election cycles the totals cover." },
+          "totals": { "type": "ref", "ref": "#totals" },
+          "topSectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Top 5 sectors (id is the sector) from PAC and individual money combined, leaving out Unknown, Retired, Not employed and party committees. The same ranking the labeler's sector labels use." },
+          "topContributors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.member#contributor" }, "description": "Top 5 contributors, OpenSecrets-style, leaving out party committees." },
+          "url": { "type": "string", "format": "uri", "description": "The member's page on contributions.fyi." }
+        }
+      }
+    },
+    "totals": {
+      "type": "object",
+      "description": "Summed over the cycles, in US dollars.",
+      "required": ["receipts", "individual", "pac", "outsideSupport", "outsideOppose"],
+      "properties": {
+        "receipts": { "type": "integer", "description": "Everything the campaign raised." },
+        "individual": { "type": "integer", "description": "From individuals." },
+        "pac": { "type": "integer", "description": "From PACs and other non-party committees." },
+        "outsideSupport": { "type": "integer", "description": "Independent expenditures supporting them." },
+        "outsideOppose": { "type": "integer", "description": "Independent expenditures opposing them." }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "lexicon": 1,
   "id": "fyi.contributions.defs",
-  "description": "Shared types for the contributions.fyi dataset. All amounts are whole US dollars, rounded to the nearest dollar (the atproto data model has no floating-point numbers); the JSON files referenced from fyi.contributions.dataset keep exact cents.",
+  "description": "Shared types for the contributions.fyi dataset. Records link to each other by at-uri ('uri' fields, set when the target record exists); ids are kept alongside for joining with the data files. Record keys are the ids, except for the few the PDS's name filter rejects, which use underscores in place of hyphens; follow the uri links rather than building them. All amounts are whole US dollars, rounded to the nearest dollar (the atproto data model has no floating-point numbers); the JSON files referenced from fyi.contributions.dataset keep exact cents.",
   "defs": {
     "sector": {
       "type": "string",
@@ -32,6 +32,7 @@
       "required": ["id", "total"],
       "properties": {
         "id": { "type": "string" },
+        "uri": { "type": "string", "format": "at-uri", "description": "The record 'id' refers to, if there is one." },
         "total": { "type": "integer", "description": "US dollars." }
       }
     },
@@ -59,6 +60,7 @@
       "required": ["id", "support", "oppose"],
       "properties": {
         "id": { "type": "string" },
+        "uri": { "type": "string", "format": "at-uri", "description": "The fyi.contributions.committee or fyi.contributions.member record 'id' refers to." },
         "support": { "type": "integer", "description": "US dollars." },
         "oppose": { "type": "integer", "description": "US dollars." }
       }

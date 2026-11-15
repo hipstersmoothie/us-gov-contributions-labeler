@@ -18,6 +18,8 @@
           "occupation": { "type": "string", "description": "As reported." },
           "organization": { "type": "string", "description": "Matching fyi.contributions.organization record key, if any." },
           "committee": { "type": "string", "description": "Matching fyi.contributions.committee record key, if the donor is a committee." },
+          "organizationUri": { "type": "string", "format": "at-uri" },
+          "committeeUri": { "type": "string", "format": "at-uri" },
           "total": { "type": "integer", "description": "US dollars." },
           "gifts": { "type": "array", "items": { "type": "ref", "ref": "#gift" }, "description": "Largest first." }
         }
@@ -28,6 +30,7 @@
       "required": ["id", "total", "byCycle"],
       "properties": {
         "id": { "type": "string", "description": "Recipient's FEC committee id." },
+        "uri": { "type": "string", "format": "at-uri", "description": "The recipient's fyi.contributions.committee record." },
         "total": { "type": "integer", "description": "US dollars." },
         "byCycle": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#cycleAmount" } }
       }

@@ -17,6 +17,7 @@
           "kind": { "type": "string", "knownValues": ["pac", "leadership-pac", "candidate", "party", "super-pac", "other"] },
           "state": { "type": "string" },
           "organization": { "type": "string", "description": "fyi.contributions.organization record key." },
+          "organizationUri": { "type": "string", "format": "at-uri" },
           "sector": { "type": "ref", "ref": "fyi.contributions.defs#sector" },
           "industry": { "type": "string" },
           "sponsors": { "type": "array", "items": { "type": "ref", "ref": "#sponsor" }, "description": "Leadership PACs: the members of Congress who run them." },
@@ -34,7 +35,8 @@
       "required": ["fecId"],
       "properties": {
         "fecId": { "type": "string", "description": "FEC candidate id." },
-        "bioguide": { "type": "string" }
+        "bioguide": { "type": "string" },
+        "uri": { "type": "string", "format": "at-uri", "description": "The sponsor's fyi.contributions.member record, if they're a current member." }
       }
     },
     "outside": {

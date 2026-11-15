@@ -36,6 +36,7 @@
       "required": ["did", "handle", "sources"],
       "properties": {
         "did": { "type": "string", "format": "did" },
+        "uri": { "type": "string", "format": "at-uri", "description": "The fyi.contributions.account record for this account." },
         "handle": { "type": "string", "format": "handle" },
         "displayName": { "type": "string" },
         "sources": { "type": "array", "items": { "type": "string" }, "description": "How the account was matched (e.g. 'verified', 'official-domain')." }
@@ -96,6 +97,7 @@
       "required": ["id"],
       "properties": {
         "id": { "type": "string", "description": "fyi.contributions.congressCommittee record key." },
+        "uri": { "type": "string", "format": "at-uri" },
         "title": { "type": "string", "description": "e.g. 'Chair', 'Ranking Member'." }
       }
     },
@@ -117,7 +119,8 @@
         "id": { "type": "string", "description": "Normalized employer name as reported." },
         "name": { "type": "string" },
         "total": { "type": "integer", "description": "US dollars." },
-        "organization": { "type": "string", "description": "Matching fyi.contributions.organization record key, if any." }
+        "organization": { "type": "string", "description": "Matching fyi.contributions.organization record key, if any." },
+        "organizationUri": { "type": "string", "format": "at-uri" }
       }
     },
     "contributor": {
@@ -125,6 +128,7 @@
       "required": ["id", "name", "total", "pacs", "individuals"],
       "properties": {
         "id": { "type": "string", "description": "fyi.contributions.organization record key, or 'employer:<name>' for employers without a PAC." },
+        "uri": { "type": "string", "format": "at-uri", "description": "The fyi.contributions.organization record, if there is one." },
         "name": { "type": "string" },
         "total": { "type": "integer", "description": "US dollars: pacs + individuals." },
         "pacs": { "type": "integer", "description": "US dollars from the organization's PACs." },

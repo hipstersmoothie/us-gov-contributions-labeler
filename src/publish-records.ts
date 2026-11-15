@@ -1,25 +1,28 @@
-// Publish data/*.json as open data in the labeler's atproto repo.
+// Publish data/*.json as open data in the data account's atproto repo,
+// data.contributions.fyi, on our own PDS (pds.contributions.fyi).
 //
 //   pnpm publish-records                    dry run: show what would change
 //   pnpm publish-records --apply            write it
-//   pnpm publish-records --apply --wait     keep going across hourly rate-limit windows
 //
 // What gets written (lexicons in lexicons/fyi/contributions/):
 //   com.atproto.lexicon.schema/<nsid>       the lexicons themselves, for resolution
 //   fyi.contributions.dataset/self          metadata, plus the complete data files as gzipped blobs
+//   fyi.contributions.account/<did>         who funds this Bluesky account, keyed by its DID
 //   fyi.contributions.member/<bioguide>     and one record per congressCommittee, committee,
-//   ...                                     organization and donor
+//   ...                                     organization and donor, linked to each other by at-uri
+//   app.bsky.actor.profile/self             the account's profile
 //
 // Only differences are written, against what the repo holds now, so an
-// interrupted or rate-limited run picks up where it stopped when re-run.
+// interrupted run picks up where it stopped when re-run.
 //
-// The PDS budgets repo writes per account: 5,000 points an hour and 35,000 a
-// day, at 3 per create, 2 per update and 1 per delete. The labeler's own jobs
-// (label definitions, profile) write to the same repo, so this script always
-// leaves --reserve points unspent in both windows. Its first write of each
-// window is a single record, to read the budget from the response headers
-// before sending bigger batches.
+// Our PDS doesn't rate-limit. Against one that does (bsky.social: 5,000
+// points an hour and 35,000 a day, at 3 per create, 2 per update and 1 per
+// delete), it reads the budget from the response headers, always leaves
+// --reserve points unspent, and stops when they run out (or, with --wait,
+// waits out the hourly window).
 //
+// Needs DATA_PASSWORD to apply: `railway run --service pds -- pnpm publish-records --apply`.
+// DATA_PDS_URL overrides the PDS from the DID document (e.g. Railway's domain).
 // Testing: --collections=schema,dataset,member --limit=5 publishes the first
 // 5 members (plus the lexicons and files) and never deletes.
 import "dotenv/config";
@@ -32,13 +35,16 @@ import { jsonToLex, Lexicons } from "@atproto/lexicon";
 import type { CommitteeRecord, DonorRecord, Member, OrganizationRecord } from "./ingest/build.js";
 import type { CongressCommittee } from "./ingest/assignments.js";
 
-const DID = (process.env.LABELER_DID ?? process.env.DID ?? "did:plc:ylmdlijvrvgbe4md6v4dyce6") as `did:${string}`;
+const DID = (process.env.DATA_DID ?? "did:plc:ej5cllsvxdrzdsweyfgr2nge") as `did:${string}`;
 const SITE = "https://contributions.fyi";
 const NS = "fyi.contributions";
 const SCHEMA = "com.atproto.lexicon.schema";
+const PROFILE = "app.bsky.actor.profile";
 const MAX_WRITES = 200; // per applyWrites call, PDS limit
 const MAX_BYTES = 500_000; // per call; the PDS allows 1 MB
 const COST = { create: 3, update: 2, delete: 1 } as const;
+// Not informative as a "who funds them" answer; the labeler skips them too.
+const SKIP_SECTORS = new Set(["Unknown", "Party & Candidate Committees", "Retired", "Not employed"]);
 
 const { values: args } = parseArgs({
   options: {
@@ -54,7 +60,7 @@ const RESERVE = Number(args.reserve);
 const LIMIT = args.limit ? Number(args.limit) : undefined;
 const only = args.collections
   ?.split(",")
-  .map((c) => (c === "schema" ? SCHEMA : c.includes(".") ? c : `${NS}.${c}`));
+  .map((c) => (c === "schema" ? SCHEMA : c === "profile" ? PROFILE : c.includes(".") ? c : `${NS}.${c}`));
 const included = (nsid: string) => !only || only.includes(nsid);
 
 // --- what the repo should hold -------------------------------------------
@@ -66,14 +72,35 @@ const committeesFile = read<{ committees: CommitteeRecord[] }>("committees.json"
 const donorsFile = read<{ donors: DonorRecord[] }>("donors.json");
 const congressFile = read<{ committees: CongressCommittee[] }>("congress-committees.json");
 
+// Records link to each other by at-uri, where the target record exists.
+// Plain at-uris rather than strongRefs: every record is regenerated from the
+// same build, and pinning versions would make each change ripple through
+// every record that links to it.
+const keys = {
+  member: new Set(membersFile.members.map((m) => m.bioguide)),
+  account: new Set(membersFile.members.flatMap((m) => m.accounts.map((a) => a.did))),
+  organization: new Set(organizationsFile.organizations.map((o) => o.id)),
+  committee: new Set(committeesFile.committees.map((c) => c.id)),
+  donor: new Set(donorsFile.donors.map((d) => d.id)),
+  congressCommittee: new Set(congressFile.committees.map((c) => c.id)),
+};
+// The PDS rejects record keys its slur filter matches, which catches some
+// names; hyphens count as word breaks to it, underscores don't. These ids get
+// underscores in their record key (the id field keeps the original). If a
+// publish fails with "Unacceptable slur in record key", add the id it names.
+const FILTERED_IDS = new Set(["chris-coons-for-delaware-c00475392"]);
+const rkey = (id: string) => (FILTERED_IDS.has(id) ? id.replaceAll("-", "_") : id);
+const uri = (name: keyof typeof keys, id: string | undefined) =>
+  id && keys[name].has(id) ? `at://${DID}/${NS}.${name}/${rkey(id)}` : undefined;
+
 // Whole dollars: the atproto data model has no floats. The files keep cents.
 const usd = (n: number) => Math.round(n);
-const amounts = (list: { id: string; total: number }[] | undefined) =>
-  list?.map((a) => ({ id: a.id, total: usd(a.total) }));
+const amounts = (list: { id: string; total: number }[] | undefined, to?: keyof typeof keys) =>
+  list?.map((a) => ({ id: a.id, uri: to && uri(to, a.id), total: usd(a.total) }));
 const byCycle = (map: Record<number, number>) =>
   Object.entries(map).map(([cycle, amount]) => ({ cycle: Number(cycle), amount: usd(amount) }));
-const outsideRows = (rows: { id: string; support: number; oppose: number }[]) =>
-  rows.map((r) => ({ id: r.id, support: usd(r.support), oppose: usd(r.oppose) }));
+const outsideRows = (rows: { id: string; support: number; oppose: number }[], to: keyof typeof keys) =>
+  rows.map((r) => ({ id: r.id, uri: uri(to, r.id), support: usd(r.support), oppose: usd(r.oppose) }));
 type Outside = { support: number; oppose: number };
 // Spending on members' opponents; optional until the ingest produces it.
 type Opponents = Outside & {
@@ -84,6 +111,14 @@ const outsideTotals = (o: Outside) => ({ support: usd(o.support), oppose: usd(o.
 // Drop undefined fields, as the PDS would.
 const compact = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 
+const contributor = (c: Member["contributors"][number]) => ({
+  ...c,
+  uri: uri("organization", c.id),
+  total: usd(c.total),
+  pacs: usd(c.pacs),
+  individuals: usd(c.individuals),
+});
+
 const toMember = (m: Member & { opponents?: Opponents }) =>
   compact({
     bioguide: m.bioguide,
@@ -93,7 +128,7 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
     district: m.district,
     party: m.party,
     fecIds: m.fecIds,
-    accounts: m.accounts,
+    accounts: m.accounts.map((a) => ({ ...a, uri: uri("account", a.did) })),
     totals: Object.entries(m.totals).map(([cycle, t]) => ({
       cycle: Number(cycle),
       receipts: usd(t.receipts),
@@ -105,29 +140,62 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
       candidate: usd(t.candidate),
     })),
     sectors: amounts(m.sectors),
-    organizations: amounts(m.organizations),
-    committees: amounts(m.committees),
-    outside: { ...outsideTotals(m.outside), spenders: outsideRows(m.outside.spenders) },
+    organizations: amounts(m.organizations, "organization"),
+    committees: amounts(m.committees, "committee"),
+    outside: { ...outsideTotals(m.outside), spenders: outsideRows(m.outside.spenders, "committee") },
     opponents: m.opponents && {
       ...outsideTotals(m.opponents),
-      spenders: outsideRows(m.opponents.spenders),
+      spenders: outsideRows(m.opponents.spenders, "committee"),
       candidates: m.opponents.candidates.map((c) => ({ ...c, ...outsideTotals(c) })),
     },
-    assignments: m.assignments,
+    assignments: m.assignments.map((a) => ({ ...a, uri: uri("congressCommittee", a.id) })),
     individuals: m.individuals && {
       itemized: usd(m.individuals.itemized),
       donations: m.individuals.donations,
-      employers: m.individuals.employers.map((e) => ({ ...e, total: usd(e.total) })),
+      employers: m.individuals.employers.map((e) => ({
+        ...e,
+        organizationUri: uri("organization", e.organization),
+        total: usd(e.total),
+      })),
       sectors: amounts(m.individuals.sectors),
     },
-    contributors: m.contributors.map((c) => ({
-      ...c,
-      total: usd(c.total),
-      pacs: usd(c.pacs),
-      individuals: usd(c.individuals),
-    })),
+    contributors: m.contributors.map(contributor),
     combinedSectors: amounts(m.combinedSectors),
   });
+
+const partyOrgs = new Set(
+  organizationsFile.organizations.filter((o) => o.sector === "Party & Candidate Committees").map((o) => o.id)
+);
+const sumCycles = (m: Member, k: "receipts" | "individual" | "pac") =>
+  usd(Object.values(m.totals).reduce((n, t) => n + t[k], 0));
+
+// One per Bluesky account, so a client can ask "who funds this account?"
+// with nothing but its DID.
+const toAccounts = (m: Member) =>
+  m.accounts.map((a) =>
+    compact({
+      did: a.did,
+      handle: a.handle,
+      member: uri("member", m.bioguide),
+      bioguide: m.bioguide,
+      name: m.name,
+      chamber: m.chamber,
+      state: m.state,
+      district: m.district,
+      party: m.party,
+      cycles: membersFile.cycles,
+      totals: {
+        receipts: sumCycles(m, "receipts"),
+        individual: sumCycles(m, "individual"),
+        pac: sumCycles(m, "pac"),
+        outsideSupport: usd(m.outside.support),
+        outsideOppose: usd(m.outside.oppose),
+      },
+      topSectors: amounts(m.combinedSectors.filter((s) => !SKIP_SECTORS.has(s.id)).slice(0, 5)),
+      topContributors: m.contributors.filter((c) => !partyOrgs.has(c.id)).slice(0, 5).map(contributor),
+      url: `${SITE}/members/${m.bioguide}/`,
+    })
+  );
 
 const toOrganization = (o: OrganizationRecord) =>
   compact({
@@ -137,13 +205,14 @@ const toOrganization = (o: OrganizationRecord) =>
     industry: o.industry,
     classifiedBy: o.classifiedBy,
     committees: o.committees,
+    committeeUris: o.committees.map((id) => uri("committee", id)).filter(Boolean),
     sec: o.sec,
     lobbying: o.lobbying,
     total: usd(o.total),
     byCycle: byCycle(o.byCycle),
-    recipients: amounts(o.recipients),
-    outsideGifts: amounts(o.outsideGifts),
-    employees: o.employees && { total: usd(o.employees.total), recipients: amounts(o.employees.recipients) },
+    recipients: amounts(o.recipients, "member"),
+    outsideGifts: amounts(o.outsideGifts, "committee"),
+    employees: o.employees && { total: usd(o.employees.total), recipients: amounts(o.employees.recipients, "member") },
     lobbyingSpend: o.lobbyingSpend && {
       total: usd(o.lobbyingSpend.total),
       byYear: Object.entries(o.lobbyingSpend.byYear).map(([year, amount]) => ({ year: Number(year), amount: usd(amount) })),
@@ -159,15 +228,16 @@ const toCommittee = (c: CommitteeRecord & { opponents?: Outside & { targets: (Ou
     kind: c.kind,
     state: c.state,
     organization: c.organization,
+    organizationUri: uri("organization", c.organization),
     sector: c.sector,
     industry: c.industry,
-    sponsors: c.sponsors,
+    sponsors: c.sponsors?.map((s) => ({ ...s, uri: uri("member", s.bioguide) })),
     total: usd(c.total),
     byCycle: byCycle(c.byCycle),
-    recipients: amounts(c.recipients),
-    outside: c.outside && { ...outsideTotals(c.outside), targets: outsideRows(c.outside.targets) },
-    opponents: c.opponents && { ...outsideTotals(c.opponents), targets: outsideRows(c.opponents.targets) },
-    donors: amounts(c.donors),
+    recipients: amounts(c.recipients, "member"),
+    outside: c.outside && { ...outsideTotals(c.outside), targets: outsideRows(c.outside.targets, "member") },
+    opponents: c.opponents && { ...outsideTotals(c.opponents), targets: outsideRows(c.opponents.targets, "member") },
+    donors: amounts(c.donors, "donor"),
   });
 
 const toDonor = (d: DonorRecord) =>
@@ -180,11 +250,18 @@ const toDonor = (d: DonorRecord) =>
     occupation: d.occupation,
     organization: d.organization,
     committee: d.committee,
+    organizationUri: uri("organization", d.organization),
+    committeeUri: uri("committee", d.committee),
     total: usd(d.total),
-    gifts: d.gifts.map((g) => ({ id: g.id, total: usd(g.total), byCycle: byCycle(g.byCycle) })),
+    gifts: d.gifts.map((g) => ({ id: g.id, uri: uri("committee", g.id), total: usd(g.total), byCycle: byCycle(g.byCycle) })),
   });
 
-const toCongressCommittee = (c: CongressCommittee) => compact(c);
+const toCongressCommittee = (c: CongressCommittee) =>
+  compact({
+    ...c,
+    parentUri: uri("congressCommittee", c.parent),
+    members: c.members.map((m) => ({ ...m, uri: uri("member", m.bioguide) })),
+  });
 
 type Value = Record<string, unknown>;
 interface Collection {
@@ -192,23 +269,40 @@ interface Collection {
   records: Map<string, Value>;
 }
 
-const collection = <T>(name: string, list: T[], key: (x: T) => string, to: (x: T) => object): Collection => ({
+const collection = (name: string, entries: [string, object][]): Collection => ({
   nsid: `${NS}.${name}`,
-  records: new Map(list.map((x) => [key(x), { $type: `${NS}.${name}`, ...to(x) }])),
+  records: new Map(entries.map(([key, value]) => [rkey(key), { $type: `${NS}.${name}`, ...value }])),
 });
 
 // In the order they're published: the most useful first, so a run that
-// stops on the rate limit has done those.
+// stops on a rate limit has done those.
 const entities = [
-  collection("member", membersFile.members, (m) => m.bioguide, toMember),
-  collection("congressCommittee", congressFile.committees, (c) => c.id, toCongressCommittee),
-  collection("committee", committeesFile.committees, (c) => c.id, toCommittee),
-  collection("organization", organizationsFile.organizations, (o) => o.id, toOrganization),
-  collection("donor", donorsFile.donors, (d) => d.id, toDonor),
+  collection("member", membersFile.members.map((m) => [m.bioguide, toMember(m)])),
+  collection("account", membersFile.members.flatMap((m) => toAccounts(m).map((a) => [a.did, a] as [string, object]))),
+  collection("congressCommittee", congressFile.committees.map((c) => [c.id, toCongressCommittee(c)])),
+  collection("committee", committeesFile.committees.map((c) => [c.id, toCommittee(c)])),
+  collection("organization", organizationsFile.organizations.map((o) => [o.id, toOrganization(o)])),
+  collection("donor", donorsFile.donors.map((d) => [d.id, toDonor(d)])),
 ];
 for (const c of entities) {
   if (!c.records.size) throw new Error(`No ${c.nsid} records in data/; refusing to publish an empty collection`);
 }
+
+const profile: Collection = {
+  nsid: PROFILE,
+  records: new Map([
+    [
+      "self",
+      {
+        $type: PROFILE,
+        displayName: "contributions.fyi data",
+        description:
+          "Open data: who funds Congress. Campaign contributions, outside spending and big donors for every member, " +
+          `as fyi.contributions.* records in this repo. How to download: ${SITE}/open-data/ · Labels: @contributions.fyi`,
+      },
+    ],
+  ]),
+};
 
 const lexiconDir = "lexicons/fyi/contributions";
 const schemas: Collection = {
@@ -307,7 +401,7 @@ async function resolvePds(did: string) {
   return pds;
 }
 
-const pds = await resolvePds(DID);
+const pds = process.env.DATA_PDS_URL ?? (await resolvePds(DID));
 
 async function listRecords(nsid: string) {
   const records = new Map<string, Value>();
@@ -364,6 +458,7 @@ console.log(`Repo ${DID} on ${pds}`);
 
 const ownSchemas = new Map([...(await listRecords(SCHEMA))].filter(([rkey]) => rkey.startsWith(`${NS}.`)));
 const schemaWrites = included(SCHEMA) ? diff(schemas, ownSchemas) : [];
+const profileWrites = included(PROFILE) ? diff(profile, await listRecords(PROFILE)) : [];
 
 const plan: { nsid: string; writes: Write[] }[] = [];
 for (const c of entities) {
@@ -385,14 +480,14 @@ const summary = (writes: Write[]) =>
   `${count(writes, "create")} create, ${count(writes, "update")} update, ${count(writes, "delete")} delete (${cost(writes).toLocaleString()} points)`;
 
 console.log(`\n${SCHEMA}: ${summary(schemaWrites)}`);
+console.log(`${PROFILE}: ${summary(profileWrites)}`);
 if (datasetIncluded) console.log(`${NS}.dataset: ${staleFiles.length} of ${files.length} files changed${staleFiles.length ? ` (${staleFiles.map((f) => f.name).join(", ")})` : ""}`);
 for (const p of plan) console.log(`${p.nsid}: ${summary(p.writes)}`);
-const total = cost(schemaWrites) + cost(entityWrites) + (datasetIncluded ? 4 : 0);
+const total = cost(schemaWrites) + cost(profileWrites) + cost(entityWrites) + (datasetIncluded && staleFiles.length ? 4 : 0);
 const perHour = 5000 - RESERVE;
 console.log(
-  `\nAbout ${total.toLocaleString()} points in all. At ${perHour.toLocaleString()} points an hour ` +
-    `(5,000 minus a ${RESERVE.toLocaleString()} reserve) and ${(35000 - RESERVE).toLocaleString()} a day, ` +
-    `that's ~${Math.ceil(total / perHour)} hour(s)${total > 35000 - RESERVE ? ` over ${Math.ceil(total / (35000 - RESERVE))} days` : ""}.`
+  `\n${entityWrites.length + schemaWrites.length + profileWrites.length} writes, ${total.toLocaleString()} rate-limit points. ` +
+    `Our PDS doesn't limit writes; at bsky.social's limits that would take ~${Math.ceil(total / perHour)} hour(s).`
 );
 
 if (!args.apply) {
@@ -402,8 +497,8 @@ if (!args.apply) {
 
 // --- apply -------------------------------------------------------------------
 
-const password = process.env.LABELER_PASSWORD;
-if (!password) throw new Error("LABELER_PASSWORD is required to apply");
+const password = process.env.DATA_PASSWORD;
+if (!password) throw new Error("DATA_PASSWORD is required to apply");
 
 async function xrpc<T>(
   method: string,
@@ -443,10 +538,12 @@ async function xrpc<T>(
 }
 
 // The tightest of the hourly and daily windows, as of the last write.
-const budget = { remaining: undefined as number | undefined, resetAt: 0, window: 0 };
+// A PDS that sends no rate-limit headers (ours) doesn't limit writes.
+const budget = { remaining: undefined as number | undefined, resetAt: 0, window: 0, unlimited: false };
 function noteRateLimit(method: string, headers: Headers) {
   if (method !== "com.atproto.repo.applyWrites") return;
   const remaining = headers.get("ratelimit-remaining");
+  budget.unlimited = remaining === null;
   if (remaining === null) return;
   budget.remaining = Number(remaining);
   budget.resetAt = Number(headers.get("ratelimit-reset")) * 1000;
@@ -471,11 +568,12 @@ const when = (ms: number) => new Date(ms).toLocaleTimeString("en-US", { hour: "n
  */
 async function available(): Promise<{ writes: number; points: number } | null> {
   for (;;) {
+    if (budget.unlimited) return { writes: MAX_WRITES, points: Infinity };
     if (budget.remaining === undefined || Date.now() >= budget.resetAt) return { writes: 1, points: Infinity };
     const spare = budget.remaining - RESERVE;
     if (spare >= COST.create) return { writes: MAX_WRITES, points: spare };
 
-    console.log(`  ${budget.remaining} points left in the ${windowName()} window (keeping ${RESERVE} for the labeler); it resets at ${when(budget.resetAt)}.`);
+    console.log(`  ${budget.remaining} points left in the ${windowName()} window (keeping ${RESERVE} in reserve); it resets at ${when(budget.resetAt)}.`);
     if (!args.wait || budget.resetAt - Date.now() > 65 * 60_000) return null;
     console.log(`  Waiting until then (--wait).`);
     await sleep(budget.resetAt - Date.now() + 5000);
@@ -506,6 +604,13 @@ async function applyAll(writes: Write[]) {
       await xrpc("com.atproto.repo.applyWrites", { auth: "access", body: { repo: DID, writes: batch } });
     } catch (err) {
       // Shouldn't happen with the reserve, unless something else spent the budget.
+      if (String(err).includes("slur in record key") && batch.length > 1) {
+        for (const w of batch) {
+          await xrpc("com.atproto.repo.applyWrites", { auth: "access", body: { repo: DID, writes: [w] } }).catch((e) => {
+            if (String(e).includes("slur in record key")) console.error(`  The PDS rejected the record key ${w.collection}/${w.rkey}: add it to FILTERED_IDS.`);
+          });
+        }
+      }
       if ((err as { status?: number }).status === 429) {
         console.log(`  Rate limited; ${budget.remaining ?? "?"} points left, resets at ${when(budget.resetAt)}.`);
         budget.remaining = 0;
@@ -515,7 +620,7 @@ async function applyAll(writes: Write[]) {
       throw err;
     }
     done += batch.length;
-    console.log(`  ${done}/${writes.length} (${budget.remaining} left in the ${windowName()} window)`);
+    console.log(`  ${done}/${writes.length}${budget.unlimited ? "" : ` (${budget.remaining} left in the ${windowName()} window)`}`);
   }
   return done;
 }
@@ -525,6 +630,11 @@ let stopped = false;
 if (schemaWrites.length) {
   console.log(`\nLexicon schemas`);
   stopped = (await applyAll(schemaWrites)) < schemaWrites.length;
+}
+
+if (profileWrites.length && !stopped) {
+  console.log(`\nProfile`);
+  stopped = (await applyAll(profileWrites)) < profileWrites.length;
 }
 
 // The dataset record: upload changed files, then point the record at them.

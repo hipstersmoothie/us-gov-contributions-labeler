@@ -16,6 +16,7 @@
           "url": { "type": "string", "format": "uri" },
           "jurisdiction": { "type": "string" },
           "parent": { "type": "string", "description": "Parent committee's record key, for subcommittees." },
+          "parentUri": { "type": "string", "format": "at-uri" },
           "members": { "type": "array", "items": { "type": "ref", "ref": "#seat" } }
         }
       }
@@ -25,6 +26,7 @@
       "required": ["bioguide", "majority"],
       "properties": {
         "bioguide": { "type": "string", "description": "fyi.contributions.member record key." },
+        "uri": { "type": "string", "format": "at-uri" },
         "title": { "type": "string" },
         "rank": { "type": "integer" },
         "majority": { "type": "boolean" }
