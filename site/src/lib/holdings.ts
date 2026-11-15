@@ -5,7 +5,6 @@ import fs from "node:fs";
 import path from "node:path";
 import { memberById, organizationById, congressCommitteeById, partyLetter, type Member } from "./data";
 import { money, surname } from "./format";
-import type { TradeRow } from "../islands/types";
 
 export type Owner = "self" | "spouse" | "joint" | "child";
 export const OWNER_LABEL: Record<Owner, string> = { self: "Member", spouse: "Spouse", joint: "Joint", child: "Dependent child" };
@@ -235,6 +234,28 @@ export function companyName(name: string) {
 
 // --- list rows -------------------------------------------------------------------
 
+/** One reported trade, from House periodic transaction reports. */
+export interface TradeRow {
+  id: string;
+  member: string;
+  bioguide: string;
+  sortName: string;
+  party: "D" | "R" | "I";
+  date: string;
+  asset: string;
+  company: boolean;
+  tx: string;
+  owner: string;
+  amount: string;
+  min: number;
+  lagDays: number;
+  /** When the report was filed. */
+  filed: string;
+  docUrl: string;
+  /** Read by machine from a scanned paper form. */
+  scanned: boolean;
+}
+
 export function tradeRows(): TradeRow[] {
   const rows: TradeRow[] = [];
   for (const [bioguide, d] of disclosures) {
@@ -257,9 +278,11 @@ export function tradeRows(): TradeRow[] {
         scanned: !!t.scanned,
         min: t.min,
         lagDays: t.lagDays,
+        filed: t.filed,
         docUrl: t.docUrl,
       });
     });
   }
-  return rows.sort((a, b) => b.date.localeCompare(a.date));
+  // Newest reported first: a filer's typo can put a trade date in the future.
+  return rows.sort((a, b) => b.filed.localeCompare(a.filed) || b.date.localeCompare(a.date));
 }

@@ -1,7 +1,7 @@
 ---
 // An index of what House members reported owning and trading.
 import Base from "../../layouts/Base.astro";
-import TradesTable from "../../islands/TradesTable";
+import TradesList from "../../components/TradesList.astro";
 import { memberById, partyLetter } from "../../lib/data";
 import { disclosures, companies, companyName, tradeRows, COMPANY_KINDS } from "../../lib/holdings";
 
@@ -58,9 +58,10 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
   </section>
 
   <section class="story">
-    <h2>Every trade</h2>
-    <TradesTable client:idle initial={rows.slice(0, 25)} src="/holdings/trades.json" />
-    <p class="source">{companyRows.toLocaleString()} of the trades are a single company's stock, options or bonds; switch to Everything to see the rest.</p>
+    <h2>Latest trades</h2>
+    <TradesList rows={rows.slice(0, 50)} caption="The 50 most recently reported trades" />
+    <p class="more"><a href="/holdings/trades/1/">All {rows.length.toLocaleString()} trades, newest first</a></p>
+    <p class="source">{companyRows.toLocaleString()} of the trades are a single company's stock, options or bonds. Each member's page lists their trades, and each company's page lists who traded it.</p>
   </section>
 
   <div class="grid-2">
@@ -114,18 +115,5 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
   .how li strong { color: var(--text-primary); }
   .paper { list-style: none; padding: 0; margin: 0; columns: 2 220px; }
   .paper li { margin-bottom: var(--sp-2); break-inside: avoid; }
-  :global(.nowrap) { white-space: nowrap; }
-  :global(.scan-tag) {
-    display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid var(--hairline); border-radius: 2px;
-    font-size: var(--fs-label); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
-  }
-  /* Member, asset, whose, traded, amount, reported */
-  :global(.trades-island .data-table .th:nth-child(1)) { width: 24%; }
-  :global(.trades-island .data-table .th:nth-child(2)) { width: auto; }
-  :global(.trades-island .data-table .th:nth-child(3)) { width: 10%; }
-  :global(.trades-island .data-table .th.num) { width: 12%; }
-  @media (max-width: 640px) {
-    :global(.trades-island .data-table .th:nth-child(1)) { width: 34%; }
-    :global(.trades-island .data-table .th.num) { width: 22%; }
-  }
+  .more { font-weight: 600; margin: var(--sp-4) 0 0; }
 </style>

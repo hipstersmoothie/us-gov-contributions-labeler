@@ -329,7 +329,7 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
                   <td>{ownerOf(t.owner)}</td>
                   <td class="num">{rangeText(t)}</td>
                   <td class="num">
-                    <a href={t.docUrl}>{t.lagDays} days later</a>
+                    <a href={t.docUrl}>{t.lagDays < 0 ? "Date error in filing" : `${t.lagDays} days later`}</a>
                     {t.status && <span class="muted small"> · {t.status.toLowerCase()}</span>}
                   </td>
                 </tr>

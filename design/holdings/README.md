@@ -27,9 +27,10 @@ open data.
     industry as ranges, every single-company holding with whose it is, stock in
     industries their committees cover against a baseline, and recent trades.
     Linked from the member page with one line, not embedded in it.
-  - **`/holdings/`**: coverage, how to read the data, every trade in a React
-    Aria table (filter by asset type, whose, party), the most widely held
-    companies, and the members who file on paper, linked.
+  - **`/holdings/`**: coverage, how to read the data, the latest trades and a
+    paginated archive of every trade (`/holdings/trades/N/`, server-rendered:
+    the site never ships the parsed data as one bulk file), the most widely
+    held companies, and the members who file on paper, linked.
   - **`/holdings/companies/[cik]/`**: which members own a company and which
     traded it, with its PAC shown beside the list, not joined to it.
 - A `ranges` chart in `site/src/lib/charts.ts`: a solid bar to the least a

@@ -1,0 +1,35 @@
+---
+// Every reported trade, newest first, a page at a time.
+import type { GetStaticPaths } from "astro";
+import Base from "../../../layouts/Base.astro";
+import TradesList from "../../../components/TradesList.astro";
+import { tradeRows, type TradeRow } from "../../../lib/holdings";
+
+export const getStaticPaths = (({ paginate }) => paginate(tradeRows(), { pageSize: 100 })) satisfies GetStaticPaths;
+
+const { page } = Astro.props as { page: { data: TradeRow[]; currentPage: number; lastPage: number; total: number; start: number; end: number; url: { prev?: string; next?: string } } };
+---
+
+<Base title={`Trades, page ${page.currentPage}`} description="Every stock trade House members reported since January 2025, newest first.">
+  <p class="kicker"><a href="/holdings/">Investments</a></p>
+  <h1>Every trade</h1>
+  <p class="dek">
+    {page.total.toLocaleString()} trades House members reported since January 2025, most recently reported first: {page.start + 1}–{page.end + 1}.
+    Each member's page lists theirs, and each company's page lists who traded it.
+  </p>
+  <TradesList rows={page.data} caption={`Trades ${page.start + 1} to ${page.end + 1}`} />
+  <nav class="pager" aria-label="Pages">
+    {page.url.prev ? <a href={page.url.prev}>← Newer</a> : <span />}
+    <span class="muted">Page {page.currentPage} of {page.lastPage}</span>
+    {page.url.next ? <a href={page.url.next}>Older →</a> : <span />}
+  </nav>
+  <p class="source">
+    Source: <a href="https://disclosures-clerk.house.gov/FinancialDisclosure">U.S. House Clerk financial disclosure reports</a>.
+    Under 5 U.S.C. § 13107 these reports may not be used for any commercial purpose (other than news media's), to
+    determine a credit rating, or to solicit money for any political, charitable or other purpose.
+  </p>
+</Base>
+
+<style>
+  .pager { display: flex; justify-content: space-between; align-items: baseline; margin: var(--sp-5) 0; font-weight: 600; }
+</style>

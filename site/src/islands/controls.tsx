@@ -227,14 +227,14 @@ export function ListTable<T extends { id: string }>({
 }
 
 /** Rows passed in for the first render, then the full list fetched from `src`. */
-export function useRows<T>(initial: T[], src?: string, pick: (json: any) => T[] = (json) => json) {
+export function useRows<T>(initial: T[], src?: string) {
   const [rows, setRows] = useState(initial);
   const [loading, setLoading] = useState(!!src);
   useEffect(() => {
     if (!src) return;
     fetch(src)
       .then((r) => r.json())
-      .then((json) => setRows(pick(json)))
+      .then((all: T[]) => setRows(all))
       .finally(() => setLoading(false));
   }, [src]);
   return { rows, loading };
