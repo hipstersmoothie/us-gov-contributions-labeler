@@ -61,48 +61,57 @@ Accounts the matcher wasn't sure about, and PACs it couldn't classify, are liste
 
 ## Open data
 
-The dataset is published in the labeler's atproto repo (`did:plc:ylmdlijvrvgbe4md6v4dyce6`), so anyone can download it with standard atproto tooling and no API key. Lexicons are in `lexicons/fyi/contributions/`; see [contributions.fyi/open-data](https://contributions.fyi/open-data/) for the user-facing version.
+The dataset is published as atproto records in its own repo, [@data.contributions.fyi](https://bsky.app/profile/data.contributions.fyi) (`did:plc:ej5cllsvxdrzdsweyfgr2nge`), on our PDS at `pds.contributions.fyi`. Anyone can download it with standard atproto tooling and no API key. Lexicons are in `lexicons/fyi/contributions/`; see [contributions.fyi/open-data](https://contributions.fyi/open-data/) for the user-facing version.
 
 | Collection | Record key | |
 |---|---|---|
 | `fyi.contributions.dataset` | `self` | metadata, plus the complete `data/*.json` files as gzipped blobs |
+| `fyi.contributions.account` | Bluesky DID | who funds this account: a member's summary, linking to their member record |
 | `fyi.contributions.member` | bioguide id | |
 | `fyi.contributions.committee` | FEC committee id | |
 | `fyi.contributions.organization` | organization id | |
 | `fyi.contributions.donor` | donor id | |
 | `fyi.contributions.congressCommittee` | Thomas id | |
-| `com.atproto.lexicon.schema` | NSID | the lexicons, for [resolution](https://atproto.com/specs/lexicon#lexicon-publication-and-resolution) |
+| `com.atproto.lexicon.schema` | NSID | the lexicons, for [resolution](https://atproto.com/specs/lexicon#lexicon-publication-and-resolution) (`_lexicon.contributions.fyi`) |
 
-Amounts in records are whole dollars (the atproto data model has no floats); the files keep cents. FEC, SEC and LDA data are public domain; our classifications and matching are CC0.
+Records link to each other by at-uri, in `uri` fields next to the ids: members to their organizations, PACs, outside spenders, committee seats and accounts; PACs to their organization, sponsors, recipients and donors; donors to the PACs they gave to; organizations to their PACs. A few record keys differ from the id (the PDS's name filter rejects them, so they use underscores), so follow the links rather than building them. Amounts in records are whole dollars (the atproto data model has no floats); the files keep cents. FEC, SEC and LDA data are public domain; our classifications and matching are CC0.
 
 Getting it:
 
 ```sh
+PDS=https://pds.contributions.fyi
+DID=did:plc:ej5cllsvxdrzdsweyfgr2nge
+
+# who funds this Bluesky account? (RecordNotFound if it isn't a member's)
+curl "$PDS/xrpc/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.account&rkey=did:plc:e3ap6sjaftiof33z6xjt54aa"
+
 # everything: the dataset record, then each file it links
-DID=did:plc:ylmdlijvrvgbe4md6v4dyce6
-curl -s "https://bsky.social/xrpc/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.dataset&rkey=self" |
+curl -s "$PDS/xrpc/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.dataset&rkey=self" |
   jq -r '.value.files[] | "\(.name) \(.blob.ref["$link"])"' |
   while read -r name cid; do
-    curl -sL "https://bsky.social/xrpc/com.atproto.sync.getBlob?did=$DID&cid=$cid" | gunzip > "${name%.gz}"
+    curl -s "$PDS/xrpc/com.atproto.sync.getBlob?did=$DID&cid=$cid" | gunzip > "${name%.gz}"
   done
 
 # single records, or the whole repo, with goat
-goat get at://contributions.fyi/fyi.contributions.member/C000127
-goat repo export contributions.fyi -o contributions.car && goat repo unpack contributions.car
+goat get at://data.contributions.fyi/fyi.contributions.member/C000127
+goat repo export data.contributions.fyi -o contributions.car && goat repo unpack contributions.car
 
 # plain XRPC
-curl "https://bsky.social/xrpc/com.atproto.repo.listRecords?repo=$DID&collection=fyi.contributions.member&limit=100"
+curl "$PDS/xrpc/com.atproto.repo.listRecords?repo=$DID&collection=fyi.contributions.member&limit=100"
 ```
 
 Publishing, after an ingest:
 
 ```sh
-pnpm publish-records                  # dry run: what would change, and how many rate-limit points it costs
-pnpm publish-records --apply          # write it; stops at the rate limit, re-run to continue
-pnpm publish-records --apply --wait   # or wait out each hourly window
+railway run --service pds -- pnpm publish-records          # dry run: what would change
+railway run --service pds -- pnpm publish-records --apply  # write it
 ```
 
-It writes only records whose content changed and deletes records for entities that are gone. The PDS allows 5,000 write points an hour and 35,000 a day (create 3, update 2, delete 1), shared with the labeler's own writes, so the script always leaves `--reserve` (default 1,000) points unspent. A first publish of all ~18,500 records is ~55,000 points: about 14 hours over 2 days. For testing, `--collections=schema,dataset,member --limit=5` publishes 5 members and never deletes. Needs `LABELER_PASSWORD`, e.g. `railway run --service us-gov-contributions-labeler -- pnpm publish-records --apply`.
+It writes only records whose content changed and deletes records for entities that are gone, so a refresh takes a minute or two; an interrupted run picks up where it stopped. For testing, `--collections=schema,dataset,member --limit=5` publishes 5 members and never deletes. Needs `DATA_PASSWORD` (a variable on the `pds` service). `DATA_PDS_URL` overrides the PDS address, e.g. `https://pds-production.up.railway.app`. Our PDS doesn't rate-limit writes. Against a PDS that does, the script reads the budget from the response headers and leaves `--reserve` points unspent.
+
+### The PDS
+
+The `pds` Railway service runs the official `ghcr.io/bluesky-social/pds` image with its data on a volume at `/pds`. Its secrets (`PDS_JWT_SECRET`, `PDS_ADMIN_PASSWORD`, `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX`) and `DATA_PASSWORD` exist only as Railway variables. It hosts one account, `data.contributions.fyi`, and invites are required. `PDS_CRAWLERS=https://bsky.network` makes it ask the Bluesky relay to crawl it after writes.
 
 ## Bluesky lists and starter packs
 

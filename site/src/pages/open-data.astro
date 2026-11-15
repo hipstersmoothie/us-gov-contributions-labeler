@@ -2,19 +2,21 @@
 import Base from "../layouts/Base.astro";
 import { generatedAt } from "../lib/data";
 
-const DID = "did:plc:ylmdlijvrvgbe4md6v4dyce6";
-const XRPC = "https://bsky.social/xrpc";
+const DID = "did:plc:ej5cllsvxdrzdsweyfgr2nge";
+const XRPC = "https://pds.contributions.fyi/xrpc";
+
+const account = `${XRPC}/com.atproto.repo.getRecord?repo=${DID}&collection=fyi.contributions.account&rkey=<the account's DID>`;
 
 const files = `DID=${DID}
 curl -s "${XRPC}/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.dataset&rkey=self" |
   jq -r '.value.files[] | "\\(.name) \\(.blob.ref["$link"])"' |
   while read -r name cid; do
-    curl -sL "${XRPC}/com.atproto.sync.getBlob?did=$DID&cid=$cid" | gunzip > "\${name%.gz}"
+    curl -s "${XRPC}/com.atproto.sync.getBlob?did=$DID&cid=$cid" | gunzip > "\${name%.gz}"
   done`;
 
-const goat = `goat get at://contributions.fyi/fyi.contributions.member/C000127
-goat record ls contributions.fyi --collection fyi.contributions.member
-goat repo export contributions.fyi -o contributions.car
+const goat = `goat get at://data.contributions.fyi/fyi.contributions.member/C000127
+goat record ls data.contributions.fyi --collection fyi.contributions.member
+goat repo export data.contributions.fyi -o contributions.car
 goat repo unpack contributions.car -o contributions   # one JSON file per record`;
 
 const xrpc = `${XRPC}/com.atproto.repo.getRecord?repo=${DID}&collection=fyi.contributions.member&rkey=C000127
@@ -23,6 +25,7 @@ ${XRPC}/com.atproto.sync.getBlob?did=${DID}&cid=…`;
 
 const collections = [
   ["fyi.contributions.dataset", "self", "Generation time, election cycles, sources, methodology, license, and the complete data files as gzipped JSON blobs"],
+  ["fyi.contributions.account", "Bluesky DID", "Who funds this account: a member's totals, top sectors and top contributors, linking to their member record"],
   ["fyi.contributions.member", "bioguide id, e.g. C000127", "Members of Congress: campaign totals, sectors, top contributors, outside spending, committee seats, individual donations"],
   ["fyi.contributions.committee", "FEC committee id, e.g. C00030718", "PACs and other FEC committees: who they gave to, outside spending, big donors"],
   ["fyi.contributions.organization", "slug, e.g. lockheed-martin", "The companies, unions and groups behind PACs: sector, SEC and lobbying records, recipients"],
@@ -36,15 +39,24 @@ const collections = [
   <h1>Take the data with you</h1>
   <p class="dek">
     Everything on this site is published as open data in the <a href="https://atproto.com">AT Protocol</a>{" "}
-    repository of <a href="https://bsky.app/profile/contributions.fyi">@contributions.fyi</a>. There's no API key
-    to request and no terms to agree to.
+    repository <a href="https://bsky.app/profile/data.contributions.fyi">@data.contributions.fyi</a>, on our own
+    server. There's no API key to request and no terms to agree to.
   </p>
 
   <article class="prose">
     <h2>Where it lives</h2>
     <p>
-      The repository's DID is <code>{DID}</code>. Download it with any atproto tool, or with plain HTTP as below.
+      The repository's DID is <code>{DID}</code>, hosted at <code>pds.contributions.fyi</code>. Download it with
+      any atproto tool, or with plain HTTP as below.
     </p>
+
+    <h2>Who funds this account?</h2>
+    <p>
+      Every member of Congress's Bluesky account has a record keyed by the account's DID, so any app can look one up
+      with a single request. It answers with their totals, top sectors and top contributors, and a link to the full
+      member record. Accounts that aren't a member's get <code>RecordNotFound</code>.
+    </p>
+    <pre><code set:text={account} /></pre>
 
     <h2>Everything at once</h2>
     <p>
@@ -62,8 +74,10 @@ const collections = [
 
     <h2>Over HTTP</h2>
     <p>
-      Each entity is also its own record, readable with the standard XRPC endpoints. <code>listRecords</code> pages
-      through a collection, 100 at a time:
+      Each entity is also its own record, readable with the standard XRPC endpoints. Records link to each other by
+      at-uri, in <code>uri</code> fields next to the ids (a member to their contributors' organizations, PACs and
+      outside spenders; a PAC to its organization, sponsor and recipients; a donor to the PACs it gave to), so a tool
+      can walk from any record to the rest. <code>listRecords</code> pages through a collection, 100 at a time:
     </p>
     <pre><code set:text={xrpc} /></pre>
 
