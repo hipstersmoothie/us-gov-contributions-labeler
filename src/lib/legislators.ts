@@ -17,6 +17,8 @@ interface RawLegislator {
     district?: number;
     party: string;
     url?: string;
+    /** Senate class: 1, 2 or 3. */
+    class?: 1 | 2 | 3;
   }[];
 }
 
@@ -33,6 +35,8 @@ export interface Legislator {
   district?: number;
   party: string;
   url?: string;
+  /** Senators: which of the three staggered seats (class 1 is up in 2024, 2 in 2026, 3 in 2028). */
+  senateClass?: 1 | 2 | 3;
 }
 
 export async function getCurrentLegislators(): Promise<Legislator[]> {
@@ -55,6 +59,7 @@ export async function getCurrentLegislators(): Promise<Legislator[]> {
       district: term.district,
       party: term.party,
       url: term.url,
+      senateClass: term.class,
     };
   });
 }

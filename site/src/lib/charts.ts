@@ -596,6 +596,8 @@ function histogram(d: HistData, ctx: Ctx): Plot.PlotOptions {
 
 export interface DivergingData {
   rows: { label: string; href?: string; support: number; oppose: number }[];
+  /** Axis headings, left then right. Default "Opposing" / "Supporting". */
+  sides?: [string, string];
 }
 
 function diverging(d: DivergingData, ctx: Ctx): Plot.PlotOptions {
@@ -635,7 +637,7 @@ function diverging(d: DivergingData, ctx: Ctx): Plot.PlotOptions {
     y: { domain: rows.map((r) => r.i), axis: null, paddingInner: 0, paddingOuter: 0 },
     marks: [
       ...(["oppose", "support"] as const).map((side) =>
-        Plot.text([side === "support" ? "SUPPORTING →" : "← OPPOSING"], {
+        Plot.text([side === "support" ? `${(d.sides?.[1] ?? "Supporting").toUpperCase()} →` : `← ${(d.sides?.[0] ?? "Opposing").toUpperCase()}`], {
           x: 0,
           dx: side === "support" ? 8 : -8,
           frameAnchor: "top",

@@ -93,6 +93,8 @@ export function displayName(name: string) {
     .replace(/\b[a-z][a-z']*/g, (w, i) => (i > 0 && SMALL.has(w) ? w : w[0]!.toUpperCase() + w.slice(1)))
     .replace(/\b(Pac|Llc|Afl|Cio|Usa)\b/g, (w) => w.toUpperCase())
     // Vowel-less short words are acronyms: Nrcc, Dscc, Clf, Smp.
+    // An abbreviation in parentheses: "United Democracy Project ('UDP')".
+    .replace(/\(('?)([A-Za-z]{2,6})('?)\)/g, (_, a: string, w: string, b: string) => `(${a}${w.toUpperCase()}${b})`)
     .replace(/\b[B-DF-HJ-NP-TV-XZ][b-df-hj-np-tv-xz]{1,4}\b/g, (w) =>
       ["Mr", "Mrs", "Dr", "St", "Jr", "Sr", "Ltd"].includes(w) ? w : w.toUpperCase()
     );

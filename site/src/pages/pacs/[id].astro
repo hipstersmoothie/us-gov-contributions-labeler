@@ -69,14 +69,40 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
     {c.total > 0 && <div class="stat"><dt>Members funded</dt><dd>{c.recipients.length}</dd></div>}
     {c.outside && c.outside.support > 0 && <div class="stat"><dt>Spent supporting members</dt><dd>{money(c.outside.support, true)}</dd></div>}
     {c.outside && c.outside.oppose > 0 && <div class="stat"><dt>Spent opposing members</dt><dd>{money(c.outside.oppose, true)}</dd></div>}
+    {c.opponents && c.opponents.support > 0 && <div class="stat"><dt>Spent supporting members' opponents</dt><dd>{money(c.opponents.support, true)}</dd></div>}
+    {c.opponents && c.opponents.oppose > 0 && <div class="stat"><dt>Spent opposing members' opponents</dt><dd>{money(c.opponents.oppose, true)}</dd></div>}
   </dl>
+
+  {
+    c.opponents && (
+      <section class="story">
+        <h2>Spending on members' opponents</h2>
+        <p class="chart-dek">
+          Money this group spent on candidates running against current members, {cycleRange}: other candidates in the
+          member's party primary, or in a general election the member was on the ballot for. It spent{" "}
+          <strong>{money(c.opponents.support, true)}</strong> supporting those opponents and{" "}
+          <strong>{money(c.opponents.oppose, true)}</strong> opposing them. This is separate from spending that named the
+          members themselves.
+        </p>
+        <OutsideTable
+          heading="Member whose opponent it was"
+          supportHeading="Supporting their opponents"
+          opposeHeading="Opposing their opponents"
+          rows={c.opponents.targets.slice(0, 30).map((t) => {
+            const m = memberById.get(t.id);
+            return { label: m?.name ?? t.id, href: `/members/${t.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined, support: t.support, oppose: t.oppose };
+          })}
+        />
+      </section>
+    )
+  }
 
   {
     (c.outside || c.donors) && (
       <div class="grid-2 section">
         {c.outside && (
           <section class="card">
-            <h2>Outside spending on current members</h2>
+            <h2>Spending that named current members</h2>
             <OutsideTable
               heading="Member"
               rows={c.outside.targets.slice(0, 30).map((t) => {

@@ -15,13 +15,16 @@ interface Row {
 interface Props {
   rows: Row[];
   heading: string;
+  supportHeading?: string;
+  opposeHeading?: string;
 }
-const { rows, heading } = Astro.props;
+const { rows, heading, supportHeading = "Supporting", opposeHeading = "Opposing" } = Astro.props;
 ---
 
-<table>
+<div class="outside-wrap">
+<table class="outside">
   <thead>
-    <tr><th>{heading}</th><th class="num">Supporting</th><th class="num">Opposing</th></tr>
+    <tr><th>{heading}</th><th class="num">{supportHeading}</th><th class="num">{opposeHeading}</th></tr>
   </thead>
   <tbody>
     {
@@ -39,7 +42,12 @@ const { rows, heading } = Astro.props;
     }
   </tbody>
 </table>
+</div>
 
 <style>
   .indent { padding-left: calc(1.55em + 6px); }
+  .outside-wrap { overflow-x: auto; }
+  /* Long column headings ("Supporting their opponents") wrap instead of widening the table. */
+  .outside th.num { white-space: normal; width: 8.5em; vertical-align: bottom; }
+  @media (max-width: 640px) { .outside th.num { width: 6.5em; } }
 </style>

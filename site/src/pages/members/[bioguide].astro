@@ -23,7 +23,8 @@ import {
   type Member,
 } from "../../lib/data";
 import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct, possessive, backersPhrase, cycleLabel } from "../../lib/derived";
-import { surname, moneyAuto } from "../../lib/format";
+import { surname, moneyAuto, candidateName, partyCode } from "../../lib/format";
+import OutsideTable from "../../components/OutsideTable.astro";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -99,6 +100,18 @@ const spenders = m.outside.spenders
   })
   .sort((a, b) => b.support + b.oppose - (a.support + a.oppose));
 
+// Spending on their opponents (other candidates in the same race), kept apart
+// from spending that named the member.
+const opp = m.opponents ?? { support: 0, oppose: 0, spenders: [], candidates: [] };
+const oppCandidates = opp.candidates.map((c) => {
+  const letter = partyCode(c.party);
+  return {
+    ...c,
+    label: `${candidateName(c.name)}${letter ? ` (${letter})` : c.party ? ` (${c.party})` : ""}`,
+    race: c.office === "S" ? `Senate, ${c.state}` : `House, ${c.state}${c.district ? `-${c.district}` : ""}`,
+  };
+});
+
 const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
 ---
 
@@ -158,6 +171,7 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
     </div>
     <div class="stat"><dt>Outside spending for</dt><dd>{m.outside.support > 0 ? money(m.outside.support, true) : "–"}</dd></div>
     <div class="stat"><dt>Outside spending against</dt><dd>{m.outside.oppose > 0 ? money(m.outside.oppose, true) : "–"}</dd></div>
+    {opp.support > 0 && <div class="stat"><dt>Spent supporting their opponents</dt><dd>{money(opp.support, true)}</dd></div>}
   </dl>
 
   {
@@ -307,13 +321,17 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
 
   <section class="story">
     <h2>Outside spending</h2>
+    <p class="chart-dek">
+      Super PACs and other outside groups can spend unlimited amounts as long as they don't coordinate with a
+      campaign. None of it goes to the campaign.
+    </p>
+    {opp.spenders.length > 0 && <h3 class="part">Spending that named {last}</h3>}
     {
       spenders.length ? (
         <>
           <p class="chart-dek">
-            Super PACs and other outside groups spent <strong>{money(m.outside.support, true)}</strong> for {last} and{" "}
-            <strong>{money(m.outside.oppose, true)}</strong> against. They can spend unlimited amounts as long as they don't
-            coordinate with the campaign, and none of it goes to the campaign.
+            Groups spent <strong>{money(m.outside.support, true)}</strong> supporting {last} and{" "}
+            <strong>{money(m.outside.oppose, true)}</strong> opposing them.
           </p>
           <PlotFigure
             chart="diverging"
@@ -331,7 +349,44 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
           />
         </>
       ) : (
-        <p class="empty-note">No outside groups reported spending for or against {last} in {cycleRange}.</p>
+        <p class="empty-note">No outside groups reported spending for or against {last} by name in {cycleRange}.</p>
+      )
+    }
+    {
+      opp.spenders.length > 0 && (
+        <>
+          <h3 class="part">Spending on their opponents</h3>
+          <p class="chart-dek">
+            Groups also spent <strong>{money(opp.support, true)}</strong> supporting candidates running against {last}
+            {opp.oppose > 0 && <> and <strong>{money(opp.oppose, true)}</strong> opposing those candidates</>}. An
+            opponent is another candidate in the same race: in {last}'s party primary, or in a general election {last}{" "}
+            was on the ballot for.
+          </p>
+          <PlotFigure
+            chart="diverging"
+            label={`Outside spending on ${possessive(last)} opponents, by opponent`}
+            legend={[
+              { label: "Supporting the opponent", color: "var(--support)" },
+              { label: "Opposing the opponent", color: "var(--oppose)" },
+            ]}
+            data={{ rows: oppCandidates.slice(0, 8).map((c) => ({ label: c.label, support: c.support, oppose: c.oppose })) }}
+            table={{
+              columns: ["Opponent", "Race", "Supporting", "Opposing"],
+              numeric: [2, 3],
+              rows: oppCandidates.map((c) => [c.label, c.race, c.support ? money(c.support) : "–", c.oppose ? money(c.oppose) : "–"]),
+            }}
+          />
+          <h4 class="kicker who">Who spent it</h4>
+          <OutsideTable
+            heading="Group"
+            supportHeading="Supporting opponents"
+            opposeHeading="Opposing opponents"
+            rows={opp.spenders.slice(0, 10).map((s) => {
+              const c = committeeById.get(s.id);
+              return { label: committeeLabel(s.id), href: committeeHref(s.id), note: c ? kindLabel(c.kind) : undefined, support: s.support, oppose: s.oppose };
+            })}
+          />
+        </>
       )
     }
   </section>
@@ -422,6 +477,8 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
   .member-head h1 { margin-bottom: var(--sp-4); }
   .meta { display: flex; flex-wrap: wrap; gap: var(--sp-5) var(--sp-7); margin: calc(-1 * var(--sp-4)) 0 var(--sp-7); }
   .meta .kicker { margin-bottom: var(--sp-2); }
+  .part { font: 700 var(--fs-lg)/1.25 var(--serif); margin: var(--sp-6) 0 var(--sp-2); }
+  .who { margin: var(--sp-5) 0 var(--sp-2); }
   @media (max-width: 640px) {
     .member-head { gap: var(--sp-4); }
     .member-head img, .portrait-empty { width: 72px; height: 88px; margin-bottom: var(--sp-3); }

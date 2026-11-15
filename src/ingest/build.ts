@@ -4,7 +4,7 @@
 //   data/committees.json     the PACs themselves
 import type { Legislator } from "../lib/legislators.js";
 import type { Sector } from "../lib/sectors.js";
-import type { FecData, FecTotals } from "./fec.js";
+import type { FecCandidate, FecData, FecTotals } from "./fec.js";
 import type { Committee, Organization } from "./committees.js";
 import type { Donor } from "./donors.js";
 import type { CongressCommittee } from "./assignments.js";
@@ -41,6 +41,15 @@ export interface Member {
   committees: Amount<"committee">[];
   /** Independent expenditures for and against them. */
   outside: Outside & { spenders: (Outside & { id: string })[] };
+  /**
+   * Independent expenditures on their opponents: candidates in the same race,
+   * same-party in a primary. `support` is money spent supporting an opponent,
+   * `oppose` money spent opposing one. Never mixed into `outside`.
+   */
+  opponents: Outside & {
+    spenders: (Outside & { id: string })[];
+    candidates: (Outside & Pick<FecCandidate, "id" | "name" | "party" | "office" | "state" | "district">)[];
+  };
   /** Congressional committee seats. */
   assignments: { id: string; title?: string }[];
   /** Itemized individual donations by employer and estimated sector. */
@@ -78,6 +87,8 @@ export type CommitteeRecord = Committee &
   Giver & {
     /** Outside spending on current members, by member. */
     outside?: Outside & { targets: (Outside & { id: string })[] };
+    /** Outside spending on current members' opponents, by the member whose race it was. */
+    opponents?: Outside & { targets: (Outside & { id: string })[] };
     /** Large donors, if this is a super PAC we looked up. */
     donors?: { id: string; total: number }[];
   };
@@ -179,6 +190,17 @@ export function buildData(
       bump(spenderOutside, committeeId, bioguide, o);
     }
   }
+  // Spending on members' opponents, by spender, by opponent, and by the
+  // spender's targets (the members whose races they spent in).
+  const memberOpponents = new Map<string, Map<string, Outside>>();
+  const memberOpponentCandidates = new Map<string, Map<string, Outside>>();
+  const spenderOpponents = new Map<string, Map<string, Outside>>();
+  for (const o of fec.opponents ?? []) {
+    bump(memberOpponents, o.member, o.committee, o);
+    bump(memberOpponentCandidates, o.member, o.candidate, o);
+    bump(spenderOpponents, o.committee, o.member, o);
+  }
+
   const rankedOutside = (map: Map<string, Outside> | undefined, limit = Infinity) => {
     const rows = [...(map ?? [])].map(([id, o]) => ({ id, ...o }));
     rows.sort((a, b) => b.support + b.oppose - (a.support + a.oppose));
@@ -263,6 +285,14 @@ export function buildData(
       outside: (({ rows, ...totals }) => ({ ...totals, spenders: rows }))(
         rankedOutside(memberOutside.get(l.bioguide), 25)
       ),
+      opponents: (({ rows, ...totals }) => ({
+        ...totals,
+        spenders: rows,
+        candidates: rankedOutside(memberOpponentCandidates.get(l.bioguide)).rows.map((r) => {
+          const c = fec.candidates?.[r.id];
+          return { ...r, name: c?.name ?? r.id, party: c?.party, office: c?.office ?? "H", state: c?.state ?? l.state, district: c?.district };
+        }),
+      }))(rankedOutside(memberOpponents.get(l.bioguide), 25)),
       assignments: seats.get(l.bioguide) ?? [],
       individuals: individuals?.members[l.bioguide],
       ...combine(memberOrgs.get(l.bioguide), memberSectors.get(l.bioguide), individuals?.members[l.bioguide]),
@@ -272,11 +302,13 @@ export function buildData(
   const committees = Object.values(enriched.committees)
     .map((c): CommitteeRecord => {
       const outside = spenderOutside.has(c.id) ? rankedOutside(spenderOutside.get(c.id)) : undefined;
+      const opponents = spenderOpponents.has(c.id) ? rankedOutside(spenderOpponents.get(c.id)) : undefined;
       const donorMap = donorsBySpender.get(c.id);
       return {
         ...c,
         ...giverFields(c.id),
         outside: outside && { support: outside.support, oppose: outside.oppose, targets: outside.rows },
+        opponents: opponents && { support: opponents.support, oppose: opponents.oppose, targets: opponents.rows },
         donors: donorMap && ranked(donorMap),
       };
     })

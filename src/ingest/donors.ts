@@ -29,8 +29,10 @@ export interface Donor {
 
 /** Groups that spent for or against current members, minus parties and campaigns. */
 export function outsideSpenders(fec: FecData) {
+  // Groups that only spent on members' opponents count too.
+  const ids = new Set([...Object.keys(fec.outside), ...(fec.opponents ?? []).map((o) => o.committee)]);
   return new Set(
-    Object.keys(fec.outside).filter((id) => {
+    [...ids].filter((id) => {
       const kind = fec.committees[id]?.kind;
       return kind !== "party" && kind !== "candidate";
     })
