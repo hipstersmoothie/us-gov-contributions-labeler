@@ -117,6 +117,18 @@ pnpm sync-lists --apply --only=state-de  # just these lists (keys are in the dry
 
 Run it after an ingest, with `LABELER_PASSWORD` (e.g. `railway run --service us-gov-contributions-labeler -- pnpm sync-lists --apply`). It adds and removes list items, updates names and descriptions, and deletes its own lists that no longer qualify. Record keys are derived from each list's key, so URLs stay stable. The old hand-made "US Government Officials" list is renamed as archived but keeps its members, because the account matcher reads it. A full first run is about 6,300 points (about 2 hours at 70% of 5,000 an hour); later runs only write what changed.
 
+## Feeds
+
+`feeds/` is a Bluesky feed generator (`did:web:feeds.contributions.fyi`) for posts by members of Congress, published from @contributions.fyi. The feeds are defined in `feeds/feeds.ts`: everyone, the Senate, the House, and one per sector for members whose top 3 funding sectors (the same ones on their labels) include it. They show original posts and quote posts, not replies or reposts.
+
+It follows members' accounts on Jetstream, keeps 30 days of posts in SQLite, and backfills new accounts from the AppView. It reads `data/members.json` from `main` on GitHub at startup and every hour (`MEMBERS_URL`, `REFRESH_MINUTES`), so pushing new data updates the feeds without a redeploy.
+
+```sh
+pnpm feeds                           # run locally on :3000 (DATA_DIR=.cache/feeds)
+pnpm feeds:publish                   # dry run: the feed generator records
+pnpm feeds:publish --apply           # write them; needs LABELER_PASSWORD and a live did.json
+```
+
 ## Website
 
 ```sh
@@ -129,5 +141,6 @@ pnpm site:build
 
 - **Labeler** (`us-gov-contributions-labeler` service): built from the root `Dockerfile`, with the label database on the `/sqlite-data` volume (`DB_PATH`).
 - **Website** (`website` service): built from `site/Dockerfile` (`RAILWAY_DOCKERFILE_PATH=site/Dockerfile`).
+- **Feeds** (`feeds` service): built from `feeds/Dockerfile`, with its SQLite database on a volume at `/data`.
 
 `pnpm dedupe-labels` is a one-off cleanup for duplicate label events in the labeler's database; run it on the labeler service (`railway ssh`).
