@@ -2,23 +2,40 @@
 import "@fontsource-variable/libre-franklin";
 import "@fontsource-variable/source-serif-4";
 import "../styles/global.css";
+import "../styles/controls.css";
+import SiteSearch from "../islands/SiteSearch";
 import { generatedAt, cycleRange } from "../lib/data";
 
 interface Props {
   title: string;
   description?: string;
+  /** Site-relative image for link previews, e.g. a member's portrait. */
+  image?: string;
+  ogType?: "website" | "article" | "profile";
 }
-const { title, description } = Astro.props;
+const { title, description, image, ogType = "article" } = Astro.props;
 const path = Astro.url.pathname;
 const NAV = [
   ["/members/", "Members"],
   ["/organizations/", "Organizations"],
-  ["/donors/", "Big donors"],
   ["/sectors/", "Sectors"],
   ["/committees/", "Committees"],
-  ["/about/", "About"],
+  ["/donors/", "Big donors"],
+  ["/about/", "About the data"],
 ];
-const fullTitle = title === "Home" ? "Who funds Congress" : `${title} · Who funds Congress`;
+const SITE_NAME = "contributions.fyi";
+// The flag: 7 red stripes of 13, and the 50 stars as 9 alternating rows of 6 and 5.
+const STRIPES = Array.from({ length: 7 }, (_, i) => (i * 2 * 100) / 13);
+const STARS = Array.from({ length: 9 }, (_, row) =>
+  Array.from({ length: row % 2 ? 5 : 6 }, (_, i) => [(76 / 12) * (row % 2 ? 2 * i + 2 : 2 * i + 1), ((100 / 13) * 7 * (row + 1)) / 10])
+).flat();
+const isHome = title === "Home";
+const fullTitle = isHome ? `Who funds Congress · ${SITE_NAME}` : `${title} · ${SITE_NAME}`;
+const desc =
+  description ?? `Campaign finance for every member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`;
+const canonical = Astro.site ? new URL(path, Astro.site).href : undefined;
+const imageUrl = image && Astro.site ? new URL(image, Astro.site).href : undefined;
+const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
 ---
 
 <!doctype html>
@@ -27,36 +44,65 @@ const fullTitle = title === "Home" ? "Who funds Congress" : `${title} · Who fun
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
-    {description && <meta name="description" content={description} />}
-    <link rel="icon" href="data:," />
+    <meta name="description" content={desc} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={isHome ? "Who funds Congress" : title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content={isHome ? "website" : ogType} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <noscript><style>.disclosure-panel[hidden] { display: block !important; } .disclosure-trigger .chevron { display: none; }</style></noscript>
   </head>
   <body>
-    <header class="site-header">
-      <div class="wrap header-row">
-        <a class="brand" href="/">Who funds Congress</a>
-        <nav aria-label="Main">
-          {NAV.map(([href, text]) => <a href={href} aria-current={path.startsWith(href!) ? "page" : undefined}>{text}</a>)}
-        </nav>
-        <form class="search" action="/search/" role="search">
-          <label class="visually-hidden" for="site-search">Search</label>
-          <input id="site-search" name="q" type="search" placeholder="Search members, companies, PACs…" autocomplete="off" />
-        </form>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="masthead">
+      <div class="wrap masthead-row">
+        <a class="brand" href="/" aria-label="contributions.fyi, home">
+          <svg class="brand-flag" viewBox="0 0 190 100" width="38" height="20" aria-hidden="true">
+            <rect width="190" height="100" fill="var(--flag-white)" />
+            {STRIPES.map((y) => <rect y={y} width="190" height={100 / 13} fill="var(--flag-red)" />)}
+            <rect width="76" height={(100 / 13) * 7} fill="var(--flag-blue)" />
+            {STARS.map(([x, y]) => <circle cx={x} cy={y} r="1.9" fill="var(--flag-white)" />)}
+          </svg>
+          <span class="brand-name">contributions</span>
+        </a>
+        <SiteSearch client:load />
       </div>
+      <nav class="sections" aria-label="Sections">
+        <ul class="wrap">
+          {
+            NAV.map(([href, text]) => (
+              <li>
+                <a href={href} aria-current={path.startsWith(href!) ? "page" : undefined}>{text}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
     </header>
 
-    <main class="wrap">
+    <main id="main" class="wrap" tabindex="-1">
       <slot />
     </main>
 
-    <footer class="site-footer wrap">
-      <p>
-        PAC contributions to current members of Congress, {cycleRange}, from{" "}
-        <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">FEC filings</a>. Industries from{" "}
-        <a href="https://www.sec.gov/edgar">SEC EDGAR</a> and{" "}
-        <a href="https://lda.gov/">lobbying disclosures</a>. Data as of{" "}
-        {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}.{" "}
-        <a href="/about/">Methodology</a>
-      </p>
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <p class="footer-brand">{SITE_NAME}</p>
+        <p>
+          PAC contributions to current members of Congress, {cycleRange}, from{" "}
+          <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">FEC filings</a>. Industries from{" "}
+          <a href="https://www.sec.gov/edgar">SEC EDGAR</a> and <a href="https://lda.gov/">lobbying disclosures</a>.
+          Data as of {updated}.
+        </p>
+        <p><a href="/about/">How this data works</a></p>
+      </div>
     </footer>
   </body>
 </html>

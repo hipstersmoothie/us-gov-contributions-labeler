@@ -29,6 +29,16 @@ function base(ctx: Ctx, extra: Plot.PlotOptions): Plot.PlotOptions {
 }
 
 const halo = { stroke: "var(--page)", strokeWidth: 4, paintOrder: "stroke" } as const;
+/** Plot's fontWeight is a constant, so emphasized rows get their own text mark. */
+function weighted<T>(data: T[], strong: (d: T) => boolean, options: Plot.TextOptions, weights: [number, number] = [700, 500]) {
+  return [
+    Plot.text(data.filter(strong), { ...options, fontWeight: weights[0] }),
+    Plot.text(data.filter((d) => !strong(d)), { ...options, fontWeight: weights[1] }),
+  ];
+}
+
+/** Single-line labels that end in an ellipsis instead of running off a narrow chart. */
+const fit = (px: number, fontSize = 13) => ({ lineWidth: Math.max(px, 40) / fontSize, textOverflow: "ellipsis" as const });
 const tickMoney = (d: number) => (d === 0 ? "$0" : money(d, true));
 const compactTicks = (w: number) => (w < 480 ? 4 : 7);
 
@@ -213,18 +223,17 @@ function bars(d: BarsData, ctx: Ctx): Plot.PlotOptions {
     y: { domain: ys, axis: null, paddingInner: 0, paddingOuter: 0 },
     marks: [
       // Label above the bar (reads like a news table, and long names never get squeezed).
-      Plot.text(rows, {
+      ...weighted(rows, (r) => r.em, {
         x: 0,
         y: "i",
         dy: -1,
         lineAnchor: "bottom",
         textAnchor: "start",
-        text: (r) => (r.note ? `${r.label}  ·  ${r.note}` : r.label),
+        text: (r: (typeof rows)[number]) => (r.note ? `${r.label}  ·  ${r.note}` : r.label),
         href: "href",
         fill: "var(--text-primary)",
-        fontWeight: (r) => (r.em ? 700 : 500),
         fontSize: 13,
-        lineWidth: Infinity,
+        ...fit(ctx.width - 8),
       }),
       Plot.barX(rows, {
         x: "value",
@@ -270,6 +279,8 @@ export interface StackedData {
   rows: { label: string; href?: string; values: Record<string, number> }[];
   /** "share": every bar fills 100%. "amount": bars share one money scale. */
   mode: "share" | "amount";
+  /** Print each segment's share inside it where it fits (default true). */
+  insideLabels?: boolean;
 }
 
 function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
@@ -300,6 +311,7 @@ function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
   // Inside-segment labels only where they fit with padding; the tooltip and
   // table carry the rest.
   const inside = (f: (typeof flat)[number]) => {
+    if (d.insideLabels === false) return null;
     const px = ((d.mode === "share" ? f.share : f.value) / xMax) * plotW;
     const text = `${Math.round(f.share * 100)}%`;
     return px > text.length * 7.5 + 14 ? text : null;
@@ -325,7 +337,7 @@ function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
         fill: "var(--text-primary)",
         fontWeight: 500,
         fontSize: 13,
-        lineWidth: Infinity,
+        ...fit(ctx.width - 8),
       }),
       Plot.barX(
         flat,
@@ -387,13 +399,9 @@ function dumbbell(d: DumbbellData, ctx: Ctx): Plot.PlotOptions {
   const pct = (v: number) => `${Math.round(v * 100)}%`;
   const ticks = narrow ? 4 : 6;
   const marginRight = narrow ? 40 : 54;
-  const xPx = (v: number) => (v / max) * (ctx.width - 6 - marginRight);
-  const valueStyle = {
-    fill: "var(--text-primary)",
-    fontWeight: (r: (typeof rows)[number]) => (r.i === 0 ? 700 : 400),
-    fontSize: 12,
-    ...halo,
-  } as const;
+  const xPx = (v: number) => (v / max) * (ctx.width - 12 - marginRight);
+  type Row = (typeof rows)[number];
+  const valueStyle = { fill: "var(--text-primary)", fontSize: 12, ...halo } as const;
   const dot = (key: "a" | "b") => ({
     x: key,
     y: "i",
@@ -406,14 +414,14 @@ function dumbbell(d: DumbbellData, ctx: Ctx): Plot.PlotOptions {
     height: rows.length * step + 30,
     marginTop: 4,
     marginBottom: 26,
-    marginLeft: 6,
+    marginLeft: 12,
     marginRight,
     x: { domain: [0, max], nice: true, label: null, tickFormat: (v: number) => pct(v), ticks },
     y: { domain: rows.map((r) => r.i), axis: null, paddingInner: 0, paddingOuter: 0 },
     marks: [
       Plot.gridX({ stroke: "var(--grid)", strokeOpacity: 1, ticks }),
       Plot.axisX({ ticks, tickFormat: (v: number) => pct(v), tickSize: 0, tickPadding: 8 }),
-      Plot.text(rows, {
+      ...weighted(rows, (r) => r.i === 0, {
         frameAnchor: "left",
         y: "i",
         dy: -1,
@@ -422,22 +430,25 @@ function dumbbell(d: DumbbellData, ctx: Ctx): Plot.PlotOptions {
         text: "label",
         href: "href",
         fill: "var(--text-primary)",
-        fontWeight: (r) => (r.i === 0 ? 700 : 500),
         fontSize: 13,
-        lineWidth: Infinity,
+        ...fit(ctx.width - marginRight - 12),
         ...halo,
       }),
       Plot.link(rows, { x1: "b", x2: "a", y1: "i", y2: "i", dy: 9, stroke: "var(--baseline)", strokeWidth: 2 }),
       Plot.dot(rows, { ...dot("b"), fill: "var(--page)", stroke: "var(--text-muted)", strokeWidth: 2 }),
       Plot.dot(rows, { ...dot("a"), fill: "var(--bar-strong)", stroke: "var(--page)", strokeWidth: 2 }),
       // The committee value sits beside the filled dot, on its outer side.
-      Plot.text(
+      ...weighted(
         rows.filter((r) => r.a >= r.b || xPx(r.a) < 44),
-        { x: (r) => Math.max(r.a, r.b), y: "i", dy: 9, dx: 10, textAnchor: "start", text: (r) => pct(r.a), ...valueStyle }
+        (r) => r.i === 0,
+        { x: (r: Row) => Math.max(r.a, r.b), y: "i", dy: 9, dx: 10, textAnchor: "start", text: (r: Row) => pct(r.a), ...valueStyle },
+        [700, 400]
       ),
-      Plot.text(
+      ...weighted(
         rows.filter((r) => r.a < r.b && xPx(r.a) >= 44),
-        { x: "a", y: "i", dy: 9, dx: -10, textAnchor: "end", text: (r) => pct(r.a), ...valueStyle }
+        (r) => r.i === 0,
+        { x: "a", y: "i", dy: 9, dx: -10, textAnchor: "end", text: (r: Row) => pct(r.a), ...valueStyle },
+        [700, 400]
       ),
       // Callout on the biggest sector, when there's room.
       ...(!narrow && rows[0] && rows[0].a > rows[0].b
@@ -501,7 +512,7 @@ function histogram(d: HistData, ctx: Ctx): Plot.PlotOptions {
       Plot.ruleY([0], { stroke: "var(--baseline)" }),
       Plot.rectY(
         d.points,
-        Plot.binX(
+        Plot.binX<Plot.RectYOptions>(
           { y: "count" },
           {
             ...opts,
@@ -515,7 +526,7 @@ function histogram(d: HistData, ctx: Ctx): Plot.PlotOptions {
       ),
       Plot.text(
         d.points,
-        Plot.binX(
+        Plot.binX<Plot.TextOptions>(
           { y: "count", text: "count" },
           { x: "value", fy: "lane", thresholds, dy: -7, fill: "var(--text-secondary)", fontSize: 11, fontVariant: "tabular-nums" }
         )
@@ -547,5 +558,89 @@ function histogram(d: HistData, ctx: Ctx): Plot.PlotOptions {
   });
 }
 
-export const charts = { swarm, bars, stacked, dumbbell, histogram } as const;
+// --- diverging: support vs. oppose -------------------------------------------------
+
+export interface DivergingData {
+  rows: { label: string; href?: string; support: number; oppose: number }[];
+}
+
+function diverging(d: DivergingData, ctx: Ctx): Plot.PlotOptions {
+  const narrow = ctx.width < 520;
+  const step = 40;
+  const rows = d.rows.map((r, i) => ({ ...r, i }));
+  const max = Math.max(...rows.flatMap((r) => [r.support, r.oppose]), 1);
+  const pad = narrow ? 1.45 : 1.25;
+  const tip = (side: "support" | "oppose") =>
+    ctx.interactive
+      ? {
+          channels: { Spender: "label", [side === "support" ? "Supporting" : "Opposing"]: (r: (typeof rows)[number]) => money(r[side]) },
+          tip: { format: { x: false, y: false, Spender: true, Supporting: true, Opposing: true } },
+        }
+      : {};
+  const value = (side: "support" | "oppose") =>
+    Plot.text(
+      rows.filter((r) => r[side] > 0),
+      {
+        x: (r) => (side === "support" ? r.support : -r.oppose),
+        y: "i",
+        dy: 9,
+        dx: side === "support" ? 5 : -5,
+        textAnchor: side === "support" ? "start" : "end",
+        text: (r) => money(r[side], true),
+        fill: "var(--text-secondary)",
+        fontSize: 12,
+      }
+    );
+  return base(ctx, {
+    height: rows.length * step + 28,
+    marginTop: 26,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    x: { domain: [-max * pad, max * pad], axis: null },
+    y: { domain: rows.map((r) => r.i), axis: null, paddingInner: 0, paddingOuter: 0 },
+    marks: [
+      ...(["oppose", "support"] as const).map((side) =>
+        Plot.text([side === "support" ? "SUPPORTING →" : "← OPPOSING"], {
+          x: 0,
+          dx: side === "support" ? 8 : -8,
+          frameAnchor: "top",
+          dy: -22,
+          textAnchor: side === "support" ? "start" : "end",
+          text: (t) => t,
+          fontWeight: 700,
+          fontSize: 11,
+          fill: "var(--text-secondary)",
+        })
+      ),
+      Plot.ruleX([0], { stroke: "var(--baseline)" }),
+      Plot.text(rows, {
+        x: 0,
+        y: "i",
+        dy: -1,
+        lineAnchor: "bottom",
+        textAnchor: "middle",
+        text: "label",
+        href: "href",
+        fill: "var(--text-primary)",
+        fontWeight: 500,
+        fontSize: 13,
+        ...fit(ctx.width - 8),
+        ...halo,
+      }),
+      Plot.barX(rows, { x1: 0, x2: (r) => -r.oppose, y: "i", insetTop: 23, insetBottom: 3, fill: "var(--oppose)", rx1: 3, ...tip("oppose") }),
+      Plot.barX(rows, { x1: 0, x2: "support", y: "i", insetTop: 23, insetBottom: 3, fill: "var(--support)", rx2: 3, ...tip("support") }),
+      value("support"),
+      value("oppose"),
+    ],
+  });
+}
+
+/** Plot labels each mark's <g> with its type ("dot", "bar"): noise to a screen
+ *  reader, and not valid ARIA on a role-less <g>. The figure carries the label. */
+export function stripMarkLabels(root: Element) {
+  for (const g of root.querySelectorAll("g[aria-label]")) g.removeAttribute("aria-label");
+}
+
+export const charts = { swarm, bars, stacked, dumbbell, histogram, diverging } as const;
 export type ChartName = keyof typeof charts;

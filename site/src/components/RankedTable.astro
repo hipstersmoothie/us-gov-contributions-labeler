@@ -1,7 +1,7 @@
 ---
 // A ranked table with an inline bar beside each value: the table is the data,
 // the bar is just a reading aid, so it stays a real <table> for screen readers.
-import { money } from "../lib/format";
+import { moneyAuto } from "../lib/format";
 
 interface Row {
   label: string;
@@ -21,9 +21,11 @@ interface Props {
   caption?: string;
   /** Show the rank number column. */
   rank?: boolean;
+  /** Shared scale when one list is split across tables. */
+  max?: number;
 }
 const { rows, heading, valueHeading, extraHeadings = [], caption, rank = true } = Astro.props;
-const max = Math.max(...rows.map((r) => r.value), 1);
+const max = Astro.props.max ?? Math.max(...rows.map((r) => r.value), 1);
 ---
 
 <table class="ranked">
@@ -49,7 +51,7 @@ const max = Math.max(...rows.map((r) => r.value), 1);
           {r.cells?.map((c) => <td class="extra">{c}</td>)}
           <td class:list={["num", "value", { em: r.value === max }]}>
             <div class="cell">
-              <span class="amount">{money(r.value, r.value >= 100_000)}</span>
+              <span class="amount">{moneyAuto(r.value)}</span>
               <span class="bar" style={`--w: ${Math.max(r.value / max, 0.004)}`} aria-hidden="true" />
             </div>
           </td>

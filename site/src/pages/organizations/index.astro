@@ -1,68 +1,19 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { organizations, money, cycleRange } from "../../lib/data";
+import OrganizationsTable from "../../islands/OrganizationsTable";
+import { money, cycleRange } from "../../lib/data";
+import { orgRows, ORG_MIN } from "../../lib/rows";
 import { SECTORS } from "../../../../src/lib/sectors.ts";
 
-// Smaller givers are still reachable through search and their PAC pages.
-const MIN = 10_000;
-const rows = organizations.filter((o) => o.total >= MIN);
+const rows = orgRows();
 ---
 
-<Base title="Organizations" description="Companies, unions and groups whose PACs fund Congress.">
-  <h1>Organizations</h1>
-  <p class="eyebrow">
-    The companies, unions, trade groups and causes behind PACs giving to current members, {cycleRange}.
-    Showing the {rows.length.toLocaleString()} that gave at least {money(MIN)}.
+<Base title="Organizations" description="The companies, unions and groups whose PACs fund Congress.">
+  <p class="kicker">Organizations</p>
+  <h1>Who's behind the PACs</h1>
+  <p class="dek">
+    The companies, unions, trade groups and causes behind PACs giving to current members, {cycleRange}. Showing the{" "}
+    {rows.length.toLocaleString()} that gave at least {money(ORG_MIN)}; the rest are in search.
   </p>
-
-  <form class="filters" id="filters">
-    <input name="q" type="search" placeholder="Filter by name" aria-label="Filter by name" />
-    <select name="sector" aria-label="Sector">
-      <option value="">All sectors</option>
-      {SECTORS.map((s) => <option>{s}</option>)}
-    </select>
-  </form>
-
-  <section class="card">
-    <table>
-      <thead>
-        <tr><th>Organization</th><th>Sector</th><th class="num">Members</th><th class="num">Given</th></tr>
-      </thead>
-      <tbody id="rows">
-        {
-          rows.map((o) => (
-            <tr data-name={o.name.toLowerCase()} data-sector={o.sector}>
-              <td><a href={`/organizations/${o.id}/`}>{o.name}</a>{o.industry && <div class="muted small">{o.industry}</div>}</td>
-              <td>{o.sector}</td>
-              <td class="num">{o.recipients.length}</td>
-              <td class="num">{money(o.total, true)}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-    <p class="muted small" id="count"></p>
-  </section>
-
-  <script is:inline>
-    const form = document.getElementById("filters");
-    const rows = [...document.querySelectorAll("#rows tr")];
-    const count = document.getElementById("count");
-    const params = new URLSearchParams(location.search);
-    if (params.get("sector")) form.sector.value = params.get("sector");
-    const apply = () => {
-      const q = form.q.value.trim().toLowerCase();
-      const sector = form.sector.value;
-      let shown = 0;
-      for (const r of rows) {
-        const ok = (!q || r.dataset.name.includes(q)) && (!sector || r.dataset.sector === sector);
-        r.hidden = !ok;
-        if (ok) shown++;
-      }
-      count.textContent = `${shown.toLocaleString()} of ${rows.length.toLocaleString()} organizations`;
-    };
-    form.addEventListener("input", apply);
-    form.addEventListener("submit", (e) => e.preventDefault());
-    apply();
-  </script>
+  <OrganizationsTable client:idle initial={rows.slice(0, 100)} src="/data/organizations.json" sectors={[...SECTORS]} />
 </Base>

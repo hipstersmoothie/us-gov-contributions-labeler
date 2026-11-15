@@ -1,6 +1,6 @@
 // Views derived at build time from the existing data, for the charts and the
 // plain-language summaries. Nothing here changes the data's shape.
-import { members, memberById, partyLetter, type Member } from "./data";
+import { members, memberById, partyLetter, generatedAt, type Member } from "./data";
 import type { SwarmPoint } from "./charts";
 
 export const pacTotal = (m: Member) => m.committees.reduce((s, c) => s + c.total, 0);
@@ -77,3 +77,40 @@ export function inEvery(share: number) {
 }
 
 export const pct = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
+
+/** "Pelosi's", "Jeffries'". */
+export const possessive = (name: string) => (name.endsWith("s") ? `${name}'` : `${name}'s`);
+
+// How each sector reads in a sentence about who backs a member.
+const BACKERS: Record<string, string> = {
+  Agribusiness: "agribusiness",
+  "Communications & Technology": "tech and telecom companies",
+  Construction: "the construction industry",
+  Defense: "defense contractors",
+  Education: "educators and schools",
+  "Energy & Natural Resources": "energy companies",
+  "Finance, Insurance & Real Estate": "finance and real estate",
+  Health: "the health care industry",
+  "Ideological & Single-Issue": "ideological and single-issue groups",
+  Labor: "labor unions",
+  "Lawyers & Lobbyists": "lawyers and lobbyists",
+  "Misc Business": "business groups",
+  Transportation: "transportation companies",
+};
+
+/** The member's top two industries, PAC and employee money combined, in words. */
+export function backersPhrase(m: Member) {
+  const source = m.combinedSectors?.length ? m.combinedSectors : m.sectors;
+  const top = source.filter((s) => BACKERS[s.id] && s.total > 0).slice(0, 2).map((s) => BACKERS[s.id]!);
+  if (top.length < 2) return top[0];
+  // "labor unions and health care", but "health care, followed by finance and real estate".
+  return top.some((t) => t.includes(" and ")) ? `${top[0]}, followed by ${top[1]}` : `${top[0]} and ${top[1]}`;
+}
+
+/** "2023–24", or "2025–26 (so far)" for a cycle that hasn't ended yet. */
+export function cycleLabel(cycle: number) {
+  const label = `${cycle - 1}–${String(cycle).slice(2)}`;
+  // A cycle ends after its general election in November of the even year.
+  const ended = generatedAt > new Date(Date.UTC(cycle, 11, 31));
+  return ended ? label : `${label} (so far)`;
+}

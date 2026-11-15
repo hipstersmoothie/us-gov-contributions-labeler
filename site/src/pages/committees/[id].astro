@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import PlotFigure from "../../components/PlotFigure.astro";
 import RankedTable from "../../components/RankedTable.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
 import {
   members,
   congressCommittees,
@@ -60,6 +61,14 @@ const ratio = top ? top.a / (top.b || 1) : 1;
 
 const lanes = c.chamber === "joint" ? ["House", "Senate"] : [chamberLabel];
 const points = memberPoints((m) => onCommittee.has(m.bioguide)).filter((p) => lanes.includes(p.lane));
+const memberRows = seated.map((s) => ({
+  label: s.member.name,
+  href: `/members/${s.bioguide}/`,
+  party: partyLetter(s.member.party),
+  note: [s.title, s.majority ? "Majority" : "Minority", s.member.state].filter(Boolean).join(" · "),
+  value: pacTotal(s.member),
+}));
+const memberMax = Math.max(...memberRows.map((r) => r.value), 1);
 const leaders = seated.filter((s) => s.title && /^(Chair|Chairman|Ranking Member)$/i.test(s.title)).map((s) => s.bioguide);
 ---
 
@@ -145,14 +154,16 @@ const leaders = seated.filter((s) => s.title && /^(Chair|Chairman|Ranking Member
         heading="Member"
         valueHeading="PAC money"
         rank={false}
-        rows={seated.map((s) => ({
-          label: s.member.name,
-          href: `/members/${s.bioguide}/`,
-          party: partyLetter(s.member.party),
-          note: [s.title, s.majority ? "Majority" : "Minority", s.member.state].filter(Boolean).join(" · "),
-          value: pacTotal(s.member),
-        }))}
+        rows={memberRows.slice(0, 15)}
+        max={memberMax}
       />
+      {
+        memberRows.length > 15 && (
+          <MoreDisclosure client:visible title={`All ${memberRows.length} members`}>
+            <RankedTable heading="Member" valueHeading="PAC money" rank={false} rows={memberRows.slice(15)} max={memberMax} />
+          </MoreDisclosure>
+        )
+      }
     </section>
     <section class="story">
       <h2>Top organizations giving to its members</h2>

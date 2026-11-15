@@ -2,8 +2,10 @@
 import Base from "../../layouts/Base.astro";
 import PlotFigure from "../../components/PlotFigure.astro";
 import RankedTable from "../../components/RankedTable.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
 import { PARTY_COLOR } from "../../lib/charts";
 import { recipientPoints, pct, chamberName } from "../../lib/derived";
+import { moneyAuto } from "../../lib/format";
 import {
   organizations,
   committeeById,
@@ -147,6 +149,30 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
           };
         })}
       />
+      {
+        o.recipients.length > 15 && (
+          <MoreDisclosure client:visible title={`All ${o.recipients.length.toLocaleString()} recipients`}>
+            <table>
+              <caption class="visually-hidden">Every member {o.name} gave to</caption>
+              <tbody>
+                {o.recipients.map((r) => {
+                  const m = memberById.get(r.id);
+                  return (
+                    <tr>
+                      <td>
+                        {m && <span class={`ptag party-${partyLetter(m.party)}`} title={m.party}>{partyLetter(m.party)}</span>}
+                        <a href={`/members/${r.id}/`}>{m?.name ?? r.id}</a>
+                        {m && <span class="muted small"> · {chamberName(m)}, {m.state}</span>}
+                      </td>
+                      <td class="num">{moneyAuto(r.total)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </MoreDisclosure>
+        )
+      }
     </section>
 
     <section class="story">
@@ -196,7 +222,11 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
         issues.length ? (
           <ul class="chips">{issues.map((i) => <li class="chip">{i.name}</li>)}</ul>
         ) : (
-          <p class="muted small">{o.lobbying?.firm ? "Registered as a lobbying firm." : "No lobbying disclosures matched."}</p>
+          <p class="empty-note">
+            {o.lobbying?.firm
+              ? `${o.name} is registered as a lobbying firm, so its filings list clients rather than issues of its own.`
+              : `No federal lobbying disclosures matched ${o.name}. Many PAC sponsors lobby through trade groups, or not at all.`}
+          </p>
         )
       }
       {

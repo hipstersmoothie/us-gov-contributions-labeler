@@ -9,6 +9,9 @@ export function money(amount: number, compact = false) {
   }).format(amount);
 }
 
+/** Table figures: exact under $100K, compact above, so columns stay narrow. */
+export const moneyAuto = (amount: number) => money(amount, Math.abs(amount) >= 100_000);
+
 export function percent(part: number, whole: number) {
   if (!whole) return "–";
   const pct = (part / whole) * 100;

@@ -1,7 +1,9 @@
 import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
 
 export default defineConfig({
-  // Set SITE_URL when deploying so canonical links and the sitemap are absolute.
-  site: process.env.SITE_URL,
+  // Canonical links and Open Graph URLs are absolute against this.
+  site: process.env.SITE_URL ?? "https://contributions.fyi",
   trailingSlash: "always",
+  integrations: [react()],
 });

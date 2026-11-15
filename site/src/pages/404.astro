@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Page not found" description="This page doesn't exist.">
+  <p class="kicker">Error 404</p>
+  <h1>We couldn't find that page</h1>
+  <p class="dek">
+    The member, organization or PAC you're looking for may have left Congress, been renamed in FEC filings, or
+    never existed. Try the search box above, or start from one of these:
+  </p>
+  <ul class="chips not-found">
+    <li><a class="chip" href="/">Home</a></li>
+    <li><a class="chip" href="/members/">All members</a></li>
+    <li><a class="chip" href="/organizations/">Organizations</a></li>
+    <li><a class="chip" href="/committees/">Committees</a></li>
+    <li><a class="chip" href="/donors/">Big donors</a></li>
+  </ul>
+</Base>
+
+<style>
+  .not-found { margin-bottom: var(--sp-8); }
+  .not-found .chip { font-size: var(--fs-base); padding: 6px 14px; }
+</style>

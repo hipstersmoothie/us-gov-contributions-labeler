@@ -1,68 +1,16 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { donors, committeeById, money, displayName, cycleRange, MIN_DONATION } from "../../lib/data";
+import DonorsTable from "../../islands/DonorsTable";
+import { donors, money, cycleRange, MIN_DONATION } from "../../lib/data";
+import { donorRows } from "../../lib/rows";
 ---
 
 <Base title="Big donors" description="The people and organizations funding super PACs that spend on Congress.">
-  <h1>Big donors</h1>
-  <p class="eyebrow">
-    People, companies and committees that gave {money(MIN_DONATION)} or more at a time to super PACs and other
-    groups that spent for or against current members of Congress, {cycleRange}.
+  <p class="kicker">Big donors</p>
+  <h1>Who funds the super PACs</h1>
+  <p class="dek">
+    {donors.length.toLocaleString()} people, companies and committees that gave {money(MIN_DONATION)} or more at a time
+    to super PACs and other groups that spent for or against current members of Congress, {cycleRange}.
   </p>
-
-  <form class="filters" id="filters">
-    <input name="q" type="search" placeholder="Filter by name" aria-label="Filter by name" />
-    <select name="type" aria-label="Donor type">
-      <option value="">All donors</option>
-      <option value="individual">Individuals</option>
-      <option value="organization">Organizations</option>
-      <option value="committee">Committees</option>
-    </select>
-  </form>
-
-  <section class="card">
-    <table>
-      <thead>
-        <tr><th>Donor</th><th>Top recipient</th><th class="num">Given</th></tr>
-      </thead>
-      <tbody id="rows">
-        {
-          donors.map((d) => {
-            const top = committeeById.get(d.gifts[0]?.id ?? "");
-            return (
-              <tr data-name={d.name.toLowerCase()} data-type={d.type}>
-                <td>
-                  <a href={`/donors/${d.id}/`}>{d.name}</a>
-                  {d.type === "individual" && <div class="muted small">{[d.occupation, d.employer].filter(Boolean).join(", ")}</div>}
-                </td>
-                <td>{top ? displayName(top.name) : "–"}</td>
-                <td class="num">{money(d.total, true)}</td>
-              </tr>
-            );
-          })
-        }
-      </tbody>
-    </table>
-    <p class="muted small" id="count"></p>
-  </section>
-
-  <script is:inline>
-    const form = document.getElementById("filters");
-    const rows = [...document.querySelectorAll("#rows tr")];
-    const count = document.getElementById("count");
-    const apply = () => {
-      const q = form.q.value.trim().toLowerCase();
-      const type = form.type.value;
-      let shown = 0;
-      for (const r of rows) {
-        const ok = (!q || r.dataset.name.includes(q)) && (!type || r.dataset.type === type);
-        r.hidden = !ok;
-        if (ok) shown++;
-      }
-      count.textContent = `${shown.toLocaleString()} of ${rows.length.toLocaleString()} donors`;
-    };
-    form.addEventListener("input", apply);
-    form.addEventListener("submit", (e) => e.preventDefault());
-    apply();
-  </script>
+  <DonorsTable client:idle initial={donorRows().slice(0, 100)} src="/data/donors.json" />
 </Base>
