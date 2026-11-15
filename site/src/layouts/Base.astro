@@ -64,14 +64,14 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="masthead">
       <div class="wrap masthead-row">
-        <a class="brand" href="/" aria-label="contributions.fyi, home">
+        <a class="brand" href="/" aria-label="Contributions, home">
           <svg class="brand-flag" viewBox="0 0 190 100" width="38" height="20" aria-hidden="true">
             <rect width="190" height="100" fill="var(--flag-white)" />
             {STRIPES.map((y) => <rect y={y} width="190" height={100 / 13} fill="var(--flag-red)" />)}
             <rect width="76" height={(100 / 13) * 7} fill="var(--flag-blue)" />
             {STARS.map(([x, y]) => <circle cx={x} cy={y} r="1.9" fill="var(--flag-white)" />)}
           </svg>
-          <span class="brand-name">contributions</span>
+          <span class="brand-name">Contributions</span>
         </a>
         <SiteSearch client:load />
       </div>
