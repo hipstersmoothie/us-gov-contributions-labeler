@@ -496,6 +496,7 @@ async function applyAll(writes: Write[]) {
       if ((err as { status?: number }).status === 429) {
         console.log(`  Rate limited; ${budget.remaining ?? "?"} points left, resets at ${when(budget.resetAt)}.`);
         budget.remaining = 0;
+        budget.resetAt = Math.max(budget.resetAt, Date.now() + 60_000);
         continue;
       }
       throw err;
