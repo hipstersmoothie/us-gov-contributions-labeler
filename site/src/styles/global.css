@@ -7,10 +7,108 @@
    red↔aqua sits in the 6–8 CVD band, which is legal with secondary encoding,
    so party is always also named in text (lanes, legend, tags, tooltips).
    Support/oppose (violet/orange) pass every check in both modes. */
+
+/* Self-hosted variable fonts (OFL, from Fontsource; licenses in /fonts).
+   font-display: optional plus a preload: the browser uses the font if it's
+   there by first paint, otherwise keeps the fallback for that page view and
+   never swaps mid-read, so text can't shift. The next page has it cached. */
+@font-face {
+  font-family: "Libre Franklin Variable";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url("/fonts/libre-franklin-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "Libre Franklin Variable";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url("/fonts/libre-franklin-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: "Libre Franklin Variable";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url("/fonts/libre-franklin-latin-wght-italic.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "Source Serif 4 Variable";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: optional;
+  src: url("/fonts/source-serif-4-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: "Source Serif 4 Variable";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: optional;
+  src: url("/fonts/source-serif-4-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* Fallbacks sized to the web fonts' metrics (generated with Capsize), so a
+   page that renders in the fallback looks and wraps nearly the same. */
+/* Each weight gets its own adjust: bold Source Serif runs narrower than
+   Georgia Bold while regular runs wider, so one face can't match both. Widths
+   were measured in the browser on this site's own text, and the fallbacks err
+   slightly narrow so a swap never adds a line. */
+@font-face {
+  font-family: "Libre Franklin Fallback";
+  font-weight: 100 450;
+  src: local("Arial"), local("ArialMT");
+  size-adjust: 104.35%;
+  ascent-override: 92.57%;
+  descent-override: 23.57%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Libre Franklin Fallback";
+  font-weight: 451 650;
+  src: local("Arial"), local("ArialMT");
+  size-adjust: 105.51%;
+  ascent-override: 91.56%;
+  descent-override: 23.32%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Libre Franklin Fallback";
+  font-weight: 651 900;
+  src: local("Arial Bold"), local("Arial-BoldMT");
+  size-adjust: 101.39%;
+  ascent-override: 95.28%;
+  descent-override: 24.26%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Source Serif 4 Fallback";
+  font-weight: 100 500;
+  src: local("Georgia");
+  size-adjust: 104.40%;
+  ascent-override: 99.23%;
+  descent-override: 32.09%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Source Serif 4 Fallback";
+  font-weight: 501 900;
+  src: local("Georgia Bold"), local("Georgia-Bold");
+  size-adjust: 94.23%;
+  ascent-override: 109.94%;
+  descent-override: 35.55%;
+  line-gap-override: 0%;
+}
+
 :root {
   color-scheme: light;
-  --serif: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
-  --sans: "Libre Franklin Variable", "Libre Franklin", "Franklin Gothic Medium", system-ui, sans-serif;
+  --serif: "Source Serif 4 Variable", "Source Serif 4 Fallback", Georgia, serif;
+  --sans: "Libre Franklin Variable", "Libre Franklin Fallback", Arial, sans-serif;
 
   /* type scale (px at 16px root): 11 · 13 · 15 · 17 · 20 · 24 · 30 · display */
   --fs-label: 0.6875rem;

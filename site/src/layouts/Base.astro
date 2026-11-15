@@ -1,9 +1,8 @@
 ---
-import "@fontsource-variable/libre-franklin";
-import "@fontsource-variable/source-serif-4";
 import "../styles/global.css";
 import "../styles/controls.css";
 import SiteSearch from "../islands/SiteSearch";
+
 import { generatedAt, cycleRange } from "../lib/data";
 
 interface Props {
@@ -54,6 +53,9 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
     <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+    <!-- The two faces every page sets text in; see the @font-face notes in global.css. -->
+    <link rel="preload" href="/fonts/libre-franklin-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

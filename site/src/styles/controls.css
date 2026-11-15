@@ -124,7 +124,11 @@
 /* --- sortable table ------------------------------------------------------------------- */
 .table-status { font-size: var(--fs-sm); color: var(--text-muted); margin: 0 0 var(--sp-2); }
 .table-wrap { overflow-x: auto; }
-.data-table { width: 100%; border-collapse: collapse; font-size: var(--fs-base); outline: none; }
+/* Fixed column widths, so the columns can't move when text metrics change
+   (a font arriving, a filter changing what's in a cell). */
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--fs-base); outline: none; table-layout: fixed; }
+.data-table .th:first-child { width: 42%; }
+.data-table .th.num { width: 16%; }
 .data-table .th {
   position: sticky; top: 0; z-index: 1; background: var(--page);
   text-align: left; padding: var(--sp-2) var(--sp-3) var(--sp-2) 0; outline: none; white-space: nowrap;
@@ -158,6 +162,8 @@
 
 @media (max-width: 640px) {
   .data-table .wide { display: none; }
+  .data-table .th:first-child { width: auto; }
+  .data-table .th.num { width: 26%; }
   .filter-bar { gap: var(--sp-3); }
   .search-filter { flex-basis: 100%; max-width: none; }
   .select-button { min-width: 0; }
