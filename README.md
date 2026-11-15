@@ -104,6 +104,19 @@ pnpm publish-records --apply --wait   # or wait out each hourly window
 
 It writes only records whose content changed and deletes records for entities that are gone. The PDS allows 5,000 write points an hour and 35,000 a day (create 3, update 2, delete 1), shared with the labeler's own writes, so the script always leaves `--reserve` (default 1,000) points unspent. A first publish of all ~18,500 records is ~55,000 points: about 14 hours over 2 days. For testing, `--collections=schema,dataset,member --limit=5` publishes 5 members and never deletes. Needs `LABELER_PASSWORD`, e.g. `railway run --service us-gov-contributions-labeler -- pnpm publish-records --apply`.
 
+## Bluesky lists and starter packs
+
+`pnpm sync-lists` keeps the labeler account's lists in line with `data/`: "Congress on Bluesky" (everyone), one per state delegation with 2+ members on Bluesky, one per full committee with 3+, and the top 25 recipients of each sector's money (`combinedSectors`). Starter packs hold at most 150 accounts, so there are three: the Senate, and the House split into Northeast & South and Midwest & West, each with one account per member plus the labeler.
+
+```sh
+pnpm sync-lists                          # dry run: what would change, and how many points it costs
+pnpm sync-lists --apply                  # write it; stops at 70% of the rate-limit window, re-run to continue
+pnpm sync-lists --apply --wait           # or wait out each hourly window
+pnpm sync-lists --apply --only=state-de  # just these lists (keys are in the dry-run output)
+```
+
+Run it after an ingest, with `LABELER_PASSWORD` (e.g. `railway run --service us-gov-contributions-labeler -- pnpm sync-lists --apply`). It adds and removes list items, updates names and descriptions, and deletes its own lists that no longer qualify. Record keys are derived from each list's key, so URLs stay stable. The old hand-made "US Government Officials" list is renamed as archived but keeps its members, because the account matcher reads it. A full first run is about 6,300 points (about 2 hours at 70% of 5,000 an hour); later runs only write what changed.
+
 ## Website
 
 ```sh
