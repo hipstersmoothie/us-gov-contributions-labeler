@@ -17,6 +17,8 @@ import {
   sectorSlug,
   cycleRange,
   displayName,
+  committeeLabel,
+  committeeHref,
   kindLabel,
   type Organization,
 } from "../../lib/data";
@@ -194,15 +196,12 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
             <p class="muted small">Donations of {money(MIN_DONATION)} or more to groups that spent on current members.</p>
             <table>
               <tbody>
-                {o.outsideGifts.map((g) => {
-                  const c = committeeById.get(g.id);
-                  return (
-                    <tr>
-                      <td><a href={`/pacs/${g.id}/`}>{c ? displayName(c.name) : g.id}</a></td>
-                      <td class="num">{money(g.total, true)}</td>
-                    </tr>
-                  );
-                })}
+                {o.outsideGifts.map((g) => (
+                  <tr>
+                    <td><a href={committeeHref(g.id)}>{committeeLabel(g.id)}</a></td>
+                    <td class="num">{money(g.total, true)}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </>

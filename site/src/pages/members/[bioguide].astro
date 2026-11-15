@@ -16,6 +16,8 @@ import {
   sectorSlug,
   cycleRange,
   displayName,
+  committeeLabel,
+  committeeHref,
   kindLabel,
   fecCandidateUrl,
   type Member,
@@ -93,7 +95,7 @@ const contribEmp = contributors.reduce((s, c) => s + c.individuals, 0);
 const spenders = m.outside.spenders
   .map((s) => {
     const c = committeeById.get(s.id);
-    return { ...s, label: c ? displayName(c.name) : s.id, kind: c ? kindLabel(c.kind) : "", href: `/pacs/${s.id}/` };
+    return { ...s, label: committeeLabel(s.id), kind: c ? kindLabel(c.kind) : "", href: committeeHref(s.id) };
   })
   .sort((a, b) => b.support + b.oppose - (a.support + a.oppose));
 
@@ -386,22 +388,19 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
           valueHeading="Given"
           rows={m.committees.slice(0, 10).map((c) => {
             const committee = committeeById.get(c.id);
-            return { label: committee ? displayName(committee.name) : c.id, value: c.total, href: `/pacs/${c.id}/`, note: committee ? kindLabel(committee.kind) : undefined };
+            return { label: committeeLabel(c.id), value: c.total, href: committeeHref(c.id), note: committee ? kindLabel(committee.kind) : undefined };
           })}
         />
         {m.committees.length > 10 && (
           <MoreDisclosure client:visible title={`All ${m.committees.length.toLocaleString()} PACs`}>
             <table>
               <tbody>
-                {m.committees.map((c) => {
-                  const committee = committeeById.get(c.id);
-                  return (
-                    <tr>
-                      <td><a href={`/pacs/${c.id}/`}>{committee ? displayName(committee.name) : c.id}</a></td>
-                      <td class="num">{moneyAuto(c.total)}</td>
-                    </tr>
-                  );
-                })}
+                {m.committees.map((c) => (
+                  <tr>
+                    <td><a href={committeeHref(c.id)}>{committeeLabel(c.id)}</a></td>
+                    <td class="num">{moneyAuto(c.total)}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </MoreDisclosure>

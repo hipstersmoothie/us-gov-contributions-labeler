@@ -98,6 +98,14 @@ export function displayName(name: string) {
 }
 
 export const fecCommitteeUrl = (id: string) => `https://www.fec.gov/data/committee/${id}/`;
+
+/** A committee's name, never a bare FEC ID, even if the ingest missed it. */
+export const committeeLabel = (id: string) => {
+  const c = committeeById.get(id);
+  return c ? displayName(c.name) : `FEC committee ${id}`;
+};
+/** Its page here, or the FEC's page when we have no profile for it. */
+export const committeeHref = (id: string) => (committeeById.has(id) ? `/pacs/${id}/` : fecCommitteeUrl(id));
 export const fecCandidateUrl = (id: string) => `https://www.fec.gov/data/candidate/${id}/`;
 
 /** Money from an org or PAC split by the recipients' party. */
