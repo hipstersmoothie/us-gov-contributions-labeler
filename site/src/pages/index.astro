@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import PlotFigure from "../components/PlotFigure.astro";
 import RankedTable from "../components/RankedTable.astro";
 import { sectors } from "../lib/sectors";
-import { members, organizations, committees, donors, money, cycleRange, displayName, partyLetter } from "../lib/data";
+import { members, organizations, committees, donors, money, cycles, cycleRange, displayName, partyLetter } from "../lib/data";
 import { PARTY_COLOR } from "../lib/charts";
 import { memberPoints, topIds, pacTotal, inEvery, pct, shortSeat, chamberName } from "../lib/derived";
 import { shortSector } from "../lib/format";
@@ -20,8 +20,22 @@ const outsideSpenders = committees
 const outsideTotal = outsideSpenders.reduce((s, x) => s + x.spent, 0);
 
 const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)] ?? 0;
-const houseMedian = median(byPacMoney.filter((x) => x.m.chamber === "house").map((x) => x.total));
-const senateMedian = median(byPacMoney.filter((x) => x.m.chamber === "senate").map((x) => x.total));
+// PAC money alone makes the House look better funded than the Senate.
+// Senators raise far more overall, mostly from individual donors, so compare
+// what each chamber raised and the share PACs made up.
+const raised = (m: (typeof members)[number]) => Object.values(m.totals).reduce((s, t) => s + t.receipts, 0);
+const chamber = (c: "house" | "senate") => {
+  const ms = members.filter((m) => m.chamber === c && raised(m) > 0);
+  return {
+    pac: median(ms.map(pacTotal)),
+    raised: median(ms.map(raised)),
+    share: Math.round(median(ms.map((m) => pacTotal(m) / raised(m))) * 100),
+  };
+};
+const house = chamber("house");
+const senate = chamber("senate");
+const latest = cycles.at(-1)!;
+const currentCycle = `${latest - 1}–${String(latest).slice(2)}`;
 
 const points = memberPoints();
 const lanes = ["House", "Senate"];
@@ -47,8 +61,10 @@ const PARTY_SERIES = [
   <p class="dek">
     PACs and other committees gave <strong>{money(total, true)}</strong> to the {members.length} current members of
     Congress from {cycleRange.replace("–", " to ")}. <strong>{top.name}</strong> gave the most, {inEvery(top.total / total)}.
-    The typical House member took <strong>{money(houseMedian, true)}</strong>; the typical senator,{" "}
-    <strong>{money(senateMedian, true)}</strong>.
+    The typical House member took <strong>{money(house.pac, true)}</strong> from PACs, about {house.share}% of what they
+    raised. The typical senator took less, <strong>{money(senate.pac, true)}</strong>, but raised far more overall
+    ({money(senate.raised, true)} to {money(house.raised, true)}), so PACs paid for only about {senate.share}% of their
+    campaigns.
   </p>
 
   <dl class="stats">
@@ -62,7 +78,8 @@ const PARTY_SERIES = [
     <h2>Every member of Congress, by the PAC money they took</h2>
     <p class="chart-dek">
       Each dot is one member, placed by total contributions from PACs and other committees, {cycleRange}. Senators
-      run for six-year terms, so most raise across more cycles than House members.
+      raise more than House members overall, but mostly from individual donors, so they tend to sit lower here.
+      Figures for {currentCycle} are still being reported to the FEC.
     </p>
     <PlotFigure
       chart="swarm"
