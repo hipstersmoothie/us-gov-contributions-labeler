@@ -124,7 +124,7 @@ pnpm sync-lists --apply --wait           # or wait out each hourly window
 pnpm sync-lists --apply --only=state-de  # just these lists (keys are in the dry-run output)
 ```
 
-Run it after an ingest, with `LABELER_PASSWORD` (e.g. `railway run --service us-gov-contributions-labeler -- pnpm sync-lists --apply`). It adds and removes list items, updates names and descriptions, and deletes its own lists that no longer qualify. Record keys are derived from each list's key, so URLs stay stable. The old hand-made "US Government Officials" list is renamed as archived but keeps its members, because the account matcher reads it. A full first run is about 6,300 points (about 2 hours at 70% of 5,000 an hour); later runs only write what changed.
+The `sync-lists` Railway service runs it daily (see Deployment), so a data refresh pushed to `main` reaches the lists by the next run. To run it by hand, it needs `LABELER_PASSWORD`, e.g. `railway run --service us-gov-contributions-labeler -- pnpm sync-lists --apply`. It adds and removes list items, updates names and descriptions, and deletes its own lists that no longer qualify. Record keys are derived from each list's key, so URLs stay stable. The old hand-made "US Government Officials" list is renamed as archived but keeps its members, because the account matcher reads it. A full first run is about 6,300 points (about 2 hours at 70% of 5,000 an hour); later runs only write what changed.
 
 ## Feeds
 
@@ -151,5 +151,6 @@ pnpm site:build
 - **Labeler** (`us-gov-contributions-labeler` service): built from the root `Dockerfile`, with the label database on the `/sqlite-data` volume (`DB_PATH`).
 - **Website** (`website` service): built from `site/Dockerfile` (`RAILWAY_DOCKERFILE_PATH=site/Dockerfile`).
 - **Feeds** (`feeds` service): built from `feeds/Dockerfile`, with its SQLite database on a volume at `/data`.
+- **Lists** (`sync-lists` service): a cron job, daily at 15:00 UTC, built from `src/sync-lists.Dockerfile` with the data baked in; `LABELER_PASSWORD` references the labeler's.
 
 `pnpm dedupe-labels` is a one-off cleanup for duplicate label events in the labeler's database; run it on the labeler service (`railway ssh`).
