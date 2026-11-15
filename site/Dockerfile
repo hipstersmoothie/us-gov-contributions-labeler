@@ -8,7 +8,8 @@ COPY patches ./patches
 COPY site/package.json ./site/
 RUN pnpm install --frozen-lockfile
 COPY . .
-RUN pnpm photos && pnpm site:build
+# Current follower counts and avatars; on failure, the committed copy.
+RUN pnpm photos && (pnpm bluesky-profiles || echo "Keeping data/bluesky-profiles.json") && pnpm site:build
 
 FROM node:24-slim
 WORKDIR /app

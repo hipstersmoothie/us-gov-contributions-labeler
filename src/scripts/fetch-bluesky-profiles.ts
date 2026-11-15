@@ -1,6 +1,8 @@
 // Public Bluesky profile data for the site: each matched member account's
 // avatar, display name and follower count, plus the labeler's own profile.
-// Read-only, from the public AppView; no login.
+// Read-only, from the public AppView; no login. The website's build runs it,
+// so each deploy has current follower counts; if it fails, the build keeps
+// the committed copy.
 //
 //   pnpm bluesky-profiles   writes data/bluesky-profiles.json
 import fs from "fs";
@@ -38,6 +40,12 @@ for (let i = 0; i < dids.length; i += BATCH) {
       postsCount: p.postsCount,
     };
   }
+}
+
+// A partial answer (an AppView hiccup) shouldn't replace a good file.
+// Deactivated accounts drop out, so allow a few.
+if (Object.keys(profiles).length < dids.length * 0.9) {
+  throw new Error(`Only ${Object.keys(profiles).length} of ${dids.length} profiles came back; keeping the existing file`);
 }
 
 const labelerRes = await fetch(`${APPVIEW}/app.bsky.labeler.getServices?dids=${LABELER_DID}&detailed=true`);

@@ -59,7 +59,6 @@ export function cardRow(m: Member): CardRow {
   };
 }
 
-export const allCardRows = () => members.map(cardRow);
 
 export function face(m: Member): Face {
   return { id: m.bioguide, name: m.name, party: partyLetter(m.party) as Face["party"], avatar: mainAccount(m)?.avatar };

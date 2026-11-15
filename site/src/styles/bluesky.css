@@ -46,6 +46,11 @@ a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary
 .bsky-find-summary strong { color: var(--text-primary); }
 .bsky-find-summary a { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
 .bsky-find-hint { margin: var(--sp-4) 0 0; font-size: var(--fs-base); }
+.bsky-retry {
+  font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 3px;
+}
+.bsky-retry:hover { text-decoration-color: currentColor; }
 
 .bsky-cards {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr)); gap: 0 var(--sp-6);

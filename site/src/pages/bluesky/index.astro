@@ -28,14 +28,13 @@ import {
   PER_KIND,
   accountCount,
 } from "../../lib/bluesky";
-import { allCardRows, facesOf, compact, initials, profilesAsOf, labelerAvatar, shortSeat } from "../../lib/bluesky-hub";
+import { facesOf, compact, initials, profilesAsOf, labelerAvatar, shortSeat } from "../../lib/bluesky-hub";
 import FindMembers, { type StateOption } from "../../islands/bluesky/FindMembers";
 import { FaceStack } from "../../islands/bluesky/Faces";
 import BlueskyLists, { type ListGroup } from "../../islands/bluesky/BlueskyLists";
 import "../../styles/bluesky.css";
 
 // --- find your members
-const rows = allCardRows();
 const stateIds = [...new Set(members.map((m) => m.state))];
 const states: StateOption[] = stateIds
   .map((id) => {
@@ -291,7 +290,7 @@ const groups: ListGroup[] = GROUP_ORDER.filter((g) => listsByGroup.has(g)).map((
   <section class="story" id="find" aria-labelledby="find-h">
     <h2 id="find-h">Find your members</h2>
     <p class="chart-dek">Every senator and representative from your state on Bluesky, with the labels our labeler puts on their posts.</p>
-    <FindMembers client:load rows={rows} states={states} />
+    <FindMembers client:load src="/data/bluesky/" states={states} />
   </section>
 
   <section class="story" id="follow" aria-labelledby="follow-h">

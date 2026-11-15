@@ -141,10 +141,13 @@ pnpm feeds:publish --apply           # write them; needs LABELER_PASSWORD and a 
 ## Website
 
 ```sh
-pnpm photos        # official portraits (not committed)
+pnpm photos            # official portraits (not committed)
+pnpm bluesky-profiles  # members' Bluesky avatars and follower counts, for /bluesky/
 pnpm site:dev
 pnpm site:build
 ```
+
+The `/bluesky/` page links to the lists, starter packs and feeds using the same code that publishes them (`src/lib/list-specs.ts`, `feeds/feeds.ts`), and shows each member's labels from `memberLabels()` in `src/lib/labels.ts`, so it always matches what's live. Profile data comes from the public AppView, read-only. The website's Docker build fetches it fresh on every deploy and falls back to the committed `data/bluesky-profiles.json` if that fails.
 
 ## Deployment (Railway)
 

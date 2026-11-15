@@ -1,5 +1,5 @@
-// Row shapes for the Bluesky hub's islands. Short keys on the labels: every
-// member's card is serialized into the hub page.
+// Row shapes for the Bluesky hub's islands. Short keys on the labels: cards
+// are served per state from /data/bluesky/<state>.json.
 
 export interface CardLabel {
   /** s = sector, c = contributor */

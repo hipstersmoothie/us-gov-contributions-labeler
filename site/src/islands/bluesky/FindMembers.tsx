@@ -72,7 +72,25 @@ function Card({ r }: { r: CardRow }) {
   );
 }
 
-export default function FindMembers({ rows, states }: { rows: CardRow[]; states: StateOption[] }) {
+/** A state's cards from `${src}${state}.json`, fetched once each. */
+function useDelegation(src: string, state: string) {
+  const [cache, setCache] = useState<Record<string, CardRow[] | "error">>({});
+  useEffect(() => {
+    if (!state || cache[state]) return;
+    let live = true;
+    fetch(`${src}${state}.json`)
+      .then((res) => (res.ok ? (res.json() as Promise<CardRow[]>) : Promise.reject(res.status)))
+      .then((rows) => live && setCache((c) => ({ ...c, [state]: rows })))
+      .catch(() => live && setCache((c) => ({ ...c, [state]: "error" })));
+    return () => {
+      live = false;
+    };
+  }, [src, state, cache]);
+  const retry = () => setCache(({ [state]: _, ...rest }) => rest);
+  return [state ? cache[state] : undefined, retry] as const;
+}
+
+export default function FindMembers({ src, states }: { src: string; states: StateOption[] }) {
   const [state, setState] = useState("");
   useEffect(() => {
     const q = new URLSearchParams(location.search).get("state")?.toUpperCase();
@@ -87,7 +105,8 @@ export default function FindMembers({ rows, states }: { rows: CardRow[]; states:
   };
 
   const info = states.find((s) => s.id === state);
-  const delegation = useMemo(() => rows.filter((r) => r.state === state).sort(byOrder), [rows, state]);
+  const [loaded, retry] = useDelegation(src, state);
+  const delegation = useMemo(() => (Array.isArray(loaded) ? [...loaded].sort(byOrder) : []), [loaded]);
   const on = delegation.filter((r) => r.handle);
   const off = delegation.filter((r) => !r.handle);
 
@@ -100,7 +119,7 @@ export default function FindMembers({ rows, states }: { rows: CardRow[]; states:
           onChange={choose}
           options={[{ id: "", label: "Choose a state" }, ...states.map((s) => ({ id: s.id, label: s.name }))]}
         />
-        {info && (
+        {info && Array.isArray(loaded) && (
           <p className="bsky-find-summary" role="status">
             <strong>
               {on.length === 0 ? "None" : on.length} of {info.name}'s {delegation.length} members
@@ -118,6 +137,14 @@ export default function FindMembers({ rows, states }: { rows: CardRow[]; states:
 
       {!info ? (
         <p className="bsky-find-hint muted">Pick a state to see its senators and representatives on Bluesky, with what our labeler shows on their posts.</p>
+      ) : loaded === "error" ? (
+        <p className="bsky-find-hint" role="status">
+          Couldn't load {info.name}'s members.{" "}
+          <button type="button" className="bsky-retry" onClick={retry}>Try again</button> or{" "}
+          <a href={`/members/?state=${info.id}`}>see them in the members list</a>.
+        </p>
+      ) : !loaded ? (
+        <p className="bsky-find-hint muted" role="status">Loading {info.name}'s members…</p>
       ) : (
         <>
           {on.length > 0 && (
