@@ -238,8 +238,8 @@ const METHODOLOGY =
   "Direct contributions from PACs and other political committees to current members of Congress, plus " +
   "independent expenditures for and against them and donations of $50,000 or more to the outside spenders, from FEC bulk data. " +
   "Each PAC is traced to the organization behind it (FEC connected organization, SEC EDGAR industry codes, lobbying " +
-  "disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted the way " +
-  "OpenSecrets did: an organization's PAC money plus itemized donations from people who list it as their employer. " +
+  "disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted by " +
+  "organization: an organization's PAC money plus itemized donations from people who list it as their employer. " +
   `Details: ${SITE}/about/`;
 
 const LICENSE =

@@ -4,7 +4,7 @@
 //   pnpm sync-labels --apply   publish it
 //
 // Each member's Bluesky accounts get their top 3 sectors and top 3
-// contributors, counted the way OpenSecrets did: an organization's PAC plus
+// contributors, counted by organization: an organization's PAC plus
 // donations from its employees. Labels that no longer apply (changed rankings, former
 // members, mismatched accounts) are negated. Only differences are sent, so
 // re-running is a no-op.

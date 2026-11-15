@@ -1,5 +1,5 @@
-// A small, fixed sector taxonomy, roughly the shape of OpenSecrets' sectors,
-// and the tables that map each source's classification onto it.
+// A small, fixed sector taxonomy, and the tables that map each source's
+// classification onto it.
 
 export const SECTORS = [
   "Agribusiness",

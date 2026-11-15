@@ -5,7 +5,7 @@
   "defs": {
     "sector": {
       "type": "string",
-      "description": "One of a fixed set of sectors, roughly OpenSecrets' sectors. Individual donations also use 'Retired' and 'Not employed'.",
+      "description": "One of a fixed set of industry sectors. Individual donations also use 'Retired' and 'Not employed'.",
       "knownValues": [
         "Agribusiness",
         "Communications & Technology",

@@ -25,7 +25,7 @@
           "outside": { "type": "ref", "ref": "#outside" },
           "assignments": { "type": "array", "items": { "type": "ref", "ref": "#assignment" }, "description": "Congressional committee seats." },
           "individuals": { "type": "ref", "ref": "#individuals" },
-          "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "OpenSecrets-style top contributors: an organization's PAC money plus donations from people who list it as their employer. Top 50." },
+          "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "Top contributors, counted by organization: its PAC money plus donations from people who list it as their employer. Top 50." },
           "combinedSectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Sectors from PAC and individual money combined (id is the sector), largest first." }
         }
       }

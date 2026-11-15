@@ -55,7 +55,7 @@ export interface Member {
   /** Itemized individual donations by employer and estimated sector. */
   individuals?: MemberIndividuals;
   /**
-   * OpenSecrets-style totals: an organization's PAC money plus donations from
+   * Totals by organization: an organization's PAC money plus donations from
    * its employees, and sectors from both PAC and individual money.
    */
   contributors: Contributor[];

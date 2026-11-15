@@ -3,7 +3,7 @@ const URL =
   "https://unitedstates.github.io/congress-legislators/legislators-current.json";
 
 interface RawLegislator {
-  id: { bioguide: string; fec?: string[]; opensecrets?: string };
+  id: { bioguide: string; fec?: string[] };
   name: {
     first: string;
     last: string;
@@ -25,7 +25,6 @@ interface RawLegislator {
 export interface Legislator {
   bioguide: string;
   fec: string[];
-  opensecrets?: string;
   name: string;
   first: string;
   last: string;
@@ -49,7 +48,6 @@ export async function getCurrentLegislators(): Promise<Legislator[]> {
     return {
       bioguide: l.id.bioguide,
       fec: l.id.fec ?? [],
-      opensecrets: l.id.opensecrets,
       name: l.name.official_full ?? `${l.name.first} ${l.name.last}`,
       first: l.name.first,
       last: l.name.last,

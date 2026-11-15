@@ -18,7 +18,7 @@ Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky l
 | [Lobbying disclosures](https://lda.gov/api/) | What organizations lobby on and spend, which PACs they run |
 | Bluesky | Matching members to their accounts |
 
-Contributions are counted the way OpenSecrets did: an organization's total is its PAC plus donations from people who list it as their employer.
+Contributions are counted by organization: an organization's total is its PAC plus donations from people who list it as their employer.
 
 ## Setup
 
