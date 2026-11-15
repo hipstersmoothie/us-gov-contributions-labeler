@@ -1,1 +1,140 @@
-{}
+{
+  "A000381": {
+    "include": [
+      "did:plc:4w4ex7k2tlpwa3phwwp7ea7a"
+    ],
+    "exclude": [
+      "did:plc:f5jxegk4cpobfskg3sfhu5gr"
+    ]
+  },
+  "B001313": {
+    "include": [
+      "did:plc:mhtg7vfga5jftbaoviu4ajza",
+      "did:plc:obcayzxqn4fm37w3k2k4rmvf"
+    ]
+  },
+  "B001328": {
+    "include": [
+      "did:plc:kevfmn3yvafggysqyfbvdwpn",
+      "did:plc:tjjtaowbajgby5ukoo2k4chp"
+    ]
+  },
+  "C001131": {
+    "include": [
+      "did:plc:qmrd2hmucin2ucnfb36hry3y"
+    ]
+  },
+  "E000299": {
+    "include": [
+      "did:plc:xxndlw6cvaepxdlfksjaofnp"
+    ]
+  },
+  "F000481": {
+    "include": [
+      "did:plc:bpmqnn3ungi5m7wcjbnrv6m5"
+    ]
+  },
+  "G000604": {
+    "include": [
+      "did:plc:hluq3iv4rk3iyn2opmf4jnsu"
+    ]
+  },
+  "J000310": {
+    "include": [
+      "did:plc:45v2c3555bls7em62fsmuaql"
+    ]
+  },
+  "K000383": {
+    "include": [
+      "did:plc:qsnuephkmovdh2u4c2u336qr"
+    ]
+  },
+  "K000402": {
+    "include": [
+      "did:plc:37vi2ubqe3f4g56is536342f"
+    ]
+  },
+  "L000557": {
+    "include": [
+      "did:plc:l4r4znkwcam5yrkgspi3mpru"
+    ]
+  },
+  "M001196": {
+    "include": [
+      "did:plc:iudave7o5abb2nxlo4ambbp7"
+    ]
+  },
+  "M001223": {
+    "include": [
+      "did:plc:35gaaw3izth3m3n6dea77udt"
+    ]
+  },
+  "M001234": {
+    "exclude": [
+      "did:plc:f5jxegk4cpobfskg3sfhu5gr"
+    ]
+  },
+  "M001245": {
+    "include": [
+      "did:plc:gd53ke3rcoptyiib6jkslloh"
+    ]
+  },
+  "M001246": {
+    "include": [
+      "did:plc:bgnw7btv6mv3jcdicj6yrekr"
+    ]
+  },
+  "N000188": {
+    "include": [
+      "did:plc:lwhbdld4x7c557vszdr2qyvq"
+    ]
+  },
+  "O000176": {
+    "include": [
+      "did:plc:jl6bnuiemddpm3orm2kcedxh",
+      "did:plc:i7xmmzkr5wvaywe64v2ydrmh"
+    ]
+  },
+  "P000607": {
+    "include": [
+      "did:plc:c23lm7asfzxtpn6kyz6hcf5z"
+    ]
+  },
+  "R000621": {
+    "include": [
+      "did:plc:smytu5uz6vbwevh67i4mnokg",
+      "did:plc:irfwoem27gack6d6erxuc74l"
+    ]
+  },
+  "S001225": {
+    "include": [
+      "did:plc:mudv7ufccpcccm74msp24lkc"
+    ]
+  },
+  "S001230": {
+    "include": [
+      "did:plc:olqojaxxuu6yjqfhiwbuware",
+      "did:plc:kopzf6vrl4ipn2z6zf2fxzs4"
+    ]
+  },
+  "T000193": {
+    "include": [
+      "did:plc:k5x57l4okndlgqhohmh5cywq"
+    ]
+  },
+  "T000486": {
+    "include": [
+      "did:plc:ulquedxocwtoitir2w4ucsbn"
+    ]
+  },
+  "W000779": {
+    "include": [
+      "did:plc:cecd5ju73ilt7ntzyygkusgp"
+    ]
+  },
+  "W000830": {
+    "include": [
+      "did:plc:evlfwdjjcyxesb6jvhczcnm5"
+    ]
+  }
+}
