@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import "../styles/controls.css";
 import SiteSearch from "../islands/SiteSearch";
+import Logo from "../components/Logo.astro";
 
 import { generatedAt, cycleRange } from "../lib/data";
 
@@ -22,17 +23,18 @@ const NAV = [
   ["/donors/", "Big donors"],
 ];
 const SITE_NAME = "contributions.fyi";
-// The flag: 7 red stripes of 13, and the 50 stars as 9 alternating rows of 6 and 5.
-const STRIPES = Array.from({ length: 7 }, (_, i) => (i * 2 * 100) / 13);
-const STARS = Array.from({ length: 9 }, (_, row) =>
-  Array.from({ length: row % 2 ? 5 : 6 }, (_, i) => [(76 / 12) * (row % 2 ? 2 * i + 2 : 2 * i + 1), ((100 / 13) * 7 * (row + 1)) / 10])
-).flat();
 const isHome = title === "Home";
 const fullTitle = isHome ? `Who funds Congress · ${SITE_NAME}` : `${title} · ${SITE_NAME}`;
-const desc =
-  description ?? `Campaign finance for every member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`;
+// The word joiner that keeps "2021–2026" together on the page is noise in a
+// link preview, so meta text drops it.
+const desc = (
+  description ?? `Campaign finance for every member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`
+).replace(/\u2060/g, "");
 const canonical = Astro.site ? new URL(path, Astro.site).href : undefined;
-const imageUrl = image && Astro.site ? new URL(image, Astro.site).href : undefined;
+// A page's own image (a member's portrait) as a small card; otherwise the
+// 1200×630 site card from design/og/og-card.html.
+const site = Astro.site ?? new URL("https://contributions.fyi");
+const imageUrl = new URL(image ?? "/og.png", site).href;
 const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
 ---
 
@@ -49,8 +51,19 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
     <meta property="og:description" content={desc} />
     <meta property="og:type" content={isHome ? "website" : ogType} />
     {canonical && <meta property="og:url" content={canonical} />}
-    {imageUrl && <meta property="og:image" content={imageUrl} />}
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={imageUrl} />
+    {
+      image ? (
+        <meta property="og:image:alt" content={`Official portrait of ${title}`} />
+      ) : (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content="contributions.fyi: who funds Congress, with every House seat colored by party" />
+        </>
+      )
+    }
+    <meta name="twitter:card" content={image ? "summary" : "summary_large_image"} />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
     <!-- The two faces every page sets text in; see the @font-face notes in global.css. -->
@@ -65,14 +78,9 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="masthead">
       <div class="wrap masthead-row">
-        <a class="brand" href="/" aria-label="Contributions, home">
-          <svg class="brand-flag" viewBox="0 0 190 100" width="38" height="20" aria-hidden="true">
-            <rect width="190" height="100" fill="var(--flag-white)" />
-            {STRIPES.map((y) => <rect y={y} width="190" height={100 / 13} fill="var(--flag-red)" />)}
-            <rect width="76" height={(100 / 13) * 7} fill="var(--flag-blue)" />
-            {STARS.map(([x, y]) => <circle cx={x} cy={y} r="1.9" fill="var(--flag-white)" />)}
-          </svg>
-          <span class="brand-name">Contributions</span>
+        <a class="brand" href="/">
+          <Logo />
+          <span class="visually-hidden">contributions.fyi</span>
         </a>
         <SiteSearch client:load />
       </div>

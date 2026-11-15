@@ -171,10 +171,6 @@
   --on-support: #ffffff;
   --on-context: #121212;
 
-  /* the flag in the masthead: brand, not data */
-  --flag-red: #b22234;
-  --flag-blue: #3c3b6e;
-  --flag-white: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -209,10 +205,6 @@
     --on-bar-ink: #121212;
     --on-support: #121212;
     --on-context: #f2f2ee;
-
-    --flag-red: #d0414f;
-    --flag-blue: #4f4e8f;
-    --flag-white: #f2f2ee;
   }
 }
 
@@ -263,10 +255,9 @@ main:focus { outline: none; }
   display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3) var(--sp-5);
   padding-top: var(--sp-4); padding-bottom: var(--sp-3);
 }
-.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; flex: none; }
-.brand:hover .brand-name { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.brand-flag { display: block; flex: none; border-radius: 1.5px; box-shadow: 0 0 0 1px var(--hairline); }
-.brand-name { font: 700 1.75rem/1 var(--serif); letter-spacing: -0.02em; }
+.brand { display: inline-flex; align-items: center; flex: none; text-decoration: none; border-radius: 2px; }
+/* The wordmark's viewBox is 645 × 128; height sets the size. */
+.brand .logo { display: block; height: 42px; width: auto; aspect-ratio: 645 / 128; }
 
 .sections { border-top: 1px solid var(--hairline); }
 .sections ul {
@@ -386,7 +377,7 @@ tbody tr:hover { background: var(--surface-2); }
   .wrap { padding: 0 var(--sp-4); }
   .masthead { margin-bottom: var(--sp-6); }
   .masthead-row { flex-wrap: wrap; padding-top: var(--sp-3); }
-  .brand-name { font-size: 1.5rem; }
+  .brand .logo { height: 34px; }
   .stats { grid-template-columns: 1fr 1fr; border-top: 0; }
   .stat, .stat:first-child { padding: var(--sp-3) var(--sp-3) var(--sp-3) 0; border-left: 0; border-top: 1px solid var(--hairline); }
   .stat dd { font-size: var(--fs-xl); }

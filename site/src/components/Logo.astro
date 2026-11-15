@@ -1,0 +1,23 @@
+---
+// The Donut C wordmark, inlined from design/logo/logo-light.svg so the header
+// follows the theme: its fills map onto the colour tokens (set as styles,
+// since var() isn't reliable in SVG presentation attributes).
+import fs from "node:fs";
+import path from "node:path";
+
+const FILLS: Record<string, string> = {
+  "#e34948": "var(--party-r)",
+  "#2a78d6": "var(--party-d)",
+  "#121212": "var(--text-primary)",
+  "#52514e": "var(--text-secondary)",
+};
+const source = fs.readFileSync(path.resolve(process.cwd(), "../design/logo/logo-light.svg"), "utf8");
+const svg = source
+  .replace(/<\?xml[^>]*>/, "")
+  .replace(/<title>[^<]*<\/title>/, "")
+  .replace(/\s(width|height|role|aria-label)="[^"]*"/g, "")
+  .replace("<svg ", '<svg class="logo" aria-hidden="true" focusable="false" ')
+  .replace(/fill="(#[0-9a-fA-F]{6})"/g, (_, hex: string) => `style="fill: ${FILLS[hex.toLowerCase()] ?? hex}"`);
+---
+
+<Fragment set:html={svg} />
