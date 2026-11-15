@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T10:05:28.734Z",
+  "generatedAt": "2026-11-15T16:36:18.228Z",
   "cycles": [
     2022,
     2024,
@@ -57,6 +57,13 @@
           }
         },
         {
+          "id": "C00962308",
+          "total": 2250000,
+          "byCycle": {
+            "2026": 2250000
+          }
+        },
+        {
           "id": "C00486845",
           "total": 500000,
           "byCycle": {
@@ -92,7 +99,7 @@
           }
         }
       ],
-      "total": 402012158
+      "total": 404262158
     },
     {
       "id": "elon-musk-tx",
@@ -9076,6 +9083,22 @@
       "total": 8140000
     },
     {
+      "id": "chakrabarti-saikat",
+      "name": "Chakrabarti, Saikat",
+      "type": "organization",
+      "state": "CA",
+      "gifts": [
+        {
+          "id": "C00897314",
+          "total": 8070000,
+          "byCycle": {
+            "2026": 8070000
+          }
+        }
+      ],
+      "total": 8070000
+    },
+    {
       "id": "amos-hostetter-ma",
       "name": "Amos Hostetter",
       "type": "individual",
@@ -9338,6 +9361,13 @@
           }
         },
         {
+          "id": "C00746628",
+          "total": 100000,
+          "byCycle": {
+            "2022": 100000
+          }
+        },
+        {
           "id": "C00739771",
           "total": 100000,
           "byCycle": {
@@ -9359,7 +9389,7 @@
           }
         }
       ],
-      "total": 7875000
+      "total": 7975000
     },
     {
       "id": "jefferson-rising",
@@ -9991,6 +10021,37 @@
           "total": 150000,
           "byCycle": {
             "2022": 150000
+          }
+        }
+      ],
+      "total": 7250000
+    },
+    {
+      "id": "c00799031",
+      "name": "United Democracy Project ('Udp')",
+      "type": "committee",
+      "state": "DC",
+      "committee": "C00799031",
+      "gifts": [
+        {
+          "id": "C00832691",
+          "total": 5000000,
+          "byCycle": {
+            "2024": 5000000
+          }
+        },
+        {
+          "id": "C00874875",
+          "total": 1300000,
+          "byCycle": {
+            "2024": 1300000
+          }
+        },
+        {
+          "id": "C00882266",
+          "total": 950000,
+          "byCycle": {
+            "2024": 950000
           }
         }
       ],
@@ -11478,6 +11539,23 @@
           "total": 6000000,
           "byCycle": {
             "2026": 6000000
+          }
+        }
+      ],
+      "total": 6000000
+    },
+    {
+      "id": "c00782656",
+      "name": "Alabama Christian Conservatives (Acc)",
+      "type": "committee",
+      "state": "TX",
+      "committee": "C00782656",
+      "gifts": [
+        {
+          "id": "C00808303",
+          "total": 6000000,
+          "byCycle": {
+            "2022": 6000000
           }
         }
       ],
@@ -13429,23 +13507,6 @@
       "total": 5000000
     },
     {
-      "id": "c00799031",
-      "name": "United Democracy Project ('Udp')",
-      "type": "committee",
-      "state": "DC",
-      "committee": "C00799031",
-      "gifts": [
-        {
-          "id": "C00832691",
-          "total": 5000000,
-          "byCycle": {
-            "2024": 5000000
-          }
-        }
-      ],
-      "total": 5000000
-    },
-    {
       "id": "kenneth-langone-ny",
       "name": "Kenneth Langone",
       "type": "individual",
@@ -15077,6 +15138,57 @@
           "byCycle": {
             "2022": 250000,
             "2024": 300000
+          }
+        }
+      ],
+      "total": 4150000
+    },
+    {
+      "id": "c00809483",
+      "name": "Eighteen Fifty-Four Fund",
+      "type": "committee",
+      "state": "TX",
+      "gifts": [
+        {
+          "id": "C00821652",
+          "total": 1625000,
+          "byCycle": {
+            "2022": 1625000
+          }
+        },
+        {
+          "id": "C00812347",
+          "total": 975000,
+          "byCycle": {
+            "2022": 975000
+          }
+        },
+        {
+          "id": "C00818138",
+          "total": 625000,
+          "byCycle": {
+            "2022": 625000
+          }
+        },
+        {
+          "id": "C00798116",
+          "total": 500000,
+          "byCycle": {
+            "2022": 500000
+          }
+        },
+        {
+          "id": "C00878686",
+          "total": 225000,
+          "byCycle": {
+            "2024": 225000
+          }
+        },
+        {
+          "id": "C00809715",
+          "total": 200000,
+          "byCycle": {
+            "2022": 200000
           }
         }
       ],
@@ -18358,43 +18470,6 @@
       "total": 2975000
     },
     {
-      "id": "c00809483",
-      "name": "Eighteen Fifty-Four Fund",
-      "type": "committee",
-      "state": "TX",
-      "gifts": [
-        {
-          "id": "C00821652",
-          "total": 1625000,
-          "byCycle": {
-            "2022": 1625000
-          }
-        },
-        {
-          "id": "C00818138",
-          "total": 625000,
-          "byCycle": {
-            "2022": 625000
-          }
-        },
-        {
-          "id": "C00798116",
-          "total": 500000,
-          "byCycle": {
-            "2022": 500000
-          }
-        },
-        {
-          "id": "C00878686",
-          "total": 225000,
-          "byCycle": {
-            "2024": 225000
-          }
-        }
-      ],
-      "total": 2975000
-    },
-    {
       "id": "joseph-kaempfer-va",
       "name": "Joseph Kaempfer",
       "type": "individual",
@@ -19358,6 +19433,58 @@
       "total": 2730000
     },
     {
+      "id": "c00568964",
+      "name": "Liuna Building America",
+      "type": "committee",
+      "state": "DC",
+      "gifts": [
+        {
+          "id": "C00484642",
+          "total": 1950000,
+          "byCycle": {
+            "2022": 1000000,
+            "2024": 950000
+          }
+        },
+        {
+          "id": "C00540203",
+          "total": 250000,
+          "byCycle": {
+            "2024": 250000
+          }
+        },
+        {
+          "id": "C00776823",
+          "total": 200000,
+          "byCycle": {
+            "2022": 200000
+          }
+        },
+        {
+          "id": "C00789495",
+          "total": 125000,
+          "byCycle": {
+            "2022": 125000
+          }
+        },
+        {
+          "id": "C00793869",
+          "total": 100000,
+          "byCycle": {
+            "2022": 100000
+          }
+        },
+        {
+          "id": "C00913178",
+          "total": 100000,
+          "byCycle": {
+            "2026": 100000
+          }
+        }
+      ],
+      "total": 2725000
+    },
+    {
       "id": "sd",
       "name": "Sd PAC",
       "type": "committee",
@@ -19609,10 +19736,29 @@
       "total": 2615100
     },
     {
+      "id": "c00386821",
+      "name": "Enterprise Association of Steamfitters Local 638 Political Action Committee",
+      "type": "committee",
+      "state": "NY",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 2607987,
+          "byCycle": {
+            "2022": 834168,
+            "2024": 938400,
+            "2026": 835419
+          }
+        }
+      ],
+      "total": 2607987
+    },
+    {
       "id": "people-for-american-way",
       "name": "People for the American Way",
       "type": "organization",
       "state": "DC",
+      "organization": "people-for-american-way",
       "gifts": [
         {
           "id": "C00744185",
@@ -19656,51 +19802,6 @@
           "total": 250000,
           "byCycle": {
             "2026": 250000
-          }
-        }
-      ],
-      "total": 2600000
-    },
-    {
-      "id": "c00568964",
-      "name": "Liuna Building America",
-      "type": "committee",
-      "state": "DC",
-      "gifts": [
-        {
-          "id": "C00484642",
-          "total": 1950000,
-          "byCycle": {
-            "2022": 1000000,
-            "2024": 950000
-          }
-        },
-        {
-          "id": "C00540203",
-          "total": 250000,
-          "byCycle": {
-            "2024": 250000
-          }
-        },
-        {
-          "id": "C00776823",
-          "total": 200000,
-          "byCycle": {
-            "2022": 200000
-          }
-        },
-        {
-          "id": "C00793869",
-          "total": 100000,
-          "byCycle": {
-            "2022": 100000
-          }
-        },
-        {
-          "id": "C00913178",
-          "total": 100000,
-          "byCycle": {
-            "2026": 100000
           }
         }
       ],
@@ -20932,6 +21033,29 @@
           "byCycle": {
             "2022": 1000000,
             "2024": 1250000
+          }
+        }
+      ],
+      "total": 2250000
+    },
+    {
+      "id": "c00458877",
+      "name": "Country Over Party PAC",
+      "type": "committee",
+      "state": "IL",
+      "gifts": [
+        {
+          "id": "C00771113",
+          "total": 2000000,
+          "byCycle": {
+            "2024": 2000000
+          }
+        },
+        {
+          "id": "C00522425",
+          "total": 250000,
+          "byCycle": {
+            "2024": 250000
           }
         }
       ],
@@ -22333,22 +22457,6 @@
           "total": 2000000,
           "byCycle": {
             "2022": 2000000
-          }
-        }
-      ],
-      "total": 2000000
-    },
-    {
-      "id": "c00458877",
-      "name": "Country Over Party PAC",
-      "type": "committee",
-      "state": "IL",
-      "gifts": [
-        {
-          "id": "C00771113",
-          "total": 2000000,
-          "byCycle": {
-            "2024": 2000000
           }
         }
       ],
@@ -25170,6 +25278,23 @@
           "byCycle": {
             "2024": 700000,
             "2026": 800000
+          }
+        }
+      ],
+      "total": 1500000
+    },
+    {
+      "id": "c00780841",
+      "name": "Principled Veterans Fund (Pv Fund)",
+      "type": "committee",
+      "state": "VA",
+      "committee": "C00780841",
+      "gifts": [
+        {
+          "id": "C00864272",
+          "total": 1500000,
+          "byCycle": {
+            "2024": 1500000
           }
         }
       ],
@@ -35192,9 +35317,10 @@
     },
     {
       "id": "c00429175",
-      "name": "Mid-Atlantic Laborers' Political League",
+      "name": "Mid-Atlantic Laborers' Political League/Laborers' International Union of North America",
       "type": "committee",
       "state": "VA",
+      "committee": "C00429175",
       "gifts": [
         {
           "id": "C00007922",
@@ -36125,6 +36251,58 @@
           "total": 750000,
           "byCycle": {
             "2026": 750000
+          }
+        }
+      ],
+      "total": 750000
+    },
+    {
+      "id": "c00686832",
+      "name": "Way to Lead PAC",
+      "type": "committee",
+      "state": "AZ",
+      "committee": "C00686832",
+      "gifts": [
+        {
+          "id": "C00859355",
+          "total": 250000,
+          "byCycle": {
+            "2024": 250000
+          }
+        },
+        {
+          "id": "C00869321",
+          "total": 150000,
+          "byCycle": {
+            "2024": 150000
+          }
+        },
+        {
+          "id": "C00743682",
+          "total": 150000,
+          "byCycle": {
+            "2024": 150000
+          }
+        },
+        {
+          "id": "C00872549",
+          "total": 100000,
+          "byCycle": {
+            "2024": 100000
+          }
+        },
+        {
+          "id": "C90021304",
+          "total": 50000,
+          "byCycle": {
+            "2022": 50000
+          }
+        },
+        {
+          "id": "C00746107",
+          "total": 50000,
+          "byCycle": {
+            "2024": 50000
           }
         }
       ],
@@ -39247,6 +39425,23 @@
       "total": 562500
     },
     {
+      "id": "c00874875",
+      "name": "Voters for Responsive Government (Vrg)",
+      "type": "committee",
+      "state": "CA",
+      "committee": "C00874875",
+      "gifts": [
+        {
+          "id": "C00882266",
+          "total": 561000,
+          "byCycle": {
+            "2024": 561000
+          }
+        }
+      ],
+      "total": 561000
+    },
+    {
       "id": "maga",
       "name": "Maga Inc.",
       "type": "committee",
@@ -39989,50 +40184,13 @@
       "name": "Protect West Virginia Values",
       "type": "committee",
       "state": "GA",
+      "committee": "C00826073",
       "gifts": [
         {
           "id": "C00487470",
           "total": 550000,
           "byCycle": {
             "2024": 550000
-          }
-        }
-      ],
-      "total": 550000
-    },
-    {
-      "id": "c00686832",
-      "name": "Way to Lead PAC",
-      "type": "committee",
-      "state": "VA",
-      "committee": "C00686832",
-      "gifts": [
-        {
-          "id": "C00859355",
-          "total": 250000,
-          "byCycle": {
-            "2024": 250000
-          }
-        },
-        {
-          "id": "C00869321",
-          "total": 150000,
-          "byCycle": {
-            "2024": 150000
-          }
-        },
-        {
-          "id": "C00872549",
-          "total": 100000,
-          "byCycle": {
-            "2024": 100000
-          }
-        },
-        {
-          "id": "C00746107",
-          "total": 50000,
-          "byCycle": {
-            "2024": 50000
           }
         }
       ],
@@ -40434,6 +40592,22 @@
       "total": 520000
     },
     {
+      "id": "c00896928",
+      "name": "Team Husted",
+      "type": "committee",
+      "state": "OH",
+      "gifts": [
+        {
+          "id": "C00912865",
+          "total": 513228,
+          "byCycle": {
+            "2026": 513228
+          }
+        }
+      ],
+      "total": 513228
+    },
+    {
       "id": "moveon-org",
       "name": "Moveon.Org",
       "type": "committee",
@@ -40500,6 +40674,24 @@
         }
       ],
       "total": 509999
+    },
+    {
+      "id": "c00206177",
+      "name": "Pipefitters Local #533 Volunteer Political Fund",
+      "type": "committee",
+      "state": "MO",
+      "committee": "C00206177",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 509343,
+          "byCycle": {
+            "2024": 188642,
+            "2026": 320701
+          }
+        }
+      ],
+      "total": 509343
     },
     {
       "id": "everyday-people",
@@ -46542,6 +46734,23 @@
       "total": 393054
     },
     {
+      "id": "c00437467",
+      "name": "Southern California Pipe Trades District Council 16 Federal PAC",
+      "type": "committee",
+      "state": "CA",
+      "committee": "C00437467",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 391972,
+          "byCycle": {
+            "2026": 391972
+          }
+        }
+      ],
+      "total": 391972
+    },
+    {
       "id": "mark-rubin-fl",
       "name": "Mark Rubin",
       "type": "individual",
@@ -46734,6 +46943,7 @@
       "name": "Democratic Power, Inc.",
       "type": "committee",
       "state": "DC",
+      "committee": "C00827253",
       "gifts": [
         {
           "id": "C00484642",
@@ -49516,6 +49726,7 @@
       "name": "Wyomingites Defending Freedom and Democracy, Inc",
       "type": "committee",
       "state": "DC",
+      "committee": "C00819144",
       "gifts": [
         {
           "id": "C00804526",
@@ -51841,6 +52052,22 @@
       "total": 289100
     },
     {
+      "id": "c00692897",
+      "name": "Collins Victory Committee",
+      "type": "committee",
+      "state": "VA",
+      "gifts": [
+        {
+          "id": "C00894709",
+          "total": 287417,
+          "byCycle": {
+            "2026": 287417
+          }
+        }
+      ],
+      "total": 287417
+    },
+    {
       "id": "honor-bound",
       "name": "Honor Bound PAC",
       "type": "committee",
@@ -52433,6 +52660,23 @@
       "total": 275000
     },
     {
+      "id": "c00771113",
+      "name": "Back the Bold",
+      "type": "committee",
+      "state": "IL",
+      "committee": "C00771113",
+      "gifts": [
+        {
+          "id": "C00522425",
+          "total": 275000,
+          "byCycle": {
+            "2024": 275000
+          }
+        }
+      ],
+      "total": 275000
+    },
+    {
       "id": "peoples-action-power",
       "name": "People's Action Power",
       "type": "committee",
@@ -52517,6 +52761,23 @@
         }
       ],
       "total": 265000
+    },
+    {
+      "id": "c00253294",
+      "name": "Laborers' District Council of the Metro Area of Philadelphia and Vicinity PAC",
+      "type": "committee",
+      "state": "PA",
+      "gifts": [
+        {
+          "id": "C00429175",
+          "total": 261000,
+          "byCycle": {
+            "2024": 161000,
+            "2026": 100000
+          }
+        }
+      ],
+      "total": 261000
     },
     {
       "id": "job-creators-network",
@@ -57151,6 +57412,23 @@
       "total": 248855
     },
     {
+      "id": "c00129627",
+      "name": "Pipefitters Local 636 Political Action Committee",
+      "type": "committee",
+      "state": "MI",
+      "committee": "C00129627",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 247893,
+          "byCycle": {
+            "2026": 247893
+          }
+        }
+      ],
+      "total": 247893
+    },
+    {
       "id": "ksl",
       "name": "Ksl Inc.",
       "type": "committee",
@@ -58404,6 +58682,23 @@
         }
       ],
       "total": 212773
+    },
+    {
+      "id": "c00468801",
+      "name": "Road Sprinkler Fitters Local Union No. 669, Ua, AFL-CIO PAC",
+      "type": "committee",
+      "state": "MD",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 212500,
+          "byCycle": {
+            "2022": 112500,
+            "2024": 100000
+          }
+        }
+      ],
+      "total": 212500
     },
     {
       "id": "john-paulson-fl",
@@ -62253,6 +62548,54 @@
       "total": 200000
     },
     {
+      "id": "c00320218",
+      "name": "United Association of Journeymen & Apprentices of the U.S. & Canada Local 447 Federal PAC",
+      "type": "committee",
+      "state": "CA",
+      "committee": "C00320218",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 200000,
+          "byCycle": {
+            "2024": 200000
+          }
+        }
+      ],
+      "total": 200000
+    },
+    {
+      "id": "c00007542",
+      "name": "International Association of Sheet Metal, Air, Rail and Transportation Workers Political Action League",
+      "type": "committee",
+      "state": "DC",
+      "committee": "C00007542",
+      "gifts": [
+        {
+          "id": "C00473918",
+          "total": 100000,
+          "byCycle": {
+            "2024": 100000
+          }
+        },
+        {
+          "id": "C00854299",
+          "total": 50000,
+          "byCycle": {
+            "2024": 50000
+          }
+        },
+        {
+          "id": "C00854059",
+          "total": 50000,
+          "byCycle": {
+            "2024": 50000
+          }
+        }
+      ],
+      "total": 200000
+    },
+    {
       "id": "c00789339",
       "name": "34n22, Inc.",
       "type": "committee",
@@ -62302,6 +62645,22 @@
         }
       ],
       "total": 200000
+    },
+    {
+      "id": "c00917831",
+      "name": "Energized for Change Va",
+      "type": "committee",
+      "state": "VA",
+      "gifts": [
+        {
+          "id": "C00853887",
+          "total": 199935,
+          "byCycle": {
+            "2026": 199935
+          }
+        }
+      ],
+      "total": 199935
     },
     {
       "id": "c00835751",
@@ -63697,6 +64056,7 @@
       "name": "Arkansas Patriots Fund",
       "type": "committee",
       "state": "DC",
+      "committee": "C00790071",
       "gifts": [
         {
           "id": "C00487470",
@@ -68329,30 +68689,6 @@
       "total": 150000
     },
     {
-      "id": "c00007542",
-      "name": "International Association of Sheet Metal, Air, Rail and Transportation Workers Political Action League",
-      "type": "committee",
-      "state": "DC",
-      "committee": "C00007542",
-      "gifts": [
-        {
-          "id": "C00473918",
-          "total": 100000,
-          "byCycle": {
-            "2024": 100000
-          }
-        },
-        {
-          "id": "C00854299",
-          "total": 50000,
-          "byCycle": {
-            "2024": 50000
-          }
-        }
-      ],
-      "total": 150000
-    },
-    {
       "id": "c00869339",
       "name": "California State Association of Electrical Workers",
       "type": "committee",
@@ -68771,6 +69107,39 @@
       "total": 140000
     },
     {
+      "id": "c00327478",
+      "name": "Plumbers Local Union No. 1 Nyc-Political Action Committee",
+      "type": "committee",
+      "state": "NY",
+      "committee": "C00327478",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 140000,
+          "byCycle": {
+            "2022": 140000
+          }
+        }
+      ],
+      "total": 140000
+    },
+    {
+      "id": "c00874834",
+      "name": "Best of Tennessee Action Fund",
+      "type": "committee",
+      "state": "TN",
+      "gifts": [
+        {
+          "id": "C00878611",
+          "total": 140000,
+          "byCycle": {
+            "2024": 140000
+          }
+        }
+      ],
+      "total": 140000
+    },
+    {
       "id": "american-dreams",
       "name": "American Dreams PAC",
       "type": "committee",
@@ -69026,6 +69395,23 @@
         }
       ],
       "total": 129000
+    },
+    {
+      "id": "c00232835",
+      "name": "Plumbers & Pipefitters Local #333 Federal PAC Fund",
+      "type": "committee",
+      "state": "MI",
+      "committee": "C00232835",
+      "gifts": [
+        {
+          "id": "C00012476",
+          "total": 127988,
+          "byCycle": {
+            "2026": 127988
+          }
+        }
+      ],
+      "total": 127988
     },
     {
       "id": "progressive-takeover",
@@ -87274,6 +87660,22 @@
       "gifts": [
         {
           "id": "C00487470",
+          "total": 70000,
+          "byCycle": {
+            "2024": 70000
+          }
+        }
+      ],
+      "total": 70000
+    },
+    {
+      "id": "c00887125",
+      "name": "Montana Voters PAC",
+      "type": "committee",
+      "state": "MT",
+      "gifts": [
+        {
+          "id": "C00868604",
           "total": 70000,
           "byCycle": {
             "2024": 70000
@@ -106668,6 +107070,23 @@
       "total": 50000
     },
     {
+      "id": "c00549865",
+      "name": "Chenega Corporation PAC (Chenega PAC)",
+      "type": "committee",
+      "state": "AK",
+      "committee": "C00549865",
+      "gifts": [
+        {
+          "id": "C00812370",
+          "total": 50000,
+          "byCycle": {
+            "2022": 50000
+          }
+        }
+      ],
+      "total": 50000
+    },
+    {
       "id": "c00448373",
       "name": "Huck PAC for America",
       "type": "committee",
@@ -106676,6 +107095,23 @@
       "gifts": [
         {
           "id": "C00544551",
+          "total": 50000,
+          "byCycle": {
+            "2022": 50000
+          }
+        }
+      ],
+      "total": 50000
+    },
+    {
+      "id": "c00523589",
+      "name": "American Unity PAC Inc",
+      "type": "committee",
+      "state": "VA",
+      "committee": "C00523589",
+      "gifts": [
+        {
+          "id": "C00812370",
           "total": 50000,
           "byCycle": {
             "2022": 50000
@@ -106759,6 +107195,23 @@
       "gifts": [
         {
           "id": "C00486845",
+          "total": 50000,
+          "byCycle": {
+            "2024": 50000
+          }
+        }
+      ],
+      "total": 50000
+    },
+    {
+      "id": "c00024968",
+      "name": "American Optometric Association Political Action Committee",
+      "type": "committee",
+      "state": "VA",
+      "committee": "C00024968",
+      "gifts": [
+        {
+          "id": "C00860411",
           "total": 50000,
           "byCycle": {
             "2024": 50000

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T10:05:28.734Z",
+  "generatedAt": "2026-11-15T16:36:18.228Z",
   "cycles": [
     2022,
     2024,
@@ -36857,7 +36857,8 @@
       "committees": [
         "C00007922",
         "C00345306",
-        "C00155069"
+        "C00155069",
+        "C00429175"
       ],
       "lobbying": {
         "client": "LABORERS' INTERNATIONAL UNION OF NORTH AMERICA",
@@ -1078288,6 +1078289,3780 @@
       "classifiedBy": "fec-type",
       "committees": [
         "C00928374"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "american-jobs-and-growth-c00659219",
+      "name": "American Jobs and Growth PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00659219"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "protect-wyoming-values-c00777524",
+      "name": "Protect Wyoming Values PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00777524"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ohio-women-rising-c00782086",
+      "name": "Ohio Women Rising",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00782086"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "american-heartland-c00548867",
+      "name": "American Heartland PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00548867"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "third-way-c90021171",
+      "name": "Third Way",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021171"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "restore-common-sense-c00794719",
+      "name": "Restore Common Sense, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00794719"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "atu-cope-special-account-c90021163",
+      "name": "Atu-Cope Special Holding Account",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021163"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ohio-conservative-victory-c00785022",
+      "name": "Ohio Conservative Victory Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00785022"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "lead-way-c00782144",
+      "name": "Lead the Way PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00782144"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "keep-texas-great-c00737536",
+      "name": "Keep Texas Great PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00737536"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "america-strong-c00778761",
+      "name": "America Strong PAC, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00778761"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "from-for-c00802942",
+      "name": "From Pa for Pa",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00802942"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "naral-pro-choice-america-c90004185",
+      "name": "Naral Pro-Choice America",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90004185"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "americans-for-accountability-in-leadership-c00514224",
+      "name": "Americans for Accountability in Leadership",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00514224"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "be-counted-c90021288",
+      "name": "Be Counted",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021288"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "penn-progress-c00789495",
+      "name": "Penn Progress, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00789495"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "arkansas-patriots-c00790071",
+      "name": "Arkansas Patriots Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00790071"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "no-more-mo-c00809715",
+      "name": "No More Mo",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00809715"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "alabama-rino-c00808303",
+      "name": "Alabama Rino PAC (Alrino; Al_rino; Arpac)",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00808303"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "pennsylvania-patriots-c00797480",
+      "name": "Pennsylvania Patriots PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00797480"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "pennsylvania-conservative-c00802793",
+      "name": "Pennsylvania Conservative Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00802793"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "constitutional-party-of-united-states-c00771048",
+      "name": "Constitutional Party of United States",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00771048"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "river-horse-c00487298",
+      "name": "River Horse PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00487298"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "friends-of-californias-future-c00808626",
+      "name": "Friends of Californias Future Committee",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00808626"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "keystone-liberty-c00771980",
+      "name": "Keystone Liberty PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00771980"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "protect-and-defend-america-c00807198",
+      "name": "Protect and Defend America",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00807198"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "jobs-opportunity-and-freedom-jofpac-c00510701",
+      "name": "Jobs Opportunity and Freedom Political Action Committee - Jofpac",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00510701"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "southern-indiana-freedom-c00803916",
+      "name": "Southern Indiana Freedom PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00803916"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "your-mississippi-neighbors-c00814285",
+      "name": "Your Mississippi Neighbors",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00814285"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "patriots-c00807958",
+      "name": "Patriots PAC LLC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00807958"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "californians-for-good-government-c00814772",
+      "name": "Californians for Good Government PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00814772"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "new-power-c00489252",
+      "name": "New Power PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00489252"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "quinn-works-c00809517",
+      "name": "Quinn Works PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00809517"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "magnolia-maga-c00817791",
+      "name": "Magnolia Maga PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00817791"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "1788-c00818278",
+      "name": "1788 PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00818278"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "missouri-first-action-c00778084",
+      "name": "Missouri First Action, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00778084"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "safeguarding-oklahoma-values-c00813550",
+      "name": "Safeguarding Oklahoma Values PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00813550"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "pushmataha-c00818195",
+      "name": "Pushmataha PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00818195"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "green-beret-c00813873",
+      "name": "Green Beret PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00813873"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "righton-time-c00745554",
+      "name": "Righton Time",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00745554"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "winmo-c00797654",
+      "name": "Winmo PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00797654"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "reset-dc-c00798363",
+      "name": "Reset Dc",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00798363"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "resolute-c00784033",
+      "name": "Resolute PAC Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00784033"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "unite-here-local-8-c90021312",
+      "name": "Unite Here Local 8",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021312"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "faith-family-freedom-c00489625",
+      "name": "Faith Family Freedom Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00489625"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "conservatives-for-a-stronger-america-c00820001",
+      "name": "Conservatives for a Stronger America",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00820001"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "forward-progress-c00815423",
+      "name": "Forward Progress",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00815423"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "get-job-done-c00796201",
+      "name": "Get the Job Done PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00796201"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "show-me-values-c00816991",
+      "name": "Show Me Values PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00816991"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "patriotic-utah-c00778175",
+      "name": "Patriotic Utah",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00778175"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "wyomingites-defending-freedom-and-democracy-c00819144",
+      "name": "Wyomingites Defending Freedom and Democracy, Inc",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00819144"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "lupe-votes-c90021304",
+      "name": "Lupe Votes",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021304"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "alaskans-for-tara-c00812370",
+      "name": "Alaskans for T.a.R.a. (True Alaska Representation Alliance)",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00812370"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "coaction-c00815159",
+      "name": "Political Coaction PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00815159"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "a-better-orlando-c00786269",
+      "name": "A Better Orlando PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00786269"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "preserve-our-rights-c00811331",
+      "name": "Preserve Our Rights PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00811331"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "fight-for-mississippi-c00802413",
+      "name": "Fight for Mississippi PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00802413"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "justice-unites-us-c00810606",
+      "name": "Justice Unites Us PAC",
+      "sector": "Lawyers & Lobbyists",
+      "classifiedBy": "name",
+      "committees": [
+        "C00810606"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "durham-for-all-c90019753",
+      "name": "Durham for All",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90019753"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "tarheel-conservative-values-c00804518",
+      "name": "Tarheel Conservative Values PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00804518"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "georgia-values-action-c00795484",
+      "name": "Georgia Values Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00795484"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "american-defense-c00817460",
+      "name": "American Defense Fund",
+      "sector": "Defense",
+      "classifiedBy": "name",
+      "committees": [
+        "C00817460"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "usa-leadership-c00808386",
+      "name": "USA Leadership Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00808386"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "hoosier-values-c00812347",
+      "name": "Hoosier Values",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00812347"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "future-progress-c00746628",
+      "name": "Future Progress",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00746628"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "virginia-conservatives-c00814921",
+      "name": "Virginia Conservatives Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00814921"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ms-conservative-action-c00817742",
+      "name": "Ms Conservative Action PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00817742"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "voices-for-peace-c00814962",
+      "name": "Voices for Peace PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00814962"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "florida-trust-c00814327",
+      "name": "Florida Trust",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00814327"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "values-c00631903",
+      "name": "Pa Values",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00631903"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ri-right-to-life-c00426528",
+      "name": "Ri Right to Life Federal PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00426528"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "moderate-party-independent-c00822379",
+      "name": "Moderate Party Independent Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00822379"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "democratic-campaign-of-st-louis-city-c00233239",
+      "name": "Democratic Federal Campaign Committee of St Louis City",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00233239"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "new-hampshire-principles-c00790808",
+      "name": "New Hampshire Principles PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00790808"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "people-empowered-c00827196",
+      "name": "The People, Empowered",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00827196"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "right-appeal-c00804971",
+      "name": "Right Appeal PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00804971"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "bitcoin-freedom-c00822775",
+      "name": "Bitcoin Freedom PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00822775"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "red-clay-values-c00822973",
+      "name": "Red Clay Values",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00822973"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "bright-future-ri-c00822072",
+      "name": "Bright Future Ri",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00822072"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "missouri-stands-united-c00815316",
+      "name": "Missouri Stands United",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00815316"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "second-congressional-district-republican-party-of-minnesota-c00453076",
+      "name": "Second Congressional District Republican Party of Minnesota",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00453076"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "carolina-federation-c90019910",
+      "name": "Carolina Federation",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90019910"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "independent-womens-voice-c90011115",
+      "name": "Independent Women's Voice",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90011115"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "forward-party-of-utah-c00656264",
+      "name": "Forward Party of Utah",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00656264"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "missouri-conservative-c00811356",
+      "name": "Missouri Conservative Political Action Committee",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00811356"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "moms-for-safe-streets-c00825539",
+      "name": "Moms for Safe Streets",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00825539"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "democracy-protection-c00815779",
+      "name": "Democracy Protection PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00815779"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "unknown-c00630830",
+      "name": "Pa PAC Aka Patriot Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00630830"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "northeast-action-c00820753",
+      "name": "Northeast Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00820753"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "page-communications-c90013517",
+      "name": "Page Communications L.L.C.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90013517"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "michigan-nurses-association-c90021486",
+      "name": "Michigan Nurses Association",
+      "sector": "Health",
+      "classifiedBy": "name",
+      "committees": [
+        "C90021486"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "move-forward-together-action-c90021569",
+      "name": "Move Forward Together Action Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021569"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "southwest-conservative-c00818153",
+      "name": "Southwest Conservative PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00818153"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "opportunity-ny-c00812867",
+      "name": "Opportunity Ny",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00812867"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "america-united-c00710616",
+      "name": "America United",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00710616"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "americans-determined-to-advance-michigan-c00807081",
+      "name": "Americans Determined to Advance Michigan",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00807081"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "clean-up-congress-c00679159",
+      "name": "Clean Up Congress PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00679159"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "we-vote-values-c00811877",
+      "name": "We Vote Values",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00811877"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "michigan-chamber-of-commerce-c90014945",
+      "name": "Michigan Chamber of Commerce",
+      "sector": "Misc Business",
+      "classifiedBy": "name",
+      "committees": [
+        "C90014945"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "aft-michigan-c90021494",
+      "name": "Aft Michigan",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021494"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "open-new-york-c90021544",
+      "name": "Open New York",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021544"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "impact-c90020884",
+      "name": "The Impact Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90020884"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "life-issues-family-ethics-c00480822",
+      "name": "Life Issues Family Ethics Political Action Committee",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00480822"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "53-peaks-c00823344",
+      "name": "53 Peaks",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00823344"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "democratic-club-of-big-bear-valley-c00832964",
+      "name": "Democratic Club of Big Bear Valley",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00832964"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "sky-is-blue-c00825075",
+      "name": "Sky Is Blue",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00825075"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "stop-him-now-c00797829",
+      "name": "Stop Him Now",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00797829"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "center-for-racial-and-gender-equity-c90021460",
+      "name": "Center for Racial and Gender Equity;the",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021460"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "new-rural-project-c90021866",
+      "name": "New Rural Project",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021866"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "our-values-c00746040",
+      "name": "Our Values PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00746040"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "transparency-in-politics-c00819904",
+      "name": "Transparency in Politics",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00819904"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "straight-talk-politics-c00743682",
+      "name": "Straight Talk Politics PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00743682"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "communities-for-a-new-california-c90021775",
+      "name": "Communities for a New California PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021775"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "bluewavenj-c90021296",
+      "name": "Bluewavenj",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021296"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "western-colorado-clarity-c00815365",
+      "name": "Western Colorado Clarity",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00815365"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "citizen-action-of-wisconsin-c90011974",
+      "name": "Citizen Action of Wisconsin",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90011974"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "north-carolina-latino-power-c90020660",
+      "name": "North Carolina Latino Power",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90020660"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "fight-for-schools-and-families-c00816827",
+      "name": "Fight for Schools and Families",
+      "sector": "Education",
+      "classifiedBy": "name",
+      "committees": [
+        "C00816827"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "people-for-american-way",
+      "name": "People for the American Way",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00331454"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": [],
+      "outsideGifts": [
+        {
+          "id": "C00744185",
+          "total": 2600000
+        }
+      ]
+    },
+    {
+      "id": "wake-up-new-york-c00792028",
+      "name": "Wake Up New York",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00792028"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "colorado-dawn-c00826743",
+      "name": "Colorado Dawn",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00826743"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "montanans-against-corruption-in-congress-c00820589",
+      "name": "Montanans Against Corruption in Congress",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00820589"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "siembra-c00825737",
+      "name": "Siembra PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00825737"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "dolores-huerta-c00823658",
+      "name": "Dolores Huerta Political Action Committee",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00823658"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "americans-for-transparency-c00824482",
+      "name": "Americans for Transparency",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00824482"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "making-congress-great-again-c00727602",
+      "name": "Making Congress Great Again",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00727602"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "pride-c00824441",
+      "name": "Pride PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00824441"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "connecticut-republican-state-central-c00023838",
+      "name": "Connecticut Republican State Central Committee, Inc.",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00023838"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "our-hawaii-c00818492",
+      "name": "Our Hawaii PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00818492"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "vermont-right-to-life",
+      "name": "Vermont Right to Life Committee Inc",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00284018"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "families-for-freedom-c00754408",
+      "name": "Families for Freedom PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00754408"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "easy-to-vote-hard-to-cheat-c00823856",
+      "name": "Easy to Vote, Hard to Cheat",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00823856"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "nevada-for-freedom-c00819987",
+      "name": "Nevada for Freedom",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00819987"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "tea-party-c00692129",
+      "name": "Tea Party PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00692129"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "rhode-island-victory-c00824532",
+      "name": "Rhode Island Victory Committee",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00824532"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "georgians-c00815787",
+      "name": "Georgians PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00815787"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "conservative-action-league-c00785550",
+      "name": "Conservative Action League Inc",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00785550"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "a-better-nc-c90021676",
+      "name": "A Better Nc",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90021676"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "via-c00863415",
+      "name": "Via Political Action Committee, LLC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00863415"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "bulldog-democrats-c00419754",
+      "name": "Bulldog Democrats PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00419754"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "she-speaks-for-me-c00833418",
+      "name": "She Speaks for Me",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00833418"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "part-of-solution-c00864058",
+      "name": "Part of the Solution PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00864058"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "protect-west-virginia-values-c00826073",
+      "name": "Protect West Virginia Values",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00826073"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "spirit-of-democracy-america-c00521211",
+      "name": "Spirit of Democracy America",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00521211"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ca-progressive-c00842740",
+      "name": "Ca Progressive PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00842740"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "freedom-for-people-c00860411",
+      "name": "Freedom for the People PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00860411"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "next-generation-veteran-c00864272",
+      "name": "Next Generation Veteran Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00864272"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "first-freedoms-foundation-c00834945",
+      "name": "First Freedoms Foundation PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00834945"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "buckeye-patriot-alliance-c00872226",
+      "name": "Buckeye Patriot Alliance",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00872226"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "defend-american-dream-c00772194",
+      "name": "Defend the American Dream PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00772194"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "better-america-under-conservatives-c00852996",
+      "name": "Better America Under Conservatives PAC, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00852996"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "victory-coalition-c00851279",
+      "name": "Victory Coalition",
+      "sector": "Energy & Natural Resources",
+      "classifiedBy": "name",
+      "committees": [
+        "C00851279"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "golden-state-leadership-c00628008",
+      "name": "Golden State Leadership Fund PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00628008"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "defending-america-c00848739",
+      "name": "Defending America PAC, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00848739"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ovrsite-c00854869",
+      "name": "Ovrsite PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00854869"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "america-first-north-carolina-c00860312",
+      "name": "America First North Carolina",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00860312"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "blue-wave-action-dba-bwa-c00882266",
+      "name": "Blue Wave Action D/B/a Bwa",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00882266"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "let-freedom-ring-c00878710",
+      "name": "Let Freedom Ring PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00878710"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "restoring-standards-c00872457",
+      "name": "Restoring Standards PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00872457"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "security-is-strength-c00573733",
+      "name": "Security Is Strength PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00573733"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "democratic-power-c00827253",
+      "name": "Democratic Power, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00827253"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "beehive-values-c00856385",
+      "name": "Beehive Values PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00856385"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "blue-horizon-c90022237",
+      "name": "Blue Horizon",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022237"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "first-for-america-c00681478",
+      "name": "First for America",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00681478"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "brighter-future-nd-c00872507",
+      "name": "Brighter Future Nd",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00872507"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "virginia-democratic-action-c00874842",
+      "name": "Virginia Democratic Action PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00874842"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "moving-michigan-forward-c00871566",
+      "name": "Moving Michigan Forward",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00871566"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "buckeyes-for-values-c00868935",
+      "name": "Buckeyes for Values",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00868935"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "voters-for-responsive-government-c00874875",
+      "name": "Voters for Responsive Government (Vrg)",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00874875"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "pro-life-c00520122",
+      "name": "Pro-Life PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00520122"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "arizonans-for-conservative-leadership-c00868083",
+      "name": "Arizonans for Conservative Leadership",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00868083"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "lowcountry-conservatives-c00872127",
+      "name": "Lowcountry Conservatives",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00872127"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "virginians-against-sexual-assault-c00880849",
+      "name": "Virginians Against Sexual Assault PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00880849"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "progressive-voices-action-c00799916",
+      "name": "Progressive Voices Action Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00799916"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "fight-corporate-monopolies-c90019407",
+      "name": "Fight Corporate Monopolies",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90019407"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "hoosier-conservative-action-c00874941",
+      "name": "Hoosier Conservative Action PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00874941"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "future-today-and-tomorrow-c00856435",
+      "name": "The Future - Today & Tomorrow",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00856435"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "red-state-blue-resources-c00855775",
+      "name": "Red State Blue Resources",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00855775"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "protect-our-children-c00879189",
+      "name": "Protect Our Children PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00879189"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "americans-first-c00870295",
+      "name": "Americans First",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00870295"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "conservatives-with-character-c00878611",
+      "name": "Conservatives With Character, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00878611"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "democratic-state-central-of-maryland-c00141812",
+      "name": "Democratic State Central Committee of Maryland",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00141812"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "health-equity-now-c00878041",
+      "name": "Health Equity Now",
+      "sector": "Health",
+      "classifiedBy": "name",
+      "committees": [
+        "C00878041"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "repro-rising-virginia-c00880302",
+      "name": "Repro Rising Virginia PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00880302"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "bluevote-org-c00869040",
+      "name": "Bluevote.Org",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00869040"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "virginians-united-for-progress-c00863456",
+      "name": "Virginians United for Progress",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00863456"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "project-72-wi-c00833228",
+      "name": "Project 72 Wi PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00833228"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "conservatives-for-effective-government-c00574749",
+      "name": "Conservatives for Effective Government",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00574749"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "lv-republican-leadership-c00875674",
+      "name": "Lv Republican Leadership Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00875674"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "california-republican-county-chairmens-association-c00887489",
+      "name": "California Republican County Chairmens Association",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00887489"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "fight-for-michigan-1-c00888768",
+      "name": "The Fight for Michigan 1 PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00888768"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "common-sense-for-c00889584",
+      "name": "Common Sense for Pa",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00889584"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "1787-c00814806",
+      "name": "1787 Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00814806"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ad-astra-c00883405",
+      "name": "Ad Astra PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00883405"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "flip-40th-c00865717",
+      "name": "Flip the 40th",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00865717"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "project-rescue-america-c00837427",
+      "name": "Project Rescue America",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00837427"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "citizens-for-virginia-c00844548",
+      "name": "Citizens for Virginia PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00844548"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "columbia-neighbors-c00889287",
+      "name": "Columbia Neighbors PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00889287"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "gen-z-take-over-c00873539",
+      "name": "Gen Z Take Over",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00873539"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "physician-voices-united-c00888966",
+      "name": "Physician Voices United",
+      "sector": "Health",
+      "classifiedBy": "name",
+      "committees": [
+        "C00888966"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "old-line-c00890657",
+      "name": "Old Line PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00890657"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "force-for-good-c00886382",
+      "name": "Force for Good",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00886382"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "montana-outdoor-values-action-c00860155",
+      "name": "Montana Outdoor Values Action Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00860155"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "montanans-for-public-lands-c00868604",
+      "name": "Montanans for Public Lands",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00868604"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "restoring-liberty-c00886747",
+      "name": "Restoring Liberty PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00886747"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "yeager-thomas-frederick-c90022666",
+      "name": "Yeager, Thomas Frederick",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022666"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "show-me-strong-c00832485",
+      "name": "Show-Me Strong PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00832485"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "inclusion-c00889220",
+      "name": "Inclusion PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00889220"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "make-montana-great-c00871012",
+      "name": "Make Montana Great",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00871012"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "inspire-colorado-c00885145",
+      "name": "Inspire Colorado",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00885145"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "independent-alaska-c00757294",
+      "name": "Independent Alaska",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00757294"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "alaska-march-on-c00826966",
+      "name": "Alaska March on",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00826966"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "1959-c00885400",
+      "name": "1959 PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00885400"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "independent-veterans-of-america-c00891879",
+      "name": "Independent Veterans of America PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00891879"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "forward-24-c00891895",
+      "name": "Forward 24",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00891895"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "wisconsin-for-all-c90022401",
+      "name": "Wisconsin for All Inc",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022401"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "one-giant-leap-c00854059",
+      "name": "One Giant Leap PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00854059"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "mcminn-county-democratic-party-c00888446",
+      "name": "Mcminn County Democratic Party",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00888446"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "americans-for-consumer-protection-c90022526",
+      "name": "Americans for Consumer Protection",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022526"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "unleash-america-c00831248",
+      "name": "Unleash America PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00831248"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "american-alliance-for-disabled-children-c00710160",
+      "name": "American Alliance for Disabled Children PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00710160"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ibew-educational-c90022351",
+      "name": "Ibew PAC Educational Fund",
+      "sector": "Education",
+      "classifiedBy": "name",
+      "committees": [
+        "C90022351"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "texas-for-all-c90022815",
+      "name": "Texas for All",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022815"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "engage-miami-c90022765",
+      "name": "Engage Miami",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022765"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "action-together-nepa-c90022906",
+      "name": "Action Together Nepa Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022906"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "making-missouri-better-c00882936",
+      "name": "Making Missouri Better",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00882936"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "douglas-county-democratic-party-c00890996",
+      "name": "Douglas County Democratic Party",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00890996"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "planned-parenthood-texas-votes-victory-c00890020",
+      "name": "Planned Parenthood Texas Votes Victory Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00890020"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "liberty-gold-nj-c00889402",
+      "name": "Liberty Gold Nj",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00889402"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "republican-party-of-wabasha-county-c00892687",
+      "name": "Republican Party of Wabasha County",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00892687"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "protecting-our-democracy-c00827626",
+      "name": "Protecting Our Democracy",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00827626"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "together-for-nevadas-future-c00882050",
+      "name": "Together for Nevada's Future PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00882050"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "laborers-building-a-better-new-york-c90022989",
+      "name": "Laborers Building a Better New York",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90022989"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "power-action-c90023052",
+      "name": "Power Action Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023052"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "colorado-democratic-party-c00161786",
+      "name": "Federal: Colorado Democratic Party",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00161786"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "every-state-c00812792",
+      "name": "Every State",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00812792"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "progress-coalition-c00887323",
+      "name": "The Progress Coalition",
+      "sector": "Energy & Natural Resources",
+      "classifiedBy": "name",
+      "committees": [
+        "C00887323"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "kentucky-first-action-c00898270",
+      "name": "Kentucky First Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00898270"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "equity-alliance-action-c00827618",
+      "name": "The Equity Alliance Fund Action PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00827618"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "our-democracy-c00883215",
+      "name": "Our Democracy PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00883215"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "national-ground-game-c00892984",
+      "name": "National Ground Game PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00892984"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "stand-up-for-science-c90023300",
+      "name": "Stand Up for Science",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023300"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "4the56-c00915173",
+      "name": "4the56",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00915173"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "stfu-c00906941",
+      "name": "Stfu PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00906941"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "organize-for-peace-c90023318",
+      "name": "Organize for Peace",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023318"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "voterise-c00890400",
+      "name": "Voterise",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00890400"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "forgie-victory-c00899039",
+      "name": "Forgie Victory Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00899039"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "united-we-succeed-c90023292",
+      "name": "United We Succeed",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023292"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "american-ideals-c00915520",
+      "name": "The American Ideals PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00915520"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "operation-guardian-support-c00919035",
+      "name": "Operation Guardian Support PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00919035"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "disrupt-c00895011",
+      "name": "Disrupt",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00895011"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "new-engagement-c00851584",
+      "name": "New Engagement PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00851584"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "arkansans-for-democracy-and-justice-c00930966",
+      "name": "Arkansans for Democracy and Justice",
+      "sector": "Lawyers & Lobbyists",
+      "classifiedBy": "name",
+      "committees": [
+        "C00930966"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "affordability-and-progress-c00928986",
+      "name": "Affordability and Progress PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00928986"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ohio-erie-c00902569",
+      "name": "Ohio Erie PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00902569"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "neo-philanthropy-action-c90023367",
+      "name": "Neo Philanthropy Action Fund Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023367"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "alabama-strong-c00906610",
+      "name": "Alabama Strong PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00906610"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ky-c00944371",
+      "name": "Ky PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00944371"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "registration-nation-action-c90023573",
+      "name": "Registration Nation Action Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023573"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "western-blue-c00951665",
+      "name": "Western Blue PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00951665"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "american-centerpoint-c00941518",
+      "name": "The American Centerpoint PAC Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00941518"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "palestine-american-league-c00949958",
+      "name": "Palestine American League - PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00949958"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "conservatives-for-a-better-tomorrow-c90023490",
+      "name": "Conservatives for a Better Tomorrow Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023490"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "california-leadership-c00948018",
+      "name": "California Leadership Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00948018"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "kentucky-4th-c00943753",
+      "name": "Kentucky 4th PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00943753"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "pine-tree-results-c00894709",
+      "name": "Pine Tree Results PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00894709"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "central-valley-for-working-families-c00936831",
+      "name": "Central Valley for Working Families",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00936831"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "project-2026-c00944397",
+      "name": "Project 2026",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00944397"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "people-for-effective-and-ethical-leadership-c00947531",
+      "name": "People for Effective and Ethical Leadership",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00947531"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "palmetto-action-c00950600",
+      "name": "Palmetto Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00950600"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "maremoto-action-c90023458",
+      "name": "Maremoto Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023458"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "patriot-partners-c00940155",
+      "name": "Patriot Partners",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00940155"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "texans-demanding-accountability-c00948695",
+      "name": "Texans Demanding Accountability",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00948695"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "servant-leader-c00899427",
+      "name": "Servant-Leader Fund, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00899427"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "huerta-democracy-c00947721",
+      "name": "Huerta Democracy PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00947721"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "last-frontier-c00875278",
+      "name": "Last Frontier PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00875278"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "palmetto-citizens-for-concerned-governance-c00788786",
+      "name": "Palmetto Citizens for Concerned Governance, Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00788786"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "san-bernardino-county-democratic-central-c00457200",
+      "name": "San Bernardino County Democratic Central Committee",
+      "sector": "Party & Candidate Committees",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00457200"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "sc-rising-c00939678",
+      "name": "Sc Rising",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00939678"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "california-blue-c00948216",
+      "name": "California Blue PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00948216"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ohio-flyer-c00912865",
+      "name": "Ohio Flyer PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00912865"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "young-people-for-a-new-era-c00949065",
+      "name": "Young People for a New Era",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00949065"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "front-line-action-c00953406",
+      "name": "The Front Line Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00953406"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "sf-solidarity-c00897314",
+      "name": "Sf Solidarity PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00897314"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "seniors-empowering-an-effective-democracy-c00934059",
+      "name": "Seniors Empowering an Effective Democracy (Seed-PAC)",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00934059"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "democratic-coalition-of-ocean-county",
+      "name": "Democratic Coalition of Ocean County",
+      "sector": "Energy & Natural Resources",
+      "classifiedBy": "name",
+      "committees": [
+        "C00870923"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "freedom-c00902189",
+      "name": "Freedom Pa",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00902189"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "mi-democratic-4th-congressional-c00914671",
+      "name": "Mi Democratic 4th Congressional PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00914671"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "dream-defenders-fight-c00728352",
+      "name": "Dream Defenders Fight PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00728352"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "texas-forever-c00962308",
+      "name": "Texas Forever",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00962308"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "rural-america-rising-c00893529",
+      "name": "Rural America Rising",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00893529"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "american-democracy-project-c00955393",
+      "name": "American Democracy Project",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00955393"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "buckeyes-c00961060",
+      "name": "Buckeyes PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00961060"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "climate-leadership-action-c90023821",
+      "name": "Climate Leadership Action",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023821"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "alaska-center-c90023615",
+      "name": "The Alaska Center",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023615"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "equal-exchange-c90023748",
+      "name": "Equal Exchange",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90023748"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "arizonans-for-american-dream-c00936443",
+      "name": "Arizonans for the American Dream PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00936443"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "evangelicals-for-a-better-future-c00887968",
+      "name": "Evangelicals for a Better Future",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00887968"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "our-future-united-c00927301",
+      "name": "Our Future United PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00927301"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "virginia-freedom-c00954792",
+      "name": "Virginia Freedom PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00954792"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "united-for-water-justice-sponsored-by-cwc-actionfund-c00957357",
+      "name": "United for Water Justice, Sponsored By Cwc Actionfund",
+      "sector": "Lawyers & Lobbyists",
+      "classifiedBy": "name",
+      "committees": [
+        "C00957357"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "take-back-texas-c00950527",
+      "name": "Take Back Texas PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00950527"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "aanhpi-rising-tide-c00891028",
+      "name": "Aanhpi Rising Tide",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00891028"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "ban-trade-c00894394",
+      "name": "Ban the Trade PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00894394"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "lone-star-voices-c00940502",
+      "name": "Lone Star Voices",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00940502"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "tab-america-first-c00956623",
+      "name": "Tab America First",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00956623"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "lowdown-c00956920",
+      "name": "The Lowdown",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00956920"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "affordable-california-2026-c00959841",
+      "name": "Affordable California 2026",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00959841"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "restoring-american-integrity-c00954065",
+      "name": "Restoring American Integrity",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00954065"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "minnesota-forward-c00935999",
+      "name": "Minnesota Forward",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00935999"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "revolutionary-change-c00919332",
+      "name": "Revolutionary Change PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00919332"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "flic-votes-c90020447",
+      "name": "Flic Votes Inc.",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C90020447"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "vote-courage-4-democracy-c00957738",
+      "name": "Vote Courage 4 Democracy Fund",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00957738"
+      ],
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
+      "id": "wisconsin-working-c00890343",
+      "name": "Wisconsin Working PAC",
+      "sector": "Ideological & Single-Issue",
+      "classifiedBy": "fec-type",
+      "committees": [
+        "C00890343"
       ],
       "total": 0,
       "byCycle": {},
