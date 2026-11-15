@@ -99,6 +99,7 @@ const PARTY_SERIES = [
           label: s.name,
           href: `/sectors/${s.slug}/`,
           values: { D: s.split.Democrat, I: s.split.Independent, R: s.split.Republican },
+          note: s.split.Republican >= s.split.Democrat ? `${pct(s.split.Republican, s.total)}% R` : `${pct(s.split.Democrat, s.total)}% D`,
         })),
       }}
       table={{

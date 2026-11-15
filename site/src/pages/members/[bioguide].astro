@@ -203,7 +203,7 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
               width={500}
               label="Money raised by election cycle and source"
               legend={SOURCES.map((s) => ({ label: s.label, color: s.color }))}
-              data={{ mode: "amount", series: SOURCES, rows: cycleRows }}
+              data={{ mode: "amount", insideLabels: true, series: SOURCES, rows: cycleRows }}
               table={{
                 columns: ["Cycle", ...SOURCES.map((s) => s.label)],
                 numeric: [1, 2, 3],
@@ -292,7 +292,6 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
           legend={CONTRIB.map((s) => ({ label: s.label, color: s.color }))}
           data={{
             mode: "amount",
-            insideLabels: false,
             series: CONTRIB,
             rows: topContributors.map(({ c, href }) => ({ label: c.name, href, values: { pacs: c.pacs, individuals: c.individuals } })),
           }}

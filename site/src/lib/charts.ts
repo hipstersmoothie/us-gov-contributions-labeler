@@ -278,15 +278,17 @@ export interface StackSeries {
 }
 export interface StackedData {
   series: StackSeries[];
-  rows: { label: string; href?: string; values: Record<string, number> }[];
+  rows: { label: string; href?: string; values: Record<string, number>; /** After the total, e.g. "85% D". */ note?: string }[];
   /** "share": every bar fills 100%. "amount": bars share one money scale. */
   mode: "share" | "amount";
-  /** Print each segment's share inside it where it fits (default true). */
+  /** Print each segment's share inside it where it fits. Only for fills that
+   *  hold text well (the neutral grays), never party colors. */
   insideLabels?: boolean;
 }
 
 function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
   const narrow = ctx.width < 520;
+  const share = d.mode === "share";
   const flat = d.rows.flatMap((row, i) => {
     const total = d.series.reduce((s, x) => s + (row.values[x.key] ?? 0), 0);
     return d.series.map((s) => ({
@@ -302,36 +304,58 @@ function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
       share: total ? (row.values[s.key] ?? 0) / total : 0,
     }));
   });
-  const totals = d.rows.map((row, i) => ({ i, total: flat.filter((f) => f.i === i).reduce((s, f) => s + f.value, 0) }));
+  const totals = d.rows.map((row, i) => ({ i, total: flat.filter((f) => f.i === i).reduce((s, f) => s + f.value, 0), note: row.note }));
   const max = Math.max(...totals.map((t) => t.total), 1);
-  const step = d.mode === "share" ? 48 : 40;
-  const plotW = ctx.width - (narrow ? 50 : 70);
-  const xMax = d.mode === "share" ? 1 : max;
-  const xField = d.mode === "share" ? "share" : "value";
-  const stackOpts = { x: xField, y: "i", z: "key", order: d.series.map((s) => s.key) } as const;
+  // Share bars carry their labels underneath, so they need a taller row.
+  const step = share ? 64 : 40;
+  const barTop = 23;
+  const barH = share ? 18 : 14;
+  const endRoom = narrow ? 50 : 70;
+  const noteRoom = totals.some((t) => t.note) ? (narrow ? 40 : 56) : 0;
+  const plotW = ctx.width - (share ? 0 : endRoom + noteRoom);
+  const xMax = share ? 1 : max;
+  const stackOpts = { x: share ? "share" : "value", y: "i", z: "key", order: d.series.map((s) => s.key) } as const;
 
-  // Inside-segment labels only where they fit with padding; the tooltip and
-  // table carry the rest.
+  // Text inside a segment only when asked (neutral fills), and only where it
+  // fits with padding; party colors never carry text.
   const inside = (f: (typeof flat)[number]) => {
-    if (d.insideLabels === false) return null;
-    const px = ((d.mode === "share" ? f.share : f.value) / xMax) * plotW;
+    if (!d.insideLabels) return null;
+    const px = ((share ? f.share : f.value) / xMax) * plotW;
     const text = `${Math.round(f.share * 100)}%`;
     return px > text.length * 7.5 + 14 ? text : null;
   };
+  // Share bars: the first and last series are named at either end, under the bar.
+  const first = d.series[0]!;
+  const last = d.series.at(-1)!;
+  const ends = (s: StackSeries, side: "start" | "end") =>
+    Plot.text(
+      flat.filter((f) => f.key === s.key && f.share > 0),
+      {
+        x: side === "start" ? 0 : 1,
+        y: "i",
+        dy: barTop + barH + 4 - step / 2,
+        lineAnchor: "top",
+        textAnchor: side,
+        text: (f) => (side === "start" ? `${Math.round(f.share * 100)}% ${s.label}` : `${s.label} ${Math.round(f.share * 100)}%`),
+        fill: "var(--text-primary)",
+        fontSize: 12,
+        fontWeight: 600,
+      }
+    );
 
   return base(ctx, {
     height: d.rows.length * step + 4,
     marginTop: 4,
     marginBottom: 0,
     marginLeft: 0,
-    marginRight: d.mode === "amount" ? (narrow ? 50 : 70) : 0,
+    marginRight: share ? 0 : endRoom + noteRoom,
     x: { domain: [0, xMax], axis: null },
     y: { domain: d.rows.map((_, i) => i), axis: null, paddingInner: 0, paddingOuter: 0 },
     marks: [
       Plot.text(d.rows, {
         x: 0,
         y: (_, i) => i,
-        dy: 19 - step / 2,
+        dy: barTop - 4 - step / 2,
         lineAnchor: "bottom",
         textAnchor: "start",
         text: "label",
@@ -346,8 +370,8 @@ function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
         Plot.stackX({
           ...stackOpts,
           fill: "color",
-          insetTop: 23,
-          insetBottom: step - 23 - (d.mode === "share" ? 22 : 14),
+          insetTop: barTop,
+          insetBottom: step - barTop - barH,
           insetLeft: 1,
           insetRight: 1,
           channels: { Group: "row", Series: "series", Amount: (f) => money(f.value), Share: (f) => `${Math.round(f.share * 100)}%` },
@@ -360,27 +384,27 @@ function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
         flat,
         Plot.stackX({
           ...stackOpts,
-          dy: d.mode === "share" ? 12 : 10,
+          dy: barTop + barH / 2 - step / 2,
           text: inside,
           fill: "ink",
           fontSize: 11,
           fontWeight: 600,
         })
       ),
-      ...(d.mode === "amount"
-        ? [
+      ...(share
+        ? [ends(first, "start"), ends(last, "end")]
+        : [
             Plot.text(totals, {
               x: "total",
               y: "i",
-              dy: 10,
+              dy: barTop + barH / 2 - step / 2,
               dx: 6,
               textAnchor: "start",
-              text: (t) => money(t.total, true),
+              text: (t) => (t.note ? `${money(t.total, true)} · ${t.note}` : money(t.total, true)),
               fill: "var(--text-secondary)",
               fontSize: 12,
             }),
-          ]
-        : []),
+          ]),
     ],
   });
 }
