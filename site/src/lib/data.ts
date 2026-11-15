@@ -22,6 +22,32 @@ const { committees: congressCommittees } = load<{ committees: CongressCommittee[
   committees: [],
 });
 
+// Committees that file with the FEC under an acronym, by their full names.
+// Renamed here, at load, so every page, list, search entry and link preview
+// agrees; the organization and donor records built from the same committee
+// carry its name too.
+const FULL_NAMES: Record<string, string> = {
+  C00000935: "Democratic Congressional Campaign Committee",
+  C00027466: "National Republican Senatorial Committee",
+  C00042366: "Democratic Senatorial Campaign Committee",
+  C00075820: "National Republican Congressional Committee",
+  C00484642: "Senate Majority PAC",
+  C00492140: "American Bridge 21st Century",
+  C00495028: "House Majority PAC",
+  C00504530: "Congressional Leadership Fund",
+  C00571703: "Senate Leadership Fund",
+  C00684969: "Jewish Democratic Council of America PAC",
+  C00710848: "Democratic Majority for Israel PAC",
+};
+for (const c of committees) {
+  const full = FULL_NAMES[c.id];
+  if (!full) continue;
+  const org = organizations.find((o) => o.id === c.organization);
+  if (org && org.committees.length === 1) org.name = full;
+  for (const d of donors) if (d.committee === c.id) d.name = full;
+  c.name = full;
+}
+
 export const generatedAt = new Date(membersFile.generatedAt);
 export const cycles = membersFile.cycles;
 export const members = [...membersFile.members].sort((a, b) =>

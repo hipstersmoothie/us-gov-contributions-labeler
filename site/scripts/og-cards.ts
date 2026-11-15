@@ -253,7 +253,7 @@ cards["page/search"] = {
   ],
 };
 
-const file: CardsFile = { version: ogVersion(), cycleRange: cycleRange.replace(/\u2060/g, ""), cards };
+const file: CardsFile = { version: ogVersion(cards), cycleRange: cycleRange.replace(/\u2060/g, ""), cards };
 fs.mkdirSync(OUT_DIR, { recursive: true });
 fs.writeFileSync(path.join(OUT_DIR, "cards.json"), JSON.stringify(file));
 // The wordmark, so the server doesn't need the rest of the repo.

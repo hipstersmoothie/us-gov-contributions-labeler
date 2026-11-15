@@ -71,15 +71,17 @@ export function money(n: number) {
   }).format(n);
 }
 const pct = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
-/** "More than 82% of senators", from the member's rank in their chamber.
- *  The percentage is always of the peers on the far side of them. */
+/** "More PAC money than 82% of senators", from the member's rank in their
+ *  chamber. The percentage is always of the peers on the far side of them. */
 function comparison(c: MemberCard) {
   const one = c.peers.replace(/s$/, "");
-  if (c.rank === 1) return `The most of any ${one}`;
-  if (c.rank === c.of) return `The least of any ${one}`;
+  if (c.rank === 1) return `The most PAC money of any ${one}`;
+  if (c.rank === c.of) return `The least PAC money of any ${one}`;
   const above = (c.rank - 1) / (c.of - 1);
-  if (above >= 0.4 && above <= 0.6) return `About what the typical ${one} took`;
-  return above < 0.5 ? `More than ${Math.round((1 - above) * 100)}% of ${c.peers}` : `Less than ${Math.round(above * 100)}% of ${c.peers}`;
+  if (above >= 0.4 && above <= 0.6) return `About as much PAC money as the typical ${one}`;
+  return above < 0.5
+    ? `More PAC money than ${Math.round((1 - above) * 100)}% of ${c.peers}`
+    : `Less PAC money than ${Math.round(above * 100)}% of ${c.peers}`;
 }
 const plural = (n: number, one: string, many: string) => `${n.toLocaleString()} ${n === 1 ? one : many}`;
 
