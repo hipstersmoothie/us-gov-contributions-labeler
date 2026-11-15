@@ -798,6 +798,25 @@
     ]
   },
   {
+    "bioguide": "L000557",
+    "name": "John B. Larson",
+    "chamber": "house",
+    "state": "CT",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:l4r4znkwcam5yrkgspi3mpru",
+        "handle": "johnlarsonct.bsky.social",
+        "displayName": "John Larson",
+        "sources": [
+          "override",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
     "bioguide": "L000397",
     "name": "Zoe Lofgren",
     "chamber": "house",
@@ -1400,6 +1419,25 @@
     ]
   },
   {
+    "bioguide": "T000193",
+    "name": "Bennie G. Thompson",
+    "chamber": "house",
+    "state": "MS",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:k5x57l4okndlgqhohmh5cywq",
+        "handle": "benniethompson.bsky.social",
+        "displayName": "Bennie Thompson",
+        "sources": [
+          "override",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
     "bioguide": "T000460",
     "name": "Mike Thompson",
     "chamber": "house",
@@ -1595,6 +1633,15 @@
           "previous-data",
           "search",
           "verified"
+        ]
+      },
+      {
+        "did": "did:plc:cecd5ju73ilt7ntzyygkusgp",
+        "handle": "wydenpress.bsky.social",
+        "displayName": "Wyden Press",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -1938,6 +1985,24 @@
     ]
   },
   {
+    "bioguide": "K000383",
+    "name": "Angus S. King, Jr.",
+    "chamber": "senate",
+    "state": "ME",
+    "party": "Independent",
+    "accounts": [
+      {
+        "did": "did:plc:qsnuephkmovdh2u4c2u336qr",
+        "handle": "senangusking.bsky.social",
+        "displayName": "Senator Angus King",
+        "sources": [
+          "override",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
     "bioguide": "M001188",
     "name": "Grace Meng",
     "chamber": "house",
@@ -2080,6 +2145,15 @@
           "search",
           "verified"
         ]
+      },
+      {
+        "did": "did:plc:c23lm7asfzxtpn6kyz6hcf5z",
+        "handle": "markpocan.bsky.social",
+        "displayName": "Mark Pocan",
+        "sources": [
+          "override",
+          "search"
+        ]
       }
     ]
   },
@@ -2165,6 +2239,27 @@
           "previous-data",
           "search",
           "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "N000188",
+    "name": "Donald Norcross",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 1,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:lwhbdld4x7c557vszdr2qyvq",
+        "handle": "handle.invalid",
+        "displayName": "Congressman Donald Norcross",
+        "sources": [
+          "labeler-list",
+          "override",
+          "previous-data",
+          "search"
         ]
       }
     ]
@@ -2334,6 +2429,15 @@
           "previous-data",
           "search",
           "verified"
+        ]
+      },
+      {
+        "did": "did:plc:iudave7o5abb2nxlo4ambbp7",
+        "handle": "sethmoulton.bsky.social",
+        "displayName": "Seth Moulton",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -3503,6 +3607,15 @@
           "search",
           "verified"
         ]
+      },
+      {
+        "did": "did:plc:xxndlw6cvaepxdlfksjaofnp",
+        "handle": "veronicaescobartx.bsky.social",
+        "displayName": "Veronica Escobar",
+        "sources": [
+          "override",
+          "search"
+        ]
       }
     ]
   },
@@ -3780,6 +3893,15 @@
           "previous-data",
           "search"
         ]
+      },
+      {
+        "did": "did:plc:ulquedxocwtoitir2w4ucsbn",
+        "handle": "repritchie.bsky.social",
+        "displayName": "Rep. Ritchie Torres",
+        "sources": [
+          "override",
+          "search"
+        ]
       }
     ]
   },
@@ -3914,6 +4036,34 @@
     ]
   },
   {
+    "bioguide": "B001313",
+    "name": "Shontel M. Brown",
+    "chamber": "house",
+    "state": "OH",
+    "district": 11,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:mhtg7vfga5jftbaoviu4ajza",
+        "handle": "repshontelbrown.bsky.social",
+        "displayName": "Rep. Shontel Brown",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:obcayzxqn4fm37w3k2k4rmvf",
+        "handle": "shontelbrown.bsky.social",
+        "displayName": "Shontel Brown",
+        "sources": [
+          "override",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
     "bioguide": "R000579",
     "name": "Patrick Ryan",
     "chamber": "house",
@@ -3978,7 +4128,6 @@
         "displayName": "Rep. Kevin Mullin",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4031,7 +4180,6 @@
         "displayName": "Rep. Robert Garcia",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4052,7 +4200,6 @@
         "displayName": "U.S. Rep. Brittany Pettersen",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4084,7 +4231,6 @@
         "displayName": "Rep. Maxwell Alejandro Frost",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4105,7 +4251,6 @@
         "displayName": "Congressman Jared Moskowitz",
         "sources": [
           "labeler-list",
-          "official-domain",
           "previous-data",
           "search",
           "verified"
@@ -4149,7 +4294,6 @@
         "sources": [
           "gov-handle",
           "labeler-list",
-          "official-domain",
           "previous-data",
           "search",
           "verified"
@@ -4171,7 +4315,6 @@
         "displayName": "Congresswoman Delia C. Ramirez",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4202,7 +4345,6 @@
         "displayName": "Nikki Budzinski",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4224,6 +4366,15 @@
         "sources": [
           "labeler-list",
           "previous-data",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:mudv7ufccpcccm74msp24lkc",
+        "handle": "repericsorensen.bsky.social",
+        "displayName": "Congressman Eric Sorensen",
+        "sources": [
+          "override",
           "search"
         ]
       }
@@ -4264,7 +4415,6 @@
         "displayName": "Congressman Glenn Ivey (MD-04) ",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4285,7 +4435,6 @@
         "displayName": "Rep. Hillary Scholten",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4316,7 +4465,6 @@
         "displayName": "Congressman Shri Thanedar",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4337,7 +4485,6 @@
         "displayName": "Congresswoman Valerie Foushee",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4359,7 +4506,6 @@
         "sources": [
           "gov-handle",
           "labeler-list",
-          "official-domain",
           "previous-data",
           "verified"
         ]
@@ -4450,7 +4596,6 @@
         "handle": "repemiliasykes.bsky.social",
         "displayName": "Rep. Emilia Strong Sykes",
         "sources": [
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4492,7 +4637,6 @@
         "displayName": "Congresswoman Andrea Salinas",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4542,7 +4686,6 @@
         "displayName": "Congressman Chris Deluzio",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4563,9 +4706,17 @@
         "displayName": "Representative Seth Magaziner",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
+        ]
+      },
+      {
+        "did": "did:plc:35gaaw3izth3m3n6dea77udt",
+        "handle": "sethmagaziner.bsky.social",
+        "displayName": "Seth Magaziner",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -4585,7 +4736,6 @@
         "sources": [
           "gov-handle",
           "labeler-list",
-          "official-domain",
           "previous-data",
           "search",
           "verified"
@@ -4618,10 +4768,18 @@
         "displayName": "Congressman Greg Casar",
         "sources": [
           "labeler-list",
-          "official-domain",
           "previous-data",
           "search",
           "verified"
+        ]
+      },
+      {
+        "did": "did:plc:qmrd2hmucin2ucnfb36hry3y",
+        "handle": "gregcasar.bsky.social",
+        "displayName": "Greg Casar",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -4641,7 +4799,6 @@
         "sources": [
           "gov-handle",
           "labeler-list",
-          "official-domain",
           "previous-data",
           "search",
           "verified"
@@ -4663,7 +4820,6 @@
         "displayName": "Rep. Marie Gluesenkamp Perez",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4703,7 +4859,6 @@
         "displayName": "Rep. Jennifer McClellan",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4729,6 +4884,24 @@
           "previous-data",
           "search",
           "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "K000402",
+    "name": "Timothy M. Kennedy",
+    "chamber": "house",
+    "state": "NY",
+    "district": 26,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:37vi2ubqe3f4g56is536342f",
+        "handle": "reptimkennedy.bsky.social",
+        "displayName": "Rep. Tim Kennedy",
+        "sources": [
+          "override"
         ]
       }
     ]
@@ -4785,7 +4958,6 @@
         "displayName": "Rep. Gil Cisneros",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4814,6 +4986,25 @@
     ]
   },
   {
+    "bioguide": "F000481",
+    "name": "Shomari Figures",
+    "chamber": "house",
+    "state": "AL",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:bpmqnn3ungi5m7wcjbnrv6m5",
+        "handle": "repscfigures.bsky.social",
+        "displayName": "Rep. Shomari C. Figures",
+        "sources": [
+          "override",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
     "bioguide": "A000381",
     "name": "Yassamin Ansari",
     "chamber": "house",
@@ -4822,22 +5013,21 @@
     "party": "Democrat",
     "accounts": [
       {
+        "did": "did:plc:4w4ex7k2tlpwa3phwwp7ea7a",
+        "handle": "repyassansari.bsky.social",
+        "displayName": "Congresswoman Yassamin Ansari",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
+      {
         "did": "did:plc:chd4o3a3vzgdxwc6jikp2sby",
         "handle": "yassaminansari.bsky.social",
         "displayName": "Yassamin Ansari",
         "sources": [
           "labeler-list",
           "search"
-        ]
-      },
-      {
-        "did": "did:plc:f5jxegk4cpobfskg3sfhu5gr",
-        "handle": "tokuda.house.gov",
-        "displayName": "Rep. Jill Tokuda",
-        "sources": [
-          "gov-handle",
-          "official-domain",
-          "verified"
         ]
       }
     ]
@@ -4876,9 +5066,27 @@
         "sources": [
           "gov-handle",
           "labeler-list",
-          "official-domain",
           "search",
           "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "W000830",
+    "name": "George Whitesides",
+    "chamber": "house",
+    "state": "CA",
+    "district": 27,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:evlfwdjjcyxesb6jvhczcnm5",
+        "handle": "georgewhitesides.bsky.social",
+        "displayName": "Rep. George Whitesides",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -4916,7 +5124,6 @@
         "displayName": "Rep. Laura Friedman",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -4985,9 +5192,36 @@
         "displayName": "Congresswoman Sarah McBride",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "O000176",
+    "name": "Johnny Olszewski, Jr.",
+    "chamber": "house",
+    "state": "MD",
+    "district": 2,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:jl6bnuiemddpm3orm2kcedxh",
+        "handle": "repjohnnyo.bsky.social",
+        "displayName": "Rep. Johnny Olszewski",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:i7xmmzkr5wvaywe64v2ydrmh",
+        "handle": "gojohnnyo.bsky.social",
+        "displayName": "Johnny Olszewski",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -5007,7 +5241,6 @@
         "sources": [
           "dm",
           "gov-handle",
-          "official-domain",
           "previous-data",
           "search",
           "verified"
@@ -5051,16 +5284,6 @@
           "search",
           "verified"
         ]
-      },
-      {
-        "did": "did:plc:f5jxegk4cpobfskg3sfhu5gr",
-        "handle": "tokuda.house.gov",
-        "displayName": "Rep. Jill Tokuda",
-        "sources": [
-          "gov-handle",
-          "official-domain",
-          "verified"
-        ]
       }
     ]
   },
@@ -5102,6 +5325,15 @@
           "previous-data",
           "search",
           "verified"
+        ]
+      },
+      {
+        "did": "did:plc:hluq3iv4rk3iyn2opmf4jnsu",
+        "handle": "maggiefornh.com",
+        "displayName": "Maggie Goodlander",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -5234,7 +5466,6 @@
         "displayName": "Rep. Janelle Bynum",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
         ]
@@ -5249,6 +5480,15 @@
     "district": 32,
     "party": "Democrat",
     "accounts": [
+      {
+        "did": "did:plc:45v2c3555bls7em62fsmuaql",
+        "handle": "juliejohnsontx.bsky.social",
+        "displayName": "Julie Johnson",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
       {
         "did": "did:plc:ezisgga5omwhwxhe32ckactd",
         "handle": "repjuliejohnson.bsky.social",
@@ -5284,6 +5524,62 @@
         "sources": [
           "search",
           "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "S001230",
+    "name": "Suhas Subramanyam",
+    "chamber": "house",
+    "state": "VA",
+    "district": 10,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:olqojaxxuu6yjqfhiwbuware",
+        "handle": "repsuhas.bsky.social",
+        "displayName": "Rep. Suhas Subramanyam",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:kopzf6vrl4ipn2z6zf2fxzs4",
+        "handle": "suhasforvirginia.bsky.social",
+        "displayName": "Suhas Subramanyam",
+        "sources": [
+          "override",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "R000621",
+    "name": "Emily Randall",
+    "chamber": "house",
+    "state": "WA",
+    "district": 6,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:smytu5uz6vbwevh67i4mnokg",
+        "handle": "emilyrandallwa.bsky.social",
+        "displayName": "Emily Randall",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:irfwoem27gack6d6erxuc74l",
+        "handle": "repemilyrandall.bsky.social",
+        "displayName": "Rep. Emily Randall",
+        "sources": [
+          "override",
+          "search"
         ]
       }
     ]
@@ -5325,14 +5621,67 @@
     "party": "Democrat",
     "accounts": [
       {
+        "did": "did:plc:gd53ke3rcoptyiib6jkslloh",
+        "handle": "cdmenefee.bsky.social",
+        "displayName": "Christian D. Menefee",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
+      {
         "did": "did:plc:k4u4xfqxmnice5ryazs6mexn",
         "handle": "menefee.house.gov",
         "displayName": "Congressman Christian D. Menefee",
         "sources": [
           "gov-handle",
-          "official-domain",
           "search",
           "verified"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "M001246",
+    "name": "Analilia Mejia",
+    "chamber": "house",
+    "state": "NJ",
+    "district": 11,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:bgnw7btv6mv3jcdicj6yrekr",
+        "handle": "repanalilia.bsky.social",
+        "displayName": "Congresswoman Analilia Mejia",
+        "sources": [
+          "override",
+          "search"
+        ]
+      }
+    ]
+  },
+  {
+    "bioguide": "B001328",
+    "name": "Everton Blair Jr.",
+    "chamber": "house",
+    "state": "GA",
+    "district": 13,
+    "party": "Democrat",
+    "accounts": [
+      {
+        "did": "did:plc:tjjtaowbajgby5ukoo2k4chp",
+        "handle": "evertonblair.bsky.social",
+        "displayName": "Everton Blair",
+        "sources": [
+          "override",
+          "search"
+        ]
+      },
+      {
+        "did": "did:plc:kevfmn3yvafggysqyfbvdwpn",
+        "handle": "congressmanblair.bsky.social",
+        "sources": [
+          "override"
         ]
       }
     ]

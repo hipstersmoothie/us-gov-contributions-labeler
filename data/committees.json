@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T07:46:40.157Z",
+  "generatedAt": "2026-11-15T10:05:28.734Z",
   "cycles": [
     2022,
     2024,
@@ -268650,7 +268650,7 @@
       "name": "CONGRESSIONAL BLACK CAUCUS PAC",
       "kind": "pac",
       "state": "DC",
-      "organization": "congressional-black-caucus",
+      "organization": "congressional-black-caucus-c00147512",
       "sector": "Ideological & Single-Issue",
       "total": 538250,
       "byCycle": {
@@ -323425,7 +323425,7 @@
       "state": "TX",
       "organization": "us-oncology-network",
       "sector": "Health",
-      "industry": "Health Issues",
+      "industry": "Medicare/Medicaid",
       "total": 884090,
       "byCycle": {
         "2022": 252500,
@@ -433371,9 +433371,8 @@
       "name": "FUTURE FORUM PAC",
       "kind": "pac",
       "state": "DC",
-      "organization": "future-forum",
-      "sector": "Finance, Insurance & Real Estate",
-      "industry": "Housing",
+      "organization": "future-forum-c00625988",
+      "sector": "Ideological & Single-Issue",
       "total": 520000,
       "byCycle": {
         "2022": 151000,
@@ -611591,7 +611590,7 @@
       "name": "HEARTDOCPAC",
       "kind": "pac",
       "state": "TX",
-      "organization": "heartdocpac",
+      "organization": "heartdocpac-c00523381",
       "sector": "Ideological & Single-Issue",
       "total": 225025,
       "byCycle": {
@@ -640825,7 +640824,7 @@
       "orgType": "C",
       "kind": "pac",
       "state": "MA",
-      "organization": "fmr-state",
+      "organization": "fmr",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "total": 188500,
@@ -642020,8 +642019,7 @@
       "kind": "pac",
       "state": "MO",
       "organization": "clean-fuels-alliance-america",
-      "sector": "Energy & Natural Resources",
-      "industry": "Energy/Nuclear",
+      "sector": "Unknown",
       "total": 187500,
       "byCycle": {
         "2022": 63000,
@@ -652646,9 +652644,8 @@
       "name": "BUFFALO RIVER POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "MN",
-      "organization": "buffalo-river",
-      "sector": "Transportation",
-      "industry": "Transportation",
+      "organization": "buffalo-river-c00253187",
+      "sector": "Ideological & Single-Issue",
       "total": 176516,
       "byCycle": {
         "2022": 76000,
@@ -665277,9 +665274,8 @@
       "name": "TEXANS FOR LAMAR SMITH",
       "kind": "pac",
       "state": "TX",
-      "organization": "texans-for-lamar-smith",
-      "sector": "Finance, Insurance & Real Estate",
-      "industry": "Housing",
+      "organization": "texans-for-lamar-smith-c00197160",
+      "sector": "Ideological & Single-Issue",
       "total": 162500,
       "byCycle": {
         "2022": 91500,
@@ -667553,9 +667549,8 @@
       "name": "BACPAC",
       "kind": "pac",
       "state": "CO",
-      "organization": "bacpac",
-      "sector": "Health",
-      "industry": "Health Issues",
+      "organization": "intl-union-of-bricklayers-and-allied-craftworkers",
+      "sector": "Labor",
       "total": 161100,
       "byCycle": {
         "2024": 101100,
@@ -712447,9 +712442,8 @@
       "name": "FREEDOM FIRST PAC",
       "kind": "pac",
       "state": "NC",
-      "organization": "freedom-first",
-      "sector": "Health",
-      "industry": "Health Issues",
+      "organization": "freedom-first-c00503094",
+      "sector": "Ideological & Single-Issue",
       "total": 117000,
       "byCycle": {
         "2022": 31000,
@@ -715707,9 +715701,8 @@
       "name": "ASIAN AMERICAN ACTION FUND",
       "kind": "pac",
       "state": "DC",
-      "organization": "amgen",
-      "sector": "Health",
-      "industry": "Biological Products, (No Diagnostic Substances)",
+      "organization": "asian-american-action-c00351031",
+      "sector": "Ideological & Single-Issue",
       "total": 114500,
       "byCycle": {
         "2022": 48000,
@@ -741482,7 +741475,7 @@
       "orgType": "C",
       "kind": "pac",
       "state": "DC",
-      "organization": "hsbc-technology-and-services-usa-state-and-local",
+      "organization": "hsbc-technology-and-services-usa",
       "sector": "Communications & Technology",
       "industry": "Computer Industry",
       "total": 92000,
@@ -772557,9 +772550,9 @@
       "orgType": "C",
       "kind": "pac",
       "state": "NY",
-      "organization": "guardian-life-insurance-of-america-general",
+      "organization": "guardian-life-insurance-of-america",
       "sector": "Finance, Insurance & Real Estate",
-      "industry": "Financial Institutions/Investments/Securities",
+      "industry": "Insurance",
       "total": 72000,
       "byCycle": {
         "2022": 18000,
@@ -774175,9 +774168,8 @@
       "name": "FRIENDS OF MEDICAL RESEARCH POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "DC",
-      "organization": "friends-of-medical-research",
+      "organization": "friends-of-medical-research-c00566042",
       "sector": "Health",
-      "industry": "Health Issues",
       "total": 70600,
       "byCycle": {
         "2022": 14400,
@@ -779455,7 +779447,7 @@
       "orgType": "M",
       "kind": "pac",
       "state": "IL",
-      "organization": "american-association-of-clinical-urologists",
+      "organization": "american-urological-association",
       "sector": "Health",
       "industry": "Health Issues",
       "total": 67750,
@@ -780073,9 +780065,8 @@
       "name": "WONDER WOMEN PAC",
       "kind": "pac",
       "state": "VA",
-      "organization": "wonder-women",
-      "sector": "Energy & Natural Resources",
-      "industry": "Environment/Superfund",
+      "organization": "wonder-women-c00787002",
+      "sector": "Ideological & Single-Issue",
       "total": 67400,
       "byCycle": {
         "2022": 17400,
@@ -794935,9 +794926,8 @@
       "name": "OLD NORTH STATE VICTORY PAC",
       "kind": "pac",
       "state": "NC",
-      "organization": "old-north-state-victory",
-      "sector": "Agribusiness",
-      "industry": "Animals",
+      "organization": "old-north-state-victory-c00401190",
+      "sector": "Ideological & Single-Issue",
       "total": 59001,
       "byCycle": {
         "2022": 38801,
@@ -795327,9 +795317,8 @@
       "name": "JPAC",
       "kind": "pac",
       "state": "SC",
-      "organization": "jpac",
-      "sector": "Health",
-      "industry": "Medicare/Medicaid",
+      "organization": "jpac-c00420695",
+      "sector": "Ideological & Single-Issue",
       "total": 59000,
       "byCycle": {
         "2022": 35000,
@@ -797357,9 +797346,8 @@
       "name": "GREATER OPPORTUNITIES FOR LEADERSHIP DEVELOPMENT (GOLD PAC)",
       "kind": "pac",
       "state": "DC",
-      "organization": "greater-opportunities-for-leadership-development",
-      "sector": "Agribusiness",
-      "industry": "Animals",
+      "organization": "greater-opportunities-for-leadership-development-c00452748",
+      "sector": "Ideological & Single-Issue",
       "total": 57700,
       "byCycle": {
         "2022": 22700,
@@ -816863,9 +816851,8 @@
       "name": "SEED FIRST POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "DC",
-      "organization": "seed-first",
-      "sector": "Health",
-      "industry": "Health Issues",
+      "organization": "seed-first-c00578468",
+      "sector": "Ideological & Single-Issue",
       "total": 46500,
       "byCycle": {
         "2022": 23000,
@@ -822343,9 +822330,8 @@
       "name": "AMERICAN VICTORY FUND",
       "kind": "pac",
       "state": "GA",
-      "organization": "american-victory",
-      "sector": "Health",
-      "industry": "Health Issues",
+      "organization": "american-victory-c00758532",
+      "sector": "Ideological & Single-Issue",
       "total": 43355,
       "byCycle": {
         "2024": 43355
@@ -836907,6 +836893,11 @@
       "state": "GA",
       "organization": "mission-democracy-c00768101",
       "sector": "Party & Candidate Committees",
+      "sponsors": [
+        {
+          "fecId": "H2GA14044"
+        }
+      ],
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -837073,8 +837064,7 @@
       "kind": "pac",
       "state": "DC",
       "organization": "endeavor",
-      "sector": "Energy & Natural Resources",
-      "industry": "Environment/Superfund",
+      "sector": "Unknown",
       "total": 36500,
       "byCycle": {
         "2022": 18500,
@@ -844619,9 +844609,8 @@
       "name": "MAIN STREET BANKING POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "VA",
-      "organization": "capital-one-financial",
+      "organization": "main-street-banking-c00551192",
       "sector": "Finance, Insurance & Real Estate",
-      "industry": "National Commercial Banks",
       "total": 32600,
       "byCycle": {
         "2022": 32600
@@ -852297,6 +852286,11 @@
       "state": "VA",
       "organization": "peace-through-strength-c00525824",
       "sector": "Party & Candidate Committees",
+      "sponsors": [
+        {
+          "fecId": "H8CA52052"
+        }
+      ],
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -880022,7 +880016,7 @@
       "orgType": "C",
       "kind": "pac",
       "state": "OH",
-      "organization": "worldpay",
+      "organization": "fidelity-national-information-systems",
       "sector": "Finance, Insurance & Real Estate",
       "industry": "Financial Institutions/Investments/Securities",
       "total": 17500,
@@ -893208,9 +893202,8 @@
       "connectedOrg": "SMILEY VICTORY FUND",
       "kind": "pac",
       "state": "VA",
-      "organization": "endeavor",
-      "sector": "Energy & Natural Resources",
-      "industry": "Environment/Superfund",
+      "organization": "endeavor-c00831560",
+      "sector": "Ideological & Single-Issue",
       "total": 12300,
       "byCycle": {
         "2024": 8300,
@@ -895031,7 +895024,8 @@
       "kind": "pac",
       "state": "OH",
       "organization": "root",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Fire, Marine & Casualty Insurance",
       "total": 11800,
       "byCycle": {
         "2022": 1000,
@@ -896234,9 +896228,8 @@
       "name": "AMERICAN VICTORY COMMITTEE",
       "kind": "pac",
       "state": "VA",
-      "organization": "american-victory",
-      "sector": "Health",
-      "industry": "Health Issues",
+      "organization": "american-victory-c00272153",
+      "sector": "Ideological & Single-Issue",
       "total": 11000,
       "byCycle": {
         "2022": 3000,
@@ -900474,7 +900467,6 @@
       "state": "TX",
       "organization": "texas-forestry-association-forestry",
       "sector": "Energy & Natural Resources",
-      "industry": "Natural Resources",
       "total": 10000,
       "byCycle": {
         "2022": 9000,
@@ -903389,9 +903381,8 @@
       "name": "GOLDEN STATE POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "CA",
-      "organization": "golden-state",
-      "sector": "Health",
-      "industry": "Pharmacy",
+      "organization": "golden-state-c00145342",
+      "sector": "Ideological & Single-Issue",
       "total": 9500,
       "byCycle": {
         "2026": 9500
@@ -912181,7 +912172,6 @@
       "state": "OH",
       "organization": "american-concrete-pumping-association-pumppac",
       "sector": "Construction",
-      "industry": "Education",
       "total": 6500,
       "byCycle": {
         "2022": 1000,
@@ -913174,9 +913164,8 @@
       "name": "AD ALLIANCE",
       "kind": "pac",
       "state": "MD",
-      "organization": "ad-alliance",
-      "sector": "Communications & Technology",
-      "industry": "Computer Industry",
+      "organization": "ad-alliance-c00233353",
+      "sector": "Ideological & Single-Issue",
       "total": 6000,
       "byCycle": {
         "2022": 6000
@@ -913754,9 +913743,8 @@
       "name": "FRIENDS OF PAT TOOMEY",
       "kind": "pac",
       "state": "VA",
-      "organization": "friends-of-pat-toomey",
-      "sector": "Health",
-      "industry": "Health Issues",
+      "organization": "friends-of-pat-toomey-c00461046",
+      "sector": "Ideological & Single-Issue",
       "total": 6000,
       "byCycle": {
         "2022": 6000
@@ -914698,7 +914686,7 @@
       "name": "FRAGOMEN POLITICAL ACTION COMMITTEE (FRAGOMEN PAC)",
       "kind": "pac",
       "state": "DC",
-      "organization": "fragomen",
+      "organization": "fragomen-c00418095",
       "sector": "Ideological & Single-Issue",
       "total": 5800,
       "byCycle": {
@@ -919390,6 +919378,7 @@
       "state": "CA",
       "organization": "foster-poultry-farms",
       "sector": "Agribusiness",
+      "industry": "Agriculture",
       "total": 4900,
       "byCycle": {
         "2022": 2900,
@@ -919512,7 +919501,8 @@
       "kind": "pac",
       "state": "MI",
       "organization": "butzel-long",
-      "sector": "Unknown",
+      "sector": "Lawyers & Lobbyists",
+      "industry": "Law firm",
       "total": 4750,
       "byCycle": {
         "2022": 500,
@@ -919758,7 +919748,8 @@
       "kind": "pac",
       "state": "FL",
       "organization": "emigrant-bancorp",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Banking",
       "total": 4500,
       "byCycle": {
         "2022": 1000,
@@ -920108,7 +920099,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "vast",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Aerospace",
       "total": 4500,
       "byCycle": {
         "2026": 4500
@@ -920739,7 +920731,8 @@
       "kind": "pac",
       "state": "NY",
       "organization": "mediacom-communications",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Telecommunications",
       "total": 4250,
       "byCycle": {
         "2022": 750,
@@ -920960,7 +920953,8 @@
       "kind": "pac",
       "state": "MN",
       "organization": "otter-tail",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
+      "industry": "Electric Services",
       "total": 4100,
       "byCycle": {
         "2022": 3100,
@@ -921151,7 +921145,8 @@
       "kind": "pac",
       "state": "OH",
       "organization": "mcdonald-hopkins",
-      "sector": "Unknown",
+      "sector": "Lawyers & Lobbyists",
+      "industry": "law firm",
       "total": 4000,
       "byCycle": {
         "2022": 1500,
@@ -921546,7 +921541,8 @@
       "kind": "pac",
       "state": "AK",
       "organization": "alaska-communications-systems",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Telecommunications",
       "total": 4000,
       "byCycle": {
         "2022": 4000
@@ -921571,6 +921567,7 @@
       "state": "VA",
       "organization": "association-of-air-medical-services",
       "sector": "Health",
+      "industry": "Medicare/Medicaid",
       "total": 4000,
       "byCycle": {
         "2022": 3000,
@@ -921710,7 +921707,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "friends-of-earth",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 4000,
       "byCycle": {
         "2022": 2500,
@@ -921885,7 +921883,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "milk-producers-council",
-      "sector": "Unknown",
+      "sector": "Agribusiness",
+      "industry": "Agriculture",
       "total": 4000,
       "byCycle": {
         "2024": 4000
@@ -922247,6 +922246,7 @@
       "state": "DC",
       "organization": "alliance-of-community-health-plans",
       "sector": "Health",
+      "industry": "Medicare/Medicaid",
       "total": 4000,
       "byCycle": {
         "2024": 1000,
@@ -922432,8 +922432,9 @@
       "name": "INCUBATE PAC",
       "kind": "pac",
       "state": "DC",
-      "organization": "incubate-c00870741",
-      "sector": "Ideological & Single-Issue",
+      "organization": "incubate",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 4000,
       "byCycle": {
         "2026": 4000
@@ -922665,7 +922666,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "national-hydropower-association",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 4000,
       "byCycle": {
         "2026": 4000
@@ -922836,7 +922838,8 @@
       "kind": "pac",
       "state": "NC",
       "organization": "wolfspeed",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Semiconductors & Related Devices",
       "total": 3900,
       "byCycle": {
         "2022": 2900,
@@ -922970,8 +922973,9 @@
       "name": "COUNCIL FOR CITIZENS AGAINST GOVERNMENT WASTE POLITICAL ACTION COMMITTEE (CCAGW PAC)",
       "kind": "pac",
       "state": "DC",
-      "organization": "council-for-citizens-against-government-waste-c00391490",
-      "sector": "Ideological & Single-Issue",
+      "organization": "council-for-citizens-against-government-waste",
+      "sector": "Communications & Technology",
+      "industry": "Copyright/Patent/Trademark",
       "total": 3786,
       "byCycle": {
         "2022": 2394,
@@ -923674,7 +923678,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "contiem",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 3614,
       "byCycle": {
         "2024": 1000,
@@ -923699,6 +923704,7 @@
       "state": "DC",
       "organization": "energy-storage-association",
       "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 3562,
       "byCycle": {
         "2022": 3562
@@ -923844,7 +923850,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "bluebird-bio",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 3500,
       "byCycle": {
         "2022": 3500
@@ -924113,7 +924120,8 @@
       "kind": "pac",
       "state": "MI",
       "organization": "jaffe-raitt-heuer-and-weiss",
-      "sector": "Unknown",
+      "sector": "Lawyers & Lobbyists",
+      "industry": "Law Firm",
       "total": 3500,
       "byCycle": {
         "2022": 3500
@@ -924164,6 +924172,7 @@
       "state": "CA",
       "organization": "american-olive-oil-producers-association",
       "sector": "Energy & Natural Resources",
+      "industry": "Agriculture",
       "total": 3500,
       "byCycle": {
         "2022": 1500,
@@ -924486,6 +924495,7 @@
       "state": "CO",
       "organization": "sm-energy",
       "sector": "Energy & Natural Resources",
+      "industry": "Crude Petroleum & Natural Gas",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924563,6 +924573,7 @@
       "state": "IL",
       "organization": "let-experienced-pilots-fly",
       "sector": "Transportation",
+      "industry": "Aviation/Airlines/Airports",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924608,7 +924619,8 @@
       "kind": "pac",
       "state": "NY",
       "organization": "zeta-global",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Services-Prepackaged Software",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924633,6 +924645,7 @@
       "state": "GA",
       "organization": "aveanna-healthcare",
       "sector": "Health",
+      "industry": "Services-Home Health Care Services",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924657,6 +924670,7 @@
       "state": "TX",
       "organization": "el-paso-electric",
       "sector": "Energy & Natural Resources",
+      "industry": "Utilities",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924743,6 +924757,7 @@
       "state": "CA",
       "organization": "rainmaker-technology",
       "sector": "Communications & Technology",
+      "industry": "Natural Resources",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924788,7 +924803,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "professional-services-council",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924849,6 +924865,7 @@
       "state": "CA",
       "organization": "national-oilseed-processors-association",
       "sector": "Energy & Natural Resources",
+      "industry": "Clean Air and Water (quality)",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924894,7 +924911,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "covenant-industries",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -924979,7 +924997,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "tanium",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -925024,6 +925043,7 @@
       "state": "DE",
       "organization": "american-independent-medical-practice-association",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -925145,8 +925165,9 @@
       "orgType": "C",
       "kind": "pac",
       "state": "TX",
-      "organization": "first-national-bank-texas",
+      "organization": "first-national",
       "sector": "Finance, Insurance & Real Estate",
+      "industry": "State Commercial Banks",
       "total": 3500,
       "byCycle": {
         "2026": 3500
@@ -925298,8 +925319,9 @@
       "name": "CALUMET PAC",
       "kind": "pac",
       "state": "IN",
-      "organization": "calumet-c00386300",
-      "sector": "Ideological & Single-Issue",
+      "organization": "calumet",
+      "sector": "Energy & Natural Resources",
+      "industry": "Petroleum Refining",
       "total": 3369,
       "byCycle": {
         "2024": 3369
@@ -925888,6 +925910,7 @@
       "state": "TX",
       "organization": "first-service-credit-union",
       "sector": "Finance, Insurance & Real Estate",
+      "industry": "Financial Institutions/Investments/Securities",
       "total": 3250,
       "byCycle": {
         "2026": 3250
@@ -926017,8 +926040,9 @@
       "name": "GOLD AND SILVER POLITICAL ACTION COMMITTEE - FEDERAL",
       "kind": "pac",
       "state": "CA",
-      "organization": "gold-and-silver-c00487892",
-      "sector": "Ideological & Single-Issue",
+      "organization": "gold-and-silver",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Minting/Money/Gold Standard",
       "total": 3200,
       "byCycle": {
         "2024": 3200
@@ -926367,8 +926391,9 @@
       "name": "DCI PAC",
       "kind": "pac",
       "state": "DC",
-      "organization": "dci-c00412395",
-      "sector": "Ideological & Single-Issue",
+      "organization": "dci",
+      "sector": "Health",
+      "industry": "Medicare/Medicaid",
       "total": 3000,
       "byCycle": {
         "2022": 3000
@@ -926470,7 +926495,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "pultegroup",
-      "sector": "Unknown",
+      "sector": "Construction",
+      "industry": "Operative Builders",
       "total": 3000,
       "byCycle": {
         "2022": 1000,
@@ -926514,6 +926540,7 @@
       "state": "IN",
       "organization": "apria-healthcare",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 3000,
       "byCycle": {
         "2022": 3000
@@ -926594,7 +926621,8 @@
       "kind": "pac",
       "state": "FL",
       "organization": "pga-tour",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Education",
+      "industry": "Education",
       "total": 3000,
       "byCycle": {
         "2022": 3000
@@ -927057,8 +927085,9 @@
       "name": "MARKETAXESS HOLDINGS INC PAC MARKETAXESS PAC",
       "kind": "pac",
       "state": "NY",
-      "organization": "marketaxess-marketaxess-c00475061",
-      "sector": "Ideological & Single-Issue",
+      "organization": "marketaxess",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Security Brokers, Dealers & Flotation Companies",
       "total": 3000,
       "byCycle": {
         "2022": 3000
@@ -927079,6 +927108,7 @@
       "state": "VA",
       "organization": "telecommunications-industry-association",
       "sector": "Communications & Technology",
+      "industry": "Telecommunications",
       "total": 3000,
       "byCycle": {
         "2022": 1500,
@@ -927106,7 +927136,8 @@
       "kind": "pac",
       "state": "OH",
       "organization": "olive-ai-civic-action",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 3000,
       "byCycle": {
         "2022": 3000
@@ -927194,7 +927225,8 @@
       "kind": "pac",
       "state": "MI",
       "organization": "dt-midstream",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
+      "industry": "Natural Gas Transmission",
       "total": 3000,
       "byCycle": {
         "2024": 1000,
@@ -927332,6 +927364,7 @@
       "state": "CA",
       "organization": "san-francisco-bar-pilots",
       "sector": "Transportation",
+      "industry": "Marine/Maritime/Boating/Fisheries",
       "total": 3000,
       "byCycle": {
         "2024": 1000,
@@ -927401,7 +927434,8 @@
       "kind": "pac",
       "state": "NJ",
       "organization": "gotenna",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Homeland Security",
       "total": 3000,
       "byCycle": {
         "2024": 1000,
@@ -927430,6 +927464,7 @@
       "state": "CO",
       "organization": "colorado-bankers-association",
       "sector": "Finance, Insurance & Real Estate",
+      "industry": "Financial Institutions/Investments/Securities",
       "total": 3000,
       "byCycle": {
         "2024": 3000
@@ -927478,7 +927513,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "preservation-action",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Real Estate/Land Use/Conservation",
       "total": 3000,
       "byCycle": {
         "2024": 1000,
@@ -927601,7 +927637,8 @@
       "kind": "pac",
       "state": "NY",
       "organization": "madison-square-garden-entertainment",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Services-Miscellaneous Amusement & Recreation",
       "total": 3000,
       "byCycle": {
         "2026": 3000
@@ -927716,7 +927753,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "bigbear-ai",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Services-Prepackaged Software",
       "total": 3000,
       "byCycle": {
         "2026": 3000
@@ -927744,6 +927782,7 @@
       "state": "MO",
       "organization": "national-association-of-electrical-distributors",
       "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 3000,
       "byCycle": {
         "2026": 3000
@@ -927837,7 +927876,8 @@
       "kind": "pac",
       "state": "NC",
       "organization": "elusys-therapeutics",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 3000,
       "byCycle": {
         "2026": 3000
@@ -928168,7 +928208,8 @@
       "kind": "pac",
       "state": "PA",
       "organization": "g4s-secure-solutions",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Homeland Security",
       "total": 2900,
       "byCycle": {
         "2022": 2900
@@ -928319,7 +928360,8 @@
       "kind": "pac",
       "state": "MA",
       "organization": "cumberland-farms",
-      "sector": "Agribusiness",
+      "sector": "Misc Business",
+      "industry": "Retail-Auto Dealers & Gasoline Stations",
       "total": 2900,
       "byCycle": {
         "2022": 2900
@@ -928398,7 +928440,8 @@
       "kind": "pac",
       "state": "UT",
       "organization": "red-cat",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Services-Prepackaged Software",
       "total": 2870,
       "byCycle": {
         "2026": 2870
@@ -928943,7 +928986,8 @@
       "kind": "pac",
       "state": "MI",
       "organization": "kelly-services",
-      "sector": "Unknown",
+      "sector": "Misc Business",
+      "industry": "Services-Help Supply Services",
       "total": 2500,
       "byCycle": {
         "2022": 2500
@@ -928982,7 +929026,8 @@
       "kind": "pac",
       "state": "NJ",
       "organization": "recreational-fishing-alliance",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Transportation",
+      "industry": "Marine/Maritime/Boating/Fisheries",
       "total": 2500,
       "byCycle": {
         "2022": 2500
@@ -929259,7 +929304,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "national-society-of-genetic-counselors",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 2500,
       "byCycle": {
         "2022": 2500
@@ -929614,7 +929660,8 @@
       "kind": "pac",
       "state": "MD",
       "organization": "orano",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 2500,
       "byCycle": {
         "2024": 2500
@@ -929789,8 +929836,9 @@
       "name": "FRIENDS OF THE UNIVERSITY OF HOUSTON",
       "kind": "pac",
       "state": "TX",
-      "organization": "friends-of-university-of-houston-c00877050",
+      "organization": "friends-of-university-of-houston",
       "sector": "Education",
+      "industry": "Education",
       "total": 2500,
       "byCycle": {
         "2024": 2500
@@ -929957,6 +930005,7 @@
       "state": "DC",
       "organization": "national-reverse-mortgage-lenders-association",
       "sector": "Finance, Insurance & Real Estate",
+      "industry": "Housing",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930006,7 +930055,8 @@
       "kind": "pac",
       "state": "GA",
       "organization": "perma-fix-environmental-services",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
+      "industry": "Hazardous Waste Management",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930064,7 +930114,8 @@
       "kind": "pac",
       "state": "CO",
       "organization": "sierra-space",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Aerospace",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930142,7 +930193,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "archer-aviation",
-      "sector": "Transportation",
+      "sector": "Defense",
+      "industry": "Aircraft",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930212,7 +930264,8 @@
       "kind": "pac",
       "state": "MD",
       "organization": "biosimilars-forum",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Medicare/Medicaid",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930233,7 +930286,7 @@
       "name": "KEYSTONE FEDERAL PAC",
       "kind": "pac",
       "state": "PA",
-      "organization": "keystone-c00943472",
+      "organization": "keystone",
       "sector": "Ideological & Single-Issue",
       "total": 2500,
       "byCycle": {
@@ -930254,6 +930307,7 @@
       "state": "DC",
       "organization": "veeam-software",
       "sector": "Communications & Technology",
+      "industry": "Computer Industry",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930273,7 +930327,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "dollar-tree",
-      "sector": "Unknown",
+      "sector": "Misc Business",
+      "industry": "Retail-Variety Stores",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930293,6 +930348,7 @@
       "state": "DC",
       "organization": "vantive-us-healthcare",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 2500,
       "byCycle": {
         "2026": 2500
@@ -930641,6 +930697,7 @@
       "state": "MS",
       "organization": "national-association-of-emergency-medical-technicians",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 2250,
       "byCycle": {
         "2022": 2250
@@ -930794,6 +930851,7 @@
       "state": "FL",
       "organization": "florida-east-coast-railway",
       "sector": "Transportation",
+      "industry": "Transportation",
       "total": 2225,
       "byCycle": {
         "2022": 1000,
@@ -931141,7 +931199,8 @@
       "kind": "pac",
       "state": "IA",
       "organization": "meredith-for-better-government",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Communications/Broadcasting/Radio/TV",
       "total": 2000,
       "byCycle": {
         "2022": 2000
@@ -931287,7 +931346,8 @@
       "kind": "pac",
       "state": "NY",
       "organization": "standard-industries",
-      "sector": "Unknown",
+      "sector": "Misc Business",
+      "industry": "Manufacturing",
       "total": 2000,
       "byCycle": {
         "2022": 2000
@@ -931310,7 +931370,8 @@
       "kind": "pac",
       "state": "IL",
       "organization": "commercial-law-league-of-america",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Banking",
       "total": 2000,
       "byCycle": {
         "2022": 2000
@@ -931426,8 +931487,9 @@
       "name": "SHOOK HARDY & BACON POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "DC",
-      "organization": "shook-hardy-and-bacon-c00367896",
-      "sector": "Ideological & Single-Issue",
+      "organization": "shook-hardy-and-bacon",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 2000,
       "byCycle": {
         "2022": 2000
@@ -931445,8 +931507,9 @@
       "orgType": "C",
       "kind": "pac",
       "state": "TN",
-      "organization": "first-horizon-la-fed",
-      "sector": "Unknown",
+      "organization": "first-horizon",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "National Commercial Banks",
       "total": 2000,
       "byCycle": {
         "2022": 2000
@@ -931729,7 +931792,8 @@
       "kind": "pac",
       "state": "PA",
       "organization": "carmeuse-lime-and-stone",
-      "sector": "Unknown",
+      "sector": "Transportation",
+      "industry": "Roads/Highway",
       "total": 2000,
       "byCycle": {
         "2022": 1000,
@@ -932159,6 +932223,7 @@
       "state": "MO",
       "organization": "missouri-hospital-association",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 2000,
       "byCycle": {
         "2022": 2000
@@ -932178,7 +932243,8 @@
       "kind": "pac",
       "state": "NC",
       "organization": "butterball",
-      "sector": "Unknown",
+      "sector": "Agribusiness",
+      "industry": "Agriculture",
       "total": 2000,
       "byCycle": {
         "2022": 1000,
@@ -932371,7 +932437,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "kb-home",
-      "sector": "Unknown",
+      "sector": "Construction",
+      "industry": "Operative Builders",
       "total": 2000,
       "byCycle": {
         "2024": 2000
@@ -932411,6 +932478,7 @@
       "state": "VA",
       "organization": "karem-aircraft",
       "sector": "Defense",
+      "industry": "Defense",
       "total": 2000,
       "byCycle": {
         "2024": 2000
@@ -932542,7 +932610,8 @@
       "kind": "pac",
       "state": "NJ",
       "organization": "securitas-security-services-usa",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Homeland Security",
       "total": 2000,
       "byCycle": {
         "2024": 2000
@@ -932567,6 +932636,7 @@
       "state": "HI",
       "organization": "bank-of-hawaii",
       "sector": "Finance, Insurance & Real Estate",
+      "industry": "State Commercial Banks",
       "total": 2000,
       "byCycle": {
         "2024": 2000
@@ -933303,8 +933373,9 @@
       "name": "DIGITAL FUTURE PAC",
       "kind": "pac",
       "state": "AL",
-      "organization": "digital-future-c00821082",
-      "sector": "Ideological & Single-Issue",
+      "organization": "digital-future",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Banking",
       "total": 2000,
       "byCycle": {
         "2026": 2000
@@ -934314,7 +934385,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "celestial-ai",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 1700,
       "byCycle": {
         "2024": 1700
@@ -934725,6 +934797,7 @@
       "state": "NY",
       "organization": "independent-health-association",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 1500,
       "byCycle": {
         "2022": 1500
@@ -934765,6 +934838,7 @@
       "state": "PA",
       "organization": "fulton-financial",
       "sector": "Finance, Insurance & Real Estate",
+      "industry": "National Commercial Banks",
       "total": 1500,
       "byCycle": {
         "2022": 1000,
@@ -934825,7 +934899,8 @@
       "kind": "pac",
       "state": "TX",
       "organization": "mclane",
-      "sector": "Unknown",
+      "sector": "Agribusiness",
+      "industry": "Tobacco",
       "total": 1500,
       "byCycle": {
         "2022": 1500
@@ -935064,7 +935139,8 @@
       "kind": "pac",
       "state": "GA",
       "organization": "rollins",
-      "sector": "Unknown",
+      "sector": "Misc Business",
+      "industry": "Services-To Dwellings & Other Buildings",
       "total": 1500,
       "byCycle": {
         "2022": 1500
@@ -935195,8 +935271,9 @@
       "name": "CAPITOL PARTNERS PAC",
       "kind": "pac",
       "state": "OH",
-      "organization": "capitol-partners-c00633735",
-      "sector": "Ideological & Single-Issue",
+      "organization": "capitol-partners",
+      "sector": "Lawyers & Lobbyists",
+      "industry": "Lobbying",
       "total": 1500,
       "byCycle": {
         "2024": 1500
@@ -935278,8 +935355,9 @@
       "name": "LATHROP & GAGE LLP POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "MO",
-      "organization": "lathrop-and-gage-c00438002",
-      "sector": "Ideological & Single-Issue",
+      "organization": "lathrop-and-gage",
+      "sector": "Energy & Natural Resources",
+      "industry": "Environment/Superfund",
       "total": 1500,
       "byCycle": {
         "2024": 1500
@@ -935362,8 +935440,9 @@
       "name": "DICKINSON WRIGHT PLLC PAC",
       "kind": "pac",
       "state": "DC",
-      "organization": "dickinson-wright-pllc-c00737940",
-      "sector": "Ideological & Single-Issue",
+      "organization": "dickinson-wright-pllc",
+      "sector": "Lawyers & Lobbyists",
+      "industry": "Law firm",
       "total": 1500,
       "byCycle": {
         "2026": 1500
@@ -935386,7 +935465,8 @@
       "kind": "pac",
       "state": "SC",
       "organization": "icelaven-development",
-      "sector": "Unknown",
+      "sector": "Education",
+      "industry": "Education",
       "total": 1500,
       "byCycle": {
         "2026": 1500
@@ -935406,7 +935486,8 @@
       "kind": "pac",
       "state": "NY",
       "organization": "partnership-for-new-york-city",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Financial Institutions/Investments/Securities",
       "total": 1500,
       "byCycle": {
         "2026": 1500
@@ -935479,7 +935560,8 @@
       "kind": "pac",
       "state": "MA",
       "organization": "parallel-systems",
-      "sector": "Unknown",
+      "sector": "Transportation",
+      "industry": "Transportation",
       "total": 1500,
       "byCycle": {
         "2026": 1500
@@ -936168,6 +936250,7 @@
       "state": "IL",
       "organization": "american-dental-hygienists-association",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 1250,
       "byCycle": {
         "2022": 1250
@@ -936509,7 +936592,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "alvarez-and-marsal",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Housing",
       "total": 1157,
       "byCycle": {
         "2024": 1157
@@ -936915,7 +936999,8 @@
       "kind": "pac",
       "state": "LA",
       "organization": "cleco-cleco",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -936935,6 +937020,7 @@
       "state": "NY",
       "organization": "continental-grain",
       "sector": "Agribusiness",
+      "industry": "Agriculture",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -936954,6 +937040,7 @@
       "state": "DC",
       "organization": "national-association-of-shareholder-and-consumer-attorneys",
       "sector": "Lawyers & Lobbyists",
+      "industry": "Financial Institutions/Investments/Securities",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -936971,8 +937058,9 @@
       "orgType": "C",
       "kind": "pac",
       "state": "VA",
-      "organization": "unisys-associates",
-      "sector": "Unknown",
+      "organization": "unisys",
+      "sector": "Communications & Technology",
+      "industry": "Services-Computer Integrated Systems Design",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937122,6 +937210,7 @@
       "state": "PA",
       "organization": "first-commonwealth-financial",
       "sector": "Finance, Insurance & Real Estate",
+      "industry": "National Commercial Banks",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937144,7 +937233,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "american-society-of-appraisers",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Banking",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937199,7 +937289,8 @@
       "kind": "pac",
       "state": "CO",
       "organization": "cannabis-trade-federation-action",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Banking",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937237,7 +937328,8 @@
       "kind": "pac",
       "state": "OH",
       "organization": "cooper-tire-and-rubber",
-      "sector": "Unknown",
+      "sector": "Transportation",
+      "industry": "Transportation",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937316,6 +937408,7 @@
       "state": "CA",
       "organization": "prospect-medical",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937335,7 +937428,8 @@
       "kind": "pac",
       "state": "TX",
       "organization": "ocean-shipholdings",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937355,7 +937449,8 @@
       "kind": "pac",
       "state": "HI",
       "organization": "referentia-systems",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937448,7 +937543,8 @@
       "kind": "pac",
       "state": "LA",
       "organization": "mcglinchey-stafford",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Telecommunications",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937502,7 +937598,7 @@
       "name": "THOMPSON HINE AND FLORY NATIONAL GOOD GOVERNMENT FUND",
       "kind": "pac",
       "state": "OH",
-      "organization": "thompson-hine-and-flory-national-c00163196",
+      "organization": "thompson-hine-and-flory-national",
       "sector": "Ideological & Single-Issue",
       "total": 1000,
       "byCycle": {
@@ -937618,7 +937714,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "global-electronics-association",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937736,7 +937833,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "cheese-importers-association-of-america",
-      "sector": "Unknown",
+      "sector": "Agribusiness",
+      "industry": "Agriculture",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -937966,7 +938064,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "national-court-reporters-association",
-      "sector": "Unknown",
+      "sector": "Education",
+      "industry": "Education",
       "total": 1000,
       "byCycle": {
         "2022": 1000
@@ -938513,7 +938612,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "convenience-distribution-association",
-      "sector": "Unknown",
+      "sector": "Agribusiness",
+      "industry": "Tobacco",
       "total": 1000,
       "byCycle": {
         "2024": 1000
@@ -938587,7 +938687,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "vision-council-of-america",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 1000,
       "byCycle": {
         "2024": 500,
@@ -938803,6 +938904,7 @@
       "state": "TX",
       "organization": "glenfarne-energy-transition",
       "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 1000,
       "byCycle": {
         "2024": 1000
@@ -938858,7 +938960,8 @@
       "kind": "pac",
       "state": "MA",
       "organization": "massachusetts-blue-of-blue-cross-blue-shield-of-massachusetts",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 1000,
       "byCycle": {
         "2024": 1000
@@ -938878,7 +938981,8 @@
       "kind": "pac",
       "state": "NC",
       "organization": "international-textile",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -939020,7 +939124,8 @@
       "kind": "pac",
       "state": "CO",
       "organization": "outdoor-industry-association",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
+      "industry": "Natural Resources",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -939039,7 +939144,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "dpwn-dhl",
-      "sector": "Unknown",
+      "sector": "Transportation",
+      "industry": "Transportation",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -939142,7 +939248,8 @@
       "kind": "pac",
       "state": "CA",
       "organization": "orchard-therapeutics-north-america",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -939276,8 +939383,9 @@
       "orgType": "C",
       "kind": "pac",
       "state": "LA",
-      "organization": "cleco",
-      "sector": "Unknown",
+      "organization": "cleco-cleco",
+      "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -939420,6 +939528,7 @@
       "state": "TX",
       "organization": "howard-energy-partners",
       "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -939553,7 +939662,8 @@
       "kind": "pac",
       "state": "TX",
       "organization": "american-lighting-association",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -939610,7 +939720,8 @@
       "kind": "pac",
       "state": "NM",
       "organization": "blackve",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 1000,
       "byCycle": {
         "2026": 1000
@@ -940193,6 +940304,7 @@
       "state": "MN",
       "organization": "minn-soybean-minnesota-soybean-growers-association",
       "sector": "Agribusiness",
+      "industry": "Agriculture",
       "total": 750,
       "byCycle": {
         "2022": 750
@@ -940256,7 +940368,8 @@
       "kind": "pac",
       "state": "CT",
       "organization": "thayermahan",
-      "sector": "Unknown",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 750,
       "byCycle": {
         "2024": 750
@@ -940936,8 +941049,9 @@
       "name": "CINCINNATUS PAC",
       "kind": "pac",
       "state": "OH",
-      "organization": "cincinnatus-c00574228",
-      "sector": "Ideological & Single-Issue",
+      "organization": "cincinnatus",
+      "sector": "Defense",
+      "industry": "Defense",
       "total": 500,
       "byCycle": {
         "2022": 500
@@ -941287,7 +941401,7 @@
       "name": "ARKANSAS RURAL WATER ASSOCIATION FEDERAL POLITICAL ACTION COMMITTEE",
       "kind": "pac",
       "state": "AR",
-      "organization": "arkansas-rural-water-association-c00485748",
+      "organization": "arkansas-rural-water-association",
       "sector": "Ideological & Single-Issue",
       "total": 500,
       "byCycle": {
@@ -941308,7 +941422,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "general-cigar",
-      "sector": "Unknown",
+      "sector": "Agribusiness",
+      "industry": "Tobacco",
       "total": 500,
       "byCycle": {
         "2022": 500
@@ -941407,7 +941522,8 @@
       "kind": "pac",
       "state": "DC",
       "organization": "intellectual-property-owners-association",
-      "sector": "Unknown",
+      "sector": "Communications & Technology",
+      "industry": "Copyright/Patent/Trademark",
       "total": 500,
       "byCycle": {
         "2024": 500
@@ -941427,7 +941543,8 @@
       "kind": "pac",
       "state": "PA",
       "organization": "manufacturer-and-business-association",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 500,
       "byCycle": {
         "2024": 500
@@ -941446,7 +941563,8 @@
       "kind": "pac",
       "state": "VA",
       "organization": "self-storage-association",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Real Estate/Land Use/Conservation",
       "total": 500,
       "byCycle": {
         "2024": 500
@@ -941541,7 +941659,8 @@
       "kind": "pac",
       "state": "KS",
       "organization": "blue-cross-and-blue-shield-of-kansas",
-      "sector": "Unknown",
+      "sector": "Health",
+      "industry": "Health Issues",
       "total": 500,
       "byCycle": {
         "2024": 500
@@ -941639,6 +941758,7 @@
       "state": "MO",
       "organization": "spectrum-healthcare-resources",
       "sector": "Health",
+      "industry": "Health Issues",
       "total": 500,
       "byCycle": {
         "2024": 500
@@ -941813,7 +941933,8 @@
       "kind": "pac",
       "state": "FL",
       "organization": "national-atm-council",
-      "sector": "Unknown",
+      "sector": "Finance, Insurance & Real Estate",
+      "industry": "Banking",
       "total": 500,
       "byCycle": {
         "2026": 500
