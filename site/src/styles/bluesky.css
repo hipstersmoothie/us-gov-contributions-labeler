@@ -1,0 +1,195 @@
+/* The Bluesky hub (/bluesky/): faces, profile cards and link lists. Classes
+   are prefixed bsky-. Color is party only (avatar rings, tags); the rest is
+   ink and hairlines. */
+
+/* --- avatars ------------------------------------------------------------------ */
+.bsky-avatar {
+  display: inline-grid; place-items: center; flex: none; border-radius: 50%; object-fit: cover;
+  background: var(--surface-2); color: var(--text-secondary);
+  border: 2px solid var(--swatch, var(--hairline)); box-sizing: border-box;
+}
+.bsky-initials { font: 700 13px/1 var(--serif); letter-spacing: 0.02em; user-select: none; }
+.bsky-more {
+  font: 700 var(--fs-sm)/1 var(--sans); color: var(--text-secondary); text-decoration: none;
+  border-color: var(--baseline); background: var(--page);
+}
+.bsky-more:hover { color: var(--text-primary); border-color: var(--text-primary); }
+
+.bsky-facerow { display: flex; flex-wrap: wrap; gap: var(--sp-2); list-style: none; margin: 0; padding: 0; }
+.bsky-facerow li { display: flex; }
+.bsky-facerow a { display: flex; border-radius: 50%; text-decoration: none; }
+.bsky-facerow a:focus-visible { outline-offset: 2px; border-radius: 50%; }
+.bsky-facerow a:hover .bsky-avatar:not(.bsky-more) { filter: brightness(0.92); }
+
+.bsky-stack { display: inline-flex; flex: none; }
+.bsky-stack .bsky-avatar { box-shadow: 0 0 0 2px var(--page); }
+.bsky-stack .bsky-avatar + .bsky-avatar { margin-left: -9px; }
+
+/* --- label pills: sectors outlined, contributors filled ------------------------ */
+.bsky-pills { display: flex; flex-wrap: wrap; gap: 5px; list-style: none; margin: 0; padding: 0; }
+.bsky-pill {
+  display: inline-block; font: 600 12px/1.35 var(--sans); padding: 2px 8px; border-radius: 999px;
+  color: var(--text-secondary); text-decoration: none; border: 1px solid var(--baseline);
+  max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; vertical-align: top;
+}
+.bsky-pills li { min-width: 0; max-width: 100%; display: flex; }
+.bsky-pill-c { background: var(--surface-2); border-color: var(--surface-2); }
+a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary); }
+
+/* --- hub: find your members ------------------------------------------------------ */
+.bsky-find-bar {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--sp-3) var(--sp-5);
+  padding: var(--sp-3) 0 var(--sp-4); border-bottom: 1px solid var(--hairline);
+}
+.bsky-find-bar .select-button { min-width: 220px; }
+.bsky-find-summary { margin: 0 0 8px; font-size: var(--fs-base); color: var(--text-secondary); }
+.bsky-find-summary strong { color: var(--text-primary); }
+.bsky-find-summary a { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+.bsky-find-hint { margin: var(--sp-4) 0 0; font-size: var(--fs-base); }
+
+.bsky-cards {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr)); gap: 0 var(--sp-6);
+  list-style: none; margin: 0; padding: 0;
+}
+.bsky-card { display: flex; gap: var(--sp-3); padding: var(--sp-4) 0; border-bottom: 1px solid var(--hairline); min-width: 0; }
+.bsky-card-face { display: flex; align-self: flex-start; border-radius: 50%; }
+.bsky-card-body { min-width: 0; flex: 1; }
+.bsky-card-name { margin: 0; font: 700 var(--fs-md)/1.25 var(--serif); }
+.bsky-card-name a { text-decoration: none; }
+.bsky-card-name a:hover { text-decoration: underline; }
+.bsky-card-meta { margin: 2px 0 0; font-size: var(--fs-sm); color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0 10px; }
+.bsky-card-meta span + span::before { content: "·"; margin-right: 10px; }
+.bsky-card-handle { margin: 0 0 var(--sp-2); font-size: var(--fs-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bsky-card-handle a { color: var(--text-secondary); }
+.bsky-card .bsky-pill { font-size: 11.5px; padding: 1px 7px; }
+.bsky-card-contrib { margin: 6px 0 0; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
+.bsky-card-contrib-k { font-weight: 700; color: var(--text-muted); }
+
+.bsky-off { margin-top: var(--sp-5); }
+.bsky-off .kicker { margin-bottom: var(--sp-2); }
+.bsky-off-list {
+  list-style: none; margin: 0; padding: 0; columns: 3 220px; column-gap: var(--sp-6);
+  font-size: var(--fs-sm); color: var(--text-muted);
+}
+.bsky-off-list li { padding: 4px 0; break-inside: avoid; border-bottom: 1px solid var(--grid); }
+.bsky-off-list a { color: var(--text-secondary); text-decoration-color: transparent; }
+.bsky-off-list a:hover { text-decoration-color: currentColor; }
+.bsky-off-list .ptag { opacity: 0.75; }
+
+/* --- hub: who's on Bluesky ------------------------------------------------------- */
+.bsky-chambers { display: grid; grid-template-columns: 2fr 3fr; gap: var(--sp-5) var(--sp-7); align-items: end; }
+.bsky-chamber .kicker { margin-bottom: var(--sp-2); }
+.bsky-legend {
+  display: flex; gap: 6px 18px; flex-wrap: wrap; list-style: none; padding: 0; margin: var(--sp-4) 0 0;
+  font-size: var(--fs-sm); color: var(--text-secondary);
+}
+.bsky-key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--key); }
+.bsky-who-grid { margin-top: var(--sp-7); }
+.bsky-who-grid h3 { margin-bottom: var(--sp-3); }
+
+.bsky-top td { vertical-align: middle; padding-top: 7px; padding-bottom: 7px; }
+.bsky-rank { width: 2.2em; color: var(--text-muted); font-size: var(--fs-sm); }
+.bsky-top-who { display: flex; align-items: center; gap: var(--sp-3); }
+.bsky-top-who a { font-weight: 500; }
+.bsky-top-handle { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
+.bsky-top-handle a { font-weight: 400; color: inherit; }
+.bsky-top-n { width: 40%; white-space: nowrap; }
+.bsky-top-n > span:first-child { display: inline-block; width: 3.4em; text-align: right; font-weight: 600; vertical-align: middle; }
+.bsky-bar {
+  display: inline-block; vertical-align: middle; height: 10px; margin-left: 10px;
+  width: calc((100% - 3.4em - 10px) * var(--w)); min-width: 2px; background: var(--bar); border-radius: 0 2px 2px 0;
+}
+.bsky-prose { font-size: var(--fs-base); color: var(--text-secondary); margin: 0 0 var(--sp-3); max-width: 46ch; text-wrap: pretty; }
+.bsky-prose code { font-size: 0.92em; color: var(--text-primary); }
+
+/* --- hub: labels ------------------------------------------------------------------- */
+.bsky-labels-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--sp-5) var(--sp-7); align-items: start; }
+.bsky-mock { margin: 0; }
+.bsky-mock-post {
+  display: flex; gap: var(--sp-3); padding: var(--sp-4); background: var(--surface);
+  border: 1px solid var(--hairline); border-radius: 4px;
+}
+.bsky-mock-body { flex: 1; min-width: 0; }
+.bsky-mock-head { margin: 0; font-size: var(--fs-base); line-height: 1.3; display: flex; flex-wrap: wrap; gap: 0 6px; }
+.bsky-mock-head span { color: var(--text-muted); }
+.bsky-mock-labels { display: flex; flex-wrap: wrap; gap: 5px; list-style: none; margin: var(--sp-2) 0 var(--sp-3); padding: 0; }
+.bsky-mock-labels li {
+  display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px 2px 3px; border-radius: 4px;
+  background: var(--surface-2); color: var(--text-secondary); font: 600 12px/1.4 var(--sans);
+  border: 1px solid var(--hairline);
+}
+.bsky-mock-labels img { width: 14px; height: 14px; border-radius: 50%; }
+.bsky-mock-text { display: grid; gap: 8px; }
+.bsky-mock-text span { display: block; height: 10px; border-radius: 2px; background: var(--grid); }
+.bsky-mock-text span:nth-child(2) { width: 92%; }
+.bsky-mock-text span:nth-child(3) { width: 58%; }
+.bsky-mock-actions { display: flex; gap: var(--sp-6); margin-top: var(--sp-4); color: var(--text-muted); }
+
+.bsky-labels-text h3 { margin-bottom: var(--sp-2); }
+.bsky-steps { margin: 0 0 var(--sp-5); padding: 0; list-style: none; counter-reset: step; font-size: var(--fs-base); }
+.bsky-steps li { counter-increment: step; display: flex; gap: var(--sp-3); padding: 6px 0; border-bottom: 1px solid var(--hairline); }
+.bsky-steps li::before {
+  content: counter(step); flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+  font: 700 var(--fs-label)/1 var(--sans); border: 1px solid var(--text-primary); margin-top: 1px;
+}
+.bsky-means { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+.bsky-means p, .bsky-means ul { font-size: var(--fs-sm); color: var(--text-secondary); margin: 0; line-height: 1.5; }
+.bsky-means ul { padding-left: 1.1em; }
+.bsky-means li { margin-bottom: 2px; }
+
+/* --- hub: follow ------------------------------------------------------------------- */
+.bsky-follow {
+  display: inline-block; flex: none; padding: 7px 14px; border: 1px solid var(--text-primary); border-radius: 3px;
+  font: 700 var(--fs-sm)/1.2 var(--sans); color: var(--text-primary); text-decoration: none; white-space: nowrap;
+}
+.bsky-follow:hover { background: var(--text-primary); color: var(--page); }
+
+.bsky-labeler {
+  display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4) 0;
+  border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+}
+.bsky-labeler > div { flex: 1; min-width: 0; }
+.bsky-labeler h3 { font: 700 var(--fs-lg)/1.25 var(--serif); margin: 0 0 2px; }
+.bsky-labeler h3 a { text-decoration: none; }
+.bsky-labeler h3 a:hover { text-decoration: underline; }
+.bsky-labeler p { margin: 0; font-size: var(--fs-sm); color: var(--text-secondary); }
+
+.bsky-packs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
+.bsky-packs li { display: flex; flex-direction: column; gap: 6px; padding: var(--sp-4) var(--sp-4) var(--sp-4) var(--sp-5); border-left: 1px solid var(--hairline); }
+.bsky-packs li:first-child { border-left: 0; padding-left: 0; }
+.bsky-packs-name { font: 700 var(--fs-md)/1.3 var(--serif); text-decoration: none; }
+.bsky-packs-name:hover { text-decoration: underline; }
+
+/* --- hub: searchable lists ------------------------------------------------------ */
+.bsky-lists-search { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--sp-2) var(--sp-5); margin: 0 0 var(--sp-4); min-height: 60px; }
+.bsky-lists-search .search-filter { max-width: 340px; }
+.bsky-lists-status { margin: 0 0 10px; font-size: var(--fs-sm); color: var(--text-muted); }
+.bsky-group { margin: 0 0 var(--sp-6); }
+.bsky-group[hidden] { display: none; }
+.bsky-group-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-3);
+  font: 700 var(--fs-label)/1.3 var(--sans); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary); margin: 0; padding-bottom: 6px; border-bottom: 1px solid var(--rule);
+}
+.bsky-group-head span { font-weight: 600; color: var(--text-muted); letter-spacing: 0.04em; }
+.bsky-rows { list-style: none; margin: 0; padding: 0; columns: 3 240px; column-gap: var(--sp-6); }
+.bsky-rows li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-3);
+  break-inside: avoid; padding: 7px 0 6px; border-bottom: 1px solid var(--hairline);
+  font-size: var(--fs-base); line-height: 1.35;
+}
+.bsky-rows li[hidden] { display: none; }
+.bsky-rows .n { font-size: var(--fs-sm); color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bsky-rows mark { background: color-mix(in oklab, var(--accent) 28%, transparent); color: inherit; border-radius: 1px; }
+.bsky-empty { margin: 0 0 var(--sp-6); font-size: var(--fs-base); color: var(--text-secondary); }
+.bsky-rows-one { columns: 1; max-width: calc((100% - 2 * var(--sp-6)) / 3); min-width: min(100%, 240px); }
+
+@media (max-width: 760px) {
+  .bsky-labels-grid, .bsky-chambers { grid-template-columns: 1fr; }
+  .bsky-packs li, .bsky-packs li:first-child { border-left: 0; padding: var(--sp-3) 0; border-bottom: 1px solid var(--hairline); }
+}
+@media (max-width: 520px) {
+  .bsky-means { grid-template-columns: 1fr; }
+  .bsky-labeler { display: grid; grid-template-columns: 56px 1fr; align-items: start; }
+  .bsky-labeler > .bsky-follow { grid-column: 2; justify-self: start; }
+}

@@ -11,9 +11,11 @@ interface Props {
   description?: string;
   /** Site-relative image for link previews, e.g. a member's portrait. */
   image?: string;
+  /** A page's own 1200×630 link-preview card, in place of the site's. */
+  card?: { src: string; alt: string };
   ogType?: "website" | "article" | "profile";
 }
-const { title, description, image, ogType = "article" } = Astro.props;
+const { title, description, image, card, ogType = "article" } = Astro.props;
 const path = Astro.url.pathname;
 const NAV = [
   ["/members/", "Members"],
@@ -21,6 +23,7 @@ const NAV = [
   ["/sectors/", "Sectors"],
   ["/committees/", "Committees"],
   ["/donors/", "Big donors"],
+  ["/bluesky/", "On Bluesky"],
 ];
 const SITE_NAME = "contributions.fyi";
 const isHome = title === "Home";
@@ -32,10 +35,12 @@ const desc = (
   description ?? `Campaign finance for every member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`
 ).replace(/\u2060/g, "");
 const canonical = Astro.site ? new URL(path, Astro.site).href : undefined;
-// A page's own image (a member's portrait) as a small card; otherwise the
-// 1200×630 site card from design/og/og-card.html.
+// A page's own image (a member's portrait) as a small card; otherwise a
+// 1200×630 card: the page's own, or the site's from design/og/og-card.html.
 const site = Astro.site ?? new URL("https://contributions.fyi");
-const imageUrl = new URL(image ?? "/og.png", site).href;
+const imageUrl = new URL(image ?? card?.src ?? "/og.png", site).href;
+const cardAlt =
+  card?.alt ?? "contributions.fyi: who funds your member of Congress? With every House seat colored by party.";
 const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
 ---
 
@@ -62,7 +67,7 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
         <>
           <meta property="og:image:width" content="1200" />
           <meta property="og:image:height" content="630" />
-          <meta property="og:image:alt" content="contributions.fyi: who funds your member of Congress? With every House seat colored by party." />
+          <meta property="og:image:alt" content={cardAlt} />
         </>
       )
     }

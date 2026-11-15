@@ -1,0 +1,407 @@
+---
+// The Bluesky hub: who's on Bluesky, what the labels are and a member finder,
+// then every feed, starter pack and list we publish.
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import { members, cycleRange, generatedAt, partyLetter } from "../../lib/data";
+import { chamberSeats } from "../../lib/derived";
+import { PARTY_COLOR, type Seat } from "../../lib/charts";
+import {
+  onBluesky,
+  followers,
+  mainAccount,
+  labelsFor,
+  lists,
+  listsByGroup,
+  packs,
+  feeds,
+  labeler,
+  dataRepo,
+  coverageBy,
+  labelerLikes,
+  labelerFollowers,
+  LABELER_URL,
+  DATA_REPO_URL,
+  DATA_HANDLE,
+  HANDLE,
+  STATES,
+  PER_KIND,
+  accountCount,
+} from "../../lib/bluesky";
+import { allCardRows, facesOf, compact, initials, profilesAsOf, labelerAvatar, shortSeat } from "../../lib/bluesky-hub";
+import FindMembers, { type StateOption } from "../../islands/bluesky/FindMembers";
+import { FaceStack } from "../../islands/bluesky/Faces";
+import BlueskyLists, { type ListGroup } from "../../islands/bluesky/BlueskyLists";
+import "../../styles/bluesky.css";
+
+// --- find your members
+const rows = allCardRows();
+const stateIds = [...new Set(members.map((m) => m.state))];
+const states: StateOption[] = stateIds
+  .map((id) => {
+    const l = lists.find((x) => x.key === `state-${id.toLowerCase()}`);
+    return { id, name: STATES[id] ?? id, ...(l ? { list: { url: l.url, count: l.count } } : {}) };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+// --- who's on Bluesky
+const amounts = new Map(onBluesky.map((m) => [m.bioguide, 1]));
+const handleOf = new Map(onBluesky.map((m) => [m.bioguide, mainAccount(m)!.handle]));
+const PARTIES = [
+  ["D", "Democrats"],
+  ["I", "Independents"],
+  ["R", "Republicans"],
+] as const;
+const chambers = (["senate", "house"] as const).map((chamber) => {
+  const seats: Seat[] = chamberSeats(chamber, amounts).map((s) => ({
+    ...s,
+    amount: undefined,
+    detail: `${s.detail} · ${s.hi ? `@${handleOf.get(s.id)}` : "Not on Bluesky"}`,
+  }));
+  const on = seats.filter((s) => s.hi).length;
+  const side = (party: Seat["party"], name: string) => {
+    const all = seats.filter((s) => s.party === party);
+    return all.length ? `${name} ${all.filter((s) => s.hi).length} of ${all.length}` : undefined;
+  };
+  const name = chamber === "house" ? "House" : "Senate";
+  return {
+    chamber,
+    name,
+    seats,
+    on,
+    left: side("D", "Democrats"),
+    right: side("R", "Republicans"),
+    ind: seats.filter((s) => s.party === "I"),
+    table: PARTIES.map(([p, label]) => {
+      const all = seats.filter((s) => s.party === p);
+      return [label, all.filter((s) => s.hi).length, all.length - all.filter((s) => s.hi).length];
+    }).filter((r) => (r[1] as number) + (r[2] as number) > 0),
+  };
+});
+const dI = { on: coverageBy.senateD.on + coverageBy.houseD.on, of: coverageBy.senateD.of + coverageBy.houseD.of };
+const r = { on: coverageBy.senateR.on + coverageBy.houseR.on, of: coverageBy.senateR.of + coverageBy.houseR.of };
+const loneR = onBluesky.filter((m) => m.party === "Republican");
+
+const top = [...onBluesky].sort((a, b) => followers(b) - followers(a)).slice(0, 10);
+const topMax = followers(top[0]!);
+
+// --- labels: a mock post from the most-followed member with a full set of labels
+const sample = [...onBluesky].sort((a, b) => followers(b) - followers(a)).find((m) => labelsFor(m).length === PER_KIND * 2 && mainAccount(m)?.avatar)!;
+const sampleAccount = mainAccount(sample)!;
+const sampleLabels = labelsFor(sample);
+
+// --- follow
+const packCards = packs.map((p) => ({ ...p, short: p.name.replace(/^Congress on Bluesky: /, ""), faces: facesOf(p.bioguides, 5) }));
+const feedGroups = Map.groupBy(feeds, (f) => f.group);
+const listCount = lists.length;
+const GROUP_ORDER = ["Everyone", "State delegations", "Committees", "Top recipients by industry"];
+const groups: ListGroup[] = GROUP_ORDER.filter((g) => listsByGroup.has(g)).map((g) => ({
+  name: g,
+  rows: listsByGroup
+    .get(g)!
+    .map((l) => ({ key: l.key, name: l.name, url: l.url, count: l.count, terms: l.ref }))
+    .sort((a, b) => (g === "Top recipients by industry" || g === "Everyone" ? 0 : a.name.localeCompare(b.name))),
+}));
+---
+
+<Base
+  title="Congress on Bluesky"
+  description={`${onBluesky.length} of ${members.length} members of Congress are on Bluesky. Find yours, see who funds them, and follow them by state, committee or industry.`}
+  card={{
+    src: "/og-bluesky.png",
+    alt: `Who funds Congress, on Bluesky: every member of Congress as a seat, in party color if they're on Bluesky. ${dI.on} of ${dI.of} Democrats and independents are; ${r.on} of ${r.of} Republicans.`,
+  }}
+>
+  <p class="kicker">On Bluesky</p>
+  <h1>Who funds Congress, on Bluesky</h1>
+  <p class="dek">
+    We've matched <strong>{onBluesky.length} of {members.length}</strong> members to a Bluesky account. Find yours, follow them, and
+    subscribe to <a href={LABELER_URL}>@{HANDLE}</a> to see their biggest funders right on their posts.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Members on Bluesky</dt><dd>{onBluesky.length}<small>of {members.length}, on {accountCount} accounts</small></dd></div>
+    <div class="stat"><dt>Democrats &amp; independents</dt><dd>{dI.on}<small>of {dI.of}</small></dd></div>
+    <div class="stat"><dt>Republicans</dt><dd>{r.on}<small>of {r.of}</small></dd></div>
+    <div class="stat"><dt>Lists, feeds &amp; packs</dt><dd>{listCount + feeds.length + packs.length}<small>{listCount} lists, {feeds.length} feeds, {packs.length} starter packs</small></dd></div>
+  </dl>
+
+  <section class="story" id="who" aria-labelledby="who-h">
+    <h2 id="who-h">Who's on Bluesky</h2>
+    <p class="chart-dek">
+      Nearly every Democrat and independent in Congress is on Bluesky.{" "}
+      {loneR.length === 1 ? (
+        <>One Republican is: <a href={`/members/${loneR[0]!.bioguide}/`}>{loneR[0]!.name}</a>.</>
+      ) : (
+        <>{r.on === 0 ? "No Republicans are." : `${r.on} Republicans are.`}</>
+      )}{" "}
+      So everything we publish there, from the labels to the lists, covers almost only Democrats. That's who has accounts, not a
+      choice we made.
+    </p>
+    <div class="bsky-chambers">
+      {
+        chambers.map((c) => (
+          <div class:list={["bsky-chamber", c.chamber]}>
+            <h3 class="kicker">{c.name}</h3>
+            <PlotFigure
+              chart="parliament"
+              width={c.chamber === "house" ? 600 : 400}
+              label={`${c.name} seats, with the ${c.on} members on Bluesky in party color`}
+              data={{ seats: c.seats, center: [String(c.on), `of ${c.seats.length} on Bluesky`], left: c.left, right: c.right }}
+              table={{ columns: ["Party", "On Bluesky", "Not on Bluesky"], numeric: [1, 2], rows: c.table }}
+            />
+            {c.ind.length > 0 && <p class="source">Independents, in the middle: {c.ind.filter((s) => s.hi).length} of {c.ind.length}.</p>}
+          </div>
+        ))
+      }
+    </div>
+    <ul class="bsky-legend" aria-label="Legend">
+      <li><span class="bsky-key" style={`--key: ${PARTY_COLOR.D}`} aria-hidden="true"></span>Democrat on Bluesky</li>
+      <li><span class="bsky-key" style={`--key: ${PARTY_COLOR.I}`} aria-hidden="true"></span>Independent on Bluesky</li>
+      <li><span class="bsky-key" style={`--key: ${PARTY_COLOR.R}`} aria-hidden="true"></span>Republican on Bluesky</li>
+      <li><span class="bsky-key" style="--key: var(--context)" aria-hidden="true"></span>Not on Bluesky</li>
+    </ul>
+
+    <div class="grid-2 bsky-who-grid">
+      <div>
+        <h3>Most-followed members</h3>
+        <table class="bsky-top">
+          <caption class="visually-hidden">The 10 members of Congress with the most Bluesky followers</caption>
+          <thead>
+            <tr><th class="num" scope="col"><span class="visually-hidden">Rank</span></th><th scope="col">Member</th><th scope="col" class="num">Followers</th></tr>
+          </thead>
+          <tbody>
+            {
+              top.map((m, i) => {
+                const a = mainAccount(m)!;
+                const n = followers(m);
+                const p = partyLetter(m.party);
+                return (
+                  <tr>
+                    <td class="num bsky-rank">{i + 1}</td>
+                    <td>
+                      <div class="bsky-top-who">
+                        {a.avatar ? (
+                          <img class={`bsky-avatar party-${p}`} src={a.avatar} alt="" width="32" height="32" loading="lazy" style="width:32px;height:32px" />
+                        ) : (
+                          <span class={`bsky-avatar bsky-initials party-${p}`} aria-hidden="true" style="width:32px;height:32px;font-size:12px">{initials(m.name)}</span>
+                        )}
+                        <span>
+                          <span class={`ptag party-${p}`} title={m.party}>{p}</span><a href={`/members/${m.bioguide}/`}>{m.name}</a>
+                          <span class="bsky-top-handle">{shortSeat(m)} · <a href={a.url}>@{a.handle}</a></span>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="num bsky-top-n">
+                      <span title={n.toLocaleString("en-US")}>{compact(n)}</span>
+                      <span class="bsky-bar" style={`--w: ${n / topMax}`} aria-hidden="true"></span>
+                    </td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </table>
+        {profilesAsOf && <p class="source">Followers on their most-followed account, as of {profilesAsOf}.</p>}
+      </div>
+      <div>
+        <h3>How we find accounts</h3>
+        <p class="bsky-prose">
+          We match members to accounts by official <code>.house.gov</code> and <code>.senate.gov</code> handles, Bluesky's
+          own verification, links from their official websites, and search. Some members have more than one account (a
+          campaign account and an official one); we label all of them.
+        </p>
+        <p class="bsky-prose">
+          Missing someone, or matched the wrong account?{" "}
+          <a href={LABELER_URL}>Message @{HANDLE} on Bluesky&nbsp;↗</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="labels" aria-labelledby="labels-h">
+    <h2 id="labels-h">What the labels are</h2>
+    <p class="chart-dek">
+      Subscribe to our labeler and every member's posts carry their top {PER_KIND} funding sectors and top {PER_KIND} contributing
+      organizations, {cycleRange}.
+    </p>
+    <div class="bsky-labels-grid">
+      <figure class="bsky-mock">
+        <div class="bsky-mock-post">
+          <img class={`bsky-avatar party-${partyLetter(sample.party)}`} src={sampleAccount.avatar} alt="" width="44" height="44" loading="lazy" style="width:44px;height:44px" />
+          <div class="bsky-mock-body">
+            <p class="bsky-mock-head">
+              <strong>{sampleAccount.displayName ?? sample.name}</strong>
+              <span>@{sampleAccount.handle} · 2h</span>
+            </p>
+            <ul class="bsky-mock-labels" aria-label="Labels from @contributions.fyi">
+              {
+                sampleLabels.map((l) => (
+                  <li>
+                    {labelerAvatar && <img src={labelerAvatar} alt="" width="14" height="14" loading="lazy" />}
+                    {l.name}
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="bsky-mock-text" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="bsky-mock-actions" aria-hidden="true">
+              <svg viewBox="0 0 20 20" width="15" height="15"><path d="M3 4h14v9H8l-4 3v-3H3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
+              <svg viewBox="0 0 20 20" width="15" height="15"><path d="M5 7l3-3 3 3M8 4v9h6M15 13l-3 3-3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" /></svg>
+              <svg viewBox="0 0 20 20" width="15" height="15"><path d="M10 16s-6-3.6-6-8a3.2 3.2 0 016-1.6A3.2 3.2 0 0116 8c0 4.4-6 8-6 8z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /></svg>
+            </div>
+          </div>
+        </div>
+        <figcaption class="source">
+          How a post from <a href={`/members/${sample.bioguide}/`}>{sample.name}</a> looks to a subscriber, with {sample.name.split(" ").at(-1)}'s
+          real labels. The post text is a placeholder.
+        </figcaption>
+      </figure>
+
+      <div class="bsky-labels-text">
+        <h3>To see them</h3>
+        <ol class="bsky-steps">
+          <li><span>Open <a href={LABELER_URL}>@{HANDLE}&nbsp;↗</a> in the Bluesky app.</span></li>
+          <li><span>Tap <strong>Subscribe to labeler</strong>.</span></li>
+          <li><span>Labels show on members' posts and profiles. Turn them off on the same page.</span></li>
+        </ol>
+
+        <div class="bsky-means">
+          <div>
+            <h3>A label means</h3>
+            <p>
+              The sector or organization was among the {PER_KIND} that gave the member the most, {cycleRange}, per FEC filings.
+              Organizations don't donate themselves: the money is from their PACs and the people who work there.
+            </p>
+          </div>
+          <div>
+            <h3>It doesn't mean</h3>
+            <ul>
+              <li>an endorsement, by them or by us</li>
+              <li>wrongdoing</li>
+              <li>that a vote was bought</li>
+              <li>anything about the member's views</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="find" aria-labelledby="find-h">
+    <h2 id="find-h">Find your members</h2>
+    <p class="chart-dek">Every senator and representative from your state on Bluesky, with the labels our labeler puts on their posts.</p>
+    <FindMembers client:load rows={rows} states={states} />
+  </section>
+
+  <section class="story" id="follow" aria-labelledby="follow-h">
+    <h2 id="follow-h">Follow along</h2>
+    <p class="chart-dek">
+      Everything we publish on Bluesky. Each link opens on bsky.app, or in the app if you have it.
+    </p>
+
+    <div class="outputs">
+      <section aria-labelledby="out-labeler">
+        <div class="bsky-labeler">
+          {labelerAvatar && <img class="bsky-avatar" src={labelerAvatar} alt="" width="56" height="56" loading="lazy" style="width:56px;height:56px" />}
+          <div>
+            <h3 id="out-labeler"><a href={LABELER_URL}>The labeler, @{HANDLE}&nbsp;↗</a></h3>
+            <p>{labeler.blurb}, on {accountCount} accounts. Liked by {labelerLikes.toLocaleString("en-US")} people · {labelerFollowers.toLocaleString("en-US")} followers.</p>
+          </div>
+          <a class="bsky-follow" href={LABELER_URL}>Subscribe&nbsp;↗</a>
+        </div>
+      </section>
+
+      <section aria-labelledby="out-packs">
+        <h3 id="out-packs">Starter packs</h3>
+        <p class="sub">A starter pack follows everyone in it at once.</p>
+        <ul class="bsky-packs">
+          {
+            packCards.map((p) => (
+              <li>
+                <FaceStack faces={p.faces} size={34} />
+                <a class="bsky-packs-name" href={p.url}>{p.short}&nbsp;↗</a>
+                <span class="muted small">{p.count} members, plus @{HANDLE}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="out-feeds">
+        <h3 id="out-feeds">Feeds</h3>
+        <p class="sub">Original posts and quote posts, newest first, without replies or reposts.</p>
+        {
+          [...feedGroups].map(([group, fs]) => (
+            <>
+              <h4 class="group-head">{group}</h4>
+              <ul class="rows link-list">
+                {fs.map((f) => (
+                  <li>
+                    <a href={f.url}>{f.name}</a>
+                    <span class="blurb">{f.blurb}.</span>
+                    <span class="n">{f.count} members</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ))
+        }
+      </section>
+
+      <section aria-labelledby="out-lists">
+        <h3 id="out-lists">Lists</h3>
+        <p class="sub">
+          Each list holds the members on Bluesky in one group. Follow one as a feed, pin it, or use it to mute.
+        </p>
+        <BlueskyLists client:visible groups={groups} />
+      </section>
+
+      <section aria-labelledby="out-data">
+        <h3 id="out-data">Open data</h3>
+        <ul class="rows link-list">
+          <li>
+            <a href={DATA_REPO_URL}>@{DATA_HANDLE}</a>
+            <span class="blurb">
+              {dataRepo.blurb}, for anyone to download or build on. <a class="inline" href="/open-data/">How to use it</a>
+            </span>
+            <span class="n">{members.length} members</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <p class="source">
+    Labels, feeds and lists are rebuilt from FEC filings with the rest of the site. Data as of{" "}
+    {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}. See <a href="/about/">how this data works</a>.
+  </p>
+</Base>
+
+<style>
+  /* --- section 4: link rows --- */
+  .outputs > section { margin: 0 0 var(--sp-7); }
+  .outputs h3 {
+    font: 700 var(--fs-lg)/1.25 var(--serif); margin: 0 0 var(--sp-1);
+  }
+  .sub { margin: 0 0 var(--sp-3); font-size: var(--fs-sm); color: var(--text-muted); }
+  .group-head {
+    font: 700 var(--fs-label)/1.3 var(--sans); text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-secondary); margin: var(--sp-4) 0 0; padding-bottom: 6px; border-bottom: 1px solid var(--rule);
+  }
+  .outputs h3 + .rows, .sub + .rows { border-top: 1px solid var(--rule); }
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li {
+    display: grid; grid-template-columns: minmax(180px, 16rem) 1fr auto; gap: var(--sp-1) var(--sp-5); align-items: baseline;
+    padding: 9px 0 8px; border-bottom: 1px solid var(--hairline); font-size: var(--fs-base); line-height: 1.4;
+  }
+  .rows li > a { font-weight: 600; }
+  .rows .blurb { color: var(--text-secondary); font-size: var(--fs-sm); }
+  .rows .n { color: var(--text-muted); font-size: var(--fs-sm); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .rows a.inline { text-decoration-color: var(--link-underline); }
+
+  @media (max-width: 760px) {
+    .rows li { grid-template-columns: 1fr auto; }
+    .rows .blurb { grid-column: 1 / -1; grid-row: 2; }
+  }
+</style>
