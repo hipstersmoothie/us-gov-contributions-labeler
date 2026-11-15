@@ -148,18 +148,25 @@ function swarm(d: SwarmData, ctx: Ctx): Plot.PlotOptions {
         dy: 2,
         ...halo,
       }),
-      Plot.text(medians, {
-        x: "value",
-        fy: "lane",
-        frameAnchor: "top",
-        dy: 4,
-        dx: 4,
-        textAnchor: "start",
-        text: (m) => `Median ${money(m.value, true)}`,
-        fill: "var(--text-secondary)",
-        fontSize: 11,
-        ...halo,
-      }),
+      // Median labels sit beside the lane title, or drop below it when the
+      // median is far enough left that they'd overlap.
+      ...[false, true].map((under) =>
+        Plot.text(
+          medians.filter((m) => (xPx(m.value) < m.lane.length * 7.6 + 12) === under),
+          {
+            x: "value",
+            fy: "lane",
+            frameAnchor: "top",
+            dy: under ? 20 : 4,
+            dx: 4,
+            textAnchor: "start",
+            text: (m) => `Median ${money(m.value, true)}`,
+            fill: "var(--text-secondary)",
+            fontSize: 11,
+            ...halo,
+          }
+        )
+      ),
       Plot.dot(
         sorted,
         dodge({
@@ -284,6 +291,8 @@ export interface StackedData {
   /** Print each segment's share inside it where it fits. Only for fills that
    *  hold text well (the neutral grays), never party colors. */
   insideLabels?: boolean;
+  /** What the values count; money unless given ("votes"). */
+  unit?: string;
 }
 
 function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
@@ -374,7 +383,7 @@ function stacked(d: StackedData, ctx: Ctx): Plot.PlotOptions {
           insetBottom: step - barTop - barH,
           insetLeft: 1,
           insetRight: 1,
-          channels: { Group: "row", Series: "series", Amount: (f) => money(f.value), Share: (f) => `${Math.round(f.share * 100)}%` },
+          channels: { Group: "row", Series: "series", Amount: (f) => (d.unit ? `${f.value.toLocaleString("en-US")} ${d.unit}` : money(f.value)), Share: (f) => `${Math.round(f.share * 100)}%` },
           tip: ctx.interactive
             ? { format: { x: false, y: false, z: false, fill: false, Group: true, Series: true, Amount: true, Share: true } }
             : undefined,

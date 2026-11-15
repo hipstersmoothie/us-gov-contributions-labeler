@@ -7,6 +7,7 @@ import Chambers from "../../components/Chambers.astro";
 import { PARTY_COLOR } from "../../lib/charts";
 import { recipientPoints, pct, chamberName } from "../../lib/derived";
 import { moneyAuto } from "../../lib/format";
+import { organizationBills, lobbyingSpan } from "../../lib/legislation";
 import {
   organizations,
   committeeById,
@@ -73,6 +74,9 @@ const splitRows = [
   { label: "Senate", values: byChamber("senate") },
 ].filter((r) => r.values.D + r.values.I + r.values.R > 0);
 
+// Bills its lobbying reports name, most often named first.
+const lobbiedBills = organizationBills[o.id] ?? [];
+const BILLS_SHOWN = 12;
 const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${o.sec.cik}`;
 ---
 
@@ -274,6 +278,57 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
   </div>
 
   {
+    lobbiedBills.length > 0 && (
+      <section class="story">
+        <h2>Bills it lobbied on</h2>
+        <p class="chart-dek">
+          Bills of this Congress named in lobbying reports filed for {name}, {lobbyingSpan}, by how many quarterly
+          reports named them. Reports list what was lobbied on, not the position taken; "Said" is filled in only where
+          the report states one.
+        </p>
+        <table class="org-bills">
+          <thead>
+            <tr>
+              <th scope="col">Bill</th>
+              <th scope="col" class="num">Reports</th>
+              <th scope="col">Said</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lobbiedBills.slice(0, BILLS_SHOWN).map((ob) => (
+              <tr>
+                <td>
+                  {ob.page ? <a href={`/bills/${ob.id}/`}>{ob.name}</a> : ob.name}
+                  <span class="muted small"> · {ob.label}</span>
+                </td>
+                <td class="num">{ob.quarters}</td>
+                <td class="small">{ob.stance === "support" ? "Supports" : ob.stance === "oppose" ? "Opposes" : <span class="muted">—</span>}</td>
+                <td class="small">{ob.law ? `Law (${ob.law})` : ob.page ? "Voted on" : <span class="muted">No passage vote</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {lobbiedBills.length > BILLS_SHOWN && (
+          <MoreDisclosure client:visible title={`All ${lobbiedBills.length}${lobbiedBills.length === 60 ? "+" : ""} bills`}>
+            <ul class="all-bills">
+              {lobbiedBills.slice(BILLS_SHOWN).map((ob) => (
+                <li>
+                  {ob.page ? <a href={`/bills/${ob.id}/`}>{ob.name}</a> : ob.name}
+                  <span class="muted small"> · {ob.label}, {ob.quarters} report{ob.quarters === 1 ? "" : "s"}</span>
+                </li>
+              ))}
+            </ul>
+          </MoreDisclosure>
+        )}
+        <p class="source">
+          Matched by the bill numbers written in each report. <a href="/about/#bills">How bills are matched</a>.
+        </p>
+      </section>
+    )
+  }
+
+  {
     o.employees && (
       <section class="story">
         <h2>Donations from its employees</h2>
@@ -296,4 +351,6 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
 
 <style>
   .gap { margin-top: 28px; }
+  .org-bills td:last-child { white-space: nowrap; }
+  .all-bills { columns: 2 280px; column-gap: var(--sp-6); padding: 0; margin: 0; list-style: none; font-size: var(--fs-sm); line-height: 1.8; }
 </style>

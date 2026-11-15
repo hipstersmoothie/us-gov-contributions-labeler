@@ -31,3 +31,16 @@ export interface DonorRow {
   top: string;
   total: number;
 }
+
+export interface BillRow {
+  id: string;
+  label: string;
+  name: string;
+  policyArea: string;
+  status: string;
+  law: boolean;
+  /** Date and pattern of its latest passage vote. */
+  lastVote: string;
+  pattern: "party-line" | "near-unanimous" | "split";
+  lobbying: number;
+}

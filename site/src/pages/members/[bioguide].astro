@@ -25,6 +25,8 @@ import {
 import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct, possessive, backersPhrase, cycleLabel } from "../../lib/derived";
 import { surname, moneyAuto, candidateName, partyCode } from "../../lib/format";
 import OutsideTable from "../../components/OutsideTable.astro";
+import VotesTable from "../../components/VotesTable.astro";
+import { memberVotes, partyPlural } from "../../lib/legislation";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -111,6 +113,14 @@ const oppCandidates = opp.candidates.map((c) => {
     race: c.office === "S" ? `Senate, ${c.state}` : `House, ${c.state}${c.district ? `-${c.district}` : ""}`,
   };
 });
+
+// Passage votes, and where they broke with their party.
+const votes = memberVotes(m);
+const decided = votes.filter((x) => x.position !== "O");
+const broke = votes.filter((x) => x.broke);
+const withParty = decided.filter((x) => x.t && (x.position === "Y" ? x.t.yes >= x.t.no : x.t.no >= x.t.yes)).length;
+const caucus = partyPlural(p === "I" ? "D" : p);
+const RECENT = 10;
 
 const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
 ---
@@ -290,6 +300,46 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
       }}
     />
   </section>
+
+  {
+    votes.length > 0 && (
+      <section class="story">
+        <h2>How {last} votes</h2>
+        <p class="chart-dek">
+          On the {votes.length} votes on passing a bill that {last} took part in this Congress, {last} voted with most{" "}
+          {caucus} {withParty} times of {decided.length}
+          {broke.length > 0 ? (
+            <>, and broke with them {broke.length === 1 ? "once" : `${broke.length} times`}: siding with a quarter of the party or less.</>
+          ) : (
+            <>, and never sided with a quarter of the party or less.</>
+          )}{" "}
+          {p === "I" && "As an independent who caucuses with Democrats, they're compared with Democrats. "}
+          The last column counts organizations whose lobbying reports name each bill, on any side of it.
+        </p>
+        {broke.length > 0 && (
+          <>
+            <h3>Where {last} broke with {caucus}</h3>
+            <VotesTable rows={broke.slice(0, RECENT)} member={last} caucus={caucus} />
+            {broke.length > RECENT && (
+              <MoreDisclosure client:visible title={`All ${broke.length} votes against most ${caucus}`}>
+                <VotesTable rows={broke.slice(RECENT)} member={last} caucus={caucus} />
+              </MoreDisclosure>
+            )}
+          </>
+        )}
+        <h3 class:list={{ spaced: broke.length > 0 }}>Most recent votes</h3>
+        <VotesTable rows={votes.slice(0, RECENT)} member={last} caucus={caucus} />
+        {votes.length > RECENT && (
+          <MoreDisclosure client:visible title={`All ${votes.length} votes`}>
+            <VotesTable rows={votes.slice(RECENT)} member={last} caucus={caucus} />
+          </MoreDisclosure>
+        )}
+        <p class="source">
+          Recorded votes on passing bills and resolutions, from the House Clerk and the Senate. <a href="/bills/">Every bill</a>.
+        </p>
+      </section>
+    )
+  }
 
   {
     topContributors.length > 0 && (
@@ -483,4 +533,5 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
     .member-head { gap: var(--sp-4); }
     .member-head img, .portrait-empty { width: 72px; height: 88px; margin-bottom: var(--sp-3); }
   }
+  .spaced { margin-top: var(--sp-6); }
 </style>

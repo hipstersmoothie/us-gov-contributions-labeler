@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import { cycleRange, generatedAt } from "../lib/data";
+import { congress, lobbyingSpan, ordinal } from "../lib/legislation";
 ---
 
 <Base title="About the data" og={{ type: "page", id: "about" }} description="Where this data comes from, what's counted and how organizations are classified.">
@@ -50,6 +51,38 @@ import { cycleRange, generatedAt } from "../lib/data";
       These feed a fixed set of sectors. PACs with no sponsoring organization are counted as{" "}
       <em>Ideological &amp; Single-Issue</em>. Some classifications are set by hand; the rules are
       in the project's source code. Mistakes are possible, so check the linked FEC filings for anything important.
+    </p>
+
+    <h2 id="bills">Bills, votes and lobbying</h2>
+    <p>
+      <a href="/bills/">Bills</a> covers every bill and joint or concurrent resolution the House or Senate held a recorded
+      vote on passing in the {ordinal(congress)} Congress. Bill details come from the Government Publishing Office's{" "}
+      <a href="https://www.govinfo.gov/bulkdata/BILLSTATUS">bill status data</a> (the same records behind congress.gov),
+      and votes from the <a href="https://clerk.house.gov/Votes">House Clerk</a> and the{" "}
+      <a href="https://www.senate.gov/legislative/votes_new.htm">Senate</a>. Only votes on passing a measure are shown,
+      including agreeing to the other chamber's version and veto overrides. Procedural votes and amendments are left out:
+      they mostly follow party lines whatever the bill says.
+    </p>
+    <p>
+      Each vote is labeled <strong>party-line</strong> when 90% or more of each party voted on opposite sides,{" "}
+      <strong>near-unanimous</strong> when 90% or more of both voted the same way, and <strong>split</strong> otherwise.
+      Members are counted under the party they belonged to when they voted. On member pages, "broke with party" means
+      siding with a quarter of their party or less; independents are compared with Democrats, who they caucus with.
+    </p>
+    <p>
+      Lobbying comes from the quarterly LD-2 reports lobbyists file on <a href="https://lda.gov/">lda.gov</a>,{" "}
+      {lobbyingSpan}. Each report describes the issues lobbied on in free text, and about a quarter of them name bills by
+      number ("H.R. 3633", "S.1582"). An organization is listed on a bill's page when one of its reports names the bill.
+      A citation is dropped when the bill hadn't been introduced by the end of the report's quarter (bill numbers start
+      over every Congress, so that's an older bill with the same number), or when the filer wrote a name beside the
+      number that's plainly a different bill. Some typos will still get through.
+    </p>
+    <p>
+      Two things the reports don't say. They don't say <strong>which side</strong> an organization took: an organization
+      listed on a bill may have backed it, opposed it, or wanted part of it changed, and fewer than one in ten reports say
+      which. And they don't say <strong>how much was spent on any one bill</strong>: a report's spending covers every
+      issue lobbied on that quarter. So this site doesn't put an organization's PAC money next to how members voted on
+      the bills it lobbied on. Reports name what was lobbied on, not what was paid for.
     </p>
 
     <h2 id="labeler">The Bluesky labeler</h2>
