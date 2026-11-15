@@ -66,8 +66,8 @@ const headline = backers ? `${possessive(last)} biggest backers are ${backers}` 
 
 // Funding breakdown by cycle, with the in-progress cycle labeled as such.
 const SOURCES = [
-  { key: "pac", label: "PACs", color: "var(--bar-ink)", ink: "var(--on-bar-ink)" },
-  { key: "individual", label: "Individuals", color: "var(--bar)", ink: "var(--on-bar)" },
+  { key: "pac", label: "PACs", color: "var(--bar)", ink: "var(--on-bar)" },
+  { key: "individual", label: "Individuals", color: "var(--bar-muted)", ink: "var(--on-bar-muted)" },
   { key: "other", label: "Party, self & other", color: "var(--context)", ink: "var(--on-context)" },
 ];
 const cycleRows = Object.entries(m.totals)
@@ -83,8 +83,8 @@ const chamberTop = [...points].sort((a, b) => b.value - a.value)[0]!;
 
 // Contributors: each organization's PAC plus its employees.
 const CONTRIB = [
-  { key: "pacs", label: "Its PAC", color: "var(--bar-ink)", ink: "var(--on-bar-ink)" },
-  { key: "individuals", label: "Its employees", color: "var(--bar)", ink: "var(--on-bar)" },
+  { key: "pacs", label: "Its PAC", color: "var(--bar)", ink: "var(--on-bar)" },
+  { key: "individuals", label: "Its employees", color: "var(--bar-muted)", ink: "var(--on-bar-muted)" },
 ];
 const topContributors = contributors.slice(0, 12).map((c) => {
   const org = c.id.startsWith("employer:") ? undefined : organizationById.get(c.id);

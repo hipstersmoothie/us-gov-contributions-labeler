@@ -41,9 +41,9 @@ const PARTY_SERIES = [
 ];
 ---
 
-<Base title="Home" description={`Who funds each member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`}>
-  <p class="kicker">Campaign finance tracker · {cycleRange}</p>
-  <h1>Who funds Congress</h1>
+<Base title="Home" description={`Who funds your member of Congress? PAC money to every member by industry, organization and committee, ${cycleRange}, from FEC filings.`}>
+  <p class="kicker">contributions.fyi · PAC money, {cycleRange}</p>
+  <h1 class="tagline">Who funds <em>your</em> member of Congress?</h1>
   <p class="dek">
     PACs and other committees gave <strong>{money(total, true)}</strong> to the {members.length} current members of
     Congress from {cycleRange.replace("–", " to ")}. <strong>{top.name}</strong> gave the most, {inEvery(top.total / total)}.
