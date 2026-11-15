@@ -81,10 +81,18 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
 
 
   {
-    (paperAnnual && !d.annualScanned) || !d.annual ? (
+    (paperAnnual && !d.annualScanned) || !d.annual || assets.length === 0 ? (
       <>
         <p class="dek">
-          {paperAnnual ? (
+          {d.annual && assets.length === 0 && (!paperAnnual || d.annualScanned) ? (
+            <>
+              {possessive(last)} annual report for {d.annual.year}, filed {date(d.annual.filed)}, lists{" "}
+              <strong>no assets that have to be reported</strong>. Members don't report a home they live in that earns no
+              income, a federal pension, personal savings deposits of $5,000 or less, or anything worth $1,000 or less that earned $200
+              or less. The report also covers income, debts and outside positions, which this page doesn't;{" "}
+              <a href={d.annual.url}>the original is on the Clerk's site</a>.
+            </>
+          ) : paperAnnual ? (
             <>
               {last} filed the {d.annual!.year} annual report on paper. The House posts it as a scanned image, which this
               site can't read reliably, so nothing from it is shown here. The original is{" "}
@@ -125,7 +133,7 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
               Reported assets
               <InfoPopover client:visible title="Why a range">
                 <p>The law asks members for a value category, like $15,001–$50,000, not a figure. This adds up the low ends and the high ends.</p>
-                <p>Their home, if not rented out, and federal retirement accounts aren't reported at all.</p>
+                <p>A home they live in that earns no income and a federal pension aren't reported at all.</p>
               </InfoPopover>
             </dt>
             <dd>{span({ ...total, open: false })}{total.open && "+"}<small>{assets.length} assets</small></dd>
