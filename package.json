@@ -17,7 +17,9 @@
     "publish-records": "tsx src/publish-records.ts",
     "sync-lists": "tsx src/sync-lists.ts",
     "dedupe-labels": "tsx src/scripts/dedupe-labels.ts",
-    "photos": "tsx src/scripts/fetch-photos.ts"
+    "photos": "tsx src/scripts/fetch-photos.ts",
+    "feeds": "tsx feeds/server.ts",
+    "feeds:publish": "tsx feeds/publish.ts"
   },
   "devDependencies": {
     "@types/node": "^24.19.2",
