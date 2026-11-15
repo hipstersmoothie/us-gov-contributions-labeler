@@ -205,7 +205,7 @@ reports):
 | Biggest filers | Khanna 6,959 of 9,017; McCaul 1,721 of 1,930; Fleischmann 111 of 115 | Khanna 3,259 of 3,475; Harshbarger 599 of 612; Guest 252 of 254 |
 | Weakest | Handwritten and check-mark forms (Self, Mann, McClain) | Handwritten forms (Craig, Thompson, Sherman, Gonzalez): a few rows each |
 | Matched to an SEC company | 76% of company-like names, by loose name (no tickers on paper PTRs); 25 random matches all right | 1,963 holdings; Harshbarger's forms carry tickers |
-| Not read at all | 100 pages with no trade table (cover pages, "nothing to report", statements) | Attached brokerage statements (~75 pages), other schedules |
+| Not read at all | 100 pages with no trade table (cover pages, "nothing to report", statements) | Attached brokerage statements other than Edward Jones (see below), other schedules |
 
 **Accuracy, checked by eye.** On 7 PTR pages not used for tuning (89 rows
 across Khanna, McCaul, Harshbarger, Wied and Fleischmann), after the fixes
@@ -222,6 +222,29 @@ bands on tight forms, owner tags OCR'd as "5P"/"SE" (now matched loosely and
 flagged if unmatched, rather than called the member's), a stray rule splitting
 the owner column, trust headings read into asset names, and Block B shifted
 one column where OCR missed the "EIF" box.
+
+### 1b. Attached brokerage statements
+
+Only paper annual reports carry attachments (none of the 1,254 e-filed PDFs
+has an image page): about 240 pages from 7 members. Most are worth little:
+Gonzalez's are mostly 1099 tax forms (sales and dividends, not holdings),
+Raskin's is a letter amending earlier years' reports (funds only), and
+McCaul's, Whitesides' and Sherman's are continuation pages of the form.
+
+**Rogers** is the exception: his Schedule A says "See attached" and attaches a
+year of Edward Jones statements for two accounts. `scan/statements.ts` reads
+the "Asset Details" tables of the statement dated through December 31: money
+market, municipal bonds, stocks, ETFs and mutual funds. Two checks: each
+stock's and fund's value against price × quantity, and each account's values
+against the statement's "Total Account Value". Both accounts reconcile **to the
+cent** ($497,034.97 and $32,315.12; 110 holdings), so every value is
+confirmed; an account that didn't add up would be left out. Statements give
+exact values, so the site shows only the Schedule A range each falls in, and
+keeps no account numbers or addresses (his statements show his home address).
+
+Not done: Fleischmann's three formats (Benjamin F. Edwards, Merrill, Vanguard
+summaries, 20 pages) and the holdings pages among Gonzalez's attachments.
+Each broker needs its own parser.
 
 ### Senate eFD (efdsearch.senate.gov): down for maintenance
 

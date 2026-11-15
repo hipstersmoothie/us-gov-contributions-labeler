@@ -47,6 +47,8 @@ export interface Holding extends Company {
   account?: string;
   description?: string;
   scanned?: boolean;
+  /** From a brokerage statement attached to the report; its exact value is shown only as a range. */
+  fromStatement?: boolean;
   docUrl?: string;
 }
 export interface Trade extends Company {

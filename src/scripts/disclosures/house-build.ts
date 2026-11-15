@@ -13,6 +13,7 @@ import type { Parsed } from "./house-all.js";
 import { matchAsset, type Match } from "./match.js";
 import type { ScannedTrade } from "./scan/ptr.js";
 import type { ScannedHolding } from "./scan/annual.js";
+import { rangeOf, type StatementHolding } from "./scan/statements.js";
 
 /** What a reader needs to tell apart: one company's stock, a fund, cash, property... */
 export const KINDS = {
@@ -95,6 +96,14 @@ const scannedAnnuals = new Map(
   ).map((d) => [d.filing.docId, d])
 );
 
+/** Brokerage statements attached to paper reports in place of a list (scan/statements.ts). */
+const statements = new Map(
+  (fs.existsSync(`${CACHE}/scan/statements.json`)
+    ? (JSON.parse(fs.readFileSync(`${CACHE}/scan/statements.json`, "utf8")) as { docId: string; holdings: StatementHolding[] }[])
+    : []
+  ).map((d) => [d.docId, d.holdings])
+);
+
 /** Kind from a name alone, for paper forms that carry no type codes. */
 function kindFromName(asset: string): Kind {
   if (MUNI.test(asset) || /\b(BANK|CHECKING|SAVINGS|MONEY MARKET|MMDA|CASH)\b/i.test(asset)) return "cash";
@@ -156,6 +165,27 @@ for (const [bioguide, filings] of byMember) {
       open: h.max === null,
       text: h.min === 0 ? "None" : "",
       scanned: true,
+      docUrl: `${pdfUrl(annual!.filing)}#page=${h.page + 1}`,
+      ...company(m),
+    });
+  }
+
+  // Attached statements: exact values become the range a filer would report.
+  for (const h of (annual && statements.get(annual.filing.docId)) ?? []) {
+    if (h.doubts.length || h.value < 1) continue;
+    const m = h.section === "stock" ? await matchAsset(h.asset, undefined, true) : undefined;
+    const [min, max] = rangeOf(h.value);
+    holdings.push({
+      name: h.asset,
+      kind: h.section === "stock" && !m ? "other" : h.section,
+      owner: "self",
+      min,
+      max: max ?? min,
+      open: max === null,
+      text: "",
+      account: `Edward Jones: ${h.account.toLowerCase().replace(/^ira$/, "IRA")}`,
+      scanned: true,
+      fromStatement: true,
       docUrl: `${pdfUrl(annual!.filing)}#page=${h.page + 1}`,
       ...company(m),
     });

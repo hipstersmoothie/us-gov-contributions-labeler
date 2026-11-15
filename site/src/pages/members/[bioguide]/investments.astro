@@ -51,6 +51,7 @@ const trades = d.trades.filter((t) => t.date >= "2025-01-01");
 const recent = trades.slice(0, 15);
 const adviserNoted = trades.filter((t) => t.adviser).length;
 const scannedTrades = trades.filter((t) => t.scanned).length;
+const fromStatements = d.holdings.filter((h) => h.fromStatement).length;
 
 const span = (r: { min: number; max: number; open: boolean }) => rangeText({ ...r, text: "" });
 const share = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
@@ -123,7 +124,14 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
             {last} filed this report on paper. Its assets were read by machine from the scan, so each links to its page;
             check it before relying on one.
             {d.annualUnread ? <> Another {d.annualUnread.toLocaleString()} rows couldn't be read reliably and aren't counted.</> : null}{" "}
-            Statements attached to the report aren't read.
+            {fromStatements > 0 ? (
+              <>
+                {fromStatements.toLocaleString()} of the assets come from the brokerage statements {last} attached instead of
+                listing them; a statement gives an exact value, shown here as the range it falls in, like every other value.
+              </>
+            ) : (
+              <>Statements attached to the report aren't read.</>
+            )}
           </p>
         )}
 
