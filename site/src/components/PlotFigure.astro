@@ -49,6 +49,7 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
     <div class="canvas" set:html={svg} />
     <script type="application/json" set:html={json} />
   </plot-chart>
+  <slot name="note" />
   {
     table && (
       <MoreDisclosure client:visible title="Table view">

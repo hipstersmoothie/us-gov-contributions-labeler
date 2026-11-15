@@ -491,25 +491,42 @@ function niceStep(max: number, n: number) {
 
 function histogram(d: HistData, ctx: Ctx): Plot.PlotOptions {
   const narrow = ctx.width < 520;
-  const max = Math.max(...d.points.map((p) => p.value), 1);
-  const step = niceStep(max, narrow ? 8 : 14);
+  const values = d.points.map((p) => p.value).sort((a, b) => a - b);
+  const max = Math.max(values.at(-1) ?? 1, 1);
+  // Bin width from the bulk of the data, not the outliers, so a single
+  // $100K recipient doesn't blur the $5K steps everyone else falls on.
+  const p95 = values[Math.floor((values.length - 1) * 0.95)] ?? max;
+  const step = niceStep(p95, narrow ? 7 : 12);
   // Bins are [a, b): a gift of exactly $25,000 counts in the $25K–$27.5K bin.
   const thresholds = Array.from({ length: Math.ceil(max / step) + 2 }, (_, i) => i * step);
-  const medians = d.lanes.map((lane) => {
+  const lanes = d.lanes.map((lane) => {
     const v = d.points.filter((p) => p.lane === lane).map((p) => p.value).sort((a, b) => a - b);
-    return { lane, value: v[Math.floor(v.length / 2)] ?? 0 };
+    return { lane, n: v.length, median: v[Math.floor(v.length / 2)] ?? 0 };
   });
+  const laneH = 156;
+  const plotTop = 54; // header lines above the bars
   const opts = { x: "value", fy: "lane", fill: (p: SwarmPoint) => PARTY_COLOR[p.party], thresholds } as const;
   return base(ctx, {
-    height: d.lanes.length * 120 + 30,
-    marginTop: 4,
-    marginLeft: 0,
-    marginRight: 8,
+    height: d.lanes.length * laneH + 30,
+    marginTop: 0,
+    marginLeft: 14,
+    marginRight: narrow ? 24 : 14,
     marginBottom: 26,
     x: { domain: [0, thresholds.at(-1)!], label: null, tickFormat: tickMoney, ticks: compactTicks(ctx.width) },
-    y: { axis: null, insetTop: 34 },
-    fy: { domain: d.lanes, axis: null, padding: 0.1 },
+    y: { axis: null, insetTop: plotTop },
+    fy: { domain: d.lanes, axis: null, padding: 0.12 },
     marks: [
+      // Each lane opens with a rule and its own header, like a table section.
+      Plot.frame({ anchor: "top", stroke: "var(--text-muted)" }),
+      Plot.text(lanes, { fy: "lane", frameAnchor: "top-left", dy: 9, text: (l) => l.lane.toUpperCase(), fontWeight: 700, fontSize: 11, fill: "var(--text-primary)" }),
+      Plot.text(lanes, {
+        fy: "lane",
+        frameAnchor: "top-left",
+        dy: 25,
+        text: (l) => `${l.n.toLocaleString()} ${l.n === 1 ? "member" : d.unit} · median ${money(l.median, true)}`,
+        fontSize: 12,
+        fill: "var(--text-secondary)",
+      }),
       Plot.axisX({ ticks: compactTicks(ctx.width), tickFormat: tickMoney, tickSize: 0, tickPadding: 8 }),
       Plot.ruleY([0], { stroke: "var(--baseline)" }),
       Plot.rectY(
@@ -526,36 +543,27 @@ function histogram(d: HistData, ctx: Ctx): Plot.PlotOptions {
           }
         )
       ),
+      Plot.ruleX(lanes, { x: "median", fy: "lane", stroke: "var(--text-primary)", insetTop: plotTop - 12 }),
+      Plot.text(lanes, {
+        x: "median",
+        fy: "lane",
+        frameAnchor: "top",
+        dy: plotTop - 14,
+        dx: 4,
+        textAnchor: "start",
+        text: () => "median",
+        fill: "var(--text-secondary)",
+        fontSize: 10,
+        fontStyle: "italic",
+        ...halo,
+      }),
       Plot.text(
         d.points,
         Plot.binX<Plot.TextOptions>(
           { y: "count", text: "count" },
-          { x: "value", fy: "lane", thresholds, dy: -7, fill: "var(--text-secondary)", fontSize: 11, fontVariant: "tabular-nums" }
+          { x: "value", fy: "lane", thresholds, dy: -7, fill: "var(--text-secondary)", fontSize: 11, fontVariant: "tabular-nums", ...halo }
         )
       ),
-      Plot.text(d.lanes, {
-        fy: (l) => l,
-        frameAnchor: "top-left",
-        text: (l) => l.toUpperCase(),
-        fontWeight: 700,
-        fontSize: 11,
-        fill: "var(--text-primary)",
-        dy: 2,
-        ...halo,
-      }),
-      Plot.ruleX(medians, { x: "value", fy: "lane", stroke: "var(--text-primary)", insetTop: 18 }),
-      Plot.text(medians, {
-        x: "value",
-        fy: "lane",
-        frameAnchor: "top",
-        dy: 4,
-        dx: 4,
-        textAnchor: "start",
-        text: (m) => `Median ${money(m.value, true)}`,
-        fill: "var(--text-secondary)",
-        fontSize: 11,
-        ...halo,
-      }),
     ],
   });
 }

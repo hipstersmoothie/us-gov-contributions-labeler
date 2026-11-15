@@ -47,7 +47,12 @@ const leanText =
 const topRecipient = memberById.get(o.recipients[0]?.id ?? "");
 
 const points = recipientPoints(o.recipients);
-const lanes = ["Democrats", "Republicans", "Independents"].filter((l) => points.some((p) => p.lane === l));
+// Parties with only a handful of recipients would get a near-empty lane of
+// their own; they're named in a note below the chart instead.
+const MIN_LANE = 5;
+const laneCount = (l: string) => points.filter((p) => p.lane === l).length;
+const lanes = ["Democrats", "Republicans", "Independents"].filter((l) => laneCount(l) >= MIN_LANE);
+const leftOut = points.filter((p) => !lanes.includes(p.lane)).sort((a, b) => b.value - a.value);
 const PARTY_SERIES = [
   { key: "D", label: "Democrats", color: PARTY_COLOR.D, ink: "var(--on-d)" },
   { key: "I", label: "Independents", color: PARTY_COLOR.I, ink: "var(--on-i)" },
@@ -108,7 +113,7 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
   </section>
 
   {
-    points.length > 1 && (
+    lanes.length > 0 && (
       <section class="story">
         <h2>How much each member got</h2>
         <p class="chart-dek">
@@ -118,8 +123,7 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
         <PlotFigure
           chart="histogram"
           label={`How much ${o.name} gave each member, by party`}
-          data={{ points, lanes, unit: "members" }}
-          legend={lanes.map((l) => ({ label: l, color: PARTY_COLOR[l[0] as "D"] }))}
+          data={{ points: points.filter((p) => lanes.includes(p.lane)), lanes, unit: "members" }}
           table={{
             columns: ["Member", "Party", "Chamber", "Given"],
             numeric: [3],
@@ -128,7 +132,20 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
               return m ? [[{ text: m.name, href: `/members/${m.bioguide}/` }, m.party, chamberName(m), money(r.total)]] : [];
             }),
           }}
-        />
+        >
+          {
+            leftOut.length > 0 && (
+              <p class="source" slot="note">
+                Not shown: {leftOut.length === 1 ? "one member" : `${leftOut.length} members`} from parties with fewer than{" "}
+                {MIN_LANE} recipients:{" "}
+                {leftOut.slice(0, 4).map((p, i) => (
+                  <>{i > 0 && "; "}<a href={p.href}>{p.name}</a> ({p.party}), {money(p.value, true)}</>
+                ))}
+                {leftOut.length > 4 && `; and ${leftOut.length - 4} more in the table view`}.
+              </p>
+            )
+          }
+        </PlotFigure>
       </section>
     )
   }
