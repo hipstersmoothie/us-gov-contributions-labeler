@@ -69,7 +69,7 @@ pnpm site:build
 
 ## Deployment (Railway)
 
-- **Labeler** (`us-gov-contributions-labeler` service): `pnpm start`, with the label database on the `/sqlite-data` volume (`DB_PATH`).
+- **Labeler** (`us-gov-contributions-labeler` service): built from the root `Dockerfile`, with the label database on the `/sqlite-data` volume (`DB_PATH`).
 - **Website** (`website` service): built from `site/Dockerfile` (`RAILWAY_DOCKERFILE_PATH=site/Dockerfile`).
 
 `pnpm dedupe-labels` is a one-off cleanup for duplicate label events in the labeler's database; run it on the labeler service (`railway ssh`).
