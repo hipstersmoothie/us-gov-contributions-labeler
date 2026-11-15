@@ -136,11 +136,11 @@ const collections = [
     <table>
       <thead><tr><th>NSID</th><th>Record key</th><th>Contents</th></tr></thead>
       <tbody>
-        {collections.map(([nsid, key, what]) => <tr><td><code>{nsid}</code></td><td>{key}</td><td>{what}</td></tr>)}
+        {collections.map(([nsid, key, what]) => <tr><td><code>fyi.contributions.<wbr />{nsid!.replace("fyi.contributions.", "")}</code></td><td>{key}</td><td>{what}</td></tr>)}
       </tbody>
     </table>
     <p>
-      The lexicons are in the <a href="https://github.com/hipstersmoothie/us-gov-contributions-labeler/tree/main/lexicons">project's source</a>
+      The lexicons are in the <a href="https://github.com/hipstersmoothie/us-gov-contributions-labeler/tree/main/lexicons">project's source</a>{" "}
       and published as <code>com.atproto.lexicon.schema</code> records in the same repository. In records, amounts
       are whole US dollars, because the atproto data model has no fractions; the files keep exact cents.
     </p>
@@ -181,5 +181,11 @@ const collections = [
   details :global(pre.astro-code) { max-height: 28rem; }
   .note { font-size: var(--fs-sm); color: var(--text-muted); }
   table { font-size: var(--fs-sm); }
-  td code { overflow-wrap: anywhere; }
+  /* Keep NSIDs whole; on phones they may wrap after "fyi.contributions.". */
+  td code { white-space: nowrap; }
+  td code wbr { display: none; } /* Chrome breaks at <wbr> even with nowrap */
+  @media (max-width: 640px) {
+    td code { white-space: normal; }
+    td code wbr { display: inline; }
+  }
 </style>
