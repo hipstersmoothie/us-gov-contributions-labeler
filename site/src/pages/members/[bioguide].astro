@@ -25,6 +25,7 @@ import {
 import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct, possessive, backersPhrase, cycleLabel } from "../../lib/derived";
 import { surname, moneyAuto, candidateName, partyCode } from "../../lib/format";
 import OutsideTable from "../../components/OutsideTable.astro";
+import { disclosures } from "../../lib/holdings";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -111,6 +112,8 @@ const oppCandidates = opp.candidates.map((c) => {
     race: c.office === "S" ? `Senate, ${c.state}` : `House, ${c.state}${c.district ? `-${c.district}` : ""}`,
   };
 });
+
+const hasDisclosure = disclosures.has(m.bioguide);
 
 const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
 ---
@@ -202,6 +205,15 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
           </div>
         )}
       </section>
+    )
+  }
+
+  {
+    hasDisclosure && (
+      <p class="investments-link">
+        <a href={`/members/${m.bioguide}/investments/`}>What {last} reported owning and trading</a>
+        <span class="muted"> · from House financial disclosures (prototype)</span>
+      </p>
     )
   }
 
@@ -465,6 +477,7 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
 </Base>
 
 <style>
+  .investments-link { margin: calc(-1 * var(--sp-4)) 0 var(--sp-6); font-size: var(--fs-sm); font-weight: 600; }
   .member-head { display: flex; gap: var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-4); }
   .member-head img, .portrait-empty {
     flex: none; width: 104px; height: 128px; border-radius: 2px; object-fit: cover; background: var(--surface-2);

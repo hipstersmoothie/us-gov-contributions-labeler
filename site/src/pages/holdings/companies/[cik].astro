@@ -1,0 +1,152 @@
+---
+// Prototype: which House members reported owning or trading one company's
+// stock. The company's PAC money is shown beside the list, deliberately not
+// joined to it member by member (see design/holdings/README.md).
+import Base from "../../../layouts/Base.astro";
+import { partyLetter, money, cycleRange } from "../../../lib/data";
+import { surname } from "../../../lib/format";
+import { companies, companyOrg, companyName, rangeText, sumRange, OWNER_LABEL, type CompanyEntry } from "../../../lib/holdings";
+
+export function getStaticPaths() {
+  return [...companies.values()].map((c) => ({ params: { cik: String(c.cik) }, props: { c } }));
+}
+
+const { c } = Astro.props as { c: CompanyEntry };
+// The joined view, for the exploration's screenshots only.
+const RISKY = process.env.HOLDINGS_RISKY === "1";
+
+const name = companyName(c.name);
+const org = companyOrg(c);
+const holders = c.holders
+  .map((h) => ({ ...h, ...sumRange(h.holdings), owners: [...new Set(h.holdings.map((x) => x.owner))] }))
+  .sort((a, b) => b.max - a.max || surname(a.member.name).localeCompare(surname(b.member.name)));
+const traders = c.traders
+  .map((t) => ({ ...t, buys: t.trades.filter((x) => x.tx === "Bought").length, sells: t.trades.filter((x) => x.tx.startsWith("Sold")).length }))
+  .sort((a, b) => b.trades.length - a.trades.length);
+const onlyOthers = holders.filter((h) => !h.owners.includes("self")).length;
+const parties = (xs: { member: { party: string } }[]) => {
+  const n = (p: string) => xs.filter((x) => partyLetter(x.member.party) === p).length;
+  return `${n("D")} Democrats, ${n("R")} Republicans${n("I") ? `, ${n("I")} independents` : ""}`;
+};
+const pacTo = new Map((org?.recipients ?? []).map((r) => [r.id, r.total]));
+const date = (iso: string) => new Date(`${iso}T12:00:00`).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" : OWNER_LABEL[o as keyof typeof OWNER_LABEL])).join(", ");
+---
+
+<Base title={`${name}: members' holdings`} description={`House members who reported owning or trading ${name} stock.`}>
+  <p class="kicker">{c.industry ?? c.sector ?? "Company"}{c.ticker && <> · {c.ticker}</>}</p>
+  <h1>{name}</h1>
+  <p class="prototype-flag">Prototype. Built from House financial disclosure reports on a branch; not on the live site.</p>
+
+  <p class="dek">
+    {holders.length > 0 ? (
+      <>
+        <strong>{holders.length} House {holders.length === 1 ? "member" : "members"}</strong> ({parties(holders)}) reported
+        owning {name} stock or options on their 2025 annual reports
+        {onlyOthers > 0 && <>; for {onlyOthers} of them it's held by a spouse, jointly or for a child</>}.
+      </>
+    ) : (
+      <>No House member reported owning {name} at the end of 2025.</>
+    )}{" "}
+    {traders.length > 0 && <>{traders.length} reported trading it since January 2025.</>} Senators and paper filers aren't
+    included.
+  </p>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Who owns it</h2>
+      {holders.length ? (
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Member</th>
+              <th scope="col">Whose</th>
+              <th scope="col" class="num">Value</th>
+              {RISKY && <th scope="col" class="num">From its PAC</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {holders.map((h) => (
+              <tr>
+                <td>
+                  <span class={`ptag party-${partyLetter(h.member.party)}`}>{partyLetter(h.member.party)}</span>
+                  <a href={`/members/${h.member.bioguide}/investments/`}>{h.member.name}</a>
+                </td>
+                <td>{whose(h.owners)}</td>
+                <td class="num">{h.holdings.length === 1 ? rangeText(h.holdings[0]!) : rangeText({ ...h, text: "" })}</td>
+                {RISKY && <td class="num">{pacTo.get(h.member.bioguide) ? money(pacTo.get(h.member.bioguide)!) : "–"}</td>}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p class="empty-note">None at the end of 2025.</p>
+      )}
+    </section>
+
+    <section class="story">
+      <h2>Who traded it</h2>
+      {traders.length ? (
+        <table>
+          <thead>
+            <tr><th scope="col">Member</th><th scope="col" class="num">Bought</th><th scope="col" class="num">Sold</th><th scope="col" class="num">Latest</th></tr>
+          </thead>
+          <tbody>
+            {traders.map((t) => (
+              <tr>
+                <td>
+                  <span class={`ptag party-${partyLetter(t.member.party)}`}>{partyLetter(t.member.party)}</span>
+                  <a href={`/members/${t.member.bioguide}/investments/`}>{t.member.name}</a>
+                </td>
+                <td class="num">{t.buys || "–"}</td>
+                <td class="num">{t.sells || "–"}</td>
+                <td class="num">{date(t.trades[0]!.date)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p class="empty-note">No House member reported trading it since January 2025.</p>
+      )}
+    </section>
+  </div>
+
+  {
+    org && (
+      <section class="story pac-aside">
+        <h2>{name}'s PAC</h2>
+        <p class="chart-dek">
+          {name} also has a political action committee. It gave <strong>{money(org.total, true)}</strong> to{" "}
+          {org.recipients.length} current members of Congress in {cycleRange}. Owning a company's stock and getting money from its PAC are separate
+          things, and this page doesn't connect them.{" "}
+          <a href={`/organizations/${org.id}/`}>See where its PAC money went</a>.
+        </p>
+      </section>
+    )
+  }
+
+  {
+    RISKY && org && (
+      <p class="risky-flag">
+        Not recommended: the "From its PAC" column joins the two lists. Of the {holders.length} holders,{" "}
+        {holders.filter((h) => pacTo.has(h.member.bioguide)).length} also got money from its PAC. Read as "owns it and is paid
+        by it", which neither report says.
+      </p>
+    )
+  }
+
+  <p class="source">
+    Source: <a href="https://disclosures-clerk.house.gov/FinancialDisclosure">U.S. House Clerk financial disclosure reports</a>;
+    company and industry from SEC EDGAR. Values are the ranges members report, added up when a member reported more than
+    one line.
+  </p>
+</Base>
+
+<style>
+  .prototype-flag, .risky-flag {
+    display: inline-block; font-size: var(--fs-sm); color: var(--text-secondary); margin: 0 0 var(--sp-5);
+    padding: var(--sp-1) var(--sp-3); border-left: 3px solid var(--accent); background: var(--surface-2);
+  }
+  .risky-flag { display: block; max-width: 680px; }
+  .pac-aside { max-width: 760px; }
+</style>

@@ -10,3 +10,7 @@ site/public/photos
 site/dist
 site/.astro
 !.env.example
+
+# Prototype financial-disclosure data: 5 U.S.C. § 13107 limits its use, so it
+# is regenerated locally and never committed (design/holdings/README.md).
+site/src/data/holdings.json

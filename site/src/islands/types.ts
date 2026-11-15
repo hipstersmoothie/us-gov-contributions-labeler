@@ -31,3 +31,21 @@ export interface DonorRow {
   top: string;
   total: number;
 }
+
+/** Prototype: one reported trade, from House periodic transaction reports. */
+export interface TradeRow {
+  id: string;
+  member: string;
+  bioguide: string;
+  sortName: string;
+  party: "D" | "R" | "I";
+  date: string;
+  asset: string;
+  company: boolean;
+  tx: string;
+  owner: string;
+  amount: string;
+  min: number;
+  lagDays: number;
+  docUrl: string;
+}

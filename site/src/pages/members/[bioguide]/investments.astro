@@ -1,0 +1,364 @@
+---
+// Prototype: what a member reported owning and trading, from House financial
+// disclosures. Its own page, apart from the campaign money, so holdings never
+// sit beside "biggest backers" as if one explained the other.
+import Base from "../../../layouts/Base.astro";
+import PlotFigure from "../../../components/PlotFigure.astro";
+import InfoPopover from "../../../islands/InfoPopover";
+import MoreDisclosure from "../../../islands/MoreDisclosure";
+import { memberById, partyLetter, seat, photoUrl, type Member } from "../../../lib/data";
+import { surname } from "../../../lib/format";
+import { possessive } from "../../../lib/derived";
+import {
+  disclosures,
+  byKind,
+  bySector,
+  sumRange,
+  rangeText,
+  committeeSectors,
+  overlapShare,
+  baselineShare,
+  companyName,
+  COMPANY_KINDS,
+  OWNER_LABEL,
+  type Disclosure,
+} from "../../../lib/holdings";
+
+export function getStaticPaths() {
+  return [...disclosures.keys()]
+    .filter((id) => memberById.has(id))
+    .map((id) => ({ params: { bioguide: id }, props: { m: memberById.get(id)!, d: disclosures.get(id)! } }));
+}
+
+const { m, d } = Astro.props as { m: Member; d: Disclosure };
+const last = surname(m.name);
+const p = partyLetter(m.party);
+const photo = photoUrl(m.bioguide);
+const date = (iso: string) => new Date(`${iso}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+const assets = d.holdings.filter((h) => h.kind !== "other" || h.max > 0);
+const total = sumRange(assets);
+const kinds = byKind(assets);
+const company = assets.filter((h) => COMPANY_KINDS.includes(h.kind));
+const companyTotal = sumRange(company);
+const sectors = bySector(assets);
+const notSelf = assets.filter((h) => h.owner !== "self");
+const notSelfTotal = sumRange(notSelf);
+const exact = assets.filter((h) => h.exact).length;
+const paperAnnual = d.annual?.paper;
+const paperPtrs = d.ptrs.filter((x) => x.paper);
+const trades = d.trades.filter((t) => t.date >= "2025-01-01");
+const recent = trades.slice(0, 15);
+const adviserNoted = trades.filter((t) => t.adviser).length;
+
+const span = (r: { min: number; max: number; open: boolean }) => rangeText({ ...r, text: "" });
+const share = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
+
+// Committees with an industry-specific jurisdiction, and how much of the
+// member's individual-company stock is in those industries, next to the
+// share for every House member's individual stocks pooled.
+const overlaps = [...committeeSectors(m)].map(([sector, committees]) => ({
+  sector,
+  committees,
+  mine: overlapShare(assets, [sector]),
+  base: baselineShare([sector]),
+  holdings: company.filter((h) => h.sector === sector),
+}));
+
+const ownerOf = (o: keyof typeof OWNER_LABEL) => (o === "self" ? last : OWNER_LABEL[o]);
+const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.cik}/` : undefined);
+---
+
+<Base title={`${m.name}: investments`} description={`What ${m.name} reported owning and trading, from House financial disclosure reports. Values are ranges.`}>
+  <header class="member-head">
+    {photo && <img src={photo} alt={`Official portrait of ${m.name}`} width="78" height="96" />}
+    <div>
+      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party} · {seat(m)} · <a href={`/members/${m.bioguide}/`}>Campaign money</a></p>
+      <h1>{m.name}: investments</h1>
+    </div>
+  </header>
+
+  <p class="prototype-flag">Prototype. Built from House financial disclosure reports on a branch; not on the live site.</p>
+
+  {
+    paperAnnual || !d.annual ? (
+      <>
+        <p class="dek">
+          {paperAnnual ? (
+            <>
+              {last} filed the {d.annual!.year} annual report on paper. The House posts it as a scanned image, which this
+              site can't read reliably, so nothing from it is shown here. The original is{" "}
+              <a href={d.annual!.url}>on the Clerk's site</a>.
+            </>
+          ) : (
+            <>No 2025 annual report from {last} is on file yet. New members file theirs the May after they take office, and members can get extensions.</>
+          )}
+        </p>
+      </>
+    ) : (
+      <>
+        <p class="dek">
+          On {possessive(last)} annual report for {d.annual!.year}, filed {date(d.annual!.filed)}
+          {d.annual!.amended && " (amended)"}, {assets.length} assets add up to{" "}
+          <strong>between {span({ min: total.min, max: total.max, open: false })}{total.open && " or more"}</strong>. Reports
+          give each value as a range, so totals are ranges too.
+          {company.length > 0 && (
+            <>
+              {" "}{company.length} of the assets are stock or options in a single company, worth{" "}
+              <strong>{span(companyTotal)}</strong> together; the rest are funds, cash, property and accounts.
+            </>
+          )}
+        </p>
+
+        <dl class="stats">
+          <div class="stat">
+            <dt>
+              Reported assets
+              <InfoPopover client:visible title="Why a range">
+                <p>The law asks members for a value category, like $15,001–$50,000, not a figure. This adds up the low ends and the high ends.</p>
+                <p>Their home, if not rented out, and federal retirement accounts aren't reported at all.</p>
+              </InfoPopover>
+            </dt>
+            <dd>{span({ ...total, open: false })}{total.open && "+"}<small>{assets.length} assets</small></dd>
+          </div>
+          <div class="stat">
+            <dt>Single-company stock</dt>
+            <dd>{company.length ? span(companyTotal) : "None"}<small>{company.length} holdings</small></dd>
+          </div>
+          <div class="stat">
+            <dt>
+              Spouse's, joint or a child's
+              <InfoPopover client:visible title="Who owns what">
+                <p>Members report their spouse's and dependent children's assets too. Each holding says whose it is.</p>
+              </InfoPopover>
+            </dt>
+            <dd>{notSelf.length ? span(notSelfTotal) : "None"}<small>{notSelf.length} of {assets.length} assets</small></dd>
+          </div>
+          <div class="stat"><dt>Trades reported since Jan. 2025</dt><dd>{trades.length.toLocaleString()}<small>{d.ptrs.length} transaction reports</small></dd></div>
+        </dl>
+
+        <div class="grid-2">
+          <section class="story">
+            <h2>What {last} owns, by kind</h2>
+            <p class="chart-dek">
+              Funds and accounts are reported by name only: the companies inside a mutual fund or 401(k) aren't listed, so
+              they can't be sorted by industry.
+            </p>
+            <PlotFigure
+              chart="ranges"
+              width={500}
+              label={`${possessive(last)} reported assets by kind, as ranges`}
+              legend={[
+                { label: "At least", color: "var(--bar)" },
+                { label: "Up to", color: "var(--context)" },
+              ]}
+              data={{ rows: kinds.map((k) => ({ label: k.label, min: k.min, max: k.max, open: k.open, note: `${k.items.length}` })) }}
+              table={{
+                columns: ["Kind", "Holdings", "Reported range"],
+                numeric: [1, 2],
+                rows: kinds.map((k) => [k.label, k.items.length, span(k)]),
+              }}
+            />
+          </section>
+
+          <section class="story">
+            <h2>Single-company stock by industry</h2>
+            {company.length ? (
+              <>
+                <p class="chart-dek">
+                  Stocks, options and bonds of one company, matched to SEC filings for its industry.
+                  {company.filter((h) => h.owner !== "self").length > company.length / 2 && (
+                    <> Most of it is <strong>held by {last}'s spouse or jointly</strong>.</>
+                  )}
+                </p>
+                <PlotFigure
+                  chart="ranges"
+                  width={500}
+                  label={`${possessive(last)} single-company stock by industry, as ranges`}
+                  legend={[
+                    { label: "At least", color: "var(--bar)" },
+                    { label: "Up to", color: "var(--context)" },
+                  ]}
+                  data={{ rows: sectors.slice(0, 8).map((s) => ({ label: s.sector, min: s.min, max: s.max, open: s.open, note: `${s.items.length}` })) }}
+                  table={{
+                    columns: ["Industry", "Holdings", "Reported range"],
+                    numeric: [1, 2],
+                    rows: sectors.map((s) => [s.sector, s.items.length, span(s)]),
+                  }}
+                />
+              </>
+            ) : (
+              <p class="empty-note">{last} reported no stock in individual companies. Everything is in funds, cash, property or accounts.</p>
+            )}
+          </section>
+        </div>
+
+        {company.length > 0 && (
+          <section class="story">
+            <h2>Every single-company holding</h2>
+            <table class="holdings">
+              <thead>
+                <tr><th scope="col">Company</th><th scope="col">Whose</th><th scope="col">Industry</th><th scope="col" class="num">Value</th></tr>
+              </thead>
+              <tbody>
+                {[...company]
+                  .sort((a, b) => b.max - a.max || a.name.localeCompare(b.name))
+                  .slice(0, 25)
+                  .map((h) => (
+                    <tr>
+                      <td>
+                        {companyHref(h) ? <a href={companyHref(h)}>{h.company ? companyName(h.company) : h.name}</a> : h.name}
+                        {h.ticker && <span class="muted"> {h.ticker}</span>}
+                        {h.kind !== "stock" && <span class="tag">{h.kind === "options" ? "Options" : "Bonds"}</span>}
+                      </td>
+                      <td><span class:list={["owner", `owner-${h.owner}`]}>{ownerOf(h.owner)}</span></td>
+                      <td class="muted">{h.sector ?? "–"}</td>
+                      <td class="num">{rangeText(h)}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            {company.length > 25 && (
+              <MoreDisclosure client:visible title={`All ${company.length}`}>
+                <table class="holdings">
+                  <tbody>
+                    {[...company].sort((a, b) => b.max - a.max).slice(25).map((h) => (
+                      <tr><td>{h.name}</td><td>{ownerOf(h.owner)}</td><td class="muted">{h.sector ?? "–"}</td><td class="num">{rangeText(h)}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </MoreDisclosure>
+            )}
+            {exact > 0 && <p class="source">{last} gave exact values for {exact} assets instead of ranges; those are shown as given.</p>}
+          </section>
+        )}
+
+        {overlaps.length > 0 && company.length > 0 && (
+          <section class="story">
+            <h2>Stock in industries {possessive(last)} committees cover</h2>
+            <p class="chart-dek">
+              Owning a stock in an industry a committee oversees is not by itself a conflict: members are allowed to own
+              stock, and the biggest companies are in nearly every portfolio. So each row compares {last} with House
+              members' single-company stock pooled together.
+            </p>
+            <table class="overlap">
+              <thead>
+                <tr>
+                  <th scope="col">Industry</th>
+                  <th scope="col">Committee</th>
+                  <th scope="col" class="num">Share of {possessive(last)} company stock</th>
+                  <th scope="col" class="num">All House members</th>
+                </tr>
+              </thead>
+              <tbody>
+                {overlaps.map((o) => (
+                  <tr>
+                    <td>{o.sector}</td>
+                    <td class="muted">{o.committees.join(", ")}</td>
+                    <td class="num">{share(o.mine, 1)}%<span class="muted small"> · {o.holdings.length} holdings</span></td>
+                    <td class="num muted">{share(o.base, 1)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p class="source">
+              Shares use the middle of each reported range, so they're approximate. Committees that reach every industry
+              (Appropriations, Ways and Means, Budget, Rules, Oversight, Judiciary) aren't listed.
+            </p>
+          </section>
+        )}
+      </>
+    )
+  }
+
+  <section class="story">
+    <h2>Trades</h2>
+    {
+      recent.length > 0 ? (
+        <>
+          <p class="chart-dek">
+            Members must report a stock or bond trade over $1,000 within 45 days, by them, their spouse or a dependent
+            child. Mutual funds and other diversified funds are exempt, so these are mostly single companies. The amount is
+            a range.
+            {adviserNoted > 0 && (
+              <>
+                {" "}On <strong>{adviserNoted.toLocaleString()} of them</strong>, {last} noted that a financial adviser or
+                manager made the trade.
+              </>
+            )}
+          </p>
+          <table class="trades">
+            <thead>
+              <tr>
+                <th scope="col">Trade date</th>
+                <th scope="col">Asset</th>
+                <th scope="col">Whose</th>
+                <th scope="col" class="num">Amount</th>
+                <th scope="col" class="num">Reported</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recent.map((t) => (
+                <tr>
+                  <td class="nowrap">{date(t.date)}</td>
+                  <td>
+                    <span class:list={["tx", t.tx.startsWith("Bought") ? "tx-buy" : "tx-sell"]}>{t.tx}</span>{" "}
+                    {companyHref(t) ? <a href={companyHref(t)}>{t.name}</a> : t.name}
+                    {t.adviser && <span class="tag" title={t.comments ?? t.description}>Adviser</span>}
+                  </td>
+                  <td>{ownerOf(t.owner)}</td>
+                  <td class="num">{rangeText(t)}</td>
+                  <td class="num">
+                    <a href={t.docUrl}>{t.lagDays} days later</a>
+                    {t.status && <span class="muted small"> · {t.status.toLowerCase()}</span>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {trades.length > recent.length && <p class="source">The {recent.length} most recent of {trades.length.toLocaleString()} trades since January 2025.</p>}
+        </>
+      ) : paperPtrs.length ? (
+        <p class="empty-note">
+          {last} filed {paperPtrs.length} transaction reports on paper since January 2025. They're scanned images this site
+          can't read reliably; the newest is <a href={paperPtrs[0]!.url}>on the Clerk's site</a>.
+        </p>
+      ) : (
+        <p class="empty-note">{last} has reported no trades since January 2025.</p>
+      )
+    }
+  </section>
+
+  <p class="source">
+    Source: <a href="https://disclosures-clerk.house.gov/FinancialDisclosure">U.S. House Clerk financial disclosure reports</a>
+    {d.annual && <>, <a href={d.annual.url}>{d.annual.year} annual report</a></>}. Under 5 U.S.C. § 13107, these reports may
+    not be used for any commercial purpose (other than news media's), to determine a credit rating, or to solicit money for
+    any political, charitable or other purpose.
+  </p>
+</Base>
+
+
+<style>
+  .member-head { display: flex; gap: var(--sp-4); align-items: center; margin-bottom: var(--sp-4); }
+  .member-head img { border-radius: 2px; flex: none; }
+  .member-head h1 { margin: 0; }
+  .prototype-flag {
+    display: inline-block; font-size: var(--fs-sm); color: var(--text-secondary); margin: 0 0 var(--sp-5);
+    padding: var(--sp-1) var(--sp-3); border-left: 3px solid var(--accent); background: var(--surface-2);
+  }
+  .holdings td, .trades td, .overlap td { font-size: var(--fs-base); }
+  .nowrap { white-space: nowrap; }
+  .tag {
+    display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid var(--hairline); border-radius: 2px;
+    font-size: var(--fs-label); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+  }
+  .owner { white-space: nowrap; }
+  .owner-spouse, .owner-joint, .owner-child { font-style: italic; }
+  .tx { font-size: var(--fs-label); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary); }
+  .tx-buy::before, .tx-sell::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 5px; vertical-align: 0; }
+  .tx-buy::before { background: var(--bar); }
+  .tx-sell::before { background: transparent; box-shadow: inset 0 0 0 1.5px var(--bar); }
+  @media (max-width: 640px) {
+    .overlap th:nth-child(2), .overlap td:nth-child(2) { display: none; }
+  }
+</style>

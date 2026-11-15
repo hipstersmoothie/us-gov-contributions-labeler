@@ -777,5 +777,78 @@ function parliament(d: ParliamentData, ctx: Ctx): Plot.PlotOptions {
   });
 }
 
-export const charts = { swarm, bars, stacked, dumbbell, histogram, diverging, parliament } as const;
+// --- value ranges: disclosures give a range, never a figure ------------------------
+
+export interface RangeRow {
+  label: string;
+  /** Sum of the reported ranges' lower and upper bounds. */
+  min: number;
+  max: number;
+  /** "Over $1,000,000" style: the upper bound is open. */
+  open?: boolean;
+  href?: string;
+  note?: string;
+}
+export interface RangesData {
+  rows: RangeRow[];
+}
+
+/** A solid bar to the least the filer could hold, a pale one on to the most. */
+function ranges(d: RangesData, ctx: Ctx): Plot.PlotOptions {
+  const rows = d.rows.map((r, i) => ({ ...r, i }));
+  const step = 38;
+  const max = Math.max(...rows.map((r) => r.max), 1);
+  const span = (r: RangeRow) => (r.min === r.max ? money(r.min, true) : `${money(r.min, true)}–${money(r.max, true)}${r.open ? "+" : ""}`);
+  return base(ctx, {
+    height: rows.length * step + 4,
+    marginTop: 4,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    x: { domain: [0, max * (ctx.width < 480 ? 1.45 : 1.25)], axis: null },
+    y: { domain: rows.map((r) => r.i), axis: null, paddingInner: 0, paddingOuter: 0 },
+    marks: [
+      Plot.text(rows, {
+        x: 0,
+        y: "i",
+        dy: -1,
+        lineAnchor: "bottom",
+        textAnchor: "start",
+        text: (r: (typeof rows)[number]) => (r.note ? `${r.label}  ·  ${r.note}` : r.label),
+        href: "href",
+        fill: "var(--text-primary)",
+        fontSize: 13,
+        fontWeight: 500,
+        ...fit(ctx.width - 8),
+      }),
+      // Up to: the pale part, drawn first and full length.
+      Plot.barX(rows, {
+        x1: 0,
+        x2: "max",
+        y: "i",
+        insetTop: step / 2 + 3,
+        insetBottom: 5,
+        fill: "var(--context)",
+        rx2: 3,
+        channels: { Name: "label", "Reported range": span },
+        tip: ctx.interactive ? { format: { x1: false, x2: false, y: false, Name: true, "Reported range": true } } : undefined,
+      }),
+      // At least: solid.
+      Plot.barX(rows, { x1: 0, x2: "min", y: "i", insetTop: step / 2 + 3, insetBottom: 5, fill: "var(--bar)" }),
+      Plot.text(rows, {
+        x: "max",
+        y: "i",
+        dy: 9,
+        dx: 5,
+        textAnchor: "start",
+        text: span,
+        fill: "var(--text-secondary)",
+        fontVariant: "tabular-nums",
+        fontSize: 12,
+      }),
+    ],
+  });
+}
+
+export const charts = { swarm, bars, stacked, dumbbell, histogram, diverging, parliament, ranges } as const;
 export type ChartName = keyof typeof charts;

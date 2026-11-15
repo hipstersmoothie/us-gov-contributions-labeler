@@ -1,0 +1,124 @@
+---
+// Prototype: an index of what House members reported owning and trading.
+import Base from "../../layouts/Base.astro";
+import TradesTable from "../../islands/TradesTable";
+import { memberById, partyLetter } from "../../lib/data";
+import { disclosures, companies, companyName, tradeRows, COMPANY_KINDS } from "../../lib/holdings";
+
+const rows = tradeRows();
+const all = [...disclosures.entries()].filter(([id]) => memberById.has(id));
+const parsed = all.filter(([, d]) => d.annual && !d.annual.paper);
+const paper = all.filter(([, d]) => d.annual?.paper || d.ptrs.some((p) => p.paper));
+const traders = new Set(rows.map((r) => r.bioguide));
+const lags = rows.map((r) => r.lagDays).sort((a, b) => a - b);
+const median = lags[Math.floor(lags.length / 2)] ?? 0;
+const after45 = lags.filter((l) => l > 45).length;
+const ptrs = all.reduce((s, [, d]) => s + d.ptrs.filter((p) => !p.paper).length, 0);
+const companyRows = rows.filter((r) => r.company).length;
+
+// Most widely held: how many members reported each company. This is mostly a
+// picture of the market itself.
+const widest = [...companies.values()]
+  .map((c) => ({ c, n: c.holders.length }))
+  .sort((a, b) => b.n - a.n)
+  .slice(0, 12);
+const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY_KINDS.includes(h.kind))).length;
+---
+
+<Base title="What members own and trade" description="House members' reported investments and stock trades, from their financial disclosure reports. Values are ranges.">
+  <p class="kicker">Investments</p>
+  <h1>What members own and trade</h1>
+  <p class="prototype-flag">Prototype. Built from House financial disclosure reports on a branch; not on the live site.</p>
+  <p class="dek">
+    Members of Congress report what they, their spouses and dependent children own each May, and any stock trade over
+    $1,000 within 45 days. These are <strong>{parsed.length} House members' 2025 annual reports</strong> and{" "}
+    <strong>{rows.length.toLocaleString()} trades</strong> from {ptrs.toLocaleString()} transaction reports since
+    January 2025, all filed electronically. Senators aren't included yet, and neither are the {paper.length} House members
+    who file on paper.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Members with single-company stock</dt><dd>{withCompanyStock}<small>of {parsed.length} with an e-filed report</small></dd></div>
+    <div class="stat"><dt>Members who reported trades</dt><dd>{traders.size}<small>since January 2025</small></dd></div>
+    <div class="stat"><dt>Typical wait to report</dt><dd>{median} days<small>after the trade</small></dd></div>
+    <div class="stat"><dt>Reported after 45 days</dt><dd>{Math.round((after45 / rows.length) * 100)}%<small>{after45.toLocaleString()} trades, including amendments</small></dd></div>
+  </dl>
+
+  <section class="story how">
+    <h2>How to read these</h2>
+    <ul>
+      <li><strong>Every value is a range.</strong> Members pick a category, like $1,001–$15,000; a total is the sum of the low ends to the sum of the high ends.</li>
+      <li><strong>Whose it is matters.</strong> Each holding and trade says whether it's the member's, their spouse's, joint, or a dependent child's. Reports don't say who chose a trade; a few members add a note that an adviser did.</li>
+      <li><strong>Funds aren't companies.</strong> A mutual fund, ETF or retirement account is listed by name only, so it isn't counted toward any company or industry here. Fund trades don't have to be reported at all.</li>
+      <li><strong>Owning isn't a conflict.</strong> A stock in an industry a member's committee oversees is worth knowing about; it isn't evidence that it changed anything they did.</li>
+    </ul>
+  </section>
+
+  <section class="story">
+    <h2>Every trade</h2>
+    <TradesTable client:idle initial={rows.slice(0, 25)} src="/holdings/trades.json" />
+    <p class="source">{companyRows.toLocaleString()} of the trades are a single company's stock, options or bonds; switch to Everything to see the rest.</p>
+  </section>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Most widely held companies</h2>
+      <p class="chart-dek">How many members reported owning each company's stock at the end of 2025. It mostly mirrors the stock market: the largest companies are in the most portfolios.</p>
+      <table>
+        <thead><tr><th scope="col">Company</th><th scope="col">Industry</th><th scope="col" class="num">Members</th></tr></thead>
+        <tbody>
+          {widest.map(({ c, n }) => (
+            <tr><td><a href={`/holdings/companies/${c.cik}/`}>{companyName(c.name)}</a></td><td class="muted">{c.sector}</td><td class="num">{n}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+    <section class="story">
+      <h2>Filed on paper</h2>
+      <p class="chart-dek">The House posts these as scanned images. They're linked here rather than read, since reading them by machine gets amounts and buy/sell marks wrong.</p>
+      <ul class="link-list paper">
+        {paper.map(([id, d]) => {
+          const m = memberById.get(id)!;
+          const p = partyLetter(m.party);
+          const url = d.annual?.paper ? d.annual.url : d.ptrs.find((x) => x.paper)?.url;
+          return (
+            <li>
+              <span class={`ptag party-${p}`}>{p}</span>
+              <a href={url}>{m.name}</a>
+              <span class="muted small"> {d.annual?.paper ? "annual report" : ""}{d.annual?.paper && d.ptrs.some((x) => x.paper) ? " and " : ""}{d.ptrs.filter((x) => x.paper).length ? `${d.ptrs.filter((x) => x.paper).length} transaction reports` : ""}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  </div>
+
+  <p class="source">
+    Source: <a href="https://disclosures-clerk.house.gov/FinancialDisclosure">U.S. House Clerk financial disclosure reports</a>;
+    companies and industries from SEC EDGAR. Under 5 U.S.C. § 13107 these reports may not be used for any commercial
+    purpose (other than news media's), to determine a credit rating, or to solicit money for any political, charitable or
+    other purpose.
+  </p>
+</Base>
+
+<style>
+  .prototype-flag {
+    display: inline-block; font-size: var(--fs-sm); color: var(--text-secondary); margin: 0 0 var(--sp-5);
+    padding: var(--sp-1) var(--sp-3); border-left: 3px solid var(--accent); background: var(--surface-2);
+  }
+  .how ul { margin: 0; padding-left: 1.1em; max-width: 720px; }
+  .how li { margin-bottom: var(--sp-2); color: var(--text-secondary); }
+  .how li strong { color: var(--text-primary); }
+  .paper { list-style: none; padding: 0; margin: 0; columns: 2 220px; }
+  .paper li { margin-bottom: var(--sp-2); break-inside: avoid; }
+  :global(.nowrap) { white-space: nowrap; }
+  /* Member, asset, whose, traded, amount, reported */
+  :global(.trades-island .data-table .th:nth-child(1)) { width: 24%; }
+  :global(.trades-island .data-table .th:nth-child(2)) { width: auto; }
+  :global(.trades-island .data-table .th:nth-child(3)) { width: 10%; }
+  :global(.trades-island .data-table .th.num) { width: 12%; }
+  @media (max-width: 640px) {
+    :global(.trades-island .data-table .th:nth-child(1)) { width: 34%; }
+    :global(.trades-island .data-table .th.num) { width: 22%; }
+  }
+</style>
