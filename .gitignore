@@ -2,7 +2,7 @@
 node_modules
 cursor.txt
 *.log
-labels.*
+/labels.*
 *.local.*
 data/review.json
 .cache
