@@ -7,13 +7,14 @@ import { disclosures, companies, companyName, tradeRows, COMPANY_KINDS } from ".
 
 const rows = tradeRows();
 const all = [...disclosures.entries()].filter(([id]) => memberById.has(id));
-const parsed = all.filter(([, d]) => d.annual && !d.annual.paper);
+// Annual reports with assets on the site: e-filed, or read from the scan.
+const parsed = all.filter(([, d]) => d.annual && (!d.annual.paper || d.annualScanned));
 const paper = all.filter(([, d]) => d.annual?.paper || d.ptrs.some((p) => p.paper));
 const traders = new Set(rows.map((r) => r.bioguide));
 const lags = rows.map((r) => r.lagDays).sort((a, b) => a - b);
 const median = lags[Math.floor(lags.length / 2)] ?? 0;
 const after45 = lags.filter((l) => l > 45).length;
-const ptrs = all.reduce((s, [, d]) => s + d.ptrs.filter((p) => !p.paper).length, 0);
+const ptrs = all.reduce((s, [, d]) => s + d.ptrs.length, 0);
 const companyRows = rows.filter((r) => r.company).length;
 const scanned = rows.filter((r) => r.scanned).length;
 const unread = all.reduce((s, [, d]) => s + (d.scanUnread ?? 0), 0);
@@ -40,7 +41,7 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
   </p>
 
   <dl class="stats">
-    <div class="stat"><dt>Members with single-company stock</dt><dd>{withCompanyStock}<small>of {parsed.length} with an e-filed report</small></dd></div>
+    <div class="stat"><dt>Members with single-company stock</dt><dd>{withCompanyStock}<small>of {parsed.length} with a 2025 annual report</small></dd></div>
     <div class="stat"><dt>Members who reported trades</dt><dd>{traders.size}<small>since January 2025</small></dd></div>
     <div class="stat"><dt>Typical wait to report</dt><dd>{median} days<small>after the trade</small></dd></div>
     <div class="stat"><dt>Reported after 45 days</dt><dd>{Math.round((after45 / rows.length) * 100)}%<small>{after45.toLocaleString()} trades, including amendments</small></dd></div>
