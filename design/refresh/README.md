@@ -42,6 +42,9 @@ clone to `origin/main` and runs `src/scripts/refresh/refresh.sh`:
      cycles both versions cover),
    - itemized individual donations drop more than 5%,
    - any `data/*.json` shrinks by more than 25% or stops parsing.
+   - an organization id disappears while a file the run doesn't rebuild
+     (`legislation.json`, `revolving-door.json`, `irs527.json`, ...) still
+     points at it.
 4. `pnpm site:build`.
 5. Commits the changed `data/*.json`, ignoring files where only `generatedAt`
    changed, then `git pull --rebase` and push to main, three tries. It never

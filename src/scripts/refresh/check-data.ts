@@ -41,6 +41,20 @@ for (const file of files) {
   }
 }
 
+// Organization ids that went away while files this run doesn't rebuild
+// (legislation, revolving door, 527s...) still point at them.
+const orgIds = (text: string) => new Set((JSON.parse(text) as { organizations: { id: string }[] }).organizations.map((o) => o.id));
+const oldOrgs = orgIds(committed("data/organizations.json") ?? '{"organizations":[]}');
+const newOrgs = orgIds(fs.readFileSync("data/organizations.json", "utf8"));
+const gone = [...oldOrgs].filter((id) => !newOrgs.has(id));
+console.log(`organizations: ${oldOrgs.size} → ${newOrgs.size}, ${gone.length} ids gone`);
+const rebuiltTogether = new Set(["data/organizations.json", "data/members.json", "data/committees.json", "data/donors.json"]);
+for (const file of files.filter((f) => !rebuiltTogether.has(f) && fs.existsSync(f))) {
+  const text = fs.readFileSync(file, "utf8");
+  const dangling = gone.filter((id) => text.includes(`"${id}"`));
+  if (dangling.length) problems.push(`${file} still refers to ${dangling.length} organizations that are gone (${dangling.slice(0, 5).join(", ")})`);
+}
+
 // Members and money, for the cycles both versions cover.
 type MembersFile = { cycles: number[]; members: Member[] };
 const before = JSON.parse(committed("data/members.json") ?? "{}") as MembersFile;
