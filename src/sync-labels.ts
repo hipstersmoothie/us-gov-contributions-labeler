@@ -2,6 +2,10 @@
 //
 //   pnpm sync-labels           dry run: show what would change
 //   pnpm sync-labels --apply   publish it
+//   pnpm sync-labels --apply --max-accounts=40
+//                              publish only if at most 40 accounts change and
+//                              none loses all its labels (exits 3 otherwise);
+//                              for unattended runs
 //
 // Each member's Bluesky accounts get their top 3 sectors and top 3
 // contributors, counted by organization: an organization's PAC plus
@@ -29,7 +33,9 @@ const METHODOLOGY =
   "members or owners. Individual donations are counted by the employer donors listed.";
 const SITE_URL = process.env.SITE_URL;
 
-const { values: args } = parseArgs({ options: { apply: { type: "boolean", default: false } } });
+const { values: args } = parseArgs({
+  options: { apply: { type: "boolean", default: false }, "max-accounts": { type: "string" } },
+});
 
 const { members, cycles } = JSON.parse(fs.readFileSync("data/members.json", "utf8")) as {
   members: Member[];
@@ -107,10 +113,28 @@ console.log("Full plan in .cache/label-plan.json");
 for (const c of changes.slice(0, 5)) {
   console.log(`  ${handleByDid.get(c.did) ?? c.did}: +${c.create.join(", +")} ${c.negate.map((v) => `-${v}`).join(" ")}`);
 }
+// Accounts that have labels now and would have none after this.
+const losingAll = changes.filter((c) => c.negate.length && !desired.get(c.did)?.size);
+if (losingAll.length) {
+  console.log(`${losingAll.length} accounts would lose all their labels:`);
+  for (const c of losingAll) console.log(`  ${handleByDid.get(c.did) ?? c.did}`);
+}
 
 if (!args.apply) {
   console.log("\nDry run. Re-run with --apply to publish.");
   process.exit(0);
+}
+
+if (args["max-accounts"] !== undefined) {
+  const max = Number(args["max-accounts"]);
+  const held = [
+    changes.length > max && `${changes.length} accounts change (limit ${max})`,
+    losingAll.length && `${losingAll.length} accounts would lose all their labels`,
+  ].filter(Boolean);
+  if (held.length) {
+    console.log(`\nNot applying: ${held.join("; ")}. Review .cache/label-plan.json and apply by hand.`);
+    process.exit(3);
+  }
 }
 
 // --- apply --------------------------------------------------------------

@@ -11,6 +11,7 @@
     "read-dms": "tsx src/read-dms.ts",
     "typecheck": "tsc --noEmit",
     "ingest": "tsx src/ingest.ts",
+    "fec-audit": "tsx src/scripts/fec-cache-audit.ts",
     "site:dev": "pnpm --filter site dev",
     "site:build": "pnpm --filter site build",
     "sync-labels": "tsx src/sync-labels.ts",

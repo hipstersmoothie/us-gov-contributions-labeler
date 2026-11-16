@@ -18,10 +18,10 @@
 import fs from "fs";
 import path from "path";
 import { getJson } from "../lib/http.js";
+import { fecBulk } from "../lib/download.js";
 import { currentCycle, isFresh } from "../lib/cycles.js";
 
 const CACHE_DIR = ".cache/fec";
-const BULK_URL = "https://www.fec.gov/files/bulk-downloads";
 const FEC_API = "https://api.open.fec.gov/v1";
 const API = { intervalMs: 1100, maxWaitMs: 300_000 };
 const apiKey = () => process.env.FEC_API_KEY ?? "DEMO_KEY";
@@ -73,15 +73,7 @@ export function parseCsv(text: string): Record<string, string>[] {
 }
 
 async function bulkCsv(cycle: number, name: string) {
-  const dest = path.join(CACHE_DIR, String(cycle), `${name}_${cycle}.csv`);
-  if (!fs.existsSync(dest) || !isFresh(fs.statSync(dest).mtime, cycle, 7)) {
-    console.log(`  downloading ${name}_${cycle}.csv`);
-    const res = await fetch(`${BULK_URL}/${cycle}/${name}_${cycle}.csv`);
-    if (!res.ok) throw new Error(`FEC download failed ${res.status}: ${name}_${cycle}`);
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
-  }
-  return parseCsv(fs.readFileSync(dest, "latin1"));
+  return parseCsv(fs.readFileSync(await fecBulk(cycle, `${name}_${cycle}.csv`), "latin1"));
 }
 
 const MONTHS: Record<string, string> = { JAN: "01", FEB: "02", MAR: "03", APR: "04", MAY: "05", JUN: "06", JUL: "07", AUG: "08", SEP: "09", OCT: "10", NOV: "11", DEC: "12" };

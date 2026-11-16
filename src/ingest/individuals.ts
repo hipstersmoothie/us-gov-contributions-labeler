@@ -3,20 +3,15 @@
 //
 // The FEC files are big (~4 GB zipped per cycle), so they stay cached in
 // .cache/fec like the other bulk files and are streamed, never loaded whole.
-import fs from "fs";
-import path from "path";
 import readline from "readline";
 import { spawn, execFileSync } from "child_process";
-import { downloadFile } from "../lib/download.js";
-import { isFresh } from "../lib/cycles.js";
+import { fecBulk } from "../lib/download.js";
 import { normalizeOrg, slugify, titleCase } from "../lib/names.js";
 import { sectorForName, type Sector } from "../lib/sectors.js";
 import type { Legislator } from "../lib/legislators.js";
 import type { Organization } from "./committees.js";
 import { districtKey, loadZipDistricts } from "../lib/districts.js";
 
-const CACHE_DIR = ".cache/fec";
-const BULK_URL = "https://www.fec.gov/files/bulk-downloads";
 
 export type IndividualSector = Sector | "Retired" | "Not employed";
 
@@ -41,12 +36,8 @@ export interface EmployerGiving {
   recipients: { id: string; total: number }[];
 }
 
-export async function download(cycle: number, file: string) {
-  const yy = String(cycle).slice(2);
-  const dest = path.join(CACHE_DIR, String(cycle), `${file}${yy}.zip`);
-  if (fs.existsSync(dest) && isFresh(fs.statSync(dest).mtime, cycle, 7)) return dest;
-  console.log(`  downloading ${file}${yy}.zip`);
-  return downloadFile(`${BULK_URL}/${cycle}/${file}${yy}.zip`, dest);
+export function download(cycle: number, file: string) {
+  return fecBulk(cycle, `${file}${String(cycle).slice(2)}.zip`);
 }
 
 export async function* rows(zip: string, member?: string) {

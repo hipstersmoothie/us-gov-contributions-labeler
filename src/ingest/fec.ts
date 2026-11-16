@@ -1,15 +1,12 @@
 // Campaign finance totals and PAC contributions from FEC bulk data.
 // https://www.fec.gov/data/browse-data/?tab=bulk-data
-import fs from "fs";
-import path from "path";
 import readline from "readline";
 import { spawn } from "child_process";
 import type { Legislator } from "../lib/legislators.js";
-import { currentCycle, isFresh } from "../lib/cycles.js";
+import { currentCycle } from "../lib/cycles.js";
+import { fecBulk } from "../lib/download.js";
 import { committeeSummaries, electioneering, form5, form9Donations, lateNotices, type IeRow } from "./outside.js";
 
-const CACHE_DIR = ".cache/fec";
-const BULK_URL = "https://www.fec.gov/files/bulk-downloads";
 
 export interface FecTotals {
   receipts: number;
@@ -118,19 +115,8 @@ export interface OpponentSpending {
   oppose: number;
 }
 
-async function download(cycle: number, file: string) {
-  const yy = String(cycle).slice(2);
-  const dest = path.join(CACHE_DIR, String(cycle), `${file}${yy}.zip`);
-
-  // Past cycles are effectively final; the current one gets refreshed weekly.
-  if (fs.existsSync(dest) && isFresh(fs.statSync(dest).mtime, cycle, 7)) return dest;
-
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
-  console.log(`  downloading ${file}${yy}.zip`);
-  const res = await fetch(`${BULK_URL}/${cycle}/${file}${yy}.zip`);
-  if (!res.ok) throw new Error(`FEC download failed ${res.status}: ${file}${yy}`);
-  fs.writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
-  return dest;
+function download(cycle: number, file: string) {
+  return fecBulk(cycle, `${file}${String(cycle).slice(2)}.zip`);
 }
 
 /** Stream the pipe-delimited rows of the single file inside a bulk zip. */
