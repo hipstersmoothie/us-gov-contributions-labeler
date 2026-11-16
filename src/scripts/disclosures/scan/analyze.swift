@@ -215,7 +215,8 @@ func reread(_ img: CGImage, _ w: Word, flip: Bool, scale: Int = 3, binarize: Boo
 func fixDates(_ img: CGImage, _ words: [Word]) -> [Word] {
   words.map { w in
     let t = w.t
-    let shape = t.contains("/") && t.filter { "0123456789ZSEOTLl".contains($0) }.count >= 4
+    // Slashes or dashes (08-21-2025, upside down "SZOZ-TZ-80").
+    let shape = (t.contains("/") || t.filter { $0 == "-" }.count == 2) && t.filter { "0123456789ZSEOTLl".contains($0) }.count >= 4
     guard shape else { return w }
     for flip in [false, true] {
       guard let r = reread(img, w, flip: flip), isDate(r) else { continue }
@@ -231,6 +232,70 @@ func fixDates(_ img: CGImage, _ words: [Word]) -> [Word] {
     }
     return w
   }
+}
+
+/** OCR one region of the page on its own, enlarged, with boxes mapped back to page coordinates. */
+func ocrRegion(_ img: CGImage, x0: Double, y0: Double, x1: Double, y1: Double, scale: Int = 3) -> [Word] {
+  let W = Double(img.width), H = Double(img.height)
+  let rect = CGRect(x: x0 * W, y: y0 * H, width: (x1 - x0) * W, height: (y1 - y0) * H).integral
+  guard let crop = img.cropping(to: rect) else { return [] }
+  let sw = crop.width * scale, sh = crop.height * scale
+  guard let ctx = CGContext(data: nil, width: sw, height: sh, bitsPerComponent: 8, bytesPerRow: sw,
+                            space: CGColorSpaceCreateDeviceGray(), bitmapInfo: CGImageAlphaInfo.none.rawValue) else { return [] }
+  ctx.interpolationQuality = .high
+  ctx.draw(crop, in: CGRect(x: 0, y: 0, width: sw, height: sh))
+  guard let big = ctx.makeImage() else { return [] }
+  let fx = Double(rect.minX) / W, fy = Double(rect.minY) / H, fw = Double(rect.width) / W, fh = Double(rect.height) / H
+  return ocr(big, fast: false).map { w in
+    Word(t: w.t, x0: fx + w.x0 * fw, y0: fy + w.y0 * fh, x1: fx + w.x1 * fw, y1: fy + w.y1 * fh, c: w.c)
+  }
+}
+
+/**
+ * On a busy page Vision skips some dates outright (bold type, mostly), and a
+ * row without a date doesn't exist for the parser. Read each column that
+ * holds dates again as a strip of its own, and add the dates it finds that
+ * the page read missed.
+ */
+func findMissedDates(_ img: CGImage, _ words: [Word], xs: [Double], ys: [Double]) -> [Word] {
+  let dates = words.filter { isDate($0.t) }
+  guard xs.count > 1, !dates.isEmpty else { return [] }
+  var added: [Word] = []
+  for c in 0..<(xs.count - 1) {
+    let inCol = dates.filter { ($0.x0 + $0.x1) / 2 >= xs[c] && ($0.x0 + $0.x1) / 2 < xs[c + 1] }
+    // A date column (narrow), not a name column that happens to hold a date.
+    guard !inCol.isEmpty, xs[c + 1] - xs[c] < 0.15 else { continue }
+    // The whole column: the dates found may all sit at the bottom. Its header
+    // ("MM/DD/YY") isn't a date, and the printed example row is skipped later.
+    let top = 0.0
+    let strip = ocrRegion(img, x0: xs[c], y0: top, x1: xs[c + 1], y1: 1)
+    var found = inCol
+    for w in strip where isDate(w.t) {
+      let mid = (w.y0 + w.y1) / 2
+      if found.contains(where: { mid > $0.y0 && mid < $0.y1 }) { continue }
+      added.append(w)
+      found.append(w)
+    }
+    // Still missing: each ruled row, one cell at a time.
+    for r in 0..<max(0, ys.count - 1) where ys[r] >= top && ys[r + 1] - ys[r] < 0.08 {
+      if found.contains(where: { ($0.y0 + $0.y1) / 2 > ys[r] && ($0.y0 + $0.y1) / 2 < ys[r + 1] }) { continue }
+      for w in ocrRegion(img, x0: xs[c], y0: ys[r], x1: xs[c + 1], y1: ys[r + 1], scale: 4) where isDate(w.t) {
+        added.append(w)
+        found.append(w)
+      }
+    }
+  }
+  return added
+}
+
+/**
+ * Vision reads text running up or down the page too, so a sideways page can
+ * score well upright. Its words then come back as boxes taller than wide.
+ */
+func sideways(_ words: [Word]) -> Bool {
+  let long = words.filter { $0.t.count >= 4 }
+  guard long.count >= 8 else { return false }
+  return long.filter { ($0.y1 - $0.y0) > ($0.x1 - $0.x0) * 1.5 }.count > long.count / 2
 }
 
 let args = CommandLine.arguments
@@ -254,6 +319,24 @@ for p in first...last {
   if (scores[180] ?? 0) > best.1 * 1.5 { best = (180, scores[180]!) }
   guard var img = render(page, longSide: 2600, rotation: best.0) else { continue }
   var words = ocr(img, fast: false)
+  if sideways(words) {
+    // Turn it a quarter either way and keep the turn whose text reads across.
+    var turned: (Int, Double)? = nil
+    for rot in [(best.0 + 90) % 360, (best.0 + 270) % 360] {
+      // Larger and slower than the first pass: small type turned reads as nothing at 1100 px.
+      guard let small = render(page, longSide: 1800, rotation: rot) else { continue }
+      let ws = ocr(small, fast: false)
+      if ProcessInfo.processInfo.environment["DEBUG_SCAN"] != nil {
+        FileHandle.standardError.write("turn \(rot): \(ws.count) words, sideways \(sideways(ws)), score \(score(ws))\n".data(using: .utf8)!)
+      }
+      if !sideways(ws), score(ws) > (turned?.1 ?? 0) { turned = (rot, score(ws)) }
+    }
+    if let t = turned, let big = render(page, longSide: 2600, rotation: t.0) {
+      best = t
+      img = big
+      words = ocr(img, fast: false)
+    }
+  }
   words = fixDates(img, words)
   // Vision reads upside-down text too, so check the layout: owner tags
   // (SP/DC/JT) belong on the left, dollar ranges to the right of the dates.
@@ -270,6 +353,8 @@ for p in first...last {
   let px = pixels(img)
   let v = lines(px, w: img.width, h: img.height, vertical: true, minRun: 0.12)
   let hz = lines(px, w: img.width, h: img.height, vertical: false, minRun: 0.25)
+  // Dates found only in the column strips are read again like the rest.
+  words += fixDates(img, findMissedDates(img, words, xs: v, ys: hz))
   let bands = words.filter { isDate($0.t) }.map { d -> Band in
     // The band is the date's line, padded by a third of its height.
     let pad = (d.y1 - d.y0) * 0.35

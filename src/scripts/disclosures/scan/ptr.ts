@@ -30,8 +30,13 @@ export interface ScannedTrade {
   max?: number | null;
   /** Why a person should look at this row before anyone relies on it. */
   doubts: string[];
+  /** Where the row sits on the page (0..1 from the top), for showing it to a person. */
+  y0?: number;
+  y1?: number;
 }
 
+/** The form's printed example row ("Example: Mega Corp. Common Stock", OCR'd as "Exemple ... Slock" too). */
+const EXAMPLE = /ex[ae]mp[l1]e|mega\s*corp/i;
 const DATE = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})\b/;
 /** The House form's amount columns, left to right (A–K). */
 export const AMOUNTS: [number, number | null][] = [
@@ -156,7 +161,7 @@ export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; sk
     const rows: number[] = [];
     for (let r = 0; r < ys.length - 1; r++) {
       const d = isoDate(text(r, tradeCol)) ?? isoDate(text(r, notifiedCol));
-      if (d && d >= "2020" && !/example/i.test(rowText(r))) rows.push(r);
+      if (d && d >= "2020" && !EXAMPLE.test(rowText(r))) rows.push(r);
     }
 
     // Asset name: the widest column left of the transaction checkboxes.
@@ -255,7 +260,7 @@ export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; sk
       if (heading && !/example|asset name|nothing to report|full nam|prov[a-z]* full|symbo|ticker/i.test(heading)) account = heading;
       const nameWords = sortWords(nameLines.get(b) ?? []);
       const asset = nameWords.map((w) => w.t).join(" ").trim();
-      if (!date || date < "2020" || /example/i.test(asset)) continue;
+      if (!date || EXAMPLE.test(asset)) continue;
 
       const doubts: string[] = [];
       const ink = inkOf(b);
@@ -295,6 +300,12 @@ export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; sk
       const merged = dateWord(b).split(/\s+/)[1];
       const notifiedWord = p.words.find((w) => startsIn(w.x0, notifiedCol) && Math.abs((w.y0 + w.y1) / 2 - mid) < lineH)?.t ?? merged;
       const notifiedDate = notifiedWord ? isoDate(notifiedWord) : undefined;
+      // An old year is the printed example row, or a misread one ("04/07/15"
+      // for 04/07/25): keep the row, flagged, when its notification is recent.
+      if (date < "2020") {
+        if (!notifiedDate || notifiedDate < "2020") continue;
+        doubts.push("trade date unclear");
+      }
       if (notifiedDate && notifiedDate < date) doubts.push("notified before the trade date");
       // A misread year or month shows up as a long gap; real late reports do too, so check either way.
       if (notifiedDate && Date.parse(notifiedDate) - Date.parse(date) > 90 * 864e5) doubts.push("over 90 days between trade and notification");
@@ -315,6 +326,8 @@ export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; sk
         notified: notifiedDate,
         ...(range ? { min: range[0], max: range[1] } : {}),
         doubts,
+        y0: Math.min(b.y0, ...nameWords.map((w) => w.y0)),
+        y1: Math.max(b.y1, ...nameWords.map((w) => w.y1)),
       });
     }
   }

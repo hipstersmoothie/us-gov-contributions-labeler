@@ -251,23 +251,82 @@ above had missed:
   left edge are now owners. On Schedule A, an inked owner cell with no tag
   read is flagged.
 
-After those fixes:
+**Rows only the second reader found.** Its first run listed 495 trade rows
+the first reader had missed. Their causes, and what fixed them:
+
+- **Dates Vision skipped** (bold type on busy pages). A row is built from its
+  trade date, so a skipped date drops the row. `analyze.swift` now OCRs each
+  date column again as a strip of its own, then any ruled row still without a
+  date as a single cell.
+- **Sideways pages** (57 across all scans). Vision reads text running up the
+  page, so the upright render scored well enough to skip the orientation
+  search. Word boxes taller than wide now trigger a quarter turn.
+- **Dash dates read upside down** ("SZOZ-TZ-80" for 08-21-2025) weren't
+  re-read. Only dates with slashes were.
+- **A year misread as old** ("04/07/15" for 04/07/25) was dropped as if it
+  were the form's printed example. It's now kept and flagged when its
+  notification date is recent.
+
+After those fixes the readers were re-run. The second reader re-read only the
+137 pages whose row lists changed. That's a few dollars, since readings line
+up with rows by position.
+
+- **Recovered:** 387 of the 495 rows. They now ship under the same rule as
+  the rest.
+- **Still found only by the second reader:** 108, spread at 1–4 per page.
+  - 58: the name was read but no row was built (dates still unread or merged).
+  - 48: on a line where the first reader has a row of the same name (two
+    trades in one band, or the same stock twice).
+  - 2: the name wasn't OCR'd at all.
+
+  None ships on one reader's word. They are in the review queue (below).
 
 | | Count |
 | --- | --- |
-| Rows confirmed by both readers | 11,230 |
-| Flagged rows filled in by the second reader | 3,396 |
-| Rows left out for disagreeing (review list) | 421 (330 trades, 91 holdings) |
-| Rows neither could read | 371 |
-| Scanned trades shown | 10,956, all but 16 read twice (was ~9,000, read once) |
-| Scanned annual holdings shown | 4,494; 3,686 read twice (pages with no flagged row weren't sent) |
-| Trade rows the second reader saw that the first missed | 495, not yet used |
+| Rows confirmed by both readers | 11,664 |
+| Flagged rows filled in by the second reader | 3,603 |
+| Rows left out for disagreeing | 369 (266 trades, 103 holdings) |
+| Rows neither could read | 471 (202 trades, 269 holdings) |
+| Rows only the second reader found | 108 |
+| Scanned trades shown | 11,431, all but 17 read twice (was ~9,000, read once) |
+| Scanned annual holdings shown | 4,513; 3,853 read twice (pages with no flagged row weren't sent) |
 
 Where the two disagreed and I checked the page (Khanna, three pages), the
 second reader was right each time. The rule stays "both agree" rather than
 "trust the second reader": its pilot record is good, but a model misreading a
 mark is still possible, and agreement between two different methods is the
 stronger check.
+
+**Review by hand.** The 948 rows in the queue (disagreements, second-reader
+only, unread by both) go to a local review tool:
+
+```sh
+pnpm review-scans       # http://127.0.0.1:4390, opens in the browser
+pnpm holdings:publish   # afterwards: rebuild, seal, commit data/holdings.json.enc, push to main (deploys)
+```
+
+- **What it shows:** a crop of the scan around the row, with a link to the
+  full page and the PDF. Both readings sit side by side, with differences
+  highlighted, next to an editable answer. Filter by member, kind and form.
+- **Keys:** `a` takes reading A, `b` reading B, `e` edits (Enter saves), `x`
+  marks the row unreadable, `s`/→ skips, ← goes back, `z` undoes, `f` shows
+  the full page.
+- **Saving:** every decision is saved as you go to
+  `.holdings-review/decisions.json` (gitignored; a log of every change is
+  next to it). Reopening resumes at the first undecided row.
+- **Applying:** the next build applies the decisions in `scan/resolve.ts`.
+  Accepted rows ship with the Scan tag, and its tooltip says "checked by
+  hand". Rows marked unreadable stay out. Decisions reach the site only
+  inside the sealed `data/holdings.json.enc`, never as a file of their own.
+- **Local only:** the tool listens on 127.0.0.1 only. It isn't part of the
+  Astro site, the Docker image copies only `site/dist` and the site server,
+  and `.holdings-review` is in `.dockerignore` too.
+- **Matching:** decisions are keyed by report, page, name as read and date.
+  If a later reader change renames a row, its decision stops matching. The
+  build says how many, and keeps them.
+
+![Review tool, light](10-review-tool-light.png)
+![Review tool, dark](11-review-tool-dark.png)
 
 ### 1b. Attached brokerage statements
 

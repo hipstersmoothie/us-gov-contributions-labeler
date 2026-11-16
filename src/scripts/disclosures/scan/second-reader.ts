@@ -9,6 +9,7 @@
 //
 //   tsx src/scripts/disclosures/scan/second-reader.ts estimate   # pages and rough cost, no API calls
 //   tsx src/scripts/disclosures/scan/second-reader.ts submit     # render pages, create batches
+//   tsx src/scripts/disclosures/scan/second-reader.ts submit changed  # only pages whose rows changed since the last run
 //   tsx src/scripts/disclosures/scan/second-reader.ts collect    # wait for batches, save readings
 //
 // Needs ANTHROPIC_API_KEY (in .env) or an `ant auth login` profile.
@@ -20,6 +21,7 @@ import { CACHE } from "../common.js";
 import type { HouseFiling } from "../house-index.js";
 import type { ScannedHolding } from "./annual.js";
 import type { ScanPage, ScannedTrade } from "./ptr.js";
+import { sameRow } from "./resolve.js";
 
 const DIR = `${CACHE}/scan/second-reader`;
 const MODEL = "claude-opus-5-5";
@@ -156,7 +158,8 @@ function jobs(): PageJob[] {
 }
 
 function render(job: PageJob) {
-  const png = `${DIR}/pages/${job.id}.png`;
+  // Keyed by rotation too: a page the analyzer later turns needs a new image.
+  const png = `${DIR}/pages/${job.id}-r${job.rotation}.png`;
   if (!fs.existsSync(png)) {
     fs.mkdirSync(`${DIR}/pages`, { recursive: true });
     execFileSync(`${CACHE}/scan/render`, [`${CACHE}/house/pdf/${job.docId}.pdf`, String(job.page), String(job.rotation), String(LONG_SIDE), png]);
@@ -214,8 +217,18 @@ if (command === "estimate") {
   }
 } else if (command === "submit") {
   const client = new Anthropic();
-  const all = jobs();
-  fs.writeFileSync(`${DIR}/jobs.json`, JSON.stringify(all));
+  let all = jobs();
+  if (process.argv[3] === "changed") {
+    // After the reader improves, re-read only the pages whose row list moved:
+    // readings line up with rows by position.
+    const old = new Map((JSON.parse(fs.readFileSync(`${DIR}/jobs.json`, "utf8")) as PageJob[]).map((j) => [j.id, j]));
+    all = all.filter((j) => {
+      const prev = old.get(j.id);
+      return !prev || prev.names.length !== j.names.length || prev.names.some((n, i) => !sameRow(n, j.names[i]!));
+    });
+    fs.writeFileSync(`${DIR}/pending-jobs.json`, JSON.stringify(all));
+    console.log(`${all.length} pages changed`);
+  } else fs.writeFileSync(`${DIR}/jobs.json`, JSON.stringify(all));
   const batches: string[] = [];
   for (let i = 0; i < all.length; i += PER_BATCH) {
     const batch = await client.messages.batches.create({ requests: all.slice(i, i + PER_BATCH).map(request) });
@@ -226,7 +239,8 @@ if (command === "estimate") {
 } else if (command === "collect") {
   const client = new Anthropic();
   const batches = JSON.parse(fs.readFileSync(`${DIR}/batches.json`, "utf8")) as string[];
-  const readings: Record<string, unknown> = {};
+  // Merged over earlier readings, so a partial re-read keeps the rest.
+  const readings: Record<string, unknown> = fs.existsSync(`${DIR}/readings.json`) ? JSON.parse(fs.readFileSync(`${DIR}/readings.json`, "utf8")) : {};
   let refused = 0, failed = 0;
   for (const id of batches) {
     for (;;) {
@@ -251,6 +265,12 @@ if (command === "estimate") {
     }
   }
   fs.writeFileSync(`${DIR}/readings.json`, JSON.stringify(readings));
+  if (fs.existsSync(`${DIR}/pending-jobs.json`)) {
+    const jobsById = new Map((JSON.parse(fs.readFileSync(`${DIR}/jobs.json`, "utf8")) as PageJob[]).map((j) => [j.id, j]));
+    for (const j of JSON.parse(fs.readFileSync(`${DIR}/pending-jobs.json`, "utf8")) as PageJob[]) jobsById.set(j.id, j);
+    fs.writeFileSync(`${DIR}/jobs.json`, JSON.stringify([...jobsById.values()]));
+    fs.rmSync(`${DIR}/pending-jobs.json`);
+  }
   console.log(`${Object.keys(readings).length} pages read; ${refused} declined; ${failed} errored or expired`);
 } else {
   console.log("usage: second-reader.ts estimate | submit | collect");

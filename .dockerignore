@@ -8,3 +8,4 @@ site/public/photos
 *.local.*
 site/server/node_modules
 site/server/data
+.holdings-review

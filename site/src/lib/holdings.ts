@@ -49,6 +49,8 @@ export interface Holding extends Company {
   scanned?: boolean;
   /** A scanned row a second, independent reader read the same way. */
   readTwice?: boolean;
+  /** A scanned row a person checked against the page. */
+  checkedByHand?: boolean;
   /** From a brokerage statement attached to the report; its exact value is shown only as a range. */
   fromStatement?: boolean;
   docUrl?: string;
@@ -74,6 +76,8 @@ export interface Trade extends Company {
   scanned?: boolean;
   /** A second, independent reader read it the same way. */
   readTwice?: boolean;
+  /** A person checked it against the page. */
+  checkedByHand?: boolean;
   account?: string;
   docUrl: string;
 }
@@ -280,11 +284,16 @@ export interface TradeRow {
   /** Read by machine from a scanned paper form. */
   scanned: boolean;
   readTwice: boolean;
+  checkedByHand: boolean;
 }
 
 /** What a Scan tag says about how the row was read. */
-export const scanTitle = (row: { readTwice?: boolean }) =>
-  row.readTwice ? "Read by machine from a scanned paper form, and read the same way by a second reader" : "Read by machine from a scanned paper form";
+export const scanTitle = (row: { readTwice?: boolean; checkedByHand?: boolean }) =>
+  row.checkedByHand
+    ? "Read from a scanned paper form and checked by hand"
+    : row.readTwice
+      ? "Read by machine from a scanned paper form, and read the same way by a second reader"
+      : "Read by machine from a scanned paper form";
 
 export function tradeRows(): TradeRow[] {
   const rows: TradeRow[] = [];
@@ -307,6 +316,7 @@ export function tradeRows(): TradeRow[] {
         amount: rangeText(t),
         scanned: !!t.scanned,
         readTwice: !!t.readTwice,
+        checkedByHand: !!t.checkedByHand,
         min: t.min,
         lagDays: t.lagDays,
         filed: t.filed,

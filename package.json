@@ -22,6 +22,8 @@
     "feeds:publish": "tsx feeds/publish.ts",
     "open-data-examples": "tsx src/scripts/open-data-examples.ts",
     "bluesky-profiles": "tsx src/scripts/fetch-bluesky-profiles.ts",
+    "review-scans": "tsx src/scripts/disclosures/scan/review-server.ts",
+    "holdings:publish": "tsx src/scripts/disclosures/house-build.ts && tsx src/scripts/disclosures/seal.ts && git commit -m 'Holdings: apply scan review decisions' -- data/holdings.json.enc && git push origin HEAD:main",
     "holdings": "tsx src/scripts/disclosures/house-all.ts && tsx src/scripts/disclosures/scan/run-ptrs.ts && tsx src/scripts/disclosures/scan/run-annuals.ts && tsx src/scripts/disclosures/scan/statements.ts && tsx src/scripts/disclosures/house-build.ts && tsx src/scripts/disclosures/seal.ts"
   },
   "devDependencies": {

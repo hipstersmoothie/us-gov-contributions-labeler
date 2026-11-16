@@ -14,6 +14,9 @@ export interface ScannedHolding {
   min?: number;
   max?: number | null;
   doubts: string[];
+  /** Where the row sits on the page (0..1 from the top). */
+  y0?: number;
+  y1?: number;
 }
 
 /** Block B, columns A–M. */
@@ -144,6 +147,8 @@ export function parseScannedScheduleA(pages: ScanPage[]) {
         ...(ticker && !OWNERS[ticker] ? { ticker } : {}),
         ...(value ? { min: value[0], max: value[1] } : {}),
         doubts,
+        y0: ys[r],
+        y1: ys[r + 1],
       });
     }
   }
