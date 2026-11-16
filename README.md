@@ -70,7 +70,7 @@ The dataset is published as atproto records in its own repo, [@data.contribution
 
 | Collection | Record key | |
 |---|---|---|
-| `fyi.contributions.dataset` | `self` | metadata, plus the complete `data/*.json` files as gzipped blobs |
+| `fyi.contributions.dataset` | `self` | metadata, plus the complete data files as gzipped blobs (below) |
 | `fyi.contributions.account` | Bluesky DID | who funds this account: a member's summary, linking to their member record |
 | `fyi.contributions.member` | bioguide id | |
 | `fyi.contributions.committee` | FEC committee id | |
@@ -81,6 +81,17 @@ The dataset is published as atproto records in its own repo, [@data.contribution
 | `com.atproto.lexicon.schema` | NSID | the lexicons, for [resolution](https://atproto.com/specs/lexicon#lexicon-publication-and-resolution) (`_lexicon.contributions.fyi`) |
 
 Records link to each other by at-uri, in `uri` fields next to the ids: members to their organizations, PACs, outside spenders, committee seats and accounts; PACs to their organization, sponsors, recipients and donors; donors to the PACs they gave to; organizations to their PACs. A few record keys differ from the id (the PDS's name filter rejects them, so they use underscores), so follow the links rather than building them. Amounts in records are whole dollars (the atproto data model has no floats); the files keep cents. FEC, SEC and LDA data are public domain; our classifications and matching are CC0.
+
+The dataset record's files:
+
+| File | |
+|---|---|
+| `*.json` | the data files the site is built from, minified |
+| `contributions.sqlite` | the same JSON as tables: a table per kind of record and per list inside them (`members`, `members_sectors`, `committees_recipients`, ...), described in its `tables` table, with views `pac_contributions`, `outside_spending` and `member_votes`. Built by `src/lib/sqlite-tables.ts` without a schema, so new fields in `data/` show up on their own; which files and lists go in is set in `src/lib/sqlite-files.ts` |
+| `fec-lines.sqlite` | every FEC line counted toward members' totals, as filed: the fec step writes them to `.cache/fec/<cycle>/lines.jsonl`, and they sum to the totals |
+| `lobbying-filings.sqlite` | every LD-1/LD-2 filing of the current Congress, from the legislation step's cache (`.cache/legis/ld2`), linked to organizations the way the legislation and revolving steps match them |
+
+The last two are separate files because, gzipped, each has to stay under the PDS's 100 MB blob limit (`PDS_BLOB_UPLOAD_LIMIT`); they're about 30 MB and 55 MB now. Individual donors are only in them as totals, as on the site.
 
 Getting it:
 
@@ -109,9 +120,12 @@ curl "$PDS/xrpc/com.atproto.repo.listRecords?repo=$DID&collection=fyi.contributi
 Publishing, after an ingest:
 
 ```sh
+pnpm build-sqlite                                          # the SQLite files, in .cache/open-data/
 railway run --service pds -- pnpm publish-records          # dry run: what would change
 railway run --service pds -- pnpm publish-records --apply  # write it
 ```
+
+`publish-records` builds `contributions.sqlite` itself. The two source files need the ingest cache, so they're only rebuilt on a machine that ran the fec and legislation steps (`pnpm build-sqlite --only=fec,lobbying`); elsewhere the published ones are kept. Files are uploaded only when their SHA-256 changes, and the SQLite builds are byte-for-byte reproducible from the same inputs.
 
 It writes only records whose content changed and deletes records for entities that are gone, so a refresh takes a minute or two; an interrupted run picks up where it stopped. For testing, `--collections=schema,dataset,member --limit=5` publishes 5 members and never deletes. Needs `DATA_PASSWORD` (a variable on the `pds` service). `DATA_PDS_URL` overrides the PDS address, e.g. `https://pds-production.up.railway.app`. Our PDS doesn't rate-limit writes. Against a PDS that does, the script reads the budget from the response headers and leaves `--reserve` points unspent.
 

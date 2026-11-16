@@ -38,6 +38,9 @@ export interface IeRow {
   date: string;
   /** When the filer left out the candidate id: who they named, to look up. */
   named?: { last: string; office: string; state: string; district: number };
+  /** The FEC filing (file number) it's from, and its page image, where the source says. */
+  filing?: string;
+  image?: string;
 }
 
 /** "Evans, Gabe" or "EVANS" -> "EVANS". */
@@ -170,7 +173,7 @@ export async function lateNotices(cycle: number, coverageEnd: (committee: string
       skipped++;
       continue;
     }
-    out.push({ committee: r.spe_id!, candidate: r.cand_id ?? "", side: r.sup_opp === "S" ? "support" : "oppose", amount, election: (r.ele_type ?? "")[0] ?? "", date, named });
+    out.push({ committee: r.spe_id!, candidate: r.cand_id ?? "", side: r.sup_opp === "S" ? "support" : "oppose", amount, election: (r.ele_type ?? "")[0] ?? "", date, named, filing: r.file_num || undefined, image: r.image_num || undefined });
   }
   if (skipped) console.log(`  skipped ${skipped} implausible or unregistered notice lines`);
   return out;
@@ -299,7 +302,7 @@ export async function form5(cycle: number): Promise<Form5> {
         continue;
       }
       if (Math.abs(amount) >= IMPLAUSIBLE) continue;
-      rows.push({ committee: report.committee_id, candidate, side: so === "S" ? "support" : "oppose", amount, election: (f[15] ?? "")[0] ?? "", date, named });
+      rows.push({ committee: report.committee_id, candidate, side: so === "S" ? "support" : "oppose", amount, election: (f[15] ?? "")[0] ?? "", date, named, filing: fileNumber });
     }
   }
 
@@ -317,7 +320,7 @@ export async function form5(cycle: number): Promise<Form5> {
     const named = r.cand_id ? undefined : r.cand_name && r.can_office ? { last: lastName(r.cand_name), office: r.can_office, state: r.can_office_state ?? "", district: Number(r.can_office_dis) || 0 } : undefined;
     if ((!r.cand_id && !named) || !date || !amount || Math.abs(amount) >= IMPLAUSIBLE) continue;
     if (date <= (coveredThrough.get(r.spe_id!) ?? "")) continue;
-    rows.push({ committee: r.spe_id!, candidate: r.cand_id ?? "", side: r.sup_opp === "S" ? "support" : "oppose", amount, election: (r.ele_type ?? "")[0] ?? "", date, named });
+    rows.push({ committee: r.spe_id!, candidate: r.cand_id ?? "", side: r.sup_opp === "S" ? "support" : "oppose", amount, election: (r.ele_type ?? "")[0] ?? "", date, named, filing: r.file_num || undefined, image: r.image_num || undefined });
     pending += amount;
   }
   const total = rows.reduce((s, r) => s + r.amount, 0);
@@ -338,6 +341,7 @@ export interface EcRow {
   /** The candidate's share of the ad's cost, as the FEC calculates it. */
   amount: number;
   date: string;
+  image?: string;
 }
 
 export async function electioneering(cycle: number) {
@@ -353,6 +357,7 @@ export async function electioneering(cycle: number) {
       candidate: r.CANDIDATE_ID,
       amount,
       date,
+      image: r.SB_IMAGE_NUM || undefined,
     });
   }
   return [...unique.values()];

@@ -15,7 +15,7 @@
           "generatedAt": { "type": "string", "format": "datetime", "description": "When the data was built." },
           "cycles": { "type": "array", "items": { "type": "integer" }, "description": "Election cycles covered, named for the year each ends." },
           "methodology": { "type": "string" },
-          "files": { "type": "array", "items": { "type": "ref", "ref": "#file" }, "description": "The complete data files, gzipped JSON." },
+          "files": { "type": "array", "items": { "type": "ref", "ref": "#file" }, "description": "The complete data files, gzipped: JSON, the same data as SQLite, and the source records behind it as SQLite." },
           "collections": { "type": "array", "items": { "type": "ref", "ref": "#collection" }, "description": "The per-entity record collections in this repository." },
           "recordsComplete": { "type": "boolean", "description": "False while the per-entity records are still being brought in line with this generation of the data; the files are always complete." },
           "sources": { "type": "array", "items": { "type": "ref", "ref": "#source" } },
@@ -29,11 +29,12 @@
       "type": "object",
       "required": ["name", "blob", "records", "sha256"],
       "properties": {
-        "name": { "type": "string", "description": "e.g. 'members.json.gz'." },
+        "name": { "type": "string", "description": "e.g. 'members.json.gz', 'contributions.sqlite.gz'." },
+        "format": { "type": "string", "knownValues": ["json", "sqlite"], "description": "What's inside the gzip." },
         "description": { "type": "string" },
         "blob": { "type": "blob", "accept": ["application/gzip"] },
-        "records": { "type": "integer", "description": "Entities in the file." },
-        "sha256": { "type": "string", "description": "Hex SHA-256 of the uncompressed JSON." }
+        "records": { "type": "integer", "description": "Entities in a JSON file; rows across all tables in a SQLite one." },
+        "sha256": { "type": "string", "description": "Hex SHA-256 of the uncompressed file." }
       }
     },
     "collection": {

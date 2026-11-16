@@ -37,6 +37,44 @@ curl -s "${XRPC}/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributio
     curl -s "${XRPC}/com.atproto.sync.getBlob?did=$DID&cid=$cid" | gunzip > "\${name%.gz}"
   done`;
 
+// Download one file from the dataset record by name.
+const download = (name: string) => `DID=${DID}
+CID=$(curl -s "${XRPC}/com.atproto.repo.getRecord?repo=$DID&collection=fyi.contributions.dataset&rkey=self" |
+  jq -r '.value.files[] | select(.name == "${name}.gz") | .blob.ref["$link"]')
+curl -s "${XRPC}/com.atproto.sync.getBlob?did=$DID&cid=$CID" | gunzip > ${name}`;
+
+const sql = `${download("contributions.sqlite")}
+
+# what's in it: a table per list in the JSON, and what each holds
+sqlite3 contributions.sqlite "SELECT name, rows, description FROM tables"
+
+# the members defense PACs gave the most
+sqlite3 -header -column contributions.sqlite "
+  SELECT member, party, sum(total) AS total
+  FROM pac_contributions
+  WHERE sector = 'Defense'
+  GROUP BY bioguide ORDER BY total DESC LIMIT 10"`;
+
+const fecSql = `${download("fec-lines.sqlite")}
+
+# Maria Cantwell's PAC contributions this cycle, newest first, with the filing each is on
+sqlite3 -header -column fec-lines.sqlite "
+  SELECT c.date, g.name AS pac, o.sector, c.amount, c.image_url
+  FROM fec_contributions_with_links c
+  JOIN committees g ON g.id = c.committee
+  LEFT JOIN organizations o ON o.id = g.organization
+  WHERE c.bioguide = 'C000127' AND c.cycle = 2026
+  ORDER BY c.date DESC"`;
+
+const lobbyingSql = `${download("lobbying-filings.sqlite")}
+
+# who Lockheed Martin paid to lobby, by quarter
+sqlite3 -header -column lobbying-filings.sqlite "
+  SELECT year, period, registrant_name, income, url
+  FROM lobbying_filings_with_links
+  WHERE organization = 'lockheed-martin' AND type NOT LIKE 'R%'
+  ORDER BY posted DESC"`;
+
 const goat = `goat get at://data.contributions.fyi/fyi.contributions.member/C000127
 goat record ls data.contributions.fyi --collection fyi.contributions.member
 goat repo export data.contributions.fyi -o contributions.car
@@ -62,7 +100,8 @@ const datasetLd = {
     `Campaign contributions from PACs and other political committees to every current member of Congress, ${cycles[0]! - 1} to ${cycles.at(-1)}, ` +
     "from FEC filings: totals by member, organization, sector and industry, outside spending for and against members, " +
     "big donors to super PACs, congressional committee seats, and members' Bluesky accounts. Organizations are matched to " +
-    "SEC EDGAR and lobbying disclosure records. Published as an AT Protocol repository with complete gzipped JSON files.",
+    "SEC EDGAR and lobbying disclosure records. Published as an AT Protocol repository with complete gzipped JSON and SQLite files, " +
+    "plus the FEC lines and lobbying filings behind the totals as SQLite.",
   url: abs("/open-data/"),
   sameAs: "https://bsky.app/profile/data.contributions.fyi",
   identifier: DID,
@@ -82,7 +121,7 @@ const datasetLd = {
     },
     {
       "@type": "DataDownload",
-      name: "The dataset record, listing the complete gzipped JSON files",
+      name: "The dataset record, listing the complete gzipped JSON and SQLite files",
       encodingFormat: "application/json",
       contentUrl: `${XRPC}/com.atproto.repo.getRecord?repo=${DID}&collection=fyi.contributions.dataset&rkey=self`,
     },
@@ -90,7 +129,7 @@ const datasetLd = {
 };
 
 const collections = [
-  ["fyi.contributions.dataset", "self", "Generation time, election cycles, sources, methodology, license, and the complete data files as gzipped JSON blobs"],
+  ["fyi.contributions.dataset", "self", "Generation time, election cycles, sources, methodology, license, and the complete data files as gzipped JSON and SQLite blobs"],
   ["fyi.contributions.account", "Bluesky DID", "Who funds this account: a member's totals, top sectors and top contributors, linking to their member record"],
   ["fyi.contributions.member", "bioguide id, e.g. C000127", "Members of Congress: campaign totals, sectors, top contributors, outside spending, electioneering, small and in-state donors, lobbyist bundlers, committee seats, former staff who now lobby, and registered foreign agents' donations"],
   ["fyi.contributions.committee", "FEC committee id, e.g. C00030718", "PACs, other FEC committees and non-committee spenders (Form 5 and 9 filers): who they gave to, outside spending, big donors, whether they disclose donors"],
@@ -104,7 +143,7 @@ const collections = [
 <Base
   title="Open data: download the campaign finance dataset"
   og={{ type: "page", id: "open-data" }}
-  description="Download every member's PAC money, organizations, sectors, outside spending and big donors as open data (CC0): one AT Protocol repository, with complete gzipped JSON files. No API key."
+  description="Download every member's PAC money, organizations, sectors, outside spending and big donors as open data (CC0): one AT Protocol repository, with complete JSON and SQLite files and the FEC and lobbying records behind them. No API key."
   crumbs={[["Open data", "/open-data/"]]}
   jsonLd={datasetLd}
 >
@@ -113,7 +152,8 @@ const collections = [
   <p class="dek">
     Everything on this site is published as open data in the <a href="https://atproto.com">AT Protocol</a>{" "}
     repository <a href="https://bsky.app/profile/data.contributions.fyi">@data.contributions.fyi</a>, on our own
-    server. There's no API key to request and no terms to agree to.
+    server, as JSON and as SQLite databases you can query, along with the FEC and lobbying records behind it. There's
+    no API key to request and no terms to agree to.
   </p>
 
   <article class="prose">
@@ -139,7 +179,8 @@ const collections = [
     <p>
       The <code>fyi.contributions.dataset</code> record links the complete data files as gzipped JSON, the same
       files this site is built from, including <code>revolving-door.json</code> (lobbyists' former government jobs)
-      and <code>fara.json</code> (foreign agents and their principals). This downloads all of them (needs <code>curl</code> and <code>jq</code>):
+      and <code>fara.json</code> (foreign agents and their principals), and the SQLite files below. This downloads all
+      of them, about 100 MB compressed, most of it the source records (needs <code>curl</code> and <code>jq</code>):
     </p>
     <Code code={files} lang="sh" themes={themes} defaultColor={false} />
     <Code code={dataset} lang="sh" themes={themes} defaultColor={false} />
@@ -147,6 +188,56 @@ const collections = [
       <summary>Example response</summary>
       <Code code={json(examples.dataset)} lang="json" themes={themes} defaultColor={false} />
     </details>
+
+    <h2>Query it with SQL</h2>
+    <p>
+      <code>contributions.sqlite</code> holds everything in the JSON files as tables: one for each kind of record
+      (<code>members</code>, <code>committees</code>, <code>organizations</code>, <code>bills</code>,{" "}
+      <code>travel_trips</code> and so on) and one for each list inside them, like <code>committees_recipients</code>{" "}
+      (who each PAC gave to) or <code>bills_votes_yes</code>. List tables link back by the record's id, in a column
+      named for it (<code>committee_id</code>, <code>member_bioguide</code>). The <code>tables</code> table describes
+      them all, and the views <code>pac_contributions</code>, <code>outside_spending</code> and{" "}
+      <code>member_votes</code> join the common ones. Query it with <code>sqlite3</code>,{" "}
+      <a href="https://datasette.io">Datasette</a>, <a href="https://duckdb.org">DuckDB</a> or any SQLite library:
+    </p>
+    <Code code={sql} lang="sh" themes={themes} defaultColor={false} />
+
+    <h2>The records behind it</h2>
+    <p>
+      The totals on this site add up individual filings. Two more SQLite files hold those filings, linked to the same
+      member, committee and organization ids:
+    </p>
+    <table>
+      <thead><tr><th>File</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>fec-lines.sqlite</code></td>
+          <td>
+            Every FEC line counted toward current members' totals, as filed: PAC contributions to their campaigns
+            (<code>fec_contributions</code>), independent expenditures for or against them or their opponents
+            (<code>fec_independent_expenditures</code>, from processed reports, 24/48-hour notices and Form 5), and
+            electioneering communications (<code>fec_electioneering</code>). Refunds and corrections are negative, so
+            the lines sum to the totals here.
+          </td>
+        </tr>
+        <tr>
+          <td><code>lobbying-filings.sqlite</code></td>
+          <td>
+            Every lobbying registration and quarterly report (LD-1, LD-2) filed for the current Congress, amendments
+            included: client, firm, income or expenses, issues and descriptions (<code>lobbying_filings_activities</code>),
+            and the lobbyists with the government jobs they disclosed (<code>lobbying_filings_lobbyists</code>).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <Code code={fecSql} lang="sh" themes={themes} defaultColor={false} />
+    <Code code={lobbyingSql} lang="sh" themes={themes} defaultColor={false} />
+    <p>
+      Individual donors aren't listed by name. Like this site, the files count their donations by employer, sector
+      and place, except for donations of $50,000 or more to outside spenders (<code>donors</code>). The FEC publishes
+      every itemized donation in its <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">bulk data</a>, and
+      federal law bars using the names in it to ask for money or for commercial purposes.
+    </p>
 
     <h2>With goat</h2>
     <p>

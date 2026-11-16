@@ -1,5 +1,7 @@
 // Campaign finance totals and PAC contributions from FEC bulk data.
 // https://www.fec.gov/data/browse-data/?tab=bulk-data
+import fs from "fs";
+import path from "path";
 import readline from "readline";
 import { spawn } from "child_process";
 import type { Legislator } from "../lib/legislators.js";
@@ -115,6 +117,65 @@ export interface OpponentSpending {
   oppose: number;
 }
 
+/**
+ * The FEC lines behind the totals, one per line, written per cycle to
+ * .cache/fec/<cycle>/lines.jsonl for the open-data source records
+ * (src/lib/sqlite-files.ts). Amounts are as filed: refunds and corrections are
+ * negative, nothing is rounded.
+ */
+export type FecLine =
+  | {
+      /** A PAC or other committee's contribution to a member's campaign (pas2 24K, or 24Z in-kind). */
+      kind: "contribution";
+      cycle: number;
+      committee: string;
+      candidate: string;
+      bioguide: string;
+      /** The committee that received it. */
+      recipient: string;
+      recipientName: string;
+      type: string;
+      /** Election, as filed: "P2026" primary, "G2026" general. */
+      election: string;
+      date?: string;
+      amount: number;
+      filing: string;
+      image: string;
+      transaction: string;
+      memo?: string;
+    }
+  | {
+      /** An independent expenditure naming a member, or a candidate running against one. */
+      kind: "independent";
+      cycle: number;
+      source: "pas2" | "notice" | "form5";
+      committee: string;
+      candidate: string;
+      /** When the candidate it names is a current member. */
+      bioguide?: string;
+      /** Current members whose race it counted toward as spending on an opponent. */
+      opponentOf?: string[];
+      side: "support" | "oppose";
+      election: string;
+      date?: string;
+      amount: number;
+      filing?: string;
+      image?: string;
+    }
+  | {
+      /** An electioneering communication (Form 9) naming a member: the member's share of its cost. */
+      kind: "electioneering";
+      cycle: number;
+      committee: string;
+      candidate: string;
+      bioguide: string;
+      date: string;
+      amount: number;
+      image?: string;
+    };
+
+const fecDate = (d = "") => (d.length === 8 ? `${d.slice(4)}-${d.slice(0, 2)}-${d.slice(2, 4)}` : undefined);
+
 function download(cycle: number, file: string) {
   return fecBulk(cycle, `${file}${String(cycle).slice(2)}.zip`);
 }
@@ -164,6 +225,7 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       download(cycle, "ccl"),
     ]);
     const summaries = await committeeSummaries(cycle);
+    const lines: FecLine[] = [];
 
     // Races this cycle, from the candidate master. A race is office + state
     // (+ district for the House) + election year: only candidates whose
@@ -306,7 +368,8 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       if (found?.length !== 1) return void unnamed++;
       return { ...ie, candidate: found[0]! };
     };
-    const recordIe = (ie: IeRow) => {
+    const recordIe = (ie: IeRow, source: "pas2" | "notice" | "form5") => {
+      const opponentOf: string[] = [];
       // Spending on members' opponents: any expenditure naming a candidate in
       // a current member's race, other than that member. That includes another
       // member, where two incumbents met in the same race.
@@ -326,8 +389,16 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
         row[ie.side] += ie.amount;
         opponentSpending.set(key, row);
         data.candidates[ie.candidate] ??= target;
+        opponentOf.push(member);
       }
 
+      if (targetMember || opponentOf.length) {
+        lines.push({
+          kind: "independent", cycle, source, committee: ie.committee, candidate: ie.candidate, bioguide: targetMember,
+          opponentOf: opponentOf.length ? opponentOf : undefined, side: ie.side, election: ie.election, date: ie.date || undefined,
+          amount: ie.amount, filing: ie.filing, image: ie.image,
+        });
+      }
       if (!targetMember) return;
       const byMember = (data.outside[ie.committee] ??= {});
       const spending = (byMember[targetMember] ??= { support: {}, oppose: {} });
@@ -342,10 +413,9 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
     for await (const r of rows(pas2)) {
       // 24E: independent expenditure supporting, 24A: opposing.
       if (r[5] === "24E" || r[5] === "24A") {
-        const d = r[13] ?? "";
-        const date = d.length === 8 ? `${d.slice(4)}-${d.slice(0, 2)}-${d.slice(2, 4)}` : "";
+        const date = fecDate(r[13]) ?? "";
         if (date > (pas2Through.get(r[0]!) ?? "")) pas2Through.set(r[0]!, date);
-        ies.push({ committee: r[0]!, candidate: r[16]!, side: r[5] === "24E" ? "support" : "oppose", amount: Number(r[14]) || 0, election: r[3]?.[0] ?? "", date: "" });
+        ies.push({ committee: r[0]!, candidate: r[16]!, side: r[5] === "24E" ? "support" : "oppose", amount: Number(r[14]) || 0, election: r[3]?.[0] ?? "", date, filing: r[18] || undefined, image: r[4] || undefined });
         continue;
       }
 
@@ -358,6 +428,10 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
         const byMember = (data.contributions[r[0]!] ??= {});
         const byCycle = (byMember[bioguide] ??= {});
         byCycle[cycle] = (byCycle[cycle] ?? 0) + amount;
+        lines.push({
+          kind: "contribution", cycle, committee: r[0]!, candidate: r[16]!, bioguide, recipient: r[15]!, recipientName: r[7]!,
+          type: r[5]!, election: r[3]!, date: fecDate(r[13]), amount, filing: r[18]!, image: r[4]!, transaction: r[17]!, memo: r[20] || undefined,
+        });
       }
     }
 
@@ -380,7 +454,9 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       const race = raceOf.get(candidate);
       if (race && amount >= 10_000) generalNamed.set(race, (generalNamed.get(race) ?? new Set()).add(candidate));
     }
-    for (const ie of [...ies, ...notices, ...f5]) recordIe(ie);
+    for (const ie of ies) recordIe(ie, "pas2");
+    for (const ie of notices) recordIe(ie, "notice");
+    for (const ie of f5) recordIe(ie, "form5");
     for (const [id, amount] of [...contributions, ...(await form9Donations(cycle))]) {
       nonCommitteeDonations.set(id, (nonCommitteeDonations.get(id) ?? 0) + amount);
     }
@@ -394,7 +470,9 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       const byMember = (data.electioneering![ec.committee] ??= {});
       const byCycle = (byMember[bioguide] ??= {});
       byCycle[cycle] = (byCycle[cycle] ?? 0) + ec.amount;
+      lines.push({ kind: "electioneering", cycle, committee: ec.committee, candidate: ec.candidate, bioguide, date: ec.date, amount: ec.amount, image: ec.image });
     }
+    fs.writeFileSync(path.join(".cache/fec", String(cycle), "lines.jsonl"), lines.map((l) => JSON.stringify(l)).join("\n") + "\n");
   }
 
   // Drop refunds that net out to nothing, and round to whole dollars.

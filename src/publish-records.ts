@@ -6,7 +6,10 @@
 //
 // What gets written (lexicons in lexicons/fyi/contributions/):
 //   com.atproto.lexicon.schema/<nsid>       the lexicons themselves, for resolution
-//   fyi.contributions.dataset/self          metadata, plus the complete data files as gzipped blobs
+//   fyi.contributions.dataset/self          metadata, plus the complete data files as gzipped blobs:
+//                                           data/*.json, the same as SQLite, and the source
+//                                           records as SQLite when they're built here
+//                                           (pnpm build-sqlite; see src/lib/sqlite-files.ts)
 //   fyi.contributions.account/<did>         who funds this Bluesky account, keyed by its DID
 //   fyi.contributions.member/<bioguide>     and one record per congressCommittee, committee,
 //   ...                                     organization, donor and foreignCountry, linked to each other by at-uri
@@ -31,7 +34,9 @@ import fs from "fs";
 import path from "path";
 import zlib from "zlib";
 import { parseArgs } from "util";
+import { DatabaseSync } from "node:sqlite";
 import { jsonToLex, Lexicons } from "@atproto/lexicon";
+import { buildDataDb, DATA_DB, FEC_DB, LOBBYING_DB } from "./lib/sqlite-files.js";
 import type { CommitteeRecord, DonorRecord, Member, OrganizationRecord } from "./ingest/build.js";
 import type { CongressCommittee } from "./ingest/assignments.js";
 import type { RevolvingFile, RevolvingLobbyist } from "./ingest/revolving.js";
@@ -394,19 +399,51 @@ const validate = (nsid: string, rkey: string, value: Value) => {
 };
 for (const c of entities) for (const [rkey, value] of c.records) validate(c.nsid, rkey, value);
 
-// The complete files, as served to the website: minified, gzipped.
-const files = [
-  { name: "members.json", entity: "member", count: membersFile.members.length, description: "Members of Congress, with sectors, contributors, outside spending, committee seats and individual donations." },
-  { name: "organizations.json", entity: "organization", count: organizationsFile.organizations.length, description: "Companies, unions and groups behind PACs." },
-  { name: "committees.json", entity: "committee", count: committeesFile.committees.length, description: "PACs and other FEC committees, with recipients, outside spending and big donors." },
-  { name: "donors.json", entity: "donor", count: donorsFile.donors.length, description: "Donors of $50,000 or more to super PACs and other outside spenders." },
-  { name: "congress-committees.json", entity: "congressCommittee", count: congressFile.committees.length, description: "Committees of Congress and their members." },
-  { name: "revolving-door.json", entity: "lobbyist", count: revolvingFile.lobbyists.length, description: "Lobbyists of the current Congress who disclosed former government jobs, with the current members and committees those jobs name, their firms and clients." },
-  { name: "fara.json", entity: "foreignCountry", count: faraFile.countries.length, description: "Foreign Agents Registration Act registrants, foreign principals by country, and registered agents' donations to current members." },
-].map((f) => {
-  const json = Buffer.from(JSON.stringify(read(f.name)));
-  return { ...f, sha256: crypto.createHash("sha256").update(json).digest("hex"), json };
-});
+// The complete files, gzipped: the JSON the website is built from (minified),
+// the same data as SQLite, and the source records behind it as SQLite.
+interface DataFile {
+  name: string;
+  format: "json" | "sqlite";
+  description: string;
+  /** Records in a JSON file; rows across all tables in a SQLite one. */
+  count?: number;
+  sha256?: string;
+  /** Uncompressed. Missing for source files not built on this machine. */
+  bytes?: Buffer;
+}
+const sha256 = (bytes: Buffer) => crypto.createHash("sha256").update(bytes).digest("hex");
+const jsonFile = (name: string, count: number, description: string): DataFile => {
+  const bytes = Buffer.from(JSON.stringify(read(name)));
+  return { name, format: "json", count, description, bytes, sha256: sha256(bytes) };
+};
+const sqliteFile = (file: string, description: string): DataFile => {
+  const name = path.basename(file);
+  if (!fs.existsSync(file)) return { name, format: "sqlite", description };
+  const db = new DatabaseSync(file, { readOnly: true });
+  const { rows } = db.prepare("SELECT sum(rows) AS rows FROM tables").get() as { rows: number };
+  db.close();
+  const bytes = fs.readFileSync(file);
+  return { name, format: "sqlite", count: rows, description, bytes, sha256: sha256(bytes) };
+};
+const legislationFile = read<{ bills: unknown[] }>("legislation.json");
+const travelFile = read<{ trips: unknown[] }>("travel.json");
+const irs527File = read<{ organizations: Record<string, unknown> }>("irs527.json");
+buildDataDb();
+let files: DataFile[] = [
+  jsonFile("members.json", membersFile.members.length, "Members of Congress, with sectors, contributors, outside spending, committee seats and individual donations."),
+  jsonFile("organizations.json", organizationsFile.organizations.length, "Companies, unions and groups behind PACs."),
+  jsonFile("committees.json", committeesFile.committees.length, "PACs and other FEC committees, with recipients, outside spending and big donors."),
+  jsonFile("donors.json", donorsFile.donors.length, "Donors of $50,000 or more to super PACs and other outside spenders."),
+  jsonFile("congress-committees.json", congressFile.committees.length, "Committees of Congress and their members."),
+  jsonFile("revolving-door.json", revolvingFile.lobbyists.length, "Lobbyists of the current Congress who disclosed former government jobs, with the current members and committees those jobs name, their firms and clients."),
+  jsonFile("fara.json", faraFile.countries.length, "Foreign Agents Registration Act registrants, foreign principals by country, and registered agents' donations to current members."),
+  jsonFile("legislation.json", legislationFile.bills.length, "Bills of the current Congress that came to a vote, with how each member voted and the organizations whose lobbying reports name them."),
+  jsonFile("travel.json", travelFile.trips.length, "Trips paid for by outside groups, from House and Senate gift travel filings."),
+  jsonFile("irs527.json", Object.keys(irs527File.organizations).length, "Organizations' gifts to state-level political groups (IRS 527 filers), and members' legal defense funds."),
+  sqliteFile(DATA_DB, "Everything in the JSON files, as SQLite tables (a table per list; see the `tables` table), with views for PAC contributions, outside spending and members' votes."),
+  sqliteFile(FEC_DB, "The FEC records behind the totals, as SQLite: every PAC contribution, independent expenditure and electioneering communication line counted for current members, as filed, with links to the filings."),
+  sqliteFile(LOBBYING_DB, "Every lobbying registration and quarterly report (LD-1, LD-2) filed for the current Congress, as SQLite: clients, firms, lobbyists, issues and spending, linked to organizations."),
+];
 
 const METHODOLOGY =
   "Direct contributions from PACs and other political committees to current members of Congress, plus " +
@@ -439,10 +476,11 @@ function datasetRecord(blobs: Map<string, unknown>, recordsComplete: boolean): V
     methodology: METHODOLOGY,
     files: files.map((f) => ({
       name: `${f.name}.gz`,
+      format: f.format,
       description: f.description,
       blob: blobs.get(f.name),
-      records: f.count,
-      sha256: f.sha256,
+      records: f.count!,
+      sha256: f.sha256!,
     })),
     collections: entities.map((c) => ({ nsid: c.nsid, records: c.records.size })),
     recordsComplete,
@@ -455,6 +493,11 @@ function datasetRecord(blobs: Map<string, unknown>, recordsComplete: boolean): V
       { name: "SEC EDGAR", url: "https://www.sec.gov/edgar", usedFor: "Industry codes for public companies" },
       { name: "Lobbying disclosures", url: "https://lda.gov/api/", usedFor: "Lobbying issues and spending, which PACs belong to which organizations, lobbyists' former government jobs" },
       { name: "FARA bulk data", url: "https://efile.fara.gov/ords/fara/f?p=API:BULKDATA", usedFor: "Foreign agents, their foreign principals and short-form registrants" },
+      { name: "Congress.gov bill status (GovInfo)", url: "https://www.govinfo.gov/bulkdata/BILLSTATUS", usedFor: "Bills, sponsors and cosponsors" },
+      { name: "House and Senate roll call votes", url: "https://clerk.house.gov/Votes", usedFor: "How each member voted" },
+      { name: "House Clerk gift travel filings", url: "https://disclosures-clerk.house.gov/GiftTravelFilings", usedFor: "Trips paid for by outside groups" },
+      { name: "Senate gift rule travel filings", url: "https://www.senate.gov/legislative/Public_Disclosure/gift-rule-travel.htm", usedFor: "Trips paid for by outside groups" },
+      { name: "IRS political organization filings", url: "https://www.irs.gov/charities-non-profits/political-organizations/political-organization-filing-and-disclosure", usedFor: "Gifts to state-level 527 groups, members' legal defense funds" },
       { name: "Bluesky", url: "https://bsky.app", usedFor: "Matching members to their accounts" },
     ],
     license: LICENSE,
@@ -544,10 +587,17 @@ for (const c of entities) {
   plan.push({ nsid: c.nsid, writes: diff(c, have, { limit: LIMIT }) });
 }
 
-type Dataset = { files?: { name: string; sha256: string; blob: unknown }[] };
+type Dataset = { files?: { name: string; sha256: string; records: number; blob: unknown }[] };
 let dataset = (await listRecords(`${NS}.dataset`)).get("self") as Dataset | undefined;
 const datasetIncluded = included(`${NS}.dataset`);
 const existingFile = (name: string) => dataset?.files?.find((e) => e.name === `${name}.gz`);
+// Source files not built on this machine keep the published version.
+files = files.flatMap((f) => {
+  if (f.bytes) return [f];
+  const existing = existingFile(f.name);
+  console.log(`${f.name}: not built here (pnpm build-sqlite)${existing ? "; keeping the published one" : ", so not published"}`);
+  return existing ? [{ ...f, sha256: existing.sha256, count: existing.records }] : [];
+});
 const staleFiles = files.filter((f) => existingFile(f.name)?.sha256 !== f.sha256);
 
 const entityWrites = plan.flatMap((p) => p.writes);
@@ -725,7 +775,7 @@ async function putDataset(recordsComplete: boolean) {
       blobs.set(f.name, existing.blob);
       continue;
     }
-    const gz = zlib.gzipSync(f.json, { level: 9 });
+    const gz = zlib.gzipSync(f.bytes!, { level: 9 });
     const { blob } = await xrpc<{ blob: unknown }>("com.atproto.repo.uploadBlob", {
       auth: "access",
       raw: gz,
