@@ -3,7 +3,7 @@
 //   pnpm ingest                      all steps, last 3 cycles
 //   pnpm ingest --steps=accounts     just re-match Bluesky accounts
 //   pnpm ingest --cycles=5           go further back
-//   pnpm ingest --min-total=1000     look up more (smaller) PACs
+//   pnpm ingest --min-total=5000     look up fewer (only bigger) PACs
 //   pnpm ingest --steps=legislation  just bills, votes and lobbying reports
 //   pnpm ingest --steps=revolving    just lobbyists' former government jobs
 //   pnpm ingest --steps=fara         just foreign lobbying
@@ -44,7 +44,7 @@ const { values: args } = parseArgs({
   options: {
     steps: { type: "string", default: STEPS.join(",") },
     cycles: { type: "string", default: "3" },
-    "min-total": { type: "string", default: "5000" },
+    "min-total": { type: "string", default: "1000" },
     "lobbying-minutes": { type: "string", default: "20" },
     // A full Congress of lobbying reports is about an hour the first time.
     "legislation-minutes": { type: "string", default: "90" },
