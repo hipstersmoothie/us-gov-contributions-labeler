@@ -5,7 +5,7 @@
 // lines that hold a date; a checkbox is "marked" when its cell has clearly
 // more ink than that column's empty cells on the same page.
 export interface Word { t: string; x0: number; y0: number; x1: number; y1: number; c: number; reads?: string[] }
-export interface Band { x0: number; x1: number; y0: number; y1: number; ink: number[] }
+export interface Band { x0: number; x1: number; y0: number; y1: number; ink: number[]; profile?: number[] }
 export interface ScanPage {
   file: string;
   page: number;
@@ -77,6 +77,46 @@ function marked(row: number[], cols: number[], base: number[]) {
   if (!best || best[0] < 0.012) return { index: -1, doubt: "no mark found" };
   if (second && second[0] > 0.012 && second[0] > best[0] * 0.5) return { index: best[1], doubt: "two marks" };
   return { index: best[1] };
+}
+
+/**
+ * Where the amount columns A–K sit, from the letters printed over them, when
+ * OCR reads enough of them. Faint or dashed rules can hide the lines between
+ * columns, but the letters stay put. Returns each column's center and width.
+ */
+function letterColumns(words: Word[], left: number, top: number, bottom: number) {
+  const at = new Map<number, number[]>();
+  for (const w of words) {
+    const t = w.t.replace(/\s+/g, "");
+    const yc = (w.y0 + w.y1) / 2;
+    if (!/^[A-K]+$/.test(t) || t.length > 11 || yc < top || yc > bottom || w.x0 < left) continue;
+    const step = (w.x1 - w.x0) / t.length;
+    [...t].forEach((ch, i) => at.set(ch.charCodeAt(0) - 65, [...(at.get(ch.charCodeAt(0) - 65) ?? []), w.x0 + step * (i + 0.5)]));
+  }
+  const known = [...at].map(([i, xs]) => [i, median(xs)] as const).sort((a, b) => a[0] - b[0]);
+  // Letters must run left to right in order, and enough of them must be read.
+  if (known.length < 5 || known.some(([, x], k) => k > 0 && x <= known[k - 1]![1])) return undefined;
+  const centers = Array.from({ length: 11 }, (_, i) => {
+    const exact = known.find(([j]) => j === i);
+    if (exact) return exact[1];
+    const before = [...known].reverse().find(([j]) => j < i);
+    const after = known.find(([j]) => j > i);
+    if (before && after) return before[1] + ((after[1] - before[1]) * (i - before[0])) / (after[0] - before[0]);
+    const [a, b] = before ? [known.at(-2)!, known.at(-1)!] : [known[0]!, known[1]!];
+    return a[1] + ((b[1] - a[1]) / (b[0] - a[0])) * (i - a[0]);
+  });
+  return centers.map((c, i) => {
+    const gap = Math.min(i > 0 ? c - centers[i - 1]! : Infinity, i < 10 ? centers[i + 1]! - c : Infinity);
+    return { center: c, half: gap * 0.35 };
+  });
+}
+
+/** Mean ink in a band's profile between two page positions. */
+function profileInk(profile: number[], x0: number, x1: number) {
+  const a = Math.max(0, Math.floor(x0 * profile.length)), b = Math.min(profile.length, Math.ceil(x1 * profile.length));
+  let sum = 0;
+  for (let i = a; i < b; i++) sum += profile[i]!;
+  return b > a ? sum / (b - a) : 0;
 }
 
 export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; skipped: { page: number; why: string }[] } {
@@ -168,6 +208,12 @@ export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; sk
     const inkOf = (b: Band) => (perRow.get(gridRow(b)) === 1 && p.ink[gridRow(b)] ? p.ink[gridRow(b)]! : b.ink);
     const base = (xs.slice(0, -1) as number[]).map((_, c) => median(tradeBands.map((b) => inkOf(b)[c] ?? 0)));
 
+    // Amount columns by their letters, measured in each band's ink profile.
+    const firstBand = tradeBands[0];
+    const letters = firstBand?.profile ? letterColumns(p.words, xs[notifiedCol + 1]! - 0.01, 0, firstBand.y0) : undefined;
+    const letterInk = (b: Band) => letters!.map((l) => profileInk(b.profile!, l.center - l.half, l.center + l.half));
+    const letterBase = letters ? letters.map((_, i) => median(tradeBands.map((b) => letterInk(b)[i]!))) : [];
+
     // Each line in the name column belongs to the first date at or below it;
     // lines far above that date (more than two lines) are a heading instead.
     const nameLines = new Map<Band, Word[]>();
@@ -201,10 +247,21 @@ export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; sk
       const ink = inkOf(b);
       const choices = typeCols.filter((c) => c !== partialCol);
       const tx = marked(ink, choices, base);
-      const amt = marked(ink, amountCols.slice(0, AMOUNTS.length), base);
+      // The ruled columns read best when the line finder got them all; the
+      // letter windows are the fallback when it didn't, or when they're unsure.
+      // Too many ruled columns (a page edge, a doubled rule): keep the one under each letter.
+      const underLetters =
+        letters && amountCols.length > 11
+          ? letters.map((l) => amountCols.reduce((best, c) => (Math.abs((xs[c]! + xs[c + 1]!) / 2 - l.center) < Math.abs((xs[best]! + xs[best + 1]!) / 2 - l.center) ? c : best)))
+          : undefined;
+      const cols = underLetters && new Set(underLetters).size === 11 ? underLetters : amountCols;
+      const ruledOk = cols.length === 11 || cols.length === 10;
+      const ruled = ruledOk ? marked(ink, cols.slice(0, AMOUNTS.length), base) : undefined;
+      const byLetter = letters && b.profile ? marked(letterInk(b), letters.map((_, i) => i), letterBase) : undefined;
+      const amt = ruled && !ruled.doubt ? ruled : byLetter && !byLetter.doubt ? byLetter : (ruled ?? byLetter ?? { index: -1, doubt: "no amount columns" });
       if (tx.doubt) doubts.push(`type: ${tx.doubt}`);
       if (amt.doubt) doubts.push(`amount: ${amt.doubt}`);
-      if (amountCols.length !== 11 && amountCols.length !== 10) doubts.push(`${amountCols.length} amount columns`);
+      if (!ruledOk && !(byLetter && !byLetter.doubt)) doubts.push(`${amountCols.length} amount columns`);
       let txName = tx.index >= 0 ? txNames[txCols.indexOf(choices[tx.index]!)] : undefined;
       if (partialCol !== undefined && txName === "Sold" && (ink[partialCol] ?? 0) - (base[partialCol] ?? 0) > 0.012) txName = "Sold some";
       const range = amt.index >= 0 ? AMOUNTS[amt.index] : undefined;

@@ -234,6 +234,25 @@ export function companyName(name: string) {
     .replace(/\/[A-Za-z]{2}\/?$/, "");
 }
 
+// --- corrections ---------------------------------------------------------------
+
+/**
+ * A prefilled GitHub issue for a row read by machine from a scan: who, what we
+ * read, and the page to check it against.
+ */
+export function reportUrl(member: string, row: string, docUrl: string) {
+  const title = `Scan correction: ${member}: ${row}`.slice(0, 120);
+  const body = [
+    `**Member:** ${member}`,
+    `**What the site shows:** ${row}`,
+    `**Original page:** ${docUrl}`,
+    "",
+    "**What the original says instead:**",
+    "",
+  ].join("\n");
+  return `https://github.com/hipstersmoothie/us-gov-contributions-labeler/issues/new?labels=scan-correction&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
 // --- list rows -------------------------------------------------------------------
 
 /** One reported trade, from House periodic transaction reports. */

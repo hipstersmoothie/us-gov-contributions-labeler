@@ -13,7 +13,7 @@ import type { Parsed } from "./house-all.js";
 import { matchAsset, type Match } from "./match.js";
 import type { ScannedTrade } from "./scan/ptr.js";
 import type { ScannedHolding } from "./scan/annual.js";
-import { rangeOf, type StatementHolding } from "./scan/statements.js";
+import { matchStatementTrade, parseEdwardJonesActivity, rangeOf, type StatementHolding, type StatementTrade } from "./scan/statements.js";
 
 /** What a reader needs to tell apart: one company's stock, a fund, cash, property... */
 export const KINDS = {
@@ -103,6 +103,24 @@ const statements = new Map(
     : []
   ).map((d) => [d.docId, d.holdings])
 );
+
+/**
+ * Trades from the Edward Jones statements Rep. Rogers attaches to his annual
+ * report: his paper trade reports quote each trade's price, so a statement line
+ * can confirm a machine-read row, or supply an amount it couldn't read.
+ */
+const statementTrades = new Map<string, StatementTrade[]>([
+  [
+    "R000395",
+    fs.existsSync(`${CACHE}/scan/9116232.jsonl`)
+      ? parseEdwardJonesActivity(
+          fs.readFileSync(`${CACHE}/scan/9116232.jsonl`, "utf8").trim().split("\n").map((l) => JSON.parse(l)),
+          2025
+        )
+      : [],
+  ],
+]);
+let statementConfirmed = 0, statementFilled = 0, statementContradicted = 0;
 
 /** Kind from a name alone, for paper forms that carry no type codes. */
 function kindFromName(asset: string): Kind {
@@ -225,6 +243,20 @@ for (const [bioguide, filings] of byMember) {
     const scan = scanned.get(p.filing.docId);
     if (!scan) continue;
     for (const t of scan.trades) {
+      // A statement line with the same date, direction and quoted price.
+      const st = t.date && t.date <= "2025-12-31" ? matchStatementTrade(statementTrades.get(bioguide) ?? [], t) : undefined;
+      if (st && t.min !== undefined && !t.doubts.length && rangeOf(st.amount)[0] !== t.min) {
+        // The statement and the form disagree: leave it out rather than guess.
+        statementContradicted++;
+        scanUnread++;
+        continue;
+      }
+      if (st && t.date && t.tx && t.doubts.every((d) => /^amount|amount columns/.test(d))) {
+        if (t.doubts.length) statementFilled++;
+        else statementConfirmed++;
+        [t.min, t.max] = rangeOf(st.amount);
+        t.doubts = [];
+      }
       if (t.doubts.length || !t.date || !t.tx || t.min === undefined) {
         scanUnread++;
         continue;
@@ -281,6 +313,7 @@ for (const [bioguide, filings] of byMember) {
   };
 }
 
+console.log(`Rogers' statements: ${statementConfirmed} trades confirmed, ${statementFilled} filled in, ${statementContradicted} left out for disagreeing`);
 const out = { generatedAt: new Date().toISOString(), source: "U.S. House Clerk financial disclosure reports", members };
 fs.mkdirSync("site/src/data", { recursive: true });
 fs.writeFileSync("site/src/data/holdings.json", JSON.stringify(out));

@@ -25,6 +25,7 @@
     "holdings": "tsx src/scripts/disclosures/house-all.ts && tsx src/scripts/disclosures/scan/run-ptrs.ts && tsx src/scripts/disclosures/scan/run-annuals.ts && tsx src/scripts/disclosures/scan/statements.ts && tsx src/scripts/disclosures/house-build.ts && tsx src/scripts/disclosures/seal.ts"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
     "@types/node": "^24.19.2",
     "pdfjs-dist": "^6.5.438",
     "typescript": "^5.5.3"

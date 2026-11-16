@@ -17,7 +17,16 @@ struct Word: Codable {
   var reads: [String]? = nil
 }
 /** Ink per column across the horizontal band of one date-like word. */
-struct Band: Codable { let x0, x1, y0, y1: Double; let ink: [Double] }
+struct Band: Codable {
+  let x0, x1, y0, y1: Double
+  let ink: [Double]
+  /**
+   * Ink across the page in 300 bins, for measuring columns the line finder
+   * missed. Pixel rows that are ruling lines are skipped, and so are pixel
+   * columns dark through most of the band (a vertical rule, solid or dashed).
+   */
+  let profile: [Double]
+}
 struct Page: Codable {
   let file: String
   let page: Int
@@ -138,6 +147,30 @@ func darkShare(_ px: [UInt8], w: Int, ax: Int, bx: Int, ay: Int, by: Int) -> Dou
   return rows == 0 ? 0 : Double(dark) / Double((bx - ax) * rows)
 }
 
+/** Ink across a band in `bins` slices, without ruling lines either way. */
+func bandProfile(_ px: [UInt8], w: Int, h: Int, y0: Double, y1: Double, bins: Int = 300) -> [Double] {
+  let ay = max(0, Int(y0 * Double(h))), by = min(h, Int(y1 * Double(h)))
+  guard by > ay else { return Array(repeating: 0, count: bins) }
+  // Rows that are mostly dark across the page are horizontal rules.
+  let rows = (ay..<by).filter { y in
+    var n = 0
+    for x in 0..<w where px[y * w + x] < 140 { n += 1 }
+    return Double(n) < 0.5 * Double(w)
+  }
+  guard !rows.isEmpty else { return Array(repeating: 0, count: bins) }
+  var col = [Double](repeating: 0, count: w)
+  for x in 0..<w {
+    var n = 0
+    for y in rows where px[y * w + x] < 140 { n += 1 }
+    let f = Double(n) / Double(rows.count)
+    col[x] = f > 0.55 ? 0 : f
+  }
+  return (0..<bins).map { b in
+    let a = b * w / bins, z = max(a + 1, (b + 1) * w / bins)
+    return col[a..<z].reduce(0, +) / Double(z - a)
+  }
+}
+
 /** Ink per column within a horizontal band, columns trimmed like cells. */
 func bandInk(_ px: [UInt8], w: Int, h: Int, xs: [Double], y0: Double, y1: Double) -> [Double] {
   guard xs.count > 1 else { return [] }
@@ -240,7 +273,9 @@ for p in first...last {
   let bands = words.filter { isDate($0.t) }.map { d -> Band in
     // The band is the date's line, padded by a third of its height.
     let pad = (d.y1 - d.y0) * 0.35
-    return Band(x0: d.x0, x1: d.x1, y0: d.y0 - pad, y1: d.y1 + pad, ink: bandInk(px, w: img.width, h: img.height, xs: v, y0: d.y0 - pad, y1: d.y1 + pad))
+    return Band(x0: d.x0, x1: d.x1, y0: d.y0 - pad, y1: d.y1 + pad,
+                ink: bandInk(px, w: img.width, h: img.height, xs: v, y0: d.y0 - pad, y1: d.y1 + pad),
+                profile: bandProfile(px, w: img.width, h: img.height, y0: d.y0 - pad, y1: d.y1 + pad))
   }
   let out = Page(file: URL(fileURLWithPath: args[1]).lastPathComponent, page: p, rotation: best.0, words: words,
                  vlines: v, hlines: hz, ink: cellInk(px, w: img.width, h: img.height, xs: v, ys: hz), bands: bands)

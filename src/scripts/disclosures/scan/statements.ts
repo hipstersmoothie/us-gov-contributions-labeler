@@ -272,3 +272,76 @@ if (process.argv[1]?.endsWith("statements.ts")) {
   }
   fs.writeFileSync(`${CACHE}/scan/statements.json`, JSON.stringify(out));
 }
+
+/** One line of an Edward Jones statement's activity: "11/24 Sell AT&T Inc @ 25.51 481 12,270.31". */
+export interface StatementTrade {
+  date: string;
+  tx: "Bought" | "Sold";
+  asset: string;
+  amount: number;
+  /** The price as printed, digits only ("47342" for 473.42), for matching a trade report that quotes it. */
+  price?: string;
+  page: number;
+}
+
+/**
+ * Buys, sells and redemptions from a year of Edward Jones statements. OCR
+ * drops commas and decimal points, so price, quantity and amount run together
+ * ("@ 25 51 481 12 270 31"); the split that makes price × quantity equal the
+ * amount is the right one.
+ */
+/**
+ * The statement line for a trade report row that quotes its price ("Sell Vng
+ * Growth Index @ 473.42"): same date, same direction, same price.
+ */
+export function matchStatementTrade(st: StatementTrade[], t: { date?: string; tx?: string; asset: string }) {
+  const quoted = t.asset.match(/@\s*([\d.]+)/)?.[1]?.replace(/\D/g, "").replace(/0+$/, "");
+  if (!quoted || !t.date) return undefined;
+  const hits = st.filter(
+    (x) => x.date === t.date && (!t.tx || (t.tx === "Bought") === (x.tx === "Bought")) && x.price?.replace(/0+$/, "").startsWith(quoted)
+  );
+  return hits.length === 1 ? hits[0] : undefined;
+}
+
+export function parseEdwardJonesActivity(pages: ScanPage[], year: number): StatementTrade[] {
+  const out: StatementTrade[] = [];
+  for (const p of pages) {
+    const text = p.words.map((w) => w.t).join(" ");
+    if (!/Edward\s*Jones/i.test(text)) continue;
+    for (const row of lines(p)) {
+      const line = row.map((w) => w.t).join(" ").trim();
+      const m = line.match(/^(\d{1,2})\/(\d{2})\/?\s+(Sell|Buy|Redeemed)\s+(.+)$/);
+      if (!m) continue;
+      const [, mo, d, verb, rest] = m;
+      const date = `${year}-${mo!.padStart(2, "0")}-${d}`;
+      let asset = rest!;
+      let amount: number | undefined;
+      let price: string | undefined;
+      const at = rest!.match(/^(.*?)\s+@\s+(.*?)(\s+as of [\d/]+)?\s+([\d ]+)$/);
+      if (at) {
+        asset = at[1]!;
+        price = `${at[2]} ${at[4]}`.trim().split(/\s+/).slice(0, 2).join("");
+        const tokens = [...at[2]!.split(/\s+/), ...at[4]!.trim().split(/\s+/)].filter((t) => /^\d+$/.test(t));
+        // Try every split into price | quantity | amount.
+        search: for (let i = 1; i < tokens.length - 1; i++)
+          for (let j = i + 1; j < tokens.length; j++) {
+            const value = money(tokens.slice(j).join(" "));
+            if (!value) continue;
+            for (const price of readings(tokens.slice(0, i).join("")))
+              for (const qty of readings(tokens.slice(i, j).join("")))
+                if (Math.abs(price * qty - value) <= Math.max(0.01 * value, 1)) {
+                  amount = value;
+                  break search;
+                }
+          }
+      } else {
+        // "Redeemed ... Matured Security 10 000 10 000 00": the last figure is the proceeds.
+        const tail = rest!.match(/(\d{1,3}(?:\s\d{3})*\s\d{2})$/);
+        asset = rest!.replace(/\s+\d[\d ]*$/, "");
+        if (tail) amount = money(tail[1]!);
+      }
+      if (amount) out.push({ date, tx: verb === "Buy" ? "Bought" : "Sold", asset: asset.trim(), amount, ...(price ? { price } : {}), page: p.page });
+    }
+  }
+  return out;
+}
