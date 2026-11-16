@@ -29,7 +29,9 @@
           "assignments": { "type": "array", "items": { "type": "ref", "ref": "#assignment" }, "description": "Congressional committee seats." },
           "individuals": { "type": "ref", "ref": "#individuals" },
           "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "Top contributors, counted by organization: its PAC money plus donations from people who list it as their employer. Top 50." },
-          "combinedSectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Sectors from PAC and individual money combined (id is the sector), largest first." }
+          "combinedSectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Sectors from PAC and individual money combined (id is the sector), largest first." },
+          "formerStaff": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#formerStaffer" }, "description": "Lobbyists on lobbying filings of the current Congress who listed a job with this member among their covered positions (former government jobs). Only unambiguous name matches." },
+          "foreignAgentGifts": { "type": "array", "items": { "type": "ref", "ref": "#foreignAgentGift" }, "description": "Donations to this member's campaign from people registered as foreign agents under FARA at the time, from itemized FEC records matched by name and employer." }
         }
       }
     },
@@ -187,6 +189,20 @@
         "total": { "type": "integer", "description": "US dollars: pacs + individuals." },
         "pacs": { "type": "integer", "description": "US dollars from the organization's PACs." },
         "individuals": { "type": "integer", "description": "US dollars from people listing it as their employer." }
+      }
+    },
+    "foreignAgentGift": {
+      "type": "object",
+      "required": ["agent", "registrant", "total", "count", "first", "last"],
+      "properties": {
+        "agent": { "type": "string", "description": "As named on their FARA short form." },
+        "registrant": { "type": "string", "description": "FARA registration number of the firm or person they're registered under." },
+        "registrantName": { "type": "string" },
+        "total": { "type": "integer", "description": "US dollars." },
+        "count": { "type": "integer", "description": "Donations." },
+        "first": { "type": "string", "description": "Date of the first, YYYY-MM-DD." },
+        "last": { "type": "string", "description": "Date of the last, YYYY-MM-DD." },
+        "committee": { "type": "string", "description": "FEC id of the member's committee that received the most." }
       }
     }
   }

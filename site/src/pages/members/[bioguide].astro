@@ -32,6 +32,11 @@ import VotesTable from "../../components/VotesTable.astro";
 import LazyDisclosure from "../../islands/LazyDisclosure";
 import { memberVotes, partyPlural, caucusOf, memberCaucusName, VOTES_SHOWN } from "../../lib/legislation";
 import { disclosures } from "../../lib/holdings";
+import StaffTable from "../../components/StaffTable.astro";
+import AgentTable from "../../components/AgentTable.astro";
+import { staffByMember, filingSpan, STAFF_SHOWN } from "../../lib/revolving";
+import { faraGifts } from "../../lib/fara";
+import "../../styles/lobbying.css";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -187,6 +192,12 @@ const withParty = decided.filter((x) => x.t && (x.position === "Y" ? x.t.yes >= 
 const caucusLetter = caucusOf(m);
 const caucus = memberCaucusName(m);
 const hasDisclosure = disclosures.has(m.bioguide);
+
+// Former staff now lobbying, and registered foreign agents who gave.
+const staff = staffByMember.get(m.bioguide) ?? [];
+const houseStaff = m.chamber === "senate" && staff.some((x) => x.note);
+const agentGifts = faraGifts[m.bioguide] ?? [];
+const agentTotal = agentGifts.reduce((s, g) => s + g.total, 0);
 
 const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
 ---
@@ -674,6 +685,58 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
           />
         </section>
       </div>
+    )
+  }
+
+  <section class="story" id="former-staff">
+    {
+      staff.length ? (
+        <>
+          <h2>{staff.length === 1 ? "One former staffer now lobbies" : `${staff.length} former staffers now lobby`}</h2>
+          <p class="chart-dek">
+            Lobbyists list the government jobs they held in the 20 years before they began lobbying for a client.{" "}
+            {staff.length === 1 ? "This person" : `These ${staff.length} people`} listed a job with {last}
+            {houseStaff && <>, some from {possessive(last)} years in the House,</>} on lobbying filings from {filingSpan}.
+          </p>
+          <StaffTable rows={staff.slice(0, STAFF_SHOWN)} caption={`Former staff of ${m.name} who now lobby`} />
+          {staff.length > STAFF_SHOWN && (
+            <LazyDisclosure client:visible title={`${staff.length - STAFF_SHOWN} more former staffers`} src={`/fragments/members/${m.bioguide}/staff/`} />
+          )}
+        </>
+      ) : (
+        <>
+          <h2>Former staff who now lobby</h2>
+          <p class="empty-note">No lobbyist on filings from {filingSpan} listed a job with {last} that could be matched.</p>
+        </>
+      )
+    }
+    <p class="source">
+      From registrations and quarterly reports on <a href="https://lda.gov/">lda.gov</a>. Lobbyists write these jobs in their
+      own words, so a job counts only when it names {last} and no other current or past member fits; some former staff
+      will be missed. <a href="/about/#revolving-door">How jobs are matched</a>.
+    </p>
+  </section>
+
+  {
+    agentGifts.length > 0 && (
+      <section class="story" id="foreign-agents">
+        <h2>Registered foreign agents who gave</h2>
+        <p class="chart-dek">
+          {agentGifts.length === 1 ? "One person" : `${agentGifts.length} people`} registered under the Foreign Agents
+          Registration Act gave <strong>{money(agentTotal, true)}</strong> to {possessive(last)} campaign while
+          registered, {cycleRange}. Agents work for firms that represent foreign governments, parties and companies;
+          FARA doesn't tie a donation to any one client, so the countries listed are those their firm's registration covers.
+        </p>
+        <AgentTable gifts={agentGifts.slice(0, STAFF_SHOWN)} caption={`Registered foreign agents who gave to ${m.name}`} />
+        {agentGifts.length > STAFF_SHOWN && (
+          <LazyDisclosure client:visible title={`${agentGifts.length - STAFF_SHOWN} more agents`} src={`/fragments/members/${m.bioguide}/agents/`} />
+        )}
+        <p class="source">
+          Agents from FARA short-form registrations on <a href="https://efile.fara.gov/">efile.fara.gov</a>, matched to
+          itemized FEC contributions by name and the employer they gave, during their registration. Amounts link to the
+          FEC's records. <a href="/about/#foreign-lobbying">How agents are matched</a>.
+        </p>
+      </section>
     )
   }
 

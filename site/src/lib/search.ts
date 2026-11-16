@@ -4,8 +4,9 @@
 import { members, organizations, committees, donors, congressCommittees, displayName, kindLabel } from "./data";
 import { pacTotal } from "./derived";
 import { bills, shortStatus } from "./legislation";
+import { countries } from "./fara";
 
-export type SearchType = "m" | "c" | "o" | "p" | "d" | "b";
+export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f";
 export type SearchRow = [type: SearchType, id: string, label: string, detail: string, weight: number];
 
 const w = (n: number) => Math.round(n / 1000);
@@ -35,6 +36,13 @@ function rows(limit?: number): SearchRow[] {
     ]),
     // The number is part of the label so "H.R. 1" finds it too.
     ...bills.map((b): SearchRow => ["b", b.id, `${b.name} (${b.label})`, [b.policyArea, shortStatus(b)].filter(Boolean).join(" · "), b.lobbying.length]),
+    ...countries.map((c): SearchRow => [
+      "f",
+      c.id,
+      c.name,
+      c.active ? `${c.active} foreign principal${c.active === 1 ? "" : "s"} with US agents` : "Foreign lobbying",
+      c.active,
+    ]),
     ...top(donors, (d) => d.total).map((d): SearchRow => [
       "d",
       d.id,

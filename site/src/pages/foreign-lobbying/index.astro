@@ -1,0 +1,131 @@
+---
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
+import { memberById, organizationById, money, partyLetter, cycleRange } from "../../lib/data";
+import { chamberName } from "../../lib/derived";
+import {
+  countries,
+  activePrincipals,
+  activeRegistrants,
+  memberGiftTotals,
+  giftsTotal,
+  givingAgents,
+  giftsByRegistrant,
+  registrantById,
+  registrantCountries,
+  faraDocsUrl,
+  faraSince,
+} from "../../lib/fara";
+
+const now = countries.filter((c) => c.active > 0);
+const sinceYear = faraSince.slice(0, 4);
+const firms = [...giftsByRegistrant]
+  .map(([id, g]) => ({ id, ...g, r: registrantById.get(id) }))
+  .sort((a, b) => b.total - a.total);
+const firmHref = (id: string) => {
+  const org = registrantById.get(id)?.organization;
+  return org && organizationById.has(org) ? `/organizations/${org}/` : faraDocsUrl(id);
+};
+---
+
+<Base
+  title="Foreign lobbying"
+  og={{ type: "page", id: "foreign-lobbying" }}
+  description={`${activePrincipals} foreign governments, parties and companies with US agents registered under FARA, by country, and what registered agents gave to members of Congress.`}
+>
+  <p class="kicker">Foreign Agents Registration Act</p>
+  <h1>Foreign lobbying</h1>
+  <p class="dek">
+    Americans who lobby or do public relations for a foreign government, political party or company register with the
+    Justice Department as its agent. <strong>{activeRegistrants.toLocaleString()}</strong> firms and people are registered
+    now, representing <strong>{activePrincipals.toLocaleString()}</strong> foreign principals in{" "}
+    <strong>{now.length}</strong> countries and territories.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Foreign principals now</dt><dd>{activePrincipals.toLocaleString()}</dd></div>
+    <div class="stat"><dt>US registrants</dt><dd>{activeRegistrants.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Countries</dt><dd>{now.length}</dd></div>
+    <div class="stat"><dt>Agents' donations to members</dt><dd>{money(giftsTotal, true)}<small>{cycleRange}</small></dd></div>
+  </dl>
+
+  <section class="story">
+    <h2>Where the foreign principals are</h2>
+    <p class="chart-dek">
+      Foreign principals with a registration in effect now, by the country each registration lists. Embassies and
+      ministries count alongside state companies, tourism boards and parties.
+    </p>
+    <PlotFigure
+      chart="bars"
+      label="Foreign principals with US agents, by country"
+      data={{
+        rows: now.slice(0, 20).map((c) => ({ label: c.name, value: c.active, href: `/foreign-lobbying/${c.id}/`, note: `${c.registrants} US registrant${c.registrants === 1 ? "" : "s"}` })),
+        emphasize: [0],
+        unit: "principals",
+      }}
+      table={{
+        columns: ["Country", "Principals now", `Ended since ${sinceYear}`, "US registrants"],
+        numeric: [1, 2, 3],
+        rows: countries.map((c) => [{ text: c.name, href: `/foreign-lobbying/${c.id}/` }, c.active, c.ended, c.registrants]),
+      }}
+    />
+    <MoreDisclosure client:visible title={`All ${countries.length} countries and territories`}>
+      <ul class="country-list">
+        {countries.map((c) => (
+          <li>
+            <a href={`/foreign-lobbying/${c.id}/`}>{c.name}</a>
+            <span class="muted"> {c.active > 0 ? `${c.active} now` : `${c.ended} ended`}</span>
+          </li>
+        ))}
+      </ul>
+    </MoreDisclosure>
+  </section>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Members registered agents gave to</h2>
+      <p class="chart-dek">
+        {givingAgents.toLocaleString()} people registered as foreign agents gave <strong>{money(giftsTotal, true)}</strong> to{" "}
+        {memberGiftTotals.length} current members' campaigns while registered, {cycleRange}. Registrants report their
+        political contributions to the Justice Department twice a year.
+      </p>
+      <RankedTable
+        heading="Member"
+        valueHeading="Given"
+        rows={memberGiftTotals.slice(0, 15).map((r) => {
+          const m = memberById.get(r.id);
+          return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/#foreign-agents`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state} · ${r.agents} agent${r.agents === 1 ? "" : "s"}` : undefined };
+        })}
+      />
+    </section>
+    <section class="story">
+      <h2>Firms whose agents gave</h2>
+      <p class="chart-dek">
+        Donations from each registrant's agents, to all current members. FARA doesn't tie a donation to a client, so these
+        aren't split by country.
+      </p>
+      <RankedTable
+        heading="Registrant"
+        valueHeading="Given"
+        rows={firms.slice(0, 15).map((f) => {
+          const places = registrantCountries(f.id).length;
+          return { label: f.r?.name ?? f.id, value: f.total, href: firmHref(f.id), note: `${f.agents.size} agent${f.agents.size === 1 ? "" : "s"}, ${f.members.size} member${f.members.size === 1 ? "" : "s"}${places ? ` · principals in ${places} countr${places === 1 ? "y" : "ies"}` : ""}` };
+        })}
+      />
+    </section>
+  </div>
+
+  <p class="source">
+    Registrations, foreign principals and short forms from the Justice Department's{" "}
+    <a href="https://efile.fara.gov/ords/fara/f?p=API:BULKDATA">FARA bulk data</a>, in effect any time since {sinceYear}.
+    Donations are itemized FEC contributions matched to agents by name and employer.{" "}
+    <a href="/about/#foreign-lobbying">How agents are matched</a>.
+  </p>
+</Base>
+
+<style>
+  .country-list { columns: 3 200px; column-gap: var(--sp-6); padding: 0; margin: 0; list-style: none; font-size: var(--fs-sm); line-height: 1.8; }
+  .country-list li { break-inside: avoid; }
+</style>

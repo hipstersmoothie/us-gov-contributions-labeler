@@ -304,7 +304,7 @@ async function fetchRollCalls(congress: number, years: number[], records: Legisl
 
 // --- lobbying reports -----------------------------------------------------------------
 
-interface Ld2 {
+export interface Ld2 {
   uuid: string;
   type: string;
   year: number;
@@ -314,7 +314,17 @@ interface Ld2 {
   client: { id: number; name: string };
   income: number | null;
   expenses: number | null;
+  /** Everyone listed as lobbying on the filing, with the covered government positions they disclosed. */
+  lobbyists: LdaLobbyist[];
   activities: { code: string; text: string }[];
+}
+
+export interface LdaLobbyist {
+  id: number;
+  first: string;
+  last: string;
+  suffix?: string;
+  position?: string;
 }
 
 const PERIODS = ["first_quarter", "second_quarter", "third_quarter", "fourth_quarter"];
@@ -368,29 +378,59 @@ async function fetchQuarter(year: number, period: string): Promise<Ld2[]> {
         client: { id: f.client.id, name: f.client.name },
         income: f.income === null ? null : Number(f.income),
         expenses: f.expenses === null ? null : Number(f.expenses),
+        // Ahead of the long activity text, so hasLobbyists() finds it at the start of the file.
+        lobbyists: filingLobbyists(f.lobbying_activities),
         activities: f.lobbying_activities.map((a: any) => ({ code: a.general_issue_code, text: a.description ?? "" })),
       },
     ];
   });
 }
 
-/** Quarterly reports (latest amendment of each), fetching quarters not cached yet. The two most recent
- *  quarters are refetched weekly, since late filings and amendments still arrive. */
-async function lobbyingReports(years: number[], budgetMinutes: number) {
+/** Each lobbyist once per filing (they're listed under every issue they worked on), with the
+ *  fullest covered position they gave. */
+function filingLobbyists(activities: any[]): LdaLobbyist[] {
+  const byId = new Map<number, LdaLobbyist>();
+  for (const a of activities) {
+    for (const l of a.lobbyists ?? []) {
+      const id = l.lobbyist?.id;
+      if (!id) continue;
+      const position = (l.covered_position ?? "").replace(/\s+/g, " ").trim() || undefined;
+      const prev = byId.get(id);
+      if (prev) {
+        if (position && position.length > (prev.position?.length ?? 0)) prev.position = position;
+        continue;
+      }
+      byId.set(id, {
+        id,
+        first: (l.lobbyist.nickname || l.lobbyist.first_name || "").trim(),
+        last: (l.lobbyist.last_name ?? "").trim(),
+        ...(l.lobbyist.suffix_display ? { suffix: l.lobbyist.suffix_display } : {}),
+        ...(position ? { position } : {}),
+      });
+    }
+  }
+  return [...byId.values()];
+}
+
+/** Every filing of each quarter of the Congress (registrations, reports and amendments), fetching
+ *  quarters not cached yet. The two most recent quarters are refetched weekly, since late filings
+ *  and amendments still arrive. */
+export async function ldaQuarters(years: number[], budgetMinutes: number) {
   const deadline = Date.now() + budgetMinutes * 60_000;
   const quarters = dueQuarters(years);
-  const reports: Ld2[] = [];
+  const filings: Ld2[] = [];
   const have: string[] = [];
   for (const [i, { year, period }] of quarters.entries()) {
     const file = path.join(DIR, "ld2", `${year}-${period}.json`);
     const recent = i >= quarters.length - 2;
-    const stale = !fs.existsSync(file) || (recent && Date.now() - fs.statSync(file).mtimeMs > 7 * DAY);
+    const stale =
+      !fs.existsSync(file) || (recent && Date.now() - fs.statSync(file).mtimeMs > 7 * DAY) || !hasLobbyists(file);
     if (stale && Date.now() < deadline) {
       console.log(`  Lobbying reports, ${year} ${period}`);
       try {
-        const filings = await fetchQuarter(year, period);
+        const fetched = await fetchQuarter(year, period);
         fs.mkdirSync(path.dirname(file), { recursive: true });
-        fs.writeFileSync(file, JSON.stringify(filings));
+        fs.writeFileSync(file, JSON.stringify(fetched));
       } catch (error) {
         console.error(`  ${(error as Error).message}; keeping what's cached`);
       }
@@ -400,16 +440,33 @@ async function lobbyingReports(years: number[], budgetMinutes: number) {
       continue;
     }
     have.push(`${year}-${period}`);
-    reports.push(...(JSON.parse(fs.readFileSync(file, "utf8")) as Ld2[]));
+    filings.push(...(JSON.parse(fs.readFileSync(file, "utf8")) as Ld2[]));
   }
+  return { filings, quarters: have };
+}
+
+/** Quarters cached before lobbyists were kept get fetched again. */
+function hasLobbyists(file: string) {
+  if (!fs.existsSync(file)) return false;
+  const fd = fs.openSync(file, "r");
+  const head = Buffer.alloc(4096);
+  const n = fs.readSync(fd, head, 0, head.length, 0);
+  fs.closeSync(fd);
+  const start = head.subarray(0, n).toString("utf8");
+  return start === "[]" || start.includes('"lobbyists"');
+}
+
+/** Quarterly reports, the latest amendment of each. */
+async function lobbyingReports(years: number[], budgetMinutes: number) {
+  const { filings, quarters } = await ldaQuarters(years, budgetMinutes);
   const latest = new Map<string, Ld2>();
-  for (const f of reports) {
+  for (const f of filings) {
     if (f.type.startsWith("R")) continue; // registrations
     const key = `${f.registrant.id}:${f.client.id}:${f.year}:${f.period}`;
     const prev = latest.get(key);
     if (!prev || prev.posted < f.posted) latest.set(key, f);
   }
-  return { reports: [...latest.values()], quarters: have };
+  return { reports: [...latest.values()], quarters };
 }
 
 // --- output ---------------------------------------------------------------------------

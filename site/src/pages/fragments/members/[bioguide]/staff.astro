@@ -1,0 +1,13 @@
+---
+// A member's former staff who now lobby, past the first few, loaded on request.
+import StaffTable from "../../../../components/StaffTable.astro";
+import { staffByMember, STAFF_SHOWN, type StaffRow } from "../../../../lib/revolving";
+
+export const partial = true;
+export function getStaticPaths() {
+  return [...staffByMember].filter(([, rows]) => rows.length > STAFF_SHOWN).map(([bioguide, rows]) => ({ params: { bioguide }, props: { rows } }));
+}
+const { rows } = Astro.props as { rows: StaffRow[] };
+---
+
+<StaffTable rows={rows.slice(STAFF_SHOWN)} />

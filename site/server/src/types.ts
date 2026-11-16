@@ -129,11 +129,27 @@ export interface BillCard {
   top: { label: string; reports: number }[];
 }
 
+export interface CountryCard {
+  type: "country";
+  name: string;
+  /** Foreign principals with a registration in effect now, and ones that ended since `span` began. */
+  active: number;
+  ended: number;
+  registrants: number;
+  /** "2021–2026", for the footer. */
+  span: string;
+  /** A few principals now, each with its US agent. */
+  principals: { label: string; note: string }[];
+}
+
 export interface PageCard {
   type: "page";
   kicker: string;
   title: string;
   dek: string;
+  /** Footer source line, when it isn't FEC filings ("Lobbying disclosures from lda.gov"), and its span. */
+  foot?: string;
+  span?: string;
   stats?: { label: string; value: string }[];
   bars?: Bar[];
   barsTitle?: string;
@@ -141,7 +157,7 @@ export interface PageCard {
   lines?: { strong: string; text: string }[];
 }
 
-export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | PageCard;
+export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard;
 
 export interface CardsFile {
   version: string;

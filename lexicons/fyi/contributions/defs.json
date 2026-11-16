@@ -64,6 +64,19 @@
         "support": { "type": "integer", "description": "US dollars." },
         "oppose": { "type": "integer", "description": "US dollars." }
       }
+    },
+    "formerStaffer": {
+      "type": "object",
+      "description": "A lobbyist with a former government job, from LD-1 and LD-2 filings on lda.gov.",
+      "required": ["name", "job", "firms", "clients"],
+      "properties": {
+        "name": { "type": "string" },
+        "ldaIds": { "type": "array", "items": { "type": "integer" }, "description": "lda.gov lobbyist ids, one per registrant." },
+        "job": { "type": "string", "description": "The job, as the lobbyist disclosed it." },
+        "chamber": { "type": "string", "knownValues": ["house", "senate"], "description": "The chamber the job was in, when written with a title ('Rep.', 'Sen.')." },
+        "firms": { "type": "array", "items": { "type": "string" }, "description": "Registrants that listed them: lobbying firms, or organizations lobbying for themselves." },
+        "clients": { "type": "array", "items": { "type": "string" }, "description": "Clients they lobbied for in the current Congress." }
+      }
     }
   }
 }

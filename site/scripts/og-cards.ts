@@ -27,6 +27,8 @@ import { shortSector, money } from "../src/lib/format";
 import { hemicycle } from "../src/lib/charts";
 import { ogVersion } from "../src/lib/og";
 import { bills, congress, ordinal, shortStatus, fmtDate, PATTERN_LABEL, chamberLabel } from "../src/lib/legislation";
+import { countries, principalsByCountry, registrantById, activePrincipals, activeRegistrants, giftsTotal, faraSince } from "../src/lib/fara";
+import { revolvingStats, lobbyists, membersByStaff, filingYears } from "../src/lib/revolving";
 import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
 
 const OUT_DIR = path.resolve(process.cwd(), "server/data");
@@ -204,6 +206,23 @@ for (const b of bills) {
   };
 }
 
+const faraSpan = `${faraSince.slice(0, 4)}–${new Date().getFullYear()}`;
+for (const c of countries) {
+  cards[`country/${c.id}`] = {
+    type: "country",
+    name: c.name,
+    active: c.active,
+    ended: c.ended,
+    registrants: c.registrants,
+    span: faraSpan,
+    principals: (principalsByCountry.get(c.id) ?? [])
+      .filter((p) => !p.terminated)
+      .sort((a, b) => b.registered.localeCompare(a.registered))
+      .slice(0, 4)
+      .map((p) => ({ label: p.name, note: registrantById.get(p.registrant)?.name ?? "" })),
+  };
+}
+
 // --- section and static pages ------------------------------------------------------
 
 const pacMoney = members.reduce((a, m) => a + pacTotal(m), 0);
@@ -265,6 +284,32 @@ cards["page/donors"] = {
   barsTitle: "Gave the most",
   bars: top(donors, (d) => d.total, 4).map((d) => ({ label: d.name, value: d.total })),
 };
+cards["page/revolving-door"] = {
+  type: "page",
+  kicker: "The revolving door",
+  title: "Former congressional staff who now lobby",
+  dek: `Lobbyists list the government jobs they held before. Of ${revolvingStats.lobbyists.toLocaleString()} lobbying this Congress, ${revolvingStats.withPositions.toLocaleString()} listed one.`,
+  foot: "Lobbying disclosures from lda.gov",
+  span: filingYears,
+  stats: [
+    { label: "Worked for a current member", value: lobbyists.filter((l) => l.members.length).length.toLocaleString() },
+    { label: "Worked for a committee", value: lobbyists.filter((l) => l.committees.length).length.toLocaleString() },
+    { label: "Members with ex-staff lobbying", value: membersByStaff.length.toLocaleString() },
+  ],
+};
+cards["page/foreign-lobbying"] = {
+  type: "page",
+  kicker: "Foreign lobbying",
+  title: "Who represents foreign governments in Washington",
+  dek: `${activeRegistrants.toLocaleString()} US firms and people are registered under FARA to represent ${activePrincipals.toLocaleString()} foreign principals.`,
+  foot: "Foreign agents from FARA filings",
+  span: faraSpan,
+  stats: [
+    { label: "Foreign principals", value: activePrincipals.toLocaleString() },
+    { label: "Countries", value: countries.filter((c) => c.active > 0).length.toLocaleString() },
+    { label: "Agents' gifts to members", value: money(giftsTotal, true) },
+  ],
+};
 cards["page/about"] = {
   type: "page",
   kicker: "About the data",
@@ -273,7 +318,8 @@ cards["page/about"] = {
   lines: [
     { strong: "FEC filings", text: "PAC contributions, outside spending and big donors" },
     { strong: "SEC EDGAR", text: "which industry each company is in" },
-    { strong: "lda.gov", text: "lobbying disclosures and the issues lobbied on" },
+    { strong: "lda.gov", text: "lobbying disclosures, issues and lobbyists' past jobs" },
+    { strong: "efile.fara.gov", text: "foreign agents and who they represent" },
   ],
 };
 cards["page/open-data"] = {

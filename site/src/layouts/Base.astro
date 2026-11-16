@@ -24,6 +24,8 @@ const NAV = [
   ["/sectors/", "Sectors"],
   ["/committees/", "Committees"],
   ["/bills/", "Bills"],
+  ["/revolving-door/", "Revolving door"],
+  ["/foreign-lobbying/", "Foreign lobbying"],
   ["/holdings/", "Investments"],
   ["/donors/", "Big donors"],
   ["/bluesky/", "On Bluesky"],
@@ -116,7 +118,8 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
         <p>
           PAC contributions to current members of Congress, {cycleRange}, from{" "}
           <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">FEC filings</a>. Industries from{" "}
-          <a href="https://www.sec.gov/edgar">SEC EDGAR</a> and <a href="https://lda.gov/">lobbying disclosures</a>.
+          <a href="https://www.sec.gov/edgar">SEC EDGAR</a> and <a href="https://lda.gov/">lobbying disclosures</a>; foreign
+          agents from <a href="https://efile.fara.gov/">FARA filings</a>.
           Data as of {updated}. Labels on Bluesky from{" "}
           <a href="https://bsky.app/profile/contributions.fyi">@contributions.fyi</a>.
         </p>

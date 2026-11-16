@@ -15,7 +15,8 @@ Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky l
 | [FEC bulk data](https://www.fec.gov/data/browse-data/?tab=bulk-data) | Campaign totals, PAC contributions, outside spending, individual and super PAC donations |
 | [FEC API](https://api.open.fec.gov/developers/) | Leadership PAC sponsors |
 | [SEC EDGAR](https://www.sec.gov/edgar) | Industry codes for public companies |
-| [Lobbying disclosures](https://lda.gov/api/) | What organizations lobby on and spend, which PACs they run |
+| [Lobbying disclosures](https://lda.gov/api/) | What organizations lobby on and spend, which PACs they run, lobbyists' former government jobs |
+| [FARA bulk data](https://efile.fara.gov/ords/fara/f?p=API:BULKDATA) | Foreign agents, their foreign principals by country, and (with FEC itemized records) their donations |
 | Bluesky | Matching members to their accounts |
 
 Contributions are counted by organization: an organization's total is its PAC plus donations from people who list it as their employer.
@@ -50,7 +51,9 @@ pnpm sync-labels               # dry run: what labels would change
 pnpm sync-labels --apply       # publish the label changes
 ```
 
-Steps: `accounts`, `assignments`, `fec`, `committees`, `lobbying`, `individuals`, `donors`. Each caches its work, so an interrupted run picks up where it stopped.
+Steps: `accounts`, `assignments`, `fec`, `committees`, `lobbying`, `individuals`, `donors`, `legislation`, `revolving`, `fara`. Each caches its work, so an interrupted run picks up where it stopped. `legislation`, `revolving` and `fara` only need what's already in `data/`, so they can run on their own (`--steps=revolving,fara`); `revolving` reads the same cached LD-1/LD-2 filings as `legislation`.
+
+The revolving-door matches are checked by hand on a random sample: `tsx src/scripts/review-revolving.ts sample 150 50`, then `show`, then `wrong <numbers>`; the about page reports the result from `data/revolving-door-review.json`.
 
 Manual corrections:
 
@@ -72,6 +75,7 @@ The dataset is published as atproto records in its own repo, [@data.contribution
 | `fyi.contributions.organization` | organization id | |
 | `fyi.contributions.donor` | donor id | |
 | `fyi.contributions.congressCommittee` | Thomas id | |
+| `fyi.contributions.foreignCountry` | country slug | FARA foreign principals and their US agents |
 | `com.atproto.lexicon.schema` | NSID | the lexicons, for [resolution](https://atproto.com/specs/lexicon#lexicon-publication-and-resolution) (`_lexicon.contributions.fyi`) |
 
 Records link to each other by at-uri, in `uri` fields next to the ids: members to their organizations, PACs, outside spenders, committee seats and accounts; PACs to their organization, sponsors, recipients and donors; donors to the PACs they gave to; organizations to their PACs. A few record keys differ from the id (the PDS's name filter rejects them, so they use underscores), so follow the links rather than building them. Amounts in records are whole dollars (the atproto data model has no floats); the files keep cents. FEC, SEC and LDA data are public domain; our classifications and matching are CC0.

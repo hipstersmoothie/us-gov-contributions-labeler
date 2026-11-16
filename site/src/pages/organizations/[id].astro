@@ -8,6 +8,21 @@ import { PARTY_COLOR } from "../../lib/charts";
 import { recipientPoints, pct, chamberName } from "../../lib/derived";
 import { moneyAuto } from "../../lib/format";
 import { organizationBills, lobbyingSpan } from "../../lib/legislation";
+import StaffTable from "../../components/StaffTable.astro";
+import LazyDisclosure from "../../islands/LazyDisclosure";
+import { officialsByOrg, filingSpan, STAFF_SHOWN } from "../../lib/revolving";
+import {
+  registrantsByOrg,
+  principalsByRegistrant,
+  principalsByOrg,
+  registrantById,
+  countryById,
+  faraGifts,
+  faraDocsUrl,
+  faraSince,
+  monthYear,
+} from "../../lib/fara";
+import "../../styles/lobbying.css";
 import {
   organizations,
   committeeById,
@@ -77,6 +92,27 @@ const splitRows = [
 // Bills its lobbying reports name, most often named first.
 const lobbiedBills = organizationBills[o.id] ?? [];
 const BILLS_SHOWN = 12;
+// Former government officials lobbying for it (or, for a firm, on its staff).
+const officials = officialsByOrg.get(o.id) ?? [];
+const firm = !!o.lobbying?.firm;
+
+// Registered under FARA: the foreign principals it represents, and its agents' donations.
+const faraRegs = registrantsByOrg.get(o.id) ?? [];
+const faraIds = new Set(faraRegs.map((r) => r.id));
+const represented = faraRegs.flatMap((r) => principalsByRegistrant.get(r.id) ?? []);
+const activePrincipals = represented.filter((p) => !p.terminated).sort((a, b) => b.registered.localeCompare(a.registered));
+const endedPrincipals = represented.filter((p) => p.terminated).sort((a, b) => b.terminated!.localeCompare(a.terminated!));
+const agentRecipients = Object.entries(faraGifts)
+  .map(([id, gifts]) => ({ id, total: gifts.filter((g) => faraIds.has(g.registrant)).reduce((s, g) => s + g.total, 0) }))
+  .filter((r) => r.total > 0)
+  .sort((a, b) => b.total - a.total);
+const agentTotal = agentRecipients.reduce((s, r) => s + r.total, 0);
+const PRINCIPALS_SHOWN = 12;
+// Matched through its PAC ("Akin Gump ... Civic Action Committee"): the firm is the registrant.
+const viaPac = /\b(PAC|Committee|Political Action)\b/i.test(o.name);
+// It's a foreign principal: the US agents registered to represent it.
+const asPrincipal = principalsByOrg.get(o.id) ?? [];
+
 const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${o.sec.cik}`;
 ---
 
@@ -354,6 +390,124 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
   }
 
   {
+    officials.length > 0 && (
+      <section class="story" id="former-officials">
+        <h2>{firm ? "Former government officials on its lobbying staff" : "Former government officials lobbying for it"}</h2>
+        <p class="chart-dek">
+          Lobbyists list the government jobs they held in the 20 years before they began lobbying for a client.{" "}
+          {officials.length === 1 ? "One lobbyist" : `${officials.length} lobbyists`}{" "}
+          {firm ? `registered by ${name}` : `lobbying for ${name}`} on filings from {filingSpan} listed one or more, in
+          Congress or the executive branch. Where a job names a current member or committee, it's linked.
+        </p>
+        <StaffTable rows={officials.slice(0, STAFF_SHOWN)} links except={o.id} caption={`Former government officials lobbying for ${o.name}`} />
+        {officials.length > STAFF_SHOWN && (
+          <LazyDisclosure client:visible title={`${officials.length - STAFF_SHOWN} more lobbyists`} src={`/fragments/organizations/${o.id}/officials/`} />
+        )}
+        <p class="source">
+          From registrations and quarterly reports on <a href="https://lda.gov/">lda.gov</a>, as the lobbyists wrote them.{" "}
+          <a href="/about/#revolving-door">How jobs are matched</a>.
+        </p>
+      </section>
+    )
+  }
+
+  {
+    faraRegs.length > 0 && (
+      <section class="story" id="foreign-agent">
+        <h2>Registered as a foreign agent</h2>
+        <p class="chart-dek">
+          {viaPac ? <>{faraRegs[0]!.name}, the firm behind this PAC,</> : name} is registered under the Foreign Agents Registration Act
+          {faraRegs.map((r, i) => (
+            <>{i > 0 ? " and" : ""} (<a href={faraDocsUrl(r.id)}>No. {r.id}</a>, since {monthYear(r.registered)}{r.terminated && `, ended ${monthYear(r.terminated)}`})</>
+          ))}{" "}
+          to represent foreign governments, parties or companies in the US.{" "}
+          {activePrincipals.length > 0
+            ? <>It lists <strong>{activePrincipals.length}</strong> foreign principal{activePrincipals.length === 1 ? "" : "s"} now.</>
+            : <>It lists no foreign principals now.</>}
+        </p>
+        {activePrincipals.length > 0 && (
+          <table class="principals">
+            <thead><tr><th scope="col">Foreign principal</th><th scope="col">Country</th><th scope="col">Since</th></tr></thead>
+            <tbody>
+              {activePrincipals.slice(0, PRINCIPALS_SHOWN).map((p) => (
+                <tr>
+                  <td>{p.name}</td>
+                  <td><a href={`/foreign-lobbying/${p.country}/`}>{countryById.get(p.country)?.name}</a></td>
+                  <td class="small">{monthYear(p.registered)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {(activePrincipals.length > PRINCIPALS_SHOWN || endedPrincipals.length > 0) && (
+          <MoreDisclosure client:visible title={activePrincipals.length > PRINCIPALS_SHOWN ? `All ${activePrincipals.length} current principals, and ${endedPrincipals.length} that ended` : `${endedPrincipals.length} that ended since ${faraSince.slice(0, 4)}`}>
+            <table class="principals">
+              <tbody>
+                {[...activePrincipals.slice(PRINCIPALS_SHOWN), ...endedPrincipals].map((p) => (
+                  <tr>
+                    <td>{p.name}</td>
+                    <td><a href={`/foreign-lobbying/${p.country}/`}>{countryById.get(p.country)?.name}</a></td>
+                    <td class="small">{p.terminated ? `Ended ${monthYear(p.terminated)}` : `Since ${monthYear(p.registered)}`}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </MoreDisclosure>
+        )}
+        {agentRecipients.length > 0 && (
+          <>
+            <h3 class="kicker gap">Its agents' donations</h3>
+            <p class="small">
+              People registered as {viaPac ? "the firm's" : "its"} foreign agents gave <strong>{money(agentTotal, true)}</strong> to{" "}
+              {agentRecipients.length} current member{agentRecipients.length === 1 ? "" : "s"}' campaigns while registered,{" "}
+              {cycleRange}, per FEC records. FARA doesn't tie these to a client.
+            </p>
+            <RankedTable
+              heading="Member"
+              valueHeading="Given"
+              rows={agentRecipients.slice(0, 10).map((r) => {
+                const m = memberById.get(r.id);
+                return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/#foreign-agents`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined };
+              })}
+            />
+          </>
+        )}
+        <p class="source">
+          From FARA registrations on <a href="https://efile.fara.gov/">efile.fara.gov</a>. <a href="/foreign-lobbying/">Foreign lobbying by country</a>.
+        </p>
+      </section>
+    )
+  }
+
+  {
+    asPrincipal.length > 0 && (
+      <section class="story" id="foreign-principal">
+        <h2>Represented by registered foreign agents</h2>
+        <p class="chart-dek">
+          {asPrincipal[0]!.name} is listed as a foreign principal on{" "}
+          {asPrincipal.length === 1 ? "a FARA registration" : `${asPrincipal.length} FARA registrations`} in effect since{" "}
+          {faraSince.slice(0, 4)}: US firms or people registered to represent it.
+        </p>
+        <table class="principals">
+          <thead><tr><th scope="col">Registered agent</th><th scope="col">Country</th><th scope="col">Registration</th></tr></thead>
+          <tbody>
+            {asPrincipal.map((p) => {
+              const r = registrantById.get(p.registrant);
+              return (
+                <tr>
+                  <td><a href={faraDocsUrl(p.registrant)}>{r?.name ?? p.registrant}</a></td>
+                  <td><a href={`/foreign-lobbying/${p.country}/`}>{countryById.get(p.country)?.name}</a></td>
+                  <td class="small">{p.terminated ? `${monthYear(p.registered)} to ${monthYear(p.terminated)}` : `Since ${monthYear(p.registered)}`}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </section>
+    )
+  }
+
+  {
     o.employees && (
       <section class="story">
         <h2>Donations from its employees</h2>
@@ -377,5 +531,6 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
 <style>
   .gap { margin-top: 28px; }
   .org-bills td:last-child { white-space: nowrap; }
+  .principals td:last-child { white-space: nowrap; color: var(--text-muted); }
   .all-bills { columns: 2 280px; column-gap: var(--sp-6); padding: 0; margin: 0; list-style: none; font-size: var(--fs-sm); line-height: 1.8; }
 </style>

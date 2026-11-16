@@ -6,7 +6,7 @@
 // drawn size, so nothing here is set smaller than 22px and the one number
 // the card is about is the biggest thing on it. Party is never color alone:
 // every party fill sits next to its letter or name.
-import type { Bar, BillCard, Card, CommitteeCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, SectorCard, Split, Target } from "./types.ts";
+import type { Bar, BillCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, SectorCard, Split, Target } from "./types.ts";
 
 export const WIDTH = 1200;
 export const HEIGHT = 630;
@@ -519,6 +519,37 @@ function bill(c: BillCard, a: Assets) {
   );
 }
 
+function country(c: CountryCard, a: Assets) {
+  const W = 600;
+  const right = c.principals.length
+    ? div(
+        { flexDirection: "column", width: W },
+        sectionLabel("Principals and their US agents"),
+        ...c.principals.slice(0, 4).map((p) =>
+          div(
+            { flexDirection: "column", borderTop: `1.5px solid ${C.hairline}`, paddingTop: 10, paddingBottom: 12 },
+            line(p.label, { fontSize: 25, fontWeight: 600, maxWidth: W }),
+            line(p.note, { fontSize: 22, color: C.muted, marginTop: 2, maxWidth: W })
+          )
+        )
+      )
+    : null;
+  return frame(
+    a,
+    "Foreign agents from FARA filings",
+    twoColumn(
+      div({ flexDirection: "column" }, kicker("Foreign lobbying"), title(c.name, 1072)),
+      stat(
+        c.active.toLocaleString(),
+        c.active === 1 ? "foreign principal with US agents registered now" : "foreign principals with US agents registered now",
+        `${plural(c.registrants, "US registrant", "US registrants")}${c.ended ? ` · ${c.ended.toLocaleString()} ended` : ""}`
+      ),
+      right
+    ),
+    c.span
+  );
+}
+
 function page(c: PageCard, a: Assets) {
   const W = 520;
   let right: Node | null = null;
@@ -553,7 +584,7 @@ function page(c: PageCard, a: Assets) {
   }
   return frame(
     a,
-    "Campaign finance from FEC filings",
+    c.foot ?? "Campaign finance from FEC filings",
     div(
       { flex: 1, gap: 56 },
       div(
@@ -563,7 +594,8 @@ function page(c: PageCard, a: Assets) {
         div({ display: "block", fontFamily: SERIF, fontSize: 27, lineHeight: 1.35, color: C.secondary, marginTop: 20 }, c.dek)
       ),
       div({ flexDirection: "column", justifyContent: "center", flex: 1 }, right)
-    )
+    ),
+    c.span
   );
 }
 
@@ -583,6 +615,8 @@ export function cardTree(card: Card, assets: Assets): Node {
       return committee(card, assets);
     case "bill":
       return bill(card, assets);
+    case "country":
+      return country(card, assets);
     case "page":
       return page(card, assets);
   }
@@ -608,6 +642,8 @@ export function altText(card: Card): string {
       return `${card.label}, ${card.name}: ${card.status}. ${card.vote.chamber} vote by party: ${card.vote.rows
         .map((r) => `${PARTY_NAMES[r.party]} ${r.yes}–${r.no}`)
         .join(", ")}. ${card.lobbying.toLocaleString()} organizations reported lobbying on it.`;
+    case "country":
+      return `Foreign lobbying, ${card.name}: ${plural(card.active, "foreign principal", "foreign principals")} with US agents registered under FARA now, through ${plural(card.registrants, "registrant", "registrants")}.`;
     case "page":
       return `${card.title}. ${card.dek}`;
   }

@@ -1,0 +1,38 @@
+{
+  "lexicon": 1,
+  "id": "fyi.contributions.foreignCountry",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Foreign principals in one country (as their Foreign Agents Registration Act registration lists it) and the US firms and people registered to represent them, from the Justice Department's FARA bulk data. Registrations in effect any time since the start of the dataset's first cycle are included. The record key is a slug of the country's name (e.g. 'japan').",
+      "key": "any",
+      "record": {
+        "type": "object",
+        "required": ["id", "name", "active", "ended", "registrants", "principals"],
+        "properties": {
+          "id": { "type": "string", "description": "Also the record key." },
+          "name": { "type": "string" },
+          "active": { "type": "integer", "description": "Principals with a registration in effect now." },
+          "ended": { "type": "integer", "description": "Principals whose registration ended in the period covered." },
+          "registrants": { "type": "integer", "description": "Registrants representing an active principal." },
+          "principals": { "type": "array", "items": { "type": "ref", "ref": "#principal" } }
+        }
+      }
+    },
+    "principal": {
+      "type": "object",
+      "required": ["name", "registrant", "registrantName", "registered"],
+      "properties": {
+        "name": { "type": "string" },
+        "registrant": { "type": "string", "description": "FARA registration number of the registered agent." },
+        "registrantName": { "type": "string" },
+        "registered": { "type": "string", "description": "When the principal was added to the registration, YYYY-MM-DD." },
+        "terminated": { "type": "string", "description": "When it ended, YYYY-MM-DD; absent if in effect." },
+        "registrantOrganization": { "type": "string", "description": "fyi.contributions.organization record key, when the registrant's name matches one." },
+        "registrantOrganizationUri": { "type": "string", "format": "at-uri" },
+        "organization": { "type": "string", "description": "fyi.contributions.organization record key, when the principal's name matches one." },
+        "organizationUri": { "type": "string", "format": "at-uri" }
+      }
+    }
+  }
+}

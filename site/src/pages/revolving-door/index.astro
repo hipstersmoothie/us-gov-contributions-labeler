@@ -1,0 +1,95 @@
+---
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
+import { memberById, congressCommitteeById, partyLetter } from "../../lib/data";
+import { chamberName } from "../../lib/derived";
+import { revolvingStats, lobbyists, membersByStaff, committeesByStaff, filingSpan } from "../../lib/revolving";
+
+const toMembers = lobbyists.filter((l) => l.members.length).length;
+const toCommittees = lobbyists.filter((l) => l.committees.length).length;
+const memberLabel = (id: string) => {
+  const m = memberById.get(id)!;
+  return `${m.name} (${partyLetter(m.party)}-${m.state})`;
+};
+const committeeName = (id: string) => congressCommitteeById.get(id)!.name;
+const share = Math.round((revolvingStats.withPositions / Math.max(revolvingStats.lobbyists, 1)) * 100);
+---
+
+<Base
+  title="The revolving door"
+  og={{ type: "page", id: "revolving-door" }}
+  description={`${toMembers.toLocaleString()} lobbyists list a past job with a current member of Congress, and ${toCommittees.toLocaleString()} with a congressional committee.`}
+>
+  <p class="kicker">Lobbying disclosures</p>
+  <h1>The revolving door</h1>
+  <p class="dek">
+    Lobbyists disclose the government jobs they held in the 20 years before they began lobbying for a client. Of the{" "}
+    {revolvingStats.lobbyists.toLocaleString()} lobbyists on filings from {filingSpan},{" "}
+    <strong>{revolvingStats.withPositions.toLocaleString()}</strong> ({share}%) listed one.{" "}
+    <strong>{toMembers.toLocaleString()}</strong> named a current member of Congress they worked for, and{" "}
+    <strong>{toCommittees.toLocaleString()}</strong> a current congressional committee.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Lobbyists</dt><dd>{revolvingStats.lobbyists.toLocaleString()}</dd></div>
+    <div class="stat"><dt>With a government job</dt><dd>{revolvingStats.withPositions.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Worked for a current member</dt><dd>{toMembers.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Worked for a committee</dt><dd>{toCommittees.toLocaleString()}</dd></div>
+  </dl>
+
+  <section class="story">
+    <h2>Members with the most former staff lobbying</h2>
+    <p class="chart-dek">
+      Lobbyists who listed a job in each member's office, now or in a past term. Long-serving members and leaders have had
+      the most staff, so they lead.
+    </p>
+    <PlotFigure
+      chart="bars"
+      label="Current members by number of former staffers now lobbying"
+      data={{
+        rows: membersByStaff.slice(0, 20).map((r) => ({ label: memberLabel(r.id), value: r.count, href: `/members/${r.id}/#former-staff` })),
+        emphasize: [0],
+        unit: "former staffers",
+      }}
+      table={{
+        columns: ["Member", "Chamber", "Former staffers lobbying"],
+        numeric: [2],
+        rows: membersByStaff.map((r) => [{ text: memberLabel(r.id), href: `/members/${r.id}/#former-staff` }, chamberName(memberById.get(r.id)!), r.count]),
+      }}
+    />
+  </section>
+
+  <section class="story">
+    <h2>Committees</h2>
+    <p class="chart-dek">Lobbyists who listed a job on each committee's staff, at any time in the past 20 years.</p>
+    <PlotFigure
+      chart="bars"
+      label="Congressional committees by number of former staffers now lobbying"
+      data={{
+        rows: committeesByStaff.slice(0, 15).map((r) => ({ label: committeeName(r.id), value: r.count, href: `/committees/${r.id}/#former-staff` })),
+        emphasize: [0],
+        unit: "former staffers",
+      }}
+      table={{
+        columns: ["Committee", "Former staffers lobbying"],
+        numeric: [1],
+        rows: committeesByStaff.map((r) => [{ text: committeeName(r.id), href: `/committees/${r.id}/#former-staff` }, r.count]),
+      }}
+    />
+    {committeesByStaff.length > 15 && (
+      <MoreDisclosure client:visible title={`All ${committeesByStaff.length} committees`}>
+        <ul class="link-list">
+          {committeesByStaff.slice(15).map((r) => <li><a href={`/committees/${r.id}/#former-staff`}>{committeeName(r.id)}</a> <span class="muted">{r.count}</span></li>)}
+        </ul>
+      </MoreDisclosure>
+    )}
+  </section>
+
+  <p class="source">
+    From LD-1 registrations and LD-2 quarterly reports on <a href="https://lda.gov/">lda.gov</a>. Lobbyists describe
+    their jobs in their own words; a job is credited to a member only when it names them and no other current or past
+    member fits, and to a committee only when the chamber is clear. Some former staff are missed.{" "}
+    <a href="/about/#revolving-door">How jobs are matched</a>.
+  </p>
+</Base>

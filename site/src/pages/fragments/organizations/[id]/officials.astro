@@ -1,0 +1,13 @@
+---
+// Former government officials lobbying for an organization, past the first few, loaded on request.
+import StaffTable from "../../../../components/StaffTable.astro";
+import { officialsByOrg, STAFF_SHOWN, type StaffRow } from "../../../../lib/revolving";
+
+export const partial = true;
+export function getStaticPaths() {
+  return [...officialsByOrg].filter(([, rows]) => rows.length > STAFF_SHOWN).map(([id, rows]) => ({ params: { id }, props: { id, rows } }));
+}
+const { id, rows } = Astro.props as { id: string; rows: StaffRow[] };
+---
+
+<StaffTable rows={rows.slice(STAFF_SHOWN)} links except={id} />

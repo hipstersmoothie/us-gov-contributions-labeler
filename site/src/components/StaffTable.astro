@@ -1,0 +1,82 @@
+---
+// Lobbyists with a former government job: who they are, the job as they
+// disclosed it, and who they lobby for. Styles are in styles/lobbying.css,
+// global so the lazy-loaded rest of a list (pages/fragments/) gets them too.
+import { memberById, congressCommitteeById, organizationById } from "../lib/data";
+import type { StaffRow } from "../lib/revolving";
+
+interface Props {
+  rows: StaffRow[];
+  /** Name the member offices and committees each lobbyist worked for (organization pages). */
+  links?: boolean;
+  /** Leave this organization out of the client list (it's the page's own). */
+  except?: string;
+  caption?: string;
+}
+const { rows, links = false, except, caption } = Astro.props;
+const CLIENTS = 3;
+const orgHref = (id?: string) => (id && organizationById.has(id) ? `/organizations/${id}/` : undefined);
+const shortCommittee = (name: string) => name.replace(/^(House|Senate|Joint) Committee on (the )?/, (_, ch: string) => `${ch} `);
+---
+
+<table class="staff">
+  {caption && <caption class="visually-hidden">{caption}</caption>}
+  <thead>
+    <tr>
+      <th scope="col">Lobbyist</th>
+      <th scope="col">Former government job, as disclosed</th>
+      <th scope="col">Lobbies for</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map(({ l, job, note }) => {
+        const inHouse = l.firms.length === 1 && l.clients.length === 1 && !!l.firms[0]!.organization && l.firms[0]!.organization === l.clients[0]!.organization;
+        const clients = except ? l.clients.filter((c) => c.organization !== except) : l.clients;
+        const worked = links
+          ? [
+              ...l.members.map((m) => ({ label: memberById.get(m.bioguide)?.name, href: `/members/${m.bioguide}/` })),
+              ...l.committees.map((c) => ({ label: congressCommitteeById.get(c.id) && shortCommittee(congressCommitteeById.get(c.id)!.name), href: `/committees/${c.id}/` })),
+            ].filter((x) => x.label)
+          : [];
+        return (
+          <tr>
+            <th scope="row" class="who">
+              {l.name}
+              <span class="firm">
+                {inHouse ? "In-house at " : "At "}
+                {l.firms.map((f, i) => (
+                  <>{i > 0 && (i === l.firms.length - 1 ? " and " : ", ")}{orgHref(f.organization) ? <a href={orgHref(f.organization)}>{f.name}</a> : f.name}</>
+                ))}
+              </span>
+            </th>
+            <td class="job">
+              {note && <span class="note">{note}: </span>}
+              {job}
+              {worked.length > 0 && (
+                <span class="worked">
+                  Worked for{" "}
+                  {worked.map((w, i) => (
+                    <>{i > 0 && (i === worked.length - 1 ? " and " : ", ")}<a href={w.href}>{w.label}</a></>
+                  ))}
+                </span>
+              )}
+            </td>
+            <td class="clients">
+              {inHouse ? (
+                <span class="muted">Itself</span>
+              ) : (
+                <>
+                  {clients.slice(0, CLIENTS).map((c, i) => (
+                    <>{i > 0 && "; "}{orgHref(c.organization) ? <a href={orgHref(c.organization)}>{c.name}</a> : c.name}</>
+                  ))}
+                  {clients.length > CLIENTS && <span class="muted"> and {clients.length - CLIENTS} more</span>}
+                </>
+              )}
+            </td>
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>

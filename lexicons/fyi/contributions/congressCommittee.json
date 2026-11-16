@@ -17,7 +17,8 @@
           "jurisdiction": { "type": "string" },
           "parent": { "type": "string", "description": "Parent committee's record key, for subcommittees." },
           "parentUri": { "type": "string", "format": "at-uri" },
-          "members": { "type": "array", "items": { "type": "ref", "ref": "#seat" } }
+          "members": { "type": "array", "items": { "type": "ref", "ref": "#seat" } },
+          "formerStaff": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#formerStaffer" }, "description": "Lobbyists on lobbying filings of the current Congress who listed a job on this committee's staff among their covered positions." }
         }
       }
     },

@@ -1,0 +1,61 @@
+---
+// Registered foreign agents' donations to one member: the agent, their firm,
+// where the firm's foreign principals are, and what they gave. Styles are in
+// styles/lobbying.css (global, for the lazy-loaded rest of the list).
+import { organizationById } from "../lib/data";
+import { registrantById, registrantCountries, faraDocsUrl, fecReceiptsUrl, type Gift } from "../lib/fara";
+import { moneyAuto } from "../lib/format";
+
+interface Props {
+  gifts: Gift[];
+  caption?: string;
+}
+const { gifts, caption } = Astro.props;
+const COUNTRIES = 3;
+const year = (iso: string) => iso.slice(0, 4);
+---
+
+<table class="agents">
+  {caption && <caption class="visually-hidden">{caption}</caption>}
+  <thead>
+    <tr>
+      <th scope="col">Agent</th>
+      <th scope="col">Firm's foreign principals are in</th>
+      <th scope="col">When</th>
+      <th scope="col" class="num">Given</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      gifts.map((g) => {
+        const r = registrantById.get(g.registrant);
+        const org = r?.organization && organizationById.has(r.organization) ? `/organizations/${r.organization}/` : undefined;
+        const places = registrantCountries(g.registrant);
+        return (
+          <tr>
+            <th scope="row">
+              {g.agent}
+              <span class="firm">
+                At {org ? <a href={org}>{r!.name}</a> : <a href={faraDocsUrl(g.registrant)}>{r?.name ?? `FARA registrant ${g.registrant}`}</a>}
+              </span>
+            </th>
+            <td class="countries">
+              {places.length ? (
+                <>
+                  {places.slice(0, COUNTRIES).map((c, i) => (
+                    <>{i > 0 && ", "}<a href={`/foreign-lobbying/${c.id}/`}>{c.name}</a></>
+                  ))}
+                  {places.length > COUNTRIES && <span class="muted"> and {places.length - COUNTRIES} more</span>}
+                </>
+              ) : (
+                <span class="muted">No active principals</span>
+              )}
+            </td>
+            <td class="when">{year(g.first) === year(g.last) ? year(g.first) : `${year(g.first)}–${year(g.last)}`}</td>
+            <td class="num"><a href={fecReceiptsUrl(g.committee, g.agent)} title={`${g.count} donation${g.count === 1 ? "" : "s"} on the FEC's site`}>{moneyAuto(g.total)}</a></td>
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>

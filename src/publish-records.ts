@@ -9,7 +9,7 @@
 //   fyi.contributions.dataset/self          metadata, plus the complete data files as gzipped blobs
 //   fyi.contributions.account/<did>         who funds this Bluesky account, keyed by its DID
 //   fyi.contributions.member/<bioguide>     and one record per congressCommittee, committee,
-//   ...                                     organization and donor, linked to each other by at-uri
+//   ...                                     organization, donor and foreignCountry, linked to each other by at-uri
 //   app.bsky.actor.profile/self             the account's profile
 //
 // Only differences are written, against what the repo holds now, so an
@@ -34,6 +34,8 @@ import { parseArgs } from "util";
 import { jsonToLex, Lexicons } from "@atproto/lexicon";
 import type { CommitteeRecord, DonorRecord, Member, OrganizationRecord } from "./ingest/build.js";
 import type { CongressCommittee } from "./ingest/assignments.js";
+import type { RevolvingFile, RevolvingLobbyist } from "./ingest/revolving.js";
+import type { FaraFile } from "./ingest/fara.js";
 
 const DID = (process.env.DATA_DID ?? "did:plc:ej5cllsvxdrzdsweyfgr2nge") as `did:${string}`;
 const SITE = "https://contributions.fyi";
@@ -71,6 +73,8 @@ const organizationsFile = read<{ organizations: OrganizationRecord[] }>("organiz
 const committeesFile = read<{ committees: CommitteeRecord[] }>("committees.json");
 const donorsFile = read<{ donors: DonorRecord[] }>("donors.json");
 const congressFile = read<{ committees: CongressCommittee[] }>("congress-committees.json");
+const revolvingFile = read<RevolvingFile>("revolving-door.json");
+const faraFile = read<FaraFile>("fara.json");
 
 // Records link to each other by at-uri, where the target record exists.
 // Plain at-uris rather than strongRefs: every record is regenerated from the
@@ -83,6 +87,7 @@ const keys = {
   committee: new Set(committeesFile.committees.map((c) => c.id)),
   donor: new Set(donorsFile.donors.map((d) => d.id)),
   congressCommittee: new Set(congressFile.committees.map((c) => c.id)),
+  foreignCountry: new Set(faraFile.countries.map((c) => c.id)),
 };
 // The PDS rejects record keys its slur filter matches, which catches some
 // names; hyphens count as word breaks to it, underscores don't. These ids get
@@ -118,6 +123,16 @@ const contributor = (c: Member["contributors"][number]) => ({
   pacs: usd(c.pacs),
   individuals: usd(c.individuals),
 });
+
+// Former staff now lobbying, by member and by committee; foreign agents' donations by member.
+const staffer = (l: RevolvingLobbyist, job: string, chamber?: string) =>
+  compact({ name: l.name, ldaIds: l.ids, job, chamber, firms: l.firms.map((f) => f.name), clients: l.clients.map((c) => c.name) });
+const staffOf = { member: new Map<string, object[]>(), committee: new Map<string, object[]>() };
+for (const l of revolvingFile.lobbyists) {
+  for (const m of l.members) staffOf.member.set(m.bioguide, [...(staffOf.member.get(m.bioguide) ?? []), staffer(l, m.job, m.chamber)]);
+  for (const c of l.committees) staffOf.committee.set(c.id, [...(staffOf.committee.get(c.id) ?? []), staffer(l, c.job)]);
+}
+const faraRegistrant = new Map(faraFile.registrants.map((r) => [r.id, r]));
 
 const toMember = (m: Member & { opponents?: Opponents }) =>
   compact({
@@ -181,6 +196,8 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
     },
     contributors: m.contributors.map(contributor),
     combinedSectors: amounts(m.combinedSectors),
+    formerStaff: staffOf.member.get(m.bioguide),
+    foreignAgentGifts: faraFile.gifts[m.bioguide]?.map((g) => ({ ...g, registrantName: faraRegistrant.get(g.registrant)?.name })),
   });
 
 const partyOrgs = new Set(
@@ -285,6 +302,28 @@ const toCongressCommittee = (c: CongressCommittee) =>
     ...c,
     parentUri: uri("congressCommittee", c.parent),
     members: c.members.map((m) => ({ ...m, uri: uri("member", m.bioguide) })),
+    formerStaff: staffOf.committee.get(c.id),
+  });
+
+const toForeignCountry = (c: FaraFile["countries"][number]) =>
+  compact({
+    ...c,
+    principals: faraFile.principals
+      .filter((p) => p.country === c.id)
+      .map((p) => {
+        const r = faraRegistrant.get(p.registrant);
+        return {
+          name: p.name,
+          registrant: p.registrant,
+          registrantName: r?.name ?? p.registrant,
+          registered: p.registered,
+          terminated: p.terminated,
+          registrantOrganization: r?.organization,
+          registrantOrganizationUri: uri("organization", r?.organization),
+          organization: p.organization,
+          organizationUri: uri("organization", p.organization),
+        };
+      }),
   });
 
 type Value = Record<string, unknown>;
@@ -307,6 +346,7 @@ const entities = [
   collection("committee", committeesFile.committees.map((c) => [c.id, toCommittee(c)])),
   collection("organization", organizationsFile.organizations.map((o) => [o.id, toOrganization(o)])),
   collection("donor", donorsFile.donors.map((d) => [d.id, toDonor(d)])),
+  collection("foreignCountry", faraFile.countries.map((c) => [c.id, toForeignCountry(c)])),
 ];
 for (const c of entities) {
   if (!c.records.size) throw new Error(`No ${c.nsid} records in data/; refusing to publish an empty collection`);
@@ -361,6 +401,8 @@ const files = [
   { name: "committees.json", entity: "committee", count: committeesFile.committees.length, description: "PACs and other FEC committees, with recipients, outside spending and big donors." },
   { name: "donors.json", entity: "donor", count: donorsFile.donors.length, description: "Donors of $50,000 or more to super PACs and other outside spenders." },
   { name: "congress-committees.json", entity: "congressCommittee", count: congressFile.committees.length, description: "Committees of Congress and their members." },
+  { name: "revolving-door.json", entity: "lobbyist", count: revolvingFile.lobbyists.length, description: "Lobbyists of the current Congress who disclosed former government jobs, with the current members and committees those jobs name, their firms and clients." },
+  { name: "fara.json", entity: "foreignCountry", count: faraFile.countries.length, description: "Foreign Agents Registration Act registrants, foreign principals by country, and registered agents' donations to current members." },
 ].map((f) => {
   const json = Buffer.from(JSON.stringify(read(f.name)));
   return { ...f, sha256: crypto.createHash("sha256").update(json).digest("hex"), json };
@@ -376,10 +418,13 @@ const METHODOLOGY =
   "Each PAC is traced to the organization behind it (FEC connected organization, SEC EDGAR industry codes, lobbying " +
   "disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted by " +
   "organization: an organization's PAC money plus itemized donations from people who list it as their employer. " +
+  "Lobbyists' former government jobs (covered positions on LD-1 and LD-2 filings) are matched to current members and " +
+  "committees by name, only when exactly one fits. Foreign agents come from FARA bulk data; their donations are itemized " +
+  "FEC contributions from people with a FARA short form in effect, matched by name and employer. " +
   `Details: ${SITE}/about/`;
 
 const LICENSE =
-  "The FEC, SEC, Census and Lobbying Disclosure Act records this is built from are US government works in the public domain. " +
+  "The FEC, SEC, Census, Lobbying Disclosure Act and FARA records this is built from are US government works in the public domain. " +
   "contributions.fyi's own additions (sector and industry classifications, organization matching, Bluesky account " +
   "matching and the compiled totals) are dedicated to the public domain under CC0 1.0 " +
   "(https://creativecommons.org/publicdomain/zero/1.0/). Attribution to contributions.fyi is appreciated, not required.";
@@ -408,7 +453,8 @@ function datasetRecord(blobs: Map<string, unknown>, recordsComplete: boolean): V
       { name: "Census ZCTA to congressional district relationship file", url: "https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/", usedFor: "Estimating in-district donations from ZIP codes" },
       { name: "congress-legislators", url: "https://github.com/unitedstates/congress-legislators", usedFor: "Current members, ids, committee seats" },
       { name: "SEC EDGAR", url: "https://www.sec.gov/edgar", usedFor: "Industry codes for public companies" },
-      { name: "Lobbying disclosures", url: "https://lda.gov/api/", usedFor: "Lobbying issues and spending, which PACs belong to which organizations" },
+      { name: "Lobbying disclosures", url: "https://lda.gov/api/", usedFor: "Lobbying issues and spending, which PACs belong to which organizations, lobbyists' former government jobs" },
+      { name: "FARA bulk data", url: "https://efile.fara.gov/ords/fara/f?p=API:BULKDATA", usedFor: "Foreign agents, their foreign principals and short-form registrants" },
       { name: "Bluesky", url: "https://bsky.app", usedFor: "Matching members to their accounts" },
     ],
     license: LICENSE,

@@ -1,0 +1,1405 @@
+{
+ "drawnFrom": "2026-11-16T19:58:00.430Z",
+ "sample": [
+  {
+   "kind": "member",
+   "lobbyist": "John Culton",
+   "id": "M001111",
+   "job": "Outreach Director, Eastern Washington, Senator Patty Murray; Outreach Director, Eastern Washington, Sen. Patty Murray; Outreach Director Eastern WA Senator Patty Murray",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Rebecca Gansca",
+   "id": "H001042",
+   "job": "National Security Advisor, Senator Mazie Hirono",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jake Oken-Berg",
+   "id": "M001176",
+   "job": "Senior Business Advisor to Senator Jeff Merkley 2011-2021",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Sarah Kidd",
+   "id": "F000471",
+   "job": "Intern, Representative Scott Fitzgerald",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Sam Olswanger",
+   "id": "B001243",
+   "job": "intrn, Rep Blackburn, Sep 08-Dec 08; intrn, Rep Blackburn, Sep 08-Dec08",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jennifer Goedke",
+   "id": "T000460",
+   "job": "May 2014-Dec 2020: Dep. CoS. Rep. Mike Thompson, Jan 2013-Jul 2013: Dep. CoS, Rep. Tulsi Gabbard Jul 2006-Jan 2013: Dep. CoS, Rep. Lynn Woolsey",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jackson Thein",
+   "id": "M001176",
+   "job": "Sen. Jeff Merkley (D-OR), served as Policy Advisor from 2022 - 2023",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Charlie Ellsworth",
+   "id": "S000148",
+   "job": "Budget & Appropriations Legis. Asst., Sen. Charles Schumer; Senior Policy Advisor, Democratic Policy and Comms. Cmte. (Sen. Harry Reid and Sen. Charles Schumer)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Tracee Sutton",
+   "id": "S001211",
+   "job": "Chief of Staff, Congressman Greg Stanton; Chief of Staff and Legislative Director, Congressman Greg Stanton; Chief of Staff, Congressman Greg Stanton Legislative Director, Senator Heidi Heitkamp; Legislative Director, Congressman Greg Stanton Chief of Staff, Congressman Greg Stanton",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Adam Finkel",
+   "id": "W000790",
+   "job": "Economic Policy Advisor, Sen. Raphael Warnock",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Alexander Hetherington",
+   "id": "S001194",
+   "job": "Sen. Brian Schatz",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Zachary Mallove",
+   "id": "M001111",
+   "job": "Sr Pol Adv, LA, Leg. Aide (Senator Murray)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Patrick Fergusson",
+   "id": "W000187",
+   "job": "Legislative Director, Rep. Maxine Waters",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Archie Miller",
+   "id": "G000546",
+   "job": "Rep. Sam Graves",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Aishwarya Grandhe",
+   "id": "B001278",
+   "job": "Intern, Rep. Bonamici (2022)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Christina Barone",
+   "id": "D000216",
+   "job": "Intern to Rep. Rosa DeLauro, January 2013-April 2013",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Megan Herber",
+   "id": "M001163",
+   "job": "Legislative Director/Senior Legislative Assistant/Legislative Assistant, Rep. Doris Matsui (D-CA); Legislative Director/Senior Legislative Assistant/Legislative Assistant, Rep. Doris Matsui (D-CA) 2014-2018",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Mason Heilman",
+   "id": "R000122",
+   "job": "Correspondence Manager (Sen. Reed), Legislative Correspondent (Rep. Deutch)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Tyler Jesse",
+   "id": "O000176",
+   "job": "Director of Scheduling and Operations, Rep. Johnny Olszewski",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Ryan Diffley",
+   "id": "A000055",
+   "job": "Legislative Assistant, Rep. Robert Aderholt",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Kyle Hill",
+   "id": "D000617",
+   "job": "Leg. Director, Rep. Suzan DelBene (1/19-7/22); Sr. Leg. Asst., Rep. Suzan DelBene (10/17-1/19)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Alessandra Nepola",
+   "id": "C001108",
+   "job": "Senior Legislative Assistant, Representative James Comer; Senior LegislativeAssistant, Representative James Comer",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Adriana Rivera",
+   "id": "B001267",
+   "job": "Military Legislative Assistant & Military Legislative Aide - U.S. Senate (Sen. Bennet) Staff Assistant, Legislative Correspondent, Legislative Aide, and Legislative Assistant - U.S. House of Representatives (Rep. Grace Napolitano, Rep. Barbara Lee)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Gregory Willis",
+   "id": "W000808",
+   "job": "Rep. Frederica Wilson",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Salim Alameddin",
+   "id": "C001056",
+   "job": "Legislative Correspondent/Staff Asst, Sen. John Cornyn",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Shaun Taylor",
+   "id": "F000246",
+   "job": "Deputy Chief of Staff to Rep. Pat Fallon (R-TX); Deputy Chief of Staff to Rep. Pat Fallon",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Deborah Mazol",
+   "id": "J000293",
+   "job": "Legislative Assistant, Senator Ron Johnson, Legislative Director, Rep. Reid Ribble, Chief of Staff, Rep Andy Biggs",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Lea Sulkala",
+   "id": "S001156",
+   "job": "Chief of Staff, Congresswoman Linda Sanchez (2014-2019)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Abbey Buchholz",
+   "id": "W000805",
+   "job": "Correspondence Assistant, Senator Mark Warner (2023-2024), Staff Assistant, Senator Mark Warner (2022-2023)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jason Isakovic",
+   "id": "L000566",
+   "job": "Office of Rep. Bob Latta, Legislative Director; Office of Rep. Bob Latta, S. Legislative Assistant; Office of Rep. Bob Latta, Legislative Assistant; Office of Rep. Bob Latta, Legislative Correspondent",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Abbey Schroeder",
+   "id": "S001183",
+   "job": "Office of Rep Schweikert, Staff Assistant",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Sasha Hernandez",
+   "id": "D000617",
+   "job": "Senior Policy Advisor, Rep. Suzan DelBene (D-WA-01) // Legislative Aide, Sen. Maria Cantwell (D-WA)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Phoebe Johnston",
+   "id": "B001306",
+   "job": "Legislative Assistant, Rep. Troy Balderson",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Charles Truxal",
+   "id": "C001039",
+   "job": "CoS, Rep. Kat Cammack (2025-2026)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Austin Higginbotham",
+   "id": "F000246",
+   "job": "Chief of Staff for Rep. Pat Fallon (June 2024-February 2026), Deputy Chief of Staff for Rep. Mark Alford (March 2023-June 2024), Press Secretary for Rep. Ralph Norman (May 2020-October 2021), Staff Assistant for Sen. Martha McSally (2020)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Scott Rausch",
+   "id": "J000293",
+   "job": "Senator Ron Johnson. Deputy Chief of Staff & Legislative Director",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Claire Casey",
+   "id": "H001047",
+   "job": "Intern, Congressman Jim Himes - 9/21 - 12/21",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Karlee Popken",
+   "id": "M000133",
+   "job": "Sen. Bill Nelson, Legislative Correspondent Sen. Ed Markey, Legislative Correspondent, Legislative Aide, Legislative Assistant",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Kathee Facchiano",
+   "id": "B001236",
+   "job": "Legislative Director, Senator John Boozman; Legislative Assistant/Legislative Director, Congressman John Boozman",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Keith Castaldo",
+   "id": "G000555",
+   "job": "Sen. Kirsten Gillibrand",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Sarah Moxley",
+   "id": "M001157",
+   "job": "Staff Asst/LC, Rep. McCaul",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Alex Monie",
+   "id": "H001077",
+   "job": "Staff Assistant, Rep. Clay Higgins",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jessica Martinez",
+   "id": "H001046",
+   "job": "Ex. Director, U.S. Joint Economic Committee, Sen. Heinrich",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Stephen Voljavec",
+   "id": "B001243",
+   "job": "Legislative Assistant, Senator Marsha Blackburn",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Emily Silverberg",
+   "id": "T000469",
+   "job": "Legislative Director to Representative Paul Tonko (D-NY)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Brendan Dunn",
+   "id": "M000355",
+   "job": "Policy Adv and Counsel to Sen McConnell Majority Leader staff, Dec 12-May18",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Stephanie Kennan",
+   "id": "W000779",
+   "job": "Senior Health Advisor, Office of Senator Ron Wyden; Senior Health Policy Advisor, Sen. Ron Wyden",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Bonnie Hogue Duffy",
+   "id": "R000122",
+   "job": "LA Sen. Reed",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Alyene Mlinar",
+   "id": "S001176",
+   "job": "Pol Adv (Maj Leader Scalise); Pol Adv (Min Whip Scalise)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jena Elshami",
+   "id": "P000197",
+   "job": "Comms.Dir/Sr. Adv., Dem.Ldr Nancy Pelosi; Dep. Comms. Dir/Sr. Adv., Speaker Pelosi",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Elizabeth Albertine",
+   "id": "D000216",
+   "job": "Rep. DeLauro: Staff Asst, LC, LA 4/2010-8/2014",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Patrick Satalin",
+   "id": "W000800",
+   "job": "Chief of Staff, Rep. Peter Welch",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Syd Terry",
+   "id": "P000607",
+   "job": "Sr. LA, Rep. Mark Pocan; LA for Rep Pocan, Intern Senator Salazar, Intern Senator Levin",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "John Ray",
+   "id": "K000376",
+   "job": "Legislative Assistant, Rep. Mike Kelly",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Marc Goldberg",
+   "id": "H001076",
+   "job": "CoS, U.S. Senator Maggie Hassan (NH)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Tara Rountree",
+   "id": "M001227",
+   "job": "Chief of Staff, Rep. Jennifer McClellan",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Andrew Terp",
+   "id": "Y000064",
+   "job": "2012-2016: Legislative Assistant, Rep. Todd Young (IN-09); 2017-2019 Legislative Assistant, Sen. Todd Young (R-IN)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Joseph Murray",
+   "id": "J000293",
+   "job": "U.S. Senator Ron Johnson, Rep. Mark Meadows, Republican Study Committee; Senator Ron Johnson; Senator Ron Johnson, Rep. Mark Meadows, Republican Study Committee; Senator Ron Johnson, Rep. Mark Meadows, & the Republican Study Committee; Senator Ron Johnson, Rep. Mark Meadows, and Republican Study Committee; & Senator Ron Johnson",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Keenan Hale Jr",
+   "id": "G000553",
+   "job": "Executive Assistant and Legislative Assistant, U.S. Representative Al Green (Texas)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Barrett Thornhill",
+   "id": "C000880",
+   "job": "Legislative Assistant, Sen. Mike Crapo (2003-2006)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jacobus Vreeburg",
+   "id": "S001196",
+   "job": "House Homeland Sec. Cmte.-Staff Asst., Dep. Parl., Parl., Rep. Messer-Leg. Dir., House Rep. Policy Cmte.-Staff Dir., NSC-Staff Officer, Acting Dep. Exec. Sec., Dep. Exec. Sec., House Rep. Conference-Policy Dir., Rep. Stefanik-Policy Dir., USUN-W-Dir; House Homeland Sec. Cmte.-Staff Asst., Dep. Parl., Parl., Rep. Messer-Leg. Dir., House Rep.Policy Cmte.-Staff Dir., NSC-Staff Officer, Acting Dep. Exec. Sec., Dep. Exec. Sec., HouseRep. Conference-Policy Dir., Rep. Stefanik-Policy Dir., USUN-W-Dir",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Alexander Bugg",
+   "id": "K000400",
+   "job": "Rep. Kamlager-Dove, Legal Fellow",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Thomas Bush",
+   "id": "M000934",
+   "job": "Leg. Dir., Sen. Jerry Moran; Sr. Leg. Assist, Leg, Assist., Leg. Corr., Intern, Sen Jerry Moran",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Milla Anderson",
+   "id": "H001076",
+   "job": "Intern, Senator Maggie Hassan",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Claire Foran",
+   "id": "M001169",
+   "job": "Sen. Chris Murphy",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Tom Clancy",
+   "id": "S001205",
+   "job": "Sr. Leg. Asst., Leg. Asst., Rep. Mary Gay Scanlon",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Christopher Javens",
+   "id": "G000386",
+   "job": "Tax Counsel, Sen. Grassley, Sen. Finance Comm",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Arthur Scott",
+   "id": "W000437",
+   "job": "Intern, Senator Wicker",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Amanda Lincoln",
+   "id": "C001035",
+   "job": "Policy Advisor Sen. Susan Collins; Staff Member for Sen. Mike Enzi, Rep. Mark Walker, Sen. Susan Collins",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Melissa Mueller",
+   "id": "N000015",
+   "job": "Leg. Dir., Rep. Richard Neal",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Ed Gerak",
+   "id": "A000381",
+   "job": "Wolfe, Rep Ansari's",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "James Min",
+   "id": "F000480",
+   "job": "Chief of Staff, Rep. Vince Fong",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Cole Lacroix",
+   "id": "L000577",
+   "job": "Legislative/policy staffer to Senator Lee",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Devin Mogler",
+   "id": "E000295",
+   "job": "Senator Joni Ernst (R-IA)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Amy Kelbick",
+   "id": "S001145",
+   "job": "2015-2017: Senior Policy Advisor, Rep. Jan Schakowsky",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Nicholas Clifford",
+   "id": "K000393",
+   "job": "Law Clerk, Sen. John Kennedy (R-LA) (08/2023-12/2023)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Austin Higginbotham",
+   "id": "N000190",
+   "job": "Chief of Staff for Rep. Pat Fallon (June 2024-February 2026), Deputy Chief of Staff for Rep. Mark Alford (March 2023-June 2024), Press Secretary for Rep. Ralph Norman (May 2020-October 2021), Staff Assistant for Sen. Martha McSally (2020)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jessica Calio",
+   "id": "F000450",
+   "job": "Scheduler, Rep. Virginia Foxx",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Madison Arcangeli",
+   "id": "S000510",
+   "job": "Legislative Assistant, Policy Aide, Legislative Correspondent, Scheduler/ Executive Assistant, Paid Intern/ Staff Assistant, Rep. Adam Smith",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Amanda Lincoln",
+   "id": "C001035",
+   "job": "Health Policy Director, Sen. Susan Collins",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jeffrey Tomkowitz",
+   "id": "F000446",
+   "job": "Legis. Asst., Rep. Feenstra, Feb. 2021-Jan. 2023; Sr. Leg. Asst., Rep. Feenstra, Jan. 2023-Nov. 2025; Legis. Dir., Rep. Feenstra, Nov. 2025",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Erskine Wells",
+   "id": "W000437",
+   "job": "Dep COS Sen. Wicker; Leg Asst Sen Wicker",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "James Obrien",
+   "id": "M000355",
+   "job": "Sen Mitch McConnell: Leg. Correspondent (18-19)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jasper Noble",
+   "id": "O000174",
+   "job": "Law Clerk, Sen. Jon Ossoff/Sen. Judiciary Cmte",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Gordon Bates",
+   "id": "M000355",
+   "job": "CoS, Sen. McConnell, 2000-02; Legal Cnsl, Sen. McConnell, 1999-00",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Alyssa Slaimen",
+   "id": "W000800",
+   "job": "Senior Counsel, Senate Judiciary Committee/Senator Peter Welch (August 2023-July 2026) Law Clerk, Senate Judiciary Committee/Senator Patrick Leahy (May 2017-August 2017)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jack Ruddy",
+   "id": "G000546",
+   "job": "Legislative Assistant, Congressman Sam Graves; Legislative Director, Congressman Sam Graves; Leg. Assistant, Rep. Sam Graves; Leg. Director, Rep. Sam Graves",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Caroline Canfield",
+   "id": "M000934",
+   "job": "Deputy Legislative Director, Senator Jerry Moran; Military Legislative Assistant and Appropriations Advisor, Senator Jerry Moran",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Kathryn Ellison",
+   "id": "V000128",
+   "job": "Feb. 2023-May 2023, US House, Intern, Congressman Dutch Ruppersberger. Aug. 2023- Dec. 2023, US Senate, Legislative Intern, Senator Chris Van Hollen",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Anna Przebinda",
+   "id": "K000384",
+   "job": "Legislative Correspondent, Senator Tim Kaine",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Michael Lowry",
+   "id": "A000055",
+   "job": "Chief of Staff, Representative Robert B. Aderholt; Communications Director, Representative Robert B. Aderholt; CommunicationsDirector, Representative Robert B. Aderholt; Chief of Staff, Representative Robert Aderholt; and, Comms Director, Representative Robert Aderholt; Chief of Staff, Rep. Robert Aderholt; Comms Dir., Rep. Robert Aderholt",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Greg Orlando",
+   "id": "W000437",
+   "job": "Counsel, Sen. Roger Wicker",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Kyle Cormney",
+   "id": "B001278",
+   "job": "Leg Dir & Counsel, Rep. Suzanne Bonamici",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Andres Bascumbe",
+   "id": "W000187",
+   "job": "Rep. Maxine Waters",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Alexis Anicama",
+   "id": "D000623",
+   "job": "Intern, Rep. Mark DeSaulnier",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Robert Mayer Jr",
+   "id": "M001169",
+   "job": "Reps. Nikema Williams,Bacon, Summer Lee, Salinas, Randall, Mannion, Grijalva Sens. Murphy and Alsobrooks",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Gregory Louer",
+   "id": "B001243",
+   "job": "Policy Director, Rep. Marsha Blackburn",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Poorvie Bishnoi",
+   "id": "M000355",
+   "job": "Intern, Rep Brett Guthrie (R-KY), Intern, Sen. Mitch McConnell (R-KY)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Brittney May",
+   "id": "S001195",
+   "job": "Rep. Jason Smith",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jake Rascoff",
+   "id": "B001267",
+   "job": "Researcher and Legislative Fellow, Sen. Michael Bennet (2017-2018); Researcher and Legislative Fellow, Sen. Michael Bennet",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "James Flood",
+   "id": "S000148",
+   "job": "Senate Judiciary Committee (Sen. Schumer)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Claire Kaliban",
+   "id": "W000779",
+   "job": "Sen. Wyden",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Larry Calhoun",
+   "id": "C001039",
+   "job": "Chief of Staff, Office of Kat Cammack",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Michelle Altman",
+   "id": "L000575",
+   "job": "Chief of Staff, Sen. James Lankford. Legislative Director, Sen. James Lankford. Deputy Chief of Staff/Legislative Director, Rep. James Lankford. Legislative Assistant, Rep. Mary Fallin",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Michael Higdon",
+   "id": "R000395",
+   "job": "Rep. Hal Rogers: Chief of Staff/Appropriations Associate 2011-2013, Legislative Director 2007-2011; OFFICE OF HAL ROGERS: CoS (2011-2013); Office of Rep. H. Rogers: Chief of Staff/Approps Assoc (2009-2011)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Libby Derrick",
+   "id": "M001199",
+   "job": "Legislative Director, Rep. Brian Mast; Legislative Assistant, Rep. Brian Mast; Legislative Correspondent, Rep. Brian Mast; Staff Assistant, Rep. Brian Mast",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Allison Jarus",
+   "id": "K000009",
+   "job": "LA, Rep. Marcy Kaptur (2013-2015); SA, Rep. Marcy Kaptur (2013); Leg Assistant, Rep. Marcy Kaptur (2013-15); SA, Rep. Kaptur (2013); Leg Assistant, Rep. Kaptur (2013-15); Staff Assistant , Rep. Kaptur (2013)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Christiane Shizuko Cardoza Brundage",
+   "id": "H001042",
+   "job": "Counsel to Senator Hirono (Judiciary Committee)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Elise Sugarman",
+   "id": "F000454",
+   "job": "Legislative Assistant, Rep. Bill Foster",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jonathan Van Buren",
+   "id": "H001093",
+   "job": "Legis Dir, Dpty Chief of Staff/Legis Dir, Rep Erin Houchin (2023-2025)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Allen Wright Jr",
+   "id": "L000575",
+   "job": "Field Representative, Senator James Lankford, 2015-2021",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Margaret Frankel",
+   "id": "M001243",
+   "job": "Office of Sen. Dave McCormick. Professional Staff Member, Senate Homeland Security and Governmental Affairs Committee (HSGAC)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Heather McHugh",
+   "id": "S000148",
+   "job": "Legislative Director, Senator Schumer (2010-2013)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Andrew Dziedzic",
+   "id": "S001227",
+   "job": "Legislative Director, Senator Eric Schmitt",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jason Frye",
+   "id": "E000294",
+   "job": "Tom Emmer MN-06 LD",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Conor Carney",
+   "id": "R000612",
+   "job": "Rep. John Rose (TN)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Amy Swonger",
+   "id": "M000355",
+   "job": "Fl Asst, Sen. Mitch McConnell 2003-2004",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jeffrey Haynes",
+   "id": "J000299",
+   "job": "CoS, House Speaker Mike Johnson (R-LA); CoS, Rep. Mike Johnson (R-LA)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Cole Rojewski",
+   "id": "V000129",
+   "job": "CoS, Deputy CoS, Office Manager, Transition Aide, Rep. David Valadao (CA)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Brian Darling",
+   "id": "P000603",
+   "job": "Counsel and Sr. Communications Director for Sen. Rand Paul; Counsel for Sen. Rand Paul 2012-4; Sr. Communications Director and Counsel for Sen. Rand Paul (R-KY); Counsel and Sr. Communications Director for Sen. Rand Paul (R-KY)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Don Andres",
+   "id": "H001066",
+   "job": "LA, LC, Sch, Sp Asst., Rep Steven Horsford",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jessica Hatcher",
+   "id": "A000148",
+   "job": "Leg. Dir, Rep. Jake Auchincloss (2021-2023)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Andrea Mares",
+   "id": "H001046",
+   "job": "Legislative Assistant, Sen. Martin Heinrich (D-NM)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Brian Coen",
+   "id": "B001278",
+   "job": "Legislative Aide, Rep. Bonamici (2025 - 2026); Legislative Correspondent and Staff Assistant, Rep. Bonamici (2023 - 2025); Legislative Intern, Rep. Bonamici (2022)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Christina McGarry David",
+   "id": "D000600",
+   "job": "Scheduler, Rep. Mario Diaz-Balart; Legislative Assistant/Scheduler, Rep. Mario Diaz-Balart",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Benjamin Napier",
+   "id": "S001176",
+   "job": "Director of Floor Operations, Rep. Whip Steven Scalise",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Hannah So",
+   "id": "S000522",
+   "job": "Rep. Chris Smith-Legislative Assistant; Legislative Asst, Rep. Chris Smith",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Ryan Shay",
+   "id": "C001072",
+   "job": "Sr. Leg. Asst & Leg. Asst, Rep. Andre Carson (D-IN)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Matthew Jackson",
+   "id": "M000312",
+   "job": "Intern, Rep. McGovern",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Madeline Stickley",
+   "id": "D000216",
+   "job": "Legislative Intern for Rosa DeLauro (2023)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Daniel West",
+   "id": "I000056",
+   "job": "Rep D Issa",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Meghan Fulcher",
+   "id": "R000584",
+   "job": "Intern, Sen. Jim Risch",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Sean Cooksey",
+   "id": "H001089",
+   "job": "General Counsel, Sen. Hawley",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Kelly McCone",
+   "id": "P000607",
+   "job": "Rep. Jan Schakowsky, Intern, June 2014-Aug 2014, Rep. Joe Crowley, Intern, Jan 2016-April 2016, Rep. Chuck Schumer, Intern, April 2016-July 2016, Rep. Raja Krishnamoorthi, Sept 2017-May 2018, Rep. Mark Pocan, Scheduler, May 2018-May 2020",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jeff Bjornstad",
+   "id": "S000510",
+   "job": "Chief of Staff for Senator Patty Murray, Chief of Staff for Rep. Rick Larsen, Chief of Staff for Rep. Adam Smith; Senator Murray Chief of Staff, Rep. Rick Larsen Chief of Staff, Rep. Adam Smith Chief of Staff; Chief of Staff Rep. Adam Smith; Chief of Staff for Patty Murray, Chief of Staff for Rep. Rick Larsen, Chief of Staff for Rep. Adam Smith; Chief of Staff for Senator Patty Murray, Chief of Staff to Rep. Rick Larsen, Chief of Staff to Rep. Adam Smith; Chief of Staff for Senator Murray, Chief of Staff for Rep. Rick Larsen, Chief of Staff for Rep. Adam Smith; Chief of Staff to Senator Patty Murray, Chief of Staff to Rep. Rick Larsen, Chief of Staff to Rep. Adam Smith; Chief of Staff Senator Patty Murray, Chief of Staff Rep. Adam Smith, Chief of Staff Rep. Rick Larsen; Chief of Staff for Senator Murray, Chief of Staff for Rep. Rick Larsen, Chief of Staff Rep. Adam Smith",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Meagan Sunn",
+   "id": "P000595",
+   "job": "Office of U.S. Senator Gary Peters, Legislative Counsel and U.S. House Committee on Small Business, Counsel, and various roles at FCC",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Ashley Jones",
+   "id": "S000148",
+   "job": "Intern, Sen. Chuck Schumer",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Becca Alcorn",
+   "id": "C000880",
+   "job": "Senior Policy Advisor, Sen. Mike Crapo and Policy Advisor, Senate Finance Committee",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Ian Whitson",
+   "id": "R000603",
+   "job": "Legislative Director, Rep. David Rouzer; Senior LegislativeAssistant,Rep.David Rouzer; Legislative Assistant, Rep. David Rouzer; Legislative Correspondent, Rep. David Rouzer; Staff Assistant, Rep.David Rouzer; Senior Legislative Assistant,Rep.David Rouzer; LegislativeCorrespondent, Rep. David Rouzer",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Cameron O'brien",
+   "id": "C001035",
+   "job": "Legislative Asst., Office of Sen. Susan Collins; Staff Asst., Office of Sen. Susan Collins; Legislative Correspondent, Office of Sen. Susan Collins",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "John Christie Iii",
+   "id": "T000474",
+   "job": "Leg. Correspondent/Leg. Aide, Rep. Norma Torres",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Ches Garrison Iv",
+   "id": "W000802",
+   "job": "Senior Counsel, Senate Judiciary Committee, Office of Senator Sheldon Whitehouse (2018-2021), Counsel, Senate Judiciary Committee, Office of Senator Sheldon Whitehouse; Senior Counsel, Senate Judiciary Committee, Office of Senator Sheldon Whitehouse (2018-2021), Counsel, Senate Judiciary Committee, Office of Senator Sheldon Whitehouse (2016-2018), Professional Staff Member, Senate Committee on Health, Education, Labor and Pensions (2009-2010), Special Counselor, Office of Senator Edward M. Kennedy (2008-2009), Policy Advisor and Assistant to the Staff Director Senate Committee on Health, Education, Labor and Pensions (2006-2008), Staff Assistant, Office of Senator Edward M. Kennedy (2005-2006); Senior Counsel, Senate Judiciary Committee, Office of Senator Sheldon Whitehouse (2018-2021), Counsel, Senate Judiciary Committee, Office of Senator Sheldon Whitehouse (2016-2018), Professional Staff Member, Senate Committee on Health, Education, Labor and Pensions (2009-2010), Special Counselor, Office of Senator Edward M. Kennedy (2008-2009), Policy Advisor and Assistant to the Staff Director Senate Committee on Health, Education, Labor and Pensions (2006-2008), Staff Assistant, Office of Senator Edward M. Kennedy (2005-2006). Assistant to the Staff Director Senate Committee on Health, Education, Labor and Pensions (2006-2008), Staff Assistant, Office of Senator Edward M. Kennedy (2005-2006)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Hazen Marshall",
+   "id": "M000355",
+   "job": "Policy Director-Senate Majority Leader Mitch McConnell",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Bryan Maxwell",
+   "id": "S001181",
+   "job": "Senior Defense Policy Advisor, Sen. Jeanne Shaheen; Military Legislative Assistant, Sen. Jeanne Shaheen",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Jason Frye",
+   "id": "E000294",
+   "job": "Tom Emmer LD; Tom Emmer LD MN06; Tom Emmer MN 06 LD; Tom Emmer MN06 LD",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Stacey Leavandosky",
+   "id": "L000397",
+   "job": "Chief of Staff, U.S. Representative Zoe Lofgren",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "William Sroka",
+   "id": "W000804",
+   "job": "Legislative Director, Legislative Assistant for Rep. Rob Wittman (2023-2025)",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Dylann Middleton",
+   "id": "D000622",
+   "job": "Legislative Aide Office of Tammy Duckworth",
+   "right": true
+  },
+  {
+   "kind": "member",
+   "lobbyist": "Taylor Tougaw",
+   "id": "N000189",
+   "job": "Congressional Western Caucus, Reps. Newhouse and LaMalfa",
+   "right": false
+  },
+  {
+   "kind": "member",
+   "lobbyist": "James Jochum",
+   "id": "G000386",
+   "job": "Trade Counsel/Legislative Director, Senator Charles Grassley",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Alexander Hecht",
+   "id": "SSSB",
+   "job": "Chief Counsel, Senate Committee on Small Business & Entrepreneurship",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "William Lane",
+   "id": "HSSY",
+   "job": "Rep. Jeff Duncan (Jan. 2018-July 2024) Rep. Jeb Hensarling (Sept. 2017-Jan 2018) (Internship) Sen. Marco Rubio (May 2016-July 2016) (Unpaid Internship) House Science, Space, and Technology Committee (July 2014-Aug. 2014) (Internship)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Abigail Carroll",
+   "id": "HSIF",
+   "job": "Detailee to the Energy and Commerce Committee, U.S. House of Representatives",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Chris Brown",
+   "id": "HSBA",
+   "job": "Senior Professional Staff, House Financial Services Committee; Senior Professional Staff, House Financial Services Committe",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Brian Greer",
+   "id": "HSAS",
+   "job": "Prof. Staff-House Armed Services Comm",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Kate Hull",
+   "id": "SSHR",
+   "job": "Staff Director for Senate HELP & Subcommittee on Aging, Sr. Legislative Assistant, Senator Tim Hutchinson, Legislative Staff, Senator Bill Cohen",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Jacqueline Cohen",
+   "id": "HSIF",
+   "job": "House Committee on Energy and Commerce staff, having served as Chief Counsel from 2017-2021, Senior Counsel 2013-2017, and Counsel from 2009-2013",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Nora Khalil",
+   "id": "SSAP",
+   "job": "PSM-Senate Energy & Water Appropriations Committee (2020-2023)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Patricia Doersch",
+   "id": "HSPW",
+   "job": "1998-2000, Majority Counsel, House Transportation and Infrastructure Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Valerie West",
+   "id": "HSII",
+   "job": "Professional Staff to the House Natural Resources Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "James French",
+   "id": "HSJU",
+   "job": "Counsel, House Judiciary Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Madeleine Pike",
+   "id": "HSPW",
+   "job": "Outreach & Member Services Director, House Transportation & Infrastructure Committee; Staff/Press Assistant, House Transportation & Infrastructure Committee; Outreach Director/Member Services Director, House Transportation & Infrastructure Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Anne Gayman",
+   "id": "SSEG",
+   "job": "Senior Professional Staff Member, U.S. Senate Committee on Energy & Natural Resources",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Monica Popp",
+   "id": "HSIF",
+   "job": "Professional Staff Member, U.S. House of Representatives-Energy & Commerce Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "John Rosemond",
+   "id": "HSBU",
+   "job": "House Budget Comm Director of Member Services and Coalitions",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Missye Brickell",
+   "id": "SSBU",
+   "job": "Clerk - US Senate Committee on the Budget (2011 - 2012)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Halie Craig",
+   "id": "SSRA",
+   "job": "Staff Assistant, Senate Rules & Administration Cmte",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Spencer Pederson",
+   "id": "HSII",
+   "job": "Press Secretary, House Natural Resources Defense Council Committee; Press Secretary, House Natural Resources Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Aliza Silver",
+   "id": "SSHR",
+   "job": "Deputy Health Policy Director, Senior Health and Oversight Counsel, Legal Fellow, Senate Committee on Health, Education, Labor and Pensions",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Andrew Neely",
+   "id": "SSCM",
+   "job": "Deputy Policy Director and Professional Staff Member on the Senate Committee on Commerce, Science, and Transportation from 2017-2022. Legislative Assistant on the Senate Committee on Environmental and Public Works from 2015-2017",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "James Richards",
+   "id": "HSAP",
+   "job": "Appropriations Associate House Member Office (Skeen & Bonilla); Appropriations Associate House Mem Office (Skeen & Bonilla)",
+   "right": false
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Holten Stringer",
+   "id": "HSSY",
+   "job": "Professional Staff, House Committee on Science, Space and Technology/ Professional Staff, Representative Frank Lucas",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Sarah Walter",
+   "id": "SSFI",
+   "job": "Senate Finance Committee/Counsel, Sen Breaux",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Christopher Davis",
+   "id": "HSWM",
+   "job": "Staff Dir. W&M Health subcommittee, Chairman Dave Camp April'13-Dec'14. Professional Staff, W&M Health subcommittee, Chairman Dave Camp, Jan'11-April'13. Leg Dir. Rep Dave Camp, May'08-Jan'11. Leg Asst Rep Dave Camp, Feb'03-May'08. Staff Ast July'02",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Charles French",
+   "id": "HSRU",
+   "job": "Staff, House Committee on Rules",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Marne Marotta",
+   "id": "SSGA",
+   "job": "Legislative Fellow, HSGAC (2011-2012)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Chris Cook",
+   "id": "SSBU",
+   "job": "Senate Budget Comm.-Pro. Staff(12/13-10/16)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Matthew Miller",
+   "id": "SSFI",
+   "job": "Intern, Senate Finance Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Robert Rosado",
+   "id": "SSAF",
+   "job": "Senior Professional Staff, US Senate Committee on Agriculture, Nutrition & Forestry",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Alyssa Latray",
+   "id": "SSVA",
+   "job": "Intern, Senate Committee on Veterans' Affairs",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Halie Craig",
+   "id": "SSBK",
+   "job": "Sr Adv, Sen Pat Toomey/Sen Banking Cmte(22-23); Plcy Adv, Sen Banking Cmte(21-22)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Susan Butler",
+   "id": "SSBU",
+   "job": "Staff Liaison to Senate Budget and Finance Committees/LA to Senator Trent Lott; Staff Liaison to Senate Budget and Finance Committees/Legislative Assistant to Senator Trent Lott; Staff Liaison to Senate Budget and Finance Committees/Legislative Assistant, Senator Trent Lott",
+   "right": false
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Andrew Williams",
+   "id": "SSEV",
+   "job": "Senate EPW Cmte.: Subcmte. Staff Dir",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Dwight Fettig",
+   "id": "SSBK",
+   "job": "Staff Director, Senate Committee on Banking, Housing, and Urban Affairs",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Andrew Vecera",
+   "id": "HSII",
+   "job": "Counsel, Oversight and Investigations, House Committee on Natural Resources. Staff Director and Counsel, Energy and Mineral Resources Subcommittee, House Committee on Natural Resources. Counsel, Office of General Counsel, U.S. Dept of Energy",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Andrew Fishburn",
+   "id": "SSFI",
+   "job": "Senate Finance Committee, 2010-2011, Tax Staff",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Lucas Tomanelli",
+   "id": "SSSB",
+   "job": "Leg. Correspondent, Leg. Aide, Leg. Assistant and Subcommittee Staff Director Senate Committee on Small Business and Entrepreneurship",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Sarah Starling Crossan",
+   "id": "SSHR",
+   "job": "Professional Staff, Health, Education, Labor, and Pensions (HELP) Cmte",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Andrew Cooper",
+   "id": "SSFI",
+   "job": "Staff Director, Senate Finance Subcommittee on Int'l Trade, Customs & Global Competitiveness (2019-22)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Mark Epley",
+   "id": "HSAS",
+   "job": "GC & Counsel, Mil Per Sub, House Armed Services (2005)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Sarah Beth Jansen",
+   "id": "SSGA",
+   "job": "Counsel, Sen. Homeland Security & Governmental Affairs Cmte (Sen. Tom Coburn)",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Amanda Neely",
+   "id": "SSGA",
+   "job": "Dir. Of Gov. Affairs for S. Homeland Security & Governmental Affairs Comm",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Sarah Ereio",
+   "id": "HSHM",
+   "job": "RA, House Committee on Homeland Security (May 2025",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Scott Kuschmider",
+   "id": "HSAG",
+   "job": "Senior Professional Staff, Subcommittee Staff Director, Professional Staff, U.S. House Committee on Agriculture",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Alex Tiersky",
+   "id": "JCSE",
+   "job": "Schedule C employee: Senior Advisor to USAID July '23-Oct '24, NSC Oct '24-'Jan'25 Legislative branch official: Senior Policy Advisor to US Commission on Security & Cooperation in Europe (US Helsinki Commission) May '16-July '23",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Phil Macnaughton",
+   "id": "HSAS",
+   "job": "PSM House Armed Services Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Tyler Jameson",
+   "id": "HSAG",
+   "job": "Legislative Assistant, House Committee on Agriculture",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Elizabeth Wroe",
+   "id": "SSBU",
+   "job": "Senate Budget Cmte",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Matthew Johnson",
+   "id": "SSJU",
+   "job": "Senate Judiciary Committee",
+   "right": true
+  },
+  {
+   "kind": "committee",
+   "lobbyist": "Matthew Schuck",
+   "id": "HSBU",
+   "job": "Communications Dir., House Budget Committee/Rep. Jason Smith",
+   "right": true
+  }
+ ]
+}

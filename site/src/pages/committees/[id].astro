@@ -19,6 +19,10 @@ import { PARTY_COLOR } from "../../lib/charts";
 import { memberPoints, pacTotal, chamberName } from "../../lib/derived";
 import { moneyAuto } from "../../lib/format";
 import { shortSector } from "../../lib/format";
+import StaffTable from "../../components/StaffTable.astro";
+import LazyDisclosure from "../../islands/LazyDisclosure";
+import { staffByCommittee, filingSpan, STAFF_SHOWN } from "../../lib/revolving";
+import "../../styles/lobbying.css";
 
 export function getStaticPaths() {
   return congressCommittees.map((c) => ({ params: { id: c.id }, props: { c } }));
@@ -26,6 +30,7 @@ export function getStaticPaths() {
 
 const { c } = Astro.props as { c: CongressCommittee };
 const parent = c.parent ? congressCommitteeById.get(c.parent) : undefined;
+const staff = staffByCommittee.get(c.id) ?? [];
 const subcommittees = congressCommittees.filter((s) => s.parent === c.id);
 const seated = c.members
   .map((s) => ({ ...s, member: memberById.get(s.bioguide)! }))
@@ -231,6 +236,28 @@ const leaderText = seated
       }
     </section>
   </div>
+
+  {
+    staff.length > 0 && (
+      <section class="story" id="former-staff">
+        <h2>{staff.length === 1 ? "One former staffer now lobbies" : `${staff.length} former staffers now lobby`}</h2>
+        <p class="chart-dek">
+          Lobbyists list the government jobs they held in the 20 years before they began lobbying for a client.{" "}
+          {staff.length === 1 ? "This person" : `These ${staff.length} people`} listed a job on the committee's staff on lobbying
+          filings from {filingSpan}. The job may date from years ago, under other chairs.
+        </p>
+        <StaffTable rows={staff.slice(0, STAFF_SHOWN)} caption={`Former ${c.name} staff who now lobby`} />
+        {staff.length > STAFF_SHOWN && (
+          <LazyDisclosure client:visible title={`${staff.length - STAFF_SHOWN} more former staffers`} src={`/fragments/committees/${c.id}/staff/`} />
+        )}
+        <p class="source">
+          From registrations and quarterly reports on <a href="https://lda.gov/">lda.gov</a>, matched by the committee's
+          name or a common abbreviation, with "House" or "Senate" where both chambers have one; some former staff will be
+          missed. <a href="/about/#revolving-door">How jobs are matched</a>.
+        </p>
+      </section>
+    )
+  }
 </Base>
 
 <style>

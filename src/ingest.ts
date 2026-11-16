@@ -5,6 +5,8 @@
 //   pnpm ingest --cycles=5           go further back
 //   pnpm ingest --min-total=1000     look up more (smaller) PACs
 //   pnpm ingest --steps=legislation  just bills, votes and lobbying reports
+//   pnpm ingest --steps=revolving    just lobbyists' former government jobs
+//   pnpm ingest --steps=fara         just foreign lobbying
 //
 // Needs FEC_API_KEY and SEC_USER_AGENT in .env. Every step caches to .cache/,
 // so an interrupted run picks up where it stopped.
@@ -21,10 +23,15 @@ import { fetchAssignments, fetchPhotos } from "./ingest/assignments.js";
 import { ingestIndividuals } from "./ingest/individuals.js";
 import { fetchLobbyingSpend } from "./ingest/lobbying.js";
 import { buildData, type Account, type OrganizationRecord } from "./ingest/build.js";
-import { ingestLegislation } from "./ingest/legislation.js";
+import type { CongressCommittee } from "./ingest/assignments.js";
+import { ingestLegislation, ldaQuarters, congressFor } from "./ingest/legislation.js";
 import { ingestBundling } from "./ingest/bundling.js";
+import { ingestRevolving } from "./ingest/revolving.js";
+import { ingestFara } from "./ingest/fara.js";
 
-const STEPS = ["accounts", "assignments", "fec", "bundling", "committees", "lobbying", "individuals", "donors", "legislation"] as const;
+const STEPS = [
+  "accounts", "assignments", "fec", "bundling", "committees", "lobbying", "individuals", "donors", "legislation", "revolving", "fara",
+] as const;
 const FEC_FILE = ".cache/fec/data.json";
 const ENRICHED_FILE = ".cache/enrich/result.json";
 const DONORS_FILE = ".cache/donors/result.json";
@@ -62,12 +69,27 @@ function required<T>(value: T | undefined, step: string): T {
 const legislators = await getCurrentLegislators();
 console.log(`Cycles ${cycles.join(", ")}; ${legislators.length} current members`);
 
-// Bills and votes only need the organizations already in data/, so they can
-// be refreshed on their own without rebuilding everything else.
-if (steps.size === 1 && steps.has("legislation")) {
+// Bills and votes, lobbyists' former jobs and foreign lobbying only need what's
+// already in data/, so they can be refreshed on their own without rebuilding
+// everything else.
+const STANDALONE = new Set(["legislation", "revolving", "fara"]);
+if ([...steps].every((s) => STANDALONE.has(s))) {
   const { organizations } = required(readJson<{ organizations: OrganizationRecord[] }>("data/organizations.json"), "committees");
-  await writeLegislation(organizations);
+  await writeStandalone(organizations);
   process.exit(0);
+}
+async function writeStandalone(organizations: OrganizationRecord[]) {
+  if (steps.has("legislation")) await writeLegislation(organizations);
+  if (!steps.has("revolving") && !steps.has("fara")) return;
+  // Both read the LD-1 and LD-2 filings the legislation step caches.
+  const { filings } = await ldaQuarters(congressFor().years, Number(args["legislation-minutes"]));
+  if (steps.has("revolving")) {
+    const committees = required(readJson<{ committees: CongressCommittee[] }>("data/congress-committees.json"), "assignments");
+    writeJson("data/revolving-door.json", await ingestRevolving(legislators, committees.committees, organizations, filings), false);
+  }
+  if (steps.has("fara")) {
+    writeJson("data/fara.json", await ingestFara(legislators, cycles, organizations, filings), false);
+  }
 }
 async function writeLegislation(organizations: OrganizationRecord[]) {
   const legislation = await ingestLegislation(legislators, organizations, {
@@ -163,7 +185,7 @@ writeJson("data/committees.json", data.committees);
 writeJson("data/organizations.json", data.organizations);
 writeJson("data/donors.json", data.donors);
 writeJson("data/congress-committees.json", data.congressCommittees);
-if (steps.has("legislation")) await writeLegislation(data.organizations.organizations);
+await writeStandalone(data.organizations.organizations);
 console.log(
   `Wrote ${data.members.members.length} members, ` +
     `${data.organizations.organizations.length} organizations, ` +

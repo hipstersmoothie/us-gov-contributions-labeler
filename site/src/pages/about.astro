@@ -2,6 +2,8 @@
 import Base from "../layouts/Base.astro";
 import { cycleRange, generatedAt, members, partyLetter } from "../lib/data";
 import { congress, lobbyingSpan, ordinal, caucusOf, partyPlural } from "../lib/legislation";
+import { filingSpan, revolvingStats, REVIEW } from "../lib/revolving";
+import { faraSince } from "../lib/fara";
 
 // "Bernard Sanders and Angus S. King, Jr. with Democrats, and Kevin Kiley with Republicans"
 const independents = members.filter((m) => partyLetter(m.party) === "I" && caucusOf(m));
@@ -137,6 +139,55 @@ const byCaucus = ["D", "R"]
       which. And they don't say <strong>how much was spent on any one bill</strong>: a report's spending covers every
       issue lobbied on that quarter. So this site doesn't put an organization's PAC money next to how members voted on
       the bills it lobbied on. Reports name what was lobbied on, not what was paid for.
+    </p>
+
+    <h2 id="revolving-door">Former staff who lobby</h2>
+    <p>
+      Lobbyists must list any "covered position" they held in the 20 years before they first lobbied for a client: jobs
+      in a member's office, on a committee's staff, in congressional leadership, or senior executive-branch jobs. They
+      appear on LD-1 registrations and LD-2 quarterly reports on <a href="https://lda.gov/">lda.gov</a>; the{" "}
+      <a href="/revolving-door/">revolving door</a> pages read every one filed {filingSpan}. Of{" "}
+      {revolvingStats.lobbyists.toLocaleString()} lobbyists on those filings,{" "}
+      {revolvingStats.withPositions.toLocaleString()} listed at least one job.
+    </p>
+    <p>
+      The jobs are written by hand, in any form: "Chief of Staff, Rep. Jane Doe", "LD to Sen. Doe (R-TX)", "Counsel,
+      Senate Finance Cmte." Each is split into separate jobs and searched for a member's name after a title ("Rep.",
+      "Senator", "Leader") or a first name. A job is credited to a member only when exactly one person fits among
+      everyone who has served in Congress since 2003, so a staffer for a retired senator who shares a current senator's
+      last name isn't credited to the current one, and "Sen. Scott" alone, with two Senator Scotts, isn't credited to
+      either. A senator's former House staff count, and say so. Committees are matched by name or a common abbreviation
+      ("Ways and Means", "HASC"), and when both chambers have one by that name, only when the job says which.
+    </p>
+    <p>
+      In a hand check of {REVIEW.members.checked} randomly chosen member matches, {REVIEW.members.right} were the right
+      member; of {REVIEW.committees.checked} committee matches, {REVIEW.committees.right} were the right committee. Matching
+      favors being right over being complete, so some former staff are missed, especially of members who share a last
+      name with another member and whose staff didn't write a first name. A job on the list may be decades old, and
+      working in an office doesn't mean working for the member directly.
+    </p>
+
+    <h2 id="foreign-lobbying">Foreign lobbying</h2>
+    <p>
+      People and firms in the US who lobby, do public relations or raise money for a foreign government, political
+      party or company register with the Justice Department under the{" "}
+      <a href="https://www.justice.gov/nsd-fara">Foreign Agents Registration Act</a>. <a href="/foreign-lobbying/">Foreign
+      lobbying</a> uses the department's <a href="https://efile.fara.gov/ords/fara/f?p=API:BULKDATA">bulk data</a>:
+      registrants, the foreign principals each represents (with the country it lists), and the short forms filed by
+      each person working on a registration. Registrations in effect any time since {faraSince.slice(0, 4)} are included.
+    </p>
+    <p>
+      Registrants report political contributions twice a year on supplemental statements, but only as PDF documents,
+      many of them scanned, so the donations here come from the FEC's itemized records instead: donations of more than
+      $200 to current members' campaigns, from a person with a FARA short form in effect on the date of the donation,
+      who gave the registrant as their employer, with a matching first and last name. Supplemental statements sometimes
+      list donations from others at the firm who aren't registered; those aren't counted. FARA doesn't tie a donation to
+      any one client, so donations are shown by person and firm, never by country.
+    </p>
+    <p>
+      Registrants are linked to organizations on this site, and to lobbying registrations under the Lobbying Disclosure
+      Act, only when the names are the same after dropping suffixes like "LLP" or "Inc.", or when the organization is
+      the firm's PAC ("Akin Gump Strauss Hauer &amp; Feld LLP Civic Action Committee").
     </p>
 
     <h2 id="investments">Investments</h2>

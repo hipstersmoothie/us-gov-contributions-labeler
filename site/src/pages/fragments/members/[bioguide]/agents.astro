@@ -1,0 +1,14 @@
+---
+// Registered foreign agents who gave to a member, past the first few, loaded on request.
+import AgentTable from "../../../../components/AgentTable.astro";
+import { faraGifts, type Gift } from "../../../../lib/fara";
+import { STAFF_SHOWN } from "../../../../lib/revolving";
+
+export const partial = true;
+export function getStaticPaths() {
+  return Object.entries(faraGifts).filter(([, gifts]) => gifts.length > STAFF_SHOWN).map(([bioguide, gifts]) => ({ params: { bioguide }, props: { gifts } }));
+}
+const { gifts } = Astro.props as { gifts: Gift[] };
+---
+
+<AgentTable gifts={gifts.slice(STAFF_SHOWN)} />

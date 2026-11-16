@@ -1,0 +1,28 @@
+/* Lobbyist and foreign-agent tables (components/StaffTable.astro, AgentTable.astro).
+   Global, not scoped: pages/fragments/ load the rest of each list without CSS of
+   their own, so the page that hosts them carries it. */
+.staff, .agents { table-layout: fixed; }
+.staff th[scope="col"]:nth-child(1) { width: 26%; }
+.staff th[scope="col"]:nth-child(2) { width: 44%; }
+.staff th[scope="row"], .agents th[scope="row"] {
+  text-align: left; text-transform: none; letter-spacing: 0; font-size: var(--fs-base); font-weight: 600;
+  color: var(--text-primary); border-bottom: 1px solid var(--hairline);
+}
+.staff .firm, .agents .firm { display: block; font-size: var(--fs-sm); font-weight: 400; color: var(--text-secondary); margin-top: 2px; }
+.staff .job { font: 400 var(--fs-base)/1.45 var(--serif); color: var(--text-secondary); overflow-wrap: anywhere; }
+.staff .job .note { font: 600 var(--fs-sm) var(--sans); color: var(--text-primary); }
+.staff .worked { display: block; margin-top: 4px; font: 400 var(--fs-sm)/1.4 var(--sans); color: var(--text-muted); }
+.staff .clients { font-size: var(--fs-sm); line-height: 1.45; }
+.agents th[scope="col"]:nth-child(1) { width: 34%; }
+.agents td.countries { font-size: var(--fs-sm); line-height: 1.45; color: var(--text-secondary); }
+.agents td.when { font-size: var(--fs-sm); color: var(--text-muted); white-space: nowrap; }
+@media (max-width: 640px) {
+  /* Stack each row: name, then the job, then clients. */
+  .staff, .staff tbody, .staff tr, .staff th[scope="row"], .staff td { display: block; width: auto; }
+  .staff thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .staff tr { padding: var(--sp-3) 0; border-bottom: 1px solid var(--hairline); }
+  .staff th[scope="row"], .staff td { border: 0; padding: 0 0 var(--sp-1); }
+  .staff .clients::before { content: "Lobbies for: "; color: var(--text-muted); }
+  .agents th[scope="col"]:nth-child(1) { width: auto; }
+  .agents { table-layout: auto; }
+}

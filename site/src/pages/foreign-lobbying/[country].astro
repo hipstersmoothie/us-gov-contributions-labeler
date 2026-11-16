@@ -1,0 +1,171 @@
+---
+import Base from "../../layouts/Base.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
+import { organizationById, money } from "../../lib/data";
+import { moneyAuto } from "../../lib/format";
+import {
+  countries,
+  principalsByCountry,
+  principalsByRegistrant,
+  registrantById,
+  giftsByRegistrant,
+  faraDocsUrl,
+  faraSince,
+  monthYear,
+  type Country,
+} from "../../lib/fara";
+
+export function getStaticPaths() {
+  return countries.map((c) => ({ params: { country: c.id }, props: { c } }));
+}
+
+const { c } = Astro.props as { c: Country };
+const all = principalsByCountry.get(c.id) ?? [];
+const active = all.filter((p) => !p.terminated).sort((a, b) => a.name.localeCompare(b.name));
+const ended = all.filter((p) => p.terminated).sort((a, b) => b.terminated!.localeCompare(a.terminated!));
+const sinceYear = faraSince.slice(0, 4);
+const SHOWN = 25;
+
+const registrantHref = (id: string) => {
+  const org = registrantById.get(id)?.organization;
+  return org && organizationById.has(org) ? `/organizations/${org}/` : faraDocsUrl(id);
+};
+// The firms and people representing this country's principals now.
+const firms = [...new Set(active.map((p) => p.registrant))]
+  .map((id) => ({
+    id,
+    r: registrantById.get(id)!,
+    here: active.filter((p) => p.registrant === id).length,
+    everywhere: (principalsByRegistrant.get(id) ?? []).filter((p) => !p.terminated).length,
+    gifts: giftsByRegistrant.get(id)?.total ?? 0,
+  }))
+  .filter((f) => f.r)
+  .sort((a, b) => b.here - a.here || a.r.name.localeCompare(b.r.name));
+const lede = active.length
+  ? `${active.length} ${c.name === "International organizations" ? "international organizations have" : `foreign principal${active.length === 1 ? "" : "s"} in ${c.name} ${active.length === 1 ? "has" : "have"}`} US agents registered under FARA now`
+  : `No foreign principal in ${c.name} has a US agent registered under FARA now`;
+---
+
+<Base
+  title={`Foreign lobbying: ${c.name}`}
+  og={{ type: "country", id: c.id }}
+  description={`${lede}. Who represents them in the US, from Justice Department FARA filings.`}
+>
+  <p class="kicker"><a href="/foreign-lobbying/">Foreign lobbying</a></p>
+  <h1>{c.name}</h1>
+  <p class="dek">
+    {lede}{firms.length > 0 && <>, through <strong>{firms.length}</strong> registrant{firms.length === 1 ? "" : "s"}</>}.{" "}
+    {ended.length > 0 && <>{ended.length} more registration{ended.length === 1 ? "" : "s"} ended since {sinceYear}.</>}
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Principals now</dt><dd>{active.length}</dd></div>
+    <div class="stat"><dt>US registrants</dt><dd>{firms.length}</dd></div>
+    <div class="stat"><dt>Ended since {sinceYear}</dt><dd>{ended.length}</dd></div>
+  </dl>
+
+  {
+    active.length > 0 && (
+      <section class="story">
+        <h2>Principals and their US agents</h2>
+        <p class="chart-dek">
+          Each foreign principal with a registration in effect now, and the firm or person registered to represent it.
+        </p>
+        <table class="principals">
+          <thead>
+            <tr><th scope="col">Foreign principal</th><th scope="col">Registered agent</th><th scope="col">Since</th></tr>
+          </thead>
+          <tbody>
+            {active.slice(0, SHOWN).map((p) => (
+              <tr>
+                <td>{p.name}</td>
+                <td><a href={registrantHref(p.registrant)}>{registrantById.get(p.registrant)?.name}</a></td>
+                <td class="when">{monthYear(p.registered)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {active.length > SHOWN && (
+          <MoreDisclosure client:visible title={`${active.length - SHOWN} more principals`}>
+            <table class="principals">
+              <tbody>
+                {active.slice(SHOWN).map((p) => (
+                  <tr>
+                    <td>{p.name}</td>
+                    <td><a href={registrantHref(p.registrant)}>{registrantById.get(p.registrant)?.name}</a></td>
+                    <td class="when">{monthYear(p.registered)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </MoreDisclosure>
+        )}
+      </section>
+    )
+  }
+
+  {
+    firms.length > 0 && (
+      <section class="story">
+        <h2>The registrants</h2>
+        <p class="chart-dek">
+          Firms and people representing principals in {c.name} now. Most represent clients elsewhere too; the last column is
+          what their registered agents gave to current members across all clients, since FARA doesn't tie a donation to one.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Registrant</th>
+              <th scope="col" class="num">Principals here</th>
+              <th scope="col" class="num">All principals</th>
+              <th scope="col" class="num">Agents' donations</th>
+            </tr>
+          </thead>
+          <tbody>
+            {firms.map((f) => (
+              <tr>
+                <td><a href={registrantHref(f.id)}>{f.r.name}</a>{f.r.city && <span class="muted small"> · {f.r.city}{f.r.state && `, ${f.r.state}`}</span>}</td>
+                <td class="num">{f.here}</td>
+                <td class="num">{f.everywhere}</td>
+                <td class="num">{f.gifts ? moneyAuto(f.gifts) : <span class="muted">–</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    )
+  }
+
+  {
+    ended.length > 0 && (
+      <section class="story">
+        <h2>Registrations that ended</h2>
+        <p class="chart-dek">Principals in {c.name} whose agent's registration ended since {sinceYear}.</p>
+        <MoreDisclosure client:visible title={`${ended.length} ended registration${ended.length === 1 ? "" : "s"}`}>
+          <table class="principals">
+            <tbody>
+              {ended.map((p) => (
+                <tr>
+                  <td>{p.name}</td>
+                  <td><a href={registrantHref(p.registrant)}>{registrantById.get(p.registrant)?.name}</a></td>
+                  <td class="when">{monthYear(p.registered)} to {monthYear(p.terminated!)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </MoreDisclosure>
+      </section>
+    )
+  }
+
+  <p class="source">
+    From the Justice Department's <a href="https://efile.fara.gov/ords/fara/f?p=API:BULKDATA">FARA bulk data</a>. Each
+    registrant's filings, including what it was paid and what it did, are on{" "}
+    <a href="https://efile.fara.gov/">efile.fara.gov</a>. <a href="/about/#foreign-lobbying">About this data</a>.
+  </p>
+</Base>
+
+<style>
+  .principals td:first-child { width: 50%; }
+  .when { white-space: nowrap; font-size: var(--fs-sm); color: var(--text-muted); }
+</style>

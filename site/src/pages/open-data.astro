@@ -55,11 +55,12 @@ const list = request(
 const collections = [
   ["fyi.contributions.dataset", "self", "Generation time, election cycles, sources, methodology, license, and the complete data files as gzipped JSON blobs"],
   ["fyi.contributions.account", "Bluesky DID", "Who funds this account: a member's totals, top sectors and top contributors, linking to their member record"],
-  ["fyi.contributions.member", "bioguide id, e.g. C000127", "Members of Congress: campaign totals, sectors, top contributors, outside spending, electioneering, small and in-state donors, lobbyist bundlers, committee seats"],
+  ["fyi.contributions.member", "bioguide id, e.g. C000127", "Members of Congress: campaign totals, sectors, top contributors, outside spending, electioneering, small and in-state donors, lobbyist bundlers, committee seats, former staff who now lobby, and registered foreign agents' donations"],
   ["fyi.contributions.committee", "FEC committee id, e.g. C00030718", "PACs, other FEC committees and non-committee spenders (Form 5 and 9 filers): who they gave to, outside spending, big donors, whether they disclose donors"],
   ["fyi.contributions.organization", "slug, e.g. lockheed-martin", "The companies, unions and groups behind PACs: sector, SEC and lobbying records, recipients, contributions their lobbyists bundled"],
   ["fyi.contributions.donor", "slug, e.g. elon-musk-tx", "Donors of $50,000 or more to super PACs and other outside spenders"],
-  ["fyi.contributions.congressCommittee", "Thomas id, e.g. HSAG", "Committees of Congress and their members"],
+  ["fyi.contributions.congressCommittee", "Thomas id, e.g. HSAG", "Committees of Congress, their members, and former committee staff who now lobby"],
+  ["fyi.contributions.foreignCountry", "slug, e.g. japan", "Foreign principals in each country with US agents registered under FARA, and those agents"],
 ];
 ---
 
@@ -94,7 +95,8 @@ const collections = [
     <h2>Everything at once</h2>
     <p>
       The <code>fyi.contributions.dataset</code> record links the complete data files as gzipped JSON, the same
-      files this site is built from. This downloads all of them (needs <code>curl</code> and <code>jq</code>):
+      files this site is built from, including <code>revolving-door.json</code> (lobbyists' former government jobs)
+      and <code>fara.json</code> (foreign agents and their principals). This downloads all of them (needs <code>curl</code> and <code>jq</code>):
     </p>
     <Code code={files} lang="sh" themes={themes} defaultColor={false} />
     <Code code={dataset} lang="sh" themes={themes} defaultColor={false} />
@@ -147,9 +149,9 @@ const collections = [
 
     <h2>License</h2>
     <p>
-      The FEC, SEC and lobbying disclosure records this is built from are US government works in the public domain.
-      Our additions (sector and industry classifications, organization matching, Bluesky account matching and the
-      compiled totals) are dedicated to the public domain under{" "}
+      The FEC, SEC, lobbying disclosure and FARA records this is built from are US government works in the public
+      domain. Our additions (sector and industry classifications, organization matching, Bluesky account matching,
+      lobbyists' job matching and the compiled totals) are dedicated to the public domain under{" "}
       <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>. Use them for anything. Credit to
       contributions.fyi is appreciated but not required. See <a href="/about/">About</a> for how the data is
       classified, and check FEC filings before relying on any single number.

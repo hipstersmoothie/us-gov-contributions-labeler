@@ -215,10 +215,13 @@ export interface BarsData {
   emphasize?: number[];
   /** Denominator for the "% of total" in the tooltip. */
   total?: number;
+  /** What the values count; money unless given ("principals"). */
+  unit?: string;
 }
 
 function bars(d: BarsData, ctx: Ctx): Plot.PlotOptions {
   const rows = d.rows.map((r, i) => ({ ...r, i, em: d.emphasize?.includes(i) ?? false }));
+  const amount = (v: number, compact = false) => (d.unit ? `${v.toLocaleString("en-US")}${compact ? "" : ` ${d.unit}`}` : money(v, compact));
   const step = 38;
   const max = Math.max(...rows.map((r) => r.value), 1);
   const ys = rows.map((r) => r.i);
@@ -251,7 +254,7 @@ function bars(d: BarsData, ctx: Ctx): Plot.PlotOptions {
         insetBottom: 5,
         fill: (r) => (r.em ? "var(--bar-strong)" : "var(--bar)"),
         rx2: 3,
-        channels: { Name: "label", Amount: (r) => money(r.value) },
+        channels: { Name: "label", Amount: (r) => amount(r.value) },
         tip: ctx.interactive
           ? {
               format: { x: false, y: false, fill: false, Name: true, Amount: true },
@@ -265,7 +268,7 @@ function bars(d: BarsData, ctx: Ctx): Plot.PlotOptions {
         dy: 9,
         dx: 5,
         textAnchor: "start",
-        text: (r) => money(r.value, true),
+        text: (r) => amount(r.value, true),
         fill: "var(--text-secondary)",
         fontVariant: "tabular-nums",
         fontSize: 12,
