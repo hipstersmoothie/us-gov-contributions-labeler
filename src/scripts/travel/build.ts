@@ -1,4 +1,4 @@
-// Build data/travel.json: every privately sponsored trip this Congress by a
+// Build data/travel.json: every privately sponsored trip since SINCE by a
 // current member or their staff, with its sponsors (matched to the site's
 // organizations where they have a page), destination, dates and cost.
 //

@@ -4,6 +4,7 @@ import { cycleRange, generatedAt, members, partyLetter } from "../lib/data";
 import { congress, lobbyingSpan, ordinal, caucusOf, partyPlural } from "../lib/legislation";
 import { filingSpan, revolvingStats, REVIEW } from "../lib/revolving";
 import { faraSince } from "../lib/fara";
+import { sinceLabel } from "../lib/travel";
 
 // "Bernard Sanders and Angus S. King, Jr. with Democrats, and Kevin Kiley with Republicans"
 const independents = members.filter((m) => partyLetter(m.party) === "I" && caucusOf(m));
@@ -234,7 +235,7 @@ const byCaucus = ["D", "R"]
     <h2 id="travel">Sponsored travel</h2>
     <p>
       <a href="/travel/">Sponsored travel</a> lists trips that a private group paid for, taken by a member of Congress or
-      a member's staff since the current Congress began. Members and staff may accept these trips when they're connected
+      a member's staff since {sinceLabel}. Members and staff may accept these trips when they're connected
       to official duties and the House or Senate Ethics Committee approves them in advance. Afterward the traveler files
       a report with the{" "}<a href="https://disclosures-clerk.house.gov/GiftTravelFilings">Clerk of the House</a> or the{" "}
       <a href="https://www.senate.gov/legislative/Public_Disclosure/gift-rule-travel.htm">Secretary of the Senate</a>,

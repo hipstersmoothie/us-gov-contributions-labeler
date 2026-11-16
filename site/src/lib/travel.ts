@@ -1,5 +1,5 @@
 // Privately sponsored travel: trips that outside groups paid for, taken by
-// current members and their staff this Congress (data/travel.json, from
+// current members and their staff since `since` (data/travel.json, from
 // src/scripts/travel/build.ts).
 import fs from "node:fs";
 import path from "node:path";
@@ -11,7 +11,7 @@ export type { Trip, Sponsor };
 const FILE = path.resolve(process.cwd(), "../data/travel.json");
 const file: { generatedAt: string; since: string; sponsors: Sponsor[]; trips: Trip[] } = fs.existsSync(FILE)
   ? JSON.parse(fs.readFileSync(FILE, "utf8"))
-  : { generatedAt: new Date(0).toISOString(), since: "2025-01-03", sponsors: [], trips: [] };
+  : { generatedAt: new Date(0).toISOString(), since: "", sponsors: [], trips: [] };
 
 // Only trips by offices of current members with a page here.
 export const trips = file.trips.filter((t) => memberById.has(t.bioguide));
@@ -103,7 +103,9 @@ export function tripDates(t: Pick<Trip, "departure" | "return">) {
   return `${a}–${d2}, ${y2}`;
 }
 
+/** "Jan. 3, 2025": when the data begins, from data/travel.json. */
 export const sinceLabel = (() => {
+  if (!travelSince) return "";
   const [y, m, d] = travelSince.split("-").map(Number) as [number, number, number];
   return `${MONTHS[m - 1]} ${d}, ${y}`;
 })();

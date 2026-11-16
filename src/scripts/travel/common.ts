@@ -14,7 +14,9 @@ import { getCurrentLegislators, type Legislator } from "../../lib/legislators.js
 import { USER_AGENT, fold } from "../disclosures/common.js";
 
 export const CACHE = ".cache/travel";
-/** The 119th Congress convened January 3, 2025. */
+/** Trips are counted from this date on, the day the 119th Congress convened,
+ *  and keep accumulating across Congresses. The one place the date is set:
+ *  build.ts writes it into data/travel.json, and the site reads it from there. */
 export const SINCE = "2025-01-03";
 /** The Clerk's yearly indexes go by filing year: from SINCE's to this one. */
 export const HOUSE_YEARS = Array.from({ length: new Date().getFullYear() - Number(SINCE.slice(0, 4)) + 1 }, (_, i) => Number(SINCE.slice(0, 4)) + i);

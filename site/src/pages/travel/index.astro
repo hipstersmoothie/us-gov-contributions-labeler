@@ -1,5 +1,5 @@
 ---
-// Privately sponsored travel this Congress: who paid, for whose offices, and
+// Privately sponsored travel since the data begins (see SINCE): who paid, for whose offices, and
 // how complete the data is.
 import Base from "../../layouts/Base.astro";
 import PlotFigure from "../../components/PlotFigure.astro";
@@ -62,7 +62,7 @@ const noTrips = members.filter((m) => !tripsByMember.has(m.bioguide)).length;
   <h1>Trips paid for by outside groups</h1>
   <p class="dek">
     Nonprofits, trade groups, universities and companies paid for <strong>{all.trips.toLocaleString()} trips</strong> taken by members of
-    Congress or their staff since {sinceLabel}, the start of this Congress. They came from {all.offices.toLocaleString()} of the{" "}
+    Congress or their staff since {sinceLabel}. They came from {all.offices.toLocaleString()} of the{" "}
     {members.length} current members' offices, and were paid for by {activeSponsors.length.toLocaleString()} sponsors. Members went on{" "}
     {all.byMembers.toLocaleString()} of the trips themselves; staff took the rest.
   </p>

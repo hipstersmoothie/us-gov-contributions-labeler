@@ -1,5 +1,5 @@
-// Download the filings for trips this Congress (departing January 3, 2025 or
-// later): every House PDF, and the first pages of each Senate PDF.
+// Download the filings for trips departing on or after SINCE (common.ts):
+// every House PDF, and the first pages of each Senate PDF.
 //
 // House PDFs average about 4 MB. Senate PDFs are scans of 20–40 MB, written
 // page by page (iText, images first), so one range request for the first

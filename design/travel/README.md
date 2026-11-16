@@ -1,7 +1,11 @@
 # Privately sponsored travel
 
 Trips that outside groups paid for, taken by current members of Congress and
-their staff since the 119th Congress convened (January 3, 2025). Shipped as
+their staff since January 3, 2025 (the day the 119th Congress convened). The
+data is cumulative: it keeps every trip from that date on, across Congresses.
+The date is set once, `SINCE` in `src/scripts/travel/common.ts`; `build.ts`
+writes it into `data/travel.json` and every page and card reads it from there,
+so no page text says "this Congress". Shipped as
 `/travel/`, a page per sponsor (`/travel/sponsors/<slug>/`), a section on every
 member page ("Trips paid for by outside groups") and on the organization pages
 of sponsors that have one ("Trips it sponsored for members and staff").
@@ -150,6 +154,13 @@ tsx src/scripts/travel/build.ts          # → data/travel.json
 ```
 
 `swiftc -O src/scripts/travel/ocr.swift -o .cache/travel/ocr` first (macOS).
+
+## Later
+
+- **A Congress filter**, once trips from the 120th Congress (from January 3,
+  2027) arrive: on `/travel/` and sponsor pages, a control to show one
+  Congress or all, and on member pages, this Congress's trips first. Until
+  then everything reads "since Jan. 3, 2025".
 
 ## Not done
 
