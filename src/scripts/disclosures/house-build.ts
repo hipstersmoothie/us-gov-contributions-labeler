@@ -173,7 +173,7 @@ for (const [bioguide, filings] of byMember) {
   // Attached statements: exact values become the range a filer would report.
   for (const h of (annual && statements.get(annual.filing.docId)) ?? []) {
     if (h.doubts.length || h.value < 1) continue;
-    const m = h.section === "stock" ? await matchAsset(h.asset, undefined, true) : undefined;
+    const m = h.section === "stock" ? await matchAsset(h.asset, h.ticker, true) : undefined;
     const [min, max] = rangeOf(h.value);
     holdings.push({
       name: h.asset,
@@ -183,7 +183,7 @@ for (const [bioguide, filings] of byMember) {
       max: max ?? min,
       open: max === null,
       text: "",
-      account: `Edward Jones: ${h.account.toLowerCase().replace(/^ira$/, "IRA")}`,
+      account: `${h.broker}: ${h.account.toLowerCase().replace(/^ira$/, "IRA")}`,
       scanned: true,
       fromStatement: true,
       docUrl: `${pdfUrl(annual!.filing)}#page=${h.page + 1}`,

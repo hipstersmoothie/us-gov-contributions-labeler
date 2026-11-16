@@ -1,9 +1,11 @@
 // Year-end holdings from brokerage statements that members attach to paper
 // annual reports instead of listing each asset ("See attached").
 //
-// Only Edward Jones statements so far (Rep. Harold Rogers attaches a year of
-// them). Statements give exact values; the site shows only the Schedule A
-// range each value falls in, and never keeps account numbers or addresses.
+// Edward Jones (Rep. Harold Rogers attaches a year of them) and JPMorgan
+// (Rep. Vicente Gonzalez attaches a year-end statement). Each parse has to add
+// up to the statement's own totals, to the cent, or the account is left out.
+// Statements give exact values; the site shows only the Schedule A range each
+// value falls in, and never keeps account numbers or addresses.
 //
 //   tsx src/scripts/disclosures/scan/statements.ts
 import fs from "fs";
@@ -12,10 +14,12 @@ import type { ScanPage, Word } from "./ptr.js";
 
 export interface StatementHolding {
   page: number;
+  broker: string;
   /** "Living trust" or "IRA": the statement's account type, never its number. */
   account: string;
   section: "stock" | "funds" | "cash" | "bonds";
   asset: string;
+  ticker?: string;
   value: number;
   doubts: string[];
 }
@@ -134,7 +138,7 @@ export function parseEdwardJones(pages: ScanPage[], year: number) {
           price && qty && readings(price).some((pr) => readings(qty).some((q) => Math.abs(pr * q - value) <= Math.max(0.02 * value, 1)));
         if (!ok) doubts.push("value doesn't match price × quantity");
       }
-      holdings.push({ page: p.page, account, section: section === "money-market" ? "cash" : section, asset, value, doubts });
+      holdings.push({ page: p.page, broker: "Edward Jones", account, section: section === "money-market" ? "cash" : section, asset, value, doubts });
     }
   }
   // Each account's values should add up to its total. When they do to the
@@ -155,16 +159,116 @@ export function parseEdwardJones(pages: ScanPage[], year: number) {
   return { holdings, checks };
 }
 
+/**
+ * JPMorgan: the Holdings pages of a statement whose period ends Dec 31. A
+ * position's first line has quantity, price and market value; its description
+ * follows ("Symbol FXAIX"), then tax-lot lines, which have no price. Each
+ * section closes with "TOTAL EQUITY $145,028.57" and so on.
+ */
+export function parseJPMorgan(pages: ScanPage[], year: number) {
+  const holdings: StatementHolding[] = [];
+  const totals: { account: string; total: number; page: number }[] = [];
+  const yearEnd = new RegExp(`December\\s*31,?\\s*${year}`);
+  const SECTION: Record<string, StatementHolding["section"]> = { "CASH & MONEY MARKETS": "cash", EQUITY: "stock", "FIXED INCOME": "bonds" };
+  let section: string | undefined;
+  let priceX: number | undefined;
+  let valueX: number | undefined;
+  let descEnd = 0.19;
+  let current: StatementHolding | undefined;
+  let desc: string[] = [];
+  const finish = () => {
+    if (!current) return;
+    const ticker = desc.join(" ").match(/Symbol\s+([A-Z]{2,6})\b/)?.[1];
+    const words = desc.filter((l) => !/^Symbol\b/.test(l)).join(" ");
+    // The description runs on into yield notes: keep the name before "EST" or a yield.
+    current.asset = `${current.asset} ${words}`.replace(/\s+(EST\b|YIELD\b|\d[\d ]*\/).*$/, "").replace(/\s+/g, " ").trim();
+    if (ticker) current.ticker = ticker;
+    if (/\b(FUND|FD|ETF|INDEX|TRUST|TR)\b/.test(current.asset)) current.section = "funds";
+    holdings.push(current);
+    current = undefined;
+    desc = [];
+  };
+  for (const p of pages) {
+    const text = p.words.map((w) => w.t).join(" ");
+    if (!/J\s?P\s?Morgan/i.test(text) || !yearEnd.test(text) || !/Holdings|EQUITY|FIXED INCOME|CASH & MONEY/i.test(text)) continue;
+    for (const row of lines(p)) {
+      const line = row.map((w) => w.t).join(" ").trim();
+      const total = line.match(/^TOTAL (CASH & MONEY MARKETS|EQUITY|FIXED INCOME)\s*\$?\s*([\d ,]+)/);
+      if (total) {
+        finish();
+        const t = money(total[2]!);
+        if (t) totals.push({ account: total[1]!, total: t, page: p.page });
+        continue;
+      }
+      const head = Object.keys(SECTION).find((k) => line.startsWith(k));
+      if (head) {
+        finish();
+        section = head;
+        continue;
+      }
+      if (row.some((w) => /^Quantity$/i.test(w.t.trim()))) {
+        finish();
+        priceX = row.find((w) => /^Price$/i.test(w.t.trim()))?.x1;
+        // OCR can read two headers as one word ("Market Value Unit Cost"): find
+        // where "Market Value" itself ends within it.
+        const mv = row.find((w) => /Market\s*Value|^Value$/i.test(w.t.trim()));
+        if (mv) {
+          const end = mv.t.search(/Value/i) + 5;
+          valueX = mv.x0 + ((mv.x1 - mv.x0) * end) / mv.t.length;
+        }
+        descEnd = (row.find((w) => /^Acquisition/i.test(w.t.trim()))?.x0 ?? 0.2) - 0.005;
+        continue;
+      }
+      if (!section || priceX === undefined || valueX === undefined) continue;
+      const name = row.filter((w) => w.x1 <= descEnd + 0.01).map((w) => w.t).join(" ").trim();
+      const price = row.find((w) => w.x0 > descEnd && Math.abs(w.x1 - priceX!) < 0.035);
+      const value = row.find((w) => w.x0 > descEnd && Math.abs(w.x1 - valueX!) < 0.035);
+      // Summary lines and the page footer end a position. ("TOTAL INTL BD INDEX FD" is
+      // a fund's name, not a total: totals carry a dollar figure.)
+      if (/^(Market Value vs|Cumulative Cash|Investment Gain)/i.test(name) || /^TOTAL\b.*\$/i.test(line) || /large number of tax lots|additional footnotes|Please read the important/i.test(line)) {
+        finish();
+        continue;
+      }
+      // A position line: a name, a price and a market value. Tax lots have no
+      // price. Cash has no lots, and its price of "1" is too small for OCR to keep.
+      if (name && (price || section === "CASH & MONEY MARKETS") && value && /^[A-Z0-9&.' -]+$/.test(name)) {
+        finish();
+        const v = money(value.t);
+        if (v === undefined) continue;
+        current = { page: p.page, broker: "JPMorgan", account: section, section: SECTION[section]!, asset: name, value: v, doubts: [] };
+        continue;
+      }
+      if (current && name && !value) desc.push(name);
+    }
+  }
+  finish();
+  const checks = totals.map((t) => {
+    const sum = holdings.filter((h) => h.account === t.account).reduce((s, h) => s + h.value, 0);
+    return { ...t, sum: Math.round(sum * 100) / 100 };
+  });
+  for (const c of checks)
+    if (Math.abs(c.sum - c.total) >= 0.01) for (const h of holdings.filter((h) => h.account === c.account)) h.doubts.push("section doesn't add up to its total");
+  for (const a of new Set(holdings.map((h) => h.account)))
+    if (!checks.some((c) => c.account === a)) for (const h of holdings.filter((h) => h.account === a)) h.doubts.push("no section total to check against");
+  // Sections group a statement; the account is the statement itself.
+  for (const h of holdings) h.account = "Brokerage account";
+  return { holdings, checks };
+}
+
 if (process.argv[1]?.endsWith("statements.ts")) {
-  // Rep. Harold Rogers (R000395), 2025 annual report filed on paper.
-  const docId = "9116232";
-  const pages = fs.readFileSync(`${CACHE}/scan/${docId}.jsonl`, "utf8").trim().split("\n").map((l) => JSON.parse(l) as ScanPage);
-  const { holdings, checks } = parseEdwardJones(pages, 2025);
-  fs.writeFileSync(`${CACHE}/scan/statements.json`, JSON.stringify([{ docId, bioguide: "R000395", holdings }]));
-  console.log(`${holdings.length} holdings, ${holdings.filter((h) => h.doubts.length).length} with doubts`);
-  for (const c of checks) console.log(`  ${c.account} (page ${c.page + 1}): statement total $${c.total.toLocaleString()}, parsed sum $${c.sum.toLocaleString()}`);
-  const by: Record<string, number> = {};
-  for (const h of holdings) by[`${h.account} ${h.section}`] = (by[`${h.account} ${h.section}`] ?? 0) + 1;
-  console.log(by);
-  for (const h of holdings.filter((h) => h.doubts.length)) console.log("  doubt:", h.page, h.asset, h.value, h.doubts.join(", "));
+  const out = [];
+  const runs: [string, string, string, typeof parseEdwardJones][] = [
+    // Rep. Harold Rogers: a year of Edward Jones statements for two accounts.
+    ["9116232", "R000395", "Edward Jones", parseEdwardJones],
+    // Rep. Vicente Gonzalez: a year-end JPMorgan statement (his Attachment 2).
+    ["9116230", "G000581", "JPMorgan", parseJPMorgan],
+  ];
+  for (const [docId, bioguide, broker, parse] of runs) {
+    const pages = fs.readFileSync(`${CACHE}/scan/${docId}.jsonl`, "utf8").trim().split("\n").map((l) => JSON.parse(l) as ScanPage);
+    const { holdings, checks } = parse(pages, 2025);
+    out.push({ docId, bioguide, holdings });
+    console.log(`${broker} (${bioguide}): ${holdings.length} holdings, ${holdings.filter((h) => h.doubts.length).length} with doubts`);
+    for (const c of checks) console.log(`  ${c.account} (page ${c.page + 1}): statement total $${c.total.toLocaleString()}, parsed sum $${c.sum.toLocaleString()}`);
+  }
+  fs.writeFileSync(`${CACHE}/scan/statements.json`, JSON.stringify(out));
 }

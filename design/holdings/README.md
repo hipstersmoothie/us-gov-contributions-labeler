@@ -242,9 +242,19 @@ confirmed; an account that didn't add up would be left out. Statements give
 exact values, so the site shows only the Schedule A range each falls in, and
 keeps no account numbers or addresses (his statements show his home address).
 
-Not done: Fleischmann's three formats (Benjamin F. Edwards, Merrill, Vanguard
-summaries, 20 pages) and the holdings pages among Gonzalez's attachments.
-Each broker needs its own parser.
+**Gonzalez** attaches a year-end JPMorgan statement among his Merrill and
+Schwab tax forms. `parseJPMorgan` reads its Holdings pages: a position's first
+line has quantity, price and market value, its description carries the ticker
+("Symbol FXAIX"), and tax-lot lines (no price) are skipped. Cash, equity and
+fixed income each reconcile to their printed totals to the cent ($4,969.31,
+$145,028.57, $236,958.79; together the statement's $386,956.67 in total
+assets): 21 holdings, all funds and cash. Getting there took handling a header
+OCR read as one word ("Market Value Unit Cost") and a price of "1" too small to
+survive OCR.
+
+Not done: Fleischmann's attachments are account-level summaries and gains
+reports with no position-by-position holdings, and the Merrill and Schwab
+documents are 1099s (income and sales, not holdings).
 
 ### Senate eFD (efdsearch.senate.gov): down for maintenance
 
