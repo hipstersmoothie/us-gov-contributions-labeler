@@ -47,6 +47,8 @@ export interface Holding extends Company {
   account?: string;
   description?: string;
   scanned?: boolean;
+  /** A scanned row a second, independent reader read the same way. */
+  readTwice?: boolean;
   /** From a brokerage statement attached to the report; its exact value is shown only as a range. */
   fromStatement?: boolean;
   docUrl?: string;
@@ -70,6 +72,8 @@ export interface Trade extends Company {
   adviser?: boolean;
   /** Read by machine from a scanned paper form; docUrl points at the page. */
   scanned?: boolean;
+  /** A second, independent reader read it the same way. */
+  readTwice?: boolean;
   account?: string;
   docUrl: string;
 }
@@ -275,7 +279,12 @@ export interface TradeRow {
   docUrl: string;
   /** Read by machine from a scanned paper form. */
   scanned: boolean;
+  readTwice: boolean;
 }
+
+/** What a Scan tag says about how the row was read. */
+export const scanTitle = (row: { readTwice?: boolean }) =>
+  row.readTwice ? "Read by machine from a scanned paper form, and read the same way by a second reader" : "Read by machine from a scanned paper form";
 
 export function tradeRows(): TradeRow[] {
   const rows: TradeRow[] = [];
@@ -297,6 +306,7 @@ export function tradeRows(): TradeRow[] {
         owner: t.owner === "self" ? "Member" : OWNER_LABEL[t.owner],
         amount: rangeText(t),
         scanned: !!t.scanned,
+        readTwice: !!t.readTwice,
         min: t.min,
         lagDays: t.lagDays,
         filed: t.filed,

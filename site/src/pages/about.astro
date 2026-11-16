@@ -115,10 +115,12 @@ const byCaucus = ["D", "R"]
     </p>
     <p>
       Most members file online. Some file on <strong>paper</strong>, which the House posts as scanned images. Those are
-      read by machine: the text is recognized and each checkbox is judged by how much ink is in it. A row is left out when
-      a mark is missing or ambiguous, its dates don't read the same way twice, or its owner is unreadable. Rows read
-      this way are tagged <strong>Scan</strong> and link to their page of the original, and may still contain mistakes,
-      so check the original before relying on one. Handwritten pages aren't read. Of the brokerage statements some
+      read by machine: the text is recognized and each checkbox is judged by how much ink is in it. A second reader,
+      Anthropic's Claude model, then reads each page on its own. A row is shown when the two readings agree, or when the
+      second reader makes out a mark the first couldn't and agrees on everything else; a row the readers disagree on is
+      left out until a person checks it. Rows read this way are tagged <strong>Scan</strong> and link to their page of
+      the original, and may still contain mistakes, so check the original before relying on one. Handwritten pages
+      aren't read. Of the brokerage statements some
       members attach instead of listing their assets, Edward Jones and JPMorgan year-end statements are read, and only
       when the holdings add up to the statement's own totals to the cent; their exact values are shown as ranges like
       everything else. Tax forms attached to reports aren't read: they show income and sales, not what's owned.

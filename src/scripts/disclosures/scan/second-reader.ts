@@ -200,6 +200,18 @@ if (command === "estimate") {
   const cost = (inTok * 4 + outTok * 20) / 1e6 / 2; // Opus 5.5 rates, halved by the Batches API
   console.log(`${all.filter((j) => j.kind === "ptr").length} trade-report pages, ${all.filter((j) => j.kind === "annual").length} Schedule A pages, ${rows} rows`);
   console.log(`about ${(inTok / 1e6).toFixed(1)}M input and ${(outTok / 1e6).toFixed(1)}M output tokens: roughly $${cost.toFixed(0)} through the Batches API`);
+} else if (command === "pilot") {
+  // A few pages synchronously, to check the output before a full batch:
+  //   second-reader.ts pilot p-8220906-40 p-9116211-3
+  const client = new Anthropic();
+  const wanted = new Set(process.argv.slice(3));
+  for (const job of jobs().filter((j) => wanted.has(j.id))) {
+    const { params } = request(job);
+    const message = await client.messages.create(params as Anthropic.MessageCreateParamsNonStreaming);
+    const text = message.content.find((b) => b.type === "text");
+    console.log(`== ${job.id} (${message.stop_reason}; ${message.usage.input_tokens} in, ${message.usage.output_tokens} out)`);
+    console.log(text?.type === "text" ? text.text : "(no text)");
+  }
 } else if (command === "submit") {
   const client = new Anthropic();
   const all = jobs();

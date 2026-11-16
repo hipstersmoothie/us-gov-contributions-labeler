@@ -21,6 +21,7 @@ import {
   companyName,
   COMPANY_KINDS,
   reportUrl,
+  scanTitle,
   OWNER_LABEL,
   type Disclosure,
 } from "../../../lib/holdings";
@@ -236,7 +237,7 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
                         {companyHref(h) ? <a href={companyHref(h)}>{h.company ? companyName(h.company) : h.name}</a> : h.name}
                         {h.ticker && <span class="muted"> {h.ticker}</span>}
                         {h.kind !== "stock" && <span class="tag">{h.kind === "options" ? "Options" : "Bonds"}</span>}
-                        {h.scanned && <a class="tag" href={h.docUrl} title="Read by machine from a scanned paper form">Scan</a>}
+                        {h.scanned && <a class="tag" href={h.docUrl} title={scanTitle(h)}>Scan</a>}
                         {h.scanned && h.docUrl && (
                           <a class="report" href={reportUrl(m.name, `${h.name}, ${rangeText(h)}, ${ownerOf(h.owner)}`, h.docUrl)}>Report a problem</a>
                         )}
@@ -343,7 +344,7 @@ const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.c
                     <span class:list={["tx", t.tx.startsWith("Bought") ? "tx-buy" : "tx-sell"]}>{t.tx}</span>{" "}
                     {companyHref(t) ? <a href={companyHref(t)}>{t.name}</a> : t.name}
                     {t.adviser && <span class="tag" title={t.comments ?? t.description}>Adviser</span>}
-                    {t.scanned && <span class="tag" title="Read by machine from a scanned paper form">Scan</span>}
+                    {t.scanned && <span class="tag" title={scanTitle(t)}>Scan</span>}
                     {t.scanned && (
                       <a class="report" href={reportUrl(m.name, `${t.tx} ${t.name}, ${t.date}, ${rangeText(t)}, ${ownerOf(t.owner)}`, t.docUrl)}>Report a problem</a>
                     )}

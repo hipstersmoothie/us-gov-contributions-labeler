@@ -2,7 +2,7 @@
 // A server-rendered table of reported trades. The full list is never shipped
 // to the browser as one file: these reports can't be offered for bulk reuse
 // (5 U.S.C. § 13107), so pages carry at most a page of rows.
-import { reportUrl, type TradeRow } from "../lib/holdings";
+import { reportUrl, scanTitle, type TradeRow } from "../lib/holdings";
 
 interface Props {
   rows: TradeRow[];
@@ -34,7 +34,7 @@ const date = (iso: string) => new Date(`${iso}T12:00:00`).toLocaleDateString("en
           </th>
           <td>
             <span class="tx">{r.tx}</span> {r.asset}
-            {r.scanned && <a class="scan-tag" href={r.docUrl} title="Read by machine from a scanned paper form">Scan</a>}
+            {r.scanned && <a class="scan-tag" href={r.docUrl} title={scanTitle(r)}>Scan</a>}
             {r.scanned && (
               <a class="report" href={reportUrl(r.member, `${r.tx} ${r.asset}, ${r.date}, ${r.amount}, ${r.owner}`, r.docUrl)}>Report a problem</a>
             )}

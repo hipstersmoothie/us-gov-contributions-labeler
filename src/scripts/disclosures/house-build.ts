@@ -14,6 +14,7 @@ import { matchAsset, type Match } from "./match.js";
 import type { ScannedTrade } from "./scan/ptr.js";
 import type { ScannedHolding } from "./scan/annual.js";
 import { matchStatementTrade, parseEdwardJonesActivity, rangeOf, type StatementHolding, type StatementTrade } from "./scan/statements.js";
+import { resolveHolding, resolveTrade, saveReview, stats as secondReader } from "./scan/resolve.js";
 
 /** What a reader needs to tell apart: one company's stock, a fund, cash, property... */
 export const KINDS = {
@@ -89,6 +90,16 @@ const scanned = new Map(
   ).map((d) => [d.filing.docId, d])
 );
 
+/** Counts rows page by page, matching the order the second reader was shown them. */
+function rowOnPage() {
+  const seen = new Map<number, number>();
+  return (page: number) => {
+    const i = seen.get(page) ?? 0;
+    seen.set(page, i + 1);
+    return i;
+  };
+}
+
 const scannedAnnuals = new Map(
   (fs.existsSync(`${CACHE}/scan/annuals.json`)
     ? (JSON.parse(fs.readFileSync(`${CACHE}/scan/annuals.json`, "utf8")) as { filing: HouseFiling; holdings: ScannedHolding[] }[])
@@ -163,8 +174,11 @@ for (const [bioguide, filings] of byMember) {
   // A paper-only annual report, read by machine from the scan (scan/run-annuals.ts).
   let annualUnread = 0;
   const scan = annual && !annual.text ? scannedAnnuals.get(annual.filing.docId) : undefined;
-  for (const h of scan?.holdings ?? []) {
-    if (h.doubts.length || h.min === undefined || !h.asset) {
+  const annualRow = rowOnPage();
+  for (const read of scan?.holdings ?? []) {
+    // Checked against the second reader where it read the page (scan/resolve.ts).
+    const h = resolveHolding(annual!.filing.docId, read, annualRow(read.page));
+    if (!h || h.doubts.length || h.min === undefined || !h.asset) {
       annualUnread++;
       continue;
     }
@@ -183,6 +197,7 @@ for (const [bioguide, filings] of byMember) {
       open: h.max === null,
       text: h.min === 0 ? "None" : "",
       scanned: true,
+      ...(h.confirmedBy ? { readTwice: true } : {}),
       docUrl: `${pdfUrl(annual!.filing)}#page=${h.page + 1}`,
       ...company(m),
     });
@@ -242,9 +257,18 @@ for (const [bioguide, filings] of byMember) {
   for (const p of ptrs.filter((p) => !p.text)) {
     const scan = scanned.get(p.filing.docId);
     if (!scan) continue;
-    for (const t of scan.trades) {
+    const tradeRow = rowOnPage();
+    for (const read of scan.trades) {
+      const index = tradeRow(read.page);
       // A statement line with the same date, direction and quoted price.
-      const st = t.date && t.date <= "2025-12-31" ? matchStatementTrade(statementTrades.get(bioguide) ?? [], t) : undefined;
+      const st = read.date && read.date <= "2025-12-31" ? matchStatementTrade(statementTrades.get(bioguide) ?? [], read) : undefined;
+      // A brokerage statement settles the amount on its own; otherwise the
+      // second reader has to agree (scan/resolve.ts).
+      const t = st ? { ...read, doubts: [...read.doubts] } : resolveTrade(p.filing.docId, read, index);
+      if (!t) {
+        scanUnread++;
+        continue;
+      }
       if (st && t.min !== undefined && !t.doubts.length && rangeOf(st.amount)[0] !== t.min) {
         // The statement and the form disagree: leave it out rather than guess.
         statementContradicted++;
@@ -293,6 +317,7 @@ for (const [bioguide, filings] of byMember) {
         text: "",
         ...(account ? { account } : {}),
         scanned: true,
+        ...("confirmedBy" in t && t.confirmedBy ? { readTwice: true } : {}),
         docUrl: `${pdfUrl(p.filing)}#page=${t.page + 1}`,
         ...company(m),
       });
@@ -313,6 +338,10 @@ for (const [bioguide, filings] of byMember) {
   };
 }
 
+saveReview();
+console.log(
+  `second reader: ${secondReader.confirmed} rows confirmed, ${secondReader.filled} flagged rows filled in, ${secondReader.disagreed} left out for disagreeing (review.json), ${secondReader.unreadBoth} unread by both, ${secondReader.noReading} not sent`
+);
 console.log(`Rogers' statements: ${statementConfirmed} trades confirmed, ${statementFilled} filled in, ${statementContradicted} left out for disagreeing`);
 const out = { generatedAt: new Date().toISOString(), source: "U.S. House Clerk financial disclosure reports", members };
 fs.mkdirSync("site/src/data", { recursive: true });

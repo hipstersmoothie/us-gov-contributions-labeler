@@ -172,8 +172,8 @@ a 401(k) by name, not its holdings.
 
 The first pass treated paper as unreadable (Vision OCR read names and dates
 but lost the X marks). The second pass reads the marks as ink in the form's
-grid, all on this machine (macOS PDFKit and Vision; no service sees the
-reports):
+grid on this machine (macOS PDFKit and Vision), then a second reader checks
+it (below):
 
 - `scan/analyze.swift` renders each page, picks its orientation (and turns it
   180° when the owner tags sit on the right; Vision reads upside-down text, so
@@ -201,7 +201,7 @@ reports):
 | --- | --- | --- |
 | Documents, pages | 124, 887 | 34, 1,005 (272 Schedule A grid pages) |
 | Rows found | 11,383 (an earlier date-line count estimated ~11,500) | 4,909 |
-| No doubts | 9,003 (79.1%) | 4,514 (92.0%) |
+| No doubts (first reader alone) | 8,087 (71.0%) | 4,205 (85.7%) |
 | Biggest filers | Khanna 6,959 of 9,017; McCaul 1,721 of 1,930; Fleischmann 111 of 115 | Khanna 3,259 of 3,475; Harshbarger 599 of 612; Guest 252 of 254 |
 | Weakest | Handwritten and check-mark forms (Self, Mann, McClain) | Handwritten forms (Craig, Thompson, Sherman, Gonzalez): a few rows each |
 | Matched to an SEC company | 76% of company-like names, by loose name (no tickers on paper PTRs); 25 random matches all right | 1,963 holdings; Harshbarger's forms carry tickers |
@@ -222,6 +222,52 @@ bands on tight forms, owner tags OCR'd as "5P"/"SE" (now matched loosely and
 flagged if unmatched, rather than called the member's), a stray rule splitting
 the owner column, trust headings read into asset names, and Block B shifted
 one column where OCR missed the "EIF" box.
+
+**Second reader.** `scan/second-reader.ts` sends every scanned trade-report
+page with rows, and every Schedule A page with a flagged row, to Claude
+(`claude-opus-5-5`, Batches API, structured output), with the list of rows the
+first reader found. It reports owner, type, dates and amount column for each.
+That's 990 pages; all were read, none declined, for about $20.
+`scan/resolve.ts` then applies these rules:
+
+- A clean row is shown only when both readers agree on type, amount, trade
+  date and owner.
+- A flagged row is shown when the second reader supplies every field we
+  doubted and agrees on every field we didn't. A supplied date also has to be
+  a weekday on or before the notification.
+- Any disagreement leaves the row out and saves it to
+  `.cache/disclosures/scan/review.json` for a person.
+
+The pilot on hand-checked pages went 63/63. On the full run, its
+disagreements exposed silent errors in the first reader that the eye check
+above had missed:
+
+- Khanna's "Partial Transaction" box went unread on pages where every sale is
+  partial. The column's typical cell was itself a mark.
+- Lost rules merged the Sale and Exchange boxes, so whole pages of sales read
+  as exchanges. Merged type columns are now flagged.
+- When the rule between owner and name was lost, DC/SP tags fell into the
+  name column and the owner defaulted to the member. Lone tags at the name's
+  left edge are now owners. On Schedule A, an inked owner cell with no tag
+  read is flagged.
+
+After those fixes:
+
+| | Count |
+| --- | --- |
+| Rows confirmed by both readers | 11,230 |
+| Flagged rows filled in by the second reader | 3,396 |
+| Rows left out for disagreeing (review list) | 421 (330 trades, 91 holdings) |
+| Rows neither could read | 371 |
+| Scanned trades shown | 10,956, all but 16 read twice (was ~9,000, read once) |
+| Scanned annual holdings shown | 4,494; 3,686 read twice (pages with no flagged row weren't sent) |
+| Trade rows the second reader saw that the first missed | 495, not yet used |
+
+Where the two disagreed and I checked the page (Khanna, three pages), the
+second reader was right each time. The rule stays "both agree" rather than
+"trust the second reader": its pilot record is good, but a model misreading a
+mark is still possible, and agreement between two different methods is the
+stronger check.
 
 ### 1b. Attached brokerage statements
 

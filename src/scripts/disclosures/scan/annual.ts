@@ -17,7 +17,7 @@ export interface ScannedHolding {
 }
 
 /** Block B, columns A–M. */
-const VALUES: [number, number | null][] = [
+export const VALUES: [number, number | null][] = [
   [0, 0], [1, 1_000], [1_001, 15_000], [15_001, 50_000], [50_001, 100_000], [100_001, 250_000],
   [250_001, 500_000], [500_001, 1_000_000], [1_000_001, 5_000_000], [5_000_001, 25_000_000],
   [25_000_001, 50_000_000], [50_000_001, null], [1_000_001, null],
@@ -134,6 +134,8 @@ export function parseScannedScheduleA(pages: ScanPage[]) {
       const lead = runIn?.[1];
       const tag = lead ?? (/^[S5$][PRF]?/.test(ownerText) ? "SP" : /^D[CGO0]?/.test(ownerText) ? "DC" : /^[JI][T1]?/.test(ownerText) ? "JT" : ownerText);
       if (ownerText && !lead && !OWNERS[tag]) doubts.push("owner unclear");
+      // A tag OCR didn't read at all: the owner cell has ink (a tag is ~0.2, empty under 0.07).
+      else if (!ownerText && !lead && Array.from({ length: nameCol }, (_, c) => ink[c] ?? 0).some((v) => v > 0.1)) doubts.push("owner unclear");
       const ticker = asset.match(/\(([A-Z][A-Z.]{0,5})\)/)?.[1];
       holdings.push({
         page: p.page,

@@ -80,8 +80,8 @@ const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY
     <section class="story">
       <h2>Filed on paper</h2>
       <p class="chart-dek">
-        The House posts these as scanned images. Their trades are read by machine and checked against each form's grid;{" "}
-        {unread.toLocaleString()} rows that couldn't be read reliably are left out. Their annual reports are read the same
+        The House posts these as scanned images. Their trades are read by machine twice, independently, and{" "}
+        {unread.toLocaleString()} rows the readings disagree on or that couldn't be read reliably are left out. Their annual reports are read the same
         way, except handwritten pages and attached brokerage statements.
       </p>
       <ul class="link-list paper">
