@@ -10,6 +10,8 @@ import type { Donor } from "./donors.js";
 import type { CongressCommittee } from "./assignments.js";
 import type { EmployerGiving, MemberIndividuals } from "./individuals.js";
 import type { LobbyingSpend } from "./lobbying.js";
+import type { Bundle, Bundler } from "./bundling.js";
+import { normalizeOrg } from "../lib/names.js";
 
 export interface Account {
   did: string;
@@ -50,6 +52,16 @@ export interface Member {
     spenders: (Outside & { id: string })[];
     candidates: (Outside & Pick<FecCandidate, "id" | "name" | "party" | "office" | "state" | "district">)[];
   };
+  /**
+   * Electioneering communications that named them: ads close to an election
+   * that don't say vote for or against. Never mixed into `outside`.
+   */
+  electioneering?: { total: number; spenders: { id: string; total: number }[] };
+  /**
+   * Contributions bundled by registered lobbyists and lobbyists' PACs for their
+   * campaign or leadership PAC (FEC Form 3L), by bundler.
+   */
+  bundling?: { total: number; bundlers: BundlerRow[]; /** The committees that reported them. */ committees: string[] };
   /** Congressional committee seats. */
   assignments: { id: string; title?: string }[];
   /** Itemized individual donations by employer and estimated sector. */
@@ -76,6 +88,14 @@ interface Outside {
   oppose: number;
 }
 
+export type BundlerRow = Omit<Bundler, "city"> & {
+  total: number;
+  /** Our organization page for the PAC, or for the lobbyist's employer where the names match exactly. */
+  organization?: string;
+  /** Form 3L filings it appears on, newest first. */
+  filings: number[];
+};
+
 interface Giver {
   total: number;
   byCycle: Record<number, number>;
@@ -91,6 +111,8 @@ export type CommitteeRecord = Committee &
     opponents?: Outside & { targets: (Outside & { id: string })[] };
     /** Large donors, if this is a super PAC we looked up. */
     donors?: { id: string; total: number }[];
+    /** Electioneering communications naming current members, by member. */
+    electioneering?: { total: number; targets: { id: string; total: number }[] };
   };
 export type OrganizationRecord = Organization &
   Giver & {
@@ -100,6 +122,8 @@ export type OrganizationRecord = Organization &
     employees?: Omit<EmployerGiving, "organization">;
     /** Federal lobbying spending in the same years. */
     lobbyingSpend?: LobbyingSpend;
+    /** Contributions its lobbyists or its PAC bundled for current members (Form 3L). */
+    bundled?: { total: number; recipients: { id: string; total: number }[]; bundlers: { id: string; name: string; total: number }[] };
   };
 export type DonorRecord = Omit<Donor, "gifts"> & {
   total: number;
@@ -128,7 +152,8 @@ export function buildData(
   donorData: { donors: Record<string, Donor> } | undefined,
   assignments: CongressCommittee[] | undefined,
   individuals: { members: Record<string, MemberIndividuals>; employers: Record<string, EmployerGiving> } | undefined,
-  lobbyingSpend: Record<string, LobbyingSpend> | undefined
+  lobbyingSpend: Record<string, LobbyingSpend> | undefined,
+  bundling?: { bundlers: Record<string, Bundler>; bundles: Bundle[] }
 ) {
   const seats = new Map<string, { id: string; title?: string }[]>();
   for (const c of assignments ?? []) {
@@ -200,6 +225,68 @@ export function buildData(
     bump(memberOpponentCandidates, o.member, o.candidate, o);
     bump(spenderOpponents, o.committee, o.member, o);
   }
+
+  const memberEc = new Map<string, Map<string, number>>();
+  const spenderEc = new Map<string, Map<string, number>>();
+  for (const [committeeId, byMember] of Object.entries(fec.electioneering ?? {})) {
+    for (const [bioguide, byCycle] of Object.entries(byMember)) {
+      const total = sum(Object.values(byCycle));
+      add(forMember(memberEc, bioguide), committeeId, total);
+      add(forMember(spenderEc, committeeId), bioguide, total);
+    }
+  }
+  const ecFields = (map: Map<string, number> | undefined) => {
+    if (!map?.size) return undefined;
+    const list = ranked(map);
+    return { total: sum(list.map((x) => x.total)), list };
+  };
+
+  // Lobbyist bundling, to members' campaigns and leadership PACs. A bundler is
+  // tied to one of our organizations only on an exact name match: a
+  // lobbyist PAC through its committee, a lobbyist through their employer.
+  const orgByName = new Map<string, string>();
+  for (const o of Object.values(enriched.organizations)) {
+    for (const name of [o.name, o.lobbying?.client]) {
+      const key = name && normalizeOrg(name);
+      if (key && !orgByName.has(key)) orgByName.set(key, o.id);
+    }
+  }
+  const bundlerOrg = (b: Bundler) =>
+    b.committee ? enriched.committees[b.committee]?.organization : b.employer ? orgByName.get(normalizeOrg(b.employer)) : undefined;
+  const memberBundles = new Map<string, Map<string, { total: number; filings: Set<number> }>>();
+  const memberBundleFilers = new Map<string, Set<string>>();
+  const orgBundles = new Map<string, { recipients: Map<string, number>; bundlers: Map<string, number> }>();
+  for (const b of bundling?.bundles ?? []) {
+    const sponsors = enriched.committees[b.recipient]?.kind === "leadership-pac" ? enriched.committees[b.recipient]!.sponsors : undefined;
+    const member = b.member ?? sponsors?.find((s) => s.bioguide)?.bioguide;
+    const bundler = bundling!.bundlers[b.bundler];
+    if (!member || !bundler) continue;
+    memberBundleFilers.set(member, (memberBundleFilers.get(member) ?? new Set()).add(b.recipient));
+    let m = memberBundles.get(member);
+    if (!m) memberBundles.set(member, (m = new Map()));
+    const row = m.get(b.bundler) ?? { total: 0, filings: new Set<number>() };
+    row.total += b.amount;
+    for (const f of b.filings) row.filings.add(f);
+    m.set(b.bundler, row);
+    const org = bundlerOrg(bundler);
+    if (org) {
+      let o = orgBundles.get(org);
+      if (!o) orgBundles.set(org, (o = { recipients: new Map(), bundlers: new Map() }));
+      add(o.recipients, member, b.amount);
+      add(o.bundlers, b.bundler, b.amount);
+    }
+  }
+  const bundlingFor = (bioguide: string): Member["bundling"] => {
+    const m = memberBundles.get(bioguide);
+    if (!m?.size) return undefined;
+    const bundlers = [...m]
+      .map(([id, { total, filings }]): BundlerRow => {
+        const { city: _, ...b } = bundling!.bundlers[id]!;
+        return { ...b, total, organization: bundlerOrg(b), filings: [...filings].sort((x, y) => y - x) };
+      })
+      .sort((a, b) => b.total - a.total);
+    return { total: sum(bundlers.map((b) => b.total)), bundlers, committees: [...(memberBundleFilers.get(bioguide) ?? [])] };
+  };
 
   const rankedOutside = (map: Map<string, Outside> | undefined, limit = Infinity) => {
     const rows = [...(map ?? [])].map(([id, o]) => ({ id, ...o }));
@@ -293,6 +380,10 @@ export function buildData(
           return { ...r, name: c?.name ?? r.id, party: c?.party, office: c?.office ?? "H", state: c?.state ?? l.state, district: c?.district };
         }),
       }))(rankedOutside(memberOpponents.get(l.bioguide), 25)),
+      electioneering: (({ total, list } = { total: 0, list: [] }) => (total ? { total, spenders: list } : undefined))(
+        ecFields(memberEc.get(l.bioguide))
+      ),
+      bundling: bundlingFor(l.bioguide),
       assignments: seats.get(l.bioguide) ?? [],
       individuals: individuals?.members[l.bioguide],
       ...combine(memberOrgs.get(l.bioguide), memberSectors.get(l.bioguide), individuals?.members[l.bioguide]),
@@ -304,12 +395,14 @@ export function buildData(
       const outside = spenderOutside.has(c.id) ? rankedOutside(spenderOutside.get(c.id)) : undefined;
       const opponents = spenderOpponents.has(c.id) ? rankedOutside(spenderOpponents.get(c.id)) : undefined;
       const donorMap = donorsBySpender.get(c.id);
+      const ec = ecFields(spenderEc.get(c.id));
       return {
         ...c,
         ...giverFields(c.id),
         outside: outside && { support: outside.support, oppose: outside.oppose, targets: outside.rows },
         opponents: opponents && { support: opponents.support, oppose: opponents.oppose, targets: opponents.rows },
         donors: donorMap && ranked(donorMap),
+        electioneering: ec && { total: ec.total, targets: ec.list },
       };
     })
     .sort((a, b) => b.total + (b.outside ? b.outside.support + b.outside.oppose : 0) - (a.total + (a.outside ? a.outside.support + a.outside.oppose : 0)));
@@ -318,12 +411,18 @@ export function buildData(
     .map((o): OrganizationRecord => {
       const gifts = giftsByOrg.get(o.id);
       const employees = individuals?.employers[o.id];
+      const bundled = orgBundles.get(o.id);
       return {
         ...o,
         ...giverFields(`org:${o.id}`),
         outsideGifts: gifts && ranked(gifts),
         employees: employees && { total: employees.total, recipients: employees.recipients },
         lobbyingSpend: lobbyingSpend?.[o.id],
+        bundled: bundled && {
+          total: sum([...bundled.recipients.values()]),
+          recipients: ranked(bundled.recipients),
+          bundlers: ranked(bundled.bundlers).map((b) => ({ ...b, name: bundling!.bundlers[b.id]!.name })),
+        },
       };
     })
     .sort((a, b) => b.total - a.total);

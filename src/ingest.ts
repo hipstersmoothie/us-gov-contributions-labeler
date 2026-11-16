@@ -22,14 +22,16 @@ import { ingestIndividuals } from "./ingest/individuals.js";
 import { fetchLobbyingSpend } from "./ingest/lobbying.js";
 import { buildData, type Account, type OrganizationRecord } from "./ingest/build.js";
 import { ingestLegislation } from "./ingest/legislation.js";
+import { ingestBundling } from "./ingest/bundling.js";
 
-const STEPS = ["accounts", "assignments", "fec", "committees", "lobbying", "individuals", "donors", "legislation"] as const;
+const STEPS = ["accounts", "assignments", "fec", "bundling", "committees", "lobbying", "individuals", "donors", "legislation"] as const;
 const FEC_FILE = ".cache/fec/data.json";
 const ENRICHED_FILE = ".cache/enrich/result.json";
 const DONORS_FILE = ".cache/donors/result.json";
 const ASSIGNMENTS_FILE = ".cache/assignments.json";
 const INDIVIDUALS_FILE = ".cache/individuals.json";
 const LOBBYING_FILE = ".cache/enrich/lobbying-result.json";
+const BUNDLING_FILE = ".cache/bundling.json";
 
 const { values: args } = parseArgs({
   options: {
@@ -91,6 +93,12 @@ if (steps.has("fec")) {
   writeJson(FEC_FILE, fec, false);
 }
 
+let bundling = readJson<Awaited<ReturnType<typeof ingestBundling>>>(BUNDLING_FILE);
+if (steps.has("bundling")) {
+  bundling = await ingestBundling(legislators, cycles);
+  writeJson(BUNDLING_FILE, bundling, false);
+}
+
 let enriched = readJson<Awaited<ReturnType<typeof enrichCommittees>>>(ENRICHED_FILE);
 if (steps.has("committees")) {
   enriched = await enrichCommittees(required(fec, "fec"), legislators, {
@@ -147,7 +155,8 @@ const data = buildData(
   donors,
   assignments,
   individuals,
-  lobbying
+  lobbying,
+  bundling
 );
 writeJson("data/members.json", data.members);
 writeJson("data/committees.json", data.committees);

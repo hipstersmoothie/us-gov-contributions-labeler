@@ -97,6 +97,7 @@ const KIND_LABELS: Record<string, string> = {
   candidate: "Candidate committee",
   party: "Party committee",
   "super-pac": "Super PAC / hybrid PAC",
+  "non-committee": "Outside group, not a PAC",
   other: "Committee",
 };
 export const kindLabel = (kind: string) => KIND_LABELS[kind] ?? "Committee";
@@ -122,6 +123,18 @@ export const fecCommitteeUrl = (id: string) => `https://www.fec.gov/data/committ
 export const committeeLabel = (id: string) => {
   const c = committeeById.get(id);
   return c ? displayName(c.name) : `FEC committee ${id}`;
+};
+/**
+ * A group that isn't a PAC whose FEC filings for its outside spending list no
+ * donors (Form 5 contributions, Form 9 donations). PACs always report theirs.
+ */
+export const hidesDonors = (c: CommitteeRecord | undefined) => c?.kind === "non-committee" && !c.person && c.reportedDonations === 0;
+/** The spender's type for tables, with "doesn't disclose its donors" where that's so. */
+export const spenderType = (id: string) => {
+  const c = committeeById.get(id);
+  if (!c) return "";
+  if (c.person) return "Individual, not a PAC";
+  return hidesDonors(c) ? `${kindLabel(c.kind)} · doesn't disclose its donors` : kindLabel(c.kind);
 };
 /** Its page here, or the FEC's page when we have no profile for it. */
 export const committeeHref = (id: string) => (committeeById.has(id) ? `/pacs/${id}/` : fecCommitteeUrl(id));

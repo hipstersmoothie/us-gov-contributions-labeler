@@ -135,3 +135,76 @@ export function chamberSeats(chamber: "house" | "senate", amounts: Map<string, n
       };
     });
 }
+
+// --- donor makeup -------------------------------------------------------------------
+
+/** Who a member's money came from, summed over the dataset's cycles. */
+export interface DonorMakeup {
+  /** Individual contributions of $200 or less a year, which campaigns report only as a total. */
+  small: number;
+  /** Itemized individual contributions (over $200), as the campaigns reported them. */
+  itemized: number;
+  /** Itemized money by donor address: in the district (House), elsewhere in the state, out of state. */
+  inDistrict?: number;
+  restOfState: number;
+  outOfState: number;
+  /** The candidate's own contributions and loans to the campaign. */
+  selfGiven: number;
+  selfLoans: number;
+  receipts: number;
+}
+
+export function donorMakeup(m: Member): DonorMakeup | undefined {
+  const totals = Object.values(m.totals);
+  const sum = (f: (t: (typeof totals)[number]) => number | undefined) => totals.reduce((s, t) => s + Math.max(f(t) ?? 0, 0), 0);
+  const small = sum((t) => t.unitemized);
+  const itemized = sum((t) => t.itemized);
+  const places = m.individuals?.places;
+  if (small + itemized <= 0 || !places) return undefined;
+  const inDistrict = places.inDistrict === undefined ? undefined : Math.min(places.inDistrict, places.inState);
+  return {
+    small,
+    itemized,
+    inDistrict,
+    restOfState: Math.max(places.inState - (inDistrict ?? 0), 0),
+    outOfState: Math.max(places.outOfState, 0),
+    selfGiven: sum((t) => t.candidate),
+    selfLoans: sum((t) => t.candidateLoans),
+    receipts: sum((t) => t.receipts),
+  };
+}
+
+export const makeupShares = (d: DonorMakeup) => {
+  const placed = (d.inDistrict ?? 0) + d.restOfState + d.outOfState;
+  return {
+    small: d.small / (d.small + d.itemized),
+    inState: placed ? ((d.inDistrict ?? 0) + d.restOfState) / placed : undefined,
+    inDistrict: placed && d.inDistrict !== undefined ? d.inDistrict / placed : undefined,
+    self: d.receipts ? (d.selfGiven + d.selfLoans) / d.receipts : undefined,
+  };
+};
+
+type Shares = ReturnType<typeof makeupShares>;
+const medianOf = (values: number[]) => {
+  const s = values.sort((a, b) => a - b);
+  if (!s.length) return undefined;
+  const mid = Math.floor(s.length / 2);
+  return s.length % 2 ? s[mid]! : (s[mid - 1]! + s[mid]!) / 2;
+};
+const makeupMedians = new Map<string, Record<keyof Shares, number | undefined>>();
+/** The typical member of the chamber, share by share (each its own median). */
+export function chamberMakeupMedians(chamber: Member["chamber"]) {
+  let out = makeupMedians.get(chamber);
+  if (!out) {
+    const shares = members
+      .filter((x) => x.chamber === chamber)
+      .flatMap((x) => {
+        const d = donorMakeup(x);
+        return d ? [makeupShares(d)] : [];
+      });
+    const pick = (k: keyof Shares) => medianOf(shares.flatMap((s) => (s[k] === undefined ? [] : [s[k]!])));
+    out = { small: pick("small"), inState: pick("inState"), inDistrict: pick("inDistrict"), self: pick("self") };
+    makeupMedians.set(chamber, out);
+  }
+  return out;
+}

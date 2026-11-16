@@ -19,6 +19,7 @@ import {
   orgTypeLabel,
   fecCommitteeUrl,
   fecCandidateUrl,
+  hidesDonors,
   type Committee,
 } from "../../lib/data";
 import { chamberName } from "../../lib/derived";
@@ -33,13 +34,36 @@ const split = partySplit(c.recipients);
 const name = displayName(c.name);
 // A PAC that is its own organization doesn't need a link back to itself.
 const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && org.name !== name);
+const nonCommittee = c.kind === "non-committee";
+const ecOnly = c.id.startsWith("C3");
 ---
 
 <Base title={name} og={{ type: "pac", id: c.id }} description={`Which members of Congress ${name} gives to, ${cycleRange}.`}>
   <p class="kicker">
-    {kindLabel(c.kind)}{orgTypeLabel(c.orgType) && <> · {orgTypeLabel(c.orgType)}</>} · <a href={fecCommitteeUrl(c.id)}>FEC {c.id}</a>
+    {c.person ? "Individual, not a PAC" : kindLabel(c.kind)}{orgTypeLabel(c.orgType) && <> · {orgTypeLabel(c.orgType)}</>} · <a href={fecCommitteeUrl(c.id)}>FEC {c.id}</a>
   </p>
   <h1>{name}</h1>
+
+  {
+    nonCommittee && (
+      <p class="filer-note">
+        {c.person ? (
+          <>{name} is a person, not a political committee, and reports independent expenditures to the FEC on Form 5.</>
+        ) : (
+          <>
+            {name} isn't a political committee. It reports its {ecOnly ? "electioneering communications" : "independent expenditures"} to the
+            FEC on Form {ecOnly ? "9" : "5"}, as groups other than PACs must.
+          </>
+        )}{" "}
+        {hidesDonors(c) ? (
+          <><strong>It doesn't disclose its donors:</strong> its filings for this spending name none.</>
+        ) : c.reportedDonations ? (
+          <>Its filings list <strong>{money(c.reportedDonations, true)}</strong> received to pay for this spending, {cycleRange}.</>
+        ) : null}{" "}
+        <a href={fecCommitteeUrl(c.id)}>Its FEC filings</a>.
+      </p>
+    )
+  }
 
   {
     showOrg && (
@@ -71,6 +95,7 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
     {c.outside && c.outside.oppose > 0 && <div class="stat"><dt>Spent opposing members</dt><dd>{money(c.outside.oppose, true)}</dd></div>}
     {c.opponents && c.opponents.support > 0 && <div class="stat"><dt>Spent supporting members' opponents</dt><dd>{money(c.opponents.support, true)}</dd></div>}
     {c.opponents && c.opponents.oppose > 0 && <div class="stat"><dt>Spent opposing members' opponents</dt><dd>{money(c.opponents.oppose, true)}</dd></div>}
+    {c.electioneering && <div class="stat"><dt>On ads naming members, without a for or against</dt><dd>{money(c.electioneering.total, true)}</dd></div>}
   </dl>
 
   {
@@ -136,6 +161,26 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
   }
 
   {
+    c.electioneering && (
+      <section class="story">
+        <h2>Electioneering ads naming members</h2>
+        <p class="chart-dek">
+          Broadcast ads that named a current member shortly before an election, {cycleRange}, without saying to vote for
+          or against them. The FEC splits each ad's cost among the candidates it names; these are the members' shares.
+        </p>
+        <RankedTable
+          heading="Member"
+          valueHeading="Spent"
+          rows={c.electioneering.targets.slice(0, 30).map((t) => {
+            const m = memberById.get(t.id);
+            return { label: m?.name ?? t.id, value: t.total, href: `/members/${t.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined };
+          })}
+        />
+      </section>
+    )
+  }
+
+  {
     c.recipients.length > 1 && (
       <section class="story">
         <h2>Who it gave to</h2>
@@ -163,3 +208,7 @@ const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && 
     </section>
   </div>}
 </Base>
+
+<style>
+  .filer-note { max-width: 46rem; }
+</style>

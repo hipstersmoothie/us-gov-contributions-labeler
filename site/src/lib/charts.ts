@@ -859,5 +859,123 @@ function ranges(d: RangesData, ctx: Ctx): Plot.PlotOptions {
   });
 }
 
-export const charts = { swarm, bars, stacked, dumbbell, histogram, diverging, parliament, ranges } as const;
+// --- makeup: what one pot of money is made of, against the chamber median ----------
+
+export interface MakeupSegment {
+  label: string;
+  value: number;
+  color: string;
+  /** Ink for the share printed inside this fill. */
+  ink: string;
+}
+export interface MakeupRow {
+  label: string;
+  /** Left to right; each bar fills 100%. */
+  segments: MakeupSegment[];
+  /** Where the typical member's bar would split, as a share from the left. */
+  median?: number;
+  /** "Median House member: 31% in state". */
+  medianLabel?: string;
+}
+export interface MakeupData {
+  rows: MakeupRow[];
+}
+
+/**
+ * One 100% bar per split, named directly underneath (no legend to decode), with
+ * a tick where the chamber median falls. The tick is drawn twice, page color
+ * under ink, so it reads on a dark segment and a pale one alike.
+ */
+function makeup(d: MakeupData, ctx: Ctx): Plot.PlotOptions {
+  const step = 78;
+  const labelY = 16;
+  const barTop = 24;
+  const barH = 18;
+  const pct = (v: number) => `${Math.round(v * 100)}%`;
+  const segs = d.rows.flatMap((row, i) => {
+    const total = row.segments.reduce((s, x) => s + x.value, 0) || 1;
+    let at = 0;
+    return row.segments.map((s) => {
+      const share = s.value / total;
+      const seg = { i, row: row.label, ...s, share, x1: at, x2: at + share };
+      at += share;
+      return seg;
+    });
+  });
+  type Seg = (typeof segs)[number];
+  const rowTop = (i: number) => i * step;
+  const fits = (s: Seg) => s.share * ctx.width > pct(s.share).length * 7.5 + 12;
+  // Under the bar, every segment by name, in bar order.
+  const captions = d.rows.map((row, i) => ({
+    i,
+    text: segs
+      .filter((s) => s.i === i)
+      .map((s) => `${pct(s.share)} ${s.label}`)
+      .join("  ·  "),
+  }));
+  const medians = d.rows.flatMap((row, i) => (row.median === undefined ? [] : [{ i, x: row.median, label: row.medianLabel ?? `Median: ${pct(row.median)}` }]));
+  const tick = (stroke: string, strokeWidth: number, extra: number) =>
+    Plot.ruleX(medians, { x: "x", y1: (m) => rowTop(m.i) + barTop - 5 - extra, y2: (m) => rowTop(m.i) + barTop + barH + 5 + extra, stroke, strokeWidth });
+
+  return base(ctx, {
+    height: d.rows.length * step - 10,
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 1,
+    marginRight: 1,
+    x: { domain: [0, 1], axis: null },
+    y: { domain: [0, d.rows.length * step - 10], axis: null, reverse: true },
+    marks: [
+      Plot.text(d.rows, {
+        x: 0,
+        y: (_, i) => rowTop(i) + labelY,
+        lineAnchor: "bottom",
+        textAnchor: "start",
+        text: "label",
+        fill: "var(--text-primary)",
+        fontWeight: 600,
+        fontSize: 13,
+        ...fit(ctx.width - 8),
+      }),
+      Plot.rectX(segs, {
+        x1: "x1",
+        x2: "x2",
+        y1: (s) => rowTop(s.i) + barTop,
+        y2: (s) => rowTop(s.i) + barTop + barH,
+        fill: "color",
+        insetLeft: 0.5,
+        insetRight: 0.5,
+        channels: { Group: "row", Part: "label", Amount: (s: Seg) => money(s.value), Share: (s: Seg) => pct(s.share) },
+        tip: ctx.interactive ? { format: { x1: false, x2: false, y1: false, y2: false, fill: false, Group: true, Part: true, Amount: true, Share: true } } : undefined,
+      }),
+      Plot.text(segs.filter(fits), {
+        x: (s: Seg) => (s.x1 + s.x2) / 2,
+        y: (s: Seg) => rowTop(s.i) + barTop + barH / 2,
+        text: (s: Seg) => pct(s.share),
+        fill: "ink",
+        fontSize: 11,
+        fontWeight: 600,
+      }),
+      Plot.text(captions, {
+        x: 0,
+        y: (c) => rowTop(c.i) + barTop + barH + 7,
+        lineAnchor: "top",
+        textAnchor: "start",
+        text: "text",
+        fill: "var(--text-secondary)",
+        fontSize: 12,
+        lineWidth: Math.max(ctx.width - 8, 40) / 12,
+      }),
+      tick("var(--page)", 5, 1),
+      tick("var(--text-primary)", 2, 0),
+      ...(ctx.interactive
+        ? [
+            Plot.tip(medians, Plot.pointerX({ x: "x", y: (m) => rowTop(m.i) + barTop + barH / 2, title: "label", maxRadius: 8 })),
+          ]
+        : []),
+    ],
+  });
+}
+
+export const charts = { swarm, bars, stacked, dumbbell, histogram, diverging, parliament, ranges, makeup } as const;
 export type ChartName = keyof typeof charts;

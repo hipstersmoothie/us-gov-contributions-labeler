@@ -13,6 +13,7 @@ import { normalizeOrg, slugify, titleCase } from "../lib/names.js";
 import { sectorForName, type Sector } from "../lib/sectors.js";
 import type { Legislator } from "../lib/legislators.js";
 import type { Organization } from "./committees.js";
+import { districtKey, loadZipDistricts } from "../lib/districts.js";
 
 const CACHE_DIR = ".cache/fec";
 const BULK_URL = "https://www.fec.gov/files/bulk-downloads";
@@ -25,6 +26,13 @@ export interface MemberIndividuals {
   donations: number;
   employers: { id: string; name: string; total: number; organization?: string }[];
   sectors: { id: IndividualSector; total: number }[];
+  /**
+   * The same itemized money by where donors live, from the address on each
+   * donation. `inDistrict` (House members in a district, not at-large seats)
+   * is part of `inState`, estimated from ZIP codes: a ZIP that crosses
+   * district lines is split by land area.
+   */
+  places?: { inState: number; outOfState: number; unknown: number; inDistrict?: number };
 }
 
 export interface EmployerGiving {
@@ -131,6 +139,10 @@ export async function ingestIndividuals(
   const sectors = new Map<string, Map<IndividualSector, number>>();
   const totals = new Map<string, { itemized: number; donations: number }>();
   const occupationSector = new Map<string, Sector | undefined>();
+  const legislatorById = new Map(legislators.map((l) => [l.bioguide, l]));
+  const places = new Map<string, { inState: number; outOfState: number; unknown: number }>();
+  // House members' in-state money by ZIP, placed in districts at the end.
+  const inStateZips = new Map<string, Map<string, number>>();
 
   const classifyOccupation = (occupation: string) => {
     if (!occupationSector.has(occupation)) {
@@ -176,6 +188,22 @@ export async function ingestIndividuals(
       const occupation = (r[12] ?? "").trim().toUpperCase();
       kept++;
 
+      const home = legislatorById.get(bioguide)!;
+      const place = places.get(bioguide) ?? { inState: 0, outOfState: 0, unknown: 0 };
+      const state = r[9] ?? "";
+      if (!/^[A-Z]{2}$/.test(state) || state === "ZZ") place.unknown += amount;
+      else if (state !== home.state) place.outOfState += amount;
+      else {
+        place.inState += amount;
+        const zip = (r[10] ?? "").slice(0, 5);
+        if (home.chamber === "house" && home.district && /^\d{5}$/.test(zip)) {
+          let z = inStateZips.get(bioguide);
+          if (!z) inStateZips.set(bioguide, (z = new Map()));
+          z.set(zip, (z.get(zip) ?? 0) + amount);
+        }
+      }
+      places.set(bioguide, place);
+
       const t = totals.get(bioguide) ?? { itemized: 0, donations: 0 };
       t.itemized += amount;
       t.donations += type === "22Y" ? 0 : 1;
@@ -217,6 +245,19 @@ export async function ingestIndividuals(
     console.log(`  ${(seen / 1e6).toFixed(1)}M rows, ${kept.toLocaleString()} to current members`);
   }
 
+  // In-district money: each in-state ZIP's donations, times the share of the
+  // ZIP inside the member's district. ZIPs the Census file doesn't know (PO
+  // boxes, businesses) stay out of the district figure.
+  const zipDistricts = await loadZipDistricts();
+  const inDistrict = new Map<string, number>();
+  for (const [bioguide, zips] of inStateZips) {
+    const l = legislatorById.get(bioguide)!;
+    const key = districtKey(l.state, l.district);
+    let sum = 0;
+    for (const [zip, amount] of zips) sum += amount * (zipDistricts.get(zip)?.get(key) ?? 0);
+    inDistrict.set(bioguide, sum);
+  }
+
   const members: Record<string, MemberIndividuals> = {};
   const employerTotals = new Map<string, Map<string, number>>();
   for (const [bioguide, t] of totals) {
@@ -243,6 +284,12 @@ export async function ingestIndividuals(
         .map(([id, total]) => ({ id, total: Math.round(total) }))
         .filter((s) => s.total > 0)
         .sort((a, b) => b.total - a.total),
+      places: (({ inState, outOfState, unknown }) => ({
+        inState: Math.round(inState),
+        outOfState: Math.round(outOfState),
+        unknown: Math.round(unknown),
+        inDistrict: inDistrict.has(bioguide) ? Math.round(inDistrict.get(bioguide)!) : undefined,
+      }))(places.get(bioguide)!),
     };
   }
 

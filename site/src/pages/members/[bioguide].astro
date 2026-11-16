@@ -20,9 +20,12 @@ import {
   committeeHref,
   kindLabel,
   fecCandidateUrl,
+  spenderType,
+  hidesDonors,
   type Member,
 } from "../../lib/data";
-import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct, possessive, backersPhrase, cycleLabel } from "../../lib/derived";
+import { memberPoints, pacPercentile, pacTotal, raisedTotal, chamberName, pct, possessive, backersPhrase, cycleLabel, donorMakeup, makeupShares, chamberMakeupMedians } from "../../lib/derived";
+import { STATES } from "../../../../src/lib/list-specs";
 import { surname, moneyAuto, candidateName, partyCode } from "../../lib/format";
 import OutsideTable from "../../components/OutsideTable.astro";
 import VotesTable from "../../components/VotesTable.astro";
@@ -100,9 +103,68 @@ const contribEmp = contributors.reduce((s, c) => s + c.individuals, 0);
 const spenders = m.outside.spenders
   .map((s) => {
     const c = committeeById.get(s.id);
-    return { ...s, label: committeeLabel(s.id), kind: c ? kindLabel(c.kind) : "", href: committeeHref(s.id) };
+    return { ...s, label: committeeLabel(s.id), kind: spenderType(s.id), nonCommittee: c?.kind === "non-committee", hidden: hidesDonors(c), href: committeeHref(s.id) };
   })
   .sort((a, b) => b.support + b.oppose - (a.support + a.oppose));
+// Groups that aren't PACs, and those of them whose filings name no donors.
+const byNonCommittee = spenders.filter((s) => s.nonCommittee).reduce((n, s) => n + s.support + s.oppose, 0);
+const byHidden = spenders.filter((s) => s.hidden).reduce((n, s) => n + s.support + s.oppose, 0);
+const ec = m.electioneering;
+// Lobbyist PACs we have a page for go by the name used everywhere else on the site.
+const bundlerName = (b: { name: string; committee?: string }) => (b.committee && committeeById.has(b.committee) ? committeeLabel(b.committee) : b.name);
+
+// Who gave: small vs. itemized, where itemized donors live, and the
+// candidate's own money, each against the chamber's median member.
+const makeup = donorMakeup(m);
+const shares = makeup && makeupShares(makeup);
+const medians = chamberMakeupMedians(m.chamber);
+const stateName = STATES[m.state] ?? m.state;
+const pctOf = (v: number | undefined) => (v === undefined ? "–" : `${Math.round(v * 100)}%`);
+const self = makeup ? makeup.selfGiven + makeup.selfLoans : 0;
+const makeupRows = makeup
+  ? [
+      {
+        label: "Individual donations, by size",
+        segments: [
+          { label: "small donors ($200 or less)", value: makeup.small, color: "var(--bar)", ink: "var(--on-bar)" },
+          { label: "larger, itemized donations", value: makeup.itemized, color: "var(--bar-muted)", ink: "var(--on-bar-muted)" },
+        ],
+        median: medians.small,
+        medianLabel: `Median ${typical}: ${pctOf(medians.small)} from small donors`,
+      },
+      ...(makeup.inDistrict !== undefined || makeup.restOfState + makeup.outOfState > 0
+        ? [
+            {
+              label: "Itemized donations, by where the donor lives",
+              segments: [
+                ...(makeup.inDistrict !== undefined
+                  ? [
+                      { label: "in the district", value: makeup.inDistrict, color: "var(--bar)", ink: "var(--on-bar)" },
+                      { label: `elsewhere in ${stateName}`, value: makeup.restOfState, color: "var(--bar-muted)", ink: "var(--on-bar-muted)" },
+                    ]
+                  : [{ label: `in ${stateName}`, value: makeup.restOfState, color: "var(--bar)", ink: "var(--on-bar)" }]),
+                { label: "out of state", value: makeup.outOfState, color: "var(--context)", ink: "var(--on-context)" },
+              ],
+              median: medians.inState,
+              medianLabel: `Median ${typical}: ${pctOf(medians.inState)} from in state`,
+            },
+          ]
+        : []),
+      ...(shares?.self && shares.self >= 0.005
+        ? [
+            {
+              label: "Everything the campaign raised",
+              segments: [
+                { label: "the candidate's own money", value: self, color: "var(--bar)", ink: "var(--on-bar)" },
+                { label: "everyone else", value: Math.max(makeup.receipts - self, 0), color: "var(--context)", ink: "var(--on-context)" },
+              ],
+              median: medians.self,
+              medianLabel: `Median ${typical}: ${pctOf(medians.self)} of their own money`,
+            },
+          ]
+        : []),
+    ]
+  : [];
 
 // Spending on their opponents (other candidates in the same race), kept apart
 // from spending that named the member.
@@ -290,6 +352,62 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
     </section>
   </div>
 
+  {
+    makeup && shares && (
+      <section class="story">
+        <h2>Small donors, home state and self-funding</h2>
+        <p class="chart-dek">
+          Small donors gave <strong>{pctOf(shares.small)}</strong> of {possessive(last)} individual donations, against{" "}
+          {pctOf(medians.small)} for the median {typical}.
+          {shares.inState !== undefined && (
+            <>
+              {" "}Of the itemized donations, <strong>{pctOf(shares.inState)}</strong> came from people in {stateName}
+              {shares.inDistrict !== undefined && <>, {pctOf(shares.inDistrict)} from inside the district</>} (median{" "}
+              {typical}: {pctOf(medians.inState)} in state).
+            </>
+          )}{" "}
+          {self > 0 ? (
+            <>
+              {last} put <strong>{money(self, true)}</strong> of their own money into the campaign
+              {makeup.selfLoans > 0 && makeup.selfGiven > 0
+                ? <> ({money(makeup.selfGiven, true)} given, {money(makeup.selfLoans, true)} lent)</>
+                : makeup.selfLoans > 0 ? <> as loans</> : null}
+              .
+            </>
+          ) : (
+            <>{last} reported no contributions or loans of their own.</>
+          )}
+        </p>
+        <PlotFigure
+          chart="makeup"
+          label={`${possessive(m.name)} donors by size and home state, with the median ${typical}`}
+          legend={[{ label: `Median ${typical}`, color: "var(--text-primary)", shape: "tick" }]}
+          data={{ rows: makeupRows }}
+          table={{
+            columns: ["", last, `Median ${typical}`],
+            numeric: [1, 2],
+            rows: [
+              ["Small donors ($200 or less)", `${money(makeup.small)} (${pctOf(shares.small)})`, pctOf(medians.small)],
+              ["Itemized donations", money(makeup.itemized), "–"],
+              ...(makeup.inDistrict !== undefined ? [["Itemized, from in the district (estimate)", `${money(makeup.inDistrict)} (${pctOf(shares.inDistrict)})`, pctOf(medians.inDistrict)]] : []),
+              ["Itemized, from in state", `${money((makeup.inDistrict ?? 0) + makeup.restOfState)} (${pctOf(shares.inState)})`, pctOf(medians.inState)],
+              ["Itemized, from out of state", money(makeup.outOfState), "–"],
+              ["Candidate's own contributions", money(makeup.selfGiven), "–"],
+              ["Candidate's own loans", money(makeup.selfLoans), "–"],
+              ["Own money, share of everything raised", pctOf(shares.self), pctOf(medians.self)],
+            ],
+          }}
+        />
+        <p class="source">
+          {cycleRange.replace("–", " to ")}. Small and itemized totals are what the campaigns reported to the FEC; where
+          donors live comes from the address on each itemized donation.
+          {makeup.inDistrict !== undefined && <> The district share is an estimate from ZIP codes: a ZIP that crosses district lines is split by land area, using the Census Bureau's map of today's districts.</>}{" "}
+          Loans can be repaid later.
+        </p>
+      </section>
+    )
+  }
+
   <section class="story">
     <h2>How {last} compares</h2>
     <p class="chart-dek">
@@ -391,6 +509,12 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
           <p class="chart-dek">
             Groups spent <strong>{money(m.outside.support, true)}</strong> supporting {last} and{" "}
             <strong>{money(m.outside.oppose, true)}</strong> opposing them.
+            {byNonCommittee > 0 && (
+              <>
+                {" "}{money(byNonCommittee, true)} of it came from groups that aren't PACs
+                {byHidden > 0 && <>, {byHidden === byNonCommittee ? "all" : <>{money(byHidden, true)}</>} from groups whose filings name no donors</>}.
+              </>
+            )}
           </p>
           <PlotFigure
             chart="diverging"
@@ -403,7 +527,7 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
             table={{
               columns: ["Group", "Type", "Supporting", "Opposing"],
               numeric: [2, 3],
-              rows: spenders.map((s) => [s.label, s.kind, s.support ? money(s.support) : "–", s.oppose ? money(s.oppose) : "–"]),
+              rows: spenders.map((s) => [{ text: s.label, href: s.href }, s.kind, s.support ? money(s.support) : "–", s.oppose ? money(s.oppose) : "–"]),
             }}
           />
         </>
@@ -442,13 +566,75 @@ const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): 
             opposeHeading="Opposing opponents"
             rows={opp.spenders.slice(0, 10).map((s) => {
               const c = committeeById.get(s.id);
-              return { label: committeeLabel(s.id), href: committeeHref(s.id), note: c ? kindLabel(c.kind) : undefined, support: s.support, oppose: s.oppose };
+              return { label: committeeLabel(s.id), href: committeeHref(s.id), note: c ? spenderType(s.id) : undefined, support: s.support, oppose: s.oppose };
             })}
           />
         </>
       )
     }
+    {
+      ec && (
+        <>
+          <h3 class="part">Ads that named {last} without a for or against</h3>
+          <p class="chart-dek">
+            Groups spent <strong>{money(ec.total, true)}</strong> on electioneering communications naming {last}: broadcast
+            ads shortly before an election that mention a candidate but don't say to vote for or against them, so they
+            aren't counted as supporting or opposing. Where an ad named several candidates, this is {possessive(last)} share.
+          </p>
+          <RankedTable
+            heading="Group"
+            valueHeading="Spent"
+            rows={ec.spenders.slice(0, 10).map((s) => ({ label: committeeLabel(s.id), value: s.total, href: committeeHref(s.id), note: spenderType(s.id) || undefined }))}
+          />
+        </>
+      )
+    }
   </section>
+
+  {
+    m.bundling && (
+      <section class="story">
+        <h2>Lobbyists who bundled for {last}</h2>
+        <p class="chart-dek">
+          Registered lobbyists and lobbyists' PACs collected <strong>{money(m.bundling.total, true)}</strong> from other
+          donors and passed it to {possessive(last)} campaign{m.bundling.committees.some((id) => committeeById.get(id)?.kind === "leadership-pac") && " or leadership PAC"},{" "}
+          {cycleRange}. Campaigns must report a lobbyist's bundles once they pass a threshold, indexed for inflation, in a half-year.
+          The money itself is counted with the donors who gave it.
+        </p>
+        <RankedTable
+          heading="Bundler"
+          valueHeading="Bundled"
+          rows={m.bundling.bundlers.slice(0, 15).map((b) => ({
+            label: bundlerName(b),
+            href: b.organization ? `/organizations/${b.organization}/` : b.committee && committeeById.has(b.committee) ? `/pacs/${b.committee}/` : undefined,
+            note: b.type === "pac" ? "Lobbyist PAC" : [b.occupation ? `Lobbyist, ${b.occupation.toLowerCase()}` : "Lobbyist", b.employer].filter(Boolean).join(" · "),
+            value: b.total,
+          }))}
+        />
+        {m.bundling.bundlers.length > 15 && (
+          <MoreDisclosure client:visible title={`All ${m.bundling.bundlers.length} bundlers`}>
+            <table>
+              <tbody>
+                {m.bundling.bundlers.map((b) => (
+                  <tr>
+                    <td>{bundlerName(b)}<span class="muted">{b.employer && <> · {b.employer}</>}</span></td>
+                    <td class="num">{moneyAuto(b.total)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </MoreDisclosure>
+        )}
+        <p class="source">
+          Source: FEC Form 3L reports filed by{" "}
+          {m.bundling.committees.map((id, i) => (
+            <>{i > 0 && ", "}<a href={`https://www.fec.gov/data/filings/?committee_id=${id}&form_type=F3L`}>{committeeLabel(id)}</a></>
+          ))}
+          . Names link to our organization pages where the employer or PAC matches by name.
+        </p>
+      </section>
+    )
+  }
 
   {
     ind && (

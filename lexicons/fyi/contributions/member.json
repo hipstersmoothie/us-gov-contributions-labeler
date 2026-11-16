@@ -24,6 +24,8 @@
           "committees": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "PAC contributions by FEC committee id (fyi.contributions.committee record key), largest first, top 50." },
           "outside": { "type": "ref", "ref": "#outside" },
           "opponents": { "type": "ref", "ref": "#opponents" },
+          "electioneering": { "type": "ref", "ref": "#electioneering" },
+          "bundling": { "type": "ref", "ref": "#bundling" },
           "assignments": { "type": "array", "items": { "type": "ref", "ref": "#assignment" }, "description": "Congressional committee seats." },
           "individuals": { "type": "ref", "ref": "#individuals" },
           "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "Top contributors, counted by organization: its PAC money plus donations from people who list it as their employer. Top 50." },
@@ -54,12 +56,15 @@
         "individual": { "type": "integer", "description": "From individuals." },
         "pac": { "type": "integer", "description": "From PACs and other non-party committees." },
         "party": { "type": "integer", "description": "From party committees." },
-        "candidate": { "type": "integer", "description": "From the candidate." }
+        "candidate": { "type": "integer", "description": "The candidate's own contributions." },
+        "candidateLoans": { "type": "integer", "description": "Loans from the candidate." },
+        "itemized": { "type": "integer", "description": "Individual contributions the campaign committees itemized (over $200 a year from one donor), from the FEC's committee summaries." },
+        "unitemized": { "type": "integer", "description": "Individual contributions reported only as a total ($200 or less a year from one donor): small donors." }
       }
     },
     "outside": {
       "type": "object",
-      "description": "Independent expenditures for and against this member.",
+      "description": "Independent expenditures for and against this member: committees' processed reports, their 24/48-hour notices dated after the last processed report, and Form 5 filings by groups and people that aren't political committees.",
       "required": ["support", "oppose", "spenders"],
       "properties": {
         "support": { "type": "integer", "description": "US dollars." },
@@ -109,7 +114,56 @@
         "itemized": { "type": "integer", "description": "US dollars." },
         "donations": { "type": "integer", "description": "Number of itemized donations." },
         "employers": { "type": "array", "items": { "type": "ref", "ref": "#employer" }, "description": "By the employer donors listed, largest first." },
-        "sectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By the employer's estimated sector (id is the sector)." }
+        "sectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By the employer's estimated sector (id is the sector)." },
+        "places": { "type": "ref", "ref": "#places" }
+      }
+    },
+    "places": {
+      "type": "object",
+      "description": "Itemized individual donations by where the donor lives, from the address on each donation.",
+      "required": ["inState", "outOfState", "unknown"],
+      "properties": {
+        "inState": { "type": "integer", "description": "US dollars from donors in the member's state." },
+        "outOfState": { "type": "integer", "description": "US dollars from donors elsewhere." },
+        "unknown": { "type": "integer", "description": "US dollars with no usable state." },
+        "inDistrict": { "type": "integer", "description": "House members with a district: the part of inState from inside it, estimated from ZIP codes. A ZIP that crosses district lines is split by land area (Census Bureau 119th Congress ZCTA relationship file)." }
+      }
+    },
+    "electioneering": {
+      "type": "object",
+      "description": "Electioneering communications (FEC Form 9) that named this member: broadcast ads shortly before an election that don't say vote for or against, so they're kept apart from 'outside'. Where an ad named several candidates, this is the member's share as the FEC calculates it.",
+      "required": ["total", "spenders"],
+      "properties": {
+        "total": { "type": "integer", "description": "US dollars." },
+        "spenders": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By filer (fyi.contributions.committee record key), largest first." }
+      }
+    },
+    "bundling": {
+      "type": "object",
+      "description": "Contributions registered lobbyists and lobbyists' PACs bundled for this member's campaign or leadership PAC, as the committees reported on FEC Form 3L.",
+      "required": ["total", "bundlers", "committees"],
+      "properties": {
+        "total": { "type": "integer", "description": "US dollars." },
+        "committees": { "type": "array", "items": { "type": "string" }, "description": "FEC ids of the committees that reported the bundles." },
+        "bundlers": { "type": "array", "items": { "type": "ref", "ref": "#bundler" }, "description": "Largest first." }
+      }
+    },
+    "bundler": {
+      "type": "object",
+      "required": ["id", "name", "type", "total", "filings"],
+      "properties": {
+        "id": { "type": "string", "description": "The lobbyist PAC's FEC committee id, or a slug of the lobbyist's name and employer." },
+        "name": { "type": "string" },
+        "type": { "type": "string", "knownValues": ["lobbyist", "pac"] },
+        "employer": { "type": "string", "description": "Lobbyists: the firm or registrant they work for, as filed." },
+        "occupation": { "type": "string" },
+        "committee": { "type": "string", "description": "Lobbyist PACs: FEC committee id." },
+        "committeeUri": { "type": "string", "format": "at-uri" },
+        "state": { "type": "string" },
+        "organization": { "type": "string", "description": "fyi.contributions.organization record key, where the PAC or the lobbyist's employer matches by exact name." },
+        "organizationUri": { "type": "string", "format": "at-uri" },
+        "total": { "type": "integer", "description": "US dollars." },
+        "filings": { "type": "array", "items": { "type": "integer" }, "description": "FEC file numbers of the Form 3L reports listing it, newest first." }
       }
     },
     "employer": {

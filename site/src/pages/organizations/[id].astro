@@ -278,6 +278,31 @@ const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcomp
   </div>
 
   {
+    o.bundled && (
+      <section class="story">
+        <h2>Contributions its lobbyists bundled</h2>
+        <p class="chart-dek">
+          {o.bundled.bundlers.length === 1 ? o.bundled.bundlers[0]!.name : `${o.bundled.bundlers.length} of its lobbyists or its PAC`}{" "}
+          collected <strong>{money(o.bundled.total, true)}</strong> from other donors and passed it to current members'
+          campaigns and leadership PACs, {cycleRange}, as the campaigns reported on FEC Form 3L. Bundlers are matched to{" "}
+          {name} by name.
+        </p>
+        <RankedTable
+          heading="Member"
+          valueHeading="Bundled"
+          rows={o.bundled.recipients.slice(0, 15).map((r) => {
+            const m = memberById.get(r.id);
+            return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined };
+          })}
+        />
+        {o.bundled.bundlers.length > 1 && (
+          <p class="source">Bundlers: {o.bundled.bundlers.map((b) => `${b.name} (${money(b.total, true)})`).join(", ")}.</p>
+        )}
+      </section>
+    )
+  }
+
+  {
     lobbiedBills.length > 0 && (
       <section class="story">
         <h2>Bills it lobbied on</h2>

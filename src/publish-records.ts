@@ -138,6 +138,9 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
       pac: usd(t.pac),
       party: usd(t.party),
       candidate: usd(t.candidate),
+      candidateLoans: t.candidateLoans === undefined ? undefined : usd(t.candidateLoans),
+      itemized: t.itemized === undefined ? undefined : usd(t.itemized),
+      unitemized: t.unitemized === undefined ? undefined : usd(t.unitemized),
     })),
     sectors: amounts(m.sectors),
     organizations: amounts(m.organizations, "organization"),
@@ -147,6 +150,17 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
       ...outsideTotals(m.opponents),
       spenders: outsideRows(m.opponents.spenders, "committee"),
       candidates: m.opponents.candidates.map((c) => ({ ...c, ...outsideTotals(c) })),
+    },
+    electioneering: m.electioneering && { total: usd(m.electioneering.total), spenders: amounts(m.electioneering.spenders, "committee") },
+    bundling: m.bundling && {
+      total: usd(m.bundling.total),
+      committees: m.bundling.committees,
+      bundlers: m.bundling.bundlers.map((b) => ({
+        ...b,
+        committeeUri: uri("committee", b.committee),
+        organizationUri: uri("organization", b.organization),
+        total: usd(b.total),
+      })),
     },
     assignments: m.assignments.map((a) => ({ ...a, uri: uri("congressCommittee", a.id) })),
     individuals: m.individuals && {
@@ -158,6 +172,12 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
         total: usd(e.total),
       })),
       sectors: amounts(m.individuals.sectors),
+      places: m.individuals.places && {
+        inState: usd(m.individuals.places.inState),
+        outOfState: usd(m.individuals.places.outOfState),
+        unknown: usd(m.individuals.places.unknown),
+        inDistrict: m.individuals.places.inDistrict === undefined ? undefined : usd(m.individuals.places.inDistrict),
+      },
     },
     contributors: m.contributors.map(contributor),
     combinedSectors: amounts(m.combinedSectors),
@@ -213,6 +233,7 @@ const toOrganization = (o: OrganizationRecord) =>
     recipients: amounts(o.recipients, "member"),
     outsideGifts: amounts(o.outsideGifts, "committee"),
     employees: o.employees && { total: usd(o.employees.total), recipients: amounts(o.employees.recipients, "member") },
+    bundled: o.bundled && { total: usd(o.bundled.total), recipients: amounts(o.bundled.recipients, "member"), bundlers: o.bundled.bundlers.map((b) => ({ ...b, total: usd(b.total) })) },
     lobbyingSpend: o.lobbyingSpend && {
       total: usd(o.lobbyingSpend.total),
       byYear: Object.entries(o.lobbyingSpend.byYear).map(([year, amount]) => ({ year: Number(year), amount: usd(amount) })),
@@ -227,6 +248,8 @@ const toCommittee = (c: CommitteeRecord & { opponents?: Outside & { targets: (Ou
     orgType: c.orgType,
     kind: c.kind,
     state: c.state,
+    reportedDonations: c.reportedDonations === undefined ? undefined : usd(c.reportedDonations),
+    person: c.person,
     organization: c.organization,
     organizationUri: uri("organization", c.organization),
     sector: c.sector,
@@ -238,6 +261,7 @@ const toCommittee = (c: CommitteeRecord & { opponents?: Outside & { targets: (Ou
     outside: c.outside && { ...outsideTotals(c.outside), targets: outsideRows(c.outside.targets, "member") },
     opponents: c.opponents && { ...outsideTotals(c.opponents), targets: outsideRows(c.opponents.targets, "member") },
     donors: amounts(c.donors, "donor"),
+    electioneering: c.electioneering && { total: usd(c.electioneering.total), targets: amounts(c.electioneering.targets, "member") },
   });
 
 const toDonor = (d: DonorRecord) =>
@@ -345,13 +369,17 @@ const files = [
 const METHODOLOGY =
   "Direct contributions from PACs and other political committees to current members of Congress, plus " +
   "independent expenditures for and against them and donations of $50,000 or more to the outside spenders, from FEC bulk data. " +
+  "Outside spending also counts 24/48-hour notices dated after a committee's last processed report, independent expenditures " +
+  "by groups and people that aren't political committees (Form 5), and, kept separate, electioneering communications (Form 9). " +
+  "Donor makeup splits individual money into small (unitemized) and itemized, and itemized money by the donor's state and, " +
+  "for House districts, ZIP code. Lobbyist bundling comes from campaigns' Form 3L reports. " +
   "Each PAC is traced to the organization behind it (FEC connected organization, SEC EDGAR industry codes, lobbying " +
   "disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted by " +
   "organization: an organization's PAC money plus itemized donations from people who list it as their employer. " +
   `Details: ${SITE}/about/`;
 
 const LICENSE =
-  "The FEC, SEC and Lobbying Disclosure Act records this is built from are US government works in the public domain. " +
+  "The FEC, SEC, Census and Lobbying Disclosure Act records this is built from are US government works in the public domain. " +
   "contributions.fyi's own additions (sector and industry classifications, organization matching, Bluesky account " +
   "matching and the compiled totals) are dedicated to the public domain under CC0 1.0 " +
   "(https://creativecommons.org/publicdomain/zero/1.0/). Attribution to contributions.fyi is appreciated, not required.";
@@ -375,7 +403,9 @@ function datasetRecord(blobs: Map<string, unknown>, recordsComplete: boolean): V
     recordsComplete,
     sources: [
       { name: "FEC bulk data", url: "https://www.fec.gov/data/browse-data/?tab=bulk-data", usedFor: "Campaign totals, PAC contributions, outside spending, individual and super PAC donations" },
-      { name: "FEC API", url: "https://api.open.fec.gov/developers/", usedFor: "Leadership PAC sponsors" },
+      { name: "FEC API", url: "https://api.open.fec.gov/developers/", usedFor: "Leadership PAC sponsors; lists of Form 5, Form 9 and Form 3L reports" },
+      { name: "FEC electronic filings", url: "https://docquery.fec.gov/dcdev/posted/", usedFor: "Itemized Form 5 independent expenditures and Form 3L lobbyist bundling" },
+      { name: "Census ZCTA to congressional district relationship file", url: "https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/", usedFor: "Estimating in-district donations from ZIP codes" },
       { name: "congress-legislators", url: "https://github.com/unitedstates/congress-legislators", usedFor: "Current members, ids, committee seats" },
       { name: "SEC EDGAR", url: "https://www.sec.gov/edgar", usedFor: "Industry codes for public companies" },
       { name: "Lobbying disclosures", url: "https://lda.gov/api/", usedFor: "Lobbying issues and spending, which PACs belong to which organizations" },

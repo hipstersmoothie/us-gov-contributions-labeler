@@ -24,7 +24,8 @@
           "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." },
           "outsideGifts": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donations to super PACs and other outside spenders (FEC committee ids)." },
           "employees": { "type": "ref", "ref": "#employees" },
-          "lobbyingSpend": { "type": "ref", "ref": "#lobbyingSpend" }
+          "lobbyingSpend": { "type": "ref", "ref": "#lobbyingSpend" },
+          "bundled": { "type": "ref", "ref": "#bundled" }
         }
       }
     },
@@ -77,6 +78,25 @@
       "properties": {
         "total": { "type": "integer", "description": "US dollars." },
         "byYear": { "type": "array", "items": { "type": "ref", "ref": "#yearAmount" } }
+      }
+    },
+    "bundled": {
+      "type": "object",
+      "description": "Contributions its lobbyists or its PAC bundled for current members' campaigns and leadership PACs (FEC Form 3L), matched to the organization by exact name.",
+      "required": ["total", "recipients", "bundlers"],
+      "properties": {
+        "total": { "type": "integer", "description": "US dollars." },
+        "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." },
+        "bundlers": { "type": "array", "items": { "type": "ref", "ref": "#bundler" } }
+      }
+    },
+    "bundler": {
+      "type": "object",
+      "required": ["id", "name", "total"],
+      "properties": {
+        "id": { "type": "string", "description": "The lobbyist PAC's FEC committee id, or a slug of the lobbyist's name and employer." },
+        "name": { "type": "string" },
+        "total": { "type": "integer", "description": "US dollars." }
       }
     },
     "yearAmount": {

@@ -4,7 +4,7 @@
   "defs": {
     "main": {
       "type": "record",
-      "description": "A political committee registered with the FEC (PAC, super PAC, party or campaign committee) that gave to or spent on current members of Congress. The record key is the FEC committee id (e.g. 'C00030718').",
+      "description": "A political committee registered with the FEC (PAC, super PAC, party or campaign committee) that gave to or spent on current members of Congress, or a group or person that isn't a political committee but reported outside spending on them (FEC Form 5 or 9). The record key is the FEC id (e.g. 'C00030718').",
       "key": "any",
       "record": {
         "type": "object",
@@ -14,8 +14,10 @@
           "name": { "type": "string" },
           "connectedOrg": { "type": "string", "description": "Connected organization as filed with the FEC." },
           "orgType": { "type": "string", "description": "FEC organization type: C corporation, L labor, M membership, T trade, V cooperative, W corporation without stock." },
-          "kind": { "type": "string", "knownValues": ["pac", "leadership-pac", "candidate", "party", "super-pac", "other"] },
+          "kind": { "type": "string", "knownValues": ["pac", "leadership-pac", "candidate", "party", "super-pac", "non-committee", "other"], "description": "'non-committee': a group or person that isn't a political committee and reports independent expenditures (Form 5) or electioneering communications (Form 9)." },
           "state": { "type": "string" },
+          "reportedDonations": { "type": "integer", "description": "Non-committee filers with reports on file: US dollars their Form 5 or Form 9 reports list as received to pay for this spending, over the dataset's cycles. 0 means the filings name no donors." },
+          "person": { "type": "boolean", "description": "Form 5 filers who report as an individual rather than a group." },
           "organization": { "type": "string", "description": "fyi.contributions.organization record key." },
           "organizationUri": { "type": "string", "format": "at-uri" },
           "sector": { "type": "ref", "ref": "fyi.contributions.defs#sector" },
@@ -26,6 +28,7 @@
           "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." },
           "outside": { "type": "ref", "ref": "#outside" },
           "opponents": { "type": "ref", "ref": "#outside", "description": "Independent expenditures on current members' opponents; targets are the members whose races it was (bioguide ids)." },
+          "electioneering": { "type": "ref", "ref": "#electioneering" },
           "donors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donors of $50,000 or more (fyi.contributions.donor record keys), largest first." }
         }
       }
@@ -37,6 +40,15 @@
         "fecId": { "type": "string", "description": "FEC candidate id." },
         "bioguide": { "type": "string" },
         "uri": { "type": "string", "format": "at-uri", "description": "The sponsor's fyi.contributions.member record, if they're a current member." }
+      }
+    },
+    "electioneering": {
+      "type": "object",
+      "description": "Electioneering communications naming current members: ads that don't say vote for or against.",
+      "required": ["total", "targets"],
+      "properties": {
+        "total": { "type": "integer", "description": "US dollars." },
+        "targets": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." }
       }
     },
     "outside": {

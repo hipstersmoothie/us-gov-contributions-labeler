@@ -6,6 +6,7 @@ import readline from "readline";
 import { spawn } from "child_process";
 import type { Legislator } from "../lib/legislators.js";
 import { currentCycle, isFresh } from "../lib/cycles.js";
+import { committeeSummaries, electioneering, form5, form9Donations, lateNotices, type IeRow } from "./outside.js";
 
 const CACHE_DIR = ".cache/fec";
 const BULK_URL = "https://www.fec.gov/files/bulk-downloads";
@@ -17,7 +18,14 @@ export interface FecTotals {
   individual: number;
   pac: number;
   party: number;
+  /** The candidate's own contributions. */
   candidate: number;
+  /** Loans from the candidate. */
+  candidateLoans?: number;
+  /** Individual contributions the campaign itemized (over $200 a year from one donor). */
+  itemized?: number;
+  /** Individual contributions reported only as a total ($200 or less a year from one donor). */
+  unitemized?: number;
 }
 
 export type CommitteeKind =
@@ -26,6 +34,8 @@ export type CommitteeKind =
   | "candidate"
   | "party"
   | "super-pac"
+  /** A group or person that isn't a political committee but reported outside spending (FEC Form 5 or 9). */
+  | "non-committee"
   | "other";
 
 export interface FecCommittee {
@@ -36,6 +46,13 @@ export interface FecCommittee {
   orgType?: string;
   kind: CommitteeKind;
   state?: string;
+  /**
+   * Form 5 and Form 9 filers: what their reports list as received to pay for
+   * this spending, over the cycles. 0 means their filings name no donors.
+   */
+  reportedDonations?: number;
+  /** Form 5 filers who report as an individual, not a group. */
+  person?: boolean;
 }
 
 export interface FecData {
@@ -54,6 +71,14 @@ export interface FecData {
   opponents: OpponentSpending[];
   /** The opponents named in `opponents`. */
   candidates: Record<string, FecCandidate>;
+  /**
+   * Electioneering communications (Form 9) naming a member: committee id ->
+   * bioguide -> cycle -> the member's share of the cost. They don't say
+   * vote for or against, so they're kept apart from `outside`.
+   */
+  electioneering?: Record<string, Record<string, Record<number, number>>>;
+  /** What the sources beyond pas2 added, for the run log and the about page. */
+  added?: { cycle: number; source: "notices" | "form5"; amount: number }[];
 }
 
 export interface OutsideSpending {
@@ -120,6 +145,7 @@ function committeeKind(type: string, designation: string): CommitteeKind {
   if (["H", "S", "P"].includes(type)) return "candidate";
   if (["X", "Y", "Z"].includes(type)) return "party";
   if (["O", "U", "V", "W"].includes(type)) return "super-pac";
+  if (type === "I" || type === "E") return "non-committee";
   if (["N", "Q"].includes(type)) return "pac";
   return "other";
 }
@@ -135,18 +161,23 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
   const byFecId = new Map<string, string>();
   for (const l of legislators) for (const id of l.fec) byFecId.set(id, l.bioguide);
 
-  const data: FecData = { totals: {}, committees: {}, contributions: {}, outside: {}, opponents: [], candidates: {} };
+  const data: FecData = { totals: {}, committees: {}, contributions: {}, outside: {}, opponents: [], candidates: {}, electioneering: {}, added: [] };
   const opponentSpending = new Map<string, OpponentSpending>();
   const allCommittees = new Map<string, FecCommittee>();
+  // Form 5 contributions and Form 9 donations, by filer, over the cycles.
+  const nonCommitteeDonations = new Map<string, number>();
+  const nonCommitteePeople = new Set<string>();
 
   for (const cycle of cycles) {
     console.log(`FEC ${cycle}${cycle === currentCycle() ? " (current)" : ""}`);
-    const [weball, pas2, cm, cn] = await Promise.all([
+    const [weball, pas2, cm, cn, ccl] = await Promise.all([
       download(cycle, "weball"),
       download(cycle, "pas2"),
       download(cycle, "cm"),
       download(cycle, "cn"),
+      download(cycle, "ccl"),
     ]);
+    const summaries = await committeeSummaries(cycle);
 
     // Races this cycle, from the candidate master. A race is office + state
     // (+ district for the House) + election year: only candidates whose
@@ -202,8 +233,18 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
     // for the current one, they're running.
     // A special Senate election fills the other seat, not the one regularly up.
     const finished = cycle < currentCycle();
+    // In the cycle under way, who won a primary isn't in the FEC files yet.
+    // General-election spending says who the nominees are, though: a member
+    // whose race saw general-election spending naming their party's nominee
+    // (or, in a top-two state, two finalists), but never them, lost the primary.
+    const generalNamed = new Map<string, Set<string>>();
     const inGeneral = (bioguide: string, c: FecCandidate, special: boolean) => {
-      if (!finished) return true;
+      if (!finished) {
+        const named = generalNamed.get(raceOf.get(c.id)!);
+        if (!named || named.has(c.id)) return true;
+        if (TOP_TWO.has(c.state)) return named.size < 2;
+        return ![...named].some((id) => candidates.get(id)?.party === c.party);
+      }
       const l = legislatorById.get(bioguide)!;
       if (c.office === "H") return l.chamber === "house" && l.state === c.state;
       const regular = l.senateClass === senateClassUpIn(cycle);
@@ -232,7 +273,20 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
         pac: n(25) + (prev?.pac ?? 0),
         party: n(26) + (prev?.party ?? 0),
         candidate: n(11) + (prev?.candidate ?? 0),
+        candidateLoans: n(12) + (prev?.candidateLoans ?? 0),
       };
+    }
+
+    // Itemized and unitemized individual money, from each member's own
+    // campaign committees (principal and authorized) this cycle.
+    for await (const r of rows(ccl)) {
+      const [candId, , , cmteId, , designation] = r;
+      const bioguide = byFecId.get(candId!);
+      const summary = summaries.get(cmteId!);
+      const totals = bioguide && data.totals[bioguide]?.[cycle];
+      if (!totals || !summary || (designation !== "P" && designation !== "A")) continue;
+      totals.itemized = (totals.itemized ?? 0) + summary.itemized;
+      totals.unitemized = (totals.unitemized ?? 0) + summary.unitemized;
     }
 
     for await (const r of rows(cm)) {
@@ -249,30 +303,64 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       });
     }
 
-    for await (const r of rows(pas2)) {
-      // Spending on members' opponents: any 24E/24A naming a candidate in a
-      // current member's race, other than that member. That includes another
+    // One independent expenditure, from whichever source: counted for or
+    // against the member it names, and toward their opponents' races.
+    // Filers sometimes name a candidate without the id: find them by office,
+    // state, district and last name, when exactly one candidate matches.
+    const byName = new Map<string, string[]>();
+    for (const c of candidates.values()) {
+      const key = `${c.office}|${c.state}|${c.office === "H" ? c.district : 0}|${c.name.split(",")[0]!.trim().toUpperCase()}`;
+      byName.get(key)?.push(c.id) ?? byName.set(key, [c.id]);
+    }
+    let unnamed = 0;
+    const resolve = (ie: IeRow): IeRow | undefined => {
+      if (ie.candidate || !ie.named) return ie.candidate ? ie : undefined;
+      const n = ie.named;
+      const found = byName.get(`${n.office}|${n.state}|${n.office === "H" ? n.district : 0}|${n.last}`);
+      if (found?.length !== 1) return void unnamed++;
+      return { ...ie, candidate: found[0]! };
+    };
+    const recordIe = (ie: IeRow) => {
+      // Spending on members' opponents: any expenditure naming a candidate in
+      // a current member's race, other than that member. That includes another
       // member, where two incumbents met in the same race.
+      const race = raceOf.get(ie.candidate);
+      const members = race ? membersInRace.get(race) : undefined;
+      const target = candidates.get(ie.candidate);
+      // Primary and runoff spending is about the member's own primary: the
+      // same party, except where everyone runs in one top-two primary.
+      // General-election spending counts only if the member was on that ballot.
+      const primary = ie.election === "P" || ie.election === "R";
+      const targetMember = byFecId.get(ie.candidate);
+      for (const [member, own] of members ?? []) {
+        if (!target || member === targetMember || !running(target) || sameStateSenators(member, targetMember)) continue;
+        if (primary ? own.party !== target.party && !TOP_TWO.has(own.state) : !inGeneral(member, own, ie.election === "S")) continue;
+        const key = `${ie.committee}|${member}|${ie.candidate}|${cycle}`;
+        const row = opponentSpending.get(key) ?? { committee: ie.committee, member, candidate: ie.candidate, cycle, support: 0, oppose: 0 };
+        row[ie.side] += ie.amount;
+        opponentSpending.set(key, row);
+        data.candidates[ie.candidate] ??= target;
+      }
+
+      if (!targetMember) return;
+      const byMember = (data.outside[ie.committee] ??= {});
+      const spending = (byMember[targetMember] ??= { support: {}, oppose: {} });
+      spending[ie.side][cycle] = (spending[ie.side][cycle] ?? 0) + ie.amount;
+    };
+
+    // The latest independent expenditure pas2 has for each committee: its
+    // processed reports run at least that far. (The committee summaries can
+    // be a report ahead of pas2, so their coverage dates aren't used.)
+    const pas2Through = new Map<string, string>();
+    const ies: IeRow[] = [];
+    for await (const r of rows(pas2)) {
+      // 24E: independent expenditure supporting, 24A: opposing.
       if (r[5] === "24E" || r[5] === "24A") {
-        const race = raceOf.get(r[16]!);
-        const members = race ? membersInRace.get(race) : undefined;
-        const target = candidates.get(r[16]!);
-        // Primary and runoff spending is about the member's own primary: the
-        // same party, except where everyone runs in one top-two primary.
-        // General-election spending counts only if the member was on that ballot.
-        const election = r[3]?.[0];
-        const primary = election === "P" || election === "R";
-        const targetMember = byFecId.get(r[16]!);
-        for (const [member, own] of members ?? []) {
-          if (!target || member === targetMember || !running(target) || sameStateSenators(member, targetMember)) continue;
-          if (primary ? own.party !== target.party && !TOP_TWO.has(own.state) : !inGeneral(member, own, election === "S")) continue;
-          const key = `${r[0]}|${member}|${r[16]}|${cycle}`;
-          const row = opponentSpending.get(key) ?? { committee: r[0]!, member, candidate: r[16]!, cycle, support: 0, oppose: 0 };
-          if (r[5] === "24E") row.support += Number(r[14]) || 0;
-          else row.oppose += Number(r[14]) || 0;
-          opponentSpending.set(key, row);
-          data.candidates[r[16]!] ??= candidates.get(r[16]!)!;
-        }
+        const d = r[13] ?? "";
+        const date = d.length === 8 ? `${d.slice(4)}-${d.slice(0, 2)}-${d.slice(2, 4)}` : "";
+        if (date > (pas2Through.get(r[0]!) ?? "")) pas2Through.set(r[0]!, date);
+        ies.push({ committee: r[0]!, candidate: r[16]!, side: r[5] === "24E" ? "support" : "oppose", amount: Number(r[14]) || 0, election: r[3]?.[0] ?? "", date: "" });
+        continue;
       }
 
       const bioguide = byFecId.get(r[16]!);
@@ -285,14 +373,40 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
         const byCycle = (byMember[bioguide] ??= {});
         byCycle[cycle] = (byCycle[cycle] ?? 0) + amount;
       }
+    }
 
-      // 24E: independent expenditure supporting, 24A: opposing.
-      if (r[5] === "24E" || r[5] === "24A") {
-        const byMember = (data.outside[r[0]!] ??= {});
-        const spending = (byMember[bioguide] ??= { support: {}, oppose: {} });
-        const side = r[5] === "24E" ? spending.support : spending.oppose;
-        side[cycle] = (side[cycle] ?? 0) + amount;
-      }
+    // pas2 stops at each committee's last processed periodic report; the
+    // 24/48-hour notices carry on from there.
+    const notices = (await lateNotices(cycle, (id) => pas2Through.get(id), (id) => allCommittees.has(id))).flatMap((ie) => resolve(ie) ?? []);
+    const form5Filings = await form5(cycle);
+    const f5 = form5Filings.rows.flatMap((ie) => resolve(ie) ?? []);
+    for (const id of form5Filings.people) nonCommitteePeople.add(id);
+    const { contributions } = form5Filings;
+    // Stray lines coded to the wrong election shouldn't decide it: a
+    // candidate counts as named once general-election spending on them
+    // passes $10,000.
+    const generalSpent = new Map<string, number>();
+    for (const ie of [...ies, ...notices, ...f5]) {
+      if (ie.election === "G") generalSpent.set(ie.candidate, (generalSpent.get(ie.candidate) ?? 0) + Math.abs(ie.amount));
+    }
+    for (const [candidate, amount] of generalSpent) {
+      const race = raceOf.get(candidate);
+      if (race && amount >= 10_000) generalNamed.set(race, (generalNamed.get(race) ?? new Set()).add(candidate));
+    }
+    for (const ie of [...ies, ...notices, ...f5]) recordIe(ie);
+    for (const [id, amount] of [...contributions, ...(await form9Donations(cycle))]) {
+      nonCommitteeDonations.set(id, (nonCommitteeDonations.get(id) ?? 0) + amount);
+    }
+    const named = (xs: IeRow[]) => Math.round(xs.filter((x) => byFecId.has(x.candidate) || raceOf.has(x.candidate)).reduce((s, x) => s + x.amount, 0));
+    data.added!.push({ cycle, source: "notices", amount: named(notices) }, { cycle, source: "form5", amount: named(f5) });
+    console.log(`  ${notices.length.toLocaleString()} notice lines after the last processed reports; ${unnamed} lines naming no candidate we could find`);
+
+    for (const ec of await electioneering(cycle)) {
+      const bioguide = byFecId.get(ec.candidate);
+      if (!bioguide) continue;
+      const byMember = (data.electioneering![ec.committee] ??= {});
+      const byCycle = (byMember[bioguide] ??= {});
+      byCycle[cycle] = (byCycle[cycle] ?? 0) + ec.amount;
     }
   }
 
@@ -319,12 +433,29 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
     data.committees[id] ??= allCommittees.get(id) ?? { id, name: id, kind: "other" };
   }
 
+  for (const [id, byMember] of Object.entries(data.electioneering!)) {
+    for (const byCycle of Object.values(byMember)) {
+      for (const cycle of Object.keys(byCycle)) byCycle[Number(cycle)] = Math.round(byCycle[Number(cycle)]!);
+    }
+    data.committees[id] ??= allCommittees.get(id) ?? { id, name: id, kind: "non-committee" };
+  }
+
   for (const row of opponentSpending.values()) {
     row.support = Math.round(row.support);
     row.oppose = Math.round(row.oppose);
     if (row.support <= 0 && row.oppose <= 0) continue;
     data.opponents.push(row);
     data.committees[row.committee] ??= allCommittees.get(row.committee) ?? { id: row.committee, name: row.committee, kind: "other" };
+  }
+
+  // Whether groups that aren't PACs name any donors for this spending.
+  const nonCommittee = Object.values(data.committees).filter((c) => c.kind === "non-committee").map((c) => c.id);
+  // Only filers with periodic reports on file have said either way.
+  for (const id of nonCommittee) {
+    const donations = nonCommitteeDonations.get(id);
+    const c = data.committees[id]!;
+    c.reportedDonations = donations === undefined ? undefined : Math.round(donations);
+    if (nonCommitteePeople.has(id)) c.person = true;
   }
 
   console.log(

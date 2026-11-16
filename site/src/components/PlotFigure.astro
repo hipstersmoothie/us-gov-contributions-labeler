@@ -11,7 +11,7 @@ import MoreDisclosure from "../islands/MoreDisclosure";
 interface LegendItem {
   label: string;
   color: string;
-  shape?: "dot" | "square" | "ring";
+  shape?: "dot" | "square" | "ring" | "tick";
 }
 interface Props {
   chart: ChartName;
@@ -155,6 +155,7 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
   .key.square { border-radius: 2px; }
   .key.dot { border-radius: 50%; }
   .key.ring { border-radius: 50%; background: transparent; border: 2px solid var(--key); }
+  .key.tick { width: 2px; height: 14px; margin: 0 8px 0 4px; vertical-align: -3px; }
 
   .table-scroll { font-size: var(--fs-sm); }
   .table-scroll table { font-size: var(--fs-sm); }
