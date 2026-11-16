@@ -16,3 +16,4 @@ site/.astro
 site/src/data/holdings.json
 # Hand decisions from the local scan review tool (pnpm review-scans).
 .holdings-review
+__pycache__/
