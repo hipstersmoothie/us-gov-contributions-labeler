@@ -166,4 +166,13 @@ python3 src/scripts/irs527/parse.py && python3 src/scripts/irs527/orgs.py && pyt
   fees campaigns pay it look like contributions. Not built: a "527s that spent on this member" section (about $2M,
   mostly already in FEC data, and name matching on expenditures wasn't reliable).
 
+## Refresh
+
+The `refresh-527` Railway cron service (`src/refresh-527.Dockerfile`, `src/scripts/refresh-527.sh`) runs on the 2nd
+of each month: it downloads the IRS file (skipping the rest if it's byte-for-byte the last one), the FEC committee
+lists for this cycle and the last, reruns `parse.py`, `orgs.py` and `build.py` on main's data, and pushes
+`data/irs527.json` when anything but its timestamp changed. ~4 GB of files live on its volume at `/cache`. To try it
+locally: `docker build -f src/refresh-527.Dockerfile -t refresh-527 . && docker run --rm -v /tmp/r527:/cache -e
+REPO=https://github.com/hipstersmoothie/us-gov-contributions-labeler.git -e DRY_RUN=1 refresh-527`.
+
 Screenshots: `01-org-meta-light.png`, `02-org-aft-dark.png`, `03-member-schiff-legal-fund-light.png`, `04-member-slotkin-legal-fund-dark.png`.

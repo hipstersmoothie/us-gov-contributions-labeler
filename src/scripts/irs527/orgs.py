@@ -101,7 +101,8 @@ def load_fec_names():
             if n and len(n) > 3:
                 site_by_norm[n].append(c["id"])
     all_by_norm = collections.defaultdict(set)
-    for f in ("cm24.txt", "cm26.txt"):
+    # FEC committee master files, cmYY.txt, for whichever cycles are cached.
+    for f in sorted(x for x in os.listdir(CACHE) if re.fullmatch(r"cm\d\d\.txt", x)):
         for line in open(os.path.join(CACHE, f), encoding="latin-1"):
             p = line.split("|")
             n = normalize_org(p[1])
