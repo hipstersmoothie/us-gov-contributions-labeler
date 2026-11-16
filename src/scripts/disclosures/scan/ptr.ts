@@ -224,6 +224,9 @@ export function parseScannedPtr(pages: ScanPage[]): { trades: ScannedTrade[]; sk
       // A misread year or month shows up as a long gap; real late reports do too, so check either way.
       if (notifiedDate && Date.parse(notifiedDate) - Date.parse(date) > 90 * 864e5) doubts.push("over 90 days between trade and notification");
       if (dateUnclear(b)) doubts.push("trade date unclear");
+      // Markets are closed on weekends, and a misread digit often lands on one
+      // (06/02/26, a Tuesday, read as 05/02/26, a Saturday).
+      if (date && [0, 6].includes(new Date(`${date}T12:00:00Z`).getUTCDay())) doubts.push("trade date falls on a weekend");
       // OCR misreads the tags ("5P", "$P", "SE"), so match loosely, and flag what can't be matched rather than calling it the member's.
       const ownerTag = /^[S5$][PRF]?/.test(owner) ? "SP" : /^D[CGO0]?/.test(owner) ? "DC" : /^[JI][T1]?/.test(owner) ? "JT" : owner;
       if (owner && !OWNERS[ownerTag]) doubts.push("owner unclear");
