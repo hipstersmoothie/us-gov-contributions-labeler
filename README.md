@@ -43,7 +43,7 @@ cp .env.example .env   # then fill it in
 
 ## Refreshing the data
 
-Meant to be run by hand every so often, e.g. on a machine at home. The first run downloads ~15 GB of FEC files and takes a few hours; later runs reuse the cache in `.cache/` and only refetch the current cycle.
+A launchd job on the maintainer's Mac runs this weekly, then syncs the labels and publishes the open data, with checks that stop it before anything looks wrong goes public: see [design/refresh/README.md](design/refresh/README.md). By hand: the first run downloads ~15 GB of FEC files and takes a few hours; later runs reuse the cache in `.cache/` and refetch a bulk file only when fec.gov's copy changed (`pnpm fec-audit` lists the cached files that are out of date).
 
 ```sh
 pnpm ingest                    # everything, last 3 election cycles

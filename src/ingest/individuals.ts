@@ -46,10 +46,24 @@ export async function* rows(zip: string, member?: string) {
   for await (const line of lines) if (line) yield line;
 }
 
-/** The individual-contribution zips also carry by-date splits of the same rows. */
+/**
+ * The individual-contribution zips also carry by-date splits of the same rows.
+ * When the two disagree, read the splits: fec.gov once served an indiv22.zip
+ * whose itcont.txt stopped at 4.5 GB of 12, with every split whole.
+ */
 export function mainEntry(zip: string) {
-  const entries = execFileSync("unzip", ["-Z1", zip], { encoding: "utf8" }).split("\n").filter(Boolean);
-  return entries.find((e) => /^it(cont|oth)\.txt$/.test(e)) ?? entries.find((e) => !e.includes("/"));
+  const entries = execFileSync("unzip", ["-l", zip], { encoding: "utf8" })
+    .split("\n")
+    .map((line) => /^\s*(\d+)\s+\d\d-\d\d-\d{4}\s+\d\d:\d\d\s+(.+)$/.exec(line))
+    .filter((m) => m !== null)
+    .map((m) => ({ size: Number(m[1]), name: m[2]! }));
+  const main = entries.find((e) => /^it(cont|oth)\.txt$/.test(e.name)) ?? entries.find((e) => !e.name.includes("/"));
+  const splits = entries.filter((e) => e.name.startsWith("by_date/")).reduce((n, e) => n + e.size, 0);
+  if (main && splits && main.size !== splits) {
+    console.warn(`  ${zip}: ${main.name} is ${main.size.toLocaleString()} bytes but its by-date splits are ${splits.toLocaleString()}; reading the splits`);
+    return "by_date/*";
+  }
+  return main?.name;
 }
 
 /** A $50k+ donation to an outside spender, kept for the donors step. */
