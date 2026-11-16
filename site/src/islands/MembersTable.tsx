@@ -79,7 +79,7 @@ export default function MembersTable({ rows, states }: { rows: MemberRow[]; stat
         href={(r) => `/members/${r.id}/`}
         sort={{ column: f.sort, direction: f.dir as "ascending" | "descending" }}
         onSort={(s) => set({ sort: String(s.column), dir: s.direction })}
-        pageSize={600}
+        pageSize={100}
         resetKey={JSON.stringify(f)}
       />
     </div>

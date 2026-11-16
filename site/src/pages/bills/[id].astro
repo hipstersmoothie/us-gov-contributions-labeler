@@ -7,6 +7,7 @@ import PlotFigure from "../../components/PlotFigure.astro";
 import LazyDisclosure from "../../islands/LazyDisclosure";
 import { memberById, organizationById, congressCommitteeById, partyLetter, sectorSlug } from "../../lib/data";
 import { shortSector } from "../../lib/format";
+import { clip } from "../../lib/seo";
 import {
   bills,
   chamberLabel,
@@ -58,10 +59,22 @@ const voteRows = (v: Bill["votes"][number]) =>
 
 const quarterSpan = (c: LobbyingClient) =>
   c.quarters.length === 1 ? c.quarters[0] : `${c.quarters.length} quarters, ${c.quarters[0]} to ${c.quarters.at(-1)}`;
+const path = `/bills/${b.id}/`;
+const lastVote = b.votes.at(-1);
+const description = clip(
+  `${b.label}, introduced ${fmtDate(b.introduced)}${sponsor ? ` by ${sponsor.name} (${partyLetter(sponsor.party)}-${sponsor.state})` : ""}. ` +
+    `${status(b)}.${lastVote ? ` ${patternSentence(lastVote)}` : ""} ` +
+    (clients.length ? `${clients.length.toLocaleString()} ${clients.length === 1 ? "organization" : "organizations"} reported lobbying on it.` : "")
+);
 const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.stance === "oppose" ? "Opposes" : undefined);
 ---
 
-<Base title={`${b.name} (${b.label})`} og={{ type: "bill", id: b.id }} description={`${b.label}, ${b.name}: how Congress voted on it and which organizations reported lobbying on it.`}>
+<Base
+  title={`${clip(b.name, 80)} (${b.label}): votes and lobbying`}
+  og={{ type: "bill", id: b.id }}
+  {description}
+  crumbs={[["Bills", "/bills/"], [`${b.label}, ${b.name}`, path]]}
+>
   <p class="kicker">
     <a href="/bills/">Bills</a> · {b.label}{b.policyArea && <> · {b.policyArea}</>}
   </p>

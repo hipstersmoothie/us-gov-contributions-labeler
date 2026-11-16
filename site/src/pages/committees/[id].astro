@@ -23,6 +23,7 @@ import StaffTable from "../../components/StaffTable.astro";
 import LazyDisclosure from "../../islands/LazyDisclosure";
 import { staffByCommittee, filingSpan, STAFF_SHOWN } from "../../lib/revolving";
 import "../../styles/lobbying.css";
+import { clip } from "../../lib/seo";
 
 export function getStaticPaths() {
   return congressCommittees.map((c) => ({ params: { id: c.id }, props: { c } }));
@@ -91,9 +92,27 @@ const leaderText = seated
   .map((s) => `${s.title!.toLowerCase().replace("chairman", "chair")} ${s.member.name} (${partyLetter(s.member.party)})`)
   .join(" and ")
   .replace(/^./, (c) => c.toUpperCase());
+
+const path = `/committees/${c.id}/`;
+// "House Committee on Agriculture" → "House Agriculture", to tell subcommittees with the same name apart.
+const shortName = (name: string) =>
+  name.replace(/^(House|Senate|Joint) (Permanent |Special |Select )*Committee on (the )?/, "$1 ").replace(/^House House /, "House ");
+const fullName = parent ? `${c.name} Subcommittee (${parent.name})` : c.name;
+const description = clip(
+  (top
+    ? `${top.id} gave more to the ${seated.length} members of the ${fullName} than any other sector: ` +
+      `${money(top.value, true)}, ${Math.round(top.a * 100)}% of their PAC money, ${cycleRange.replace("–", " to ")}.`
+    : `Who funds the ${seated.length} members of the ${fullName}, ${cycleRange.replace("–", " to ")}.`) +
+    (leaderText ? ` ${leaderText}.` : "")
+);
 ---
 
-<Base title={c.name} og={{ type: "committee", id: c.id }} description={`Who funds the members of the ${c.name}, ${cycleRange}.`}>
+<Base
+  title={`${parent ? `${c.name} Subcommittee (${shortName(parent.name)})` : c.name}: who funds its members`}
+  og={{ type: "committee", id: c.id }}
+  {description}
+  crumbs={[["Committees", "/committees/"], ...(parent ? [[parent.name, `/committees/${parent.id}/`] as [string, string]] : []), [c.name, path]]}
+>
   <p class="kicker">
     {parent ? <>Subcommittee of <a href={`/committees/${parent.id}/`}>{parent.name}</a></> : `${chamberLabel} committee`} · {seated.length} members
   </p>

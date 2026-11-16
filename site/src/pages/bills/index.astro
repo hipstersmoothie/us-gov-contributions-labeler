@@ -11,7 +11,12 @@ const votes = bills.flatMap((b) => b.votes);
 const share = (p: string) => Math.round((100 * votes.filter((v) => v.pattern === p).length) / Math.max(votes.length, 1));
 ---
 
-<Base title="Bills" og={{ type: "page", id: "bills" }} description={`Every bill the ${ordinal(congress)} Congress voted on passing: how each party voted, and which organizations reported lobbying on it.`}>
+<Base
+  title={`Bills the ${ordinal(congress)} Congress voted on: party votes and lobbying`}
+  og={{ type: "page", id: "bills" }}
+  description={`All ${bills.length} bills and resolutions the ${ordinal(congress)} Congress held a recorded vote on passing, ${laws} of them now law: how each party voted, and which organizations reported lobbying on them.`}
+  crumbs={[["Bills", "/bills/"]]}
+>
   <p class="kicker">Bills</p>
   <h1>What Congress voted on</h1>
   <p class="dek">

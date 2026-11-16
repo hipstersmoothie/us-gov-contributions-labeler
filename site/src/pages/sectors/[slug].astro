@@ -5,15 +5,30 @@ import PartySplit from "../../components/PartySplit.astro";
 import { sectors, type SectorSummary } from "../../lib/sectors";
 import { memberById, money, cycleRange, partyLetter } from "../../lib/data";
 import { pct, chamberName } from "../../lib/derived";
+import { clip, listOf } from "../../lib/seo";
 
 export function getStaticPaths() {
   return sectors.map((s) => ({ params: { slug: s.slug }, props: { s } }));
 }
 
 const { s } = Astro.props as { s: SectorSummary };
+
+const path = `/sectors/${s.slug}/`;
+const biggest = [...s.organizations].sort((a, b) => b.total - a.total).slice(0, 3).map((o) => o.name);
+const description = clip(
+  `PACs tied to ${s.organizations.length.toLocaleString()} ${s.name.toLowerCase()} organizations gave ${money(s.total, true)} ` +
+    `to ${s.recipients.length} current members of Congress from ${cycleRange.replace("–", " to ")}: ` +
+    `${pct(s.split.Republican, s.total)}% to Republicans, ${pct(s.split.Democrat, s.total)}% to Democrats. ` +
+    `Biggest givers: ${listOf(biggest)}.`
+);
 ---
 
-<Base title={s.name} og={{ type: "sector", id: s.slug }} description={`PAC money from ${s.name} to Congress, ${cycleRange}.`}>
+<Base
+  title={`${s.name}: PAC money to Congress`}
+  og={{ type: "sector", id: s.slug }}
+  {description}
+  crumbs={[["Sectors", "/sectors/"], [s.name, path]]}
+>
   <p class="kicker"><a href="/sectors/">Sectors</a></p>
   <h1>{s.name}</h1>
   <p class="dek">

@@ -28,7 +28,13 @@ const widest = [...companies.values()]
 const withCompanyStock = parsed.filter(([, d]) => d.holdings.some((h) => COMPANY_KINDS.includes(h.kind))).length;
 ---
 
-<Base title="What members own and trade" description="House members' reported investments and stock trades, from their financial disclosure reports. Values are ranges.">
+<Base
+  title="What members of Congress own and trade: House stock holdings"
+  description={all.length
+    ? `${parsed.length} House members' reported investments and ${rows.length.toLocaleString()} stock trades since January 2025, from their financial disclosure reports. Values are ranges.`
+    : "House members' reported investments and stock trades, from their financial disclosure reports. Values are ranges."}
+  crumbs={[["Investments", "/holdings/"]]}
+>
   <p class="kicker">Investments</p>
   <h1>What members own and trade</h1>
   {all.length === 0 && <p class="empty-note">This build doesn't include the disclosure data.</p>}

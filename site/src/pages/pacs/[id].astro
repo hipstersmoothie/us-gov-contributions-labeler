@@ -23,12 +23,16 @@ import {
   type Committee,
 } from "../../lib/data";
 import { chamberName } from "../../lib/derived";
+import { clip, listOf, organization } from "../../lib/seo";
 
 export function getStaticPaths() {
-  return committees.map((c) => ({ params: { id: c.id }, props: { c } }));
+  // Committees that share a name get their FEC id in the page title.
+  const named = new Map<string, number>();
+  for (const c of committees) named.set(displayName(c.name), (named.get(displayName(c.name)) ?? 0) + 1);
+  return committees.map((c) => ({ params: { id: c.id }, props: { c, shared: named.get(displayName(c.name))! > 1 } }));
 }
 
-const { c } = Astro.props as { c: Committee };
+const { c, shared } = Astro.props as { c: Committee; shared: boolean };
 const org = organizationById.get(c.organization);
 const split = partySplit(c.recipients);
 const name = displayName(c.name);
@@ -36,9 +40,46 @@ const name = displayName(c.name);
 const showOrg = org && org.committees.length > 1 || (org && c.kind === "pac" && org.name !== name);
 const nonCommittee = c.kind === "non-committee";
 const ecOnly = c.id.startsWith("C3");
+
+const path = `/pacs/${c.id}/`;
+const span = cycleRange.replace("–", " to ");
+const topRecipient = memberById.get(c.recipients[0]?.id ?? "");
+const spent = [
+  c.outside?.support && `${money(c.outside.support, true)} supporting`,
+  c.outside?.oppose && `${money(c.outside.oppose, true)} opposing`,
+].filter((x): x is string => !!x);
+const spends = nonCommittee || (spent.length > 0 && !(c.total > (c.outside?.support ?? 0) + (c.outside?.oppose ?? 0)));
+const title = `${name}${shared ? ` (FEC ${c.id})` : ""}: ${spends ? "outside spending on Congress" : "who it gives to in Congress"}`;
+const did = [
+  c.total > 0 && `gave ${money(c.total, true)} to ${c.recipients.length} current members of Congress`,
+  spent.length && `spent ${listOf(spent)} members`,
+].filter((x): x is string => !!x);
+const description = clip(
+  `${name} is ${c.person ? "a person who reports outside spending" : nonCommittee ? "an outside group, not a PAC" : `a ${kindLabel(c.kind).toLowerCase().replace(/\bpac\b/g, "PAC")}`}` +
+    (showOrg ? ` affiliated with ${org!.name}` : "") +
+    ` (FEC ${c.id}). ` +
+    (did.length
+      ? `${c.person ? "They" : "It"} ${listOf(did)} from ${span}.`
+      : nonCommittee
+        ? `${c.person ? "Their" : "Its"} ${ecOnly ? "electioneering communications" : "independent expenditures"} about members of Congress, ${span}, from FEC filings.`
+        : `What it gave to and spent on members of Congress, ${span}, from FEC filings.`) +
+    (topRecipient && c.total > 0 ? ` ${topRecipient.name} got the most, ${money(c.recipients[0]!.total, true)}.` : "")
+);
 ---
 
-<Base title={name} og={{ type: "pac", id: c.id }} description={`Which members of Congress ${name} gives to, ${cycleRange}.`}>
+<Base
+  {title}
+  og={{ type: "pac", id: c.id }}
+  {description}
+  crumbs={showOrg ? [["Organizations", "/organizations/"], [org!.name, `/organizations/${org!.id}/`], [name, path]] : [[name, path]]}
+  jsonLd={c.person ? undefined : organization({
+    path,
+    name,
+    description,
+    sameAs: [fecCommitteeUrl(c.id)],
+    parent: showOrg ? { name: org!.name, path: `/organizations/${org!.id}/` } : undefined,
+  })}
+>
   <p class="kicker">
     {c.person ? "Individual, not a PAC" : kindLabel(c.kind)}{orgTypeLabel(c.orgType) && <> · {orgTypeLabel(c.orgType)}</>} · <a href={fecCommitteeUrl(c.id)}>FEC {c.id}</a>
   </p>

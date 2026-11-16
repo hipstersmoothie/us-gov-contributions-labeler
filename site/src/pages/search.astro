@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import SearchResults from "../islands/SearchResults";
 ---
 
-<Base title="Search" og={{ type: "page", id: "search" }} description="Search members of Congress, organizations, PACs, donors and committees.">
+<Base title="Search" og={{ type: "page", id: "search" }} description="Search members of Congress, organizations, PACs, donors and committees." noindex>
   <p class="kicker">Search</p>
   <h1>Search</h1>
   <SearchResults client:load />

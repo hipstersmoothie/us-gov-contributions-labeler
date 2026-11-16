@@ -10,7 +10,11 @@ export const getStaticPaths = (({ paginate }) => paginate(tradeRows(), { pageSiz
 const { page } = Astro.props as { page: { data: TradeRow[]; currentPage: number; lastPage: number; total: number; start: number; end: number; url: { prev?: string; next?: string } } };
 ---
 
-<Base title={`Trades, page ${page.currentPage}`} description="Every stock trade House members reported since January 2025, newest first.">
+<Base
+  title={`Stock trades by members of Congress, page ${page.currentPage} of ${page.lastPage}`}
+  description={`All ${page.total.toLocaleString()} stock trades House members reported since January 2025, newest first: trades ${page.start + 1}–${page.end + 1}.`}
+  crumbs={[["Investments", "/holdings/"], [`Every trade, page ${page.currentPage}`, `/holdings/trades/${page.currentPage}/`]]}
+>
   <p class="kicker"><a href="/holdings/">Investments</a></p>
   <h1>Every trade</h1>
   <p class="dek">

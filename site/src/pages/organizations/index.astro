@@ -8,7 +8,12 @@ import { SECTORS } from "../../../../src/lib/sectors.ts";
 const rows = orgRows();
 ---
 
-<Base title="Organizations" og={{ type: "page", id: "organizations" }} description="The companies, unions and groups whose PACs fund Congress.">
+<Base
+  title="Organizations behind the PACs that fund Congress"
+  og={{ type: "page", id: "organizations" }}
+  description={`The ${rows.length.toLocaleString()} companies, unions, trade groups and causes whose PACs gave ${money(ORG_MIN)} or more to current members of Congress from ${cycleRange.replace("–", " to ")}, by sector and party.`}
+  crumbs={[["Organizations", "/organizations/"]]}
+>
   <p class="kicker">Organizations</p>
   <h1>Who's behind the PACs</h1>
   <p class="dek">

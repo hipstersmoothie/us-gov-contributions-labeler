@@ -6,6 +6,7 @@ import Logo from "../components/Logo.astro";
 
 import { generatedAt, cycleRange } from "../lib/data";
 import { ogImage, type OgType } from "../lib/og";
+import { breadcrumbs, SITE_NAME } from "../lib/seo";
 
 interface Props {
   title: string;
@@ -15,8 +16,14 @@ interface Props {
   /** A static 1200×630 card for a page without an og card, e.g. /bluesky/. */
   card?: { src: string; alt: string };
   ogType?: "website" | "article" | "profile";
+  /** Where the page sits, after Home: [name, path] pairs, the last being this page. */
+  crumbs?: [string, string][];
+  /** schema.org JSON-LD for the page (see lib/seo.ts). */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Kept out of search results: the 404 page, search results. */
+  noindex?: boolean;
 }
-const { title, description, og, card, ogType = "article" } = Astro.props;
+const { title, description, og, card, ogType = "article", crumbs, jsonLd, noindex = false } = Astro.props;
 const path = Astro.url.pathname;
 const NAV = [
   ["/members/", "Members"],
@@ -30,7 +37,6 @@ const NAV = [
   ["/donors/", "Big donors"],
   ["/bluesky/", "On Bluesky"],
 ];
-const SITE_NAME = "contributions.fyi";
 const isHome = title === "Home";
 const TAGLINE = "Who funds your member of Congress?";
 const fullTitle = isHome ? `${TAGLINE} · ${SITE_NAME}` : `${title} · ${SITE_NAME}`;
@@ -39,7 +45,12 @@ const fullTitle = isHome ? `${TAGLINE} · ${SITE_NAME}` : `${title} · ${SITE_NA
 const desc = (
   description ?? `Campaign finance for every member of Congress: PAC money by industry, organization and committee, ${cycleRange}.`
 ).replace(/\u2060/g, "");
-const canonical = Astro.site ? new URL(path, Astro.site).href : undefined;
+// No canonical on a noindex page: the 404 page answers for every missing URL.
+const canonical = Astro.site && !noindex ? new URL(path, Astro.site).href : undefined;
+const cardTitle = isHome ? `${SITE_NAME}: ${TAGLINE}` : title;
+const structured = [...[jsonLd ?? []].flat(), ...(crumbs?.length ? [breadcrumbs(crumbs)] : [])];
+// "<" can't appear raw in a script element's JSON.
+const ld = (data: unknown) => JSON.stringify(data).replace(/</g, "\\u003c");
 // The page's own 1200×630 card: rendered on request by site/server, or a
 // static one; otherwise the site card from design/og/og-card.html.
 const site = Astro.site ?? new URL("https://contributions.fyi");
@@ -57,9 +68,10 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
     {canonical && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:site_name" content={SITE_NAME} />
-    <meta property="og:title" content={isHome ? `${SITE_NAME}: ${TAGLINE}` : title} />
-    <meta name="twitter:title" content={isHome ? `${SITE_NAME}: ${TAGLINE}` : `${title} · ${SITE_NAME}`} />
+    <meta property="og:title" content={cardTitle} />
+    <meta name="twitter:title" content={cardTitle} />
     <meta name="twitter:description" content={desc} />
     <meta property="og:description" content={desc} />
     <meta property="og:type" content={isHome ? "website" : ogType} />
@@ -80,6 +92,14 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {structured.map((data) => <script type="application/ld+json" set:html={ld(data)} />)}
+    <!-- Privacy-friendly analytics by Plausible: no cookies, aggregate counts only. Proxied
+         through site/server (/v/), so blocklists that match plausible.io don't drop it. -->
+    <script is:inline async src="/v/s.js"></script>
+    <script is:inline>
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init({ endpoint: "/v/e", outboundLinks: true, fileDownloads: true });
+    </script>
     <noscript><style>.disclosure-panel[hidden] { display: block !important; } .disclosure-trigger .chevron { display: none; }</style></noscript>
   </head>
   <body>

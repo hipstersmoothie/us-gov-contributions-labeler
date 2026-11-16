@@ -38,13 +38,18 @@ import {
   committeeHref,
   kindLabel,
   type Organization,
+  fecCommitteeUrl,
 } from "../../lib/data";
+import { clip, organization } from "../../lib/seo";
 
 export function getStaticPaths() {
-  return organizations.map((o) => ({ params: { id: o.id }, props: { o } }));
+  // Organizations that share a name get their PAC's FEC id in the title and description.
+  const named = new Map<string, number>();
+  for (const o of organizations) named.set(o.name, (named.get(o.name) ?? 0) + 1);
+  return organizations.map((o) => ({ params: { id: o.id }, props: { o, shared: named.get(o.name)! > 1 } }));
 }
 
-const { o } = Astro.props as { o: Organization };
+const { o, shared } = Astro.props as { o: Organization; shared: boolean };
 const split = partySplit(o.recipients);
 const pacs = o.committees.map((id) => committeeById.get(id)).filter((c) => !!c);
 const issues = o.lobbying?.issues.slice(0, 10) ?? [];
@@ -114,16 +119,32 @@ const viaPac = /\b(PAC|Committee|Political Action)\b/i.test(o.name);
 const asPrincipal = principalsByOrg.get(o.id) ?? [];
 
 const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${o.sec.cik}`;
+
+const path = `/organizations/${o.id}/`;
+const giver = `${name}${o.name.endsWith("PAC") ? "" : o.name.endsWith("s") ? "' PAC" : "'s PAC"}`;
+const description = clip(
+  `${giver} gave ${money(o.total, true)} to ${o.recipients.length} current members of Congress from ` +
+    `${cycleRange.replace("–", " to ")}. ${leanText}.` +
+    (topRecipient ? ` ${topRecipient.name} got the most, ${money(o.recipients[0]!.total, true)}.` : "") +
+    ` ${o.industry ?? o.sector}.` +
+    (shared && o.committees.length ? ` FEC ${o.committees.join(", ")}.` : "")
+);
 ---
 
-<Base title={o.name} og={{ type: "organization", id: o.id }} description={`Which members of Congress ${o.name} funds, ${cycleRange}.`}>
+<Base
+  title={`${o.name}${shared && o.committees[0] ? ` (FEC ${o.committees[0]})` : ""}: PAC contributions to Congress`}
+  og={{ type: "organization", id: o.id }}
+  {description}
+  crumbs={[["Organizations", "/organizations/"], [o.name, path]]}
+  jsonLd={organization({ path, name: o.name, description, sameAs: [secUrl || undefined, ...o.committees.map(fecCommitteeUrl)] })}
+>
   <p class="kicker">
     <a href={`/sectors/${sectorSlug(o.sector)}/`}>{o.sector}</a>
     {o.industry && <> · {o.industry}</>}
   </p>
   <h1>{o.name}</h1>
   <p class="dek">
-    {name}{o.name.endsWith("PAC") ? "" : o.name.endsWith("s") ? "' PAC" : "'s PAC"} gave <strong>{money(o.total, true)}</strong> to{" "}
+    {giver} gave <strong>{money(o.total, true)}</strong> to{" "}
     <strong>{o.recipients.length}</strong> current members of Congress from {cycleRange.replace("–", " to ")}. {leanText}.{" "}
     {amounts.length > 4 && <>The typical member got between {money(q(0.25), true)} and {money(q(0.75), true)}</>}
     {topRecipient && <>; {topRecipient.name} got the most, {money(o.recipients[0]!.total, true)}</>}.

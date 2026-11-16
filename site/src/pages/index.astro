@@ -7,6 +7,7 @@ import { members, organizations, committees, donors, money, cycles, cycleRange, 
 import { PARTY_COLOR } from "../lib/charts";
 import { memberPoints, topIds, pacTotal, inEvery, pct, shortSeat, chamberName } from "../lib/derived";
 import { shortSector } from "../lib/format";
+import { website } from "../lib/seo";
 
 const total = sectors.reduce((s, x) => s + x.total, 0);
 const byPacMoney = members
@@ -55,7 +56,11 @@ const PARTY_SERIES = [
 ];
 ---
 
-<Base title="Home" description={`Who funds your member of Congress? PAC money to every member by industry, organization and committee, ${cycleRange}, from FEC filings.`}>
+<Base
+  title="Home"
+  description={`PACs gave ${money(total, true)} to the ${members.length} current members of Congress from ${cycleRange.replace("–", " to ")}. See who funds yours: PAC money by industry, organization and committee, from FEC filings.`}
+  jsonLd={website()}
+>
   <p class="kicker">contributions.fyi · PAC money, {cycleRange}</p>
   <h1 class="tagline">Who funds <em>your</em> member of Congress?</h1>
   <p class="dek">

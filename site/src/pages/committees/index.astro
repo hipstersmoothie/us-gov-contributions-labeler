@@ -22,7 +22,12 @@ const topSector = (id: string) => {
 };
 ---
 
-<Base title="Committees" og={{ type: "page", id: "committees" }} description="Congressional committees and who funds their members.">
+<Base
+  title="Congressional committees and who funds their members"
+  og={{ type: "page", id: "committees" }}
+  description={`All ${top.length} House, Senate and joint committees of Congress, the members who sit on them, and which industries fund those members most.`}
+  crumbs={[["Committees", "/committees/"]]}
+>
   <h1>Committees</h1>
   <p class="eyebrow">Where members sit, and which industries fund the people on each committee.</p>
   {

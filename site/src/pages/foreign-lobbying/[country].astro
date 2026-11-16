@@ -49,6 +49,7 @@ const lede = active.length
 <Base
   title={`Foreign lobbying: ${c.name}`}
   og={{ type: "country", id: c.id }}
+  crumbs={[["Foreign lobbying", "/foreign-lobbying/"], [c.name, `/foreign-lobbying/${c.id}/`]]}
   description={`${lede}. Who represents them in the US, from Justice Department FARA filings.`}
 >
   <p class="kicker"><a href="/foreign-lobbying/">Foreign lobbying</a></p>

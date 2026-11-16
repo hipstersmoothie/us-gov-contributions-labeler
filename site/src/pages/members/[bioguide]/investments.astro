@@ -9,6 +9,7 @@ import MoreDisclosure from "../../../islands/MoreDisclosure";
 import { memberById, partyLetter, seat, photoUrl, type Member } from "../../../lib/data";
 import { surname } from "../../../lib/format";
 import { possessive } from "../../../lib/derived";
+import { clip, partyState } from "../../../lib/seo";
 import {
   disclosures,
   byKind,
@@ -73,7 +74,15 @@ const ownerOf = (o: keyof typeof OWNER_LABEL) => (o === "self" ? last : OWNER_LA
 const companyHref = (h: { cik?: number }) => (h.cik ? `/holdings/companies/${h.cik}/` : undefined);
 ---
 
-<Base title={`${m.name}: investments`} description={`What ${m.name} reported owning and trading, from House financial disclosure reports. Values are ranges.`}>
+<Base
+  title={`${m.name} (${partyState(m)}): stock holdings and trades`}
+  description={clip(
+    `What ${m.name} reported owning and trading: assets worth ${span(total)}` +
+      `${trades.length ? ` and ${trades.length} ${trades.length === 1 ? "trade" : "trades"} since January 2025` : ""}, ` +
+      `from House financial disclosure reports. Values are ranges.`
+  )}
+  crumbs={[["Members", "/members/"], [m.name, `/members/${m.bioguide}/`], ["Investments", `/members/${m.bioguide}/investments/`]]}
+>
   <header class="member-head">
     {photo && <img src={photo} alt={`Official portrait of ${m.name}`} width="78" height="96" />}
     <div>

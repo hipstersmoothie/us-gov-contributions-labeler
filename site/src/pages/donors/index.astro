@@ -5,7 +5,12 @@ import { donors, money, cycleRange, MIN_DONATION } from "../../lib/data";
 import { donorRows } from "../../lib/rows";
 ---
 
-<Base title="Big donors" og={{ type: "page", id: "donors" }} description="The people and organizations funding super PACs that spend on Congress.">
+<Base
+  title="Big donors: who funds the super PACs"
+  og={{ type: "page", id: "donors" }}
+  description={`${donors.length.toLocaleString()} people, companies and committees that gave ${money(MIN_DONATION)} or more at a time to super PACs and other groups spending for or against members of Congress, ${cycleRange.replace("–", " to ")}.`}
+  crumbs={[["Big donors", "/donors/"]]}
+>
   <p class="kicker">Big donors</p>
   <h1>Who funds the super PACs</h1>
   <p class="dek">

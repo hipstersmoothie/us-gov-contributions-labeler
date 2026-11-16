@@ -5,9 +5,15 @@ import { sectors } from "../../lib/sectors";
 import { cycleRange, money } from "../../lib/data";
 
 const total = sectors.reduce((s, x) => s + x.total, 0);
+const biggest = sectors.find((s) => !["Unknown", "Party & Candidate Committees"].includes(s.name))!;
 ---
 
-<Base title="Sectors" og={{ type: "page", id: "sectors" }} description="PAC money to Congress by industry sector.">
+<Base
+  title="PAC money to Congress by industry sector"
+  og={{ type: "page", id: "sectors" }}
+  description={`${money(total, true)} in PAC money to current members of Congress from ${cycleRange.replace("–", " to ")}, by the sector of the organization behind each PAC. ${biggest.name} gave the most, ${money(biggest.total, true)}.`}
+  crumbs={[["Sectors", "/sectors/"]]}
+>
   <h1>Sectors</h1>
   <p class="dek">PAC contributions to current members by the sector of the organization behind each PAC, {cycleRange}.</p>
   <section class="story">

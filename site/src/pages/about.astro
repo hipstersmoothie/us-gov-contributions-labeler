@@ -14,7 +14,12 @@ const byCaucus = ["D", "R"]
   .join(", and ");
 ---
 
-<Base title="About the data" og={{ type: "page", id: "about" }} description="Where this data comes from, what's counted and how organizations are classified.">
+<Base
+  title="About the data: sources, methods and what's counted"
+  og={{ type: "page", id: "about" }}
+  description={`Where contributions.fyi's campaign finance data comes from (FEC, SEC EDGAR and lobbying disclosures), what's counted, ${cycleRange}, and how PACs are matched to organizations and industries.`}
+  crumbs={[["About the data", "/about/"]]}
+>
   <p class="kicker">About the data</p>
   <h1>How this data works</h1>
   <p class="dek">
@@ -232,6 +237,14 @@ const byCaucus = ["D", "R"]
       by the <a href="https://bsky.app/profile/contributions.fyi">@contributions.fyi</a> labeler.
       Subscribe to it to see the labels on their posts.{" "}
       <a href="/bluesky/">How the labels work, and every feed, list and starter pack we publish</a>.
+    </p>
+
+    <h2 id="privacy">Privacy</h2>
+    <p>
+      This site counts visits with <a href="https://plausible.io/privacy-focused-web-analytics">Plausible</a>, which
+      doesn't use cookies or store personal data. We see aggregate numbers only: how many people read a page, which
+      sites sent them, and a few counts like how often search is used (never what was searched for). Nothing is
+      shared with advertisers.
     </p>
 
     <p class="muted small">Data last updated {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}.</p>

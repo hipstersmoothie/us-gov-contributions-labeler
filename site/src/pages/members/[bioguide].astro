@@ -37,6 +37,7 @@ import AgentTable from "../../components/AgentTable.astro";
 import { staffByMember, filingSpan, STAFF_SHOWN } from "../../lib/revolving";
 import { faraGifts } from "../../lib/fara";
 import "../../styles/lobbying.css";
+import { clip, memberProfile, office, partyState } from "../../lib/seo";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -199,10 +200,25 @@ const houseStaff = m.chamber === "senate" && staff.some((x) => x.note);
 const agentGifts = faraGifts[m.bioguide] ?? [];
 const agentTotal = agentGifts.reduce((s, g) => s + g.total, 0);
 
-const description = `${headline}. Who funds ${m.name} (${m.party}, ${seat(m)}): PAC money, top contributors and outside spending, ${cycleRange}.`;
+const path = `/members/${m.bioguide}/`;
+const title = `${m.name} (${partyState(m)}): campaign money, top donors and industries`;
+const description = clip(
+  `${m.name}, ${office(m)}` +
+    (raised > 0
+      ? `, raised ${money(raised, true)} from ${cycleRange.replace("–", " to ")}, ${money(fromPacs, true)} of it from PACs. `
+      : `. `) +
+    `${headline}. Top contributors, PAC money by industry, outside spending and votes.`
+);
 ---
 
-<Base title={m.name} description={description} og={{ type: "member", id: m.bioguide }} ogType="profile">
+<Base
+  {title}
+  {description}
+  og={{ type: "member", id: m.bioguide }}
+  ogType="profile"
+  crumbs={[["Members", "/members/"], [m.name, path]]}
+  jsonLd={memberProfile(m, path)}
+>
   <header class="member-head">
     {
       photo ? (

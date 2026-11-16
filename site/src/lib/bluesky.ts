@@ -33,6 +33,8 @@ const cache: { fetchedAt?: string; labeler: { likeCount: number }; profiles: Rec
   ? JSON.parse(fs.readFileSync(PROFILES_FILE, "utf8"))
   : { labeler: { likeCount: 0 }, profiles: {} };
 export const profiles = cache.profiles;
+// Avatars show at 56px at most: the CDN's thumbnail size, not the full image (~10× the bytes).
+for (const p of Object.values(profiles)) p.avatar &&= p.avatar.replace("/img/avatar/plain/", "/img/avatar_thumbnail/plain/");
 export const labelerLikes = cache.labeler.likeCount;
 export const labelerFollowers = profiles[LABELER_DID]?.followersCount ?? 0;
 

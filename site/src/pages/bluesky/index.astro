@@ -104,7 +104,8 @@ const groups: ListGroup[] = GROUP_ORDER.filter((g) => listsByGroup.has(g)).map((
 ---
 
 <Base
-  title="Congress on Bluesky"
+  title="Congress on Bluesky: find your members and who funds them"
+  crumbs={[["On Bluesky", "/bluesky/"]]}
   description={`${onBluesky.length} of ${members.length} members of Congress are on Bluesky. Find yours, see who funds them, and follow them by state, committee or industry.`}
   card={{
     src: "/og-bluesky.png",
@@ -376,6 +377,27 @@ const groups: ListGroup[] = GROUP_ORDER.filter((g) => listsByGroup.has(g)).map((
     {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}. See <a href="/about/">how this data works</a>.
   </p>
 </Base>
+
+<script>
+  // Counts clicks through to Bluesky by what they lead to (the labeler, a
+  // starter pack, feed or list, a member's account), and where on the page.
+  import { track } from "../../lib/analytics";
+
+  const kindOf = (url: URL) => {
+    if (url.pathname.startsWith("/starter-pack/")) return "starter pack";
+    if (url.pathname.includes("/feed/")) return "feed";
+    if (url.pathname.includes("/lists/")) return "list";
+    if (url.pathname === "/profile/contributions.fyi") return "labeler";
+    if (url.pathname === "/profile/data.contributions.fyi") return "open data";
+    return "member account";
+  };
+  document.addEventListener("click", (e) => {
+    const a = (e.target as Element | null)?.closest?.<HTMLAnchorElement>('a[href^="https://bsky.app/"]');
+    if (!a) return;
+    const section = a.closest("section[id]")?.id ?? "intro";
+    track("Bluesky: follow", { kind: kindOf(new URL(a.href)), section });
+  });
+</script>
 
 <style>
   /* --- section 4: link rows --- */

@@ -33,6 +33,8 @@ export interface Member {
   district?: number;
   party: string;
   fecIds: string[];
+  /** Official website, from congress-legislators. */
+  url?: string;
   accounts: Account[];
   totals: Record<number, FecTotals>;
   /** PAC money by sector, largest first. */
@@ -364,6 +366,7 @@ export function buildData(
       district: l.district,
       party: l.party,
       fecIds: l.fec,
+      url: l.url,
       accounts: accountsByMember.get(l.bioguide) ?? [],
       totals: fec.totals[l.bioguide] ?? {},
       sectors: ranked(memberSectors.get(l.bioguide) ?? new Map()) as Amount<"sector">[],

@@ -1,7 +1,8 @@
 ---
 import { Code } from "astro:components";
 import Base from "../layouts/Base.astro";
-import { generatedAt } from "../lib/data";
+import { cycles, generatedAt } from "../lib/data";
+import { abs, SITE_NAME } from "../lib/seo";
 import examples from "../data/open-data-examples.json";
 
 const DID = "did:plc:ej5cllsvxdrzdsweyfgr2nge";
@@ -52,6 +53,42 @@ const list = request(
   "a page of a collection; add -d cursor=… with the returned cursor for the next page"
 );
 
+// For dataset search (https://developers.google.com/search/docs/appearance/structured-data/dataset).
+const datasetLd = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: "contributions.fyi: PAC money to members of Congress",
+  description:
+    `Campaign contributions from PACs and other political committees to every current member of Congress, ${cycles[0]! - 1} to ${cycles.at(-1)}, ` +
+    "from FEC filings: totals by member, organization, sector and industry, outside spending for and against members, " +
+    "big donors to super PACs, congressional committee seats, and members' Bluesky accounts. Organizations are matched to " +
+    "SEC EDGAR and lobbying disclosure records. Published as an AT Protocol repository with complete gzipped JSON files.",
+  url: abs("/open-data/"),
+  sameAs: "https://bsky.app/profile/data.contributions.fyi",
+  identifier: DID,
+  keywords: ["campaign finance", "PAC contributions", "Congress", "FEC", "lobbying", "political action committees", "AT Protocol"],
+  license: "https://creativecommons.org/publicdomain/zero/1.0/",
+  isAccessibleForFree: true,
+  creator: { "@type": "Organization", "@id": abs("/#publisher"), name: SITE_NAME, url: abs("/") },
+  temporalCoverage: `${cycles[0]! - 1}/${cycles.at(-1)}`,
+  spatialCoverage: { "@type": "Place", name: "United States" },
+  dateModified: generatedAt.toISOString(),
+  distribution: [
+    {
+      "@type": "DataDownload",
+      name: "The whole repository, as a CAR file",
+      encodingFormat: "application/vnd.ipld.car",
+      contentUrl: `${XRPC}/com.atproto.sync.getRepo?did=${DID}`,
+    },
+    {
+      "@type": "DataDownload",
+      name: "The dataset record, listing the complete gzipped JSON files",
+      encodingFormat: "application/json",
+      contentUrl: `${XRPC}/com.atproto.repo.getRecord?repo=${DID}&collection=fyi.contributions.dataset&rkey=self`,
+    },
+  ],
+};
+
 const collections = [
   ["fyi.contributions.dataset", "self", "Generation time, election cycles, sources, methodology, license, and the complete data files as gzipped JSON blobs"],
   ["fyi.contributions.account", "Bluesky DID", "Who funds this account: a member's totals, top sectors and top contributors, linking to their member record"],
@@ -64,7 +101,13 @@ const collections = [
 ];
 ---
 
-<Base title="Open data" og={{ type: "page", id: "open-data" }} description="Download the whole dataset with standard atproto tools.">
+<Base
+  title="Open data: download the campaign finance dataset"
+  og={{ type: "page", id: "open-data" }}
+  description="Download every member's PAC money, organizations, sectors, outside spending and big donors as open data (CC0): one AT Protocol repository, with complete gzipped JSON files. No API key."
+  crumbs={[["Open data", "/open-data/"]]}
+  jsonLd={datasetLd}
+>
   <p class="kicker">Open data</p>
   <h1>Take the data with you</h1>
   <p class="dek">
@@ -161,6 +204,57 @@ const collections = [
   </article>
 </Base>
 
+<script>
+  // Copy buttons on the code samples. Copies are counted by section, whether by
+  // button or by selecting the text; copying a snippet that downloads the
+  // dataset counts as a download.
+  import { track } from "../lib/analytics";
+
+  const sectionOf = new Map<Element, string>();
+  let heading = "";
+  for (const el of document.querySelectorAll(".prose h2, .prose pre.astro-code")) {
+    if (el.tagName === "H2") heading = el.textContent ?? "";
+    else sectionOf.set(el, heading);
+  }
+  const report = (pre: Element, how: string) => {
+    const download = /getBlob|getRepo|repo export/.test(pre.textContent ?? "");
+    track(download ? "Open data: download" : "Open data: copy", {
+      section: sectionOf.get(pre) ?? "",
+      sample: pre.closest("details") ? "example response" : "command",
+      how,
+    });
+  };
+
+  for (const pre of sectionOf.keys()) {
+    const wrap = document.createElement("div");
+    wrap.className = "snippet";
+    pre.replaceWith(wrap);
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "copy-button";
+    button.textContent = "Copy";
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(pre.textContent ?? "");
+      } catch {
+        // No clipboard access: select the code so it can be copied by hand.
+        getSelection()?.selectAllChildren(pre);
+        return;
+      }
+      button.textContent = "Copied";
+      setTimeout(() => (button.textContent = "Copy"), 1500);
+      report(pre, "button");
+    });
+    wrap.append(pre, button);
+  }
+
+  document.addEventListener("copy", () => {
+    const node = document.getSelection()?.anchorNode;
+    const pre = (node instanceof Element ? node : node?.parentElement)?.closest("pre.astro-code");
+    if (pre) report(pre, "selection");
+  });
+</script>
+
 <style>
   .prose { max-width: 760px; font-size: var(--fs-md); line-height: 1.65; }
   .prose h2 { margin-top: var(--sp-7); padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
@@ -178,6 +272,13 @@ const collections = [
   @media (prefers-color-scheme: dark) {
     .prose :global(.astro-code span) { color: var(--shiki-dark); }
   }
+  .prose :global(.snippet) { position: relative; }
+  .prose :global(.copy-button) {
+    position: absolute; top: var(--sp-2); right: var(--sp-2); padding: 3px 9px; border: 1px solid var(--hairline);
+    border-radius: 3px; background: var(--surface); color: var(--text-secondary); cursor: pointer;
+    font: 600 var(--fs-label)/1.4 var(--sans); letter-spacing: 0.02em;
+  }
+  .prose :global(.copy-button:hover) { color: var(--text-primary); border-color: var(--text-muted); }
   details { margin: calc(-1 * var(--sp-2)) 0 var(--sp-5); }
   details summary { cursor: pointer; font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: var(--sp-2); }
   details :global(pre.astro-code) { max-height: 28rem; }

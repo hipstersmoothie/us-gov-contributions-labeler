@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
 import type { SearchRow } from "../lib/search";
 import { group, search, TYPE_LABEL } from "./search-core";
+import { track } from "../lib/analytics";
 
 const LIMIT = 200;
 
@@ -22,6 +23,13 @@ export default function SearchResults() {
 
   const hits = useMemo(() => (rows ? search(rows, query) : []), [rows, query]);
   const groups = useMemo(() => group(hits), [hits]);
+
+  // One "Search" per submitted query, with how many results it found, in
+  // buckets. The query itself is never sent.
+  useEffect(() => {
+    if (!query || !rows) return;
+    track("Search", { via: "results page", results: hits.length === 0 ? "none" : hits.length < 10 ? "1–9" : hits.length < 100 ? "10–99" : "100+" });
+  }, [query, rows]);
 
   if (!query) return <p className="search-summary">Type a name in the search box above.</p>;
   if (!rows) return <p className="search-summary" role="status">Searching…</p>;

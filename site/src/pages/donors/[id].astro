@@ -16,12 +16,28 @@ import {
   type Donor,
 } from "../../lib/data";
 import { chamberName } from "../../lib/derived";
+import { clip, listOf } from "../../lib/seo";
 
 export function getStaticPaths() {
-  return donors.map((d) => ({ params: { id: d.id }, props: { d } }));
+  // Donors that share a name (people in different states, a committee filed
+  // two ways) get what tells them apart in the title: their state, then their
+  // type, then the FEC id.
+  const counter = (key: (d: Donor) => string) => {
+    const n = new Map<string, number>();
+    for (const d of donors) n.set(key(d), (n.get(key(d)) ?? 0) + 1);
+    return (d: Donor) => n.get(key(d))!;
+  };
+  const byName = counter((d) => d.name);
+  const byState = counter((d) => `${d.name}|${d.state}`);
+  const byType = counter((d) => `${d.name}|${d.state}|${d.type}`);
+  const which = (d: Donor) =>
+    byName(d) > 1
+      ? [d.state, byState(d) > 1 && d.type, byType(d) > 1 && /^c\d{8}$/.test(d.id) && `FEC ${d.id.toUpperCase()}`].filter(Boolean).join(", ")
+      : "";
+  return donors.map((d) => ({ params: { id: d.id }, props: { d, which: which(d) } }));
 }
 
-const { d } = Astro.props as { d: Donor };
+const { d, which } = Astro.props as { d: Donor; which: string };
 
 // What the groups they funded spent on members. Shown per group, never
 // attributed to the donor: money is fungible inside a super PAC.
@@ -32,9 +48,21 @@ const about =
     : d.type === "committee"
       ? "Political committee"
       : "Organization";
+
+const path = `/donors/${d.id}/`;
+const groups = d.gifts.length === 1 ? "one super PAC or outside group" : `${d.gifts.length} super PACs and outside groups`;
+const description = clip(
+  `${d.name}${about && d.type === "individual" ? ` (${about.replaceAll(" · ", ", ")})` : ""} gave ${money(d.total, true)} to ${groups} ` +
+    `that spent on members of Congress, ${cycleRange.replace("–", " to ")}, including ${listOf(d.gifts.slice(0, 2).map((g) => committeeLabel(g.id)))}.`
+);
 ---
 
-<Base title={d.name} og={{ type: "donor", id: d.id }} description={`${d.name}'s donations to super PACs and outside groups, ${cycleRange}.`}>
+<Base
+  title={`${d.name}${which ? ` (${which})` : ""}: donations to super PACs and outside groups`}
+  og={{ type: "donor", id: d.id }}
+  {description}
+  crumbs={[["Big donors", "/donors/"], [d.name, path]]}
+>
   <p class="kicker"><a href="/donors/">Big donors</a></p>
   <h1>{d.name}</h1>
   <p class="dek">{about}</p>

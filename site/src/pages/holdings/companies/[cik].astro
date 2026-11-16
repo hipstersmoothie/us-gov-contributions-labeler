@@ -5,6 +5,7 @@
 import Base from "../../../layouts/Base.astro";
 import { partyLetter, money, cycleRange } from "../../../lib/data";
 import { surname } from "../../../lib/format";
+import { clip } from "../../../lib/seo";
 import { companies, companyOrg, companyName, rangeText, sumRange, OWNER_LABEL, type CompanyEntry } from "../../../lib/holdings";
 
 export function getStaticPaths() {
@@ -30,7 +31,15 @@ const date = (iso: string) => new Date(`${iso}T12:00:00`).toLocaleDateString("en
 const whose = (owners: string[]) => owners.map((o) => (o === "self" ? "Member" : OWNER_LABEL[o as keyof typeof OWNER_LABEL])).join(", ");
 ---
 
-<Base title={`${name}: members' holdings`} description={`House members who reported owning or trading ${name} stock.`}>
+<Base
+  title={`${name}${c.ticker ? ` (${c.ticker})` : ""} stock: which members of Congress own and trade it`}
+  description={clip(
+    `${holders.length} House ${holders.length === 1 ? "member" : "members"} reported owning ${name}${c.ticker ? ` (${c.ticker})` : ""} stock` +
+      (holders.length ? ` (${parties(holders)})` : "") +
+      ` and ${traders.length} reported trading it since January 2025, from House financial disclosure reports.`
+  )}
+  crumbs={[["Investments", "/holdings/"], [name, `/holdings/companies/${c.cik}/`]]}
+>
   <p class="kicker">{c.industry ?? c.sector ?? "Company"}{c.ticker && <> · {c.ticker}</>}</p>
   <h1>{name}</h1>
 

@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 ---
 
-<Base title="Page not found" description="This page doesn't exist.">
+<Base title="Page not found" description="This page doesn't exist." noindex>
   <p class="kicker">Error 404</p>
   <h1>We couldn't find that page</h1>
   <p class="dek">
@@ -16,6 +16,8 @@ import Base from "../layouts/Base.astro";
     <li><a class="chip" href="/committees/">Committees</a></li>
     <li><a class="chip" href="/donors/">Big donors</a></li>
   </ul>
+  <!-- Plausible's 404 goal: which missing URLs people land on. -->
+  <script is:inline>plausible("404", { props: { path: location.pathname } });</script>
 </Base>
 
 <style>

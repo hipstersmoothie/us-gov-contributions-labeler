@@ -1,6 +1,7 @@
 // The production web server: the static site in dist/ exactly as `serve`
 // served it (serve-handler with ETags, behind compression), plus link-preview
-// images rendered on request at /og/<version>/<type>/<id>.png.
+// images rendered on request at /og/<version>/<type>/<id>.png, and Plausible's
+// script and event endpoint proxied at /v/ (see plausible.ts).
 //
 // Card images aren't built ahead of time: there are ~19K pages and a crawler
 // asks for a page's image once or twice, when someone shares the link. Each
@@ -13,6 +14,7 @@ import path from "node:path";
 import compression from "compression";
 import handler from "serve-handler";
 import { createRenderer } from "./render.ts";
+import { EVENT_PATH, SCRIPT_PATH, forwardEvent, serveScript } from "./plausible.ts";
 
 const SERVER_DIR = path.resolve(import.meta.dirname, "..");
 const DIST = path.resolve(process.env.DIST_DIR ?? path.join(SERVER_DIR, "../dist"));
@@ -90,6 +92,34 @@ async function og(req: http.IncomingMessage, res: http.ServerResponse, match: Re
   }
 }
 
+// --- one URL per page ---------------------------------------------------------------------------
+
+/**
+ * Where a request for a page under another URL should go: /about and
+ * /about/index.html both to /about/, the canonical URL. Only for pages that
+ * exist, so files without an extension (/.well-known/atproto-did) are left be.
+ */
+function canonicalPath(pathname: string) {
+  let dir: string;
+  if (pathname.endsWith("/index.html")) dir = pathname.slice(0, -"index.html".length);
+  else if (!pathname.endsWith("/") && !path.posix.extname(pathname)) dir = `${pathname}/`;
+  else return undefined;
+  let file: string;
+  try {
+    file = path.join(DIST, decodeURIComponent(dir), "index.html");
+  } catch {
+    return undefined;
+  }
+  return file.startsWith(DIST + path.sep) && fs.existsSync(file) ? dir : undefined;
+}
+
+// Pages are indexed; the data files and HTML fragments they load aren't.
+const HEADERS = [
+  { source: "/_astro/**", headers: [{ key: "Cache-Control", value: YEAR }] },
+  { source: "/{data,fragments}/**", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
+  { source: "/*.json", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
+];
+
 // --- the server ---------------------------------------------------------------------------------
 
 const compress = compression();
@@ -100,13 +130,29 @@ const server = http.createServer((req, res) => {
     console.log(`${req.method} ${req.url} ${res.statusCode} ${(performance.now() - start).toFixed(0)}ms`);
   });
   const url = new URL(req.url ?? "/", "http://localhost");
-  const match = (req.method === "GET" || req.method === "HEAD") && url.pathname.match(OG_PATH);
+  const read = req.method === "GET" || req.method === "HEAD";
+  const match = read && url.pathname.match(OG_PATH);
   if (match) {
     void og(req, res, match);
     return;
   }
+  if (read && url.pathname === SCRIPT_PATH) {
+    void serveScript(req, res);
+    return;
+  }
+  if (req.method === "POST" && url.pathname === EVENT_PATH) {
+    void forwardEvent(req, res);
+    return;
+  }
+  const moved = read && canonicalPath(url.pathname);
+  if (moved) {
+    // Keeps the query, e.g. /members?state=AZ → /members/?state=AZ.
+    res.writeHead(301, { Location: moved + url.search });
+    res.end();
+    return;
+  }
   compress(req as never, res as never, () => {
-    handler(req, res, { public: DIST, etag: true }).catch((err: unknown) => {
+    handler(req, res, { public: DIST, etag: true, headers: HEADERS, directoryListing: false }).catch((err: unknown) => {
       console.error(err);
       if (!res.headersSent) res.writeHead(500);
       res.end();
