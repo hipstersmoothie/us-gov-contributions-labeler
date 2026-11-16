@@ -24,6 +24,7 @@ import {
 } from "../../lib/fara";
 import "../../styles/lobbying.css";
 import TripsTable from "../../components/TripsTable.astro";
+import { givingByOrg, groups527, years527, IRS_SEARCH } from "../../lib/irs527";
 import { sponsorByOrganization, tripsBySponsor, summarize, officeParties, sinceLabel, sponsorHref, byMembersSentence, TRIPS_SHOWN } from "../../lib/travel";
 import {
   organizations,
@@ -119,6 +120,13 @@ const PRINCIPALS_SHOWN = 12;
 const viaPac = /\b(PAC|Committee|Political Action)\b/i.test(o.name);
 // It's a foreign principal: the US agents registered to represent it.
 const asPrincipal = principalsByOrg.get(o.id) ?? [];
+
+// Gifts to political organizations that report to the IRS, mostly state-level.
+const giving527 = givingByOrg[o.id];
+const stateShare = giving527
+  ? Math.round((100 * giving527.to.filter((t) => groups527[t.ein]?.stateLevel).reduce((s, t) => s + t.total, 0)) / giving527.total)
+  : 0;
+const filedAs = giving527?.filedAs.filter((n) => n.toLowerCase() !== o.name.toLowerCase()) ?? [];
 
 // Trips it paid for, when it sponsors privately funded travel.
 const travelSponsor = sponsorByOrganization.get(o.id);
@@ -531,6 +539,39 @@ const description = clip(
             })}
           </tbody>
         </table>
+      </section>
+    )
+  }
+
+  {
+    giving527 && (
+      <section class="story" id="state-groups">
+        <h2>Money to state political groups</h2>
+        <p class="chart-dek">
+          {name} gave <strong>{money(giving527.total, true)}</strong> to {giving527.groups === 1 ? "a political group" : `${giving527.groups} political groups`} that
+          report to the IRS rather than the FEC, {years527}.{" "}
+          {stateShare >= 50 ? (
+            <>{stateShare === 100 ? "All of it" : `${stateShare}% of it`} went to groups working on state races: governors, attorneys general, state legislatures and single states.</>
+          ) : (
+            <>{stateShare > 0 ? `${stateShare}% of it went to groups working on state races.` : "None of it went to groups working only on state races."}</>
+          )}{" "}
+          It isn't part of the totals above, which count money to members of Congress.
+        </p>
+        <RankedTable
+          heading="Group"
+          valueHeading="Given"
+          caption={`Political groups reporting to the IRS that ${o.name} gave to`}
+          rows={giving527.to.map((t) => {
+            const g = groups527[t.ein];
+            return { label: displayName(g?.name ?? t.ein), note: g?.kind, value: t.total };
+          })}
+        />
+        <p class="source">
+          {giving527.groups > giving527.to.length && <>The {giving527.to.length} it gave the most. </>}
+          From Schedule A of Forms 8872 filed with the{" "}<a href={IRS_SEARCH}>IRS</a>, matched by the contributor's name
+          {filedAs.length > 0 && <> (filed as {filedAs.map((n, i) => <>{i > 0 && ", "}“{n}”</>)})</>}. Amended reports replace the
+          ones they amend. <a href="/about/#state-groups">About this data</a>.
+        </p>
       </section>
     )
   }

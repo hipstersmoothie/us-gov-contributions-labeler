@@ -39,6 +39,7 @@ import { faraGifts } from "../../lib/fara";
 import "../../styles/lobbying.css";
 import { clip, memberProfile, office, partyState } from "../../lib/seo";
 import TripsTable from "../../components/TripsTable.astro";
+import { legalFundByMember, years527, ein, IRS_SEARCH } from "../../lib/irs527";
 import { tripsByMember, summarize, sinceLabel, sponsorByKey, sponsorHref, TRIPS_SHOWN } from "../../lib/travel";
 
 export function getStaticPaths() {
@@ -223,6 +224,7 @@ const tripSponsorRows = [...memberTrips.reduce((acc, t) => {
   .filter((r) => r.s)
   .sort((a, b) => b.n - a.n || a.s.name.localeCompare(b.s.name));
 const ethics = m.chamber === "senate" ? "Senate Ethics Committee" : "House Ethics Committee";
+const legalFund = legalFundByMember.get(m.bioguide);
 
 ---
 
@@ -812,6 +814,28 @@ const ethics = m.chamber === "senate" ? "Senate Ethics Committee" : "House Ethic
       sponsor's post-travel form. <a href="/travel/">All sponsored travel</a>.
     </p>
   </section>
+
+  {
+    legalFund && (
+      <section class="story" id="legal-fund">
+        <h2>Legal defense fund</h2>
+        <p class="chart-dek">
+          {displayName(legalFund.name)} raised <strong>{money(legalFund.receipts, true)}</strong> and spent{" "}
+          {money(legalFund.spending, true)}, {years527}, according to its reports to the IRS. It lists{" "}
+          {legalFund.contributors.toLocaleString()} {legalFund.contributors === 1 ? "contributor" : "contributors"} by name:{" "}
+          {[
+            legalFund.split.individuals && `people gave ${money(legalFund.split.individuals, true)}`,
+            legalFund.split.committees && `PACs and campaign committees ${money(legalFund.split.committees, true)}`,
+            legalFund.split.organizations && `other organizations ${money(legalFund.split.organizations, true)}`,
+          ].filter(Boolean).join(", ")}.
+          Members may raise money for legal costs connected to their office through a fund set up under the {ethics}'s rules.
+        </p>
+        <p class="source">
+          Form 8872 filings for EIN {ein(legalFund.ein)}, on the{" "}<a href={IRS_SEARCH}>IRS political organization site</a>.
+        </p>
+      </section>
+    )
+  }
 
   {
     m.committees.length > 0 && (

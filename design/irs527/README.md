@@ -146,4 +146,24 @@ python3 src/scripts/irs527/parse.py && python3 src/scripts/irs527/orgs.py && pyt
   && python3 src/scripts/irs527/donors.py && python3 src/scripts/irs527/transfers.py && python3 src/scripts/irs527/scope.py
 ```
 
-Nothing from this assessment is on the site.
+## What shipped (the recommended piece)
+
+`python3 src/scripts/irs527/build.py` (after the scripts above) writes `data/irs527.json`:
+
+- **Organization pages**, "Money to state political groups": for 876 organizations with a page here, what they gave
+  to 527s, 2023–2026 ($438M), up to the 12 groups each gave the most, each labeled by what it works on (governors',
+  attorneys general, state legislative races, a single state's politics, a union's state account, candidate
+  training…). 94.0% of it went to groups working on state races. The page says how the contributor was filed.
+- **Member pages**, "Legal defense fund": Schiff ($1.30M), Kelly ($863K), Slotkin ($512K) and Sanford Bishop ($11K),
+  with what came from people, PACs and campaign committees, and other organizations. Funds are listed by EIN by hand
+  (`LEGAL_FUNDS`); the "Menendez Legal Defense Fund" is former Sen. Bob Menendez's and isn't shown. Gallego's and
+  Cuellar's funds report nothing yet.
+- **Matching:** contributor name → organization by `normalizeOrg`, only when the contributor looks like an
+  organization (a business word, or employer N/A), and never a group giving to its own nonfederal account. In 70
+  checked (the 40 largest and 30 at random), one was doubtful: "North Star Companies Group" counted under North Star
+  PAC.
+- **Left out:** ActBlue Technical Services ($67M from 801 organizations matched): it files as a 527, so the processing
+  fees campaigns pay it look like contributions. Not built: a "527s that spent on this member" section (about $2M,
+  mostly already in FEC data, and name matching on expenditures wasn't reliable).
+
+Screenshots: `01-org-meta-light.png`, `02-org-aft-dark.png`, `03-member-schiff-legal-fund-light.png`, `04-member-slotkin-legal-fund-dark.png`.

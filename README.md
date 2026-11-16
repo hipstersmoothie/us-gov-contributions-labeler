@@ -18,6 +18,7 @@ Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky l
 | [Lobbying disclosures](https://lda.gov/api/) | What organizations lobby on and spend, which PACs they run, lobbyists' former government jobs |
 | [FARA bulk data](https://efile.fara.gov/ords/fara/f?p=API:BULKDATA) | Foreign agents, their foreign principals by country, and (with FEC itemized records) their donations |
 | [House Clerk gift travel](https://disclosures-clerk.house.gov/GiftTravelFilings) and [Senate gift rule travel](https://www.senate.gov/legislative/Public_Disclosure/gift-rule-travel.htm) filings | Trips paid for by outside groups (`src/scripts/travel/`, `data/travel.json`; see `design/travel/README.md`) |
+| [IRS political organization filings](https://www.irs.gov/charities-non-profits/political-organizations/political-organization-filing-and-disclosure) | Organizations' gifts to state-level 527 groups, members' legal defense funds (`src/scripts/irs527/`, `data/irs527.json`; see `design/irs527/README.md`) |
 | Bluesky | Matching members to their accounts |
 
 Contributions are counted by organization: an organization's total is its PAC plus donations from people who list it as their employer.

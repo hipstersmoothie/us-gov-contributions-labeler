@@ -68,7 +68,7 @@ export function titleCase(name: string) {
 
 // Acronyms that title-casing can't spot because they have vowels.
 const ACRONYMS = new Set(
-  ("Pac Llc Llp Pllc Usa Afl Cio Ubs Ups Seiu Uaw Ua Ncta Ctia Cme Cipa Basf Bae Ge Dla Saic Sabic Nreca Tma Aota " +
+  ("Pac Llc Llp Pllc Usa Afl Aft Cio Ubs Ups Seiu Uaw Ua Ncta Ctia Cme Cipa Basf Bae Ge Dla Saic Sabic Nreca Tma Aota " +
     "Usaa Aarp Afscme Afge Ibew Iuoe Aig Aep Aes Hca Ibm Ey Bp Ieee Nea Aipac Ici Nahb Nrca Ahip Apta Aapa Nfib " +
     "Nrf Api Afpm Ipaa Eei Nmha Hdma Apapo Mci").split(" ")
 );
