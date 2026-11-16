@@ -31,7 +31,9 @@ clone to `origin/main` and runs `src/scripts/refresh/refresh.sh`:
    account the matcher dropped is put back and listed in the run's summary.
    To drop one for real, add it to `exclude` in `data/account-overrides.json`
    or remove it by hand.
-2. `pnpm ingest --steps=assignments,fec,bundling,committees,lobbying,individuals,donors,legislation`.
+2. `pnpm ingest --steps=assignments,fec,bundling,committees,lobbying,individuals,donors,legislation`
+   (`pnpm ingest` allows Node a 12 GB heap: three complete cycles of
+   individual donations outgrow the default 4 GB).
    Bulk files are refetched only when fec.gov's copy changed (below). The
    revolving door and FARA are left to the Railway job.
 3. `check-data.ts`. It stops the run before anything is pushed if:

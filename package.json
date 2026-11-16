@@ -10,7 +10,7 @@
     "discover": "tsx src/ingest.ts --steps=accounts",
     "read-dms": "tsx src/read-dms.ts",
     "typecheck": "tsc --noEmit",
-    "ingest": "tsx src/ingest.ts",
+    "ingest": "NODE_OPTIONS=--max-old-space-size=12288 tsx src/ingest.ts",
     "fec-audit": "tsx src/scripts/fec-cache-audit.ts",
     "site:dev": "pnpm --filter site dev",
     "site:build": "pnpm --filter site build",

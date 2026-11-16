@@ -27,11 +27,11 @@ pnpm install --frozen-lockfile --silent
 # Bluesky accounts first, on their own, so dropped matches can be put back
 # before anything is built from them.
 log "matching Bluesky accounts"
-npx tsx src/ingest.ts --steps=accounts
+pnpm ingest --steps=accounts
 npx tsx src/scripts/refresh/accounts-guard.ts | tee -a "$SUMMARY"
 
 log "ingesting $STEPS"
-npx tsx src/ingest.ts --steps=$STEPS
+pnpm ingest --steps=$STEPS
 
 log "checking the data against main"
 npx tsx src/scripts/refresh/check-data.ts | tee -a "$SUMMARY"
