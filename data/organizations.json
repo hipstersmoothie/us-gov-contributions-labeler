@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T19:36:44.829Z",
+  "generatedAt": "2026-11-16T19:43:32.146Z",
   "cycles": [
     2022,
     2024,
@@ -1085574,18 +1085574,6 @@
       "classifiedBy": "fec-type",
       "committees": [
         "C90021676"
-      ],
-      "total": 0,
-      "byCycle": {},
-      "recipients": []
-    },
-    {
-      "id": "young-leadership-coalition-c00762740",
-      "name": "Young Leadership Coalition",
-      "sector": "Energy & Natural Resources",
-      "classifiedBy": "name",
-      "committees": [
-        "C00762740"
       ],
       "total": 0,
       "byCycle": {},

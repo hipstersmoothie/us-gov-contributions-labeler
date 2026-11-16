@@ -376,8 +376,9 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
     }
 
     // pas2 stops at each committee's last processed periodic report; the
-    // 24/48-hour notices carry on from there.
-    const notices = (await lateNotices(cycle, (id) => pas2Through.get(id), (id) => allCommittees.has(id))).flatMap((ie) => resolve(ie) ?? []);
+    // 24/48-hour notices carry on from there. A finished cycle's reports are
+    // all processed, so its notices would only repeat what pas2 has.
+    const notices = finished ? [] : (await lateNotices(cycle, (id) => pas2Through.get(id), (id) => allCommittees.has(id))).flatMap((ie) => resolve(ie) ?? []);
     const form5Filings = await form5(cycle);
     const f5 = form5Filings.rows.flatMap((ie) => resolve(ie) ?? []);
     for (const id of form5Filings.people) nonCommitteePeople.add(id);
