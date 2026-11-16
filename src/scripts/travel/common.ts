@@ -8,21 +8,26 @@
 // 5 U.S.C. § 13107 doesn't reach them (see design/travel/README.md).
 import fs from "fs";
 import path from "path";
+import { execFileSync } from "child_process";
 import { XMLParser } from "fast-xml-parser";
 import { getCurrentLegislators, type Legislator } from "../../lib/legislators.js";
 import { USER_AGENT, fold } from "../disclosures/common.js";
 
 export const CACHE = ".cache/travel";
-export const HOUSE_YEARS = [2025, 2026];
 /** The 119th Congress convened January 3, 2025. */
 export const SINCE = "2025-01-03";
+/** The Clerk's yearly indexes go by filing year: from SINCE's to this one. */
+export const HOUSE_YEARS = Array.from({ length: new Date().getFullYear() - Number(SINCE.slice(0, 4)) + 1 }, (_, i) => Number(SINCE.slice(0, 4)) + i);
+/** Indexes older than this are downloaded again; filings never are. */
+const INDEX_MAX_AGE_MS = 20 * 3600 * 1000;
 
 const lastRequest = new Map<string, number>();
 
-/** Fetch a URL at most once (cached under .cache/travel), pacing each host. */
-export async function cachedFetch(url: string, file: string, intervalMs = 2000): Promise<Buffer> {
+/** Fetch a URL at most once (cached under .cache/travel), pacing each host.
+ *  With `maxAgeMs`, a cached copy older than that is fetched again. */
+export async function cachedFetch(url: string, file: string, intervalMs = 2000, maxAgeMs = Infinity): Promise<Buffer> {
   const dest = path.join(CACHE, file);
-  if (fs.existsSync(dest)) return fs.readFileSync(dest);
+  if (fs.existsSync(dest) && Date.now() - fs.statSync(dest).mtimeMs < maxAgeMs) return fs.readFileSync(dest);
   const host = new URL(url).host;
   const wait = (lastRequest.get(host) ?? 0) + intervalMs - Date.now();
   if (wait > 0) await new Promise((r) => setTimeout(r, wait));
@@ -35,9 +40,20 @@ export async function cachedFetch(url: string, file: string, intervalMs = 2000):
   return body;
 }
 
+/** An index ZIP, fetched again once a day and unzipped next to it. */
+async function index(url: string, zip: string, dir: string) {
+  const before = fs.existsSync(path.join(CACHE, zip)) ? fs.statSync(path.join(CACHE, zip)).mtimeMs : 0;
+  await cachedFetch(url, zip, 2000, INDEX_MAX_AGE_MS);
+  if (fs.statSync(path.join(CACHE, zip)).mtimeMs !== before || !fs.existsSync(path.join(CACHE, dir))) {
+    fs.mkdirSync(path.join(CACHE, dir), { recursive: true });
+    execFileSync("unzip", ["-o", "-q", path.join(CACHE, zip), "-d", path.join(CACHE, dir)]);
+  }
+}
+
 export async function legislators(): Promise<Legislator[]> {
   const file = path.join(CACHE, "legislators-current.json");
-  if (fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, "utf8"));
+  // Members change (resignations, special elections); refetch after a few days.
+  if (fs.existsSync(file) && Date.now() - fs.statSync(file).mtimeMs < 3 * 86400_000) return JSON.parse(fs.readFileSync(file, "utf8"));
   const list = await getCurrentLegislators();
   fs.mkdirSync(CACHE, { recursive: true });
   fs.writeFileSync(file, JSON.stringify(list));
@@ -96,9 +112,9 @@ export async function houseIndex(): Promise<HouseFiling[]> {
   const out: HouseFiling[] = [];
   for (const year of HOUSE_YEARS) {
     const zip = `house/${year}Travel.zip`;
-    await cachedFetch(`https://disclosures-clerk.house.gov/public_disc/gift-pdfs/${year}Travel.zip`, zip);
+    await index(`https://disclosures-clerk.house.gov/public_disc/gift-pdfs/${year}Travel.zip`, zip, `house/${year}`);
     const xml = path.join(CACHE, `house/${year}/${year}Travel.xml`);
-    if (!fs.existsSync(xml)) throw new Error(`unzip ${zip} into ${CACHE}/house/${year}/ first`);
+    if (!fs.existsSync(xml)) throw new Error(`${zip} has no ${year}Travel.xml`);
     const rows = parser.parse(fs.readFileSync(xml, "utf8")).GiftTravel.Travel as Record<string, unknown>[];
     for (const r of rows) {
       const office = clean(r.MemberName);
@@ -148,9 +164,9 @@ export interface SenateFiling {
 export async function senateIndex(): Promise<SenateFiling[]> {
   const list = (await legislators()).filter((l) => l.chamber === "senate");
   const match = matcher(list);
-  await cachedFetch("https://giftrule-disclosure.senate.gov/media/giftruledownloads/giftruledata.zip", "senate/giftruledata.zip");
+  await index("https://giftrule-disclosure.senate.gov/media/giftruledownloads/giftruledata.zip", "senate/giftruledata.zip", "senate");
   const xml = path.join(CACHE, "senate/giftrule.xml");
-  if (!fs.existsSync(xml)) throw new Error(`unzip ${CACHE}/senate/giftruledata.zip first`);
+  if (!fs.existsSync(xml)) throw new Error("giftruledata.zip has no giftrule.xml");
   const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "", isArray: (n) => n.startsWith("dbo.") });
   const root = parser.parse(fs.readFileSync(xml, "utf8").replace(/^﻿/, "")).GiftRule;
   const out: SenateFiling[] = [];

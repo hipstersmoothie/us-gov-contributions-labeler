@@ -131,6 +131,17 @@ and only where read, with the count; party is shown next to the seat split.
 
 ## Refresh
 
+Weekly, on this Mac (the OCR needs macOS Vision): a launchd job,
+`fyi.contributions.travel-refresh`, runs Mondays at 7:00 (or at the next wake)
+from its own clone in `~/Library/Application Support/contributions-fyi/travel-refresh/`.
+It updates the clone to main, downloads the day's indexes and any new filings,
+reads them, rebuilds `data/travel.json` and pushes it when anything but the
+timestamp changed. Logs are in `logs/` there. Install or reinstall with
+`zsh src/scripts/travel/install-refresh.sh [existing .cache/travel to move in]`;
+run it now with `launchctl kickstart gui/$(id -u)/fyi.contributions.travel-refresh`.
+
+By hand:
+
 ```sh
 tsx src/scripts/travel/fetch.ts          # new filings, both chambers
 tsx src/scripts/travel/house-read.ts     # parse/OCR new House filings
