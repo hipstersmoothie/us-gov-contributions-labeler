@@ -1,0 +1,36 @@
+---
+// The sponsors past the first page of /travel/'s list, loaded on request.
+import { money } from "../../../../lib/data";
+import { activeSponsors, tripsBySponsor, summarize, sponsorHref, organizationOf, SPONSORS_SHOWN } from "../../../../lib/travel";
+
+export const partial = true;
+const rows = activeSponsors.slice(SPONSORS_SHOWN).map((sp) => ({ sp, sum: summarize(tripsBySponsor.get(sp.key)!) }));
+---
+
+<table class="sponsors">
+  <caption class="visually-hidden">More sponsors of trips, most trips first</caption>
+  <thead>
+    <tr>
+      <th scope="col">Sponsor</th>
+      <th scope="col" class="num">Trips</th>
+      <th scope="col" class="num">Offices</th>
+      <th scope="col" class="num">Reported cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    {rows.map(({ sp, sum }) => {
+      const org = organizationOf(sp);
+      return (
+        <tr>
+          <td>
+            <a href={sponsorHref(sp)}>{sp.name}</a>
+            {org && <a class="muted small" href={`/organizations/${org.id}/`}> · its PAC and lobbying</a>}
+          </td>
+          <td class="num">{sum.trips.toLocaleString()}</td>
+          <td class="num">{sum.offices.toLocaleString()}</td>
+          <td class="num">{sum.withCost ? money(sum.cost, true) : <span class="muted">–</span>}</td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>

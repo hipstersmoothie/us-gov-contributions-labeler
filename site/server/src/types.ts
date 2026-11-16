@@ -157,7 +157,21 @@ export interface PageCard {
   lines?: { strong: string; text: string }[];
 }
 
-export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard;
+/** Privately sponsored travel: the /travel/ index and each sponsor's page. */
+export interface TravelCard {
+  type: "travel";
+  kicker: string;
+  title: string;
+  dek: string;
+  stats: { label: string; value: string }[];
+  /** Counted in trips, not dollars. */
+  bars?: Bar[];
+  barsTitle?: string;
+  /** "since Jan. 3, 2025", for the footer. */
+  span: string;
+}
+
+export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard | TravelCard;
 
 export interface CardsFile {
   version: string;

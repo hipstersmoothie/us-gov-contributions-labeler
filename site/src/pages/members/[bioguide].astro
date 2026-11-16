@@ -38,6 +38,8 @@ import { staffByMember, filingSpan, STAFF_SHOWN } from "../../lib/revolving";
 import { faraGifts } from "../../lib/fara";
 import "../../styles/lobbying.css";
 import { clip, memberProfile, office, partyState } from "../../lib/seo";
+import TripsTable from "../../components/TripsTable.astro";
+import { tripsByMember, summarize, sinceLabel, sponsorByKey, sponsorHref, TRIPS_SHOWN } from "../../lib/travel";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -209,6 +211,19 @@ const description = clip(
       : `. `) +
     `${headline}. Top contributors, PAC money by industry, outside spending and votes.`
 );
+
+// Trips outside groups paid for, by the member or their staff.
+const memberTrips = tripsByMember.get(m.bioguide) ?? [];
+const travel = summarize(memberTrips);
+const tripSponsorRows = [...memberTrips.reduce((acc, t) => {
+  for (const k of t.sponsors) acc.set(k, (acc.get(k) ?? 0) + 1);
+  return acc;
+}, new Map<string, number>())]
+  .map(([k, n]) => ({ s: sponsorByKey.get(k)!, n }))
+  .filter((r) => r.s)
+  .sort((a, b) => b.n - a.n || a.s.name.localeCompare(b.s.name));
+const ethics = m.chamber === "senate" ? "Senate Ethics Committee" : "House Ethics Committee";
+
 ---
 
 <Base
@@ -755,6 +770,47 @@ const description = clip(
       </section>
     )
   }
+  <section class="story" id="travel">
+    <h2>Trips paid for by outside groups</h2>
+    {
+      memberTrips.length > 0 ? (
+        <>
+          <p class="chart-dek">
+            Since {sinceLabel}, outside groups paid for <strong>{travel.trips.toLocaleString()} {travel.trips === 1 ? "trip" : "trips"}</strong>{" "}
+            by {last} or staff in {possessive(last)} office
+            {travel.byMembers > 0 ? <>; {last} went on {travel.byMembers === travel.trips ? (travel.trips === 1 ? "it" : "all of them") : travel.byMembers}</> : <>; {last} went on none of them</>}.
+            {travel.withCost > 0 && (
+              <>
+                {" "}Sponsors reported spending <strong>{money(travel.cost, true)}</strong> on the{" "}
+                {travel.withCost === travel.trips ? "" : `${travel.withCost.toLocaleString()} `}trips whose costs could be read.
+              </>
+            )}{" "}
+            Members and staff may accept travel connected to their official duties when the {ethics} approves it in advance.
+          </p>
+          {tripSponsorRows.length >= 3 && (
+            <PlotFigure
+              chart="bars"
+              width={640}
+              label={`Trips paid for by each sponsor, ${m.name}'s office`}
+              data={{ rows: tripSponsorRows.slice(0, 6).map((r) => ({ label: r.s.name, value: r.n, href: sponsorHref(r.s) })), unit: "trips" }}
+              table={{ columns: ["Sponsor", "Trips"], numeric: [1], rows: tripSponsorRows.map((r) => [{ text: r.s.name, href: sponsorHref(r.s) }, r.n]) }}
+            />
+          )}
+          <h3 class="spaced">Most recent trips</h3>
+          <TripsTable rows={memberTrips.slice(0, TRIPS_SHOWN)} caption={`Trips paid for by outside groups, ${m.name}'s office`} view="member" />
+          {memberTrips.length > TRIPS_SHOWN && (
+            <LazyDisclosure client:visible title={`${memberTrips.length - TRIPS_SHOWN} earlier trips`} src={`/fragments/members/${m.bioguide}/travel/`} />
+          )}
+        </>
+      ) : (
+        <p class="empty-note">No trips paid for by outside groups have been filed for {last} or {possessive(last)} staff since {sinceLabel}.</p>
+      )
+    }
+    <p class="source">
+      From the {m.chamber === "senate" ? "Secretary of the Senate's gift rule travel filings" : "House Clerk's gift travel filings"}; costs from each
+      sponsor's post-travel form. <a href="/travel/">All sponsored travel</a>.
+    </p>
+  </section>
 
   {
     m.committees.length > 0 && (

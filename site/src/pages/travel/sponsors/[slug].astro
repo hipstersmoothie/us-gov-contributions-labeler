@@ -1,0 +1,133 @@
+---
+// One trip sponsor: every trip it paid for, by whose office.
+import Base from "../../../layouts/Base.astro";
+import PlotFigure from "../../../components/PlotFigure.astro";
+import TripsTable from "../../../components/TripsTable.astro";
+import LazyDisclosure from "../../../islands/LazyDisclosure";
+import { memberById, money, partyLetter } from "../../../lib/data";
+import { shortSeat } from "../../../lib/derived";
+import {
+  activeSponsors,
+  tripsBySponsor,
+  summarize,
+  officeParties,
+  organizationOf,
+  sinceLabel,
+  COST_NOTE,
+  SPONSOR_TRIPS_SHOWN,
+  byMembersSentence,
+  type Sponsor,
+} from "../../../lib/travel";
+
+export function getStaticPaths() {
+  return activeSponsors.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Sponsor };
+const list = tripsBySponsor.get(s.key)!;
+const sum = summarize(list);
+const parties = officeParties(list);
+const org = organizationOf(s);
+const Name = s.name.startsWith("The ") ? s.name : /^(National|American|International|Congressional)\b/.test(s.name) ? `The ${s.name}` : s.name;
+
+// Whose offices, most trips first.
+const offices = [...list.reduce((acc, t) => acc.set(t.bioguide, (acc.get(t.bioguide) ?? 0) + 1), new Map<string, number>())]
+  .map(([id, n]) => ({ m: memberById.get(id)!, n }))
+  .filter((r) => r.m)
+  .sort((a, b) => b.n - a.n || a.m.name.localeCompare(b.m.name));
+const places = [...list.reduce((acc, t) => (t.destination ? acc.set(t.destination, (acc.get(t.destination) ?? 0) + 1) : acc), new Map<string, number>())].sort(
+  (a, b) => b[1] - a[1]
+);
+const jointly = list.filter((t) => t.sponsors.length > 1).length;
+const chambers = [...new Set(list.map((t) => t.chamber))];
+const description = `${Name} paid for ${sum.trips} ${sum.trips === 1 ? "trip" : "trips"} taken by members of Congress or their staff since ${sinceLabel}.`;
+---
+
+<Base title={s.name} description={description} og={{ type: "travel", id: s.slug }}>
+  <p class="kicker"><a href="/travel/">Sponsored travel</a></p>
+  <h1>{s.name}</h1>
+  <p class="dek">
+    {Name} paid for <strong>{sum.trips.toLocaleString()} {sum.trips === 1 ? "trip" : "trips"}</strong> taken by members of Congress or their staff since{" "}
+    {sinceLabel}, from the offices of {parties}.
+    {sum.byMembers > 0 && <> {byMembersSentence(sum.byMembers, sum.trips)}</>}
+    {sum.withCost > 0 && (
+      <>
+        {" "}It reported spending <strong>{money(sum.cost, true)}</strong> on the {sum.withCost === sum.trips ? "" : `${sum.withCost.toLocaleString()} `}trips
+        whose costs could be read.
+      </>
+    )}
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Trips</dt><dd>{sum.trips.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Members' offices</dt><dd>{sum.offices.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Taken by members</dt><dd>{sum.byMembers.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Reported cost</dt><dd>{sum.withCost ? money(sum.cost, true) : "–"}{sum.withCost > 0 && sum.withCost < sum.trips && <small>{sum.withCost} of {sum.trips} trips read</small>}</dd></div>
+  </dl>
+
+  {
+    org && (
+      <p class="org-link">
+        <a href={`/organizations/${org.id}/`}>{org.name}'s PAC money and lobbying</a>
+        <span class="muted"> · its organization page</span>
+      </p>
+    )
+  }
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Whose offices went</h2>
+      <p class="chart-dek">Trips by each member's office, counting trips by staff.</p>
+      <PlotFigure
+        chart="bars"
+        width={500}
+        label={`Trips ${s.name} paid for, by member's office`}
+        data={{ rows: offices.slice(0, 8).map((r) => ({ label: r.m.name, note: shortSeat(r.m), value: r.n, href: `/members/${r.m.bioguide}/` })), unit: "trips" }}
+        table={{
+          columns: ["Member", "Party", "Trips"],
+          numeric: [2],
+          rows: offices.map((r) => [{ text: r.m.name, href: `/members/${r.m.bioguide}/` }, partyLetter(r.m.party), r.n]),
+        }}
+      />
+    </section>
+    <section class="story">
+      <h2>Where they went</h2>
+      {
+        places.length ? (
+          <>
+            <p class="chart-dek">Destinations as filed.</p>
+            <PlotFigure
+              chart="bars"
+              width={500}
+              label={`Destinations of trips ${s.name} paid for`}
+              data={{ rows: places.slice(0, 8).map(([label, value]) => ({ label, value })), unit: "trips" }}
+              table={{ columns: ["Destination", "Trips"], numeric: [1], rows: places.map(([p, n]) => [p, n]) }}
+            />
+          </>
+        ) : (
+          <p class="empty-note">No destinations were read from these filings.</p>
+        )
+      }
+    </section>
+  </div>
+
+  <section class="story">
+    <h2>Every trip</h2>
+    <p class="chart-dek">
+      Most recent first.{jointly > 0 && <> {jointly === sum.trips ? "All were" : `${jointly} ${jointly === 1 ? "was" : "were"}`} paid for jointly with another sponsor.</>}{" "}
+      {COST_NOTE}
+    </p>
+    <TripsTable rows={list.slice(0, SPONSOR_TRIPS_SHOWN)} caption={`Trips ${s.name} paid for`} view="sponsor" />
+    {list.length > SPONSOR_TRIPS_SHOWN && (
+      <LazyDisclosure client:visible title={`${list.length - SPONSOR_TRIPS_SHOWN} earlier trips`} src={`/fragments/travel/sponsors/${s.slug}/`} />
+    )}
+    <p class="source">
+      From {chambers.length > 1 ? "House and Senate" : chambers[0] === "house" ? "House" : "Senate"} gift travel filings: the{" "}
+      {chambers.includes("house") && "House Clerk's"}{chambers.length > 1 && " and the "}{chambers.includes("senate") && "Secretary of the Senate's"}.
+      Sponsors are named as filed. <a href="/travel/#how-to-read">How to read these</a>.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .org-link { margin: calc(-1 * var(--sp-4)) 0 var(--sp-6); font-size: var(--fs-sm); font-weight: 600; }
+</style>

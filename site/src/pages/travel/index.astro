@@ -1,0 +1,220 @@
+---
+// Privately sponsored travel this Congress: who paid, for whose offices, and
+// how complete the data is.
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import LazyDisclosure from "../../islands/LazyDisclosure";
+import { members, memberById, money, partyLetter } from "../../lib/data";
+import { shortSeat } from "../../lib/derived";
+import { PARTY_COLOR } from "../../lib/charts";
+import { trips, activeSponsors, tripsBySponsor, tripsByMember, summarize, sinceLabel, sponsorHref, organizationOf, COST_NOTE, SPONSORS_SHOWN } from "../../lib/travel";
+
+const all = summarize(trips);
+const house = trips.filter((t) => t.chamber === "house");
+const senate = trips.filter((t) => t.chamber === "senate");
+const h = summarize(house);
+const s = summarize(senate);
+const pct = (a: number, b: number) => (b ? Math.round((a / b) * 100) : 0);
+const senateSponsorRead = senate.filter((t) => t.sponsors.length).length;
+const senateDestinations = senate.filter((t) => t.destination).length;
+const scanned = trips.filter((t) => t.cost?.scan).length;
+
+const sponsorRows = activeSponsors.map((sp) => ({ sp, sum: summarize(tripsBySponsor.get(sp.key)!) }));
+
+// Trips by the party of the member's office, in each chamber.
+const byParty = (list: typeof trips) => {
+  const v = { D: 0, I: 0, R: 0 };
+  for (const t of list) {
+    const m = memberById.get(t.bioguide);
+    if (m) v[partyLetter(m.party) as "D"]++;
+  }
+  return v;
+};
+const partyRows = [
+  { label: "House offices", values: byParty(house) },
+  { label: "Senate offices", values: byParty(senate) },
+].filter((r) => r.values.D + r.values.I + r.values.R > 0);
+const PARTY_SERIES = [
+  { key: "D", label: "Democrats", color: PARTY_COLOR.D, ink: "var(--on-d)" },
+  { key: "I", label: "Independents", color: PARTY_COLOR.I, ink: "var(--on-i)" },
+  { key: "R", label: "Republicans", color: PARTY_COLOR.R, ink: "var(--on-r)" },
+];
+const seats = (ch: "house" | "senate") => {
+  const v = { D: 0, I: 0, R: 0 };
+  for (const m of members) if (m.chamber === ch) v[partyLetter(m.party) as "D"]++;
+  return v;
+};
+const houseSeats = seats("house");
+
+const offices = [...tripsByMember]
+  .map(([id, list]) => ({ m: memberById.get(id)!, n: list.length, self: list.filter((t) => t.member).length }))
+  .filter((r) => r.m)
+  .sort((a, b) => b.n - a.n || a.m.name.localeCompare(b.m.name));
+const noTrips = members.filter((m) => !tripsByMember.has(m.bioguide)).length;
+---
+
+<Base
+  title="Trips paid for by outside groups"
+  description={`Privately sponsored travel by members of Congress and their staff since ${sinceLabel}: ${all.trips.toLocaleString()} trips, who paid and where they went.`}
+  og={{ type: "travel", id: "index" }}
+>
+  <p class="kicker">Sponsored travel</p>
+  <h1>Trips paid for by outside groups</h1>
+  <p class="dek">
+    Nonprofits, trade groups, universities and companies paid for <strong>{all.trips.toLocaleString()} trips</strong> taken by members of
+    Congress or their staff since {sinceLabel}, the start of this Congress. They came from {all.offices.toLocaleString()} of the{" "}
+    {members.length} current members' offices, and were paid for by {activeSponsors.length.toLocaleString()} sponsors. Members went on{" "}
+    {all.byMembers.toLocaleString()} of the trips themselves; staff took the rest.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Trips</dt><dd>{all.trips.toLocaleString()}<small>{h.trips.toLocaleString()} House, {s.trips.toLocaleString()} Senate</small></dd></div>
+    <div class="stat"><dt>Sponsors</dt><dd>{activeSponsors.length.toLocaleString()}</dd></div>
+    <div class="stat"><dt>Taken by members</dt><dd>{all.byMembers.toLocaleString()}<small>the rest by staff</small></dd></div>
+    <div class="stat"><dt>Reported cost</dt><dd>{money(all.cost, true)}<small>for the {all.withCost.toLocaleString()} trips whose costs were read</small></dd></div>
+  </dl>
+
+  <section class="story how" id="how-to-read">
+    <h2>How to read these</h2>
+    <ul>
+      <li>
+        <strong>The trips are allowed.</strong> Members and staff may accept travel from a private sponsor when it's connected to their official
+        duties and the House or Senate Ethics Committee approves it in advance. A registered lobbyist can't pay for it, groups that employ
+        lobbyists are limited to short trips, and the sponsor has to certify what it paid afterward.
+      </li>
+      <li>
+        <strong>A trip is one traveler's filing.</strong> When a sponsor flies ten staffers to one conference, that's ten trips here, each listed
+        under the office the staffer works for. Members' offices are counted whether the member went or not.
+      </li>
+      <li><strong>Cost is per traveler, as the sponsor reported it.</strong> {COST_NOTE} Money spent on a spouse or child who went along is shown separately for the House; the Senate's form has one total, so those trips say it includes a relative.</li>
+      <li>
+        <strong>Sponsors are named as filed.</strong> Many are affiliated with groups that lobby or run PACs (an education fund, a foundation, an
+        institute); they're kept separate here unless the name is the same as an organization on this site.
+      </li>
+    </ul>
+  </section>
+
+  <section class="story">
+    <h2>Who paid for the most trips</h2>
+    <p class="chart-dek">Trips each sponsor paid for, alone or jointly with another sponsor.</p>
+    <PlotFigure
+      chart="bars"
+      label="Sponsors by number of trips paid for"
+      data={{ rows: sponsorRows.slice(0, 12).map(({ sp, sum }) => ({ label: sp.name, value: sum.trips, href: sponsorHref(sp) })), unit: "trips" }}
+      table={{
+        columns: ["Sponsor", "Trips", "Offices", "Reported cost"],
+        numeric: [1, 2, 3],
+        // The full list is the table below.
+        rows: sponsorRows.slice(0, 12).map(({ sp, sum }) => [{ text: sp.name, href: sponsorHref(sp) }, sum.trips, sum.offices, sum.withCost ? money(sum.cost) : "–"]),
+      }}
+    />
+  </section>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Trips by party</h2>
+      <p class="chart-dek">
+        Trips by the party of the member whose office took them. Republicans hold {houseSeats.R} House seats to Democrats' {houseSeats.D}.
+      </p>
+      <PlotFigure
+        chart="stacked"
+        width={500}
+        label="Sponsored trips by the party of the member's office, in each chamber"
+        legend={PARTY_SERIES.filter((p) => partyRows.some((r) => r.values[p.key as "D"] > 0)).map((p) => ({ label: p.label, color: p.color }))}
+        data={{ mode: "share", series: PARTY_SERIES, rows: partyRows, unit: "trips" }}
+        table={{ columns: ["", "Democrats", "Independents", "Republicans"], numeric: [1, 2, 3], rows: partyRows.map((r) => [r.label, r.values.D, r.values.I, r.values.R]) }}
+      />
+    </section>
+    <section class="story">
+      <h2>Offices with the most trips</h2>
+      <p class="chart-dek">Trips by each member's office, counting trips by staff.</p>
+      <PlotFigure
+        chart="bars"
+        width={500}
+        label="Members' offices by number of sponsored trips"
+        data={{ rows: offices.slice(0, 8).map((r) => ({ label: r.m.name, note: shortSeat(r.m), value: r.n, href: `/members/${r.m.bioguide}/#travel` })), unit: "trips" }}
+        table={{
+          columns: ["Member", "Party", "Trips", "Taken by the member"],
+          numeric: [2, 3],
+          rows: offices.slice(0, 25).map((r) => [{ text: r.m.name, href: `/members/${r.m.bioguide}/#travel` }, partyLetter(r.m.party), r.n, r.self]),
+        }}
+      />
+      <p class="source">The table view lists the top 25; every member's page lists their office's trips. {noTrips} current members' offices have none on file since {sinceLabel}.</p>
+    </section>
+  </div>
+
+  <section class="story">
+    <h2>Every sponsor</h2>
+    <p class="chart-dek">Most trips first. Reported cost adds up only the trips whose costs could be read; each sponsor's page says how many.</p>
+    <table class="sponsors">
+      <caption class="visually-hidden">Every sponsor of trips since {sinceLabel}, most trips first</caption>
+      <thead>
+        <tr>
+          <th scope="col">Sponsor</th>
+          <th scope="col" class="num">Trips</th>
+          <th scope="col" class="num wide">Offices</th>
+          <th scope="col" class="num">Reported cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sponsorRows.slice(0, SPONSORS_SHOWN).map(({ sp, sum }) => {
+          const org = organizationOf(sp);
+          return (
+            <tr>
+              <td>
+                <a href={sponsorHref(sp)}>{sp.name}</a>
+                {org && <a class="muted small" href={`/organizations/${org.id}/`}> · its PAC and lobbying</a>}
+              </td>
+              <td class="num">{sum.trips.toLocaleString()}</td>
+              <td class="num wide">{sum.offices.toLocaleString()}</td>
+              <td class="num">{sum.withCost ? money(sum.cost, true) : <span class="muted">–</span>}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+    {sponsorRows.length > SPONSORS_SHOWN && (
+      <LazyDisclosure client:visible title={`${sponsorRows.length - SPONSORS_SHOWN} more sponsors`} src="/fragments/travel/sponsors/" />
+    )}
+  </section>
+
+  <section class="story">
+    <h2>What's covered</h2>
+    <ul class="coverage">
+      <li>
+        <strong>House:</strong> {h.trips.toLocaleString()} trips from the{" "}
+        <a href="https://disclosures-clerk.house.gov/GiftTravelFilings">Clerk's gift travel filings</a>, with traveler, sponsor, destination
+        and dates from the Clerk's index. Costs were read for {pct(h.withCost, h.trips)}% of them, from the sponsor's form in each filing.
+      </li>
+      <li>
+        <strong>Senate:</strong> {s.trips.toLocaleString()} trips from the Secretary of the Senate's{" "}
+        <a href="https://www.senate.gov/legislative/Public_Disclosure/gift-rule-travel.htm">gift rule travel database</a>. Its index lists the
+        traveler, office and dates; every filing is a scan, so the sponsor and cost were read by machine from the post-travel form, for{" "}
+        {pct(senateSponsorRead, s.trips)}% and {pct(s.withCost, s.trips)}% of trips. Destinations come from the pre-travel form or a House
+        filing for the same trip, for {pct(senateDestinations, s.trips)}%.
+      </li>
+      <li>
+        <strong>Scans:</strong> {scanned.toLocaleString()} costs were read from scanned forms. One is kept only when two readings at different
+        sizes agree and every figure has its dollar sign; handwritten forms mostly don't qualify. Those rows are marked "Scan" and link to the
+        filing.
+      </li>
+      <li>
+        <strong>Amendments</strong> replace the filing they amend. Trips by members who have left Congress aren't included, nor trips paid for
+        with official funds or by a foreign government.
+      </li>
+    </ul>
+  </section>
+
+  <p class="source">
+    These reports are filed under House Rule XXV, clause 5 and Senate Rule XXXV, and published by the Clerk of the House and the Secretary
+    of the Senate under the Honest Leadership and Open Government Act of 2007. They aren't financial disclosure reports, whose use is
+    restricted by 5 U.S.C. § 13107. Members also list sponsored travel on their annual financial disclosure, which isn't used here.
+  </p>
+</Base>
+
+<style>
+  .how ul, .coverage { margin: 0; padding-left: 1.1em; max-width: 760px; }
+  .how li, .coverage li { margin-bottom: var(--sp-2); color: var(--text-secondary); }
+  .how li strong, .coverage li strong { color: var(--text-primary); }
+  @media (max-width: 640px) { .sponsors .wide { display: none; } }
+</style>

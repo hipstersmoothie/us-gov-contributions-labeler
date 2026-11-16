@@ -1,0 +1,15 @@
+---
+// A member's sponsored trips past the most recent few, loaded on request.
+import TripsTable from "../../../../components/TripsTable.astro";
+import { memberById } from "../../../../lib/data";
+import { tripsByMember, TRIPS_SHOWN } from "../../../../lib/travel";
+
+export const partial = true;
+export function getStaticPaths() {
+  return [...tripsByMember].filter(([id, list]) => list.length > TRIPS_SHOWN && memberById.has(id)).map(([bioguide]) => ({ params: { bioguide } }));
+}
+const { bioguide } = Astro.params as { bioguide: string };
+const m = memberById.get(bioguide)!;
+---
+
+<TripsTable rows={tripsByMember.get(bioguide)!.slice(TRIPS_SHOWN)} caption={`Earlier trips paid for by outside groups, ${m.name}'s office`} view="member" />

@@ -23,6 +23,8 @@ import {
   monthYear,
 } from "../../lib/fara";
 import "../../styles/lobbying.css";
+import TripsTable from "../../components/TripsTable.astro";
+import { sponsorByOrganization, tripsBySponsor, summarize, officeParties, sinceLabel, sponsorHref, byMembersSentence, TRIPS_SHOWN } from "../../lib/travel";
 import {
   organizations,
   committeeById,
@@ -118,6 +120,11 @@ const viaPac = /\b(PAC|Committee|Political Action)\b/i.test(o.name);
 // It's a foreign principal: the US agents registered to represent it.
 const asPrincipal = principalsByOrg.get(o.id) ?? [];
 
+// Trips it paid for, when it sponsors privately funded travel.
+const travelSponsor = sponsorByOrganization.get(o.id);
+const orgTrips = travelSponsor ? tripsBySponsor.get(travelSponsor.key) ?? [] : [];
+const orgTravel = summarize(orgTrips);
+const orgTripParties = officeParties(orgTrips);
 const secUrl = o.sec && `https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=${o.sec.cik}`;
 
 const path = `/organizations/${o.id}/`;
@@ -524,6 +531,21 @@ const description = clip(
             })}
           </tbody>
         </table>
+    travelSponsor && orgTrips.length > 0 && (
+      <section class="story" id="travel">
+        <h2>Trips it sponsored for members and staff</h2>
+        <p class="chart-dek">
+          Since {sinceLabel}, {name} paid for <strong>{orgTravel.trips.toLocaleString()} {orgTravel.trips === 1 ? "trip" : "trips"}</strong> taken by
+          members of Congress or their staff, from the offices of {orgTripParties}.
+          {orgTravel.byMembers > 0 && <> {byMembersSentence(orgTravel.byMembers, orgTravel.trips)}</>}
+          {orgTravel.withCost > 0 && <> It reported spending <strong>{money(orgTravel.cost, true)}</strong> on the {orgTravel.withCost === orgTravel.trips ? "" : `${orgTravel.withCost} `}trips whose costs could be read.</>}{" "}
+          Sponsored travel is allowed when the House or Senate Ethics Committee approves it in advance.
+        </p>
+        <TripsTable rows={orgTrips.slice(0, TRIPS_SHOWN)} caption={`Trips ${o.name} paid for`} view="sponsor" />
+        <p class="source">
+          {orgTrips.length > TRIPS_SHOWN ? <><a href={sponsorHref(travelSponsor)}>All {orgTrips.length.toLocaleString()} trips</a>, from</> : "From"} House and
+          Senate gift travel filings. <a href="/travel/">All sponsored travel</a>.
+        </p>
       </section>
     )
   }

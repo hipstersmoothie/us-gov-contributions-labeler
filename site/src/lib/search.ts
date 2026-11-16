@@ -5,8 +5,9 @@ import { members, organizations, committees, donors, congressCommittees, display
 import { pacTotal } from "./derived";
 import { bills, shortStatus } from "./legislation";
 import { countries } from "./fara";
+import { activeSponsors, tripsBySponsor } from "./travel";
 
-export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f";
+export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f" | "t";
 export type SearchRow = [type: SearchType, id: string, label: string, detail: string, weight: number];
 
 const w = (n: number) => Math.round(n / 1000);
@@ -43,6 +44,10 @@ function rows(limit?: number): SearchRow[] {
       c.active ? `${c.active} foreign principal${c.active === 1 ? "" : "s"} with US agents` : "Foreign lobbying",
       c.active,
     ]),
+    ...top(activeSponsors, (sp) => tripsBySponsor.get(sp.key)!.length).map((sp): SearchRow => {
+      const n = tripsBySponsor.get(sp.key)!.length;
+      return ["t", sp.slug, sp.name, `Paid for ${n} ${n === 1 ? "trip" : "trips"} by members and staff`, n];
+    }),
     ...top(donors, (d) => d.total).map((d): SearchRow => [
       "d",
       d.id,

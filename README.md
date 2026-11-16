@@ -17,6 +17,7 @@ Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky l
 | [SEC EDGAR](https://www.sec.gov/edgar) | Industry codes for public companies |
 | [Lobbying disclosures](https://lda.gov/api/) | What organizations lobby on and spend, which PACs they run, lobbyists' former government jobs |
 | [FARA bulk data](https://efile.fara.gov/ords/fara/f?p=API:BULKDATA) | Foreign agents, their foreign principals by country, and (with FEC itemized records) their donations |
+| [House Clerk gift travel](https://disclosures-clerk.house.gov/GiftTravelFilings) and [Senate gift rule travel](https://www.senate.gov/legislative/Public_Disclosure/gift-rule-travel.htm) filings | Trips paid for by outside groups (`src/scripts/travel/`, `data/travel.json`; see `design/travel/README.md`) |
 | Bluesky | Matching members to their accounts |
 
 Contributions are counted by organization: an organization's total is its PAC plus donations from people who list it as their employer.

@@ -29,6 +29,7 @@ import { ogVersion } from "../src/lib/og";
 import { bills, congress, ordinal, shortStatus, fmtDate, PATTERN_LABEL, chamberLabel } from "../src/lib/legislation";
 import { countries, principalsByCountry, registrantById, activePrincipals, activeRegistrants, giftsTotal, faraSince } from "../src/lib/fara";
 import { revolvingStats, lobbyists, membersByStaff, filingYears } from "../src/lib/revolving";
+import { trips, activeSponsors, tripsBySponsor, summarize, sinceLabel } from "../src/lib/travel";
 import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
 
 const OUT_DIR = path.resolve(process.cwd(), "server/data");
@@ -345,6 +346,51 @@ cards["page/search"] = {
     { label: "Donors", value: donors.length.toLocaleString() },
   ],
 };
+
+// --- sponsored travel ----------------------------------------------------------------
+
+const since = `since ${sinceLabel}`;
+const officeBars = (list: typeof trips, n: number): Bar[] =>
+  [...list.reduce((acc, t) => acc.set(t.bioguide, (acc.get(t.bioguide) ?? 0) + 1), new Map<string, number>())]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, n)
+    .flatMap(([id, count]) => {
+      const m = memberById.get(id);
+      return m ? [{ label: m.name, value: count, party: party(m), note: shortSeat(m) }] : [];
+    });
+const allTrips = summarize(trips);
+cards["travel/index"] = {
+  type: "travel",
+  kicker: "Sponsored travel",
+  title: "Trips paid for by outside groups",
+  dek: `${allTrips.trips.toLocaleString()} trips by members of Congress and their staff ${since}, paid for by ${activeSponsors.length} sponsors.`,
+  stats: [
+    { value: allTrips.trips.toLocaleString(), label: "trips by members and their staff" },
+    { value: activeSponsors.length.toLocaleString(), label: "sponsors" },
+    { value: allTrips.offices.toLocaleString(), label: "offices" },
+  ],
+  barsTitle: "Paid for the most trips",
+  bars: activeSponsors.slice(0, 4).map((sp) => ({ label: sp.name, value: tripsBySponsor.get(sp.key)!.length })),
+  span: since,
+};
+for (const sp of activeSponsors) {
+  const list = tripsBySponsor.get(sp.key)!;
+  const sum = summarize(list);
+  cards[`travel/${sp.slug}`] = {
+    type: "travel",
+    kicker: "Sponsored travel",
+    title: sp.name,
+    dek: `Paid for ${sum.trips.toLocaleString()} ${sum.trips === 1 ? "trip" : "trips"} by members of Congress or their staff ${since}, from ${sum.offices} ${sum.offices === 1 ? "office" : "offices"}${sum.withCost ? `; it reported spending ${money(sum.cost, true)} on the ${sum.withCost === sum.trips ? "" : `${sum.withCost} `}trips whose costs were read` : ""}.`,
+    stats: [
+      { value: sum.trips.toLocaleString(), label: `${sum.trips === 1 ? "trip" : "trips"} it paid for` },
+      { value: sum.offices.toLocaleString(), label: sum.offices === 1 ? "office" : "offices" },
+      ...(sum.withCost ? [{ value: money(sum.cost, true), label: sum.withCost < sum.trips ? "reported, where read" : "reported cost" }] : []),
+    ],
+    barsTitle: "Whose offices went",
+    bars: officeBars(list, 4),
+    span: since,
+  };
+}
 
 const file: CardsFile = { version: ogVersion(cards), cycleRange: cycleRange.replace(/\u2060/g, ""), cards };
 fs.mkdirSync(OUT_DIR, { recursive: true });

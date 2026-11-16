@@ -1,0 +1,101 @@
+---
+// Privately sponsored trips: when, who went, who paid, where, and what the
+// sponsor reported it cost, linked to the filing.
+import { memberById, partyLetter } from "../lib/data";
+import { moneyAuto } from "../lib/format";
+import { tripDates, tripSponsors, sponsorHref, shortSponsorName, type Trip } from "../lib/travel";
+
+interface Props {
+  rows: Trip[];
+  caption: string;
+  /** "member": rows are one office's, so show the sponsor. "sponsor": rows are one sponsor's, so show the office. */
+  view: "member" | "sponsor";
+}
+const { rows, caption, view } = Astro.props;
+const scanTitle = "Read by machine from a scanned form; open the filing to check it.";
+---
+
+<table class="trips-table">
+  <caption class="visually-hidden">{caption}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Trip</th>
+      <th scope="col">{view === "member" ? "Paid for by" : "Office"}</th>
+      <th scope="col" class="wide">Traveler</th>
+      <th scope="col" class="num">Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((t) => {
+        const m = memberById.get(t.bioguide);
+        const p = m ? partyLetter(m.party) : undefined;
+        const who = t.member ? (view === "member" ? "Member" : "The member") : `${t.traveler}, staff`;
+        return (
+          <tr>
+            <td>
+              <span class="dest">{t.destination ?? <span class="muted">Destination not read</span>}</span>
+              <span class="muted small dates">{tripDates(t)}</span>
+              {view === "member" && <span class="muted small narrow-who block">{who}</span>}
+            </td>
+            <td>
+              {view === "member" ? (
+                tripSponsors(t).length ? (
+                  tripSponsors(t).map((s, i) => (
+                    <>
+                      {i > 0 && " and "}
+                      <a href={sponsorHref(s)} title={s.name.length > 80 ? s.name : undefined}>{shortSponsorName(s.name)}</a>
+                    </>
+                  ))
+                ) : (
+                  <span class="muted">Sponsor not read</span>
+                )
+              ) : (
+                <>
+                  {p && <span class={`ptag party-${p}`} title={m!.party}>{p}</span>}
+                  <a href={`/members/${t.bioguide}/`}>{m?.name ?? t.bioguide}</a>
+                  <span class="muted small narrow-who"> · {who}</span>
+                </>
+              )}
+            </td>
+            <td class="wide small">{who}</td>
+            <td class="num">
+              {t.cost ? (
+                <>
+                  <a href={t.url}>{moneyAuto(Math.round(t.cost.total))}</a>
+                  {t.cost.scan && <span class="scan-tag" title={scanTitle}>Scan</span>}
+                  {t.cost.family ? <span class="muted small family">+{moneyAuto(Math.round(t.cost.family))} for a relative</span> : null}
+                  {t.cost.withRelative && <span class="muted small family">incl. a relative</span>}
+                </>
+              ) : (
+                <a class="muted small" href={t.url}>{t.noCost === "no-form" ? "No sponsor form" : "In the filing"}</a>
+              )}
+            </td>
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>
+
+<!-- Global (keyed by .trips-table): the table is also a fragment page. -->
+<style is:global>
+  .trips-table { width: 100%; }
+  .trips-table td { vertical-align: baseline; }
+  .trips-table td:nth-child(3) { min-width: 9em; }
+  .trips-table td:last-child, .trips-table th:last-child { white-space: nowrap; }
+  .trips-table .dest { display: block; font-weight: 500; }
+  .trips-table .dates { display: block; white-space: nowrap; }
+  .trips-table .family { display: block; white-space: nowrap; }
+  .trips-table .narrow-who { display: none; }
+  .trips-table .scan-tag {
+    display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid var(--hairline); border-radius: 2px;
+    font-size: var(--fs-label); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);
+    vertical-align: 1px;
+  }
+  @media (max-width: 640px) {
+    .trips-table .wide { display: none; }
+    .trips-table .narrow-who { display: inline; }
+    .trips-table .narrow-who.block { display: block; }
+  }
+</style>

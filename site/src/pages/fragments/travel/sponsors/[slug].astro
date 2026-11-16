@@ -1,0 +1,13 @@
+---
+// A sponsor's trips past the first page, loaded on request.
+import TripsTable from "../../../../components/TripsTable.astro";
+import { activeSponsors, tripsBySponsor, SPONSOR_TRIPS_SHOWN, type Sponsor } from "../../../../lib/travel";
+
+export const partial = true;
+export function getStaticPaths() {
+  return activeSponsors.filter((s) => tripsBySponsor.get(s.key)!.length > SPONSOR_TRIPS_SHOWN).map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Sponsor };
+---
+
+<TripsTable rows={tripsBySponsor.get(s.key)!.slice(SPONSOR_TRIPS_SHOWN)} caption={`Earlier trips ${s.name} paid for`} view="sponsor" />

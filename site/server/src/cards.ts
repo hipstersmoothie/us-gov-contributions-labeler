@@ -6,7 +6,7 @@
 // drawn size, so nothing here is set smaller than 22px and the one number
 // the card is about is the biggest thing on it. Party is never color alone:
 // every party fill sits next to its letter or name.
-import type { Bar, BillCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, SectorCard, Split, Target } from "./types.ts";
+import type { Bar, BillCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, SectorCard, Split, Target, TravelCard } from "./types.ts";
 
 export const WIDTH = 1200;
 export const HEIGHT = 630;
@@ -167,7 +167,7 @@ function sectionLabel(text: string) {
 }
 
 /** Ranked bars, labeled above, in the site's single-series black. */
-function bars(rows: Bar[], width: number, opts: { rowHeight?: number; max?: number } = {}) {
+function bars(rows: Bar[], width: number, opts: { rowHeight?: number; max?: number; format?: (n: number) => string } = {}) {
   const max = opts.max ?? Math.max(...rows.map((r) => r.value), 1);
   const rowH = opts.rowHeight ?? 74;
   return div(
@@ -184,7 +184,7 @@ function bars(rows: Bar[], width: number, opts: { rowHeight?: number; max?: numb
         div(
           { alignItems: "center", marginTop: 6, gap: 10 },
           div({ width: Math.max(4, (r.value / max) * (width - 120)), height: 16, background: C.bar, borderRadius: "0 3px 3px 0" }),
-          div({ fontSize: 22, color: C.secondary, fontWeight: 600 }, money(r.value))
+          div({ fontSize: 22, color: C.secondary, fontWeight: 600 }, (opts.format ?? money)(r.value))
         )
       )
     )
@@ -599,6 +599,43 @@ function page(c: PageCard, a: Assets) {
   );
 }
 
+/** A sponsor's trips, or all of them: the count big, then whose offices. */
+function travel(c: TravelCard, a: Assets) {
+  const W = 520;
+  const trips = (n: number) => `${n.toLocaleString()} ${n === 1 ? "trip" : "trips"}`;
+  const right = c.bars?.length
+    ? div({ flexDirection: "column" }, c.barsTitle ? sectionLabel(c.barsTitle) : null, bars(c.bars, W, { format: trips, rowHeight: 70 }))
+    : null;
+  const [first, ...rest] = c.stats;
+  return frame(
+    a,
+    "Privately sponsored travel",
+    div(
+      { flex: 1, gap: 56 },
+      div(
+        { flexDirection: "column", width: right ? 1072 - W - 56 : 1072, justifyContent: "center" },
+        kicker(c.kicker),
+        title(c.title, right ? 1072 - W - 56 : 1072, [56, 50, 46, 40]),
+        first ? div({ marginTop: 22 }, stat(first.value, first.label, undefined, 80)) : null,
+        rest.length
+          ? div(
+              { gap: 28, marginTop: 18 },
+              ...rest.map((s) =>
+                div(
+                  { flexDirection: "column" },
+                  div({ fontSize: 36, fontWeight: 800, letterSpacing: "-0.01em" }, s.value),
+                  div({ fontSize: 21, fontWeight: 600, color: C.secondary, marginTop: 2 }, s.label)
+                )
+              )
+            )
+          : null
+      ),
+      right ? div({ flexDirection: "column", justifyContent: "center", flex: 1 }, right) : null
+    ),
+    c.span
+  );
+}
+
 export function cardTree(card: Card, assets: Assets): Node {
   switch (card.type) {
     case "member":
@@ -619,6 +656,8 @@ export function cardTree(card: Card, assets: Assets): Node {
       return country(card, assets);
     case "page":
       return page(card, assets);
+    case "travel":
+      return travel(card, assets);
   }
 }
 
@@ -646,5 +685,7 @@ export function altText(card: Card): string {
       return `Foreign lobbying, ${card.name}: ${plural(card.active, "foreign principal", "foreign principals")} with US agents registered under FARA now, through ${plural(card.registrants, "registrant", "registrants")}.`;
     case "page":
       return `${card.title}. ${card.dek}`;
+    case "travel":
+      return `${card.title}: ${card.dek}`;
   }
 }
