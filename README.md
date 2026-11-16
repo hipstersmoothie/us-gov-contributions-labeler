@@ -162,5 +162,6 @@ In production the site is served by `site/server`, a small Node server: it serve
 - **Website** (`website` service): built from `site/Dockerfile` (`RAILWAY_DOCKERFILE_PATH=site/Dockerfile`), running `site/server`.
 - **Feeds** (`feeds` service): built from `feeds/Dockerfile`, with its SQLite database on a volume at `/data`.
 - **Lists** (`sync-lists` service): a cron job, daily at 15:00 UTC, built from `src/sync-lists.Dockerfile` with the data baked in; `LABELER_PASSWORD` references the labeler's.
+- **Lobbying refresh** (`refresh-lobbying` service): a cron job, Mondays at 09:00 UTC, built from `src/refresh-lobbying.Dockerfile`. It reruns `pnpm ingest --steps=revolving,fara` on main's data and pushes `data/revolving-door.json` and `data/fara.json` back to main when they change (which redeploys the site). The LD-1/LD-2 filings and FEC bulk files it reads are cached on a volume at `/cache`; a cold cache takes about five hours, a weekly run one to two. Variables: `LDA_API_KEY`, and `DEPLOY_KEY`, the private half of the repo's "refresh-lobbying (Railway cron)" deploy key (write access).
 
 `pnpm dedupe-labels` is a one-off cleanup for duplicate label events in the labeler's database; run it on the labeler service (`railway ssh`).
