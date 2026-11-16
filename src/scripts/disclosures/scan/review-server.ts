@@ -7,6 +7,10 @@
 //
 //   pnpm review-scans            # opens http://127.0.0.1:4390
 //   pnpm holdings:publish        # afterwards: rebuild, seal, commit, push (deploys)
+//
+// For tests, point REVIEW_DIR at a scratch directory so the real decisions
+// are never touched, then rebuild without it before sealing:
+//   REVIEW_DIR=/tmp/review-test NO_OPEN=1 REVIEW_PORT=4391 tsx src/scripts/disclosures/scan/review-server.ts
 import { execFileSync, spawn } from "child_process";
 import fs from "fs";
 import http from "http";

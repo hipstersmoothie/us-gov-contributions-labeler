@@ -12,7 +12,11 @@ import { AMOUNTS, isoDate, type ScannedTrade } from "./ptr.js";
 
 const DIR = `${CACHE}/scan/second-reader`;
 export const QUEUE = `${CACHE}/scan/review.json`;
-export const DECISIONS = ".holdings-review/decisions.json";
+/**
+ * The user's review decisions: real work once reviewing starts, so never
+ * delete them. Tests set REVIEW_DIR to a scratch directory instead.
+ */
+export const DECISIONS = `${process.env.REVIEW_DIR ?? ".holdings-review"}/decisions.json`;
 type Owner = ScannedTrade["owner"];
 
 interface PtrReading { n: number; owner: string; transaction: string; trade_date: string; notified_date: string; amount_column: string }

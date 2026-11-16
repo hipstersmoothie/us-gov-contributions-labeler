@@ -321,6 +321,10 @@ pnpm holdings:publish   # afterwards: rebuild, seal, commit data/holdings.json.e
 - **Local only:** the tool listens on 127.0.0.1 only. It isn't part of the
   Astro site, the Docker image copies only `site/dist` and the site server,
   and `.holdings-review` is in `.dockerignore` too.
+- **Testing:** never delete `.holdings-review/`; once reviewing starts it
+  holds real work. Tests set `REVIEW_DIR` to a scratch directory for both the
+  server and the build, then rebuild without it and check no `checkedByHand`
+  row remains before sealing.
 - **Matching:** decisions are keyed by report, page, name as read and date.
   If a later reader change renames a row, its decision stops matching. The
   build says how many, and keeps them.
