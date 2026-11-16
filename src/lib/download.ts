@@ -53,9 +53,17 @@ export async function downloadFile(url: string, dest: string, remote?: Remote & 
   const fd = fs.openSync(tmp, "w");
   try {
     if (!ranges) {
-      const res = await fetch(remote.url, { headers: HEADERS });
-      if (!res.ok) throw new Error(`${res.status} downloading ${url}`);
-      fs.writeSync(fd, Buffer.from(await res.arrayBuffer()));
+      for (let attempt = 1; ; attempt++) {
+        try {
+          const res = await fetch(remote.url, { headers: HEADERS });
+          if (!res.ok) throw new Error(`${res.status} downloading ${url}`);
+          fs.writeSync(fd, Buffer.from(await res.arrayBuffer()), 0, undefined, 0);
+          break;
+        } catch (e) {
+          if (attempt >= 3) throw e;
+          await new Promise((r) => setTimeout(r, attempt * 5000));
+        }
+      }
     } else {
       const chunk = Math.ceil(size / PARTS);
       let done = 0;
@@ -64,19 +72,28 @@ export async function downloadFile(url: string, dest: string, remote?: Remote & 
         Array.from({ length: PARTS }, async (_, i) => {
           const start = i * chunk;
           const end = Math.min(size, start + chunk) - 1;
-          const res = await fetch(remote.url, { headers: { ...HEADERS, Range: `bytes=${start}-${end}` } });
-          if (res.status !== 206 || !res.body) throw new Error(`${res.status} on range ${start}-${end} of ${url}`);
           let pos = start;
-          for await (const piece of res.body as unknown as AsyncIterable<Uint8Array>) {
-            fs.writeSync(fd, piece, 0, piece.length, pos);
-            pos += piece.length;
-            done += piece.length;
-            if (done - lastLog > 500_000_000) {
-              lastLog = done;
-              console.log(`    ${path.basename(dest)}: ${Math.round((done / size) * 100)}%`);
+          // fec.gov drops a long connection now and then; pick up where it stopped.
+          for (let attempt = 1; pos <= end; attempt++) {
+            try {
+              const res = await fetch(remote.url, { headers: { ...HEADERS, Range: `bytes=${pos}-${end}` } });
+              if (res.status !== 206 || !res.body) throw new Error(`${res.status} on range ${pos}-${end} of ${url}`);
+              for await (const piece of res.body as unknown as AsyncIterable<Uint8Array>) {
+                fs.writeSync(fd, piece, 0, piece.length, pos);
+                pos += piece.length;
+                done += piece.length;
+                if (done - lastLog > 500_000_000) {
+                  lastLog = done;
+                  console.log(`    ${path.basename(dest)}: ${Math.round((done / size) * 100)}%`);
+                }
+              }
+              if (pos !== end + 1) throw new Error(`Short read on range ${start}-${end} of ${url}`);
+            } catch (e) {
+              if (attempt >= 5) throw e;
+              console.log(`    ${path.basename(dest)}: ${(e as Error).message}; retrying from byte ${pos}`);
+              await new Promise((r) => setTimeout(r, attempt * 5000));
             }
           }
-          if (pos !== end + 1) throw new Error(`Short read on range ${start}-${end} of ${url}`);
         })
       );
     }
