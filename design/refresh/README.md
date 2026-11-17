@@ -57,6 +57,10 @@ clone to `origin/main` and runs `src/scripts/refresh/refresh.sh`:
 7. `publish-records --apply` via `railway run -s pds`. It writes only
    differences, and skips deletes when more than 10% of a collection would go.
 
+Steps 6 and 7 retry up to three times, 30 seconds apart: Railway's API and
+the labeler drop connections now and then, and both scripts only send
+differences, so a retry picks up where the last try stopped.
+
 On an error or a stop, and when labels are held, you get a macOS
 notification.
 

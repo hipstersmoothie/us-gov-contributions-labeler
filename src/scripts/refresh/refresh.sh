@@ -83,15 +83,22 @@ else
   note "no data changes"
 fi
 
-# Railway's CLI session refreshes its token on use.
-railway whoami > /dev/null || { note "railway CLI isn't logged in; run 'railway login'"; exit 1; }
+# Railway's CLI session refreshes its token on use. Its API, lda.gov and the
+# labeler drop connections now and then, so the steps below retry; both only
+# send differences, so a retry picks up where the last try stopped.
+retry() { local i; for i in 1 2 3; do "$@" && return 0; local code=$?; (( code == 3 )) && return 3; log "attempt $i failed (exit $code)"; sleep 30; done; return 1; }
+retry railway whoami > /dev/null || { note "railway CLI isn't logged in; run 'railway login'"; exit 1; }
 
 log "syncing labels"
+labels_run() {
+  railway run -p $RAILWAY_PROJECT -e $RAILWAY_ENV -s us-gov-contributions-labeler -- \
+    npx tsx src/sync-labels.ts --apply --max-accounts=40 > .cache/refresh/labels.log 2>&1
+}
 set +e
-railway run -p $RAILWAY_PROJECT -e $RAILWAY_ENV -s us-gov-contributions-labeler -- \
-  npx tsx src/sync-labels.ts --apply --max-accounts=40 | tee .cache/refresh/labels.log
-labels=${pipestatus[1]}
+retry labels_run
+labels=$?
 set -e
+grep -vE "DEP0169|trace-deprecation" .cache/refresh/labels.log | tail -15
 grep -E "accounts change|lose all|Not applying|Applied" .cache/refresh/labels.log >> "$SUMMARY" || true
 if (( labels == 3 )); then
   held=1
@@ -101,8 +108,12 @@ elif (( labels != 0 )); then
 fi
 
 log "publishing the open data"
-railway run -p $RAILWAY_PROJECT -e $RAILWAY_ENV -s pds -- \
-  npx tsx src/publish-records.ts --apply | tee .cache/refresh/publish.log
+publish_run() {
+  railway run -p $RAILWAY_PROJECT -e $RAILWAY_ENV -s pds -- \
+    npx tsx src/publish-records.ts --apply > .cache/refresh/publish.log 2>&1
+}
+retry publish_run || { tail -20 .cache/refresh/publish.log; note "publishing the open data failed"; exit 1; }
+grep -E "create,|files changed|writes, |skipping|Done" .cache/refresh/publish.log
 grep -E "writes, |skipping" .cache/refresh/publish.log >> "$SUMMARY" || true
 
 if [[ -n "${held:-}" ]]; then
