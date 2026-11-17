@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-16T23:56:41.531Z",
+  "generatedAt": "2026-11-17T00:31:57.741Z",
   "cycles": [
     2022,
     2024,
@@ -39261,7 +39261,6 @@
           "handle": "carson.house.gov",
           "displayName": "Congressman André Carson ",
           "sources": [
-            "dm",
             "gov-handle",
             "labeler-list",
             "official-domain",
@@ -131423,7 +131422,6 @@
           "handle": "pallone.house.gov",
           "displayName": "Rep. Frank Pallone",
           "sources": [
-            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -179776,7 +179774,6 @@
           "handle": "welch.senate.gov",
           "displayName": "Senator Peter Welch",
           "sources": [
-            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -192148,7 +192145,6 @@
           "handle": "repdelbene.bsky.social",
           "displayName": "Congresswoman Suzan DelBene",
           "sources": [
-            "dm",
             "search",
             "verified"
           ]
@@ -252884,7 +252880,6 @@
           "handle": "gallego.senate.gov",
           "displayName": "Senator Ruben Gallego",
           "sources": [
-            "dm",
             "gov-handle",
             "labeler-list",
             "official-domain",
@@ -297633,7 +297628,6 @@
           "handle": "hassan.senate.gov",
           "displayName": "Senator Maggie Hassan",
           "sources": [
-            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -377247,7 +377241,6 @@
           "handle": "underwood.house.gov",
           "displayName": "Rep. Lauren Underwood",
           "sources": [
-            "dm",
             "gov-handle",
             "labeler-list",
             "official-domain",
@@ -437098,7 +437091,6 @@
           "handle": "captmarkkelly.bsky.social",
           "displayName": "Captain Mark Kelly",
           "sources": [
-            "dm",
             "labeler-list",
             "previous-data",
             "search",
@@ -537301,6 +537293,7 @@
           "displayName": "Rep. Kevin Mullin",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -540125,6 +540118,7 @@
           "displayName": "Rep. Robert Garcia",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -541590,6 +541584,7 @@
           "displayName": "U.S. Rep. Brittany Pettersen",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -545751,6 +545746,7 @@
           "displayName": "Rep. Maxwell Alejandro Frost",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -550219,6 +550215,7 @@
           "displayName": "Congressman Jared Moskowitz",
           "sources": [
             "labeler-list",
+            "official-domain",
             "previous-data",
             "search",
             "verified"
@@ -558940,6 +558937,7 @@
           "sources": [
             "gov-handle",
             "labeler-list",
+            "official-domain",
             "previous-data",
             "search",
             "verified"
@@ -560326,6 +560324,7 @@
           "displayName": "Congresswoman Delia C. Ramirez",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -561783,6 +561782,7 @@
           "displayName": "Nikki Budzinski",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -567525,6 +567525,7 @@
           "displayName": "Congressman Glenn Ivey (MD-04) ",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -568847,6 +568848,7 @@
           "displayName": "Rep. Hillary Scholten",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -572015,6 +572017,7 @@
           "displayName": "Congressman Shri Thanedar",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -579361,6 +579364,7 @@
           "displayName": "Congresswoman Valerie Foushee",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -583969,6 +583973,7 @@
           "sources": [
             "gov-handle",
             "labeler-list",
+            "official-domain",
             "previous-data",
             "verified"
           ]
@@ -596139,6 +596144,7 @@
           "handle": "repemiliasykes.bsky.social",
           "displayName": "Rep. Emilia Strong Sykes",
           "sources": [
+            "official-domain",
             "search",
             "verified"
           ]
@@ -600685,6 +600691,7 @@
           "displayName": "Congresswoman Andrea Salinas",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -603739,6 +603746,7 @@
           "displayName": "Congressman Chris Deluzio",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -605285,6 +605293,7 @@
           "displayName": "Representative Seth Magaziner",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -615406,6 +615415,7 @@
           "sources": [
             "gov-handle",
             "labeler-list",
+            "official-domain",
             "previous-data",
             "search",
             "verified"
@@ -616867,6 +616877,7 @@
           "displayName": "Congressman Greg Casar",
           "sources": [
             "labeler-list",
+            "official-domain",
             "previous-data",
             "search",
             "verified"
@@ -621431,6 +621442,7 @@
           "sources": [
             "gov-handle",
             "labeler-list",
+            "official-domain",
             "previous-data",
             "search",
             "verified"
@@ -622795,6 +622807,7 @@
           "displayName": "Rep. Marie Gluesenkamp Perez",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -629155,6 +629168,7 @@
           "displayName": "Rep. Jennifer McClellan",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -644155,6 +644169,7 @@
           "displayName": "Rep. Gil Cisneros",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -645482,7 +645497,6 @@
           "handle": "alsobrooks.senate.gov",
           "displayName": "Senator Angela Alsobrooks",
           "sources": [
-            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -661072,6 +661086,7 @@
           "sources": [
             "gov-handle",
             "labeler-list",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -665432,6 +665447,7 @@
           "displayName": "Rep. Laura Friedman",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -674771,6 +674787,7 @@
           "displayName": "Congresswoman Sarah McBride",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -684174,8 +684191,8 @@
           "handle": "elfreth.house.gov",
           "displayName": "Congresswoman Sarah Elfreth ",
           "sources": [
-            "dm",
             "gov-handle",
+            "official-domain",
             "previous-data",
             "search",
             "verified"
@@ -690168,7 +690185,6 @@
           "handle": "kellymorrisonmn.bsky.social",
           "displayName": "Rep. Kelly Morrison",
           "sources": [
-            "dm",
             "search",
             "verified"
           ]
@@ -718143,6 +718159,7 @@
           "displayName": "Rep. Janelle Bynum",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
@@ -751029,6 +751046,7 @@
           "displayName": "Congressman Christian D. Menefee",
           "sources": [
             "gov-handle",
+            "official-domain",
             "search",
             "verified"
           ]
