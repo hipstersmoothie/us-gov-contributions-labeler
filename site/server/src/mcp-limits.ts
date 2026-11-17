@@ -4,6 +4,10 @@
 export const QUERY_TIMEOUT_MS = 10_000;
 /** Most rows a query returns. */
 export const MAX_ROWS = 1000;
+/** Longest SQL a query can be. */
+export const MAX_SQL_CHARS = 20_000;
+/** Queries a client can run in ten minutes, one at a time. */
+export const QUERIES_PER_CLIENT = 120;
 /** Disclosure records a client can read in an hour before it needs the user's agreement. */
 export const FREE_RECORDS = 25;
 /** And all clients together, since a client can claim to be many (X-Forwarded-For). */

@@ -33,7 +33,7 @@ import { CLIENT_CAPABILITIES_META_KEY, McpServer, acceptedContent, createMcpHand
 import * as z from "zod";
 import { search, TYPE_NAMES, type SearchRow, type SearchType } from "./search.ts";
 import { limited, lookup } from "./geocode.ts";
-import { AGREED_HOURS, FREE_RECORDS, FREE_RECORDS_OVERALL, MAX_ROWS, QUERY_TIMEOUT_MS } from "./mcp-limits.ts";
+import { AGREED_HOURS, FREE_RECORDS, FREE_RECORDS_OVERALL, MAX_ROWS, MAX_SQL_CHARS, QUERIES_PER_CLIENT, QUERY_TIMEOUT_MS } from "./mcp-limits.ts";
 import type { QueryRequest, QueryResult } from "./sql-worker.ts";
 
 export const MCP_PATH = "/mcp";
@@ -146,19 +146,48 @@ function fit(record: Record<string, unknown>) {
 }
 
 let running = 0;
-/** Run one query in a child process, killed if it runs past the time limit. */
-function query(request: QueryRequest): Promise<QueryResult> {
+/** Clients with a query running, and when each client's recent queries started. */
+const busy = new Set<string>();
+const started = new Map<string, number[]>();
+setInterval(() => {
+  const since = Date.now() - 10 * 60_000;
+  for (const [client, times] of started) if (!times.some((t) => t > since)) started.delete(client);
+}, 10 * 60_000).unref();
+
+/**
+ * Run one query in a child process, killed if it runs past the time limit:
+ * MAX_QUERIES at once, and for each client, one at a time and
+ * QUERIES_PER_CLIENT every ten minutes, so no one client can take them all.
+ */
+function query(client: string, request: QueryRequest): Promise<QueryResult> {
+  const since = Date.now() - 10 * 60_000;
+  const recent = (started.get(client) ?? []).filter((t) => t > since);
+  started.set(client, recent);
+  if (busy.has(client)) return Promise.resolve({ error: "Another of your queries is still running; run one at a time." });
+  if (recent.length >= QUERIES_PER_CLIENT) return Promise.resolve({ error: `That's ${QUERIES_PER_CLIENT} queries in ten minutes; try again in a few minutes.` });
   if (running >= MAX_QUERIES) return Promise.resolve({ error: "Too many queries running at once; try again in a few seconds." });
   running++;
+  busy.add(client);
+  recent.push(Date.now());
   return new Promise<QueryResult>((resolve) => {
     const child = fork(WORKER, { execArgv: ["--max-old-space-size=384"], stdio: ["ignore", "inherit", "inherit", "ipc"] });
-    const timer = setTimeout(() => child.kill("SIGKILL"), QUERY_TIMEOUT_MS);
+    let timedOut = false;
+    const timer = setTimeout(() => {
+      timedOut = true;
+      child.kill("SIGKILL");
+    }, QUERY_TIMEOUT_MS);
     let result: QueryResult | undefined;
     child.once("message", (r: QueryResult) => (result = r));
     child.once("exit", () => {
       clearTimeout(timer);
       running--;
-      resolve(result ?? { error: `The query took longer than ${QUERY_TIMEOUT_MS / 1000} seconds and was stopped. Narrow it with WHERE on an indexed id, or LIMIT.` });
+      busy.delete(client);
+      resolve(
+        result ??
+          (timedOut
+            ? { error: `The query took longer than ${QUERY_TIMEOUT_MS / 1000} seconds and was stopped. Narrow it with WHERE on an indexed id, or LIMIT.` }
+            : { error: "The query used too much memory and was stopped. Narrow it, or select fewer or smaller columns." })
+      );
     });
     child.send(request);
   });
@@ -334,7 +363,7 @@ export function createMcp(dir: string) {
         title: "Query with SQL",
         description: `Run one read-only SQLite SELECT over the tables from list_tables, for rankings, totals and filters across records.${attach.fec ? " Name the filing-level tables with their schema: fec.fec_contributions, lobbying.lobbying_filings." : ""} Up to ${MAX_ROWS.toLocaleString("en-US")} rows, ${QUERY_TIMEOUT_MS / 1000} seconds. Filter or join on ids (indexed) and use LIMIT.`,
         inputSchema: z.object({
-          sql: z.string().min(1),
+          sql: z.string().min(1).max(MAX_SQL_CHARS),
           limit: z.number().int().min(1).max(MAX_ROWS).default(100).describe("Most rows to return"),
           ...(holdings ? { terms_token: z.string().optional().describe("termsToken from an earlier agreement to the disclosure terms") } : {}),
         }),
@@ -348,7 +377,7 @@ export function createMcp(dir: string) {
           gate = agreed(ctx, terms_token as string | undefined, client);
           if (!gate.agreed) return gate.result;
         }
-        const result = await query({ file, attach, sql, maxRows: limit });
+        const result = await query(client, { file, attach, sql, maxRows: limit });
         if ("error" in result) return fail(result.error);
         if (!gate && result.read.some(isDisclosureTable)) {
           gate = agreed(ctx, terms_token as string | undefined, client);
