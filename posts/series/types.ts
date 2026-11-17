@@ -17,8 +17,9 @@ export interface Draft {
   priority: number;
 }
 
+// Each series' own cap, under MAX_PER_DAY for all of them together (server.ts).
 export const SERIES = {
-  "member-elect": { dailyCap: 4 },
-  "new-on-bluesky": { dailyCap: 3 },
+  "member-elect": { dailyCap: 2 },
+  "new-on-bluesky": { dailyCap: 1 },
 } as const;
 export type SeriesName = keyof typeof SERIES;
