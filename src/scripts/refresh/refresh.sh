@@ -107,6 +107,12 @@ elif (( labels != 0 )); then
   exit 1
 fi
 
+# The source records (FEC lines, lobbying filings) come from this run's ingest
+# cache; publish-records builds contributions.sqlite itself. If they fail to
+# build, the published ones stay.
+log "building the open data's source files"
+pnpm build-sqlite --only=fec,lobbying > .cache/refresh/sqlite.log 2>&1 || { tail -20 .cache/refresh/sqlite.log; note "building the SQLite source files failed; publishing the previous ones"; }
+
 log "publishing the open data"
 publish_run() {
   railway run -p $RAILWAY_PROJECT -e $RAILWAY_ENV -s pds -- \

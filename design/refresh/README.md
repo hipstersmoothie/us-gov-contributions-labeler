@@ -54,10 +54,14 @@ clone to `origin/main` and runs `src/scripts/refresh/refresh.sh`:
    us-gov-contributions-labeler`. If more than 40 accounts would change, or
    any account would lose all its labels, nothing is applied: the plan is in
    the clone's `.cache/label-plan.json` and the run exits 3.
-7. `publish-records --apply` via `railway run -s pds`. It writes only
+7. `pnpm build-sqlite --only=fec,lobbying`: the open data's source files
+   (FEC lines, lobbying filings) from this run's cache. If it fails, the
+   published ones are kept.
+8. `publish-records --apply` via `railway run -s pds`. It writes only
    differences, and skips deletes when more than 10% of a collection would go.
+   Files are uploaded only when they changed.
 
-Steps 6 and 7 retry up to three times, 30 seconds apart: Railway's API and
+Steps 6 and 8 retry up to three times, 30 seconds apart: Railway's API and
 the labeler drop connections now and then, and both scripts only send
 differences, so a retry picks up where the last try stopped.
 
