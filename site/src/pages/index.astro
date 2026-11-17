@@ -8,6 +8,9 @@ import { PARTY_COLOR } from "../lib/charts";
 import { memberPoints, topIds, pacTotal, inEvery, pct, shortSeat, chamberName } from "../lib/derived";
 import { shortSector } from "../lib/format";
 import { website } from "../lib/seo";
+import Finder from "../islands/find/Finder";
+import "../styles/find.css";
+import { CONGRESS, congressName, congressYears } from "../lib/districts";
 
 const total = sectors.reduce((s, x) => s + x.total, 0);
 const byPacMoney = members
@@ -63,6 +66,7 @@ const PARTY_SERIES = [
 >
   <p class="kicker">contributions.fyi · PAC money, {cycleRange}</p>
   <h1 class="tagline">Who funds <em>your</em> member of Congress?</h1>
+  <Finder client:load congress={CONGRESS} congressLabel={`${congressName} (${congressYears})`} cycleRange={cycleRange.replace(/\u2060/g, "")} size="home" />
   <p class="dek">
     PACs and other committees gave <strong>{money(total, true)}</strong> to the {members.length} current members of
     Congress from {cycleRange.replace("–", " to ")}. <strong>{top.name}</strong> gave the most, {inEvery(top.total / total)}.

@@ -1,0 +1,101 @@
+/* The member finder (islands/find) and the member cards it shares with the
+   state pages. Form controls follow controls.css. */
+
+.finder { margin: 0 0 var(--sp-7); }
+.finder-form { display: flex; flex-direction: column; gap: var(--sp-3); }
+.finder-modes { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.finder-modes .segmented { height: 32px; }
+.finder-fields { display: flex; align-items: flex-start; gap: var(--sp-3); flex-wrap: wrap; }
+.finder-fields .field-input {
+  flex: none; width: 100%; height: 44px; font-size: var(--fs-md);
+  border: 1px solid var(--baseline); border-radius: 3px; background: var(--surface); padding: 0 var(--sp-3);
+}
+.finder-fields .field-input[data-hovered] { border-color: var(--text-muted); }
+.finder-fields .field-input[data-focused] { border-color: var(--text-primary); box-shadow: 0 0 0 1px var(--text-primary); }
+.finder-fields .field-input[data-invalid] { border-color: var(--accent); }
+.finder-zip { width: 9.5rem; }
+.finder-street { flex: 1 1 260px; max-width: 420px; }
+.field-error { font-size: var(--fs-sm); color: var(--text-primary); font-weight: 600; }
+.field-error::before { content: "! "; color: var(--accent); font-weight: 800; }
+.finder-submit {
+  align-self: flex-end; height: 44px; padding: 0 var(--sp-5); border: 0; border-radius: 3px;
+  background: var(--text-primary); color: var(--page); font: 700 var(--fs-base)/1 var(--sans); cursor: pointer;
+}
+/* The fields' labels sit above their boxes; the button lines up with the boxes. */
+.finder-fields .finder-submit { margin-top: calc(var(--fs-label) + 6px); align-self: flex-start; }
+.finder-submit[data-hovered] { background: var(--text-secondary); }
+.finder-submit[data-focus-visible] { outline: 2px solid var(--focus); outline-offset: 2px; }
+.finder-submit[data-disabled] { opacity: 0.6; cursor: progress; }
+.finder-secondary { background: var(--page); color: var(--text-primary); box-shadow: inset 0 0 0 1.5px var(--text-primary); height: 38px; }
+.finder-secondary[data-hovered] { background: var(--surface-2); }
+.finder-privacy { margin: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+
+.finder-home { padding: var(--sp-5) 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--hairline); }
+.finder-home .finder-fields .field-input { height: 48px; font-size: var(--fs-lg); }
+.finder-home .finder-submit:not(.finder-secondary) { height: 48px; font-size: var(--fs-md); }
+
+/* --- results --- */
+.find-results:empty { display: none; }
+.find-results { margin-top: var(--sp-5); }
+.find-error, .find-notice {
+  margin: 0 0 var(--sp-4); padding: var(--sp-3) var(--sp-4); max-width: 700px;
+  background: var(--surface-2); border-left: 3px solid var(--accent); font-size: var(--fs-base); color: var(--text-secondary);
+}
+.find-headline { font: 600 var(--fs-xl)/1.25 var(--serif); margin: 0 0 var(--sp-4); max-width: 760px; text-wrap: balance; }
+.find-headline strong { font-weight: 700; }
+.find-address { font-family: var(--sans); font-size: 0.8em; font-weight: 600; letter-spacing: 0.01em; }
+.find-narrow { display: flex; align-items: center; gap: var(--sp-3) var(--sp-4); flex-wrap: wrap; margin: 0 0 var(--sp-5); }
+.find-narrow p { margin: 0; color: var(--text-secondary); }
+.find-group {
+  font: 700 var(--fs-label)/1.3 var(--sans); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-secondary); margin: var(--sp-5) 0 var(--sp-3); padding-top: var(--sp-2); border-top: 1px solid var(--rule);
+}
+.find-sliver, .find-note, .find-map-note { font-size: var(--fs-sm); color: var(--text-muted); margin: var(--sp-3) 0 0; max-width: 700px; }
+.find-links { margin: var(--sp-5) 0 0; font-size: var(--fs-sm); font-weight: 600; }
+
+/* --- member cards --- */
+.mcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: var(--sp-3) var(--sp-5); }
+.mcard { display: flex; gap: var(--sp-4); align-items: flex-start; padding: var(--sp-3) 0; border-bottom: 1px solid var(--hairline); min-width: 0; position: relative; }
+.mcard-photo { flex: none; width: 64px; height: 78px; object-fit: cover; border-radius: 2px; background: var(--context); }
+.mcard-initials {
+  display: flex; align-items: center; justify-content: center;
+  font: 600 var(--fs-lg)/1 var(--serif); color: var(--text-secondary);
+}
+.mcard-body { min-width: 0; flex: 1; }
+.mcard-body p { margin: 0; }
+.mcard-seat { font: 700 var(--fs-label)/1.3 var(--sans); text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-secondary); }
+.mcard-name { font: 700 var(--fs-lg)/1.2 var(--serif); margin: 2px 0 4px !important; }
+.mcard-name a { text-decoration-color: transparent; }
+.mcard-name a:hover { text-decoration-color: currentColor; }
+/* The whole card is the link's target. */
+.mcard-name a::after { content: ""; position: absolute; inset: 0; }
+.mcard:hover { background: var(--surface-2); }
+.mcard:hover .mcard-name a { text-decoration-color: currentColor; }
+.mcard-money { font-size: var(--fs-sm); color: var(--text-secondary); }
+.mcard-money strong { color: var(--text-primary); font-size: var(--fs-base); }
+.mcard-top { font-size: var(--fs-sm); color: var(--text-muted); }
+.mcard-share { display: flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-2) !important; font-size: var(--fs-sm); font-weight: 600; color: var(--text-primary); }
+.share-bar {
+  flex: none; width: 56px; height: 8px; border-radius: 1px;
+  background: linear-gradient(90deg, var(--bar) calc(var(--w) * 100%), var(--context) 0);
+}
+.mcard-vacant .mcard-name { font-family: var(--sans); font-size: var(--fs-base); color: var(--text-secondary); }
+
+@media (max-width: 640px) {
+  .finder-fields { gap: var(--sp-2) var(--sp-3); }
+  .finder-street { flex-basis: 100%; max-width: none; }
+  .finder-zip { flex: 1 1 8rem; width: auto; }
+  .finder-fields .finder-submit { flex: 1 1 100%; margin-top: var(--sp-1); }
+  .find-headline { font-size: var(--fs-lg); }
+  .find-outside-table th.num { width: 4.75rem; }
+}
+
+/* --- outside money in the reader's races --- */
+.find-dek { font-size: var(--fs-base); color: var(--text-secondary); max-width: 680px; margin: 0 0 var(--sp-3); }
+.find-dek strong { color: var(--text-primary); }
+.find-outside-table { max-width: 760px; }
+.find-outside-table td { vertical-align: baseline; }
+.find-outside-table td a { font-weight: 600; }
+.find-outside-table th.num { width: 7.5rem; }
+.find-outside-note { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
+.find-outside-note .ptag { margin: 0 3px 0 2px; }

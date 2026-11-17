@@ -1,0 +1,81 @@
+---
+import Base from "../../layouts/Base.astro";
+import "../../styles/find.css";
+import { cycleRange, money } from "../../lib/data";
+import { delegations, statePath } from "../../lib/districts";
+import { summarizeState, makeup } from "../../lib/states";
+import { shortSector } from "../../lib/format";
+
+const rows = delegations.map(summarizeState);
+const states = rows.filter((s) => s.d.senators.length);
+const others = rows.filter((s) => !s.d.senators.length);
+const topPac = [...states].sort((a, b) => b.pac - a.pac)[0]!;
+const total = rows.reduce((t, s) => t + s.pac, 0);
+---
+
+<Base
+  title="Members of Congress by state"
+  og={{ type: "page", id: "states" }}
+  description={`Every state's delegation to Congress and who funds it: PAC money, top industries and contributors for each state's senators and representatives, ${cycleRange.replace("–", " to ")}.`}
+  crumbs={[["States", "/states/"]]}
+>
+  <p class="kicker">States</p>
+  <h1>Members of Congress by state</h1>
+  <p class="dek">
+    Each state's senators and representatives, what PACs gave them and the industries behind the money. {topPac.d.name}'s
+    delegation took the most, <strong>{money(topPac.pac, true)}</strong> of the {money(total, true)} PACs gave all of Congress.{" "}
+    <a href="/find/">Find your own members by ZIP code or address</a>.
+  </p>
+
+  {
+    [
+      { title: "States", list: states },
+      { title: "D.C. and the territories", list: others },
+    ].map(({ title, list }) => (
+      <section class="story">
+        <h2>{title}</h2>
+        <table class="states-table">
+          <thead>
+            <tr>
+              <th scope="col">State</th>
+              <th scope="col" class="party-col">Delegation</th>
+              <th scope="col" class="num">From PACs</th>
+              <th scope="col" class="wide">Top industry</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((s) => (
+              <tr>
+                <td>
+                  <a href={statePath(s.d.state)} class="state-name">{s.d.name}</a>
+                  <span class="note">{makeup(s)}</span>
+                </td>
+                <td class="party-col">
+                  {(["D", "R", "I"] as const).filter((p) => s.counts[p]).map((p) => (
+                    <span class="count"><span class={`ptag party-${p}`} aria-hidden="true">{p}</span><span class="visually-hidden">{{ D: "Democrats", R: "Republicans", I: "Independents" }[p]}: </span>{s.counts[p]}</span>
+                  ))}
+                  {s.vacant > 0 && <span class="count muted">{s.vacant} vacant</span>}
+                </td>
+                <td class="num">{money(s.pac, true)}</td>
+                <td class="wide">{s.industries[0] ? shortSector(s.industries[0].id) : "–"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  .states-table td { vertical-align: baseline; }
+  .state-name { font-weight: 600; text-decoration-color: transparent; }
+  .state-name:hover { text-decoration-color: currentColor; }
+  .note { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
+  .party-col { white-space: nowrap; }
+  .count { display: inline-flex; align-items: center; margin-right: var(--sp-3); font-variant-numeric: tabular-nums; font-size: var(--fs-sm); }
+  .count .ptag { margin-right: 4px; }
+  @media (max-width: 640px) {
+    .wide { display: none; }
+  }
+</style>

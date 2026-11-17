@@ -1,0 +1,30 @@
+---
+// A member as a card: portrait, party and seat, PAC money and top industries.
+// The same markup as MemberCard in islands/find/Finder.tsx (styles/find.css).
+import { money } from "../lib/format";
+import type { MemberSummary } from "../islands/find/types";
+
+interface Props {
+  m: MemberSummary;
+}
+const { m } = Astro.props;
+const initials = `${m.name[0] ?? ""}${m.name.replace(/,? (Jr\.|Sr\.|II|III|IV)$/, "").split(" ").at(-1)?.[0] ?? ""}`;
+---
+
+<article class="mcard">
+  {
+    m.photo ? (
+      <img class="mcard-photo" src={m.photo} alt="" width="64" height="78" loading="lazy" decoding="async" />
+    ) : (
+      <span class="mcard-photo mcard-initials" aria-hidden="true">{initials}</span>
+    )
+  }
+  <div class="mcard-body">
+    <p class="mcard-seat"><span class={`ptag party-${m.party}`} aria-hidden="true">{m.party}</span>{m.partyName} · {m.seat}</p>
+    <p class="mcard-name"><a href={`/members/${m.id}/`}>{m.name}</a></p>
+    <p class="mcard-money">
+      <strong>{money(m.pac, true)}</strong> from PACs{m.raised > 0 && <> · {money(m.raised, true)} raised</>}
+    </p>
+    {m.industries.length > 0 && <p class="mcard-top">Top industries: {m.industries.join(", ")}</p>}
+  </div>
+</article>

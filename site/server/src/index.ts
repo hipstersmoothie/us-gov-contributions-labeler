@@ -1,7 +1,8 @@
 // The production web server: the static site in dist/ exactly as `serve`
 // served it (serve-handler with ETags, behind compression), plus link-preview
 // images rendered on request at /og/<version>/<type>/<id>.png, and Plausible's
-// script and event endpoint proxied at /v/ (see plausible.ts).
+// script and event endpoint proxied at /v/ (see plausible.ts), and the member
+// finder's address lookup at /api/district (see geocode.ts).
 //
 // Card images aren't built ahead of time: there are ~19K pages and a crawler
 // asks for a page's image once or twice, when someone shares the link. Each
@@ -15,6 +16,7 @@ import compression from "compression";
 import handler from "serve-handler";
 import { createRenderer } from "./render.ts";
 import { EVENT_PATH, SCRIPT_PATH, forwardEvent, serveScript } from "./plausible.ts";
+import { DISTRICT_PATH, findDistrict } from "./geocode.ts";
 
 const SERVER_DIR = path.resolve(import.meta.dirname, "..");
 const DIST = path.resolve(process.env.DIST_DIR ?? path.join(SERVER_DIR, "../dist"));
@@ -142,6 +144,11 @@ const server = http.createServer((req, res) => {
   }
   if (req.method === "POST" && url.pathname === EVENT_PATH) {
     void forwardEvent(req, res);
+    return;
+  }
+  // Logged above by path alone: the address is in the body.
+  if (req.method === "POST" && url.pathname === DISTRICT_PATH) {
+    void findDistrict(req, res);
     return;
   }
   const moved = read && canonicalPath(url.pathname);

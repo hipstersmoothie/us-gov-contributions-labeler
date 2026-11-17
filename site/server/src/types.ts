@@ -200,7 +200,23 @@ export interface CandidateCard {
   span: string;
 }
 
-export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard | TravelCard | RaceCard | CandidateCard;
+/** A state's delegation: its seats by party, PAC money and top industries. */
+export interface StateCard {
+  type: "state";
+  name: string;
+  /** "Who funds Arizona's members of Congress?" */
+  title: string;
+  /** "2 senators and 9 representatives", "1 delegate". */
+  makeup: string;
+  /** One per member, Democrats first; vacant seats aren't drawn. */
+  seats: Party[];
+  counts: Split;
+  pac: number;
+  /** PAC money by sector, to the whole delegation. */
+  sectors: Bar[];
+}
+
+export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard | TravelCard | RaceCard | CandidateCard | StateCard;
 
 export interface CardsFile {
   version: string;

@@ -6,7 +6,7 @@
 // drawn size, so nothing here is set smaller than 22px and the one number
 // the card is about is the biggest thing on it. Party is never color alone:
 // every party fill sits next to its letter or name.
-import type { Bar, BillCard, CandidateCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, RaceCard, SectorCard, Split, Target, TravelCard } from "./types.ts";
+import type { Bar, BillCard, CandidateCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, RaceCard, SectorCard, Split, StateCard, Target, TravelCard } from "./types.ts";
 
 export const WIDTH = 1200;
 export const HEIGHT = 630;
@@ -717,6 +717,67 @@ function candidate(c: CandidateCard, a: Assets) {
   );
 }
 
+/** A delegation's seats as a grid of party squares, Democrats first, sized to fit. */
+function seatGrid(seats: Party[], width: number, maxHeight: number) {
+  const n = Math.max(seats.length, 1);
+  // The largest square that fits n of them in width × maxHeight.
+  let size = 64;
+  while (size > 8) {
+    const perRow = Math.floor((width + 6) / (size + 6));
+    if (perRow > 0 && Math.ceil(n / perRow) * (size + 6) - 6 <= maxHeight) break;
+    size -= 2;
+  }
+  const gap = Math.max(3, Math.round(size / 8));
+  const perRow = Math.max(1, Math.floor((width + gap) / (size + gap)));
+  const rows = Math.ceil(n / perRow);
+  const height = rows * (size + gap) - gap;
+  const squares = seats
+    .map((p, i) => {
+      const x = (i % perRow) * (size + gap);
+      const y = Math.floor(i / perRow) * (size + gap);
+      return `<rect x="${x}" y="${y}" width="${size}" height="${size}" rx="${Math.min(4, size / 6)}" fill="${C[p]}"/>`;
+    })
+    .join("");
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${squares}</svg>`;
+  return img(`data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`, { width, height });
+}
+
+function state(c: StateCard, a: Assets) {
+  const W = 430;
+  const counts = (["D", "R", "I"] as Party[]).filter((p) => c.counts[p] > 0);
+  const right = c.sectors.length ? div({ flexDirection: "column" }, sectionLabel("PAC money by sector"), bars(c.sectors.slice(0, 3), 1072 - W - 56)) : null;
+  return frame(
+    a,
+    "Campaign finance from FEC filings",
+    twoColumn(
+      div({ flexDirection: "column" }, kicker(`State delegation · ${c.makeup}`), title(c.title, 1072, [56, 52, 46, 40])),
+      div(
+        { flexDirection: "column" },
+        stat(money(c.pac), `from PACs to ${c.seats.length === 1 ? "its member" : `its ${c.seats.length} members`}`, undefined, 80),
+        c.seats.length > 1
+          ? div(
+              { flexDirection: "column", marginTop: 22 },
+              seatGrid(c.seats, W, 92),
+              div(
+                { gap: 22, marginTop: 10, fontSize: 24, fontWeight: 700 },
+                // Three parties don't fit by name; the chips carry the letters.
+                ...counts.map((p) =>
+                  div(
+                    { alignItems: "center", gap: 8, whiteSpace: "nowrap" },
+                    partyChip(p, 26),
+                    counts.length > 2 ? String(c.counts[p]) : `${c.counts[p]} ${c.counts[p] === 1 ? PARTY_NAMES[p].replace(/s$/, "") : PARTY_NAMES[p]}`
+                  )
+                )
+              )
+            )
+          : null
+      ),
+      right,
+      W
+    )
+  );
+}
+
 export function cardTree(card: Card, assets: Assets): Node {
   switch (card.type) {
     case "member":
@@ -743,6 +804,8 @@ export function cardTree(card: Card, assets: Assets): Node {
       return race(card, assets);
     case "candidate":
       return candidate(card, assets);
+    case "state":
+      return state(card, assets);
   }
 }
 
@@ -776,5 +839,9 @@ export function altText(card: Card): string {
       return `${card.name}, ${card.kicker.replace(/ ·.*/, "")}: ${card.candidates.map((x) => `${x.label}${x.party ? ` (${x.party})` : ""} raised ${money(x.raised)}`).join("; ")}. ${card.status}.`;
     case "candidate":
       return `${card.name}${card.party ? ` (${card.party})` : ""}, ${card.seat}: raised ${money(card.raised)}. ${card.status}.`;
+    case "state": {
+      const parties = (["D", "R", "I"] as Party[]).filter((p) => card.counts[p] > 0).map((p) => `${card.counts[p]} ${card.counts[p] === 1 ? PARTY_NAMES[p].replace(/s$/, "") : PARTY_NAMES[p]}`);
+      return `${card.name}: ${card.makeup}${parties.length > 1 ? ` (${parties.join(", ")})` : ""}: ${money(card.pac)} from PACs${card.sectors.length ? `, most from ${card.sectors.map((s) => s.label).slice(0, 2).join(" and ")}` : ""}.`;
+    }
   }
 }

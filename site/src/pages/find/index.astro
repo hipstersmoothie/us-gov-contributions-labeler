@@ -1,0 +1,71 @@
+---
+import Base from "../../layouts/Base.astro";
+import Finder from "../../islands/find/Finder";
+import "../../styles/find.css";
+import { cycleRange } from "../../lib/data";
+import { CONGRESS, congressName, congressYears, delegations, statePath, zipCoverage } from "../../lib/districts";
+
+const states = delegations.filter((d) => d.senators.length);
+const others = delegations.filter((d) => !d.senators.length);
+const crossing = Math.round((1 - zipCoverage.single / zipCoverage.total) * 100);
+---
+
+<Base
+  title="Find your member of Congress by ZIP code or address"
+  og={{ type: "page", id: "find" }}
+  description={`Enter your ZIP code or street address to find your representative and senators, and see who funds them: PAC money, top industries and contributors, ${cycleRange.replace("–", " to ")}.`}
+  crumbs={[["Find your member", "/find/"]]}
+>
+  <p class="kicker">Find your member</p>
+  <h1>Who represents you in Congress?</h1>
+  <p class="dek">
+    Enter your ZIP code to see your representative and both of your senators, and who funds them. If your ZIP crosses
+    district lines, your street address settles it.
+  </p>
+
+  <Finder client:load congress={CONGRESS} congressLabel={`${congressName} (${congressYears})`} cycleRange={cycleRange.replace(/\u2060/g, "")} syncUrl />
+  <noscript><p class="empty-note">The finder needs JavaScript. You can pick your state below instead.</p></noscript>
+
+  <section class="story">
+    <h2>Or browse by state</h2>
+    <ul class="state-links">
+      {states.map((d) => <li><a href={statePath(d.state)}>{d.name}</a></li>)}
+    </ul>
+    <h3 class="find-group">D.C. and the territories</h3>
+    <ul class="state-links">
+      {others.map((d) => <li><a href={statePath(d.state)}>{d.name}</a></li>)}
+    </ul>
+  </section>
+
+  <section class="story measure about-maps">
+    <h2>About the district maps</h2>
+    <p>
+      ZIP codes are matched to districts with the Census Bureau's{" "}
+      <a href="https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html">relationship file</a>{" "}
+      between ZIP Code Tabulation Areas and the districts of the {congressName} ({congressYears}), the ones current members were
+      elected to represent. About {crossing}% of ZIPs cross a district line; for those, the finder shows each district's share of
+      the ZIP's land area, which isn't the same as its share of the people who live there. A street address is matched by the{" "}
+      <a href="https://geocoding.geo.census.gov/geocoder/">Census Geocoder</a>, against the same Congress's map.
+    </p>
+    <p>
+      Several states, including Texas and California, drew new districts for the 2026 elections. Those take effect when the
+      next Congress is sworn in in January 2027; until then, members represent the districts they were elected from, and that's
+      what the finder shows.
+    </p>
+    <p>
+      Delegates from the District of Columbia, Guam, the U.S. Virgin Islands, American Samoa and the Northern Mariana Islands, and
+      Puerto Rico's resident commissioner, are included. Their ZIP codes find them too.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .state-links {
+    list-style: none; padding: 0; margin: 0 0 var(--sp-4);
+    columns: 4 11rem; column-gap: var(--sp-5);
+  }
+  .state-links li { padding: 3px 0; break-inside: avoid; }
+  .state-links a { text-decoration-color: transparent; font-weight: 500; }
+  .state-links a:hover { text-decoration-color: currentColor; }
+  .about-maps p { color: var(--text-secondary); max-width: 680px; }
+</style>

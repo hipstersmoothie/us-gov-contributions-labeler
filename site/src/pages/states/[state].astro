@@ -1,0 +1,181 @@
+---
+import Base from "../../layouts/Base.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import MemberCard from "../../components/MemberCard.astro";
+import OutsideTable from "../../components/OutsideTable.astro";
+import "../../styles/find.css";
+import { cycleRange, money } from "../../lib/data";
+import { delegations, statePath, stateSlug, summary, districtName, congressName, congressYears, type Delegation } from "../../lib/districts";
+import { summarizeState, makeup, partyCounts } from "../../lib/states";
+import { sectors } from "../../lib/sectors";
+import { stateList } from "../../lib/bluesky";
+import { pct } from "../../lib/derived";
+import { shortSector, moneyAuto } from "../../lib/format";
+import { abs, clip } from "../../lib/seo";
+import { capitalize, placeName, possessive as possessiveOf } from "../../islands/find/core";
+
+export function getStaticPaths() {
+  return delegations.map((d) => ({ params: { state: stateSlug(d.state) }, props: { d } }));
+}
+
+const { d } = Astro.props as { d: Delegation };
+const s = summarizeState(d);
+const n = s.members.length;
+const path = statePath(d.state);
+const list = stateList(d.state);
+const onBluesky = s.members.filter((m) => m.accounts.length).length;
+const sectorPages = new Set(sectors.map((x) => x.name));
+const sectorHref = (name: string) => (sectorPages.has(name) ? `/sectors/${sectors.find((x) => x.name === name)!.slug}/` : undefined);
+const [top1, top2] = s.industries;
+const territory = !d.senators.length;
+const theName = capitalize(placeName(d.state, d.name));
+const Possessive = capitalize(possessiveOf(d.state, d.name));
+const who = territory ? (d.state === "PR" ? "resident commissioner" : "delegate") : n === 1 ? "member of Congress" : `${n} members of Congress`;
+const backers = top1 ? (top2 ? `${shortSector(top1.id).toLowerCase()} and ${shortSector(top2.id).toLowerCase()}` : shortSector(top1.id).toLowerCase()) : undefined;
+const vacantSeats = d.house.filter((h) => !h.member);
+const range = cycleRange.replace("–", " to ");
+
+const title = `${Possessive} ${territory ? who : "members of Congress"} and who funds them`;
+const description = clip(
+  `${Possessive} ${who} took ${money(s.pac, true)} from PACs from ${range}` +
+    (backers ? `; the most came from ${backers}.` : ".") +
+    ` ${territory ? "" : `${makeup(s)}: `}PAC money, top industries and contributors for each, and the delegation as a whole.`
+);
+const itemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `${Possessive} members of Congress`,
+  url: abs(path),
+  itemListElement: s.members.map((m, i) => ({ "@type": "ListItem", position: i + 1, name: m.name, url: abs(`/members/${m.bioguide}/`) })),
+};
+---
+
+<Base {title} {description} og={{ type: "state", id: stateSlug(d.state) }} crumbs={[["States", "/states/"], [d.name, path]]} jsonLd={itemList}>
+  <p class="kicker"><a href="/states/">States</a> · {territory ? who : makeup(s)}</p>
+  <h1>{d.name}</h1>
+  <p class="headline-summary">
+    {Possessive} {who} took {money(s.pac, true)} from PACs{backers ? <>, the most from {backers}</> : null}.
+  </p>
+  <p class="dek">
+    {
+      territory ? (
+        <>
+          {theName} sends one {who} to the House, who serves on committees but can't vote on the final passage of bills. It has no
+          senators.
+        </>
+      ) : (
+        <>
+          {d.name} sends {makeup(s)} to Congress: {partyCounts(s.counts)}.{" "}
+          {vacantSeats.length > 0 && <>{vacantSeats.map((h) => capitalize(districtName(d.state, h.district))).join(" and ")} {vacantSeats.length === 1 ? "is" : "are"} vacant. </>}
+        </>
+      )
+    }
+    {s.raised > 0 && n === 1 && <>The campaign raised <strong>{money(s.raised, true)}</strong> from {range}, {pct(s.pac, s.raised)}% of it from PACs and other committees.</>}
+    {s.raised > 0 && n > 1 && <>Together they raised <strong>{money(s.raised, true)}</strong> from {range}, {pct(s.pac, s.raised)}% of it from PACs and other committees.</>}
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>From PACs &amp; committees</dt><dd>{money(s.pac, true)}</dd></div>
+    <div class="stat"><dt>Raised in all, {cycleRange}</dt><dd>{s.raised > 0 ? money(s.raised, true) : "–"}</dd></div>
+    <div class="stat"><dt>Members</dt><dd>{n}{!territory && <small>{partyCounts(s.counts)}</small>}</dd></div>
+    <div class="stat"><dt>On Bluesky</dt><dd>{onBluesky} of {n}</dd></div>
+  </dl>
+
+  <p class="state-find">
+    Not sure which district is yours? <a href="/find/">Find your members by ZIP code or address</a>.
+    {list && <> · <a href={list.url}>Follow {possessiveOf(d.state, d.name)} delegation on Bluesky</a></>}
+  </p>
+
+  {
+    d.senators.length > 0 && (
+      <section class="story">
+        <h2>Senators</h2>
+        <div class="mcards">{d.senators.map((m) => <MemberCard m={summary(m)} />)}</div>
+      </section>
+    )
+  }
+
+  <section class="story">
+    <h2>{territory ? (d.state === "PR" ? "Resident commissioner" : "Delegate") : d.house.length === 1 ? "Representative" : "Representatives"}</h2>
+    <div class="mcards">
+      {
+        d.house.map((h) =>
+          h.member ? (
+            <MemberCard m={summary(h.member)} />
+          ) : (
+            <article class="mcard mcard-vacant">
+              <span class="mcard-photo mcard-initials" aria-hidden="true">–</span>
+              <div class="mcard-body">
+                <p class="mcard-name">{capitalize(districtName(d.state, h.district))} is vacant</p>
+                <p class="mcard-top">No one holds this seat right now.</p>
+              </div>
+            </article>
+          )
+        )
+      }
+    </div>
+    {
+      d.house.length > 1 && (
+        <p class="source">
+          Districts as drawn for the {congressName} ({congressYears}), the ones these members were elected to represent.
+        </p>
+      )
+    }
+  </section>
+
+  <section class="story" id="outside">
+    <h2>Outside money in {possessiveOf(d.state, d.name)} races</h2>
+    {
+      s.outside.spenders.length > 0 ? (
+        <>
+          <p class="chart-dek">
+            Super PACs and other groups can spend without limit for or against a candidate, as long as they don't coordinate
+            with the campaign. From {range}, they spent <strong>{money(s.outside.support, true)}</strong> supporting{" "}
+            {n === 1 ? "this member" : `${possessiveOf(d.state, d.name)} members`} and <strong>{money(s.outside.oppose, true)}</strong> opposing them
+            {s.outside.opponents.support + s.outside.opponents.oppose > 0 && (
+              <>, plus {money(s.outside.opponents.support, true)} supporting and {money(s.outside.opponents.oppose, true)} opposing their opponents</>
+            )}
+            . Each group's page shows who funds it, where its filings say.
+          </p>
+          <OutsideTable heading="Group" rows={s.outside.spenders.slice(0, 12)} />
+        </>
+      ) : (
+        <p class="empty-note">No outside groups reported spending for or against {n === 1 ? "this member" : "these members"} by name in {cycleRange}.</p>
+      )
+    }
+  </section>
+
+  {
+    n > 1 && (
+      <div class="grid-2">
+        <section class="story">
+          <h2>Top industries</h2>
+          <p class="chart-dek">PAC money plus donations from people who work in each industry, to the whole delegation, {cycleRange}.</p>
+          <RankedTable
+            heading="Industry"
+            valueHeading="Given"
+            rows={s.industries.slice(0, 10).map((x) => ({ label: x.id, href: sectorHref(x.id), value: x.total, note: `to ${x.members} of ${n} members` }))}
+          />
+        </section>
+        <section class="story">
+          <h2>Top contributors</h2>
+          <p class="chart-dek">Organizations' PACs and employees, and employers without a PAC, to the whole delegation, {cycleRange}.</p>
+          <RankedTable
+            heading="Contributor"
+            valueHeading="Given"
+            rows={s.contributors.slice(0, 10).map((c) => ({
+              label: c.name,
+              href: c.href,
+              value: c.total,
+              note: [c.pacs > 0 && `PAC ${moneyAuto(c.pacs)}`, c.individuals > 0 && `employees ${moneyAuto(c.individuals)}`, `to ${c.members} of ${n}`].filter(Boolean).join(" · "),
+            }))}
+          />
+        </section>
+      </div>
+    )
+  }
+</Base>
+
+<style>
+  .state-find { margin: calc(-1 * var(--sp-4)) 0 var(--sp-6); font-size: var(--fs-sm); font-weight: 600; }
+</style>

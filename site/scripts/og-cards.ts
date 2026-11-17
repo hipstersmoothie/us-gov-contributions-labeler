@@ -31,6 +31,9 @@ import { countries, principalsByCountry, registrantById, activePrincipals, activ
 import { revolvingStats, lobbyists, membersByStaff, filingYears } from "../src/lib/revolving";
 import { trips, activeSponsors, tripsBySponsor, summarize, sinceLabel } from "../src/lib/travel";
 import { bundledMembers, bundlingTotal, bundlers, bundlerName } from "../src/lib/bundling";
+import { delegations, stateSlug, zipCoverage } from "../src/lib/districts";
+import { summarizeState, makeup } from "../src/lib/states";
+import { possessive } from "../src/islands/find/core";
 import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
 import { races, raceName, raceShort, raceChamber, stateName, personName, partyLetterOf, partyName, raised, sourceValues, resultLine, raceYear, PENDING } from "../src/lib/races";
 
@@ -226,6 +229,28 @@ for (const c of countries) {
   };
 }
 
+for (const d of delegations) {
+  const s = summarizeState(d);
+  const who = d.senators.length ? "members of Congress" : d.state === "PR" ? "resident commissioner" : "delegate";
+  const order = { D: 0, I: 1, R: 2 };
+  cards[`state/${stateSlug(d.state)}`] = {
+    type: "state",
+    name: d.name,
+    title: `Who funds ${possessive(d.state, d.name)} ${who}?`,
+    makeup: makeup(s),
+    seats: s.members.map(party).sort((a, b) => order[a] - order[b]),
+    counts: { D: s.counts.D, I: s.counts.I, R: s.counts.R },
+    pac: s.pac,
+    sectors: [...s.members.reduce((acc, m) => {
+      for (const x of m.sectors) if (!NOT_INDUSTRY.includes(x.id) && x.total > 0) acc.set(x.id, (acc.get(x.id) ?? 0) + x.total);
+      return acc;
+    }, new Map<string, number>())]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([id, total]) => ({ label: shortSector(id), value: total })),
+  };
+}
+
 // --- section and static pages ------------------------------------------------------
 
 const pacMoney = members.reduce((a, m) => a + pacTotal(m), 0);
@@ -342,6 +367,26 @@ cards["page/open-data"] = {
     { label: "Members", value: members.length.toLocaleString() },
     { label: "Organizations", value: organizations.length.toLocaleString() },
     { label: "PACs and committees", value: committees.length.toLocaleString() },
+  ],
+};
+const stateRows = delegations.filter((d) => d.senators.length).map(summarizeState);
+cards["page/states"] = {
+  type: "page",
+  kicker: "States",
+  title: "Members of Congress by state",
+  dek: `Each state's senators and representatives, and what PACs gave them, ${cycleRange}.`,
+  barsTitle: "Most PAC money, by delegation",
+  bars: top(stateRows, (s) => s.pac, 4).map((s) => ({ label: s.d.name, value: s.pac, note: `${s.members.length} members` })),
+};
+cards["page/find"] = {
+  type: "page",
+  kicker: "Find your member",
+  title: "Who represents you in Congress?",
+  dek: "Enter your ZIP code or street address to see your representative and senators, and who funds them.",
+  stats: [
+    { label: "ZIP codes mapped", value: zipCoverage.total.toLocaleString() },
+    { label: "in a single district", value: `${Math.round((zipCoverage.single / zipCoverage.total) * 100)}%` },
+    { label: "members of Congress", value: members.length.toLocaleString() },
   ],
 };
 cards["page/search"] = {

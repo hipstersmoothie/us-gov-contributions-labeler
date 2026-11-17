@@ -20,6 +20,7 @@
     "sync-lists": "tsx src/sync-lists.ts",
     "dedupe-labels": "tsx src/scripts/dedupe-labels.ts",
     "photos": "tsx src/scripts/fetch-photos.ts",
+    "zip-districts": "tsx src/scripts/zip-districts.ts",
     "feeds": "tsx feeds/server.ts",
     "feeds:publish": "tsx feeds/publish.ts",
     "open-data-examples": "tsx src/scripts/open-data-examples.ts",
