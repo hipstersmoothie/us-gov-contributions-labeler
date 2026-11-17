@@ -136,6 +136,8 @@
   --page: #f9f9f7;
   --surface: #ffffff;
   --surface-2: #efeee9;
+  /* Hovered or focused rows and options. */
+  --highlight: var(--surface-2);
   --text-primary: #121212;
   --text-secondary: #4f4e4a;
   --text-muted: #6b6a65;
@@ -181,6 +183,8 @@
     --page: #121212;
     --surface: #1c1c1b;
     --surface-2: #1c1c1b;
+    /* --surface-2 matches --surface here, so highlights mix their own. */
+    --highlight: color-mix(in oklab, var(--text-primary) 7%, var(--surface));
     --text-primary: #f2f2ee;
     --text-secondary: #c3c2b7;
     --text-muted: #a3a29b;
@@ -390,7 +394,7 @@ th {
 th, td { padding: var(--sp-2) var(--sp-3) var(--sp-2) 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
 th:last-child, td:last-child { padding-right: 0; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: var(--surface-2); } }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: var(--highlight); } }
 
 /* --- party: a tinted tag with the letter, or a dot beside the full name. Never color alone. --- */
 .party::before {
