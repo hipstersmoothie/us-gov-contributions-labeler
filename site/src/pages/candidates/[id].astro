@@ -9,7 +9,7 @@ import InfoPopover from "../../islands/InfoPopover";
 import { money, organizationById, sectorSlug } from "../../lib/data";
 import { surname } from "../../lib/format";
 import {
-  races,
+  candidateRaces,
   raceName,
   raceShort,
   raceHref,
@@ -27,7 +27,9 @@ import {
   resultLine,
   isWinner,
   stateName,
-  raceYear,
+  noResult,
+  day,
+  cycleOf,
   PENDING,
   type Race,
   type RaceCandidate,
@@ -36,15 +38,15 @@ import { candidacy, candidateJsonLd } from "../../lib/race-pages";
 import { clip } from "../../lib/seo";
 
 export function getStaticPaths() {
-  return races.flatMap((r) =>
-    r.candidates
-      // Members (and anyone who became one) have member pages; their
-      // candidate URL, if it ever existed, points there.
-      .filter((c) => !c.bioguide || !r.incumbents.includes(c.bioguide))
-      .map((c) => ({ params: { id: c.id.toLowerCase() }, props: { c, r } }))
-  );
+  // One page per candidate, about their latest race, listing earlier ones.
+  // Members (and anyone who became one) have member pages; their candidate
+  // URL, if it ever existed, points there.
+  return [...candidateRaces]
+    .filter(([, list]) => !list[0]!.c.bioguide || !list[0]!.race.incumbents.includes(list[0]!.c.bioguide))
+    .map(([id, list]) => ({ params: { id: id.toLowerCase() }, props: { c: list[0]!.c, r: list[0]!.race, earlier: list.slice(1).map((x) => x.race) } }));
 }
-const { c, r } = Astro.props as { c: RaceCandidate; r: Race };
+const { c, r, earlier } = Astro.props as { c: RaceCandidate; r: Race; earlier: Race[] };
+const raceYear = r.year;
 const memberPage = candidateHref(c).startsWith("/members/") ? candidateHref(c) : undefined;
 
 const name = personName(c);
@@ -63,7 +65,7 @@ const sourceRow = [{ label: name, values: sourceValues(c) }];
 const spenders = c.outside.spenders.map((s) => ({ ...spender(s.id), ...s }));
 const ind = c.individuals;
 const inState = ind ? ind.places.inState / Math.max(ind.itemized, 1) : undefined;
-const pending = r.result.status === "pending";
+const pending = noResult(r);
 
 const status = c.onBallot
   ? c.uncertain
@@ -80,7 +82,7 @@ const title = `${name} (${p ?? c.party ?? "?"}), ${raceShort(r)} ${raceYear}: ca
 const description = clip(
   `${name}, ${partyName(c)}, ${candidacy(r).replace(/^C/, "c")}. ` +
     (total > 0 ? `Raised ${money(total, true)}${topIndustry ? `; the top industry among donors was ${topIndustry.id}` : ""}. ` : "") +
-    `${pending ? PENDING : resultLine(r)}. Top contributors, industries and outside spending.`
+    `${pending && r.result.status !== "upcoming" ? PENDING : resultLine(r)}. Top contributors, industries and outside spending.`
 );
 ---
 
@@ -102,7 +104,7 @@ const description = clip(
       {description}
       og={{ type: "candidate", id: c.id }}
       ogType="profile"
-      crumbs={[["2026 races", `/races/${raceYear}/`], [raceShort(r), raceHref(r)], [name, path]]}
+      crumbs={[[`${raceYear} races`, `/races/${raceYear}/`], [raceShort(r), raceHref(r)], [name, path]]}
       jsonLd={candidateJsonLd(c, r, path)}
     >
       <header class="cand-head">
@@ -114,7 +116,7 @@ const description = clip(
       </header>
 
       <p class="dek">
-        {name} ran for {r.office === "S" ? `the U.S. Senate in ${stateName(r.state)}` : `the U.S. House in ${raceName(r)}`} in {raceYear}.{" "}
+        {name} {r.result.status === "upcoming" ? "is running" : "ran"} for {r.office === "S" ? `the U.S. Senate in ${stateName(r.state)}` : `the U.S. House in ${raceName(r)}`} in {raceYear}.{" "}
         {total > 0 ? (
           <>
             The campaign raised <strong>{money(total, true)}</strong>{m && m.individual > 0 && <>, {Math.round((m.individual / total) * 100)}% of it from individual donors</>}{own > 0 && <>, and {last} put in <strong>{money(own, true)}</strong> of their own</>}.
@@ -134,15 +136,16 @@ const description = clip(
       </p>
       <p class="status-line">{status}</p>
       <div class:list={["result", { pending }]} role="note">
-        <strong>{pending ? PENDING : isWinner(r, c) ? "Won" : "Result"}.</strong>{" "}
-        {pending ? <>We show a winner only once {stateName(r.state)} certifies the result or the winner is sworn in.</> : <>{resultLine(r)}.</>}{" "}
+        <strong>{r.result.status === "upcoming" ? `Election day is ${day(r.election.electionDay)}` : pending ? PENDING : isWinner(r, c) ? "Won" : "Result"}.</strong>{" "}
+        {pending ? <>We show a winner only once {stateName(r.state)} certifies the result, the FEC publishes official results, or the winner is sworn in.</> : <>{resultLine(r)}.</>}{" "}
+        {c.votes?.votes !== undefined && <>{last} received {c.votes.votes.toLocaleString()} votes{c.votes.pct !== undefined && <> ({(c.votes.pct * 100).toFixed(1)}%)</>}, by the FEC's official results.{" "}</>}
         <a href={raceHref(r)}>The whole race</a>
       </div>
 
       <dl class="stats">
         <div class="stat">
           <dt>
-            Raised, {raceYear - 1}–{raceYear}
+            Raised, {cycleOf(raceYear)}
             <InfoPopover client:visible title="What counts as raised">
               <p>Total receipts the campaign reported to the FEC for the {raceYear} cycle{m?.through && <>, through {m.through}</>}: individual donations, PAC and party money, and the candidate's own funds.</p>
             </InfoPopover>
@@ -270,6 +273,16 @@ const description = clip(
         </section>
       )}
 
+      {earlier.length > 0 && (
+        <p class="earlier">
+          Also ran in{" "}
+          {earlier.map((e, i) => (
+            <>{i > 0 && ", "}<a href={raceHref(e)}>{raceName(e)}, {e.year}</a></>
+          ))}
+          .
+        </p>
+      )}
+
       <p class="source">
         From FEC bulk data for the {raceYear} cycle: the candidate master, campaign summaries, PAC contributions and itemized
         individual donations, and independent expenditures including 24- and 48-hour notices.{" "}
@@ -291,5 +304,6 @@ const description = clip(
     margin: 0 0 var(--sp-6); padding: var(--sp-3) var(--sp-4); border-left: 3px solid var(--rule);
     background: var(--surface-2); font-size: var(--fs-sm); max-width: 72ch;
   }
+  .earlier { font-size: var(--fs-sm); }
   .stat dd small { display: block; font-size: var(--fs-xs, 0.75rem); font-weight: 400; color: var(--text-muted); }
 </style>

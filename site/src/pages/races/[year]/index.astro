@@ -2,9 +2,22 @@
 import Base from "../../../layouts/Base.astro";
 import RacesTable from "../../../islands/RacesTable";
 import { money } from "../../../lib/data";
-import { races, raceName, raceShort, raceHref, personName, partyLetterOf, raised, tierOf, resultLine, raceYear, raceCoverage, PENDING, REDRAWN_STATES } from "../../../lib/races";
+import { racesOf, raceYears, raceName, raceShort, raceHref, personName, partyLetterOf, raised, tierOf, resultLine, noResult, redrawnStates, electionOf, fileByYear, day, PENDING } from "../../../lib/races";
 import { listOf, abs } from "../../../lib/seo";
 import type { RaceRow } from "../../../islands/types";
+
+export function getStaticPaths() {
+  return raceYears.map((year) => ({ params: { year: String(year) }, props: { year } }));
+}
+const { year: raceYear } = Astro.props as { year: number };
+const races = racesOf(raceYear);
+const E = electionOf(raceYear);
+const today = new Date().toISOString().slice(0, 10);
+const before = today < E.electionDay;
+const ballotSource = fileByYear.get(raceYear)?.fec?.ballot
+  ? "the FEC's list of general-election candidates, compiled from state election offices"
+  : "the pre- and post-general reports their campaigns filed";
+const REDRAWN_STATES = redrawnStates(raceYear);
 
 const rows: RaceRow[] = races.map((r) => ({
   id: r.id,
@@ -23,7 +36,7 @@ const rows: RaceRow[] = races.map((r) => ({
   outside: r.outside.general,
   tier: tierOf(r),
   redrawn: !!r.redrawn,
-  result: r.result.status === "pending" ? "Pending certification" : resultLine(r),
+  result: r.result.status === "pending" ? "Pending certification" : r.result.status === "upcoming" ? "Upcoming" : resultLine(r),
 }));
 const states = [...new Set(races.map((r) => r.state))].sort();
 const totalRaised = rows.reduce((s, r) => s + r.raised, 0);
@@ -31,30 +44,40 @@ const outsideAll = races.reduce((s, r) => s + r.outside.total, 0);
 const open = races.filter((r) => r.open).length;
 const candidates = races.reduce((s, r) => s + r.candidates.length, 0);
 const senate = races.filter((r) => r.office === "S").length;
-const decided = races.filter((r) => r.result.status !== "pending").length;
+const decided = races.filter((r) => !noResult(r) && r.result.status !== "runoff").length;
+const runoffs = races.filter((r) => r.result.status === "runoff").length;
 const description = `All ${races.length} House and Senate races of ${raceYear}: the ${candidates.toLocaleString()} candidates on the November ballot, what each raised and who spent from outside. Filter by state, chamber, open seats and outside spending.`;
 ---
 
 <Base
   title={`${raceYear} House and Senate races`}
   {description}
-  og={{ type: "page", id: "races" }}
-  crumbs={[["2026 races", `/races/${raceYear}/`]]}
+  og={{ type: "page", id: `races-${raceYear}` }}
+  crumbs={[[`${raceYear} races`, `/races/${raceYear}/`]]}
   jsonLd={{ "@context": "https://schema.org", "@type": "CollectionPage", url: abs(`/races/${raceYear}/`), name: `${raceYear} House and Senate races`, description }}
 >
   <p class="kicker">{raceYear} races</p>
   <h1>The {raceYear} House and Senate races</h1>
   <p class="dek">
-    Every race on the Nov. 3 ballot: {races.length - senate} for the House and {senate} for the Senate, with the{" "}
-    {candidates.toLocaleString()} candidates who filed general-election reports with the FEC. They raised{" "}
+    Every race on the {day(E.electionDay)} ballot: {races.length - senate} for the House and {senate} for the Senate,
+    with the {candidates.toLocaleString()} candidates on the ballot by {ballotSource}. They raised{" "}
     <strong>{money(totalRaised, true)}</strong>, and outside groups spent <strong>{money(outsideAll, true)}</strong> on
     the races, primaries included.
   </p>
   <div class="result" role="note">
-    <strong>{decided ? `${decided} results in; the rest are pending certification.` : `${PENDING}.`}</strong>{" "}
-    States are still counting and certifying. We show a winner only once a state certifies its result or the winner is
-    sworn in on Jan. 3, 2027, and we don't call races. Louisiana's House races ran as an open primary on Nov. 3, with
-    runoffs on Dec. 12.
+    {before ? (
+      <><strong>Election day is {day(E.electionDay)}.</strong> Until then, each race lists the candidates who raised money.</>
+    ) : (
+      <>
+        <strong>
+          {decided === races.length ? "Every race has an official result." : decided ? `${decided} of ${races.length} races have an official result; the rest are pending certification.` : `${PENDING}.`}
+        </strong>{" "}
+        We show a winner only once a state certifies its result, the FEC publishes official results, or the winner is
+        sworn in on {day(E.newCongress)}, and we don't call races.
+        {runoffs > 0 && <> {runoffs === 1 ? "One race goes" : `${runoffs} races go`} to a runoff.</>}
+        {Object.entries(E.systemNotes ?? {}).map(([, note]) => <> {note}</>)}
+      </>
+    )}
   </div>
 
   <dl class="stats">
@@ -72,8 +95,7 @@ const description = `All ${races.length} House and Senate races of ${raceYear}: 
   <RacesTable client:idle rows={rows} states={states} />
 
   <p class="source">
-    Candidates from the FEC candidate master, on the ballot by the pre- and post-general reports their campaigns filed;
-    money from FEC campaign summaries; outside spending from independent expenditure reports and 24- and 48-hour notices.
+    Candidates from the FEC candidate master, on the ballot by {ballotSource}; money from FEC campaign summaries; outside spending from independent expenditure reports and 24- and 48-hour notices.
     "Outside, general" counts spending coded to the general election. <a href="/about/#races">How races are built</a>
   </p>
 </Base>

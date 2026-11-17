@@ -35,7 +35,7 @@ import { delegations, stateSlug, zipCoverage } from "../src/lib/districts";
 import { summarizeState, makeup } from "../src/lib/states";
 import { possessive } from "../src/islands/find/core";
 import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
-import { races, raceName, raceShort, raceChamber, stateName, personName, partyLetterOf, partyName, raised, sourceValues, resultLine, raceYear, PENDING } from "../src/lib/races";
+import { allRaces, racesOf, candidateRaces, raceName, raceShort, raceChamber, stateName, personName, partyLetterOf, partyName, raised, sourceValues, resultLine, noResult, cycleOf, PENDING } from "../src/lib/races";
 
 const OUT_DIR = path.resolve(process.cwd(), "server/data");
 const NOT_INDUSTRY = ["Unknown", "Party & Candidate Committees"];
@@ -447,17 +447,16 @@ for (const sp of activeSponsors) {
   };
 }
 
-// --- 2026 races and candidates ------------------------------------------------------
+// --- House and Senate races, and candidates who aren't members -------------------
 
-const raceSpan = `${raceYear - 1}–${raceYear}`;
 const asParty = (p: string | undefined) => (p === "D" || p === "R" || p === "I" ? (p as Party) : undefined);
-for (const r of races) {
-  const status = r.result.status === "pending" ? PENDING : resultLine(r);
-  cards[`race/${r.slug}`] = {
+const statusOf = (r: (typeof allRaces)[number]) => (r.result.status === "pending" ? PENDING : resultLine(r));
+for (const r of allRaces) {
+  cards[`race/${r.year}-${r.slug}`] = {
     type: "race",
-    kicker: `${raceYear} ${raceChamber(r)} race · ${stateName(r.state)}`,
+    kicker: `${r.year} ${raceChamber(r)} race · ${stateName(r.state)}`,
     name: raceName(r),
-    status,
+    status: statusOf(r),
     candidates: r.candidates.slice(0, 3).map((c) => ({
       label: personName(c),
       party: asParty(partyLetterOf(c)),
@@ -466,41 +465,46 @@ for (const r of races) {
       support: c.outside.support,
       oppose: c.outside.oppose,
     })),
-    span: raceSpan,
+    span: cycleOf(r.year),
   };
-  for (const c of r.candidates) {
-    if (c.bioguide) continue;
-    const v = sourceValues(c);
-    cards[`candidate/${c.id}`] = {
-      type: "candidate",
-      name: personName(c),
-      party: asParty(partyLetterOf(c)),
-      partyName: partyName(c),
-      seat: `${r.office === "S" ? "Senate" : "House"} candidate, ${raceShort(r)}`,
-      raised: raised(c),
-      sources: [
-        { label: "Individuals", value: v.individual },
-        { label: "PACs & party", value: v.pac },
-        { label: "Own money", value: v.self },
-      ],
-      status,
-      span: raceSpan,
-    };
-  }
 }
-const raceMoney = races.reduce((a, r) => a + r.candidates.reduce((b, c) => b + raised(c), 0), 0);
-cards["page/races"] = {
-  type: "page",
-  kicker: `${raceYear} races`,
-  title: `Every ${raceYear} House and Senate race`,
-  dek: `${races.reduce((a, r) => a + r.candidates.length, 0).toLocaleString()} candidates on the November ballot raised ${money(raceMoney, true)}. ${PENDING}.`,
-  span: raceSpan,
-  barsTitle: "Most outside spending",
-  bars: [...races]
-    .sort((a, b) => b.outside.total - a.outside.total)
-    .slice(0, 4)
-    .map((r) => ({ label: raceName(r), value: r.outside.total })),
-};
+// A candidate's card is about their latest race, like their page.
+for (const [id, [{ c, race: r }]] of candidateRaces as Map<string, [{ c: (typeof allRaces)[number]["candidates"][number]; race: (typeof allRaces)[number] }]>) {
+  if (c.bioguide) continue;
+  const v = sourceValues(c);
+  cards[`candidate/${id}`] = {
+    type: "candidate",
+    name: personName(c),
+    party: asParty(partyLetterOf(c)),
+    partyName: partyName(c),
+    seat: `${r.office === "S" ? "Senate" : "House"} candidate, ${raceShort(r)} (${r.year})`,
+    raised: raised(c),
+    sources: [
+      { label: "Individuals", value: v.individual },
+      { label: "PACs & party", value: v.pac },
+      { label: "Own money", value: v.self },
+    ],
+    status: statusOf(r),
+    span: cycleOf(r.year),
+  };
+}
+for (const year of new Set(allRaces.map((r) => r.year))) {
+  const list = racesOf(year);
+  const raceMoney = list.reduce((a, r) => a + r.candidates.reduce((b, c) => b + raised(c), 0), 0);
+  const decided = list.filter((r) => !noResult(r) && r.result.status !== "runoff").length;
+  cards[`page/races-${year}`] = {
+    type: "page",
+    kicker: `${year} races`,
+    title: `Every ${year} House and Senate race`,
+    dek: `${list.reduce((a, r) => a + r.candidates.length, 0).toLocaleString()} candidates on the November ballot raised ${money(raceMoney, true)}. ${decided ? `${decided} of ${list.length} races have official results.` : `${PENDING}.`}`,
+    span: cycleOf(year),
+    barsTitle: "Most outside spending",
+    bars: [...list]
+      .sort((a, b) => b.outside.total - a.outside.total)
+      .slice(0, 4)
+      .map((r) => ({ label: raceName(r), value: r.outside.total })),
+  };
+}
 
 const file: CardsFile = { version: ogVersion(cards), cycleRange: cycleRange.replace(/\u2060/g, ""), cards };
 fs.mkdirSync(OUT_DIR, { recursive: true });

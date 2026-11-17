@@ -1,5 +1,5 @@
 ---
-// One 2026 race: the candidates side by side, the money each raised and from
+// One race: the candidates side by side, the money each raised and from
 // whom, and outside spending for and against each. Never calls the race.
 import Base from "../../../layouts/Base.astro";
 import PlotFigure from "../../../components/PlotFigure.astro";
@@ -9,7 +9,7 @@ import LazyDisclosure from "../../../islands/LazyDisclosure";
 import { money, organizationById, sectorSlug, photoUrl } from "../../../lib/data";
 import { moneyAuto, percent } from "../../../lib/format";
 import {
-  races,
+  allRaces,
   raceName,
   raceShort,
   raceChamber,
@@ -28,7 +28,9 @@ import {
   resultLine,
   isWinner,
   stateName,
-  raceYear,
+  noResult,
+  day,
+  cycleOf,
   PENDING,
   type Race,
 } from "../../../lib/races";
@@ -36,9 +38,12 @@ import { raceJsonLd, RACE_SPENDERS_SHOWN } from "../../../lib/race-pages";
 import { clip } from "../../../lib/seo";
 
 export function getStaticPaths() {
-  return races.map((r) => ({ params: { slug: r.slug }, props: { r } }));
+  return allRaces.map((r) => ({ params: { year: String(r.year), slug: r.slug }, props: { r } }));
 }
 const { r } = Astro.props as { r: Race };
+const raceYear = r.year;
+const E = r.election;
+const cycle = cycleOf(raceYear);
 
 const name = raceName(r);
 // Sentences don't start with a numeral.
@@ -48,7 +53,10 @@ const path = raceHref(r);
 const shown = r.candidates;
 const main = shown.slice(0, 6);
 const total = shown.reduce((s, c) => s + raised(c), 0);
-const pending = r.result.status === "pending";
+const pending = noResult(r);
+const upcoming = r.result.status === "upcoming";
+// Official results, where the FEC has published them.
+const hasVotes = shown.some((c) => c.votes?.votes !== undefined);
 const NOT_INDUSTRY = ["Unknown", "Party & Candidate Committees", "Retired", "Not employed"];
 
 const label = (c: (typeof shown)[number]) => {
@@ -88,7 +96,7 @@ const description = clip(
   `The ${raceYear} race for ${r.office === "S" ? `U.S. Senate in ${stateName(r.state)}` : name}: ` +
     `${shown.length} ${r.nominees === "filings" ? "candidates on the November ballot" : "candidates"} raised ${money(total, true)}` +
     (hasOutside ? ` and outside groups spent ${money(r.outside.total, true)}` : "") +
-    `. ${pending ? `${PENDING}.` : `${resultLine(r)}.`} Who funded each, by industry and contributor.`
+    `. ${pending && !upcoming ? `${PENDING}.` : `${resultLine(r)}.`} Who funded each, by industry and contributor.`
 );
 const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${r.state}/${raceYear}/` : `https://www.fec.gov/data/elections/house/${r.state}/${String(r.district ?? 0).padStart(2, "0")}/${raceYear}/`;
 ---
@@ -96,16 +104,18 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
 <Base
   {title}
   {description}
-  og={{ type: "race", id: r.slug }}
-  crumbs={[["2026 races", `/races/${raceYear}/`], [short, path]]}
+  og={{ type: "race", id: `${r.year}-${r.slug}` }}
+  crumbs={[[`${raceYear} races`, `/races/${raceYear}/`], [short, path]]}
   jsonLd={raceJsonLd(r, path)}
 >
   <p class="kicker">{raceYear} {raceChamber(r)} race · {stateName(r.state)}</p>
   <h1>{name}</h1>
   <p class="dek">
     {r.special && <>This is {r.special}. </>}
-    {r.open ? <>No current member of the {r.office === "S" ? "Senate" : "House"} is on the November ballot here. </> : <>{incumbentNames.length > 1 ? `Incumbents ${incumbentNames.join(" and ")}` : `Incumbent ${incumbentNames[0]}`} {incumbentNames.length > 1 ? "were" : "was"} on the ballot. </>}
-    {r.nominees === "filings" ? (
+    {r.open ? <>No sitting member of the {r.office === "S" ? "Senate" : "House"} {upcoming ? "is running" : "was on the November ballot"} here. </> : <>{incumbentNames.length > 1 ? `Incumbents ${incumbentNames.join(" and ")}` : `Incumbent ${incumbentNames[0]}`} {upcoming ? (incumbentNames.length > 1 ? "are running" : "is running") : incumbentNames.length > 1 ? "were on the ballot" : "was on the ballot"}. </>}
+    {r.nominees === "ballot" ? (
+      <>{countWord(shown.length)} {shown.length === 1 ? "candidate was" : "candidates were"} on the general-election ballot, by the FEC's list compiled from state election offices, and together raised <strong>{money(total, true)}</strong>.</>
+    ) : r.nominees === "filings" ? (
       <>{countWord(shown.length)} {shown.length === 1 ? "candidate" : "candidates"} filed general-election reports with the FEC, and together raised <strong>{money(total, true)}</strong>.</>
     ) : (
       <>No candidate here filed a general-election report with the FEC, so the November candidates aren't known from FEC filings. Everyone who raised money for this seat is shown.</>
@@ -114,23 +124,34 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
   </p>
 
   <div class:list={["result", { pending }]} role="note">
-    <strong>{pending ? PENDING : "Result"}.</strong>{" "}
+    <strong>{upcoming ? `Election day is ${day(E.electionDay)}` : pending ? PENDING : "Result"}.</strong>{" "}
     {pending ? (
-      r.system === "louisiana" ? (
-        <>Louisiana held its open House primary on Nov. 3, with every party on one ballot; where no one won a majority, the top two meet in a runoff on Dec. 12. We show a winner only once the state certifies it or the winner is sworn in.</>
+      r.system && E.systemNotes?.[r.system] ? (
+        <>{E.systemNotes[r.system]} We show a winner only once the state certifies it or the winner is sworn in.</>
+      ) : upcoming ? (
+        <>Who's on the ballot comes from campaigns' FEC filings until the FEC publishes the official list.</>
       ) : (
-        <>The election was Nov. 3. We show a winner only once {stateName(r.state)} certifies the result or the winner is sworn in on Jan. 3, 2027, and never call a race from money or early returns.</>
+        <>
+          The election was {day(E.electionDay)}. We show a winner only once {stateName(r.state)} certifies the result, the
+          FEC publishes official results, or the winner is sworn in on {day(E.newCongress)}, and never call a race from
+          money or early returns.
+          {r.result.conflict && <> Official sources disagree about this race, so it stays pending until that's resolved.</>}
+        </>
       )
     ) : (
       <>
-        {resultLine(r)}.{" "}
+        {resultLine(r)}{r.result.date && r.result.status === "certified" && <> on {day(r.result.date)}</>}.{" "}
         {r.result.sourceUrl && <a href={r.result.sourceUrl}>Source</a>}
+        {r.result.evidenceUrl && <>{" "}· <a href={r.result.evidenceUrl}>official results</a></>}
+        {r.result.confirmedBy?.map((x) => (
+          <>{" "}· confirmed by {x.sourceUrl ? <a href={x.sourceUrl}>{x.source}</a> : x.source}</>
+        ))}
       </>
     )}
   </div>
 
   {r.redrawn && (
-    <p class="note-line"><strong>New district lines.</strong> {r.redrawn.note} This race ran on the new lines, so {short} isn't the same territory it was in 2024.{" "}<a href={r.redrawn.source}>NCSL</a></p>
+    <p class="note-line"><strong>New district lines.</strong> {r.redrawn.note} This race ran on the new lines, so {short} isn't the same territory it was in {raceYear - 2}.{" "}<a href={r.redrawn.source}>{E.redistricting.sourceName}</a></p>
   )}
   {r.system === "top-two" && <p class="note-line"><strong>Top-two primary.</strong> Every candidate ran on one primary ballot and the two with the most votes, whatever their party, went on to November.</p>}
   {r.system === "top-four" && <p class="note-line"><strong>Top-four primary.</strong> Alaska's primary sends the top four candidates of any party to a ranked-choice general election.</p>}
@@ -152,6 +173,7 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
               </div>
             </div>
             <dl>
+              {hasVotes && <div class="votes"><dt>Votes</dt><dd>{c.votes?.votes !== undefined ? c.votes.votes.toLocaleString() : "–"}{c.votes?.pct !== undefined && <small>{(c.votes.pct * 100).toFixed(1)}%{c.votes.runoffVotes !== undefined && `; runoff ${c.votes.runoffVotes.toLocaleString()}`}</small>}</dd></div>}
               <div><dt>Raised</dt><dd>{raised(c) > 0 ? money(raised(c), true) : "–"}</dd></div>
               <div><dt>Cash on hand</dt><dd>{c.money ? money(c.money.cashOnHand, true) : "–"}</dd></div>
               <div><dt>Small donors</dt><dd>{small !== undefined ? `${Math.round(small * 100)}%` : "–"}<small>of individual money</small></dd></div>
@@ -164,14 +186,14 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
       })
     }
   </ul>
-  {shown.length > main.length && <p class="muted small">{shown.length - main.length} more candidates filed general-election reports; they're listed under Everyone else, below.</p>}
+  {shown.length > main.length && <p class="muted small">{shown.length - main.length} more candidates were on the ballot; they're listed under Everyone else, below.</p>}
 
   <div class="grid-2">
     <section class="story">
       <h2>Where the money came from</h2>
       {hasMoney ? (
         <>
-          <p class="chart-dek">What each campaign raised in the {raceYear - 1}–{raceYear} cycle, by source.</p>
+          <p class="chart-dek">What each campaign raised in the {cycle} cycle, by source.</p>
           <PlotFigure
             chart="stacked"
             width={500}
@@ -207,7 +229,7 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
       {hasOutside ? (
         <>
           <p class="chart-dek">
-            Spending for and against each candidate, {raceYear - 1}–{raceYear}
+            Spending for and against each candidate, {cycle}
             {primaryOnly > 0 && <>, including {money(primaryOnly, true)} spent before the general (primaries and runoffs)</>}.
           </p>
           <PlotFigure
@@ -296,9 +318,11 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
       <section class="story">
         <h2>Everyone else who ran</h2>
         <p class="chart-dek">
-          {r.nominees === "filings"
-            ? "Candidates who registered with the FEC for this seat and raised money, but didn't file a general-election report: most ran in a primary."
-            : "Other candidates who registered with the FEC for this seat."}
+          {r.nominees === "ballot"
+            ? "Candidates who registered with the FEC for this seat and raised money but weren't on the general-election ballot: most ran in a primary."
+            : r.nominees === "filings"
+              ? "Candidates who registered with the FEC for this seat and raised money, but didn't file a general-election report: most ran in a primary."
+              : "Other candidates who registered with the FEC for this seat."}
         </p>
         <table class="others">
           <thead><tr><th scope="col">Candidate</th><th scope="col">Party</th><th scope="col" class="num">Raised</th></tr></thead>
@@ -317,8 +341,8 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
   }
 
   <p class="source">
-    Candidates, campaign totals and contributions from FEC bulk data; who was on the November ballot from the
-    pre- and post-general reports campaigns file with the FEC.{" "}
+    Candidates, campaign totals and contributions from FEC bulk data; who was on the November ballot from{" "}
+    {r.nominees === "ballot" ? "the FEC's list of general-election candidates, compiled from state election offices" : "the pre- and post-general reports campaigns file with the FEC"}.{" "}
     <a href={fecLink}>This race on fec.gov</a> · <a href={`/races/${raceYear}/`}>All {raceYear} races</a> ·{" "}
     <a href="/about/#races">How races are built</a>
   </p>
@@ -347,6 +371,7 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
   .cand dt { font-size: var(--fs-xs, 0.8125rem); color: var(--text-muted); }
   .cand dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; }
   .cand dd small { display: block; font-weight: 400; font-size: var(--fs-xs, 0.75rem); color: var(--text-muted); }
+  .cand .votes { grid-column: 1 / -1; }
   .cand dd.sup::before, .cand dd.opp::before {
     content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 2px; vertical-align: 1px;
   }

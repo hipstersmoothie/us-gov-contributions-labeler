@@ -33,6 +33,12 @@ npx tsx src/scripts/refresh/accounts-guard.ts | tee -a "$SUMMARY"
 log "ingesting $STEPS"
 pnpm ingest --steps=$STEPS
 
+# Certified race results: every entry still matches its official source, and
+# how many races are still waiting on a certification.
+log "checking race results against their sources"
+pnpm -s race-results check > .cache/refresh/race-results.log 2>&1 || note "a race result no longer matches its source: see .cache/refresh/race-results.log"
+pnpm -s race-results status > .cache/refresh/race-status.txt 2>&1 && note "$(head -1 .cache/refresh/race-status.txt)"
+
 log "checking the data against main"
 npx tsx src/scripts/refresh/check-data.ts | tee -a "$SUMMARY"
 

@@ -1,26 +1,33 @@
-// The 2026 House and Senate races: every candidate on the November ballot,
-// what each raised, who gave, and outside spending for and against each.
-// Writes data/races.json.
+// One federal general election's House and Senate races: every candidate on
+// the November ballot, what each raised, who gave, and outside spending for
+// and against each. Writes data/races-<year>.json, for each year with a
+// data/elections-<year>.json (the facts FEC data doesn't have: dates,
+// redistricting, primary systems, specials).
 //
-// Who was on the ballot. The FEC files don't say who won a primary, but a
-// candidate's campaign has to file a pre-general report (12G) for a general
-// election they're on the ballot for, and a post-general one (30G) after it.
-// So a candidate is counted on the November ballot when their campaign filed
-// either. That includes third-party and minor-line candidates who registered
-// with the FEC. Where no one in a race filed one, the race lists everyone who
-// raised money and says the nominees aren't known from FEC filings.
+// Who was on the ballot, best source first:
+//   1. The FEC's list of general-election ballot candidates, compiled from
+//      state election offices (election-results.ts), once it's published.
+//   2. Until then, the campaigns' own filings: a campaign has to file a
+//      pre-general report (12G) for a general election it's on the ballot
+//      for, and a post-general one (30G) after. That's a superset (some file
+//      after losing a primary), so same-party ties are broken by
+//      general-election outside spending, then general-election money given
+//      after the primaries; what's left is marked uncertain.
+//   3. Where no one filed one, everyone who raised money, and the race says
+//      the nominees aren't known.
 //
-// Who won. Never inferred from money or filings: only from
-//   data/race-results.json   results entered by hand, each with the official
-//                            source that certified it, and
-//   congress-legislators     once a candidate in the race holds the seat in a
-//                            term that started on or after Jan. 3, 2027.
-// Anything else is "Results pending certification".
+// Who won. Never inferred from money, filings or early returns. Only from
+//   - data/race-results-<year>.json: state certifications entered with
+//     `pnpm race-results add`, each with the official source,
+//   - the FEC's official results compilation, once it's published, and
+//   - congress-legislators: a candidate sworn in to the seat on or after the
+//     new Congress's first day.
+// If two of them disagree, the race stays pending and the run says so.
 //
-// Money is the 2026 cycle only, for incumbents too, so candidates compare
-// like for like: campaign summaries (weball), PAC contributions (pas2),
-// itemized individual donations (indiv) and outside spending (from the fec
-// step's per-candidate totals, which include the 24/48-hour notices).
+// Money is the election's cycle only, for incumbents too, so candidates
+// compare like for like: campaign summaries (weball), PAC contributions
+// (pas2), itemized individual donations (indiv) and outside spending (from
+// the fec step's per-candidate totals, which include 24/48-hour notices).
 import fs from "fs";
 import { fecBulk } from "../lib/download.js";
 import type { Legislator } from "../lib/legislators.js";
@@ -29,47 +36,50 @@ import type { FecData } from "./fec.js";
 import type { Committee, Organization } from "./committees.js";
 import { committeeSummaries, pages, cachedJson, parseCsv } from "./outside.js";
 import { donationClassifier, mainEntry, rows, type IndividualSector } from "./individuals.js";
+import { byCandidate as resultsByCandidate, fecElectionFiles, parseBallot, parseResults } from "./election-results.js";
 
-/** The election these pages are about. */
-export const RACE_YEAR = 2026;
-export const ELECTION_DAY = "2026-11-03";
-/** The day members elected in November take office. */
-export const NEW_CONGRESS = "2027-01-03";
-const RESULTS_FILE = "data/race-results.json";
-/** After every primary but Louisiana's (the last were Sept. 8 and 15). */
-const LATE_GENERAL_FROM = "2026-09-16";
+/** The hand-entered facts about one election (data/elections-<year>.json). */
+export interface Election {
+  year: number;
+  electionDay: string;
+  /** The day the members it elects take office. */
+  newCongress: string;
+  /** The day after the last regular primary. */
+  lateGeneralFrom: string;
+  /** House seats per state (the census apportionment): one is an at-large seat. */
+  houseSeats: Record<string, number>;
+  redistricting: { source: string; sourceName: string; asOf: string; states: Record<string, string> };
+  /** Where November isn't a plain party-nominee general: "top-two", "top-four", "louisiana". */
+  systems: Record<string, { house?: string; senate?: string }>;
+  systemNotes?: Record<string, string>;
+  /** General-election runoff dates, by state. */
+  runoffs?: Record<string, string>;
+  /** States with a Senate special election, and what it fills. */
+  senateSpecials?: Record<string, string>;
+  /** When each state certifies (null where it isn't posted), and its official results page. */
+  certification?: Record<string, { deadline: string | null; results: string }>;
+}
+
+export const electionFile = (year: number) => `data/elections-${year}.json`;
+export const racesFile = (year: number) => `data/races-${year}.json`;
+export const resultsFile = (year: number) => `data/race-results-${year}.json`;
+/** Every year with an election file, oldest first. */
+export const electionYears = () =>
+  fs.readdirSync("data").flatMap((f) => (/^elections-(\d{4})\.json$/.exec(f) ? [Number(f.slice(10, 14))] : [])).sort();
+export const loadElection = (year: number): Election => JSON.parse(fs.readFileSync(electionFile(year), "utf8"));
 
 /**
- * States that drew new congressional maps for 2026, from NCSL's mid-decade
- * redistricting tracker (updated Sept. 11, 2026). Missouri's and Virginia's
- * new maps were blocked, so they used their old ones.
+ * Hosts a certification can come from: government domains, plus results
+ * sites states run through a vendor and link from their own pages.
  */
-const NCSL = "https://www.ncsl.org/redistricting-and-census/changing-the-maps-tracking-mid-decade-redistricting";
-export const REDRAWN: Record<string, { note: string; source: string }> = {
-  AL: { note: "The Supreme Court let Alabama return to its 2023 congressional map on June 2, 2026, with special primaries in the districts that changed.", source: NCSL },
-  CA: { note: "California voters approved new congressional maps (Proposition 50) on Nov. 4, 2025.", source: NCSL },
-  FL: { note: "Florida enacted new congressional maps on May 4, 2026.", source: NCSL },
-  LA: { note: "Louisiana enacted new congressional maps on May 29, 2026.", source: NCSL },
-  NC: { note: "North Carolina enacted new congressional maps on Oct. 22, 2025.", source: NCSL },
-  OH: { note: "Ohio adopted new congressional maps on Oct. 31, 2025.", source: NCSL },
-  TN: { note: "Tennessee adopted new congressional maps on May 7, 2026.", source: NCSL },
-  TX: { note: "Texas enacted new congressional maps in August 2025.", source: NCSL },
-  UT: { note: "Utah's congressional maps were redrawn by court order on Nov. 10, 2025.", source: NCSL },
-};
-
-/** How a state's November election worked, where it isn't a plain party-nominee general. */
-export const SYSTEMS: Record<string, { house?: string; senate?: string }> = {
-  CA: { house: "top-two", senate: "top-two" },
-  WA: { house: "top-two", senate: "top-two" },
-  AK: { house: "top-four", senate: "top-four" },
-  // Louisiana's House primaries moved to Nov. 3, with any runoffs on Dec. 12.
-  LA: { house: "louisiana" },
-};
-
-/** Senate seats filled by special election in 2026 (the regular class 2 seats are up too). */
-const SENATE_SPECIALS: Record<string, string> = {
-  OH: "a special election for the rest of JD Vance's term, through January 2029",
-  FL: "a special election for the rest of Marco Rubio's term, through January 2029",
+const OFFICIAL_HOSTS = [/\.gov$/, /\.us$/, /\.gov\.[a-z]{2}$/, /(^|\.)clarityelections\.com$/, /(^|\.)enr-scvotes\.org$/];
+export const isOfficialUrl = (url: string) => {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    return new URL(url).protocol === "https:" && OFFICIAL_HOSTS.some((re) => re.test(host));
+  } catch {
+    return false;
+  }
 };
 
 // --- shapes --------------------------------------------------------------------------
@@ -116,6 +126,8 @@ export interface RaceCandidate {
    * spending says which one was the nominee.
    */
   uncertain?: boolean;
+  /** Official results, from the FEC's compilation: votes (across party lines), share, and runoff votes. */
+  votes?: { votes?: number; pct?: number; runoffVotes?: number };
   committees: string[];
   money?: CandidateMoney;
   /** PAC and other committee contributions, by committee, largest first. */
@@ -141,14 +153,22 @@ export interface RaceCandidate {
 }
 
 export interface RaceResult {
-  status: "pending" | "certified" | "sworn-in" | "runoff";
+  /** "upcoming" before Election Day; "pending" until an official source says who won. */
+  status: "upcoming" | "pending" | "certified" | "sworn-in" | "runoff";
   /** FEC candidate ids of the winner (or the two in a runoff). */
   winners?: string[];
+  /** Who certified it: "the Delaware Department of Elections". */
   source?: string;
   sourceUrl?: string;
+  /** The official results that name the winner, when the certification itself doesn't (minutes, a press release, a scan). */
+  evidenceUrl?: string;
   /** YYYY-MM-DD */
   date?: string;
   note?: string;
+  /** Other official sources that agree. */
+  confirmedBy?: { source: string; sourceUrl?: string; date?: string }[];
+  /** Official sources that disagreed; the race stays pending until it's sorted out. */
+  conflict?: string;
 }
 
 export interface Race {
@@ -169,8 +189,8 @@ export interface Race {
   open: boolean;
   /** Current members of Congress on the ballot here. */
   incumbents: string[];
-  /** Whether the November candidates come from FEC filings, or aren't known. */
-  nominees: "filings" | "unknown";
+  /** Where the November candidates come from: the FEC's ballot list, campaigns' filings, or not known. */
+  nominees: "ballot" | "filings" | "unknown";
   /** On the ballot first (by money raised), then those who weren't, or aren't known to be. */
   candidates: RaceCandidate[];
   /** Everyone else who registered for this race and raised money, in short. */
@@ -192,10 +212,13 @@ export interface RacesFile {
   year: number;
   electionDay: string;
   newCongress: string;
+  election: Election;
+  /** The FEC compilations used, when published. */
+  fec?: { ballot?: boolean; results?: boolean };
   races: Race[];
   /** Outside spenders and PACs that don't have a page (not in committees.json): name and kind. */
   committees: Record<string, { name: string; kind: string }>;
-  /** Members of Congress who ran in 2026, by bioguide: their race. */
+  /** Members of Congress who ran, by bioguide: their race. */
   members: Record<string, { race: string; onBallot: boolean }>;
   coverage: Record<string, number>;
 }
@@ -216,8 +239,8 @@ const add = <K>(m: Map<K, number>, k: K, v: number) => m.set(k, (m.get(k) ?? 0) 
 const isoDate = (mdy: string) => (/^\d\d\/\d\d\/\d{4}$/.test(mdy) ? `${mdy.slice(6)}-${mdy.slice(0, 2)}-${mdy.slice(3, 5)}` : undefined);
 
 /** Bulk file rows, pipe-delimited. */
-async function* bulk(file: string) {
-  for await (const line of rows(await fecBulk(RACE_YEAR, `${file}${String(RACE_YEAR).slice(2)}.zip`))) yield line.split("|");
+async function* bulk(year: number, file: string) {
+  for await (const line of rows(await fecBulk(year, `${file}${String(year).slice(2)}.zip`))) yield line.split("|");
 }
 
 /** Words of a person's name for matching: "SMITH, JOHN R. JR" -> last SMITH, first JOHN. */
@@ -236,12 +259,12 @@ interface Report {
 }
 
 /** Campaign committees that filed a pre- or post-general report this cycle. A few dozen API calls a week at most. */
-async function generalReports() {
+async function generalReports(year: number) {
   const out: Report[] = [];
   for (const type of ["12G", "30G"]) {
-    const list = await cachedJson(RACE_YEAR, `reports-${type}`, async () => {
+    const list = await cachedJson(year, `reports-${type}`, async () => {
       const got: Report[] = [];
-      for await (const r of pages<Report>("reports/house-senate/", { cycle: String(RACE_YEAR), report_type: type, sort: "beginning_image_number" })) {
+      for await (const r of pages<Report>("reports/house-senate/", { cycle: String(year), report_type: type, sort: "beginning_image_number" })) {
         got.push({ committee_id: r.committee_id, report_type: r.report_type, coverage_end_date: r.coverage_end_date, document_description: r.document_description });
       }
       return got;
@@ -251,9 +274,38 @@ async function generalReports() {
   return out;
 }
 
+// --- results -------------------------------------------------------------------------------
+
+/** One official source's word on a race. */
+export type Claim = { status: "certified" | "runoff" | "sworn-in"; winners: string[]; source: string; sourceUrl?: string; evidenceUrl?: string; date?: string; note?: string };
+
+/**
+ * A race's result from every official claim about it, most specific source
+ * first. Final results (certified, sworn in) have to agree with each other,
+ * and with a runoff the state certified (the winner is one of the two);
+ * otherwise the race stays pending with the disagreement noted.
+ */
+export function reconcile(claims: Claim[], beforeElection: boolean): RaceResult {
+  const key = (c: Claim) => [...c.winners].sort().join(",");
+  const finals = claims.filter((c) => c.status !== "runoff");
+  const runoff = claims.find((c) => c.status === "runoff");
+  const disagree =
+    new Set(finals.map(key)).size > 1 ? finals.map((c) => `${c.source}: ${c.winners.join(", ")}`).join("; ")
+    : runoff && finals[0] && !finals[0].winners.every((w) => runoff.winners.includes(w)) ? `runoff ${runoff.winners.join(", ")} vs ${finals[0].source}: ${finals[0].winners.join(", ")}`
+    : undefined;
+  if (disagree) return { status: "pending", conflict: disagree };
+  if (finals.length) {
+    const [first, ...rest] = finals;
+    return { ...first!, confirmedBy: rest.length ? rest.map(({ source, sourceUrl, date }) => ({ source, sourceUrl, date })) : undefined };
+  }
+  if (runoff) return { ...runoff };
+  return { status: beforeElection ? "upcoming" : "pending" };
+}
+
 // --- the step ----------------------------------------------------------------------------
 
 export async function ingestRaces(
+  year: number,
   legislators: Legislator[],
   fec: FecData,
   enriched: { committees: Record<string, Committee>; organizations: Record<string, Organization> },
@@ -262,25 +314,28 @@ export async function ingestRaces(
   /** Members who have left Congress (former-members.json), so their candidacies still link to them. */
   former: { bioguide: string; fecIds: string[]; chamber: "house" | "senate"; state: string }[] = []
 ): Promise<RacesFile> {
-  console.log(`Races ${RACE_YEAR}`);
+  console.log(`Races ${year}`);
+  const E = loadElection(year);
+  const today = new Date().toISOString().slice(0, 10);
   const byFecId = new Map<string, string>();
   for (const f of former) for (const id of f.fecIds) byFecId.set(id, f.bioguide);
   for (const l of legislators) for (const id of l.fec) byFecId.set(id, l.bioguide);
   const formerById = new Map(former.map((f) => [f.bioguide, f]));
   // Who was in office on Election Day. Once the new Congress is sworn in,
   // the current list has the winners, so incumbency is carried over from the
-  // races.json written before then.
-  const newCongress = new Date().toISOString().slice(0, 10) >= NEW_CONGRESS;
-  const before: RacesFile | undefined = fs.existsSync("data/races.json") ? JSON.parse(fs.readFileSync("data/races.json", "utf8")) : undefined;
+  // races-<year>.json written before then.
+  const newCongress = today >= E.newCongress;
+  const before: RacesFile | undefined = fs.existsSync(racesFile(year)) ? JSON.parse(fs.readFileSync(racesFile(year), "utf8")) : undefined;
   const incumbentsBefore = new Map((before?.races ?? []).map((r) => [r.id, r.incumbents]));
   const legislatorById = new Map(legislators.map((l) => [l.bioguide, l]));
 
   // Candidates for House and Senate this year.
   const candidates = new Map<string, RaceCandidate & { race: string; status: string }>();
-  for await (const r of bulk("cn")) {
-    const [id, name, party, year, state, office, district, ici, status] = r;
-    if ((office !== "H" && office !== "S") || Number(year) !== RACE_YEAR || !state || !id) continue;
-    const race = raceId(office, state, office === "H" ? Number(district) || 0 : undefined);
+  for await (const r of bulk(year, "cn")) {
+    const [id, name, party, candYear, state, office, district, ici, status] = r;
+    if ((office !== "H" && office !== "S") || Number(candYear) !== year || !state || !id) continue;
+    // One-seat states (and delegates) are at large, whatever district number was filed.
+    const race = raceId(office, state, office === "H" ? (E.houseSeats[state] === 1 ? 0 : Number(district) || 0) : undefined);
     candidates.set(id, {
       id,
       name: name!,
@@ -326,9 +381,9 @@ export async function ingestRaces(
 
   // Campaign committees (principal and authorized).
   const candidatesOf = new Map<string, string[]>();
-  for await (const [candId, candYear, , cmteId, , designation] of bulk("ccl")) {
+  for await (const [candId, candYear, , cmteId, , designation] of bulk(year, "ccl")) {
     const c = candidates.get(candId!);
-    if (!c || Number(candYear) !== RACE_YEAR || (designation !== "P" && designation !== "A")) continue;
+    if (!c || Number(candYear) !== year || (designation !== "P" && designation !== "A")) continue;
     if (!c.committees.includes(cmteId!)) c.committees.push(cmteId!);
     candidatesOf.set(cmteId!, [...(candidatesOf.get(cmteId!) ?? []), candId!]);
   }
@@ -336,10 +391,13 @@ export async function ingestRaces(
   // On the November ballot: their campaign filed a pre- or post-general report.
   // Reports for a special general on another date cover other periods; the
   // pre-general for Nov. 3 covers through Oct. 14.
-  for (const r of await generalReports()) {
+  // The pre-general report covers through 20 days before the election.
+  const preGeneralFrom = new Date(Date.parse(E.electionDay) - 40 * 86400_000).toISOString().slice(0, 10);
+  for (const r of await generalReports(year)) {
     const desc = (r.document_description ?? "").toUpperCase();
     if (/SPECIAL|RUNOFF/.test(desc)) continue;
-    if (r.report_type === "12G" && !(r.coverage_end_date ?? "").startsWith("2026-10")) continue;
+    const end = (r.coverage_end_date ?? "").slice(0, 10);
+    if (r.report_type === "12G" && !(end >= preGeneralFrom && end < E.electionDay)) continue;
     for (const id of candidatesOf.get(r.committee_id) ?? []) {
       const c = candidates.get(id)!;
       c.onBallot = true;
@@ -349,7 +407,7 @@ export async function ingestRaces(
   }
 
   // Campaign totals.
-  for await (const r of bulk("weball")) {
+  for await (const r of bulk(year, "weball")) {
     const c = candidates.get(r[0]!);
     if (!c) continue;
     const n = (i: number) => Math.round(Number(r[i]) || 0);
@@ -365,7 +423,7 @@ export async function ingestRaces(
       through: isoDate(r[27] ?? ""),
     };
   }
-  const summaries = await committeeSummaries(RACE_YEAR);
+  const summaries = await committeeSummaries(year);
   for (const c of candidates.values()) {
     if (!c.money) continue;
     for (const id of c.committees) {
@@ -379,7 +437,7 @@ export async function ingestRaces(
   // Committee names and kinds, for PACs and spenders without a page.
   const cm = new Map<string, { name: string; kind: string }>();
   for (const c of Object.values(fec.committees)) cm.set(c.id, { name: c.name, kind: c.kind });
-  for await (const [id, name, , , , , , , designation, type] of bulk("cm")) {
+  for await (const [id, name, , , , , , , designation, type] of bulk(year, "cm")) {
     if (cm.has(id!)) continue;
     const kind =
       designation === "D" ? "leadership-pac"
@@ -392,7 +450,7 @@ export async function ingestRaces(
     cm.set(id!, { name: name!, kind });
   }
   // Groups that aren't committees (Form 5, ids starting C9) are named in the notices.
-  const ieFile = await fecBulk(RACE_YEAR, `independent_expenditure_${RACE_YEAR}.csv`);
+  const ieFile = await fecBulk(year, `independent_expenditure_${year}.csv`);
   for (const r of parseCsv(fs.readFileSync(ieFile, "latin1"))) {
     if (r.spe_id && r.spe_nam && !cm.has(r.spe_id)) cm.set(r.spe_id, { name: r.spe_nam, kind: r.spe_id.startsWith("C9") ? "non-committee" : "other" });
   }
@@ -406,9 +464,9 @@ export async function ingestRaces(
   const isLateGeneral = (pgi: string | undefined, mmddyyyy: string | undefined) => {
     if (!pgi?.startsWith("G") || !mmddyyyy || mmddyyyy.length !== 8) return false;
     const d = `${mmddyyyy.slice(4)}-${mmddyyyy.slice(0, 2)}-${mmddyyyy.slice(2, 4)}`;
-    return d >= LATE_GENERAL_FROM && d <= ELECTION_DAY;
+    return d >= E.lateGeneralFrom && d <= E.electionDay;
   };
-  for await (const r of bulk("pas2")) {
+  for await (const r of bulk(year, "pas2")) {
     if (r[5] !== "24K" && r[5] !== "24Z") continue;
     const cand = r[16]!;
     if (!candidates.has(cand)) continue;
@@ -433,7 +491,7 @@ export async function ingestRaces(
   const { classify, employerInfo } = donationClassifier(enriched.organizations);
   type Agg = { itemized: number; donations: number; sectors: Map<string, number>; employers: Map<string, number>; places: { inState: number; outOfState: number; unknown: number } };
   const ind = new Map<string, Agg>();
-  const indiv = await fecBulk(RACE_YEAR, `indiv${String(RACE_YEAR).slice(2)}.zip`);
+  const indiv = await fecBulk(year, `indiv${String(year).slice(2)}.zip`);
   let seen = 0;
   for await (const line of rows(indiv, mainEntry(indiv))) {
     if (++seen % 10_000_000 === 0) console.log(`  ${(seen / 1e6).toFixed(0)}M individual donation rows`);
@@ -464,7 +522,7 @@ export async function ingestRaces(
   console.log(`  ${(seen / 1e6).toFixed(1)}M rows; itemized donations for ${ind.size} candidates`);
 
   // Outside spending by candidate, from the fec step.
-  const outside = fec.byCandidate?.[RACE_YEAR] ?? {};
+  const outside = fec.byCandidate?.[year] ?? {};
 
   // Fill in each candidate.
   for (const c of candidates.values()) {
@@ -526,6 +584,9 @@ export async function ingestRaces(
   // One person, two candidate ids: the same campaign committee linked to
   // both. Keep the one that's a member, else the one that raised more.
   const raceOfCand = (c: { race: string }) => c.race;
+  /** A merged-away id -> the id kept, so official lists naming either find the candidate. */
+  const alias = new Map<string, string>();
+  const canon = (id: string) => alias.get(id) ?? id;
   let merged = 0;
   for (const c of [...candidates.values()]) {
     if (!candidates.has(c.id)) continue;
@@ -539,10 +600,48 @@ export async function ingestRaces(
         keep.reports = [...new Set([...(keep.reports ?? []), ...(drop.reports ?? [])])];
         if (!keep.reports.length) delete keep.reports;
         candidates.delete(drop.id);
+        alias.set(drop.id, keep.id);
+        for (const [from, to] of alias) if (to === drop.id) alias.set(from, keep.id);
         merged++;
       }
     }
   }
+
+  // The FEC's official compilations, once published: the ballot list
+  // decides who was on the ballot in every race it covers, and the results
+  // give votes and winners.
+  const files = await fecElectionFiles(year);
+  const counts = (l: { special: boolean; office: string; state: string }) => !l.special || (l.office === "S" && !!E.senateSpecials?.[l.state]);
+  const ballotLines = files.ballot ? parseBallot(files.ballot).filter(counts) : undefined;
+  const ballotRaces = new Set<string>();
+  /** A line's candidate: by FEC id, else by last name in the race when exactly one fits. */
+  const findCandidate = (l: { fecIds: string[]; name: string; office: "H" | "S"; state: string; district?: number }) => {
+    const race = raceId(l.office, l.state, E.houseSeats[l.state] === 1 ? 0 : l.district);
+    const byId = l.fecIds.map(canon).filter((id) => candidates.get(id)?.race === race);
+    if (byId.length) return byId[0];
+    const last = l.name.split(",")[0]!.trim().toUpperCase().replace(/[^A-Z' -]/g, "");
+    const fits = [...candidates.values()].filter((c) => c.race === race && nameParts(c.name).last === last);
+    return fits.length === 1 ? fits[0]!.id : undefined;
+  };
+  if (ballotLines) {
+    const listed = new Set<string>();
+    let unmatched = 0;
+    for (const l of ballotLines) {
+      ballotRaces.add(raceId(l.office, l.state, E.houseSeats[l.state] === 1 ? 0 : l.district));
+      const id = findCandidate(l);
+      if (id) listed.add(id);
+      else unmatched++;
+    }
+    for (const c of candidates.values()) {
+      if (!ballotRaces.has(c.race)) continue;
+      c.onBallot = listed.has(c.id);
+      delete c.uncertain;
+    }
+    console.log(`  FEC ballot list: ${ballotLines.length} candidates in ${ballotRaces.size} races; ${unmatched} not matched to an FEC candidate record (write-ins, no FEC filing)`);
+  } else console.log("  FEC ballot list not published yet; using campaigns' general-election reports");
+  const official = files.results ? resultsByCandidate(parseResults(files.results).filter(counts)) : undefined;
+  if (official) console.log(`  FEC official results: ${official.size} candidates`);
+  else console.log("  FEC official results not published yet");
 
   // General-election reports are a superset: some campaigns file one after
   // losing the primary, or after retiring. Where a party has more than one
@@ -566,7 +665,8 @@ export async function ingestRaces(
     }
   };
   for (const [race, field] of fieldOf) {
-    const system = SYSTEMS[race.slice(0, 2)]?.[race.endsWith("-S") ? "senate" : "house"];
+    if (ballotRaces.has(race)) continue;
+    const system = E.systems[race.slice(0, 2)]?.[race.endsWith("-S") ? "senate" : "house"];
     if (system) continue;
     const byParty = new Map<string, typeof field>();
     for (const c of field) if (c.party) byParty.get(c.party)?.push(c) ?? byParty.set(c.party, [c]);
@@ -585,8 +685,25 @@ export async function ingestRaces(
   }
   console.log(`  ${merged} duplicate candidate ids merged; ${dropped} general-election filers set aside for another candidate of their party; ${uncertain} left uncertain`);
 
-  // Results entered by hand from official sources.
-  const manual: Record<string, RaceResult> = fs.existsSync(RESULTS_FILE) ? JSON.parse(fs.readFileSync(RESULTS_FILE, "utf8")).results ?? {} : {};
+  // State certifications entered by hand (pnpm race-results add), checked
+  // here too: the winners must be candidates in the race, the source an
+  // official one.
+  const manual = new Map<string, Claim>();
+  const entered: Record<string, Claim> = fs.existsSync(resultsFile(year)) ? JSON.parse(fs.readFileSync(resultsFile(year), "utf8")).results ?? {} : {};
+  for (const [race, r] of Object.entries(entered)) {
+    const problem =
+      !["certified", "runoff"].includes(r.status) ? `status "${r.status}"`
+      : !r.winners?.length ? "no winners"
+      : r.winners.some((w) => candidates.get(canon(w))?.race !== race) ? `winners ${r.winners.join(", ")} aren't all candidates in ${race}`
+      : !r.source || !r.date ? "no source or date"
+      : !r.sourceUrl || !isOfficialUrl(r.sourceUrl) ? `source ${r.sourceUrl} isn't an official (https, .gov/.us) address`
+      : r.evidenceUrl && !isOfficialUrl(r.evidenceUrl) ? `evidence ${r.evidenceUrl} isn't an official address`
+      : undefined;
+    if (problem) console.warn(`  ${resultsFile(year)}: ${race} ignored: ${problem}`);
+    else manual.set(race, { ...r, winners: r.winners.map(canon) });
+  }
+  const FEC_RESULTS = `https://www.fec.gov/introduction-campaign-finance/election-results-and-voting-information/federal-elections-${year}/`;
+  let conflicts = 0;
 
   // Group into races.
   const byRace = new Map<string, (RaceCandidate & { race: string; status: string })[]>();
@@ -597,13 +714,47 @@ export async function ingestRaces(
     const office = id.endsWith("-S") ? "S" : "H";
     const state = id.slice(0, 2);
     const district = office === "H" ? (id.endsWith("-AL") ? 0 : Number(id.slice(3))) : undefined;
+    // Every official claim about who won, before choosing whom to show:
+    // a winner is on the ballot whatever the filings suggested.
+    const claims: Claim[] = [];
+    if (manual.has(id)) claims.push(manual.get(id)!);
+    const fecWinners = official ? field.filter((c) => official.get(c.id)?.winner || [...alias].some(([from, to]) => to === c.id && official.get(from)?.winner)) : [];
+    if (fecWinners.length) claims.push({ status: "certified", winners: fecWinners.map((c) => c.id), source: `the FEC's official ${year} results, compiled from state election offices`, sourceUrl: FEC_RESULTS });
+    const sworn = field.filter((c) => {
+      const l = c.bioguide ? legislatorById.get(c.bioguide) : undefined;
+      if (!l || !l.termStart || l.termStart < E.newCongress || l.state !== state) return false;
+      return office === "S" ? l.chamber === "senate" : l.chamber === "house" && (l.district ?? 0) === district;
+    });
+    if (sworn.length === 1) {
+      claims.push({ status: "sworn-in", winners: [sworn[0]!.id], source: "sworn in to the seat, per congress-legislators", sourceUrl: "https://github.com/unitedstates/congress-legislators", date: legislatorById.get(sworn[0]!.bioguide!)!.termStart });
+    }
+    for (const w of claims.flatMap((c) => c.winners)) {
+      const c = candidates.get(w);
+      if (c) c.onBallot = true;
+    }
+    if (official) {
+      for (const c of field) {
+        const o = official.get(c.id) ?? [...alias].filter(([, to]) => to === c.id).map(([from]) => official.get(from)).find(Boolean);
+        if (o) c.votes = { votes: o.votes, pct: o.pct, runoffVotes: o.runoffVotes };
+      }
+    }
+    // Stray filings for a seat that doesn't exist (an at-large race in a
+    // state with districts, a district number past the state's count).
+    const seats = E.houseSeats[state] ?? 0;
+    if (office === "H" && (district === 0 ? seats > 1 : district! > seats)) {
+      if (field.some((c) => c.onBallot || raisedOf(c) > 10_000)) console.log(`  ${id}: no such seat (${state} has ${seats}); ${field.length} candidate records left out`);
+      continue;
+    }
+    // The ballot list covers every general-election race; anything else is a
+    // stray filing (a Senate seat that isn't up, an old district).
+    if (ballotLines && !ballotRaces.has(id) && !claims.length) continue;
     const ballot = field.filter((c) => c.onBallot);
-    const nominees = ballot.length ? "filings" : "unknown";
+    const nominees = ballotRaces.has(id) ? "ballot" : ballot.length ? "filings" : "unknown";
     // A race with no money and no one on the ballot by filings is someone's
     // paperwork, not a race (old district numbers, never-run campaigns).
     const active = field.filter((c) => raisedOf(c) > 0 || c.onBallot || (outside[c.id] && Object.keys(outside[c.id]!).length));
     if (!active.length) continue;
-    const shown = (nominees === "filings" ? ballot : active.filter((c) => raisedOf(c) > 0 || c.bioguide)).sort((a, b) => raisedOf(b) - raisedOf(a));
+    const shown = (nominees !== "unknown" ? ballot : active.filter((c) => raisedOf(c) > 0 || c.bioguide)).sort((a, b) => raisedOf(b) - raisedOf(a));
     if (!shown.length) continue;
     const others = active
       .filter((c) => !shown.includes(c) && raisedOf(c) > 0)
@@ -613,13 +764,17 @@ export async function ingestRaces(
     const chamber = office === "S" ? "senate" : "house";
     const sitting = (b: string) => {
       const l = legislatorById.get(b);
-      if (l) return l.chamber === chamber && (l.termStart ?? "") < NEW_CONGRESS;
+      if (l) return l.chamber === chamber && (l.termStart ?? "") < E.newCongress;
       return formerById.get(b)?.chamber === chamber;
     };
+    // After the new Congress starts, from the snapshot taken before it; built
+    // after the fact with no snapshot, from the FEC's incumbent flag.
     const incumbents =
       newCongress && incumbentsBefore.has(id)
         ? incumbentsBefore.get(id)!
-        : shown.filter((c) => c.bioguide && sitting(c.bioguide)).map((c) => c.bioguide!);
+        : newCongress
+          ? shown.filter((c) => c.bioguide && c.ici === "I" && (legislatorById.get(c.bioguide)?.chamber ?? formerById.get(c.bioguide)?.chamber) === chamber).map((c) => c.bioguide!)
+          : shown.filter((c) => c.bioguide && sitting(c.bioguide)).map((c) => c.bioguide!);
 
     // Spenders across the race's candidates (everyone, not just those shown).
     const spenders = new Map<string, { id: string; total: number; general: number; byCandidate: Map<string, { support: number; oppose: number }> }>();
@@ -639,23 +794,10 @@ export async function ingestRaces(
       .sort((a, b) => b.total - a.total)
       .map((s) => ({ id: s.id, total: s.total, general: s.general, byCandidate: [...s.byCandidate].map(([cid, b]) => ({ id: cid, ...b })) }));
 
-    // Who won: a hand-entered official result, or a candidate here sworn in
-    // to this seat in the new Congress.
-    let result: RaceResult = { status: "pending" };
-    if (manual[id]) result = manual[id]!;
-    const sworn = shown.filter((c) => {
-      const l = c.bioguide ? legislatorById.get(c.bioguide) : undefined;
-      if (!l || !l.termStart || l.termStart < NEW_CONGRESS || l.state !== state) return false;
-      return office === "S" ? l.chamber === "senate" : l.chamber === "house" && (l.district ?? 0) === district;
-    });
-    if (sworn.length === 1) {
-      result = {
-        status: "sworn-in",
-        winners: [sworn[0]!.id],
-        source: "Sworn in to the seat, per congress-legislators",
-        sourceUrl: "https://github.com/unitedstates/congress-legislators",
-        date: legislatorById.get(sworn[0]!.bioguide!)!.termStart,
-      };
+    const result = reconcile(claims, today < E.electionDay);
+    if (result.conflict) {
+      conflicts++;
+      console.warn(`  ${id}: official sources disagree, left pending (${result.conflict})`);
     }
 
     const general = sum(spenderList.map((s) => s.general));
@@ -667,9 +809,9 @@ export async function ingestRaces(
       state,
       district,
       delegate: office === "H" && DELEGATES.has(state) ? true : undefined,
-      special: office === "S" ? SENATE_SPECIALS[state] : undefined,
-      system: SYSTEMS[state]?.[office === "S" ? "senate" : "house"],
-      redrawn: office === "H" ? REDRAWN[state] : undefined,
+      special: office === "S" ? E.senateSpecials?.[state] : undefined,
+      system: E.systems[state]?.[office === "S" ? "senate" : "house"],
+      redrawn: office === "H" && E.redistricting.states[state] ? { note: E.redistricting.states[state]!, source: E.redistricting.source } : undefined,
       open: incumbents.length === 0,
       incumbents,
       nominees,
@@ -727,17 +869,20 @@ export async function ingestRaces(
     races: races.length,
     house: races.filter((r) => r.office === "H").length,
     senate: races.filter((r) => r.office === "S").length,
-    withNominees: races.filter((r) => r.nominees === "filings").length,
+    withNominees: races.filter((r) => r.nominees !== "unknown").length,
+    fromBallotList: races.filter((r) => r.nominees === "ballot").length,
     candidates: shownCandidates.length,
     onBallot: shownCandidates.filter((c) => c.onBallot).length,
     uncertain: shownCandidates.filter((c) => c.uncertain).length,
     members: shownCandidates.filter((c) => c.bioguide).length,
     challengers: shownCandidates.filter((c) => !c.bioguide).length,
     openSeats: races.filter((r) => r.open).length,
-    withResults: races.filter((r) => r.result.status !== "pending").length,
+    withResults: races.filter((r) => r.result.status === "certified" || r.result.status === "sworn-in").length,
+    runoffs: races.filter((r) => r.result.status === "runoff").length,
+    conflicts,
     matchedByName,
     pacsClassified: Math.round((100 * sum(shownCandidates.flatMap((c) => c.pacs.filter((p) => enriched.committees[p.id]).map((p) => p.total)))) / Math.max(1, sum(shownCandidates.flatMap((c) => c.pacs.map((p) => p.total))))),
   };
   console.log(`  ${JSON.stringify(coverage)}`);
-  return { generatedAt: new Date().toISOString(), year: RACE_YEAR, electionDay: ELECTION_DAY, newCongress: NEW_CONGRESS, races, committees, members, coverage };
+  return { generatedAt: new Date().toISOString(), year, electionDay: E.electionDay, newCongress: E.newCongress, election: E, fec: { ballot: !!ballotLines, results: !!official }, races, committees, members, coverage };
 }

@@ -1,4 +1,0 @@
-{
-  "_doc": "Certified 2026 results, entered by hand. Key: race id (\"AZ-04\", \"AK-AL\", \"AZ-S\"). status: \"certified\" (the state certified the winner) or \"runoff\" (the state certified that no one won outright; winners = the two in the runoff). winners: FEC candidate ids. source: who certified it (\"the Arizona Secretary of State\"), sourceUrl: the certification or official canvass, date: YYYY-MM-DD it was certified. Never enter a result from news reports or unofficial returns. Winners sworn in on Jan. 3, 2027 are picked up from congress-legislators without an entry here. See design/races/README.md.",
-  "results": {}
-}

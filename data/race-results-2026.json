@@ -1,0 +1,142 @@
+{
+  "_doc": "Certified results, entered with `pnpm race-results add` (or `import`), which checks each one against its source. Key: race id (\"AZ-04\", \"AK-AL\", \"AZ-S\"). status: \"certified\" (one winner) or \"runoff\" (the two who advanced). winners: FEC candidate ids. source: who certified it; sourceUrl: the official certification or canvass (https, .gov/.us); date: when it was certified. Never from news reports or unofficial returns. See design/races/README.md.",
+  "results": {
+    "DE-AL": {
+      "status": "certified",
+      "winners": [
+        "H4DE00045"
+      ],
+      "source": "the Delaware Department of Elections",
+      "sourceUrl": "https://elections.delaware.gov/results/enr/GE2026.html",
+      "evidenceUrl": "https://elections.delaware.gov/results/enr/Election_StatewideResults_ID_GE2026.json",
+      "date": "2026-11-10"
+    },
+    "DE-S": {
+      "status": "certified",
+      "winners": [
+        "S0DE00092"
+      ],
+      "source": "the Delaware Department of Elections",
+      "sourceUrl": "https://elections.delaware.gov/results/enr/GE2026.html",
+      "evidenceUrl": "https://elections.delaware.gov/results/enr/Election_StatewideResults_ID_GE2026.json",
+      "date": "2026-11-10"
+    },
+    "MP-AL": {
+      "status": "certified",
+      "winners": [
+        "H4MP01022"
+      ],
+      "source": "the Commonwealth Election Commission",
+      "sourceUrl": "https://www.votecnmi.gov.mp/general-election-2026.php",
+      "date": "2026-11-06"
+    },
+    "SC-01": {
+      "status": "certified",
+      "winners": [
+        "H6SC01359"
+      ],
+      "source": "the South Carolina State Election Commission",
+      "sourceUrl": "https://scvotes.gov/state-election-commission-certifies-2026-statewide-general-election/",
+      "evidenceUrl": "https://www.enr-scvotes.org/SC/127300/386661/json/en/summary.json",
+      "date": "2026-11-11"
+    },
+    "SC-03": {
+      "status": "certified",
+      "winners": [
+        "H4SC01313"
+      ],
+      "source": "the South Carolina State Election Commission",
+      "sourceUrl": "https://scvotes.gov/state-election-commission-certifies-2026-statewide-general-election/",
+      "evidenceUrl": "https://www.enr-scvotes.org/SC/127300/386661/json/en/summary.json",
+      "date": "2026-11-11"
+    },
+    "SC-04": {
+      "status": "certified",
+      "winners": [
+        "H8SC04250"
+      ],
+      "source": "the South Carolina State Election Commission",
+      "sourceUrl": "https://scvotes.gov/state-election-commission-certifies-2026-statewide-general-election/",
+      "evidenceUrl": "https://www.enr-scvotes.org/SC/127300/386661/json/en/summary.json",
+      "date": "2026-11-11"
+    },
+    "SC-05": {
+      "status": "certified",
+      "winners": [
+        "H6SC05202"
+      ],
+      "source": "the South Carolina State Election Commission",
+      "sourceUrl": "https://scvotes.gov/state-election-commission-certifies-2026-statewide-general-election/",
+      "evidenceUrl": "https://www.enr-scvotes.org/SC/127300/386661/json/en/summary.json",
+      "date": "2026-11-11"
+    },
+    "SC-06": {
+      "status": "certified",
+      "winners": [
+        "H2SC02042"
+      ],
+      "source": "the South Carolina State Election Commission",
+      "sourceUrl": "https://scvotes.gov/state-election-commission-certifies-2026-statewide-general-election/",
+      "evidenceUrl": "https://www.enr-scvotes.org/SC/127300/386661/json/en/summary.json",
+      "date": "2026-11-11"
+    },
+    "SC-07": {
+      "status": "certified",
+      "winners": [
+        "H2SC07280"
+      ],
+      "source": "the South Carolina State Election Commission",
+      "sourceUrl": "https://scvotes.gov/state-election-commission-certifies-2026-statewide-general-election/",
+      "evidenceUrl": "https://www.enr-scvotes.org/SC/127300/386661/json/en/summary.json",
+      "date": "2026-11-11"
+    },
+    "SC-S": {
+      "status": "certified",
+      "winners": [
+        "S6SC04239"
+      ],
+      "source": "the South Carolina State Election Commission",
+      "sourceUrl": "https://scvotes.gov/state-election-commission-certifies-2026-statewide-general-election/",
+      "evidenceUrl": "https://www.enr-scvotes.org/SC/127300/386661/json/en/summary.json",
+      "date": "2026-11-11"
+    },
+    "VI-AL": {
+      "status": "certified",
+      "winners": [
+        "H6VI01065"
+      ],
+      "source": "the Virgin Islands Office of the Supervisor of Elections",
+      "sourceUrl": "https://vivote.gov/wp-content/uploads/2026/11/2026-General-Election-Certification-11.03.2026.pdf",
+      "date": "2026-11-13"
+    },
+    "VT-AL": {
+      "status": "certified",
+      "winners": [
+        "H2VT01076"
+      ],
+      "source": "the Vermont Canvassing Committee",
+      "sourceUrl": "https://outside.vermont.gov/dept/sos/Elections_Division/election_info_resources/elections_results_data/2026_general_election_official_report_canvassing_committee_vermont_statewide_public_questions.pdf",
+      "date": "2026-11-09"
+    },
+    "WY-AL": {
+      "status": "certified",
+      "winners": [
+        "H6WY00217"
+      ],
+      "source": "the Wyoming State Canvassing Board",
+      "sourceUrl": "https://sos.wyo.gov/Elections/Docs/2026/Results/General/2026_General_State_Canvassing_Board_Minutes.pdf",
+      "evidenceUrl": "https://sos.wyo.gov/Elections/Docs/2026/Results/General/2026_General_Statewide_Candidates_Summary.pdf",
+      "date": "2026-11-10"
+    },
+    "WY-S": {
+      "status": "certified",
+      "winners": [
+        "S6WY00209"
+      ],
+      "source": "the Wyoming State Canvassing Board",
+      "sourceUrl": "https://sos.wyo.gov/Elections/Docs/2026/Results/General/2026_General_State_Canvassing_Board_Minutes.pdf",
+      "evidenceUrl": "https://sos.wyo.gov/Elections/Docs/2026/Results/General/2026_General_Statewide_Candidates_Summary.pdf",
+      "date": "2026-11-10"
+    }
+  }
+}

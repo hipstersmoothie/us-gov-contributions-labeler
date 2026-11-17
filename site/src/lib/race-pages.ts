@@ -1,7 +1,7 @@
 // Structured data and list sizes for the race and candidate pages.
 import { abs } from "./seo";
 import { generatedAt } from "./data";
-import { candidateHref, personName, partyName, raceName, raceYear, stateName, type Race, type RaceCandidate } from "./races";
+import { candidateHref, personName, partyName, raceName, stateName, type Race, type RaceCandidate } from "./races";
 
 /** Spenders listed on a race page before the rest load on request. */
 export const RACE_SPENDERS_SHOWN = 10;
@@ -11,7 +11,7 @@ const PARTY_NAME: Record<string, string> = { Democrat: "Democratic Party", Repub
 
 /** "Candidate for U.S. House, Arizona's 4th District (2026)". */
 export const candidacy = (r: Race) =>
-  `Candidate for ${r.office === "S" ? `U.S. Senate in ${stateName(r.state)}` : `the U.S. House, ${raceName(r)}`} (${raceYear})`;
+  `Candidate for ${r.office === "S" ? `U.S. Senate in ${stateName(r.state)}` : `the U.S. House, ${raceName(r)}`} (${r.year})`;
 
 function person(c: RaceCandidate, r: Race) {
   const href = candidateHref(c);
@@ -32,10 +32,10 @@ export function raceJsonLd(r: Race, path: string) {
     "@context": "https://schema.org",
     "@type": "WebPage",
     url: abs(path),
-    name: `${raceName(r)}, ${raceYear} election`,
+    name: `${raceName(r)}, ${r.year} election`,
     dateModified: generatedAt.toISOString(),
     about: r.candidates.map((c) => person(c, r)),
-    isBasedOn: `https://www.fec.gov/data/elections/${r.office === "S" ? `senate/${r.state}` : `house/${r.state}/${String(r.district ?? 0).padStart(2, "0")}`}/${raceYear}/`,
+    isBasedOn: `https://www.fec.gov/data/elections/${r.office === "S" ? `senate/${r.state}` : `house/${r.state}/${String(r.district ?? 0).padStart(2, "0")}`}/${r.year}/`,
   };
 }
 

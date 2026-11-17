@@ -1,15 +1,16 @@
 ---
-// /races/ is the current election's list.
-const to = "/races/2026/";
+// /races/ is the latest election's list.
+import { latestYear } from "../../lib/races";
+const to = `/races/${latestYear}/`;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>2026 races</title>
+    <title>{latestYear} races</title>
     <meta name="robots" content="noindex" />
     <link rel="canonical" href={new URL(to, Astro.site).href} />
     <meta http-equiv="refresh" content={`0; url=${to}`} />
   </head>
-  <body><p><a href={to}>The 2026 House and Senate races</a></p></body>
+  <body><p><a href={to}>The {latestYear} House and Senate races</a></p></body>
 </html>

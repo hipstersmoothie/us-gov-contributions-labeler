@@ -42,7 +42,7 @@ import TripsTable from "../../components/TripsTable.astro";
 import { legalFundByMember, years527, ein, IRS_SEARCH } from "../../lib/irs527";
 import { tripsByMember, summarize, sinceLabel, sponsorByKey, sponsorHref, TRIPS_SHOWN } from "../../lib/travel";
 import { bundlerName, bundlerNote, bundlerHref } from "../../lib/bundling";
-import { raceOfMember, raceName, raceHref, raceYear, resultLine, isWinner, formerMembers } from "../../lib/races";
+import { raceOfMember, raceName, raceHref, resultLine, isWinner, noResult, day, formerMembers } from "../../lib/races";
 
 export function getStaticPaths() {
   // Members who have left keep their page, marked as former (data/former-members.json).
@@ -335,7 +335,7 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
   {
     ran && (
       <p class="race-link">
-        <span class="kicker">{raceYear} race</span>{" "}
+        <span class="kicker">{ran.race.year} race</span>{" "}
         <a href={raceHref(ran.race)}>{raceName(ran.race)}</a>
         <span class="muted">
           {" "}·{" "}
@@ -343,7 +343,9 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
             ? "registered for this seat; not on the November ballot by FEC filings"
             : ranAs?.uncertain
               ? "FEC filings don't settle whether they were on the November ballot"
-              : ran.race.result.status === "pending"
+              : ran.race.result.status === "upcoming"
+                ? `on the ballot ${day(ran.race.election.electionDay)}`
+                : noResult(ran.race)
                 ? "on the November ballot; results pending certification"
                 : ranAs && isWinner(ran.race, ranAs) ? "won" : resultLine(ran.race)}
         </span>

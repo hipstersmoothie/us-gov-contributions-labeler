@@ -5,6 +5,7 @@ import SiteSearch from "../islands/SiteSearch";
 import Logo from "../components/Logo.astro";
 
 import { generatedAt, cycleRange } from "../lib/data";
+import { latestYear } from "../lib/races";
 import { ogImage, type OgType } from "../lib/og";
 import { breadcrumbs, SITE_NAME } from "../lib/seo";
 
@@ -27,7 +28,7 @@ const { title, description, og, card, ogType = "article", crumbs, jsonLd, noinde
 const path = Astro.url.pathname;
 const NAV = [
   ["/members/", "Members"],
-  ["/races/", "2026 races"],
+  ["/races/", `${latestYear} races`],
   ["/states/", "States"],
   ["/organizations/", "Organizations"],
   ["/sectors/", "Sectors"],

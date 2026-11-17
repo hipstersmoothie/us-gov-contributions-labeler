@@ -1,0 +1,334 @@
+{
+  "_doc": "Facts about one federal general election that aren't in FEC data, entered by hand once per cycle (see design/races/README.md, 'Each cycle'). The races step reads this to build data/races-<year>.json.",
+  "year": 2026,
+  "electionDay": "2026-11-03",
+  "newCongress": "2027-01-03",
+  "lateGeneralFrom": "2026-09-16",
+  "lateGeneralNote": "The day after the last regular primary (Sept. 15). General-election money given from here on can only go to a nominee.",
+  "houseSeatsNote": "House seats per state (the 2020 census apportionment, for 2022\u20132030); a state with one seat elects it at large. Races for seats outside this are stray filings and are dropped.",
+  "houseSeats": {
+    "AL": 7,
+    "AK": 1,
+    "AZ": 9,
+    "AR": 4,
+    "CA": 52,
+    "CO": 8,
+    "CT": 5,
+    "DE": 1,
+    "FL": 28,
+    "GA": 14,
+    "HI": 2,
+    "ID": 2,
+    "IL": 17,
+    "IN": 9,
+    "IA": 4,
+    "KS": 4,
+    "KY": 6,
+    "LA": 6,
+    "ME": 2,
+    "MD": 8,
+    "MA": 9,
+    "MI": 13,
+    "MN": 8,
+    "MS": 4,
+    "MO": 8,
+    "MT": 2,
+    "NE": 3,
+    "NV": 4,
+    "NH": 2,
+    "NJ": 12,
+    "NM": 3,
+    "NY": 26,
+    "NC": 14,
+    "ND": 1,
+    "OH": 15,
+    "OK": 5,
+    "OR": 6,
+    "PA": 17,
+    "RI": 2,
+    "SC": 7,
+    "SD": 1,
+    "TN": 9,
+    "TX": 38,
+    "UT": 4,
+    "VT": 1,
+    "VA": 11,
+    "WA": 10,
+    "WV": 2,
+    "WI": 8,
+    "WY": 1,
+    "DC": 1,
+    "PR": 1,
+    "GU": 1,
+    "VI": 1,
+    "AS": 1,
+    "MP": 1
+  },
+  "redistricting": {
+    "source": "https://www.ncsl.org/redistricting-and-census/changing-the-maps-tracking-mid-decade-redistricting",
+    "sourceName": "NCSL",
+    "asOf": "2026-09-11",
+    "states": {
+      "AL": "The Supreme Court let Alabama return to its 2023 congressional map on June 2, 2026, with special primaries in the districts that changed.",
+      "CA": "California voters approved new congressional maps (Proposition 50) on Nov. 4, 2025.",
+      "FL": "Florida enacted new congressional maps on May 4, 2026.",
+      "LA": "Louisiana enacted new congressional maps on May 29, 2026.",
+      "NC": "North Carolina enacted new congressional maps on Oct. 22, 2025.",
+      "OH": "Ohio adopted new congressional maps on Oct. 31, 2025.",
+      "TN": "Tennessee adopted new congressional maps on May 7, 2026.",
+      "TX": "Texas enacted new congressional maps in August 2025.",
+      "UT": "Utah's congressional maps were redrawn by court order on Nov. 10, 2025."
+    }
+  },
+  "systems": {
+    "CA": {
+      "house": "top-two",
+      "senate": "top-two"
+    },
+    "WA": {
+      "house": "top-two",
+      "senate": "top-two"
+    },
+    "AK": {
+      "house": "top-four",
+      "senate": "top-four"
+    },
+    "LA": {
+      "house": "louisiana"
+    }
+  },
+  "systemNotes": {
+    "louisiana": "Louisiana held its open House primary on Nov. 3, with every party on one ballot; where no one won a majority, the top two meet in a runoff on Dec. 12."
+  },
+  "runoffs": {
+    "GA": "2026-12-01",
+    "LA": "2026-12-12"
+  },
+  "senateSpecials": {
+    "OH": "a special election for the rest of JD Vance's term, through January 2029",
+    "FL": "a special election for the rest of Marco Rubio's term, through January 2029"
+  },
+  "certificationNote": "When each state certifies (by statute or its published calendar; null where it isn't posted) and where its official results are, for `pnpm race-results status`. Gathered Nov. 16, 2026 from official sites; check each cycle.",
+  "certification": {
+    "AK": {
+      "deadline": "2026-11-25",
+      "results": "https://www.elections.alaska.gov/"
+    },
+    "AL": {
+      "deadline": "2026-11-25",
+      "results": "https://www.sos.alabama.gov/alabama-votes/voter/election-information/2026"
+    },
+    "AR": {
+      "deadline": "2026-11-18",
+      "results": "https://www.sos.arkansas.gov/elections"
+    },
+    "AS": {
+      "deadline": null,
+      "results": "https://www.aselectionoffice.gov/2026-election-results"
+    },
+    "AZ": {
+      "deadline": "2026-11-23",
+      "results": "https://azsos.gov/elections"
+    },
+    "CA": {
+      "deadline": "2026-12-11",
+      "results": "https://www.sos.ca.gov/elections"
+    },
+    "CO": {
+      "deadline": "2026-11-27",
+      "results": "https://www.sos.state.co.us/pubs/elections/"
+    },
+    "CT": {
+      "deadline": "2026-11-25",
+      "results": "https://portal.ct.gov/sots/election-services"
+    },
+    "DC": {
+      "deadline": "2026-12-02",
+      "results": "https://www.dcboe.org/"
+    },
+    "DE": {
+      "deadline": "2026-11-05",
+      "results": "https://elections.delaware.gov/results/enr/GE2026.html"
+    },
+    "FL": {
+      "deadline": "2026-11-17",
+      "results": "https://floridaelectionwatch.gov/"
+    },
+    "GA": {
+      "deadline": "2026-11-20",
+      "results": "https://results.sos.ga.gov/results/public/Georgia/elections/11032026GeneralAndSpecialElection"
+    },
+    "GU": {
+      "deadline": "2026-11-19",
+      "results": "https://gec.guam.gov/"
+    },
+    "HI": {
+      "deadline": null,
+      "results": "https://elections.hawaii.gov/election-results/"
+    },
+    "IA": {
+      "deadline": "2026-11-30",
+      "results": "https://sos.iowa.gov/elections/results/"
+    },
+    "ID": {
+      "deadline": "2026-11-24",
+      "results": "https://voteidaho.gov/election-results/"
+    },
+    "IL": {
+      "deadline": "2026-12-04",
+      "results": "https://www.elections.il.gov/"
+    },
+    "IN": {
+      "deadline": null,
+      "results": "https://www.in.gov/sos/elections/election-commission/election-results"
+    },
+    "KS": {
+      "deadline": "2026-12-01",
+      "results": "https://sos.ks.gov/elections/election-results.html"
+    },
+    "KY": {
+      "deadline": "2026-11-23",
+      "results": "https://elect.ky.gov/"
+    },
+    "LA": {
+      "deadline": null,
+      "results": "https://voterportal.sos.la.gov/graphical"
+    },
+    "MA": {
+      "deadline": null,
+      "results": "https://electionstats.state.ma.us/"
+    },
+    "MD": {
+      "deadline": "2026-12-03",
+      "results": "https://elections.maryland.gov/elections/2026/general_results/gen_results_2026_1.html"
+    },
+    "ME": {
+      "deadline": "2026-11-23",
+      "results": "https://www.maine.gov/sos/elections-voting/election-results-data"
+    },
+    "MI": {
+      "deadline": "2026-11-23",
+      "results": "https://www.michigan.gov/sos/elections/bsc"
+    },
+    "MN": {
+      "deadline": "2026-11-19",
+      "results": "https://electionresults.sos.mn.gov/"
+    },
+    "MO": {
+      "deadline": null,
+      "results": "https://s1.sos.mo.gov/elections/results"
+    },
+    "MP": {
+      "deadline": "2026-11-06",
+      "results": "https://www.votecnmi.gov.mp/general-election-2026.php"
+    },
+    "MS": {
+      "deadline": null,
+      "results": "https://www.sos.ms.gov/elections-voting"
+    },
+    "MT": {
+      "deadline": "2026-11-30",
+      "results": "https://electionresults.mt.gov/"
+    },
+    "NC": {
+      "deadline": "2026-11-24",
+      "results": "https://er.ncsbe.gov/"
+    },
+    "ND": {
+      "deadline": "2026-11-18",
+      "results": "https://results.sos.nd.gov/"
+    },
+    "NE": {
+      "deadline": "2026-11-30",
+      "results": "https://electionresults.nebraska.gov/"
+    },
+    "NH": {
+      "deadline": null,
+      "results": "https://www.sos.nh.gov/elections"
+    },
+    "NJ": {
+      "deadline": "2026-12-03",
+      "results": "https://www.nj.gov/state/elections/election-information-results.shtml"
+    },
+    "NM": {
+      "deadline": "2026-11-24",
+      "results": "https://electionresults.sos.nm.gov/"
+    },
+    "NV": {
+      "deadline": "2026-11-24",
+      "results": "https://www.nvsos.gov/sos/elections/election-information/2026-election-information"
+    },
+    "NY": {
+      "deadline": "2026-12-15",
+      "results": "https://www.elections.ny.gov/"
+    },
+    "OH": {
+      "deadline": null,
+      "results": "https://www.ohiosos.gov/elections/election-results-and-data/"
+    },
+    "OK": {
+      "deadline": "2026-11-10",
+      "results": "https://oklahoma.gov/elections/elections-results/election-results/2026-election-results/november-general-election.html"
+    },
+    "OR": {
+      "deadline": "2026-12-10",
+      "results": "https://results.oregonvotes.gov/"
+    },
+    "PA": {
+      "deadline": null,
+      "results": "https://www.electionreturns.pa.gov/"
+    },
+    "RI": {
+      "deadline": null,
+      "results": "https://electionresults.ri.gov/"
+    },
+    "SC": {
+      "deadline": "2026-11-11",
+      "results": "https://scvotes.gov/"
+    },
+    "SD": {
+      "deadline": "2026-11-10",
+      "results": "https://sdsos.gov/elections-voting/upcoming-elections/general-information/default.aspx"
+    },
+    "TN": {
+      "deadline": null,
+      "results": "https://sos.tn.gov/elections/results"
+    },
+    "TX": {
+      "deadline": "2026-12-07",
+      "results": "https://results.texas-election.com/"
+    },
+    "UT": {
+      "deadline": "2026-11-23",
+      "results": "https://electionresults.utah.gov/"
+    },
+    "VA": {
+      "deadline": "2026-12-07",
+      "results": "https://www.elections.virginia.gov/resultsreports/election-results/"
+    },
+    "VI": {
+      "deadline": "2026-11-13",
+      "results": "https://vivote.gov/"
+    },
+    "VT": {
+      "deadline": "2026-11-09",
+      "results": "https://sos.vermont.gov/elections/election-info-resources/elections-results-data/"
+    },
+    "WA": {
+      "deadline": "2026-12-03",
+      "results": "https://results.votewa.gov/"
+    },
+    "WI": {
+      "deadline": "2026-12-01",
+      "results": "https://elections.wi.gov/elections/election-results"
+    },
+    "WV": {
+      "deadline": "2026-12-03",
+      "results": "https://sos.wv.gov/elections/Pages/default.aspx"
+    },
+    "WY": {
+      "deadline": "2026-11-10",
+      "results": "https://sos.wyo.gov/Elections/State/ElectionResults.aspx"
+    }
+  }
+}

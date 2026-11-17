@@ -48,9 +48,10 @@ const oldOrgs = orgIds(committed("data/organizations.json") ?? '{"organizations"
 const newOrgs = orgIds(fs.readFileSync("data/organizations.json", "utf8"));
 const gone = [...oldOrgs].filter((id) => !newOrgs.has(id));
 console.log(`organizations: ${oldOrgs.size} → ${newOrgs.size}, ${gone.length} ids gone`);
-// races.json and former-members.json are rewritten in the same run, and their
+// races-<year>.json and former-members.json are rewritten in the same run, and their
 // pages only link an organization that still has one.
-const rebuiltTogether = new Set(["data/organizations.json", "data/members.json", "data/committees.json", "data/donors.json", "data/races.json", "data/former-members.json"]);
+const raceFiles = fs.readdirSync("data").filter((f) => /^races-\d{4}\.json$/.test(f)).map((f) => `data/${f}`);
+const rebuiltTogether = new Set(["data/organizations.json", "data/members.json", "data/committees.json", "data/donors.json", "data/former-members.json", ...raceFiles]);
 for (const file of files.filter((f) => !rebuiltTogether.has(f) && fs.existsSync(f))) {
   const text = fs.readFileSync(file, "utf8");
   const dangling = gone.filter((id) => text.includes(`"${id}"`));
@@ -65,21 +66,23 @@ const memberChange = after.members.length - before.members.length;
 console.log(`members: ${before.members.length} → ${after.members.length}`);
 // A new Congress replaces dozens of members at once. That's expected when
 // everyone who left is now in former-members.json and everyone who arrived
-// was a 2026 general-election candidate (data/races.json).
+// was a candidate in the election (data/races-<year>.json), in the month
+// after the new Congress is sworn in.
 const beforeIds = new Set(before.members.map((m) => m.bioguide));
 const afterIds = new Set(after.members.map((m) => m.bioguide));
 const left = [...beforeIds].filter((id) => !afterIds.has(id));
 const arrived = [...afterIds].filter((id) => !beforeIds.has(id));
 const former = new Set(fs.existsSync("data/former-members.json") ? (JSON.parse(fs.readFileSync("data/former-members.json", "utf8")).members as { bioguide: string }[]).map((m) => m.bioguide) : []);
-const ranIn2026 = new Set(
-  fs.existsSync("data/races.json")
-    ? (JSON.parse(fs.readFileSync("data/races.json", "utf8")) as { races: { candidates: { bioguide?: string }[] }[] }).races.flatMap((r) => r.candidates.flatMap((c) => (c.bioguide ? [c.bioguide] : [])))
-    : []
-);
-const turnover = left.every((id) => former.has(id)) && arrived.every((id) => ranIn2026.has(id));
-if (left.length || arrived.length) console.log(`  left: ${left.length} (all in former-members.json: ${left.every((id) => former.has(id))}); arrived: ${arrived.length} (all 2026 candidates: ${arrived.every((id) => ranIn2026.has(id))})`);
+// Everyone who ran in an election, and when its winners take office.
+const elections = raceFiles.map((f) => JSON.parse(fs.readFileSync(f, "utf8")) as { newCongress: string; races: { candidates: { bioguide?: string }[] }[] });
+const ranInAnElection = new Set(elections.flatMap((e) => e.races.flatMap((r) => r.candidates.flatMap((c) => (c.bioguide ? [c.bioguide] : [])))));
+const today = new Date().toISOString().slice(0, 10);
+// Within a month after a new Congress is sworn in.
+const newCongressNow = elections.some((e) => today >= e.newCongress && today <= `${e.newCongress.slice(0, 5)}02-${e.newCongress.slice(8)}`);
+const turnover = left.every((id) => former.has(id)) && arrived.every((id) => ranInAnElection.has(id));
+if (left.length || arrived.length) console.log(`  left: ${left.length} (all in former-members.json: ${left.every((id) => former.has(id))}); arrived: ${arrived.length} (all candidates in an election: ${arrived.every((id) => ranInAnElection.has(id))})`);
 if (Math.abs(memberChange) > MAX_MEMBER_CHANGE || left.length + arrived.length > 2 * MAX_MEMBER_CHANGE) {
-  if (turnover && new Date() >= new Date("2027-01-03")) console.log("  a new Congress: turnover accounted for");
+  if (turnover && newCongressNow) console.log("  a new Congress: turnover accounted for");
   else problems.push(`member count changed by ${memberChange} (${left.length} left, ${arrived.length} arrived)`);
 }
 

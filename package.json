@@ -12,6 +12,8 @@
     "typecheck": "tsc --noEmit",
     "ingest": "NODE_OPTIONS=--max-old-space-size=12288 tsx src/ingest.ts",
     "fec-audit": "tsx src/scripts/fec-cache-audit.ts",
+    "race-results": "tsx src/scripts/race-results.ts",
+    "test:races": "tsx src/scripts/race-results-test.ts",
     "site:dev": "pnpm --filter site dev",
     "site:build": "pnpm --filter site build",
     "sync-labels": "tsx src/sync-labels.ts",

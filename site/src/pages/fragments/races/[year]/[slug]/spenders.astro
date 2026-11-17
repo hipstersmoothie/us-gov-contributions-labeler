@@ -1,12 +1,12 @@
 ---
 // A race's outside spenders past the first few, loaded on request.
 import RankedTable from "../../../../../components/RankedTable.astro";
-import { races, spender, personName, type Race } from "../../../../../lib/races";
+import { allRaces, spender, personName, type Race } from "../../../../../lib/races";
 import { RACE_SPENDERS_SHOWN } from "../../../../../lib/race-pages";
 
 export const partial = true;
 export function getStaticPaths() {
-  return races.filter((r) => r.outside.spenders.length > RACE_SPENDERS_SHOWN).map((r) => ({ params: { slug: r.slug }, props: { r } }));
+  return allRaces.filter((r) => r.outside.spenders.length > RACE_SPENDERS_SHOWN).map((r) => ({ params: { year: String(r.year), slug: r.slug }, props: { r } }));
 }
 const { r } = Astro.props as { r: Race };
 const names = new Map([...r.candidates, ...r.others].map((c) => [c.id, personName(c)]));

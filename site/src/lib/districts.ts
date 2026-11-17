@@ -13,7 +13,7 @@ import { members, photoUrl, partyLetter, committeeLabel, committeeHref, spenderT
 import { pacTotal, raisedTotal } from "./derived";
 import { shortSector } from "./format";
 import type { DelegationFile, MemberSummary, OutsideMoney, RaceLink, StateRaces, ZipFile } from "../islands/find/types";
-import { races, raceYear, raceHref, raceName, type Race } from "./races";
+import { racesOf, latestYear as raceYear, raceHref, raceName, type Race } from "./races";
 import { NO_SENATORS, ordinal, districtName as name } from "../islands/find/core";
 
 export { CONGRESS, STATES, NO_SENATORS };
@@ -167,7 +167,8 @@ export function delegationFile(d: Delegation, list?: string): DelegationFile {
   };
 }
 
-const racesByState = Map.groupBy(races, (r) => r.state);
+// The latest election's races.
+const racesByState = Map.groupBy(racesOf(raceYear), (r) => r.state);
 const raceLink = (r: Race): RaceLink => ({ label: raceName(r), href: raceHref(r), support: r.outside.support, oppose: r.outside.oppose });
 
 /**

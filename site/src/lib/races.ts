@@ -1,30 +1,50 @@
-// The 2026 races and their candidates (data/races.json, from the ingest's
-// races step), and the helpers the race, candidate and member pages share.
+// The House and Senate races of each election (data/races-<year>.json, from
+// the ingest's races step), and the helpers the race, candidate and member
+// pages share. Every race carries its year and its election's facts.
 //
 // Every lookup is a Map built once here, so a page's frontmatter never scans
 // the whole list.
 import fs from "node:fs";
 import path from "node:path";
-import type { Race, RaceCandidate, RacesFile } from "../../../src/ingest/races.ts";
+import type { Election, Race as RawRace, RaceCandidate, RacesFile } from "../../../src/ingest/races.ts";
 import { STATES } from "../../../src/lib/list-specs.ts";
 import { committeeById, memberById, displayName, kindLabel, spenderType, fecCommitteeUrl, type Member } from "./data";
 import { candidateName, partyCode } from "./format";
 
-export type { Race, RaceCandidate };
+export type Race = RawRace & { year: number; election: Election };
+export type { RaceCandidate, Election };
 
-const FILE = path.resolve(process.cwd(), "../data/races.json");
-const file: RacesFile = fs.existsSync(FILE)
-  ? JSON.parse(fs.readFileSync(FILE, "utf8"))
-  : { generatedAt: "", year: 2026, electionDay: "2026-11-03", newCongress: "2027-01-03", races: [], committees: {}, members: {}, coverage: {} };
+const DATA = path.resolve(process.cwd(), "../data");
+const files: RacesFile[] = fs
+  .readdirSync(DATA)
+  .filter((f) => /^races-\d{4}\.json$/.test(f))
+  .sort()
+  .map((f) => JSON.parse(fs.readFileSync(path.join(DATA, f), "utf8")));
 
-export const raceYear = file.year;
-export const races = file.races;
-export const raceCoverage = file.coverage;
-export const newCongress = file.newCongress;
-export const raceById = new Map(races.map((r) => [r.id, r]));
-export const raceBySlug = new Map(races.map((r) => [r.slug, r]));
-/** FEC candidate id -> the candidate and their race. */
-export const candidateById = new Map(races.flatMap((r) => r.candidates.map((c) => [c.id, { c, race: r }] as const)));
+/** Election years with races, newest first. */
+export const raceYears = files.map((f) => f.year).sort((a, b) => b - a);
+export const latestYear = raceYears[0] ?? new Date().getFullYear();
+export const fileByYear = new Map(files.map((f) => [f.year, f]));
+export const electionOf = (year: number) => fileByYear.get(year)!.election;
+export const coverageOf = (year: number) => fileByYear.get(year)?.coverage ?? {};
+/** Every race of every year. */
+export const allRaces: Race[] = files.flatMap((f) => f.races.map((r) => ({ ...r, year: f.year, election: f.election })));
+export const racesOf = (year: number) => allRaces.filter((r) => r.year === year);
+export const raceByKey = new Map(allRaces.map((r) => [`${r.year}/${r.id}`, r]));
+/** FEC candidate id -> their races, newest first. */
+export const candidateRaces = new Map<string, { c: RaceCandidate; race: Race }[]>();
+for (const race of [...allRaces].sort((a, b) => b.year - a.year)) {
+  for (const c of race.candidates) candidateRaces.set(c.id, [...(candidateRaces.get(c.id) ?? []), { c, race }]);
+}
+
+/** "Nov. 3, 2026", AP style. */
+export function day(iso: string) {
+  const d = new Date(`${iso}T12:00:00Z`);
+  const month = ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."][d.getUTCMonth()];
+  return `${month} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+}
+/** "2025–2026", the two-year cycle an election ends. */
+export const cycleOf = (year: number) => `${year - 1}–${year}`;
 
 // --- members who left Congress ------------------------------------------------------
 
@@ -56,7 +76,7 @@ export function raceShort(r: Race) {
 }
 /** "House", "Senate", "Delegate". */
 export const raceChamber = (r: Race) => (r.office === "S" ? "Senate" : r.delegate ? "House delegate" : "House");
-export const raceHref = (r: Race) => `/races/${raceYear}/${r.slug}/`;
+export const raceHref = (r: Race) => `/races/${r.year}/${r.slug}/`;
 
 /** Display name: the member's name for members, else the FEC filing's name cleaned up. */
 export function personName(c: { name: string; bioguide?: string }) {
@@ -81,7 +101,7 @@ export const partyName = (c: { party?: string; bioguide?: string }) => {
 /** Where a candidate's name links: their member page (current or former), else their candidate page. */
 export function candidateHref(c: { id: string; bioguide?: string }) {
   if (c.bioguide && (memberById.has(c.bioguide) || formerById.has(c.bioguide))) return `/members/${c.bioguide}/`;
-  return candidateById.has(c.id) ? `/candidates/${c.id.toLowerCase()}/` : `https://www.fec.gov/data/candidate/${c.id}/`;
+  return candidateRaces.has(c.id) ? `/candidates/${c.id.toLowerCase()}/` : `https://www.fec.gov/data/candidate/${c.id}/`;
 }
 
 /** Who they are in the race: "Incumbent", "Challenger", or for open seats, "Open seat". */
@@ -95,17 +115,20 @@ export function role(c: RaceCandidate, r: Race) {
 }
 
 /** A spender's name and type, for committees with and without a page here. */
+const otherCommittees = Object.assign({}, ...files.map((f) => f.committees)) as RacesFile["committees"];
 export function spender(id: string) {
   const c = committeeById.get(id);
   if (c) return { label: displayName(c.name), href: `/pacs/${id}/`, kind: spenderType(id) };
-  const x = file.committees[id];
+  const x = otherCommittees[id];
   return { label: x ? displayName(x.name) : `FEC committee ${id}`, href: fecCommitteeUrl(id), kind: x ? kindLabel(x.kind) : "" };
 }
 
-/** The race a member ran in this year, if any. */
+/** The latest race a member ran in, if any. */
 export const raceOfMember = (bioguide: string) => {
-  const x = file.members[bioguide];
-  return x ? { race: raceById.get(x.race)!, onBallot: x.onBallot } : undefined;
+  for (const f of [...files].reverse()) {
+    const x = f.members[bioguide];
+    if (x) return { race: raceByKey.get(`${f.year}/${x.race}`)!, onBallot: x.onBallot };
+  }
 };
 
 // --- money --------------------------------------------------------------------------
@@ -153,15 +176,19 @@ export function resultLine(r: Race) {
   });
   switch (res.status) {
     case "certified":
-      return `${names.join(" and ")} won, as certified${res.source ? ` by ${res.source}` : ""}`;
+      return `${names.join(" and ")} won, as certified by ${res.source ?? "the state"}`;
     case "sworn-in":
-      return `${names.join(" and ")} won and took office on Jan. 3, 2027`;
+      return `${names.join(" and ")} won and took office on ${day(res.date ?? r.election.newCongress)}`;
     case "runoff":
-      return `${names.join(" and ")} advanced to a runoff${res.date ? ` on ${res.date}` : ""}`;
+      return `${names.join(" and ")} advanced to a runoff${r.election.runoffs?.[r.state] ? ` on ${day(r.election.runoffs[r.state]!)}` : ""}`;
+    case "upcoming":
+      return `The election is on ${day(r.election.electionDay)}`;
     default:
       return PENDING;
   }
 }
+/** Whether the result isn't in yet (before or after Election Day). */
+export const noResult = (r: Race) => r.result.status === "pending" || r.result.status === "upcoming";
 export const isWinner = (r: Race, c: RaceCandidate) => (r.result.status === "certified" || r.result.status === "sworn-in") && !!r.result.winners?.includes(c.id);
 
 /** The candidates' letters and surnames, for list rows: "D Stanton · R Cooper". */
@@ -172,5 +199,5 @@ export const fieldSummary = (r: Race) =>
 
 export { candidateName, partyCode };
 
-/** State names whose House races ran on new maps, for the index's note. */
-export const REDRAWN_STATES = [...new Set(races.filter((r) => r.redrawn).map((r) => r.state))].sort().map(stateName);
+/** State names whose House races ran on new maps that year, for the index's note. */
+export const redrawnStates = (year: number) => Object.keys(fileByYear.get(year)?.election.redistricting.states ?? {}).sort().map(stateName);

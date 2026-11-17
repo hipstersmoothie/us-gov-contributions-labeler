@@ -10,12 +10,12 @@ export const TYPE_LABEL: Record<SearchType, string> = {
   b: "Bills",
   f: "Foreign lobbying by country",
   t: "Trip sponsors",
-  r: "2026 races",
-  n: "2026 candidates",
+  r: "House and Senate races",
+  n: "Candidates",
 };
 export const TYPE_ORDER: SearchType[] = ["m", "n", "r", "o", "p", "d", "t", "b", "c", "f"];
 
-const PATH: Record<SearchType, string> = { m: "members", c: "committees", o: "organizations", p: "pacs", d: "donors", b: "bills", f: "foreign-lobbying", t: "travel/sponsors", r: "races/2026", n: "candidates" };
+const PATH: Record<SearchType, string> = { m: "members", c: "committees", o: "organizations", p: "pacs", d: "donors", b: "bills", f: "foreign-lobbying", t: "travel/sponsors", r: "races", n: "candidates" };
 export const urlFor = (type: SearchType, id: string) => `/${PATH[type]}/${id}/`;
 
 export interface Hit {

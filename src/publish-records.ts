@@ -440,6 +440,18 @@ let files: DataFile[] = [
   jsonFile("legislation.json", legislationFile.bills.length, "Bills of the current Congress that came to a vote, with how each member voted and the organizations whose lobbying reports name them."),
   jsonFile("travel.json", travelFile.trips.length, "Trips paid for by outside groups, from House and Senate gift travel filings."),
   jsonFile("irs527.json", Object.keys(irs527File.organizations).length, "Organizations' gifts to state-level political groups (IRS 527 filers), and members' legal defense funds."),
+  // Each election's House and Senate races, and members who have left Congress.
+  ...fs
+    .readdirSync("data")
+    .filter((f) => /^races-\d{4}\.json$/.test(f))
+    .sort()
+    .map((f) => {
+      const r = read<{ year: number; races: unknown[] }>(f);
+      return jsonFile(f, r.races.length, `The ${r.year} House and Senate races: every candidate on the November ballot, what each raised and from whom, outside spending for and against each, and official results where certified.`);
+    }),
+  ...(fs.existsSync(path.join("data", "former-members.json"))
+    ? [jsonFile("former-members.json", read<{ members: unknown[] }>("former-members.json").members.length, "Members who have left Congress, with their last record as members.")]
+    : []),
   sqliteFile(DATA_DB, "Everything in the JSON files, as SQLite tables (a table per list; see the `tables` table), with views for PAC contributions, outside spending and members' votes."),
   sqliteFile(FEC_DB, "The FEC records behind the totals, as SQLite: every PAC contribution, independent expenditure and electioneering communication line counted for current members, as filed, with links to the filings."),
   sqliteFile(LOBBYING_DB, "Every lobbying registration and quarterly report (LD-1, LD-2) filed for the current Congress, as SQLite: clients, firms, lobbyists, issues and spending, linked to organizations."),
@@ -486,7 +498,9 @@ function datasetRecord(blobs: Map<string, unknown>, recordsComplete: boolean): V
     recordsComplete,
     sources: [
       { name: "FEC bulk data", url: "https://www.fec.gov/data/browse-data/?tab=bulk-data", usedFor: "Campaign totals, PAC contributions, outside spending, individual and super PAC donations" },
-      { name: "FEC API", url: "https://api.open.fec.gov/developers/", usedFor: "Leadership PAC sponsors; lists of Form 5, Form 9 and Form 3L reports" },
+      { name: "FEC API", url: "https://api.open.fec.gov/developers/", usedFor: "Leadership PAC sponsors; lists of Form 5, Form 9, Form 3L and pre- and post-general reports" },
+      { name: "FEC election results", url: "https://www.fec.gov/introduction-campaign-finance/election-results-and-voting-information/", usedFor: "General-election ballot candidates and official results, compiled from state election offices" },
+      { name: "State election offices", url: `${SITE}/about/#races`, usedFor: "Certified House and Senate results, each linked from its race" },
       { name: "FEC electronic filings", url: "https://docquery.fec.gov/dcdev/posted/", usedFor: "Itemized Form 5 independent expenditures and Form 3L lobbyist bundling" },
       { name: "Census ZCTA to congressional district relationship file", url: "https://www2.census.gov/geo/docs/maps-data/data/rel2020/cd-sld/", usedFor: "Estimating in-district donations from ZIP codes" },
       { name: "congress-legislators", url: "https://github.com/unitedstates/congress-legislators", usedFor: "Current members, ids, committee seats" },

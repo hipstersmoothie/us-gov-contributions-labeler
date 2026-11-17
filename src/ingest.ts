@@ -7,7 +7,7 @@
 //   pnpm ingest --steps=legislation  just bills, votes and lobbying reports
 //   pnpm ingest --steps=revolving    just lobbyists' former government jobs
 //   pnpm ingest --steps=fara         just foreign lobbying
-//   pnpm ingest --steps=races        just the 2026 races (needs the fec cache)
+//   pnpm ingest --steps=races        just the House and Senate races (needs the fec cache)
 //
 // Needs FEC_API_KEY and SEC_USER_AGENT in .env. Every step caches to .cache/,
 // so an interrupted run picks up where it stopped.
@@ -29,7 +29,7 @@ import { ingestLegislation, ldaQuarters, congressFor } from "./ingest/legislatio
 import { ingestBundling } from "./ingest/bundling.js";
 import { ingestRevolving } from "./ingest/revolving.js";
 import { ingestFara } from "./ingest/fara.js";
-import { ingestRaces } from "./ingest/races.js";
+import { ingestRaces, electionYears, loadElection, racesFile } from "./ingest/races.js";
 import type { Member } from "./ingest/build.js";
 
 const STEPS = [
@@ -51,6 +51,8 @@ const { values: args } = parseArgs({
     "lobbying-minutes": { type: "string", default: "20" },
     // A full Congress of lobbying reports is about an hour the first time.
     "legislation-minutes": { type: "string", default: "90" },
+    // Which elections the races step builds, e.g. 2026,2028 (default: see below).
+    "race-years": { type: "string" },
   },
 });
 
@@ -213,14 +215,28 @@ writeJson("data/donors.json", data.donors);
 writeJson("data/congress-committees.json", data.congressCommittees);
 await writeStandalone(data.organizations.organizations);
 if (steps.has("races")) {
-  const races = await ingestRaces(
-    legislators,
-    required(fec, "fec"),
-    required(enriched, "committees"),
-    new Set(data.committees.committees.map((c) => c.id)),
-    former
-  );
-  writeJson("data/races.json", races, false);
+  // Every election with a data/elections-<year>.json, until a year after its
+  // Congress is sworn in (by then the FEC's official results are out and
+  // nothing changes); --race-years picks them by hand.
+  const today = new Date().toISOString().slice(0, 10);
+  const years = args["race-years"]
+    ? args["race-years"].split(",").map(Number)
+    : electionYears().filter((y) => !fs.existsSync(racesFile(y)) || today <= `${Number(loadElection(y).newCongress.slice(0, 4)) + 1}${loadElection(y).newCongress.slice(4)}`);
+  for (const year of years) {
+    if (!cycles.includes(year)) {
+      console.warn(`Races ${year}: not one of the cycles ingested (${cycles.join(", ")}); skipped`);
+      continue;
+    }
+    const races = await ingestRaces(
+      year,
+      legislators,
+      required(fec, "fec"),
+      required(enriched, "committees"),
+      new Set(data.committees.committees.map((c) => c.id)),
+      former
+    );
+    writeJson(racesFile(year), races, false);
+  }
 }
 console.log(
   `Wrote ${data.members.members.length} members, ` +
