@@ -1,22 +1,16 @@
 // React Aria building blocks for the list pages, styled in controls.css
 // through React Aria's data attributes. No theme: just the site's tokens.
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type MouseEvent as ReactMouseEvent, type ReactNode } from "react";
 import {
   Button,
-  Cell,
-  Column,
   Input,
   Label,
   ListBox,
   ListBoxItem,
   Popover,
-  Row,
   SearchField,
   Select,
   SelectValue,
-  Table,
-  TableBody,
-  TableHeader,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
@@ -133,6 +127,7 @@ export interface ColumnDef<T> {
   id: string;
   name: string;
   num?: boolean;
+  /** The cell that names the row, with its link. */
   rowHeader?: boolean;
   /** Hidden below 640px. */
   wide?: boolean;
@@ -140,12 +135,27 @@ export interface ColumnDef<T> {
   cell: (row: T) => ReactNode;
 }
 
+/**
+ * A click anywhere in a row follows the link in its name cell, so the whole row
+ * is a target while the link stays a real <a> (crawlers, new tabs, copy link,
+ * one tab stop per row). Clicks on the link itself are left to the browser, and
+ * a click that ends a text selection isn't a click on the row.
+ */
+function followRowLink(e: ReactMouseEvent<HTMLTableSectionElement>) {
+  const target = e.target as Element;
+  if (e.button > 1 || target.closest("a, button") || getSelection()?.toString()) return;
+  const link = target.closest("tr")?.querySelector("a[href]");
+  if (!link) return;
+  if (e.button === 1) e.preventDefault();
+  // A copy of the click, modifier keys and all, so ⌘-click and middle-click open a new tab as they would on the link.
+  link.dispatchEvent(new MouseEvent("click", e.nativeEvent));
+}
+
 export function ListTable<T extends { id: string }>({
   label,
   noun,
   rows,
   columns,
-  href,
   sort,
   onSort,
   pageSize = 100,
@@ -155,7 +165,6 @@ export function ListTable<T extends { id: string }>({
   noun: string;
   rows: T[];
   columns: ColumnDef<T>[];
-  href: (row: T) => string;
   sort: SortDescriptor;
   onSort: (s: SortDescriptor) => void;
   pageSize?: number;
@@ -177,6 +186,7 @@ export function ListTable<T extends { id: string }>({
     });
   }, [rows, sort, columns]);
   const visible = sorted.slice(0, limit);
+  const cls = (base: string, c: ColumnDef<T>) => [base, c.num && "num", c.wide && "wide"].filter(Boolean).join(" ");
 
   return (
     <>
@@ -186,36 +196,50 @@ export function ListTable<T extends { id: string }>({
           : `${rows.length.toLocaleString()} ${noun}${visible.length < rows.length ? `, showing the first ${visible.length.toLocaleString()}` : ""}`}
       </p>
       <div className="table-wrap">
-        <Table aria-label={label} className="data-table" sortDescriptor={sort} onSortChange={onSort}>
-          <TableHeader columns={columns}>
-            {(c) => (
-              <Column
-                id={c.id}
-                isRowHeader={c.rowHeader}
-                allowsSorting={!!c.sort}
-                className={["th", c.num && "num", c.wide && "wide"].filter(Boolean).join(" ")}
-              >
-                {({ sortDirection, allowsSorting }) => (
-                  <span className="th-inner">
-                    {c.name}
-                    {allowsSorting && (
-                      <span className="sort-icon" aria-hidden="true" data-direction={sortDirection ?? undefined}>
-                        {sortDirection === "ascending" ? "▲" : sortDirection === "descending" ? "▼" : "↕"}
-                      </span>
+        <table aria-label={label} className="data-table">
+          <thead>
+            <tr>
+              {columns.map((c) => {
+                const active = sort.column === c.id ? sort.direction : undefined;
+                return (
+                  <th key={c.id} scope="col" className={cls("th", c)} aria-sort={c.sort ? (active ?? "none") : undefined}>
+                    {c.sort ? (
+                      <button
+                        type="button"
+                        className="th-inner th-button"
+                        onClick={() => onSort({ column: c.id, direction: active === "ascending" ? "descending" : "ascending" })}
+                      >
+                        {c.name}
+                        <span className="sort-icon" aria-hidden="true" data-direction={active}>
+                          {active === "ascending" ? "▲" : active === "descending" ? "▼" : "↕"}
+                        </span>
+                      </button>
+                    ) : (
+                      <span className="th-inner">{c.name}</span>
                     )}
-                  </span>
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+          <tbody onClick={followRowLink} onAuxClick={followRowLink}>
+            {visible.map((row) => (
+              <tr key={row.id} className="tr">
+                {columns.map((c) =>
+                  c.rowHeader ? (
+                    <th key={c.id} scope="row" className={cls("td", c)}>
+                      {c.cell(row)}
+                    </th>
+                  ) : (
+                    <td key={c.id} className={cls("td", c)}>
+                      {c.cell(row)}
+                    </td>
+                  )
                 )}
-              </Column>
-            )}
-          </TableHeader>
-          <TableBody items={visible}>
-            {(row) => (
-              <Row id={row.id} href={href(row)} columns={columns} className="tr">
-                {(c) => <Cell className={["td", c.num && "num", c.wide && "wide"].filter(Boolean).join(" ")}>{c.cell(row)}</Cell>}
-              </Row>
-            )}
-          </TableBody>
-        </Table>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       {visible.length < rows.length && (
         <Button className="more-button" onPress={() => setLimit((l) => l + pageSize)}>

@@ -351,13 +351,13 @@ const description = clip(
 
   {
     o.bundled && (
-      <section class="story">
+      <section class="story" id="bundled">
         <h2>Contributions its lobbyists bundled</h2>
         <p class="chart-dek">
           {o.bundled.bundlers.length === 1 ? o.bundled.bundlers[0]!.name : `${o.bundled.bundlers.length} of its lobbyists or its PAC`}{" "}
           collected <strong>{money(o.bundled.total, true)}</strong> from other donors and passed it to current members'
           campaigns and leadership PACs, {cycleRange}, as the campaigns reported on FEC Form 3L. Bundlers are matched to{" "}
-          {name} by name.
+          {name} by name. <a href="/bundling/">All lobbyist bundling</a>.
         </p>
         <RankedTable
           heading="Member"

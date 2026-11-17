@@ -15,7 +15,7 @@ const COLUMNS: ColumnDef<BillRow>[] = [
     sort: (r) => r.name,
     cell: (r) => (
       <span>
-        <span className="cell-title">{r.name}</span>
+        <a className="cell-title" href={`/bills/${r.id}/`}>{r.name}</a>
         <span className="cell-note">
           {r.label}
           {r.policyArea && ` · ${r.policyArea}`}
@@ -79,7 +79,6 @@ export default function BillsTable({ initial, src, policyAreas }: { initial: Bil
         noun={filtered.length === 1 ? "bill" : "bills"}
         rows={filtered}
         columns={COLUMNS}
-        href={(r) => `/bills/${r.id}/`}
         sort={{ column: f.sort, direction: f.dir as "ascending" | "descending" }}
         onSort={(s) => set({ sort: String(s.column), dir: s.direction })}
         resetKey={JSON.stringify(f)}

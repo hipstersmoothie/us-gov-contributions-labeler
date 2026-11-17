@@ -272,6 +272,8 @@ main:focus { outline: none; }
   scrollbar-width: none;
 }
 .sections ul::-webkit-scrollbar { display: none; }
+/* On a wide screen every section fits, spread across the column; narrower, the list scrolls. */
+@media (min-width: 1024px) { .sections ul { justify-content: space-between; gap: var(--sp-4); } }
 .sections a {
   display: block; padding: 10px 0 9px; white-space: nowrap;
   font-size: var(--fs-sm); font-weight: 600; color: var(--text-secondary); text-decoration: none;

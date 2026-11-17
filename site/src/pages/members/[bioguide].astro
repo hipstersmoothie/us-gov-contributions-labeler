@@ -41,6 +41,7 @@ import { clip, memberProfile, office, partyState } from "../../lib/seo";
 import TripsTable from "../../components/TripsTable.astro";
 import { legalFundByMember, years527, ein, IRS_SEARCH } from "../../lib/irs527";
 import { tripsByMember, summarize, sinceLabel, sponsorByKey, sponsorHref, TRIPS_SHOWN } from "../../lib/travel";
+import { bundlerName, bundlerNote, bundlerHref } from "../../lib/bundling";
 
 export function getStaticPaths() {
   return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
@@ -120,7 +121,6 @@ const byNonCommittee = spenders.filter((s) => s.nonCommittee).reduce((n, s) => n
 const byHidden = spenders.filter((s) => s.hidden).reduce((n, s) => n + s.support + s.oppose, 0);
 const ec = m.electioneering;
 // Lobbyist PACs we have a page for go by the name used everywhere else on the site.
-const bundlerName = (b: { name: string; committee?: string }) => (b.committee && committeeById.has(b.committee) ? committeeLabel(b.committee) : b.name);
 
 // Who gave: small vs. itemized, where itemized donors live, and the
 // candidate's own money, each against the chamber's median member.
@@ -637,7 +637,7 @@ const legalFund = legalFundByMember.get(m.bioguide);
 
   {
     m.bundling && (
-      <section class="story">
+      <section class="story" id="bundling">
         <h2>Lobbyists who bundled for {last}</h2>
         <p class="chart-dek">
           Registered lobbyists and lobbyists' PACs collected <strong>{money(m.bundling.total, true)}</strong> from other
@@ -650,8 +650,8 @@ const legalFund = legalFundByMember.get(m.bioguide);
           valueHeading="Bundled"
           rows={m.bundling.bundlers.slice(0, 15).map((b) => ({
             label: bundlerName(b),
-            href: b.organization ? `/organizations/${b.organization}/` : b.committee && committeeById.has(b.committee) ? `/pacs/${b.committee}/` : undefined,
-            note: b.type === "pac" ? "Lobbyist PAC" : [b.occupation ? `Lobbyist, ${b.occupation.toLowerCase()}` : "Lobbyist", b.employer].filter(Boolean).join(" · "),
+            href: bundlerHref(b),
+            note: bundlerNote(b),
             value: b.total,
           }))}
         />
@@ -674,7 +674,8 @@ const legalFund = legalFundByMember.get(m.bioguide);
           {m.bundling.committees.map((id, i) => (
             <>{i > 0 && ", "}<a href={`https://www.fec.gov/data/filings/?committee_id=${id}&form_type=F3L`}>{committeeLabel(id)}</a></>
           ))}
-          . Names link to our organization pages where the employer or PAC matches by name.
+          . Names link to our organization pages where the employer or PAC matches by name.{" "}
+          <a href="/bundling/">Lobbyist bundling for every member</a>.
         </p>
       </section>
     )

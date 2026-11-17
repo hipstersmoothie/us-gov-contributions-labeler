@@ -1,0 +1,84 @@
+---
+import Base from "../../layouts/Base.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
+import { memberById, money, partyLetter, cycleRange } from "../../lib/data";
+import { chamberName } from "../../lib/derived";
+import { bundledMembers, bundlingTotal, bundlers, bundlerName, bundlerNote, bundlerHref } from "../../lib/bundling";
+
+const MEMBERS_SHOWN = 15;
+const pacs = bundlers.filter((b) => b.type === "pac").length;
+const top = bundlers[0];
+const memberRow = (r: (typeof bundledMembers)[number]) => {
+  const m = memberById.get(r.id);
+  return {
+    label: m?.name ?? r.id,
+    value: r.total,
+    href: `/members/${r.id}/#bundling`,
+    party: m ? partyLetter(m.party) : undefined,
+    note: m ? `${chamberName(m)}, ${m.state} · ${r.bundlers} bundler${r.bundlers === 1 ? "" : "s"}` : undefined,
+  };
+};
+---
+
+<Base
+  title="Lobbyist bundling"
+  og={{ type: "page", id: "bundling" }}
+  crumbs={[["Lobbyist bundling", "/bundling/"]]}
+  description={`Lobbyists and lobbyists' PACs bundled ${money(bundlingTotal, true)} in contributions to ${bundledMembers.length} current members of Congress, ${cycleRange}, as their campaigns reported to the FEC.`}
+>
+  <p class="kicker">FEC Form 3L</p>
+  <h1>Lobbyist bundling</h1>
+  <p class="dek">
+    When a registered lobbyist or a lobbyist's PAC collects contributions from other donors and passes them to a
+    campaign, the campaign has to report it. From {cycleRange}, <strong>{bundledMembers.length}</strong> current members'
+    campaigns and leadership PACs reported <strong>{money(bundlingTotal, true)}</strong> bundled by{" "}
+    <strong>{bundlers.length}</strong> lobbyists and lobbyists' PACs.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Bundled</dt><dd>{money(bundlingTotal, true)}<small>{cycleRange}</small></dd></div>
+    <div class="stat"><dt>Members</dt><dd>{bundledMembers.length}</dd></div>
+    <div class="stat"><dt>Bundlers</dt><dd>{bundlers.length}</dd></div>
+    {top && <div class="stat"><dt>Largest bundler's share</dt><dd>{Math.round((100 * top.total) / Math.max(bundlingTotal, 1))}%</dd></div>}
+  </dl>
+
+  <div class="grid-2">
+    <section class="story" id="members">
+      <h2>Members it was bundled for</h2>
+      <p class="chart-dek">
+        Bundled for each member's campaign or leadership PAC. The money itself is counted with the donors who gave it.
+      </p>
+      <RankedTable heading="Member" valueHeading="Bundled" rows={bundledMembers.slice(0, MEMBERS_SHOWN).map(memberRow)} />
+      {bundledMembers.length > MEMBERS_SHOWN && (
+        <MoreDisclosure client:visible title={`All ${bundledMembers.length} members`}>
+          <RankedTable heading="Member" valueHeading="Bundled" rows={bundledMembers.map(memberRow)} />
+        </MoreDisclosure>
+      )}
+    </section>
+    <section class="story" id="bundlers">
+      <h2>The bundlers</h2>
+      <p class="chart-dek">
+        What each bundled for all current members{pacs > 0 && `; ${pacs} of the ${bundlers.length} are lobbyists' PACs`}.
+        Names link to our organization pages where the PAC or the lobbyist's employer matches by name.
+      </p>
+      <RankedTable
+        heading="Bundler"
+        valueHeading="Bundled"
+        rows={bundlers.map((b) => ({
+          label: bundlerName(b),
+          href: bundlerHref(b),
+          note: `${bundlerNote(b)} · ${b.members} member${b.members === 1 ? "" : "s"}`,
+          value: b.total,
+        }))}
+      />
+    </section>
+  </div>
+
+  <p class="source">
+    From campaigns' and leadership PACs' FEC{" "}
+    <a href="https://www.fec.gov/help-candidates-and-committees/lobbyist-bundling-disclosure/">Form 3L</a> reports,
+    which are due once a lobbyist's bundles pass a threshold, indexed for inflation, in a half-year.{" "}
+    <a href="/about/#bundling">How bundling is counted</a>.
+  </p>
+</Base>

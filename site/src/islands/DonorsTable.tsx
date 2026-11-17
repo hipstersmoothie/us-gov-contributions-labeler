@@ -12,7 +12,7 @@ const COLUMNS: ColumnDef<DonorRow>[] = [
     sort: (r) => r.name,
     cell: (r) => (
       <span>
-        <span className="cell-title">{r.name}</span>
+        <a className="cell-title" href={`/donors/${r.id}/`}>{r.name}</a>
         {r.about && <span className="cell-note">{r.about}</span>}
       </span>
     ),
@@ -51,7 +51,6 @@ export default function DonorsTable({ initial, src }: { initial: DonorRow[]; src
         noun={filtered.length === 1 ? "donor" : "donors"}
         rows={filtered}
         columns={COLUMNS}
-        href={(r) => `/donors/${r.id}/`}
         sort={{ column: f.sort, direction: f.dir as "ascending" | "descending" }}
         onSort={(s) => set({ sort: String(s.column), dir: s.direction })}
         resetKey={JSON.stringify(f)}

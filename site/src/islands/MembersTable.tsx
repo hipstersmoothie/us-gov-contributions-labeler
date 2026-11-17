@@ -14,7 +14,7 @@ const COLUMNS: ColumnDef<MemberRow>[] = [
       <span className="cell-name">
         <PartyTag party={r.party} />
         <span>
-          <span className="cell-title">{r.name}</span>
+          <a className="cell-title" href={`/members/${r.id}/`}>{r.name}</a>
           <span className="cell-note">{r.seat}</span>
         </span>
       </span>
@@ -76,7 +76,6 @@ export default function MembersTable({ rows, states }: { rows: MemberRow[]; stat
         noun={filtered.length === 1 ? "member" : "members"}
         rows={filtered}
         columns={COLUMNS}
-        href={(r) => `/members/${r.id}/`}
         sort={{ column: f.sort, direction: f.dir as "ascending" | "descending" }}
         onSort={(s) => set({ sort: String(s.column), dir: s.direction })}
         pageSize={100}

@@ -30,6 +30,7 @@ import { bills, congress, ordinal, shortStatus, fmtDate, PATTERN_LABEL, chamberL
 import { countries, principalsByCountry, registrantById, activePrincipals, activeRegistrants, giftsTotal, faraSince } from "../src/lib/fara";
 import { revolvingStats, lobbyists, membersByStaff, filingYears } from "../src/lib/revolving";
 import { trips, activeSponsors, tripsBySponsor, summarize, sinceLabel } from "../src/lib/travel";
+import { bundledMembers, bundlingTotal, bundlers, bundlerName } from "../src/lib/bundling";
 import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
 
 const OUT_DIR = path.resolve(process.cwd(), "server/data");
@@ -310,6 +311,14 @@ cards["page/foreign-lobbying"] = {
     { label: "Countries", value: countries.filter((c) => c.active > 0).length.toLocaleString() },
     { label: "Agents' gifts to members", value: money(giftsTotal, true) },
   ],
+};
+cards["page/bundling"] = {
+  type: "page",
+  kicker: "Lobbyist bundling",
+  title: "Lobbyists who bundled money for members",
+  dek: `Lobbyists and lobbyists' PACs bundled ${money(bundlingTotal, true)} for ${bundledMembers.length} current members, ${cycleRange}.`,
+  barsTitle: "Bundled the most",
+  bars: bundlers.slice(0, 4).map((b) => ({ label: bundlerName(b), value: b.total })),
 };
 cards["page/about"] = {
   type: "page",

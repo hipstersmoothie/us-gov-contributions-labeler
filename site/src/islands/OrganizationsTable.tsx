@@ -12,7 +12,7 @@ const COLUMNS: ColumnDef<OrgRow>[] = [
     sort: (r) => r.name,
     cell: (r) => (
       <span>
-        <span className="cell-title">{r.name}</span>
+        <a className="cell-title" href={`/organizations/${r.id}/`}>{r.name}</a>
         {r.industry && <span className="cell-note">{r.industry}</span>}
       </span>
     ),
@@ -47,7 +47,6 @@ export default function OrganizationsTable({ initial, src, sectors }: { initial:
         noun={filtered.length === 1 ? "organization" : "organizations"}
         rows={filtered}
         columns={COLUMNS}
-        href={(r) => `/organizations/${r.id}/`}
         sort={{ column: f.sort, direction: f.dir as "ascending" | "descending" }}
         onSort={(s) => set({ sort: String(s.column), dir: s.direction })}
         resetKey={JSON.stringify(f)}
