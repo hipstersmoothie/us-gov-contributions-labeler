@@ -289,7 +289,7 @@ main:focus { outline: none; }
 .sections a[aria-current="page"] { color: var(--text-primary); border-bottom-color: var(--text-primary); }
 
 /* --- footer --- */
-.site-footer { margin-top: var(--sp-8); border-top: 1px solid var(--rule); color: var(--text-muted); font-size: var(--fs-sm); }
+.site-footer { margin-top: var(--sp-8); border-top: 1px solid var(--hairline); color: var(--text-muted); font-size: var(--fs-sm); }
 .footer-grid { display: grid; grid-template-columns: auto 1fr auto; gap: var(--sp-3) var(--sp-6); padding-top: var(--sp-5); padding-bottom: var(--sp-7); align-items: baseline; }
 .footer-grid p { margin: 0; }
 .footer-brand { display: flex; flex-direction: column; gap: var(--sp-2); }
@@ -395,10 +395,10 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 }
 
 @media (max-width: 640px) {
-  .wrap { padding: 0 var(--sp-4); }
+  /* Sides only: .masthead-row and .footer-grid are .wrap too, with their own top and bottom padding. */
+  .wrap { padding-left: var(--sp-4); padding-right: var(--sp-4); }
   .masthead { margin-bottom: var(--sp-6); }
-  /* Both paddings: the .wrap rule above resets them, which left the search box sitting on the nav's rule. */
-  .masthead-row { flex-wrap: wrap; padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
+  .masthead-row { flex-wrap: wrap; padding-top: var(--sp-3); }
   .brand .logo { height: 34px; }
   .stats { grid-template-columns: 1fr 1fr; border-top: 0; }
   .stat, .stat:first-child { padding: var(--sp-3) var(--sp-3) var(--sp-3) 0; border-left: 0; border-top: 1px solid var(--hairline); }
