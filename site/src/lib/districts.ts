@@ -12,7 +12,8 @@ import { STATES } from "../../../src/lib/list-specs.ts";
 import { members, photoUrl, partyLetter, committeeLabel, committeeHref, spenderType, type Member } from "./data";
 import { pacTotal, raisedTotal } from "./derived";
 import { shortSector } from "./format";
-import type { DelegationFile, MemberSummary, OutsideMoney, ZipFile } from "../islands/find/types";
+import type { DelegationFile, MemberSummary, OutsideMoney, RaceLink, StateRaces, ZipFile } from "../islands/find/types";
+import { races, raceYear, raceHref, raceName, type Race } from "./races";
 import { NO_SENATORS, ordinal, districtName as name } from "../islands/find/core";
 
 export { CONGRESS, STATES, NO_SENATORS };
@@ -162,6 +163,29 @@ export function delegationFile(d: Delegation, list?: string): DelegationFile {
     house: Object.fromEntries(d.house.map((h) => [String(h.district), h.member ? summary(h.member) : null])),
     noSenators: NO_SENATORS.has(d.state) || undefined,
     list,
+    races: stateRaces(d.state),
+  };
+}
+
+const racesByState = Map.groupBy(races, (r) => r.state);
+const raceLink = (r: Race): RaceLink => ({ label: raceName(r), href: raceHref(r), support: r.outside.support, oppose: r.outside.oppose });
+
+/**
+ * A state's races this year. The House races follow the districts on the
+ * ballot, so where a state drew new lines they're linked as a list, not
+ * matched to the reader's current district.
+ */
+export function stateRaces(st: string): StateRaces | undefined {
+  const list = racesByState.get(st);
+  if (!list?.length) return undefined;
+  const house = list.filter((r) => r.office === "H");
+  const redrawn = house.find((r) => r.redrawn)?.redrawn?.note;
+  return {
+    year: raceYear,
+    senate: list.filter((r) => r.office === "S").map(raceLink),
+    house: redrawn ? {} : Object.fromEntries(house.map((r) => [String(r.district ?? 0), raceLink(r)])),
+    redrawn,
+    index: `/races/${raceYear}/?state=${st}`,
   };
 }
 

@@ -59,4 +59,25 @@ export interface DelegationFile {
   noSenators?: boolean;
   /** The delegation's Bluesky list. */
   list?: string;
+  /** This year's elections in the state (/races/), with outside spending on each. */
+  races?: StateRaces;
+}
+
+export interface RaceLink {
+  label: string;
+  href: string;
+  /** Outside spending for and against its candidates. */
+  support: number;
+  oppose: number;
+}
+
+export interface StateRaces {
+  year: number;
+  senate: RaceLink[];
+  /** By district on the current map; left out where the state drew new lines. */
+  house: Record<string, RaceLink>;
+  /** Why the House races don't follow the current districts. */
+  redrawn?: string;
+  /** The state's races on the races index. */
+  index: string;
 }

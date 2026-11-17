@@ -5,7 +5,7 @@ import MemberCard from "../../components/MemberCard.astro";
 import OutsideTable from "../../components/OutsideTable.astro";
 import "../../styles/find.css";
 import { cycleRange, money } from "../../lib/data";
-import { delegations, statePath, stateSlug, summary, districtName, congressName, congressYears, type Delegation } from "../../lib/districts";
+import { delegations, statePath, stateSlug, summary, districtName, congressName, congressYears, stateRaces, type Delegation } from "../../lib/districts";
 import { summarizeState, makeup, partyCounts } from "../../lib/states";
 import { sectors } from "../../lib/sectors";
 import { stateList } from "../../lib/bluesky";
@@ -23,6 +23,7 @@ const s = summarizeState(d);
 const n = s.members.length;
 const path = statePath(d.state);
 const list = stateList(d.state);
+const raceList = stateRaces(d.state);
 const onBluesky = s.members.filter((m) => m.accounts.length).length;
 const sectorPages = new Set(sectors.map((x) => x.name));
 const sectorHref = (name: string) => (sectorPages.has(name) ? `/sectors/${sectors.find((x) => x.name === name)!.slug}/` : undefined);
@@ -83,6 +84,7 @@ const itemList = {
 
   <p class="state-find">
     Not sure which district is yours? <a href="/find/">Find your members by ZIP code or address</a>.
+    {raceList && <> · <a href={raceList.index}>{Possessive} {raceList.year} races</a></>}
     {list && <> · <a href={list.url}>Follow {possessiveOf(d.state, d.name)} delegation on Bluesky</a></>}
   </p>
 
@@ -124,7 +126,7 @@ const itemList = {
   </section>
 
   <section class="story" id="outside">
-    <h2>Outside money in {possessiveOf(d.state, d.name)} races</h2>
+    <h2>Outside money for and against {n === 1 ? "this member" : `${possessiveOf(d.state, d.name)} members`}</h2>
     {
       s.outside.spenders.length > 0 ? (
         <>

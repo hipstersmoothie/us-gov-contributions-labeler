@@ -346,6 +346,7 @@ function Results({ r, onNarrow, congressLabel, cycleRange, showShare }: { r: Res
         split={split}
         cycleRange={cycleRange}
       />
+      <Races r={r} />
 
       <p className="find-links">
         {r.states.map((s, i) => (
@@ -379,7 +380,7 @@ function Outside({ members, split, cycleRange }: { members: MemberSummary[]; spl
   const who = split ? "these members" : members.length === 1 ? "your member" : "your members";
   return (
     <section className="find-outside" aria-labelledby="find-outside-h">
-      <h3 className="find-group" id="find-outside-h">Outside money in {split ? "these races" : "your races"}</h3>
+      <h3 className="find-group" id="find-outside-h">Outside money for and against {split ? "these members" : members.length === 1 ? "your member" : "your members"}</h3>
       {rows.length === 0 ? (
         <p className="find-note">No outside groups reported spending for or against {who} by name, {cycleRange}.</p>
       ) : (
@@ -427,6 +428,64 @@ function Outside({ members, split, cycleRange }: { members: MemberSummary[]; spl
         </p>
       )}
       <p className="find-note">Each group's page shows who funds it, where its filings say.</p>
+    </section>
+  );
+}
+
+/** This year's elections where the reader lives, with the outside money in each. */
+function Races({ r }: { r: Result }) {
+  const states = r.states.filter((s) => s.races);
+  if (!states.length) return null;
+  const year = states[0]!.races!.year;
+  const rows: { key: string; label: ReactNode; href: string; support: number; oppose: number }[] = [];
+  const notes: ReactNode[] = [];
+  for (const s of states) {
+    const races = s.races!;
+    for (const x of races.senate) rows.push({ key: x.href, label: x.label, href: x.href, support: x.support, oppose: x.oppose });
+    if (r.stateOnly) continue;
+    const mine = r.parts.filter((p) => p.state === s.state);
+    if (races.redrawn) {
+      notes.push(
+        <span key={s.state}>
+          {races.redrawn} The {year} House races were on the new districts, so yours may not match the district above:{" "}
+          <a href={races.index}>{possessive(s.state, s.name)} {year} races</a>.
+        </span>
+      );
+      continue;
+    }
+    for (const p of mine) {
+      const x = races.house[String(p.district)];
+      if (x) rows.push({ key: x.href, label: x.label, href: x.href, support: x.support, oppose: x.oppose });
+    }
+  }
+  if (!rows.length && !notes.length) return null;
+  return (
+    <section className="find-races" aria-labelledby="find-races-h">
+      <h3 className="find-group" id="find-races-h">Your {year} elections</h3>
+      {rows.length > 0 && (
+        <>
+          <p className="find-dek">Outside spending for and against the candidates on the ballot where you live.</p>
+          <table className="find-outside-table">
+            <thead>
+              <tr>
+                <th scope="col">Race</th>
+                <th scope="col" className="num">Supporting</th>
+                <th scope="col" className="num">Opposing</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((x) => (
+                <tr key={x.key}>
+                  <td><a href={x.href}>{x.label}</a></td>
+                  <td className="num">{x.support ? money(x.support, true) : <span className="muted">–</span>}</td>
+                  <td className="num">{x.oppose ? money(x.oppose, true) : <span className="muted">–</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+      {notes.map((n, i) => <p key={i} className="find-note">{n}</p>)}
     </section>
   );
 }

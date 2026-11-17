@@ -107,6 +107,11 @@ The switch is a data refresh, not a code change. In order:
       the 120th Congress; the first refresh after Jan. 3 starts it empty.
       Former members' vote tables come from the 119th Congress data until then.
 - [ ] **Photos:** `pnpm photos` for new members' portraits.
+- [ ] **District maps:** the member finder and state pages map ZIPs and
+      addresses to the 119th Congress's districts until `CONGRESS` in
+      `src/lib/districts.ts` moves to 120; see "Districts and the next
+      Congress" in the README. The build warns when a member's district isn't
+      on the map.
 - [ ] **Races still open on Jan. 3** (recounts, contested results): stay
       pending until certified; nothing to do.
 - [ ] **Copy:** the races index and the about page say results are pending;
