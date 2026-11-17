@@ -33,6 +33,7 @@ import { CLIENT_CAPABILITIES_META_KEY, McpServer, acceptedContent, createMcpHand
 import * as z from "zod";
 import { search, TYPE_NAMES, type SearchRow, type SearchType } from "./search.ts";
 import { limited, lookup } from "./geocode.ts";
+import { AGREED_HOURS, FREE_RECORDS, FREE_RECORDS_OVERALL, MAX_ROWS, QUERY_TIMEOUT_MS } from "./mcp-limits.ts";
 import type { QueryRequest, QueryResult } from "./sql-worker.ts";
 
 export const MCP_PATH = "/mcp";
@@ -41,7 +42,6 @@ const SITE = (process.env.SITE_URL ?? "https://contributions.fyi").replace(/\/$/
 const WORKER = path.join(import.meta.dirname, "sql-worker.ts");
 /** Roughly 25K tokens: past this, a record's longest lists are cut short. */
 const MAX_CHARS = 100_000;
-const QUERY_TIMEOUT_MS = 10_000;
 const MAX_QUERIES = 4;
 
 const TYPE_LETTER = Object.fromEntries(Object.entries(TYPE_NAMES).map(([letter, name]) => [name, letter])) as Record<string, SearchType>;
@@ -56,16 +56,11 @@ const isDisclosureTable = (table: string) => table === "disclosures" || table.st
 
 // --- agreeing to the disclosure terms ------------------------------------------------
 
-/** Disclosure records a client can read in an hour before it needs the user's agreement. */
-const FREE_RECORDS = 25;
-/** And all clients together, since a client can claim to be many (X-Forwarded-For). */
-const FREE_RECORDS_OVERALL = 500;
 const HOUR = 3600_000;
-/** How long an agreement lasts. */
-const AGREED_MS = 24 * HOUR;
+const AGREED_MS = AGREED_HOURS * HOUR;
 /** Signs agreement tokens. A new deploy has a new key, so users agree again. */
 const TERMS_KEY = crypto.randomBytes(32);
-const TERMS = `This asks for House members' financial disclosures in bulk. Under 5 U.S.C. § 13107, it is unlawful to obtain or use these reports for any unlawful purpose; for any commercial purpose, other than by news and communications media for dissemination to the general public; to determine or establish anyone's credit rating; or, directly or indirectly, to solicit money for any political, charitable or other purpose. Agree only if you'll use this data within those limits. Your agreement lasts 24 hours.`;
+const TERMS = `This asks for House members' financial disclosures in bulk. Under 5 U.S.C. § 13107, it is unlawful to obtain or use these reports for any unlawful purpose; for any commercial purpose, other than by news and communications media for dissemination to the general public; to determine or establish anyone's credit rating; or, directly or indirectly, to solicit money for any political, charitable or other purpose. Agree only if you'll use this data within those limits. Your agreement lasts ${AGREED_HOURS} hours.`;
 const agreement = z.object({ agree: z.boolean().describe("I'll use this data only within the limits of 5 U.S.C. § 13107") });
 
 /** Tokens are for the client that agreed, so one can't be passed around. */
@@ -120,7 +115,7 @@ function agreed(ctx: AgreementContext, token: string | undefined, client: string
   return { agreed: false as const, result: inputRequired({ inputRequests: { terms: inputRequired.elicit({ message: TERMS, requestedSchema: agreement }) } }) };
 }
 /** Said with a new token, so the model passes it on. */
-const TOKEN_NOTE = "The user agreed to the disclosure terms. Pass termsToken as terms_token in later calls that read disclosures, for the next 24 hours.";
+const TOKEN_NOTE = `The user agreed to the disclosure terms. Pass termsToken as terms_token in later calls that read disclosures, for the next ${AGREED_HOURS} hours.`;
 
 const json = (value: unknown) => ({ content: [{ type: "text" as const, text: JSON.stringify(value) }] });
 const fail = (text: string) => ({ content: [{ type: "text" as const, text }], isError: true });
@@ -337,10 +332,10 @@ export function createMcp(dir: string) {
       "query",
       {
         title: "Query with SQL",
-        description: `Run one read-only SQLite SELECT over the tables from list_tables, for rankings, totals and filters across records.${attach.fec ? " Name the filing-level tables with their schema: fec.fec_contributions, lobbying.lobbying_filings." : ""} Up to 1,000 rows, ${QUERY_TIMEOUT_MS / 1000} seconds. Filter or join on ids (indexed) and use LIMIT.`,
+        description: `Run one read-only SQLite SELECT over the tables from list_tables, for rankings, totals and filters across records.${attach.fec ? " Name the filing-level tables with their schema: fec.fec_contributions, lobbying.lobbying_filings." : ""} Up to ${MAX_ROWS.toLocaleString("en-US")} rows, ${QUERY_TIMEOUT_MS / 1000} seconds. Filter or join on ids (indexed) and use LIMIT.`,
         inputSchema: z.object({
           sql: z.string().min(1),
-          limit: z.number().int().min(1).max(1000).default(100).describe("Most rows to return"),
+          limit: z.number().int().min(1).max(MAX_ROWS).default(100).describe("Most rows to return"),
           ...(holdings ? { terms_token: z.string().optional().describe("termsToken from an earlier agreement to the disclosure terms") } : {}),
         }),
         annotations: readOnly,
@@ -391,12 +386,6 @@ export function createMcp(dir: string) {
     };
     if (req.method === "OPTIONS") {
       res.writeHead(204, cors);
-      res.end();
-      return;
-    }
-    // Someone opening the URL in a browser: how to use it.
-    if (req.method === "GET" && req.headers.accept?.includes("text/html")) {
-      res.writeHead(302, { Location: "/open-data/#mcp" });
       res.end();
       return;
     }

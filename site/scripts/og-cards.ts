@@ -370,6 +370,18 @@ cards["page/open-data"] = {
   ],
 };
 const stateRows = delegations.filter((d) => d.senators.length).map(summarizeState);
+cards["page/mcp"] = {
+  type: "page",
+  kicker: "For AI assistants",
+  title: "Ask your AI assistant who funds Congress",
+  dek: "Add contributions.fyi to Claude or any assistant that takes an MCP server. Free, with no sign-in.",
+  lines: [
+    { strong: "search", text: "members, PACs, donors, bills and races by name" },
+    { strong: "get_record", text: "a page's full record, with links" },
+    { strong: "find_members", text: "who represents a ZIP code or address" },
+    { strong: "query", text: "SQL across everything, down to FEC filings" },
+  ],
+};
 cards["page/states"] = {
   type: "page",
   kicker: "States",

@@ -155,7 +155,9 @@ const server = http.createServer((req, res) => {
     void findDistrict(req, res);
     return;
   }
-  if ((url.pathname === MCP_PATH || url.pathname === `${MCP_PATH}/`) && mcp) {
+  // MCP clients at /mcp; a browser opening the same URL gets the page about it, /mcp/.
+  const browsing = read && !!req.headers.accept?.includes("text/html");
+  if ((url.pathname === MCP_PATH || url.pathname === `${MCP_PATH}/`) && mcp && !browsing) {
     void mcp(req, res);
     return;
   }

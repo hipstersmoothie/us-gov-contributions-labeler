@@ -1,6 +1,7 @@
 ---
 import { Code } from "astro:components";
 import Base from "../layouts/Base.astro";
+import "../styles/snippets.css";
 import { cycles, generatedAt } from "../lib/data";
 import { abs, SITE_NAME } from "../lib/seo";
 import examples from "../data/open-data-examples.json";
@@ -74,12 +75,6 @@ sqlite3 -header -column lobbying-filings.sqlite "
   FROM lobbying_filings_with_links
   WHERE organization = 'lockheed-martin' AND type NOT LIKE 'R%'
   ORDER BY posted DESC"`;
-
-const mcp = `# Claude Code
-claude mcp add --transport http contributions-fyi ${abs("/mcp")}
-
-# other clients: Streamable HTTP, no sign-in
-{ "mcpServers": { "contributions-fyi": { "type": "http", "url": "${abs("/mcp")}" } } }`;
 
 const goat = `goat get at://data.contributions.fyi/fyi.contributions.member/C000127
 goat record ls data.contributions.fyi --collection fyi.contributions.member
@@ -247,16 +242,10 @@ const collections = [
 
     <h2 id="mcp">Ask an AI assistant</h2>
     <p>
-      This site runs an <a href="https://modelcontextprotocol.io">MCP</a> server at <code>{abs("/mcp")}</code>, so
-      assistants like Claude can look things up here and link to the pages behind their answers. <code>search</code>{" "}
-      finds anything by name, as the search box does; <code>get_record</code> reads a page's full record;{" "}
-      <code>find_members</code> says who represents a ZIP code or street address; and <code>list_tables</code> and{" "}
-      <code>query</code> run SQL over everything above, <code>contributions.sqlite</code> and both filing files, plus
-      races and the districts of each ZIP code. It also has House members' investments, from their financial
-      disclosures, with the notice that comes with them: those aren't part of the open data, and 5 U.S.C. § 13107
-      limits how they can be used, so reading them in bulk asks you to agree to those limits first. Add it as a custom connector in your assistant's settings, or:
+      The same data, and members' investments, can be searched and queried by AI assistants like Claude through
+      this site's <a href="https://modelcontextprotocol.io">MCP</a> server at <code>{abs("/mcp")}</code>. See{" "}
+      <a href="/mcp/">how to add it to your assistant</a>.
     </p>
-    <Code code={mcp} lang="sh" themes={themes} defaultColor={false} />
 
     <h2>With goat</h2>
     <p>
@@ -315,53 +304,18 @@ const collections = [
 </Base>
 
 <script>
-  // Copy buttons on the code samples. Copies are counted by section, whether by
-  // button or by selecting the text; copying a snippet that downloads the
+  // Copies are counted by section; copying a snippet that downloads the
   // dataset counts as a download.
   import { track } from "../lib/analytics";
+  import { copyButtons } from "../lib/snippets";
 
-  const sectionOf = new Map<Element, string>();
-  let heading = "";
-  for (const el of document.querySelectorAll(".prose h2, .prose pre.astro-code")) {
-    if (el.tagName === "H2") heading = el.textContent ?? "";
-    else sectionOf.set(el, heading);
-  }
-  const report = (pre: Element, how: string) => {
+  copyButtons((pre, section, how) => {
     const download = /getBlob|getRepo|repo export/.test(pre.textContent ?? "");
     track(download ? "Open data: download" : "Open data: copy", {
-      section: sectionOf.get(pre) ?? "",
+      section,
       sample: pre.closest("details") ? "example response" : "command",
       how,
     });
-  };
-
-  for (const pre of sectionOf.keys()) {
-    const wrap = document.createElement("div");
-    wrap.className = "snippet";
-    pre.replaceWith(wrap);
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "copy-button";
-    button.textContent = "Copy";
-    button.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(pre.textContent ?? "");
-      } catch {
-        // No clipboard access: select the code so it can be copied by hand.
-        getSelection()?.selectAllChildren(pre);
-        return;
-      }
-      button.textContent = "Copied";
-      setTimeout(() => (button.textContent = "Copy"), 1500);
-      report(pre, "button");
-    });
-    wrap.append(pre, button);
-  }
-
-  document.addEventListener("copy", () => {
-    const node = document.getSelection()?.anchorNode;
-    const pre = (node instanceof Element ? node : node?.parentElement)?.closest("pre.astro-code");
-    if (pre) report(pre, "selection");
   });
 </script>
 
@@ -370,25 +324,6 @@ const collections = [
   .prose h2 { margin-top: var(--sp-7); padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
   .prose h2:first-child { margin-top: 0; }
   .prose p { margin: 0 0 var(--sp-4); }
-  code { font: 0.875em/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
-  p code { padding: 1px 4px; border-radius: 2px; background: var(--surface-2); overflow-wrap: anywhere; }
-  .prose :global(pre.astro-code) {
-    overflow-x: auto; margin: 0 0 var(--sp-4); padding: var(--sp-4); border-left: 3px solid var(--baseline);
-    background-color: var(--surface-2) !important; font-size: var(--fs-sm); line-height: 1.5;
-  }
-  .prose :global(pre.astro-code code) { font: inherit; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
-  /* Shiki writes both themes' colors as variables; pick one per color scheme. */
-  .prose :global(.astro-code span) { color: var(--shiki-light); }
-  @media (prefers-color-scheme: dark) {
-    .prose :global(.astro-code span) { color: var(--shiki-dark); }
-  }
-  .prose :global(.snippet) { position: relative; }
-  .prose :global(.copy-button) {
-    position: absolute; top: var(--sp-2); right: var(--sp-2); padding: 3px 9px; border: 1px solid var(--hairline);
-    border-radius: 3px; background: var(--surface); color: var(--text-secondary); cursor: pointer;
-    font: 600 var(--fs-label)/1.4 var(--sans); letter-spacing: 0.02em;
-  }
-  @media (hover: hover) and (pointer: fine) { .prose :global(.copy-button:hover) { color: var(--text-primary); border-color: var(--text-muted); } }
   details { margin: calc(-1 * var(--sp-2)) 0 var(--sp-5); }
   details summary { cursor: pointer; font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: var(--sp-2); }
   details :global(pre.astro-code) { max-height: 28rem; }

@@ -1,0 +1,20 @@
+/* Code samples with copy buttons, in a page's .prose (open-data, mcp; see lib/snippets.ts). */
+.prose code { font: 0.875em/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
+.prose p code, .prose li code { padding: 1px 4px; border-radius: 2px; background: var(--surface-2); overflow-wrap: anywhere; }
+.prose pre.astro-code {
+  overflow-x: auto; margin: 0 0 var(--sp-4); padding: var(--sp-4); border-left: 3px solid var(--baseline);
+  background-color: var(--surface-2) !important; font-size: var(--fs-sm); line-height: 1.5;
+}
+.prose pre.astro-code code { font: inherit; font-family: ui-monospace, "SF Mono", Menlo, monospace; padding: 0; background: none; }
+/* Shiki writes both themes' colors as variables; pick one per color scheme. */
+.prose .astro-code span { color: var(--shiki-light); }
+@media (prefers-color-scheme: dark) {
+  .prose .astro-code span { color: var(--shiki-dark); }
+}
+.prose .snippet { position: relative; }
+.prose .copy-button {
+  position: absolute; top: var(--sp-2); right: var(--sp-2); padding: 3px 9px; border: 1px solid var(--hairline);
+  border-radius: 3px; background: var(--surface); color: var(--text-secondary); cursor: pointer;
+  font: 600 var(--fs-label)/1.4 var(--sans); letter-spacing: 0.02em;
+}
+@media (hover: hover) and (pointer: fine) { .prose .copy-button:hover { color: var(--text-primary); border-color: var(--text-muted); } }

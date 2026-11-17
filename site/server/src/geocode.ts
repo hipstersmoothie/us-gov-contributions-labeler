@@ -40,7 +40,7 @@ const STATE_FIPS: Record<string, string> = {
 // polite user of a free service. Counts only; addresses never enter. ----------------
 
 const WINDOW_MS = 10 * 60 * 1000;
-const PER_CLIENT = 20;
+export const PER_CLIENT = 20;
 const OVERALL = 600;
 const hits = new Map<string, number[]>();
 let overall: number[] = [];

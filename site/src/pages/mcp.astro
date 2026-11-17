@@ -1,0 +1,185 @@
+---
+// /mcp/: what the MCP server at /mcp is and how to add it to an assistant.
+// The server answers MCP clients at the same URL; browsers get this page
+// (server/src/index.ts).
+import { Code } from "astro:components";
+import Base from "../layouts/Base.astro";
+import "../styles/snippets.css";
+import { committees, cycleRange, donors, generatedAt, members, organizations } from "../lib/data";
+import { bills } from "../lib/legislation";
+import { allRaces } from "../lib/races";
+import { disclosures } from "../lib/holdings";
+import { abs } from "../lib/seo";
+import { AGREED_HOURS, FREE_RECORDS, MAX_ROWS, QUERY_TIMEOUT_MS } from "../../server/src/mcp-limits.ts";
+import { PER_CLIENT as LOOKUPS_PER_CLIENT } from "../../server/src/geocode.ts";
+
+const url = abs("/mcp");
+const themes = { light: "github-light", dark: "github-dark" } as const;
+const holdings = disclosures.size > 0;
+const count = (n: number) => n.toLocaleString("en-US");
+
+const claudeCode = `claude mcp add --transport http contributions-fyi ${url}`;
+const vscode = JSON.stringify({ servers: { "contributions-fyi": { type: "http", url } } }, null, 2);
+const cursor = JSON.stringify({ mcpServers: { "contributions-fyi": { url } } }, null, 2);
+const inspector = `npx @modelcontextprotocol/inspector
+# then connect to ${url} with the Streamable HTTP transport`;
+const curl = `curl -s ${url} \\
+  -H 'Content-Type: application/json' \\
+  -H 'Accept: application/json, text/event-stream' \\
+  -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+       "params": {"name": "search", "arguments": {"query": "lockheed"}}}'`;
+
+const prompts = [
+  "Who represents ZIP code 85004, and which industries' PACs fund them?",
+  "Which members got the most from defense industry PACs this cycle? Link their pages.",
+  "List the PAC contributions to Maria Cantwell this year, with links to the FEC filings.",
+  "Who has Lockheed Martin paid to lobby this year, and on which bills?",
+  "Which 2026 House races drew the most outside spending, and from whom?",
+  "Which lobbyists used to work for members of the House Armed Services Committee?",
+  "Which groups paid for members' trips abroad this year?",
+  ...(holdings ? ["Which companies does my representative report owning stock in, and whose holdings are they?"] : []),
+];
+
+const tools: [string, string][] = [
+  ["search", "Finds members, candidates, races, organizations, PACs, donors, bills, committees and more by name, as this site's search box does."],
+  ["get_record", "Reads one page's full record: a member's money by cycle, sectors, contributors, outside spending, committee seats, trips and race; an organization's PAC, recipients, lobbying and bills; a race's candidates and spending; and so on."],
+  ["find_members", "Says who represents a ZIP code or street address: the House member for each district, and both senators."],
+  ["list_tables", "Lists the tables the query tool can read, with what's in them."],
+  ["query", `Runs a read-only SQL query across everything, for rankings, totals and filters: up to ${count(MAX_ROWS)} rows, ${QUERY_TIMEOUT_MS / 1000} seconds.`],
+];
+---
+
+<Base
+  title="Ask your AI assistant who funds Congress (MCP server)"
+  og={{ type: "page", id: "mcp" }}
+  description="Add contributions.fyi to Claude, ChatGPT, VS Code or Cursor as an MCP server: search members, PACs and donors, read their records, find who represents an address, and query everything with SQL. Free, no sign-in."
+  crumbs={[["AI assistants", "/mcp/"]]}
+>
+  <p class="kicker">For AI assistants</p>
+  <h1>Ask your AI assistant who funds Congress</h1>
+  <p class="dek">
+    Add this site to Claude or another AI assistant, and it can look up everything here, from a member's biggest
+    donors to every lobbying filing, and link you to the pages behind its answers. It's an{" "}
+    <a href="https://modelcontextprotocol.io">MCP</a> server: free, with no account or API key.
+  </p>
+
+  <article class="prose">
+    <Code code={url} lang="txt" themes={themes} defaultColor={false} />
+
+    <h2>Add it to your assistant</h2>
+    <h3>Claude</h3>
+    <p>
+      In Claude on the web or the desktop app, open Settings, then Connectors, and choose <strong>Add custom
+      connector</strong>. Name it contributions.fyi, paste the URL above, and add it. Leave the authentication
+      settings empty. Then turn it on for a chat from the tools menu below the message box.
+    </p>
+    <h3>Claude Code</h3>
+    <Code code={claudeCode} lang="sh" themes={themes} defaultColor={false} />
+    <h3>ChatGPT and other assistants</h3>
+    <p>
+      Any assistant that can use a remote MCP server can use this one: add a custom connector or MCP server (in
+      some, it's in the developer settings) with the URL above and no authentication.
+    </p>
+    <h3>VS Code</h3>
+    <p>In <code>.vscode/mcp.json</code> in your project, or your user settings' MCP configuration:</p>
+    <Code code={vscode} lang="json" themes={themes} defaultColor={false} />
+    <h3>Cursor</h3>
+    <p>In <code>~/.cursor/mcp.json</code>:</p>
+    <Code code={cursor} lang="json" themes={themes} defaultColor={false} />
+
+    <h2>What to ask</h2>
+    <p>Ask in your own words. The assistant chooses what to look up. Some questions it can answer:</p>
+    <ul class="prompts">
+      {prompts.map((p) => <li>{p}</li>)}
+    </ul>
+    <p>
+      Answers come with links to the pages they're from. Check a number that matters on its page, and on the
+      filing it links to, before you rely on it.
+    </p>
+
+    <h2>What's in it</h2>
+    <p>
+      Everything on this site, as of {generatedAt.toLocaleDateString("en-US", { dateStyle: "long" })}:{" "}
+      {count(members.length)} members of Congress and their money, {cycleRange}; {count(organizations.length)}{" "}
+      organizations, {count(committees.length)} PACs and other committees and {count(donors.length)} big donors;{" "}
+      {count(bills.length)} bills with their votes and lobbying; {count(allRaces.length)} House and Senate races; the
+      revolving door, foreign agents, sponsored travel{holdings ? " and House members' investments" : ""}. It also
+      has the records the totals add up from: every FEC line counted toward members' totals, as filed, and every
+      lobbying registration and report of the current Congress. See <a href="/about/">how this data works</a> for
+      where it comes from and what's counted. The data is updated weekly.
+    </p>
+
+    <h2>What it can do</h2>
+    <table>
+      <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+      <tbody>
+        {tools.map(([name, what]) => <tr><td><code>{name}</code></td><td>{what}</td></tr>)}
+      </tbody>
+    </table>
+    <p>
+      Assistants usually find what they need with <code>search</code> and <code>get_record</code>, and use{" "}
+      <code>query</code> for questions across many members or organizations. The tables are the same as in the{" "}
+      <a href="/open-data/">open data</a>'s SQLite files, plus races, ZIP codes and investments.
+    </p>
+
+    {
+      holdings && (
+        <>
+          <h2>Members' investments</h2>
+          <p>
+            Assistants can read a House member's financial disclosure, or who reports owning a company's stock, as{" "}
+            <a href="/holdings/">the investments pages</a> show them. Senators aren't included. Values are the
+            ranges members reported, not amounts, and many holdings are a spouse's or held jointly.
+          </p>
+          <p>
+            Under 5 U.S.C. § 13107, these reports may not be used for any commercial purpose (other than news
+            media's), to determine a credit rating, or to solicit money for any political, charitable or other
+            purpose. Every answer with this data carries that notice. Reading it in bulk (SQL across members'
+            disclosures, or more than {FREE_RECORDS} records an hour) needs your agreement to those terms first:
+            your assistant shows you the terms and asks. The agreement lasts {AGREED_HOURS} hours. Assistants that
+            can't ask you can still look up one member or company at a time.
+          </p>
+        </>
+      )
+    }
+
+    <h2>Limits and privacy</h2>
+    <p>
+      A query can run for {QUERY_TIMEOUT_MS / 1000} seconds and return {count(MAX_ROWS)} rows; ask for a narrower
+      one if it's cut off. Address lookups go to the Census Bureau's geocoder, as they do in{" "}
+      <a href="/find/">Find your member</a>, and are limited to {LOOKUPS_PER_CLIENT} every ten minutes. The server doesn't
+      log what's asked: its log records that a request came in, when, and how long it took. Your assistant's own privacy terms
+      cover your conversation.
+    </p>
+
+    <h2>For developers</h2>
+    <p>
+      The server speaks MCP over Streamable HTTP at <code>{url}</code>, statelessly, with no authentication and
+      open CORS. Try it in the MCP Inspector, or call a tool directly:
+    </p>
+    <Code code={inspector} lang="sh" themes={themes} defaultColor={false} />
+    <Code code={curl} lang="sh" themes={themes} defaultColor={false} />
+    <p>
+      The <a href="https://github.com/hipstersmoothie/us-gov-contributions-labeler/blob/main/site/server/src/mcp.ts">server's source</a>{" "}
+      is with the rest of the site's.
+    </p>
+  </article>
+</Base>
+
+<script>
+  import { track } from "../lib/analytics";
+  import { copyButtons } from "../lib/snippets";
+
+  copyButtons((_pre, section, how) => track("MCP: copy", { section, how }));
+</script>
+
+<style>
+  .prose { max-width: 760px; font-size: var(--fs-md); line-height: 1.65; }
+  .prose h2 { margin-top: var(--sp-7); padding-top: var(--sp-4); border-top: 1px solid var(--rule); }
+  .prose h3 { margin: var(--sp-5) 0 var(--sp-2); font-size: var(--fs-md); }
+  .prose p, .prose ul { margin: 0 0 var(--sp-4); }
+  .prose li { margin-bottom: var(--sp-2); }
+  .prompts li { font-family: var(--serif); font-style: italic; }
+  table { font-size: var(--fs-sm); }
+  td:first-child { white-space: nowrap; }
+</style>
