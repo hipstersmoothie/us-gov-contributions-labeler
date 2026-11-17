@@ -2,10 +2,12 @@
 import "../styles/global.css";
 import "../styles/controls.css";
 import SiteSearch from "../islands/SiteSearch";
+import SectionNav from "../islands/SectionNav";
 import Logo from "../components/Logo.astro";
 
 import { generatedAt, cycleRange } from "../lib/data";
 import { latestYear } from "../lib/races";
+import { navGroups, NAV_LINKS, MORE_LINKS, isCurrent } from "../lib/nav";
 import { ogImage, type OgType } from "../lib/og";
 import { breadcrumbs, SITE_NAME } from "../lib/seo";
 
@@ -26,21 +28,9 @@ interface Props {
 }
 const { title, description, og, card, ogType = "article", crumbs, jsonLd, noindex = false } = Astro.props;
 const path = Astro.url.pathname;
-const NAV = [
-  ["/members/", "Members"],
-  ["/races/", `${latestYear} races`],
-  ["/organizations/", "Organizations"],
-  ["/sectors/", "Sectors"],
-  ["/committees/", "Committees"],
-  ["/bills/", "Bills"],
-  ["/revolving-door/", "Revolving door"],
-  ["/foreign-lobbying/", "Foreign lobbying"],
-  ["/bundling/", "Bundling"],
-  ["/holdings/", "Investments"],
-  ["/travel/", "Travel"],
-  ["/donors/", "Big donors"],
-  ["/bluesky/", "On Bluesky"],
-];
+const groups = navGroups(latestYear);
+// The section the page is in, for the nav's active group and aria-current.
+const current = [...groups.flatMap((g) => g.items), ...NAV_LINKS].find((i) => isCurrent(i, path))?.href;
 const isHome = title === "Home";
 const TAGLINE = "Who funds your member of Congress?";
 const fullTitle = isHome ? `${TAGLINE} · ${SITE_NAME}` : `${title} · ${SITE_NAME}`;
@@ -117,15 +107,7 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
         <SiteSearch client:load />
       </div>
       <nav class="sections" aria-label="Sections">
-        <ul class="wrap">
-          {
-            NAV.map(([href, text]) => (
-              <li>
-                <a href={href} aria-current={path.startsWith(href!) ? "page" : undefined}>{text}</a>
-              </li>
-            ))
-          }
-        </ul>
+        <SectionNav client:idle year={latestYear} current={current} />
       </nav>
     </header>
 
@@ -139,7 +121,21 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
           <a href="/" aria-label={`${SITE_NAME}, home`}><Logo /></a>
           <p class="footer-tagline">Who funds <em>your</em> member of Congress?</p>
         </div>
-        <p>
+        <nav class="footer-map" aria-label="Site map">
+          {
+            [...groups, { label: "More", items: MORE_LINKS }].map((g) => (
+              <div>
+                <h2 class="footer-head">{g.label}</h2>
+                <ul>
+                  {g.items.map((i) => (
+                    <li><a href={i.href}>{i.label}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </nav>
+        <p class="footer-sources">
           PAC contributions to current members of Congress, {cycleRange}, from{" "}
           <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">FEC filings</a>. Industries from{" "}
           <a href="https://www.sec.gov/edgar">SEC EDGAR</a> and <a href="https://lda.gov/">lobbying disclosures</a>; foreign
@@ -147,7 +143,6 @@ const updated = generatedAt.toLocaleDateString("en-US", { dateStyle: "long" });
           Data as of {updated}. Labels on Bluesky from{" "}
           <a href="https://bsky.app/profile/contributions.fyi">@contributions.fyi</a>.
         </p>
-        <p class="footer-links"><a href="/about/">How this data works</a> · <a href="/open-data/">Open data</a></p>
       </div>
     </footer>
   </body>
