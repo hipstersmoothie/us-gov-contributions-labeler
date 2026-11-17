@@ -26,7 +26,7 @@ type Who = Pick<LargeReceipt, "entityType" | "name" | "state" | "otherId">;
 // A person's row is the person's, whatever committee id it carries.
 export const isPerson = (r: Who) => r.entityType === "IND";
 export const isCommittee = (r: Who) =>
-  ["COM", "PAC", "PTY", "CCM"].includes(r.entityType) || (r.otherId.startsWith("C") && !["IND", "ORG", "CAN"].includes(r.entityType));
+  ["COM", "PAC", "PTY", "CCM"].includes(r.entityType) || (r.otherId.startsWith("C") && r.entityType !== "IND");
 
 /** "MUSK, ELON R. MR." -> "Elon Musk" */
 export function personName(raw: string) {
