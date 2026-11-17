@@ -228,12 +228,18 @@ a {
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
-a:hover { text-decoration-color: currentColor; }
+/* Hover styles only where there's a real hover (a mouse or trackpad): on a
+   touchscreen, :hover sticks to whatever was last tapped and flashes on rows
+   as the page scrolls under a finger. Every :hover rule on the site sits in
+   this query; React Aria components use [data-hovered], which already
+   ignores touch. Focus rings use :focus-visible, so they show for the
+   keyboard and not for a click or tap. */
+@media (hover: hover) and (pointer: fine) { a:hover { text-decoration-color: currentColor; } }
 /* Links in tables and link lists read as links by their position, so they
    underline on hover only. Links in running text keep the hairline underline:
    they share the text color, so it's what marks them (WCAG 1.4.1). */
 td a, .link-list a, .results a { text-decoration-color: transparent; }
-td a:hover, .link-list a:hover, .results a:hover { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) { td a:hover, .link-list a:hover, .results a:hover { text-decoration-color: currentColor; } }
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
 main:focus { outline: none; }
 
@@ -249,7 +255,7 @@ main:focus { outline: none; }
   background: var(--text-primary); color: var(--page); padding: var(--sp-2) var(--sp-3);
   font-weight: 700; font-size: var(--fs-sm); text-decoration: none;
 }
-.skip-link:focus { top: var(--sp-2); }
+.skip-link:focus-visible { top: var(--sp-2); }
 
 /* --- masthead --- */
 .masthead { border-bottom: 1px solid var(--hairline); margin-bottom: var(--sp-7); }
@@ -279,7 +285,7 @@ main:focus { outline: none; }
   font-size: var(--fs-sm); font-weight: 600; color: var(--text-secondary); text-decoration: none;
   border-bottom: 3px solid transparent;
 }
-.sections a:hover { color: var(--text-primary); }
+@media (hover: hover) and (pointer: fine) { .sections a:hover { color: var(--text-primary); } }
 .sections a[aria-current="page"] { color: var(--text-primary); border-bottom-color: var(--text-primary); }
 
 /* --- footer --- */
@@ -297,7 +303,7 @@ main:focus { outline: none; }
   color: var(--text-secondary); margin: 0 0 var(--sp-3);
 }
 .kicker a { text-decoration: none; }
-.kicker a:hover { text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) { .kicker a:hover { text-decoration: underline; } }
 h1 {
   font: 700 var(--fs-display)/1.06 var(--serif);
   letter-spacing: -0.018em; margin: 0 0 var(--sp-4); text-wrap: balance;
@@ -355,7 +361,7 @@ h3 { font: 700 var(--fs-base)/1.3 var(--sans); margin: 0 0 var(--sp-2); }
   display: inline-block; font-size: var(--fs-sm); padding: 3px 10px; border-radius: 3px; text-decoration: none;
   border: 1px solid var(--hairline); color: var(--text-secondary); background: var(--surface-2); line-height: 1.45;
 }
-a.chip:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+@media (hover: hover) and (pointer: fine) { a.chip:hover { border-color: var(--text-secondary); color: var(--text-primary); } }
 .chip strong { font-weight: 700; color: var(--text-primary); }
 
 /* --- tables --- */
@@ -367,7 +373,7 @@ th {
 th, td { padding: var(--sp-2) var(--sp-3) var(--sp-2) 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
 th:last-child, td:last-child { padding-right: 0; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-tbody tr:hover { background: var(--surface-2); }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: var(--surface-2); } }
 
 /* --- party: a tinted tag with the letter, or a dot beside the full name. Never color alone. --- */
 .party::before {

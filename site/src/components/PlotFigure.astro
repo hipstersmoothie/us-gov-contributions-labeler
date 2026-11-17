@@ -82,36 +82,108 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
   let lib: Promise<[typeof import("@observablehq/plot"), typeof import("../lib/charts")]> | undefined;
   const load = () => (lib ??= Promise.all([import("@observablehq/plot"), import("../lib/charts")]));
 
+  type Value = { href?: string } | null | undefined;
+  const nextFrame = () => new Promise((r) => requestAnimationFrame(r));
+
   class PlotChart extends HTMLElement {
     #width = 0;
     #spec?: Spec;
     #visible = false;
+    /** The interactive render, once Plot has loaded. */
+    #plot?: SVGSVGElement;
+    #drawn?: () => void;
+    #ready = new Promise<void>((resolve) => (this.#drawn = resolve));
+    /** The pointer that last went down on the chart: "mouse", "touch" or "pen". */
+    #pointer = "mouse";
+    #tapped = false;
 
     connectedCallback() {
       const json = this.querySelector('script[type="application/json"]');
       if (!json?.textContent) return;
       this.#spec = JSON.parse(json.textContent);
-      const start = () => {
-        if (this.#visible) return;
-        this.#visible = true;
-        this.#render();
-      };
       // The build-time SVG is right at its own width; Plot only has to load
       // for the hover tip, or to redraw at a different width (phones, tablets).
-      this.addEventListener("pointerenter", start, { once: true });
-      this.addEventListener("focusin", start, { once: true });
+      this.addEventListener("pointerenter", () => this.#start(), { once: true });
+      this.addEventListener("focusin", () => this.#start(), { once: true });
       new IntersectionObserver(
         ([entry], io) => {
           if (!entry?.isIntersecting) return;
           io.disconnect();
-          if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) start();
+          if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) this.#start();
         },
         { rootMargin: "300px" }
       ).observe(this);
       new ResizeObserver(() => {
-        if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) start();
+        if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) this.#start();
         this.#render();
       }).observe(this);
+
+      // Plot's pointer shows a tip as soon as a finger touches the chart, even
+      // to scroll, and only hides it when a mouse leaves, so on a phone tips
+      // pop up mid-scroll and stay. Plot hears from the mouse only; a tap
+      // (a click, so never a scroll) shows the tip at the finger, and the next
+      // tap outside the chart, or a scroll that starts on it, closes it.
+      for (const type of ["pointerenter", "pointermove", "pointerdown", "pointerleave"]) {
+        this.addEventListener(
+          type,
+          (e) => {
+            const { pointerType } = e as PointerEvent;
+            if (type === "pointerdown") this.#pointer = pointerType;
+            if (pointerType !== "mouse" && e.isTrusted) e.stopPropagation();
+          },
+          { capture: true }
+        );
+      }
+      this.addEventListener("pointercancel", () => this.#dismiss());
+      this.addEventListener("click", (e) => this.#click(e));
+    }
+
+    #start() {
+      if (this.#visible) return;
+      this.#visible = true;
+      this.#render();
+    }
+
+    get #value() {
+      return (this.#plot as unknown as { value?: Value } | undefined)?.value;
+    }
+
+    // Marks whose data carry an href (swarm dots) open it: on a click with a
+    // mouse, or on a second tap on the same mark. Plot's pointer picks the
+    // nearest mark, so there's no need to hit a 6px dot.
+    async #click(e: MouseEvent) {
+      if ((e.target as Element).closest("a")) return;
+      if (this.#pointer === "mouse") {
+        // A keyboard "click" (detail 0) only comes from a link, handled above.
+        const href = this.#value?.href;
+        if (!href || e.detail === 0) return;
+        if (e.metaKey || e.ctrlKey) window.open(href, "_blank");
+        else location.href = href;
+        return;
+      }
+      this.#start();
+      await this.#ready;
+      const before = this.#value;
+      this.#plot!.dispatchEvent(new PointerEvent("pointermove", { pointerType: "mouse", clientX: e.clientX, clientY: e.clientY }));
+      // Marks that share the pointer settle which tip shows on the next frame.
+      await nextFrame();
+      const value = this.#value;
+      if (value && value === before && value.href) location.href = value.href;
+      else if (value && !this.#tapped) {
+        this.#tapped = true;
+        document.addEventListener("pointerdown", this.#outside, { capture: true, passive: true });
+      } else if (!value) this.#dismiss();
+    }
+
+    #outside = (e: PointerEvent) => {
+      if (!this.contains(e.target as Node)) this.#dismiss();
+    };
+
+    #dismiss() {
+      if (!this.#tapped) return;
+      this.#tapped = false;
+      document.removeEventListener("pointerdown", this.#outside, { capture: true });
+      this.#plot?.dispatchEvent(new PointerEvent("pointerleave", { pointerType: "mouse" }));
     }
 
     async #render() {
@@ -120,19 +192,13 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
       this.#width = width;
       const [Plot, { charts, stripMarkLabels }] = await load();
       const { chart, data } = this.#spec;
-      const el = Plot.plot(charts[chart as keyof typeof charts](data as never, { width, interactive: true }));
+      const el = Plot.plot(charts[chart as keyof typeof charts](data as never, { width, interactive: true })) as SVGSVGElement;
       stripMarkLabels(el);
-      // Marks whose data carry an href (swarm dots) open it on click. Plot's
-      // pointer picks the nearest mark, so there's no need to hit a 6px dot.
-      const hrefOf = () => (el as unknown as { value?: { href?: string } | null }).value?.href;
-      el.addEventListener("input", () => el.classList.toggle("is-linked", !!hrefOf()));
-      el.addEventListener("click", (e) => {
-        const href = hrefOf();
-        if (!href || (e.target as Element).closest("a")) return;
-        if (e.metaKey || e.ctrlKey) window.open(href, "_blank");
-        else location.href = href;
-      });
+      el.addEventListener("input", () => el.classList.toggle("is-linked", !!this.#value?.href));
+      this.#dismiss();
+      this.#plot = el;
       this.querySelector(".canvas")!.replaceChildren(el);
+      this.#drawn?.();
     }
   }
   customElements.define("plot-chart", PlotChart);
@@ -145,7 +211,7 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
   .canvas :global(a:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
   .canvas :global(svg.is-linked) { cursor: pointer; }
   .canvas :global(svg a) { text-decoration: none; }
-  .canvas :global(svg a:hover) { text-decoration: underline; }
+  @media (hover: hover) and (pointer: fine) { .canvas :global(svg a:hover) { text-decoration: underline; } }
 
   .legend {
     display: flex; gap: 6px 18px; flex-wrap: wrap; list-style: none; padding: 0; margin: 0 0 var(--sp-3);

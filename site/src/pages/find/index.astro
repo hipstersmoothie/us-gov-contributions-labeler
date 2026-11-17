@@ -66,6 +66,6 @@ const crossing = Math.round((1 - zipCoverage.single / zipCoverage.total) * 100);
   }
   .state-links li { padding: 3px 0; break-inside: avoid; }
   .state-links a { text-decoration-color: transparent; font-weight: 500; }
-  .state-links a:hover { text-decoration-color: currentColor; }
+  @media (hover: hover) and (pointer: fine) { .state-links a:hover { text-decoration-color: currentColor; } }
   .about-maps p { color: var(--text-secondary); max-width: 680px; }
 </style>

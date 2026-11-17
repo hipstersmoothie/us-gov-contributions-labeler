@@ -1,6 +1,7 @@
 // "Find your members": pick a state, see its delegation as Bluesky profile
 // cards, with members who aren't on Bluesky listed below so the gap shows.
 import { useEffect, useMemo, useState } from "react";
+import { Button } from "react-aria-components";
 import { FilterSelect, PartyTag } from "../controls";
 import { Avatar } from "./Faces";
 import type { CardRow, CardLabel } from "./types";
@@ -140,7 +141,7 @@ export default function FindMembers({ src, states }: { src: string; states: Stat
       ) : loaded === "error" ? (
         <p className="bsky-find-hint" role="status">
           Couldn't load {info.name}'s members.{" "}
-          <button type="button" className="bsky-retry" onClick={retry}>Try again</button> or{" "}
+          <Button className="bsky-retry" onPress={retry}>Try again</Button> or{" "}
           <a href={`/members/?state=${info.id}`}>see them in the members list</a>.
         </p>
       ) : !loaded ? (

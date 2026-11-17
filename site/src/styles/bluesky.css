@@ -13,13 +13,13 @@
   font: 700 var(--fs-sm)/1 var(--sans); color: var(--text-secondary); text-decoration: none;
   border-color: var(--baseline); background: var(--page);
 }
-.bsky-more:hover { color: var(--text-primary); border-color: var(--text-primary); }
+@media (hover: hover) and (pointer: fine) { .bsky-more:hover { color: var(--text-primary); border-color: var(--text-primary); } }
 
 .bsky-facerow { display: flex; flex-wrap: wrap; gap: var(--sp-2); list-style: none; margin: 0; padding: 0; }
 .bsky-facerow li { display: flex; }
 .bsky-facerow a { display: flex; border-radius: 50%; text-decoration: none; }
 .bsky-facerow a:focus-visible { outline-offset: 2px; border-radius: 50%; }
-.bsky-facerow a:hover .bsky-avatar:not(.bsky-more) { filter: brightness(0.92); }
+@media (hover: hover) and (pointer: fine) { .bsky-facerow a:hover .bsky-avatar:not(.bsky-more) { filter: brightness(0.92); } }
 
 .bsky-stack { display: inline-flex; flex: none; }
 .bsky-stack .bsky-avatar { box-shadow: 0 0 0 2px var(--page); }
@@ -34,7 +34,7 @@
 }
 .bsky-pills li { min-width: 0; max-width: 100%; display: flex; }
 .bsky-pill-c { background: var(--surface-2); border-color: var(--surface-2); }
-a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary); }
+@media (hover: hover) and (pointer: fine) { a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary); } }
 
 /* --- hub: find your members ------------------------------------------------------ */
 .bsky-find-bar {
@@ -50,7 +50,7 @@ a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary
   font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer;
   text-decoration: underline; text-decoration-color: var(--link-underline); text-underline-offset: 3px;
 }
-.bsky-retry:hover { text-decoration-color: currentColor; }
+.bsky-retry[data-hovered] { text-decoration-color: currentColor; }
 
 .bsky-cards {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr)); gap: 0 var(--sp-6);
@@ -61,7 +61,7 @@ a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary
 .bsky-card-body { min-width: 0; flex: 1; }
 .bsky-card-name { margin: 0; font: 700 var(--fs-md)/1.25 var(--serif); }
 .bsky-card-name a { text-decoration: none; }
-.bsky-card-name a:hover { text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) { .bsky-card-name a:hover { text-decoration: underline; } }
 .bsky-card-meta { margin: 2px 0 0; font-size: var(--fs-sm); color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0 10px; }
 .bsky-card-meta span + span::before { content: "·"; margin-right: 10px; }
 .bsky-card-handle { margin: 0 0 var(--sp-2); font-size: var(--fs-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -78,7 +78,7 @@ a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary
 }
 .bsky-off-list li { padding: 4px 0; break-inside: avoid; border-bottom: 1px solid var(--grid); }
 .bsky-off-list a { color: var(--text-secondary); text-decoration-color: transparent; }
-.bsky-off-list a:hover { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) { .bsky-off-list a:hover { text-decoration-color: currentColor; } }
 .bsky-off-list .ptag { opacity: 0.75; }
 
 /* --- hub: who's on Bluesky ------------------------------------------------------- */
@@ -147,7 +147,7 @@ a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary
   display: inline-block; flex: none; padding: 7px 14px; border: 1px solid var(--text-primary); border-radius: 3px;
   font: 700 var(--fs-sm)/1.2 var(--sans); color: var(--text-primary); text-decoration: none; white-space: nowrap;
 }
-.bsky-follow:hover { background: var(--text-primary); color: var(--page); }
+@media (hover: hover) and (pointer: fine) { .bsky-follow:hover { background: var(--text-primary); color: var(--page); } }
 
 .bsky-labeler {
   display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4) 0;
@@ -156,14 +156,14 @@ a.bsky-pill:hover { color: var(--text-primary); border-color: var(--text-primary
 .bsky-labeler > div { flex: 1; min-width: 0; }
 .bsky-labeler h3 { font: 700 var(--fs-lg)/1.25 var(--serif); margin: 0 0 2px; }
 .bsky-labeler h3 a { text-decoration: none; }
-.bsky-labeler h3 a:hover { text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) { .bsky-labeler h3 a:hover { text-decoration: underline; } }
 .bsky-labeler p { margin: 0; font-size: var(--fs-sm); color: var(--text-secondary); }
 
 .bsky-packs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--hairline); }
 .bsky-packs li { display: flex; flex-direction: column; gap: 6px; padding: var(--sp-4) var(--sp-4) var(--sp-4) var(--sp-5); border-left: 1px solid var(--hairline); }
 .bsky-packs li:first-child { border-left: 0; padding-left: 0; }
 .bsky-packs-name { font: 700 var(--fs-md)/1.3 var(--serif); text-decoration: none; }
-.bsky-packs-name:hover { text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) { .bsky-packs-name:hover { text-decoration: underline; } }
 
 /* --- hub: searchable lists ------------------------------------------------------ */
 .bsky-lists-search { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--sp-2) var(--sp-5); margin: 0 0 var(--sp-4); min-height: 60px; }

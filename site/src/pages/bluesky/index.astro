@@ -187,7 +187,7 @@ const groups: ListGroup[] = GROUP_ORDER.filter((g) => listsByGroup.has(g)).map((
                           <span class={`bsky-avatar bsky-initials party-${p}`} aria-hidden="true" style="width:32px;height:32px;font-size:12px">{initials(m.name)}</span>
                         )}
                         <span>
-                          <span class={`ptag party-${p}`} title={m.party}>{p}</span><a href={`/members/${m.bioguide}/`}>{m.name}</a>
+                          <span class={`ptag party-${p}`} title={m.party}><span aria-hidden="true">{p}</span><span class="visually-hidden">{m.party}</span></span><a href={`/members/${m.bioguide}/`}>{m.name}</a>
                           <span class="bsky-top-handle">{shortSeat(m)} · <a href={a.url}>@{a.handle}</a></span>
                         </span>
                       </div>

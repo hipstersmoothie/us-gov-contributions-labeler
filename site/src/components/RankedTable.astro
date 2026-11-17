@@ -3,6 +3,8 @@
 // the bar is just a reading aid, so it stays a real <table> for screen readers.
 import { moneyAuto } from "../lib/format";
 
+const PARTY: Record<string, string> = { D: "Democrat", R: "Republican", I: "Independent" };
+
 interface Row {
   label: string;
   href?: string;
@@ -46,7 +48,7 @@ const max = Astro.props.max ?? Math.max(...rows.map((r) => r.value), 1);
         <tr>
           {rank && <td class="rank num">{i + 1}</td>}
           <td class="name">
-            {r.party && <span class={`ptag party-${r.party}`} title={{ D: "Democrat", R: "Republican", I: "Independent" }[r.party]}>{r.party}</span>}
+            {r.party && <span class={`ptag party-${r.party}`} title={PARTY[r.party]}><span aria-hidden="true">{r.party}</span><span class="visually-hidden">{PARTY[r.party]}</span></span>}
             {r.href ? <a href={r.href}>{r.label}</a> : r.label}
             {r.note && <span class="note">{breakable(r.note)}</span>}
           </td>

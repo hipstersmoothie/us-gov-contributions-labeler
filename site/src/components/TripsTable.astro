@@ -52,7 +52,7 @@ const scanTitle = "Read by machine from a scanned form; open the filing to check
                 )
               ) : (
                 <>
-                  {p && <span class={`ptag party-${p}`} title={m!.party}>{p}</span>}
+                  {p && <span class={`ptag party-${p}`} title={m!.party}><span aria-hidden="true">{p}</span><span class="visually-hidden">{m!.party}</span></span>}
                   <a href={`/members/${t.bioguide}/`}>{m?.name ?? t.bioguide}</a>
                   <span class="muted small narrow-who"> · {who}</span>
                 </>

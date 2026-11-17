@@ -3,6 +3,8 @@
 // opposition are different acts, so they get separate columns, never a sum.
 import { money } from "../lib/data";
 
+const PARTY: Record<string, string> = { D: "Democrat", R: "Republican", I: "Independent" };
+
 interface Row {
   label: string;
   href?: string;
@@ -31,7 +33,7 @@ const { rows, heading, supportHeading = "Supporting", opposeHeading = "Opposing"
       rows.map((r) => (
         <tr>
           <td>
-            {r.party && <span class={`ptag party-${r.party}`} title={{ D: "Democrat", R: "Republican", I: "Independent" }[r.party]}>{r.party}</span>}
+            {r.party && <span class={`ptag party-${r.party}`} title={PARTY[r.party]}><span aria-hidden="true">{r.party}</span><span class="visually-hidden">{PARTY[r.party]}</span></span>}
             {r.href ? <a href={r.href}>{r.label}</a> : r.label}
             {r.note && <div class:list={["muted", "small", { indent: r.party }]}>{r.note}</div>}
           </td>

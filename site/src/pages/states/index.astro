@@ -70,7 +70,7 @@ const total = rows.reduce((t, s) => t + s.pac, 0);
 <style>
   .states-table td { vertical-align: baseline; }
   .state-name { font-weight: 600; text-decoration-color: transparent; }
-  .state-name:hover { text-decoration-color: currentColor; }
+  @media (hover: hover) and (pointer: fine) { .state-name:hover { text-decoration-color: currentColor; } }
   .note { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
   .party-col { white-space: nowrap; }
   .count { display: inline-flex; align-items: center; margin-right: var(--sp-3); font-variant-numeric: tabular-nums; font-size: var(--fs-sm); }

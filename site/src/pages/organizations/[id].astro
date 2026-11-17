@@ -265,7 +265,7 @@ const description = clip(
                   return (
                     <tr>
                       <td>
-                        {m && <span class={`ptag party-${partyLetter(m.party)}`} title={m.party}>{partyLetter(m.party)}</span>}
+                        {m && <span class={`ptag party-${partyLetter(m.party)}`} title={m.party}><span aria-hidden="true">{partyLetter(m.party)}</span><span class="visually-hidden">{m.party}</span></span>}
                         <a href={`/members/${r.id}/`}>{m?.name ?? r.id}</a>
                         {m && <span class="muted small"> · {chamberName(m)}, {m.state}</span>}
                       </td>

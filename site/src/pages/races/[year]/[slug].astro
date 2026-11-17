@@ -365,7 +365,7 @@ const fecLink = r.office === "S" ? `https://www.fec.gov/data/elections/senate/${
   .cand-role { margin: 0; font-size: var(--fs-xs, 0.8125rem); color: var(--text-secondary); }
   .cand-name { font: 700 var(--fs-lg)/1.2 var(--serif); margin: 2px 0 var(--sp-2); }
   .cand-name a { text-decoration: none; }
-  .cand-name a:hover { text-decoration: underline; }
+  @media (hover: hover) and (pointer: fine) { .cand-name a:hover { text-decoration: underline; } }
   .won { margin: 0 0 var(--sp-2); font-weight: 700; font-size: var(--fs-sm); }
   .cand dl { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2) var(--sp-4); margin: var(--sp-3) 0 0; }
   .cand dt { font-size: var(--fs-xs, 0.8125rem); color: var(--text-muted); }

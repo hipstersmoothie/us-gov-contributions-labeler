@@ -66,11 +66,14 @@
 .mcard-seat { font: 700 var(--fs-label)/1.3 var(--sans); text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-secondary); }
 .mcard-name { font: 700 var(--fs-lg)/1.2 var(--serif); margin: 2px 0 4px !important; }
 .mcard-name a { text-decoration-color: transparent; }
-.mcard-name a:hover { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) { .mcard-name a:hover { text-decoration-color: currentColor; } }
 /* The whole card is the link's target. */
 .mcard-name a::after { content: ""; position: absolute; inset: 0; }
-.mcard:hover { background: var(--surface-2); }
-.mcard:hover .mcard-name a { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) {
+  .mcard:hover { background: var(--surface-2); }
+  .mcard:hover .mcard-name a { text-decoration-color: currentColor; }
+}
+.mcard:has(.mcard-name a:focus-visible) { background: var(--surface-2); }
 .mcard-money { font-size: var(--fs-sm); color: var(--text-secondary); }
 .mcard-money strong { color: var(--text-primary); font-size: var(--fs-base); }
 .mcard-top { font-size: var(--fs-sm); color: var(--text-muted); }

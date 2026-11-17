@@ -204,16 +204,15 @@ export function ListTable<T extends { id: string }>({
                 return (
                   <th key={c.id} scope="col" className={cls("th", c)} aria-sort={c.sort ? (active ?? "none") : undefined}>
                     {c.sort ? (
-                      <button
-                        type="button"
+                      <Button
                         className="th-inner th-button"
-                        onClick={() => onSort({ column: c.id, direction: active === "ascending" ? "descending" : "ascending" })}
+                        onPress={() => onSort({ column: c.id, direction: active === "ascending" ? "descending" : "ascending" })}
                       >
                         {c.name}
                         <span className="sort-icon" aria-hidden="true" data-direction={active}>
                           {active === "ascending" ? "▲" : active === "descending" ? "▼" : "↕"}
                         </span>
-                      </button>
+                      </Button>
                     ) : (
                       <span className="th-inner">{c.name}</span>
                     )}

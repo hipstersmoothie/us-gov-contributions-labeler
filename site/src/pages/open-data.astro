@@ -369,7 +369,7 @@ const collections = [
     border-radius: 3px; background: var(--surface); color: var(--text-secondary); cursor: pointer;
     font: 600 var(--fs-label)/1.4 var(--sans); letter-spacing: 0.02em;
   }
-  .prose :global(.copy-button:hover) { color: var(--text-primary); border-color: var(--text-muted); }
+  @media (hover: hover) and (pointer: fine) { .prose :global(.copy-button:hover) { color: var(--text-primary); border-color: var(--text-muted); } }
   details { margin: calc(-1 * var(--sp-2)) 0 var(--sp-5); }
   details summary { cursor: pointer; font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: var(--sp-2); }
   details :global(pre.astro-code) { max-height: 28rem; }

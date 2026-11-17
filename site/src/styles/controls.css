@@ -12,7 +12,7 @@
   transition: border-color 120ms, box-shadow 120ms;
 }
 .site-search input::placeholder { color: var(--text-muted); }
-.site-search input:hover { border-color: var(--text-muted); }
+.site-search input[data-hovered] { border-color: var(--text-muted); }
 .site-search input[data-focused] { border-color: var(--text-primary); box-shadow: 0 0 0 1px var(--text-primary); outline: none; }
 .site-search input[data-focus-visible] { outline: none; }
 .search-kbd {
@@ -60,7 +60,8 @@
   display: flex; align-items: center; height: 38px; border: 1px solid var(--baseline); border-radius: 3px;
   background: var(--page); color: var(--text-primary); transition: border-color 120ms;
 }
-.field-box:hover, .field-box[data-hovered] { border-color: var(--text-muted); }
+/* The search filter's box is a plain div around a React Aria Input; the Select's box is a Button. */
+.field-box:has([data-hovered]), .field-box[data-hovered] { border-color: var(--text-muted); }
 .field-box:focus-within, .select-button[data-focus-visible], .select-button[data-pressed] { border-color: var(--text-primary); box-shadow: 0 0 0 1px var(--text-primary); }
 .field-input {
   flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; color: inherit;
@@ -138,17 +139,19 @@
   font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit;
   background: none; border: 0; padding: 0; cursor: pointer;
 }
-.th-button:hover { color: var(--text-primary); }
+.th-button[data-hovered] { color: var(--text-primary); }
 .sort-icon { font-size: 9px; color: var(--baseline); }
 .sort-icon[data-direction] { color: var(--text-primary); }
 .data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
 .data-table .num .th-inner { flex-direction: row-reverse; }
 /* The whole row follows its name link (controls.tsx), which underlines only on hover, like links in other tables. */
 .data-table .tr { cursor: pointer; }
-.data-table .tr:hover { background: var(--surface-2); }
 .data-table .cell-title { text-decoration-color: transparent; }
-.data-table .tr:hover .cell-title { text-decoration-color: var(--link-underline); }
-.data-table .tr .cell-title:hover { text-decoration-color: currentColor; }
+@media (hover: hover) and (pointer: fine) {
+  .data-table .tr:hover { background: var(--surface-2); }
+  .data-table .tr:hover .cell-title { text-decoration-color: var(--link-underline); }
+  .data-table .tr .cell-title:hover { text-decoration-color: currentColor; }
+}
 .data-table .tr:has(.cell-title:focus-visible) { box-shadow: inset 3px 0 0 var(--focus); background: var(--surface-2); }
 .data-table .td { padding: 9px var(--sp-3) 9px 0; border-bottom: 1px solid var(--hairline); vertical-align: middle; }
 /* Row headers read as ordinary cells. */
