@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T01:30:54.625Z",
+  "generatedAt": "2026-11-17T09:06:48.197Z",
   "cycles": [
     2022,
     2024,
@@ -25945,7 +25945,7 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 24201616
+            "total": 24198352
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -25965,7 +25965,7 @@
           },
           {
             "id": "Not employed",
-            "total": 515589
+            "total": 518853
           },
           {
             "id": "Communications & Technology",
@@ -26369,7 +26369,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 24259141
+          "total": 24255877
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -26396,12 +26396,12 @@
           "total": 545351
         },
         {
-          "id": "Communications & Technology",
-          "total": 518263
+          "id": "Not employed",
+          "total": 518853
         },
         {
-          "id": "Not employed",
-          "total": 515589
+          "id": "Communications & Technology",
+          "total": 518263
         },
         {
           "id": "Labor",
@@ -39261,6 +39261,7 @@
           "handle": "carson.house.gov",
           "displayName": "Congressman André Carson ",
           "sources": [
+            "dm",
             "gov-handle",
             "labeler-list",
             "official-domain",
@@ -44416,11 +44417,11 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 805927
+            "total": 805842
           },
           {
             "id": "Not employed",
-            "total": 711520
+            "total": 711605
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -44837,11 +44838,11 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 816927
+          "total": 816842
         },
         {
           "id": "Not employed",
-          "total": 711520
+          "total": 711605
         },
         {
           "id": "Health",
@@ -44955,11 +44956,11 @@
           "unitemized": 60915.23
         },
         "2026": {
-          "receipts": 1375778.13,
+          "receipts": 1382778.13,
           "disbursements": 1297130.26,
-          "cashOnHand": 3680652.82,
+          "cashOnHand": 3687652.82,
           "individual": 865615.13,
-          "pac": 510163,
+          "pac": 517163,
           "party": 0,
           "candidate": 0,
           "candidateLoans": 0,
@@ -94991,11 +94992,6 @@
         "donations": 10272,
         "employers": [
           {
-            "id": "NO EMPLOYER",
-            "name": "No Employer",
-            "total": 122938
-          },
-          {
             "id": "UNIVERSITY OF TOLEDO",
             "name": "University of Toledo",
             "total": 35660
@@ -95242,16 +95238,21 @@
             "id": "DEPT VETERANS AFFAIRS UCSF",
             "name": "Dept. Veterans Affairs/Ucsf",
             "total": 9700
+          },
+          {
+            "id": "GREYLOCK PARTNERS",
+            "name": "Greylock Partners",
+            "total": 9500
           }
         ],
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1989018
+            "total": 1866080
           },
           {
             "id": "Not employed",
-            "total": 1685838
+            "total": 1808776
           },
           {
             "id": "Retired",
@@ -95314,13 +95315,6 @@
         }
       },
       "contributors": [
-        {
-          "id": "employer:NO EMPLOYER",
-          "name": "No Employer",
-          "total": 122938,
-          "pacs": 0,
-          "individuals": 122938
-        },
         {
           "id": "cleveland-cliffs",
           "name": "Cleveland-Cliffs Inc",
@@ -95663,16 +95657,23 @@
           "total": 23000,
           "pacs": 23000,
           "individuals": 0
+        },
+        {
+          "id": "employer:DASCHLE",
+          "name": "The Daschle Group",
+          "total": 23000,
+          "pacs": 0,
+          "individuals": 23000
         }
       ],
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 2012015
+          "total": 1889077
         },
         {
           "id": "Not employed",
-          "total": 1685838
+          "total": 1808776
         },
         {
           "id": "Party & Candidate Committees",
@@ -131422,6 +131423,7 @@
           "handle": "pallone.house.gov",
           "displayName": "Rep. Frank Pallone",
           "sources": [
+            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -145906,11 +145908,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 19940988
+            "total": 19941088
           },
           {
             "id": "Unknown",
-            "total": 7086221
+            "total": 7086121
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -146330,11 +146332,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 19940988
+          "total": 19941088
         },
         {
           "id": "Unknown",
-          "total": 7090221
+          "total": 7090121
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -153080,7 +153082,7 @@
           },
           {
             "id": "Unknown",
-            "total": 7950807
+            "total": 7950767
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -153096,7 +153098,7 @@
           },
           {
             "id": "Not employed",
-            "total": 505071
+            "total": 505111
           },
           {
             "id": "Construction",
@@ -153504,7 +153506,7 @@
         },
         {
           "id": "Unknown",
-          "total": 8009107
+          "total": 8009067
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -153520,7 +153522,7 @@
         },
         {
           "id": "Not employed",
-          "total": 505071
+          "total": 505111
         },
         {
           "id": "Misc Business",
@@ -176586,11 +176588,11 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1634157
+            "total": 1634130
           },
           {
             "id": "Not employed",
-            "total": 1418231
+            "total": 1418258
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -177007,11 +177009,11 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 1644157
+          "total": 1644130
         },
         {
           "id": "Not employed",
-          "total": 1418231
+          "total": 1418258
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -179774,6 +179776,7 @@
           "handle": "welch.senate.gov",
           "displayName": "Senator Peter Welch",
           "sources": [
+            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -192145,6 +192148,7 @@
           "handle": "repdelbene.bsky.social",
           "displayName": "Congresswoman Suzan DelBene",
           "sources": [
+            "dm",
             "search",
             "verified"
           ]
@@ -226162,11 +226166,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 5592940
+            "total": 5594366
           },
           {
             "id": "Unknown",
-            "total": 3025317
+            "total": 3023891
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -226587,7 +226591,7 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 5592940
+          "total": 5594366
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -226595,7 +226599,7 @@
         },
         {
           "id": "Unknown",
-          "total": 3159223
+          "total": 3157797
         },
         {
           "id": "Health",
@@ -252880,6 +252884,7 @@
           "handle": "gallego.senate.gov",
           "displayName": "Senator Ruben Gallego",
           "sources": [
+            "dm",
             "gov-handle",
             "labeler-list",
             "official-domain",
@@ -253981,11 +253986,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 18671973
+            "total": 18680992
           },
           {
             "id": "Unknown",
-            "total": 6392601
+            "total": 6383582
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -254405,11 +254410,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 18671973
+          "total": 18680992
         },
         {
           "id": "Unknown",
-          "total": 6422626
+          "total": 6413607
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -266167,7 +266172,7 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 2526497
+            "total": 2513207
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -266175,7 +266180,7 @@
           },
           {
             "id": "Not employed",
-            "total": 1516745
+            "total": 1530035
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -266592,7 +266597,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 2529997
+          "total": 2516707
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -266600,7 +266605,7 @@
         },
         {
           "id": "Not employed",
-          "total": 1516745
+          "total": 1530035
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -284874,7 +284879,7 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1953521
+            "total": 1952521
           },
           {
             "id": "Retired",
@@ -284890,7 +284895,7 @@
           },
           {
             "id": "Not employed",
-            "total": 172167
+            "total": 173167
           },
           {
             "id": "Agribusiness",
@@ -285294,7 +285299,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 1993521
+          "total": 1992521
         },
         {
           "id": "Retired",
@@ -285346,7 +285351,7 @@
         },
         {
           "id": "Not employed",
-          "total": 172167
+          "total": 173167
         },
         {
           "id": "Construction",
@@ -287591,7 +287596,7 @@
           },
           {
             "id": "Unknown",
-            "total": 691212
+            "total": 689212
           },
           {
             "id": "Retired",
@@ -287615,7 +287620,7 @@
           },
           {
             "id": "Not employed",
-            "total": 75135
+            "total": 77135
           },
           {
             "id": "Agribusiness",
@@ -288011,7 +288016,7 @@
         },
         {
           "id": "Unknown",
-          "total": 740962
+          "total": 738962
         },
         {
           "id": "Health",
@@ -288055,7 +288060,7 @@
         },
         {
           "id": "Not employed",
-          "total": 75135
+          "total": 77135
         },
         {
           "id": "Construction",
@@ -297628,6 +297633,7 @@
           "handle": "hassan.senate.gov",
           "displayName": "Senator Maggie Hassan",
           "sources": [
+            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -318184,11 +318190,11 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 6275850
+            "total": 6272550
           },
           {
             "id": "Not employed",
-            "total": 5248129
+            "total": 5251429
           },
           {
             "id": "Health",
@@ -318609,11 +318615,11 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 6302825
+          "total": 6299525
         },
         {
           "id": "Not employed",
-          "total": 5248129
+          "total": 5251429
         },
         {
           "id": "Health",
@@ -328158,7 +328164,7 @@
           },
           {
             "id": "Unknown",
-            "total": 2446242
+            "total": 2441842
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -328166,7 +328172,7 @@
           },
           {
             "id": "Not employed",
-            "total": 402657
+            "total": 407057
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -328582,7 +328588,7 @@
         },
         {
           "id": "Unknown",
-          "total": 2489242
+          "total": 2484842
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -328598,7 +328604,7 @@
         },
         {
           "id": "Not employed",
-          "total": 402657
+          "total": 407057
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -339759,11 +339765,6 @@
         "donations": 4463,
         "employers": [
           {
-            "id": "NO EMPLOYER",
-            "name": "No Employer",
-            "total": 28737
-          },
-          {
             "id": "SAMES",
             "name": "Sames Inc",
             "total": 28000
@@ -340009,16 +340010,21 @@
             "id": "BAIN CAPITAL",
             "name": "Bain Capital",
             "total": 9100
+          },
+          {
+            "id": "LAW OFFICES OF DOMINGO GARCIA",
+            "name": "Law Offices of Domingo Garcia",
+            "total": 8900
           }
         ],
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1819169
+            "total": 1790432
           },
           {
             "id": "Not employed",
-            "total": 1587291
+            "total": 1616028
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -340222,13 +340228,6 @@
           "individuals": 0
         },
         {
-          "id": "employer:NO EMPLOYER",
-          "name": "No Employer",
-          "total": 28737,
-          "pacs": 0,
-          "individuals": 28737
-        },
-        {
           "id": "employer:SAMES",
           "name": "Sames Inc",
           "total": 28000,
@@ -340430,6 +340429,13 @@
           "total": 21900,
           "pacs": 21900,
           "individuals": 0
+        },
+        {
+          "id": "dccc-c00000935",
+          "name": "DCCC",
+          "total": 21362,
+          "pacs": 21362,
+          "individuals": 0
         }
       ],
       "combinedSectors": [
@@ -340439,11 +340445,11 @@
         },
         {
           "id": "Unknown",
-          "total": 1906669
+          "total": 1877932
         },
         {
           "id": "Not employed",
-          "total": 1587291
+          "total": 1616028
         },
         {
           "id": "Party & Candidate Committees",
@@ -368336,11 +368342,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 1741024
+            "total": 1748024
           },
           {
             "id": "Unknown",
-            "total": 1267580
+            "total": 1260580
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -368761,11 +368767,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 1741024
+          "total": 1748024
         },
         {
           "id": "Unknown",
-          "total": 1272080
+          "total": 1265080
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -369850,11 +369856,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 1792258
+            "total": 1796558
           },
           {
             "id": "Unknown",
-            "total": 1138875
+            "total": 1134575
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -370275,11 +370281,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 1792258
+          "total": 1796558
         },
         {
           "id": "Unknown",
-          "total": 1150993
+          "total": 1146693
         },
         {
           "id": "Party & Candidate Committees",
@@ -377241,6 +377247,7 @@
           "handle": "underwood.house.gov",
           "displayName": "Rep. Lauren Underwood",
           "sources": [
+            "dm",
             "gov-handle",
             "labeler-list",
             "official-domain",
@@ -389934,11 +389941,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 7385155
+            "total": 7386805
           },
           {
             "id": "Unknown",
-            "total": 3542450
+            "total": 3540800
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -390359,11 +390366,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 7385155
+          "total": 7386805
         },
         {
           "id": "Unknown",
-          "total": 3593027
+          "total": 3591377
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -395824,11 +395831,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 5359006
+            "total": 5362506
           },
           {
             "id": "Unknown",
-            "total": 4851390
+            "total": 4847890
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -396245,11 +396252,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 5359006
+          "total": 5362506
         },
         {
           "id": "Unknown",
-          "total": 4859007
+          "total": 4855507
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -398747,11 +398754,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 4590784
+            "total": 4591388
           },
           {
             "id": "Unknown",
-            "total": 4357894
+            "total": 4357290
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -399171,11 +399178,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 4590784
+          "total": 4591388
         },
         {
           "id": "Unknown",
-          "total": 4358954
+          "total": 4358350
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -400352,24 +400359,24 @@
             "total": 14700
           },
           {
-            "id": "NO EMPLOYER",
-            "name": "No Employer",
-            "total": 14500
-          },
-          {
             "id": "BROWN BROWN AND PREMSRIRUT",
             "name": "Brown, Brown & Premsrirut",
             "total": 14400
+          },
+          {
+            "id": "STRETTO",
+            "name": "Stretto",
+            "total": 14100
           }
         ],
         "sectors": [
           {
             "id": "Not employed",
-            "total": 3645098
+            "total": 3659598
           },
           {
             "id": "Unknown",
-            "total": 3342408
+            "total": 3327908
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -400790,11 +400797,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 3645098
+          "total": 3659598
         },
         {
           "id": "Unknown",
-          "total": 3353637
+          "total": 3339137
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -437091,6 +437098,7 @@
           "handle": "captmarkkelly.bsky.social",
           "displayName": "Captain Mark Kelly",
           "sources": [
+            "dm",
             "labeler-list",
             "previous-data",
             "search",
@@ -438200,11 +438208,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 39020706
+            "total": 39021306
           },
           {
             "id": "Unknown",
-            "total": 10249025
+            "total": 10248425
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -438624,11 +438632,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 39020706
+          "total": 39021306
         },
         {
           "id": "Unknown",
-          "total": 10271316
+          "total": 10270716
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -508363,11 +508371,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 53935504
+            "total": 53935579
           },
           {
             "id": "Unknown",
-            "total": 18373185
+            "total": 18373110
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -508787,11 +508795,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 53935504
+          "total": 53935579
         },
         {
           "id": "Unknown",
-          "total": 18558468
+          "total": 18558393
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -515433,7 +515441,7 @@
           },
           {
             "id": "Unknown",
-            "total": 1085813
+            "total": 1080013
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -515473,7 +515481,7 @@
           },
           {
             "id": "Not employed",
-            "total": 30678
+            "total": 36478
           },
           {
             "id": "Communications & Technology",
@@ -515858,7 +515866,7 @@
         },
         {
           "id": "Unknown",
-          "total": 1101813
+          "total": 1096013
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -515918,7 +515926,7 @@
         },
         {
           "id": "Not employed",
-          "total": 30678
+          "total": 36478
         }
       ]
     },
@@ -551024,11 +551032,6 @@
         "donations": 7330,
         "employers": [
           {
-            "id": "NO EMPLOYER",
-            "name": "No Employer",
-            "total": 59241
-          },
-          {
             "id": "AMSCOT FINANCIAL",
             "name": "Amscot Financial",
             "total": 30000
@@ -551275,16 +551278,21 @@
             "id": "FORTS SERVICES",
             "name": "Forts Services LLC",
             "total": 7800
+          },
+          {
+            "id": "PEBB ENTERPRISES",
+            "name": "Pebb Enterprises",
+            "total": 7750
           }
         ],
         "sectors": [
           {
-            "id": "Unknown",
-            "total": 1340842
+            "id": "Not employed",
+            "total": 1296228
           },
           {
-            "id": "Not employed",
-            "total": 1236987
+            "id": "Unknown",
+            "total": 1281601
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -551347,13 +551355,6 @@
         }
       },
       "contributors": [
-        {
-          "id": "employer:NO EMPLOYER",
-          "name": "No Employer",
-          "total": 59241,
-          "pacs": 0,
-          "individuals": 59241
-        },
         {
           "id": "american-israel-public-affairs",
           "name": "American Israel Public Affairs Committee",
@@ -551696,16 +551697,23 @@
           "total": 13100,
           "pacs": 0,
           "individuals": 13100
+        },
+        {
+          "id": "employer:LENNAR",
+          "name": "Lennar",
+          "total": 12950,
+          "pacs": 0,
+          "individuals": 12950
         }
       ],
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 1378342
+          "total": 1319101
         },
         {
           "id": "Not employed",
-          "total": 1236987
+          "total": 1296228
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -578865,11 +578873,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 2757498
+            "total": 2758098
           },
           {
             "id": "Unknown",
-            "total": 1863775
+            "total": 1863175
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -579282,11 +579290,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 2757498
+          "total": 2758098
         },
         {
           "id": "Unknown",
-          "total": 1879775
+          "total": 1879175
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -580374,11 +580382,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 589210
+            "total": 589322
           },
           {
             "id": "Unknown",
-            "total": 356389
+            "total": 356277
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -580791,11 +580799,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 589210
+          "total": 589322
         },
         {
           "id": "Unknown",
-          "total": 358889
+          "total": 358777
         },
         {
           "id": "Labor",
@@ -584008,10 +584016,10 @@
           "receipts": 2236501.68,
           "disbursements": 1790787.41,
           "cashOnHand": 722399.83,
-          "individual": 1251801.33,
+          "individual": 1251432.85,
           "pac": 886109.23,
           "party": 0,
-          "candidate": 0,
+          "candidate": 368.48,
           "candidateLoans": 0,
           "itemized": 1223235.22,
           "unitemized": 28566.11
@@ -601706,11 +601714,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 2694876
+            "total": 2695876
           },
           {
             "id": "Unknown",
-            "total": 1740336
+            "total": 1739336
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -602131,11 +602139,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 2694876
+          "total": 2695876
         },
         {
           "id": "Unknown",
-          "total": 1753782
+          "total": 1752782
         },
         {
           "id": "Party & Candidate Committees",
@@ -606264,11 +606272,11 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1640271
+            "total": 1636771
           },
           {
             "id": "Not employed",
-            "total": 713552
+            "total": 717052
           },
           {
             "id": "Retired",
@@ -606689,7 +606697,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 1659584
+          "total": 1656084
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -606697,7 +606705,7 @@
         },
         {
           "id": "Not employed",
-          "total": 713552
+          "total": 717052
         },
         {
           "id": "Retired",
@@ -617768,11 +617776,11 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1025475
+            "total": 1025138
           },
           {
             "id": "Not employed",
-            "total": 490151
+            "total": 490488
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -618193,7 +618201,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 1025475
+          "total": 1025138
         },
         {
           "id": "Labor",
@@ -618201,7 +618209,7 @@
         },
         {
           "id": "Not employed",
-          "total": 490151
+          "total": 490488
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -645497,6 +645505,7 @@
           "handle": "alsobrooks.senate.gov",
           "displayName": "Senator Angela Alsobrooks",
           "sources": [
+            "dm",
             "gov-handle",
             "official-domain",
             "search",
@@ -653252,7 +653261,7 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1693330
+            "total": 1692712
           },
           {
             "id": "Retired",
@@ -653284,7 +653293,7 @@
           },
           {
             "id": "Not employed",
-            "total": 39060
+            "total": 39678
           },
           {
             "id": "Agribusiness",
@@ -653672,7 +653681,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 1705830
+          "total": 1705212
         },
         {
           "id": "Retired",
@@ -653728,7 +653737,7 @@
         },
         {
           "id": "Not employed",
-          "total": 39060
+          "total": 39678
         },
         {
           "id": "Labor",
@@ -660338,11 +660347,6 @@
             "total": 29500
           },
           {
-            "id": "NO EMPLOYER",
-            "name": "No Employer",
-            "total": 28805
-          },
-          {
             "id": "MERCED HEART ASSOCIATES",
             "name": "Merced Heart Associates",
             "total": 23200
@@ -660573,16 +660577,21 @@
             "name": "Fluence Energy",
             "total": 9700,
             "organization": "fluence-energy"
+          },
+          {
+            "id": "EUSTACE KWAN FAMILY FOUNDATION",
+            "name": "Eustace-Kwan Family Foundation",
+            "total": 9500
           }
         ],
         "sectors": [
           {
             "id": "Not employed",
-            "total": 2597439
+            "total": 2626244
           },
           {
             "id": "Unknown",
-            "total": 2286901
+            "total": 2258096
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -660700,13 +660709,6 @@
           "total": 29000,
           "pacs": 29000,
           "individuals": 0
-        },
-        {
-          "id": "employer:NO EMPLOYER",
-          "name": "No Employer",
-          "total": 28805,
-          "pacs": 0,
-          "individuals": 28805
         },
         {
           "id": "laborers-international-union-of-north-america",
@@ -660994,16 +660996,23 @@
           "total": 15000,
           "pacs": 15000,
           "individuals": 0
+        },
+        {
+          "id": "american-crystal-sugar-compay",
+          "name": "American Crystal Sugar Company",
+          "total": 15000,
+          "pacs": 15000,
+          "individuals": 0
         }
       ],
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 2597439
+          "total": 2626244
         },
         {
           "id": "Unknown",
-          "total": 2306301
+          "total": 2277496
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -668003,7 +668012,7 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 2454592
+            "total": 2454692
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -668011,7 +668020,7 @@
           },
           {
             "id": "Unknown",
-            "total": 1508038
+            "total": 1507938
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -668424,7 +668433,7 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 2454592
+          "total": 2454692
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -668432,7 +668441,7 @@
         },
         {
           "id": "Unknown",
-          "total": 1508058
+          "total": 1507958
         },
         {
           "id": "Party & Candidate Committees",
@@ -684191,6 +684200,7 @@
           "handle": "elfreth.house.gov",
           "displayName": "Congresswoman Sarah Elfreth ",
           "sources": [
+            "dm",
             "gov-handle",
             "official-domain",
             "previous-data",
@@ -690185,6 +690195,7 @@
           "handle": "kellymorrisonmn.bsky.social",
           "displayName": "Rep. Kelly Morrison",
           "sources": [
+            "dm",
             "search",
             "verified"
           ]
@@ -698648,11 +698659,6 @@
         "donations": 1835,
         "employers": [
           {
-            "id": "NO EMPLOYER",
-            "name": "No Employer",
-            "total": 41800
-          },
-          {
             "id": "BULLINGTON CONSTRUCTION",
             "name": "Bullington Construction",
             "total": 27500
@@ -698897,12 +698903,17 @@
             "id": "FALLING OAK",
             "name": "Falling Oak",
             "total": 4000
+          },
+          {
+            "id": "RITCH BREEDEN",
+            "name": "Ritch, Breeden & Co",
+            "total": 3750
           }
         ],
         "sectors": [
           {
             "id": "Unknown",
-            "total": 509166
+            "total": 467366
           },
           {
             "id": "Retired",
@@ -698915,6 +698926,10 @@
           {
             "id": "Construction",
             "total": 77500
+          },
+          {
+            "id": "Not employed",
+            "total": 66675
           },
           {
             "id": "Health",
@@ -698931,10 +698946,6 @@
           {
             "id": "Transportation",
             "total": 25000
-          },
-          {
-            "id": "Not employed",
-            "total": 24875
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -698957,13 +698968,6 @@
         }
       },
       "contributors": [
-        {
-          "id": "employer:NO EMPLOYER",
-          "name": "No Employer",
-          "total": 41800,
-          "pacs": 0,
-          "individuals": 41800
-        },
         {
           "id": "employer:BULLINGTON CONSTRUCTION",
           "name": "Bullington Construction",
@@ -699306,12 +699310,19 @@
           "total": 6300,
           "pacs": 0,
           "individuals": 6300
+        },
+        {
+          "id": "employer:FRONTIER",
+          "name": "Frontier",
+          "total": 6100,
+          "pacs": 0,
+          "individuals": 6100
         }
       ],
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 509166
+          "total": 467366
         },
         {
           "id": "Retired",
@@ -699334,6 +699345,10 @@
           "total": 83000
         },
         {
+          "id": "Not employed",
+          "total": 66675
+        },
+        {
           "id": "Ideological & Single-Issue",
           "total": 58249
         },
@@ -699348,10 +699363,6 @@
         {
           "id": "Transportation",
           "total": 27000
-        },
-        {
-          "id": "Not employed",
-          "total": 24875
         },
         {
           "id": "Lawyers & Lobbyists",
@@ -700336,7 +700347,7 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 808306
+            "total": 805206
           },
           {
             "id": "Retired",
@@ -700351,12 +700362,12 @@
             "total": 80813
           },
           {
-            "id": "Health",
-            "total": 57562
+            "id": "Not employed",
+            "total": 58902
           },
           {
-            "id": "Not employed",
-            "total": 55802
+            "id": "Health",
+            "total": 57562
           },
           {
             "id": "Defense",
@@ -700757,7 +700768,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 815656
+          "total": 812556
         },
         {
           "id": "Retired",
@@ -700801,7 +700812,7 @@
         },
         {
           "id": "Not employed",
-          "total": 55802
+          "total": 58902
         },
         {
           "id": "Communications & Technology",
@@ -703069,7 +703080,7 @@
         "sectors": [
           {
             "id": "Unknown",
-            "total": 1269139
+            "total": 1267139
           },
           {
             "id": "Finance, Insurance & Real Estate",
@@ -703089,7 +703100,7 @@
           },
           {
             "id": "Not employed",
-            "total": 116238
+            "total": 118238
           },
           {
             "id": "Construction",
@@ -703486,7 +703497,7 @@
       "combinedSectors": [
         {
           "id": "Unknown",
-          "total": 1274139
+          "total": 1272139
         },
         {
           "id": "Finance, Insurance & Real Estate",
@@ -703514,7 +703525,7 @@
         },
         {
           "id": "Not employed",
-          "total": 116238
+          "total": 118238
         },
         {
           "id": "Construction",
@@ -714815,11 +714826,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 1712477
+            "total": 1712560
           },
           {
             "id": "Unknown",
-            "total": 998946
+            "total": 998863
           },
           {
             "id": "Education",
@@ -715236,11 +715247,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 1712477
+          "total": 1712560
         },
         {
           "id": "Unknown",
-          "total": 1010946
+          "total": 1010863
         },
         {
           "id": "Labor",
@@ -733450,11 +733461,11 @@
         "sectors": [
           {
             "id": "Not employed",
-            "total": 5549162
+            "total": 5553732
           },
           {
             "id": "Unknown",
-            "total": 2341270
+            "total": 2336700
           },
           {
             "id": "Lawyers & Lobbyists",
@@ -733875,11 +733886,11 @@
       "combinedSectors": [
         {
           "id": "Not employed",
-          "total": 5549162
+          "total": 5553732
         },
         {
           "id": "Unknown",
-          "total": 2349270
+          "total": 2344700
         },
         {
           "id": "Finance, Insurance & Real Estate",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T01:30:54.625Z",
+  "generatedAt": "2026-11-17T09:06:48.197Z",
   "cycles": [
     2022,
     2024,
@@ -974619,7 +974619,6 @@
     {
       "id": "C00238907",
       "name": "THE REED COMMITTEE",
-      "connectedOrg": "HICKENLOOPER REED VICTORY FUND",
       "kind": "candidate",
       "state": "RI",
       "organization": "reed-c00238907",
@@ -993728,6 +993727,7 @@
     {
       "id": "C00830034",
       "name": "TREMCO CPG INC. PAC, DBA TREMCO PAC",
+      "connectedOrg": "RPM INTERNATIONAL INC. MANUFACTURING IN AMERICA PAC, DBA RPM MANUFACTURING IN AMERICA PAC",
       "orgType": "C",
       "kind": "pac",
       "state": "OH",

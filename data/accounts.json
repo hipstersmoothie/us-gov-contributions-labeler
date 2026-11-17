@@ -347,6 +347,7 @@
         "handle": "carson.house.gov",
         "displayName": "Congressman André Carson ",
         "sources": [
+          "dm",
           "gov-handle",
           "labeler-list",
           "official-domain",
@@ -1136,6 +1137,7 @@
         "handle": "pallone.house.gov",
         "displayName": "Rep. Frank Pallone",
         "sources": [
+          "dm",
           "gov-handle",
           "official-domain",
           "search",
@@ -1583,6 +1585,7 @@
         "handle": "welch.senate.gov",
         "displayName": "Senator Peter Welch",
         "sources": [
+          "dm",
           "gov-handle",
           "official-domain",
           "search",
@@ -1677,6 +1680,7 @@
         "handle": "repdelbene.bsky.social",
         "displayName": "Congresswoman Suzan DelBene",
         "sources": [
+          "dm",
           "search",
           "verified"
         ]
@@ -2293,6 +2297,7 @@
         "handle": "gallego.senate.gov",
         "displayName": "Senator Ruben Gallego",
         "sources": [
+          "dm",
           "gov-handle",
           "labeler-list",
           "official-domain",
@@ -2584,6 +2589,7 @@
         "handle": "hassan.senate.gov",
         "displayName": "Senator Maggie Hassan",
         "sources": [
+          "dm",
           "gov-handle",
           "official-domain",
           "search",
@@ -3215,6 +3221,7 @@
         "handle": "underwood.house.gov",
         "displayName": "Rep. Lauren Underwood",
         "sources": [
+          "dm",
           "gov-handle",
           "labeler-list",
           "official-domain",
@@ -3705,6 +3712,7 @@
         "handle": "captmarkkelly.bsky.social",
         "displayName": "Captain Mark Kelly",
         "sources": [
+          "dm",
           "labeler-list",
           "previous-data",
           "search",
@@ -4991,6 +4999,7 @@
         "handle": "alsobrooks.senate.gov",
         "displayName": "Senator Angela Alsobrooks",
         "sources": [
+          "dm",
           "gov-handle",
           "official-domain",
           "search",
@@ -5256,6 +5265,7 @@
         "handle": "elfreth.house.gov",
         "displayName": "Congresswoman Sarah Elfreth ",
         "sources": [
+          "dm",
           "gov-handle",
           "official-domain",
           "previous-data",
@@ -5297,6 +5307,7 @@
         "handle": "kellymorrisonmn.bsky.social",
         "displayName": "Rep. Kelly Morrison",
         "sources": [
+          "dm",
           "search",
           "verified"
         ]
