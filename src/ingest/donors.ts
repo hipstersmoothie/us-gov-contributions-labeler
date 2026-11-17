@@ -1,7 +1,7 @@
 // Who funds the outside spenders. Super PACs can't give to campaigns, but
 // they can take unlimited money and spend it for or against candidates; this
-// collects the large ($50k+) donations behind every group that spent on
-// current members.
+// collects the donors who gave $50k+ in all to a group that spent on current
+// members (see receipts.ts).
 //
 // Everything comes from FEC bulk files: donations from people and companies
 // are picked out while the individuals step streams itcont, and donations
@@ -9,9 +9,8 @@
 import { normalizeOrg, slugify, titleCase } from "../lib/names.js";
 import type { FecData } from "./fec.js";
 import type { Committee, Organization } from "./committees.js";
-import { download, largeReceipt, mainEntry, rows, type LargeReceipt } from "./individuals.js";
-
-export const MIN_DONATION = 50_000;
+import { download, mainEntry, rows } from "./individuals.js";
+import { MIN_DONATION, OutsideReceipts, donorId, isCommittee, isPerson, personName, type LargeReceipt } from "./receipts.js";
 
 export interface Donor {
   id: string;
@@ -39,16 +38,6 @@ export function outsideSpenders(fec: FecData) {
   );
 }
 
-/** "MUSK, ELON R. MR." -> "Elon Musk" */
-function personName(raw: string) {
-  const [last, rest = ""] = raw.split(",").map((s) => s.trim());
-  const first = rest
-    .split(/\s+/)
-    .filter((t) => t.replace(/\./g, "").length > 1 && !/^(MR|MRS|MS|DR|JR|SR|II|III|IV)\.?$/i.test(t))
-    .join(" ");
-  return titleCase(`${first} ${last}`.trim());
-}
-
 export async function collectDonors(
   fec: FecData,
   enriched: { committees: Record<string, Committee>; organizations: Record<string, Organization> },
@@ -56,44 +45,35 @@ export async function collectDonors(
   fromIndividuals: LargeReceipt[]
 ) {
   const spenders = outsideSpenders(fec);
-  const receipts = [...fromIndividuals];
-
+  const fromCommittees = new OutsideReceipts(spenders);
   for (const cycle of cycles) {
     console.log(`Committee donations to outside spenders ${cycle}`);
     const oth = await download(cycle, "oth");
-    for await (const line of rows(oth, mainEntry(oth))) {
-      const r = largeReceipt(line, spenders, cycle);
-      if (r) receipts.push(r);
-    }
+    for await (const line of rows(oth, mainEntry(oth))) fromCommittees.add(line, cycle);
   }
+  const receipts = [...fromIndividuals, ...fromCommittees.atLeast(MIN_DONATION)];
 
   const donors: Record<string, Donor> = {};
   const orgIds = new Set(Object.keys(enriched.organizations));
 
   for (const r of receipts) {
-    const isCommittee = r.otherId.startsWith("C") || ["COM", "PAC", "PTY", "CCM"].includes(r.entityType);
-    const isPerson = !isCommittee && r.entityType === "IND";
-    const committeeName = isCommittee ? fec.committees[r.otherId]?.name : undefined;
-    const name = isPerson ? personName(r.name) : titleCase(committeeName ?? r.name);
+    const committee = isCommittee(r);
+    const person = isPerson(r);
+    const committeeName = committee ? fec.committees[r.otherId]?.name : undefined;
+    const name = person ? personName(r.name) : titleCase(committeeName ?? r.name);
     const state = r.state || undefined;
-
-    const id =
-      isCommittee && r.otherId.startsWith("C")
-        ? r.otherId.toLowerCase()
-        : isPerson
-          ? `${slugify(name)}-${(state ?? "us").toLowerCase()}`
-          : slugify(r.name);
-    if (!id || id === "unknown" || id.startsWith("unknown-")) continue;
+    const id = donorId(r);
+    if (!id) continue;
 
     const donor = (donors[id] ??= {
       id,
       name,
-      type: isCommittee ? "committee" : isPerson ? "individual" : "organization",
+      type: committee ? "committee" : person ? "individual" : "organization",
       state,
-      employer: isPerson ? titleCase(r.employer) || undefined : undefined,
-      occupation: isPerson ? titleCase(r.occupation) || undefined : undefined,
-      committee: isCommittee && enriched.committees[r.otherId] ? r.otherId : undefined,
-      organization: !isPerson && !isCommittee && orgIds.has(slugify(r.name)) ? slugify(r.name) : undefined,
+      employer: person ? titleCase(r.employer) || undefined : undefined,
+      occupation: person ? titleCase(r.occupation) || undefined : undefined,
+      committee: committee && enriched.committees[r.otherId] ? r.otherId : undefined,
+      organization: !person && !committee && orgIds.has(slugify(r.name)) ? slugify(r.name) : undefined,
       gifts: {},
     });
     const byCycle = (donor.gifts[r.recipient] ??= {});
@@ -121,7 +101,7 @@ export async function collectDonors(
 
   const list = Object.values(donors);
   console.log(
-    `${list.length} donors of $${MIN_DONATION.toLocaleString()}+ to ${spenders.size} outside spenders: ` +
+    `${list.length} donors of $${MIN_DONATION.toLocaleString()}+ in all to one of ${spenders.size} outside spenders: ` +
       `${list.filter((d) => d.type === "individual").length} individuals, ` +
       `${list.filter((d) => d.type === "organization").length} organizations, ` +
       `${list.filter((d) => d.type === "committee").length} committees`

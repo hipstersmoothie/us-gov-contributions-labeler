@@ -6,6 +6,7 @@
 import readline from "readline";
 import { spawn, execFileSync } from "child_process";
 import { fecBulk } from "../lib/download.js";
+import { MIN_DONATION, OutsideReceipts } from "./receipts.js";
 import { normalizeOrg, slugify, titleCase } from "../lib/names.js";
 import { sectorForName, type Sector } from "../lib/sectors.js";
 import type { Legislator } from "../lib/legislators.js";
@@ -64,45 +65,6 @@ export function mainEntry(zip: string) {
     return "by_date/*";
   }
   return main?.name;
-}
-
-/** A $50k+ donation to an outside spender, kept for the donors step. */
-export interface LargeReceipt {
-  recipient: string;
-  cycle: number;
-  entityType: string;
-  name: string;
-  state: string;
-  employer: string;
-  occupation: string;
-  /** Contributing committee, if the donor is one. */
-  otherId: string;
-  amount: number;
-}
-
-export const LARGE_DONATION = 50_000;
-
-/**
- * Pick out large receipts to the given committees from an itcont/itoth row.
- * Receipts are transaction types 10-19; memo entries repeat money already
- * counted on another line.
- */
-export function largeReceipt(line: string, spenders: Set<string>, cycle: number): LargeReceipt | undefined {
-  if (!spenders.has(line.slice(0, line.indexOf("|")))) return;
-  const r = line.split("|");
-  const amount = Number(r[14]) || 0;
-  if (amount < LARGE_DONATION || !r[5]?.startsWith("1") || r[18] === "X") return;
-  return {
-    recipient: r[0]!,
-    cycle,
-    entityType: r[6] ?? "",
-    name: r[7] ?? "",
-    state: r[9] ?? "",
-    employer: r[11] ?? "",
-    occupation: r[12] ?? "",
-    otherId: r[15] ?? "",
-    amount,
-  };
 }
 
 const NOT_AN_EMPLOYER: [RegExp, "Retired" | "Self-employed" | "Not employed" | "Not reported"][] = [
@@ -182,7 +144,7 @@ export async function ingestIndividuals(
   /** Outside spenders whose large donors we want. */
   spenders: Set<string>
 ) {
-  const largeReceipts: LargeReceipt[] = [];
+  const outsideReceipts = new OutsideReceipts(spenders);
   const byFecId = new Map<string, string>();
   for (const l of legislators) for (const id of l.fec) byFecId.set(id, l.bioguide);
   const { classify, employerInfo } = donationClassifier(organizations);
@@ -216,8 +178,7 @@ export async function ingestIndividuals(
       // Cheap pre-filter before splitting the whole row.
       const bioguide = campaignOf.get(line.slice(0, line.indexOf("|")));
       if (!bioguide) {
-        const large = largeReceipt(line, spenders, cycle);
-        if (large) largeReceipts.push(large);
+        outsideReceipts.add(line, cycle);
         continue;
       }
 
@@ -331,6 +292,8 @@ export async function ingestIndividuals(
     `Individual donations for ${Object.keys(members).length} members; ` +
       `employee giving matched to ${Object.keys(employers).length} organizations`
   );
-  console.log(`${largeReceipts.length.toLocaleString()} individual donations of $${LARGE_DONATION.toLocaleString()}+ to outside spenders`);
+  // The donors step adds committees' donations and builds the list.
+  const largeReceipts = outsideReceipts.atLeast(MIN_DONATION);
+  console.log(`${largeReceipts.length.toLocaleString()} donor-cycle totals to outside spenders from donors who gave one $${MIN_DONATION.toLocaleString()}+ in all`);
   return { members, employers, largeReceipts };
 }

@@ -29,7 +29,7 @@
           "outside": { "type": "ref", "ref": "#outside" },
           "opponents": { "type": "ref", "ref": "#outside", "description": "Independent expenditures on current members' opponents; targets are the members whose races it was (bioguide ids)." },
           "electioneering": { "type": "ref", "ref": "#electioneering" },
-          "donors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donors of $50,000 or more (fyi.contributions.donor record keys), largest first." }
+          "donors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donors who gave it $50,000 or more in all (fyi.contributions.donor record keys), largest first." }
         }
       }
     },

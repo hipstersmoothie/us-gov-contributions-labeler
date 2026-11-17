@@ -296,7 +296,7 @@ const description = clip(
         o.outsideGifts && (
           <>
             <h3 class="kicker gap">Gifts to super PACs</h3>
-            <p class="muted small">Donations of {money(MIN_DONATION)} or more to groups that spent on current members.</p>
+            <p class="muted small">Everything given to groups that spent on current members, where it gave {money(MIN_DONATION)} or more in all.</p>
             <table>
               <tbody>
                 {o.outsideGifts.map((g) => (

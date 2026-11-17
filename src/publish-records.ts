@@ -433,7 +433,7 @@ let files: DataFile[] = [
   jsonFile("members.json", membersFile.members.length, "Members of Congress, with sectors, contributors, outside spending, committee seats and individual donations."),
   jsonFile("organizations.json", organizationsFile.organizations.length, "Companies, unions and groups behind PACs."),
   jsonFile("committees.json", committeesFile.committees.length, "PACs and other FEC committees, with recipients, outside spending and big donors."),
-  jsonFile("donors.json", donorsFile.donors.length, "Donors of $50,000 or more to super PACs and other outside spenders."),
+  jsonFile("donors.json", donorsFile.donors.length, "Donors who gave a super PAC or other outside spender $50,000 or more in all."),
   jsonFile("congress-committees.json", congressFile.committees.length, "Committees of Congress and their members."),
   jsonFile("revolving-door.json", revolvingFile.lobbyists.length, "Lobbyists of the current Congress who disclosed former government jobs, with the current members and committees those jobs name, their firms and clients."),
   jsonFile("fara.json", faraFile.countries.length, "Foreign Agents Registration Act registrants, foreign principals by country, and registered agents' donations to current members."),
@@ -447,7 +447,7 @@ let files: DataFile[] = [
 
 const METHODOLOGY =
   "Direct contributions from PACs and other political committees to current members of Congress, plus " +
-  "independent expenditures for and against them and donations of $50,000 or more to the outside spenders, from FEC bulk data. " +
+  "independent expenditures for and against them and the donors who gave an outside spender $50,000 or more in all, from FEC bulk data. " +
   "Outside spending also counts 24/48-hour notices dated after a committee's last processed report, independent expenditures " +
   "by groups and people that aren't political committees (Form 5), and, kept separate, electioneering communications (Form 9). " +
   "Donor makeup splits individual money into small (unitemized) and itemized, and itemized money by the donor's state and, " +

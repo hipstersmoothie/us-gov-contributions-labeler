@@ -4,7 +4,7 @@
   "defs": {
     "main": {
       "type": "record",
-      "description": "A donor of $50,000 or more to a super PAC or other outside spender that spent on current members of Congress, as reported to the FEC. The record key is a slug of the name and state for people and organizations, or the lowercased FEC committee id for committees.",
+      "description": "A donor who gave $50,000 or more in all to a super PAC or other outside spender that spent on current members of Congress, as reported to the FEC; every donation they made to that group is counted. The record key is a slug of the name and state for people and organizations, or the lowercased FEC committee id for committees.",
       "key": "any",
       "record": {
         "type": "object",
