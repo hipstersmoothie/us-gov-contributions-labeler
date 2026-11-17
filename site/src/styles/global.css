@@ -295,7 +295,8 @@ main:focus { outline: none; }
 .footer-brand { display: flex; flex-direction: column; gap: var(--sp-2); }
 .footer-brand .logo { display: block; height: 28px; width: auto; aspect-ratio: 645 / 128; }
 .footer-tagline { font: 400 var(--fs-base)/1.3 var(--serif); color: var(--text-secondary); }
-.footer-tagline em, .tagline em { font-style: italic; }
+/* The italic's last letter leans into the space after it; a little room keeps "your member" from closing up. */
+.footer-tagline em, .tagline em { font-style: italic; padding-right: 0.08em; }
 
 /* --- headlines --- */
 .kicker {
@@ -396,7 +397,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 @media (max-width: 640px) {
   .wrap { padding: 0 var(--sp-4); }
   .masthead { margin-bottom: var(--sp-6); }
-  .masthead-row { flex-wrap: wrap; padding-top: var(--sp-3); }
+  /* Both paddings: the .wrap rule above resets them, which left the search box sitting on the nav's rule. */
+  .masthead-row { flex-wrap: wrap; padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
   .brand .logo { height: 34px; }
   .stats { grid-template-columns: 1fr 1fr; border-top: 0; }
   .stat, .stat:first-child { padding: var(--sp-3) var(--sp-3) var(--sp-3) 0; border-left: 0; border-top: 1px solid var(--hairline); }
