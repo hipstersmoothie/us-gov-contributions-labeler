@@ -84,6 +84,15 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
 
   type Value = { href?: string } | null | undefined;
   const nextFrame = () => new Promise((r) => requestAnimationFrame(r));
+  // Redrawing at the real width is a refinement of the build-time SVG, which
+  // is already on screen and scaled, so it waits for the page's first paint
+  // and a quiet moment rather than fetching Plot alongside the page.
+  const settled = new Promise<void>((resolve) => {
+    const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(() => resolve(), { timeout: 2000 }) : resolve());
+    const afterPaint = () => requestAnimationFrame(() => setTimeout(idle));
+    if (document.readyState === "complete") afterPaint();
+    else addEventListener("load", afterPaint, { once: true });
+  });
 
   class PlotChart extends HTMLElement {
     #width = 0;
@@ -109,12 +118,12 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
         ([entry], io) => {
           if (!entry?.isIntersecting) return;
           io.disconnect();
-          if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) this.#start();
+          if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) settled.then(() => this.#start());
         },
         { rootMargin: "300px" }
       ).observe(this);
       new ResizeObserver(() => {
-        if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) this.#start();
+        if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) settled.then(() => this.#start());
         this.#render();
       }).observe(this);
 
