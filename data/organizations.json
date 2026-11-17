@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T00:31:57.741Z",
+  "generatedAt": "2026-11-17T01:30:54.625Z",
   "cycles": [
     2022,
     2024,
@@ -14874,7 +14874,7 @@
         },
         {
           "id": "C00756569",
-          "total": 350000
+          "total": 375000
         },
         {
           "id": "C90019472",
@@ -18117,6 +18117,12 @@
         {
           "id": "G000574",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 100000
         }
       ],
       "employees": {
@@ -29961,6 +29967,12 @@
         {
           "id": "M001236",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 50000
         }
       ],
       "employees": {
@@ -47955,14 +47967,14 @@
         },
         {
           "id": "C00865717",
-          "total": 200000
-        },
-        {
-          "id": "C00732172",
-          "total": 100000
+          "total": 225000
         },
         {
           "id": "C00540203",
+          "total": 130000
+        },
+        {
+          "id": "C00732172",
           "total": 100000
         },
         {
@@ -57388,7 +57400,7 @@
       "outsideGifts": [
         {
           "id": "C00685719",
-          "total": 175000
+          "total": 250000
         }
       ],
       "employees": {
@@ -82117,6 +82129,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 50000
+        }
+      ],
       "employees": {
         "total": 254276,
         "recipients": [
@@ -89192,7 +89210,7 @@
       "outsideGifts": [
         {
           "id": "C00685719",
-          "total": 250000
+          "total": 268000
         }
       ],
       "employees": {
@@ -113146,6 +113164,10 @@
           "total": 150000
         },
         {
+          "id": "C00327189",
+          "total": 100000
+        },
+        {
           "id": "C00946012",
           "total": 50000
         }
@@ -128274,11 +128296,11 @@
       "outsideGifts": [
         {
           "id": "C00488486",
-          "total": 26907760
+          "total": 28158663
         },
         {
           "id": "C00686832",
-          "total": 1350000
+          "total": 1375000
         },
         {
           "id": "C00495861",
@@ -141156,7 +141178,11 @@
       "outsideGifts": [
         {
           "id": "C00725820",
-          "total": 250816
+          "total": 749281
+        },
+        {
+          "id": "C00685719",
+          "total": 160000
         }
       ],
       "employees": {
@@ -145787,7 +145813,7 @@
       "outsideGifts": [
         {
           "id": "C00751495",
-          "total": 1160000
+          "total": 1281474
         }
       ],
       "employees": {
@@ -167078,7 +167104,7 @@
       "outsideGifts": [
         {
           "id": "C00851410",
-          "total": 53241
+          "total": 396725
         }
       ],
       "employees": {
@@ -168216,6 +168242,12 @@
         {
           "id": "F000481",
           "total": 500
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 180000
         }
       ],
       "employees": {
@@ -183601,7 +183633,7 @@
       "outsideGifts": [
         {
           "id": "C00821439",
-          "total": 65507
+          "total": 110235
         }
       ],
       "employees": {
@@ -185848,16 +185880,6 @@
         {
           "id": "F000479",
           "total": 131
-        }
-      ],
-      "outsideGifts": [
-        {
-          "id": "C00815753",
-          "total": 839000
-        },
-        {
-          "id": "C00606962",
-          "total": 104254
         }
       ],
       "employees": {
@@ -210448,6 +210470,12 @@
         {
           "id": "R000621",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00573733",
+          "total": 50000
         }
       ],
       "employees": {
@@ -250996,6 +251024,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00894709",
+          "total": 77321
+        }
+      ],
       "employees": {
         "total": 358975,
         "recipients": [
@@ -268101,11 +268135,11 @@
       "outsideGifts": [
         {
           "id": "C00486845",
-          "total": 96675000
+          "total": 96695601
         },
         {
           "id": "C00802389",
-          "total": 892472
+          "total": 1419075
         },
         {
           "id": "C90019472",
@@ -274723,7 +274757,7 @@
       "outsideGifts": [
         {
           "id": "C00826271",
-          "total": 55000
+          "total": 100000
         }
       ],
       "lobbyingSpend": {
@@ -280724,6 +280758,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 75000
+        }
+      ],
       "employees": {
         "total": 27486,
         "recipients": [
@@ -283107,7 +283147,7 @@
       "outsideGifts": [
         {
           "id": "C00826271",
-          "total": 79400
+          "total": 100000
         }
       ],
       "employees": {
@@ -283704,7 +283744,7 @@
       "outsideGifts": [
         {
           "id": "C00754051",
-          "total": 23615000
+          "total": 23697946
         },
         {
           "id": "C00627372",
@@ -293625,7 +293665,7 @@
       "outsideGifts": [
         {
           "id": "C00556274",
-          "total": 5384447
+          "total": 5720293
         },
         {
           "id": "C00745745",
@@ -294111,7 +294151,7 @@
       "outsideGifts": [
         {
           "id": "C00573733",
-          "total": 100000
+          "total": 175000
         }
       ],
       "employees": {
@@ -298164,6 +298204,12 @@
         {
           "id": "C001095",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 125000
         }
       ],
       "employees": {
@@ -302347,6 +302393,12 @@
         {
           "id": "V000136",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 125000
         }
       ],
       "employees": {
@@ -316688,7 +316740,7 @@
       "outsideGifts": [
         {
           "id": "C00528455",
-          "total": 50000
+          "total": 1150000
         }
       ],
       "lobbyingSpend": {
@@ -366411,6 +366463,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 123000
+        }
+      ],
       "employees": {
         "total": 21009,
         "recipients": [
@@ -381851,7 +381909,7 @@
       "outsideGifts": [
         {
           "id": "C00541433",
-          "total": 196629
+          "total": 219737
         }
       ],
       "lobbyingSpend": {
@@ -412980,6 +413038,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 55000
+        }
+      ],
       "employees": {
         "total": 7173,
         "recipients": [
@@ -435984,6 +436048,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 70000
+        }
+      ],
       "employees": {
         "total": 30700,
         "recipients": [
@@ -438511,7 +438581,7 @@
       "outsideGifts": [
         {
           "id": "C00685719",
-          "total": 100000
+          "total": 135000
         }
       ],
       "employees": {
@@ -457330,7 +457400,7 @@
       "outsideGifts": [
         {
           "id": "C00738674",
-          "total": 1370000
+          "total": 1395000
         },
         {
           "id": "C00489799",
@@ -463763,6 +463833,12 @@
         {
           "id": "T000490",
           "total": 500
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00879072",
+          "total": 80000
         }
       ],
       "employees": {
@@ -471609,7 +471685,7 @@
         },
         {
           "id": "C00504530",
-          "total": 5950000
+          "total": 5975000
         },
         {
           "id": "C00893263",
@@ -481547,7 +481623,7 @@
       "outsideGifts": [
         {
           "id": "C00879965",
-          "total": 511884
+          "total": 1313516
         }
       ]
     },
@@ -492131,7 +492207,7 @@
       "outsideGifts": [
         {
           "id": "C00707844",
-          "total": 37165000
+          "total": 37798750
         },
         {
           "id": "C00486845",
@@ -495366,6 +495442,12 @@
         {
           "id": "C001067",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 62500
         }
       ],
       "employees": {
@@ -516017,7 +516099,7 @@
       "outsideGifts": [
         {
           "id": "C00685719",
-          "total": 225000
+          "total": 370000
         }
       ],
       "employees": {
@@ -517698,6 +517780,12 @@
         {
           "id": "G000598",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 50000
         }
       ],
       "employees": {
@@ -521064,7 +521152,7 @@
       "outsideGifts": [
         {
           "id": "C00530766",
-          "total": 76000
+          "total": 161000
         }
       ],
       "employees": {
@@ -597537,7 +597625,7 @@
         },
         {
           "id": "C00722025",
-          "total": 325000
+          "total": 329780
         },
         {
           "id": "C00764209",
@@ -649230,6 +649318,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 125000
+        }
+      ],
       "employees": {
         "total": 137261,
         "recipients": [
@@ -679473,7 +679567,7 @@
       "outsideGifts": [
         {
           "id": "C00688655",
-          "total": 32201091
+          "total": 33073860
         }
       ],
       "employees": {
@@ -683341,6 +683435,20 @@
         {
           "id": "H001090",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00490375",
+          "total": 7144962
+        },
+        {
+          "id": "C00685719",
+          "total": 200000
+        },
+        {
+          "id": "C90021791",
+          "total": 125000
         }
       ],
       "employees": {
@@ -697166,6 +697274,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 50000
+        }
+      ],
       "employees": {
         "total": 34714,
         "recipients": [
@@ -702206,6 +702320,12 @@
         {
           "id": "M001237",
           "total": 250
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 70000
         }
       ],
       "employees": {
@@ -711471,11 +711591,11 @@
         },
         {
           "id": "C00854299",
-          "total": 100000
+          "total": 110000
         },
         {
           "id": "C00844530",
-          "total": 50000
+          "total": 85000
         }
       ],
       "employees": {
@@ -714577,7 +714697,7 @@
       "outsideGifts": [
         {
           "id": "C00495861",
-          "total": 78877
+          "total": 80877
         }
       ],
       "employees": {
@@ -742329,11 +742449,11 @@
       "outsideGifts": [
         {
           "id": "C00740225",
-          "total": 9940000
+          "total": 10424704
         },
         {
           "id": "C00802389",
-          "total": 2750000
+          "total": 3524364
         }
       ],
       "employees": {
@@ -761935,6 +762055,12 @@
         {
           "id": "R000619",
           "total": 1000
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 55000
         }
       ],
       "employees": {
@@ -839636,6 +839762,12 @@
           "total": 250
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 82500
+        }
+      ],
       "employees": {
         "total": 42075,
         "recipients": [
@@ -858636,7 +858768,7 @@
       "outsideGifts": [
         {
           "id": "C00495028",
-          "total": 50000
+          "total": 57000
         }
       ],
       "employees": {
@@ -874839,7 +874971,7 @@
       "outsideGifts": [
         {
           "id": "C00733352",
-          "total": 60000
+          "total": 100000
         }
       ],
       "employees": {
@@ -898831,7 +898963,7 @@
       "outsideGifts": [
         {
           "id": "C00742635",
-          "total": 200000
+          "total": 511844
         }
       ],
       "employees": {
@@ -914251,7 +914383,7 @@
       "outsideGifts": [
         {
           "id": "C00492116",
-          "total": 1631833
+          "total": 1976636
         }
       ],
       "employees": {
@@ -940057,6 +940189,12 @@
           "total": 1000
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 90000
+        }
+      ],
       "employees": {
         "total": 6114,
         "recipients": [
@@ -960812,7 +960950,7 @@
       "outsideGifts": [
         {
           "id": "C00701797",
-          "total": 525000
+          "total": 735500
         }
       ],
       "employees": {
@@ -977599,6 +977737,12 @@
           "total": 500
         }
       ],
+      "outsideGifts": [
+        {
+          "id": "C00854059",
+          "total": 60000
+        }
+      ],
       "employees": {
         "total": 46420,
         "recipients": [
@@ -977944,15 +978088,15 @@
       "outsideGifts": [
         {
           "id": "C00484642",
-          "total": 26508959
+          "total": 26773463
         },
         {
           "id": "C00495028",
-          "total": 711145
+          "total": 791552
         },
         {
           "id": "C00580068",
-          "total": 322699
+          "total": 384649
         },
         {
           "id": "C00573261",
@@ -1002145,6 +1002289,12 @@
         {
           "id": "D000197",
           "total": 500
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00685719",
+          "total": 60000
         }
       ],
       "employees": {
@@ -1041187,11 +1041337,11 @@
       "outsideGifts": [
         {
           "id": "C00609388",
-          "total": 399999
+          "total": 400000
         },
         {
           "id": "C00753277",
-          "total": 349999
+          "total": 350000
         },
         {
           "id": "C00876094",
@@ -1048289,7 +1048439,7 @@
       "outsideGifts": [
         {
           "id": "C00755363",
-          "total": 172311
+          "total": 348384
         }
       ],
       "employees": {
@@ -1058053,6 +1058203,12 @@
         {
           "id": "L000602",
           "total": 1500
+        }
+      ],
+      "outsideGifts": [
+        {
+          "id": "C00630665",
+          "total": 80000
         }
       ],
       "lobbyingSpend": {
@@ -1071838,7 +1071994,7 @@
       "outsideGifts": [
         {
           "id": "C00606962",
-          "total": 100000
+          "total": 150000
         },
         {
           "id": "C00504530",
@@ -1081314,7 +1081470,7 @@
       "outsideGifts": [
         {
           "id": "C00509893",
-          "total": 1444441
+          "total": 1704701
         }
       ],
       "employees": {
