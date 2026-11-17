@@ -53,14 +53,17 @@ pnpm sync-labels               # dry run: what labels would change
 pnpm sync-labels --apply       # publish the label changes
 ```
 
-Steps: `accounts`, `assignments`, `fec`, `committees`, `lobbying`, `individuals`, `donors`, `legislation`, `revolving`, `fara`. Each caches its work, so an interrupted run picks up where it stopped. `legislation`, `revolving` and `fara` only need what's already in `data/`, so they can run on their own (`--steps=revolving,fara`); `revolving` reads the same cached LD-1/LD-2 filings as `legislation`.
+Steps: `accounts`, `assignments`, `fec`, `committees`, `lobbying`, `individuals`, `donors`, `legislation`, `revolving`, `fara`, `races`. Each caches its work, so an interrupted run picks up where it stopped. `legislation`, `revolving` and `fara` only need what's already in `data/`, so they can run on their own (`--steps=revolving,fara`); `revolving` reads the same cached LD-1/LD-2 filings as `legislation`.
 
 The revolving-door matches are checked by hand on a random sample: `tsx src/scripts/review-revolving.ts sample 150 50`, then `show`, then `wrong <numbers>`; the about page reports the result from `data/revolving-door-review.json`.
+
+`races` writes `data/races.json`, the 2026 House and Senate races and every candidate on the November ballot, from the fec step's cache plus `cn`, `ccl`, `weball`, `pas2` and `indiv` for 2026; see [design/races/README.md](design/races/README.md), which also has the checklist for Jan. 3, 2027. Members who leave Congress move from `data/members.json` to `data/former-members.json` on the next run, so their pages stay up; the labeler, lists and feeds only read `members.json`.
 
 Manual corrections:
 
 - `data/account-overrides.json`: `{ "<bioguide>": { "include": ["handle or did"], "exclude": [...] } }`
 - `data/committee-overrides.json`: `{ "<FEC committee id>": { "sector": "...", "industry": "...", "name": "..." } }`
+- `data/race-results.json`: certified 2026 results, each with the official source (see design/races/README.md)
 
 Accounts the matcher wasn't sure about, and PACs it couldn't classify, are listed in `data/review.json` and the ingest output.
 

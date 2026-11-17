@@ -48,7 +48,9 @@ const oldOrgs = orgIds(committed("data/organizations.json") ?? '{"organizations"
 const newOrgs = orgIds(fs.readFileSync("data/organizations.json", "utf8"));
 const gone = [...oldOrgs].filter((id) => !newOrgs.has(id));
 console.log(`organizations: ${oldOrgs.size} → ${newOrgs.size}, ${gone.length} ids gone`);
-const rebuiltTogether = new Set(["data/organizations.json", "data/members.json", "data/committees.json", "data/donors.json"]);
+// races.json and former-members.json are rewritten in the same run, and their
+// pages only link an organization that still has one.
+const rebuiltTogether = new Set(["data/organizations.json", "data/members.json", "data/committees.json", "data/donors.json", "data/races.json", "data/former-members.json"]);
 for (const file of files.filter((f) => !rebuiltTogether.has(f) && fs.existsSync(f))) {
   const text = fs.readFileSync(file, "utf8");
   const dangling = gone.filter((id) => text.includes(`"${id}"`));
@@ -61,12 +63,32 @@ const before = JSON.parse(committed("data/members.json") ?? "{}") as MembersFile
 const after = JSON.parse(fs.readFileSync("data/members.json", "utf8")) as MembersFile;
 const memberChange = after.members.length - before.members.length;
 console.log(`members: ${before.members.length} → ${after.members.length}`);
-if (Math.abs(memberChange) > MAX_MEMBER_CHANGE) problems.push(`member count changed by ${memberChange}`);
+// A new Congress replaces dozens of members at once. That's expected when
+// everyone who left is now in former-members.json and everyone who arrived
+// was a 2026 general-election candidate (data/races.json).
+const beforeIds = new Set(before.members.map((m) => m.bioguide));
+const afterIds = new Set(after.members.map((m) => m.bioguide));
+const left = [...beforeIds].filter((id) => !afterIds.has(id));
+const arrived = [...afterIds].filter((id) => !beforeIds.has(id));
+const former = new Set(fs.existsSync("data/former-members.json") ? (JSON.parse(fs.readFileSync("data/former-members.json", "utf8")).members as { bioguide: string }[]).map((m) => m.bioguide) : []);
+const ranIn2026 = new Set(
+  fs.existsSync("data/races.json")
+    ? (JSON.parse(fs.readFileSync("data/races.json", "utf8")) as { races: { candidates: { bioguide?: string }[] }[] }).races.flatMap((r) => r.candidates.flatMap((c) => (c.bioguide ? [c.bioguide] : [])))
+    : []
+);
+const turnover = left.every((id) => former.has(id)) && arrived.every((id) => ranIn2026.has(id));
+if (left.length || arrived.length) console.log(`  left: ${left.length} (all in former-members.json: ${left.every((id) => former.has(id))}); arrived: ${arrived.length} (all 2026 candidates: ${arrived.every((id) => ranIn2026.has(id))})`);
+if (Math.abs(memberChange) > MAX_MEMBER_CHANGE || left.length + arrived.length > 2 * MAX_MEMBER_CHANGE) {
+  if (turnover && new Date() >= new Date("2027-01-03")) console.log("  a new Congress: turnover accounted for");
+  else problems.push(`member count changed by ${memberChange} (${left.length} left, ${arrived.length} arrived)`);
+}
 
 const cycles = after.cycles.filter((c) => before.cycles.includes(c));
+// Money of members in both versions, so members leaving (a new Congress) isn't a drop.
+const both = (m: Member) => beforeIds.has(m.bioguide) && afterIds.has(m.bioguide);
 const money = (f: MembersFile, key: "pac" | "individual" | "receipts" | "itemized", cycle: number) =>
-  f.members.reduce((n, m) => n + (m.totals[cycle]?.[key] ?? 0), 0);
-const employerMoney = (f: MembersFile) => f.members.reduce((n, m) => n + (m.individuals?.itemized ?? 0), 0);
+  f.members.filter(both).reduce((n, m) => n + (m.totals[cycle]?.[key] ?? 0), 0);
+const employerMoney = (f: MembersFile) => f.members.filter(both).reduce((n, m) => n + (m.individuals?.itemized ?? 0), 0);
 const fmt = (n: number) => `$${(n / 1e6).toFixed(1)}M`;
 const pct = (a: number, b: number) => (a ? `${b >= a ? "+" : ""}${(((b - a) / a) * 100).toFixed(1)}%` : "new");
 

@@ -31,15 +31,18 @@ clone to `origin/main` and runs `src/scripts/refresh/refresh.sh`:
    account the matcher dropped is put back and listed in the run's summary.
    To drop one for real, add it to `exclude` in `data/account-overrides.json`
    or remove it by hand.
-2. `pnpm ingest --steps=assignments,fec,bundling,committees,lobbying,individuals,donors,legislation`
+2. `pnpm ingest --steps=assignments,fec,bundling,committees,lobbying,individuals,donors,legislation,races`
    (`pnpm ingest` allows Node a 12 GB heap: three complete cycles of
    individual donations outgrow the default 4 GB).
    Bulk files are refetched only when fec.gov's copy changed (below). The
    revolving door and FARA are left to the Railway job.
 3. `check-data.ts`. It stops the run before anything is pushed if:
-   - the member count moves by more than 3,
+   - the member count moves by more than 3 (or more than 6 members come and
+     go), unless it's on or after Jan. 3, 2027 and everyone who left is in
+     `former-members.json` and everyone who arrived was a 2026 candidate (a
+     new Congress; see design/races/README.md),
    - total PAC, individual or receipts money drops more than 5% (over the
-     cycles both versions cover),
+     cycles both versions cover, for members in both),
    - itemized individual donations drop more than 5%,
    - any `data/*.json` shrinks by more than 25% or stops parsing.
    - an organization id disappears while a file the run doesn't rebuild

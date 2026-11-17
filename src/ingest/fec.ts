@@ -78,6 +78,20 @@ export interface FecData {
   electioneering?: Record<string, Record<string, Record<number, number>>>;
   /** What the sources beyond pas2 added, for the run log and the about page. */
   added?: { cycle: number; source: "notices" | "form5"; amount: number }[];
+  /**
+   * Independent expenditures naming any House or Senate candidate, member or
+   * not, for the race pages: cycle -> candidate id -> committee id -> amounts,
+   * with general-election spending also counted on its own.
+   */
+  byCandidate?: Record<number, Record<string, Record<string, CandidateOutside>>>;
+}
+
+export interface CandidateOutside {
+  support: number;
+  oppose: number;
+  /** The part of support and oppose coded to the general election. */
+  generalSupport: number;
+  generalOppose: number;
 }
 
 export interface OutsideSpending {
@@ -208,7 +222,7 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
   const byFecId = new Map<string, string>();
   for (const l of legislators) for (const id of l.fec) byFecId.set(id, l.bioguide);
 
-  const data: FecData = { totals: {}, committees: {}, contributions: {}, outside: {}, opponents: [], candidates: {}, electioneering: {}, added: [] };
+  const data: FecData = { totals: {}, committees: {}, contributions: {}, outside: {}, opponents: [], candidates: {}, electioneering: {}, added: [], byCandidate: {} };
   const opponentSpending = new Map<string, OpponentSpending>();
   const allCommittees = new Map<string, FecCommittee>();
   // Form 5 contributions and Form 9 donations, by filer, over the cycles.
@@ -368,8 +382,15 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       if (found?.length !== 1) return void unnamed++;
       return { ...ie, candidate: found[0]! };
     };
+    const byCandidate = (data.byCandidate![cycle] = {} as Record<string, Record<string, CandidateOutside>>);
     const recordIe = (ie: IeRow, source: "pas2" | "notice" | "form5") => {
       const opponentOf: string[] = [];
+      if (raceOf.has(ie.candidate)) {
+        const byCommittee = (byCandidate[ie.candidate] ??= {});
+        const row = (byCommittee[ie.committee] ??= { support: 0, oppose: 0, generalSupport: 0, generalOppose: 0 });
+        row[ie.side] += ie.amount;
+        if (ie.election === "G") row[ie.side === "support" ? "generalSupport" : "generalOppose"] += ie.amount;
+      }
       // Spending on members' opponents: any expenditure naming a candidate in
       // a current member's race, other than that member. That includes another
       // member, where two incumbents met in the same race.
@@ -503,6 +524,21 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       for (const cycle of Object.keys(byCycle)) byCycle[Number(cycle)] = Math.round(byCycle[Number(cycle)]!);
     }
     data.committees[id] ??= allCommittees.get(id) ?? { id, name: id, kind: "non-committee" };
+  }
+
+  // Candidates' outside spending, in whole dollars. Spenders that only named
+  // non-members stay out of data.committees (and so out of committees.json);
+  // the races step names them from the committee master.
+  for (const byCand of Object.values(data.byCandidate!)) {
+    for (const [cand, byCommittee] of Object.entries(byCand)) {
+      for (const [id, row] of Object.entries(byCommittee)) {
+        for (const k of ["support", "oppose", "generalSupport", "generalOppose"] as const) row[k] = Math.round(row[k]);
+        if (row.support <= 0 && row.oppose <= 0) {
+          delete byCommittee[id];
+        }
+      }
+      if (!Object.keys(byCommittee).length) delete byCand[cand];
+    }
   }
 
   for (const row of opponentSpending.values()) {

@@ -32,6 +32,7 @@ import { revolvingStats, lobbyists, membersByStaff, filingYears } from "../src/l
 import { trips, activeSponsors, tripsBySponsor, summarize, sinceLabel } from "../src/lib/travel";
 import { bundledMembers, bundlingTotal, bundlers, bundlerName } from "../src/lib/bundling";
 import type { Bar, Card, CardsFile, Party, Split } from "../server/src/types";
+import { races, raceName, raceShort, raceChamber, stateName, personName, partyLetterOf, partyName, raised, sourceValues, resultLine, raceYear, PENDING } from "../src/lib/races";
 
 const OUT_DIR = path.resolve(process.cwd(), "server/data");
 const NOT_INDUSTRY = ["Unknown", "Party & Candidate Committees"];
@@ -400,6 +401,61 @@ for (const sp of activeSponsors) {
     span: since,
   };
 }
+
+// --- 2026 races and candidates ------------------------------------------------------
+
+const raceSpan = `${raceYear - 1}–${raceYear}`;
+const asParty = (p: string | undefined) => (p === "D" || p === "R" || p === "I" ? (p as Party) : undefined);
+for (const r of races) {
+  const status = r.result.status === "pending" ? PENDING : resultLine(r);
+  cards[`race/${r.slug}`] = {
+    type: "race",
+    kicker: `${raceYear} ${raceChamber(r)} race · ${stateName(r.state)}`,
+    name: raceName(r),
+    status,
+    candidates: r.candidates.slice(0, 3).map((c) => ({
+      label: personName(c),
+      party: asParty(partyLetterOf(c)),
+      note: asParty(partyLetterOf(c)) ? undefined : c.party,
+      raised: raised(c),
+      support: c.outside.support,
+      oppose: c.outside.oppose,
+    })),
+    span: raceSpan,
+  };
+  for (const c of r.candidates) {
+    if (c.bioguide) continue;
+    const v = sourceValues(c);
+    cards[`candidate/${c.id}`] = {
+      type: "candidate",
+      name: personName(c),
+      party: asParty(partyLetterOf(c)),
+      partyName: partyName(c),
+      seat: `${r.office === "S" ? "Senate" : "House"} candidate, ${raceShort(r)}`,
+      raised: raised(c),
+      sources: [
+        { label: "Individuals", value: v.individual },
+        { label: "PACs & party", value: v.pac },
+        { label: "Own money", value: v.self },
+      ],
+      status,
+      span: raceSpan,
+    };
+  }
+}
+const raceMoney = races.reduce((a, r) => a + r.candidates.reduce((b, c) => b + raised(c), 0), 0);
+cards["page/races"] = {
+  type: "page",
+  kicker: `${raceYear} races`,
+  title: `Every ${raceYear} House and Senate race`,
+  dek: `${races.reduce((a, r) => a + r.candidates.length, 0).toLocaleString()} candidates on the November ballot raised ${money(raceMoney, true)}. ${PENDING}.`,
+  span: raceSpan,
+  barsTitle: "Most outside spending",
+  bars: [...races]
+    .sort((a, b) => b.outside.total - a.outside.total)
+    .slice(0, 4)
+    .map((r) => ({ label: raceName(r), value: r.outside.total })),
+};
 
 const file: CardsFile = { version: ogVersion(cards), cycleRange: cycleRange.replace(/\u2060/g, ""), cards };
 fs.mkdirSync(OUT_DIR, { recursive: true });

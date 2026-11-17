@@ -1,0 +1,20 @@
+---
+// A race's outside spenders past the first few, loaded on request.
+import RankedTable from "../../../../../components/RankedTable.astro";
+import { races, spender, personName, type Race } from "../../../../../lib/races";
+import { RACE_SPENDERS_SHOWN } from "../../../../../lib/race-pages";
+
+export const partial = true;
+export function getStaticPaths() {
+  return races.filter((r) => r.outside.spenders.length > RACE_SPENDERS_SHOWN).map((r) => ({ params: { slug: r.slug }, props: { r } }));
+}
+const { r } = Astro.props as { r: Race };
+const names = new Map([...r.candidates, ...r.others].map((c) => [c.id, personName(c)]));
+const rows = r.outside.spenders.slice(RACE_SPENDERS_SHOWN).map((s) => {
+  const sp = spender(s.id);
+  const parts = s.byCandidate.flatMap((b) => [b.support > 0 ? `for ${names.get(b.id) ?? b.id}` : "", b.oppose > 0 ? `against ${names.get(b.id) ?? b.id}` : ""]).filter(Boolean);
+  return { label: sp.label, href: sp.href, note: [sp.kind, parts.join(", ")].filter(Boolean).join(" · "), value: s.total };
+});
+---
+
+<RankedTable heading="Group" valueHeading="Spent" rank={false} rows={rows} />

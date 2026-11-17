@@ -76,7 +76,7 @@ export function office(m: Member) {
 const PARTY_NAME: Record<string, string> = { Democrat: "Democratic Party", Republican: "Republican Party" };
 
 /** A member's profile page: the Person, linked to their other profiles on the web. */
-export function memberProfile(m: Member, path: string): Thing {
+export function memberProfile(m: Member, path: string, former = false): Thing {
   const photo = photoUrl(m.bioguide);
   const sameAs = [
     m.url,
@@ -93,9 +93,9 @@ export function memberProfile(m: Member, path: string): Thing {
       "@type": "Person",
       "@id": abs(`${path}#person`),
       name: m.name,
-      jobTitle: office(m),
+      jobTitle: former ? `Former ${office(m)}` : office(m),
       ...(PARTY_NAME[m.party] && { affiliation: { "@type": "PoliticalParty", name: PARTY_NAME[m.party] } }),
-      memberOf: { "@type": "GovernmentOrganization", name: m.chamber === "senate" ? "United States Senate" : "United States House of Representatives" },
+      ...(!former && { memberOf: { "@type": "GovernmentOrganization", name: m.chamber === "senate" ? "United States Senate" : "United States House of Representatives" } }),
       identifier: { "@type": "PropertyValue", propertyID: "bioguide", value: m.bioguide },
       ...(photo && { image: abs(photo) }),
       sameAs,

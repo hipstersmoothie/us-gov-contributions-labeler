@@ -229,3 +229,7 @@
 .results a { font-weight: 500; }
 .result-detail { font-size: var(--fs-sm); color: var(--text-muted); text-align: right; }
 .result-more { color: var(--text-muted); font-size: var(--fs-sm); }
+
+/* The races list: each race's candidates, party tag and surname. */
+.race-field { display: flex; flex-wrap: wrap; gap: 4px 12px; }
+.race-cand { display: inline-flex; align-items: center; white-space: nowrap; }

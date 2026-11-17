@@ -6,7 +6,7 @@
 // drawn size, so nothing here is set smaller than 22px and the one number
 // the card is about is the biggest thing on it. Party is never color alone:
 // every party fill sits next to its letter or name.
-import type { Bar, BillCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, SectorCard, Split, Target, TravelCard } from "./types.ts";
+import type { Bar, BillCard, CandidateCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, RaceCard, SectorCard, Split, Target, TravelCard } from "./types.ts";
 
 export const WIDTH = 1200;
 export const HEIGHT = 630;
@@ -636,6 +636,87 @@ function travel(c: TravelCard, a: Assets) {
   );
 }
 
+/** A race: up to three candidates, each with what they raised and outside spending on them. */
+function race(c: RaceCard, a: Assets) {
+  const rows = c.candidates.slice(0, 3);
+  const max = Math.max(...rows.map((r) => r.raised), 1);
+  const width = 1072;
+  const mini = (v: number, color: string, word: string) =>
+    v > 0
+      ? div(
+          { alignItems: "center", gap: 8 },
+          div({ width: 14, height: 14, background: color, borderRadius: 2 }),
+          div({ fontSize: 21, fontWeight: 600, color: C.secondary, whiteSpace: "nowrap" }, `${money(v)} ${word}`)
+        )
+      : null;
+  return frame(
+    a,
+    "Campaign money and outside spending from FEC filings",
+    div(
+      { flexDirection: "column", flex: 1 },
+      kicker(c.kicker),
+      title(c.name, width, [64, 56, 48, 42]),
+      div({ display: "block", fontSize: 24, fontWeight: 600, color: C.secondary, marginTop: 10 }, c.status),
+      div(
+        { flexDirection: "column", flex: 1, justifyContent: "center", gap: rows.length > 2 ? 14 : 22 },
+        ...rows.map((r) =>
+          div(
+            { flexDirection: "column" },
+            div(
+              { alignItems: "center", gap: 10 },
+              r.party ? partyChip(r.party, 28) : null,
+              line(r.label, { fontSize: 26, fontWeight: 700, maxWidth: 560 }),
+              r.note ? div({ fontSize: 22, color: C.muted, fontWeight: 500 }, r.note) : null
+            ),
+            div(
+              { alignItems: "center", gap: 14, marginTop: 6 },
+              div({ width: Math.max(4, (r.raised / max) * 420), height: 16, background: C.bar, borderRadius: "0 3px 3px 0" }),
+              div({ fontSize: 22, fontWeight: 600, color: C.secondary, whiteSpace: "nowrap" }, r.raised > 0 ? `${money(r.raised)} raised` : "No money reported"),
+              mini(r.support, C.support, "for"),
+              mini(r.oppose, C.oppose, "against")
+            )
+          )
+        )
+      )
+    ),
+    c.span
+  );
+}
+
+/** A candidate who isn't a member: what they raised, by source. */
+function candidate(c: CandidateCard, a: Assets) {
+  const initials = c.name
+    .split(" ")
+    .filter((w) => /^[A-Z]/.test(w))
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("");
+  const colW = 1072 - 180 - 48;
+  return frame(
+    a,
+    "Campaign money from FEC filings",
+    div(
+      { gap: 48, flex: 1 },
+      div(
+        { width: 180, height: 220, background: C.context, alignItems: "center", justifyContent: "center", fontFamily: SERIF, fontSize: 72, fontWeight: 600, color: C.secondary, borderRadius: 4, marginTop: 6 },
+        initials
+      ),
+      div(
+        { flexDirection: "column", width: colW },
+        kicker(`${c.partyName} · ${c.seat}`, c.party ? partyChip(c.party) : undefined),
+        title(c.name, colW, [64, 56, 48, 42]),
+        div({ display: "block", fontSize: 24, fontWeight: 600, color: C.secondary, marginTop: 8 }, c.status),
+        div(
+          { flex: 1, alignItems: "center", gap: 40 },
+          div({ width: 300, flexShrink: 0 }, stat(c.raised > 0 ? money(c.raised) : "–", "raised for the campaign", undefined, 84)),
+          c.sources.some((s) => s.value > 0) ? div({ flexDirection: "column" }, sectionLabel("By source"), bars(c.sources.filter((s) => s.value > 0), colW - 300 - 40, { rowHeight: 66 })) : null
+        )
+      )
+    ),
+    c.span
+  );
+}
+
 export function cardTree(card: Card, assets: Assets): Node {
   switch (card.type) {
     case "member":
@@ -658,6 +739,10 @@ export function cardTree(card: Card, assets: Assets): Node {
       return page(card, assets);
     case "travel":
       return travel(card, assets);
+    case "race":
+      return race(card, assets);
+    case "candidate":
+      return candidate(card, assets);
   }
 }
 
@@ -687,5 +772,9 @@ export function altText(card: Card): string {
       return `${card.title}. ${card.dek}`;
     case "travel":
       return `${card.title}: ${card.dek}`;
+    case "race":
+      return `${card.name}, ${card.kicker.replace(/ ·.*/, "")}: ${card.candidates.map((x) => `${x.label}${x.party ? ` (${x.party})` : ""} raised ${money(x.raised)}`).join("; ")}. ${card.status}.`;
+    case "candidate":
+      return `${card.name}${card.party ? ` (${card.party})` : ""}, ${card.seat}: raised ${money(card.raised)}. ${card.status}.`;
   }
 }

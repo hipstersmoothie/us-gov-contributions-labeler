@@ -1,0 +1,295 @@
+---
+// A 2026 candidate who isn't a member of Congress: a smaller member page.
+// Once a candidate is a member (sworn in on Jan. 3, 2027, after the data
+// refresh), this URL becomes a pointer to their member page.
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import InfoPopover from "../../islands/InfoPopover";
+import { money, organizationById, sectorSlug } from "../../lib/data";
+import { surname } from "../../lib/format";
+import {
+  races,
+  raceName,
+  raceShort,
+  raceHref,
+  personName,
+  partyLetterOf,
+  partyName,
+  candidateHref,
+  role,
+  spender,
+  raised,
+  ownMoney,
+  SOURCES,
+  sourceValues,
+  smallShare,
+  resultLine,
+  isWinner,
+  stateName,
+  raceYear,
+  PENDING,
+  type Race,
+  type RaceCandidate,
+} from "../../lib/races";
+import { candidacy, candidateJsonLd } from "../../lib/race-pages";
+import { clip } from "../../lib/seo";
+
+export function getStaticPaths() {
+  return races.flatMap((r) =>
+    r.candidates
+      // Members (and anyone who became one) have member pages; their
+      // candidate URL, if it ever existed, points there.
+      .filter((c) => !c.bioguide || !r.incumbents.includes(c.bioguide))
+      .map((c) => ({ params: { id: c.id.toLowerCase() }, props: { c, r } }))
+  );
+}
+const { c, r } = Astro.props as { c: RaceCandidate; r: Race };
+const memberPage = candidateHref(c).startsWith("/members/") ? candidateHref(c) : undefined;
+
+const name = personName(c);
+const last = surname(name);
+const p = partyLetterOf(c);
+const path = `/candidates/${c.id.toLowerCase()}/`;
+const m = c.money;
+const total = raised(c);
+const own = ownMoney(c);
+const small = smallShare(c);
+const opponents = r.candidates.filter((x) => x.id !== c.id);
+const NOT_INDUSTRY = ["Unknown", "Party & Candidate Committees", "Retired", "Not employed"];
+const sectors = c.combinedSectors.filter((s) => !NOT_INDUSTRY.includes(s.id));
+const topIndustry = sectors[0];
+const sourceRow = [{ label: name, values: sourceValues(c) }];
+const spenders = c.outside.spenders.map((s) => ({ ...spender(s.id), ...s }));
+const ind = c.individuals;
+const inState = ind ? ind.places.inState / Math.max(ind.itemized, 1) : undefined;
+const pending = r.result.status === "pending";
+
+const status = c.onBallot
+  ? c.uncertain
+    ? `Filed general-election reports with the FEC, as did another candidate of the same party, so FEC filings don't settle which was on the November ballot.`
+    : `On the Nov. 3 ballot, by the general-election reports ${possessiveName(name)} campaign filed with the FEC.`
+  : r.nominees === "unknown"
+    ? `Registered with the FEC for this seat. No candidate here filed general-election reports, so who was on the November ballot isn't known from FEC filings.`
+    : `Registered with the FEC for this seat.`;
+function possessiveName(n: string) {
+  return n.endsWith("s") ? `${n}'` : `${n}'s`;
+}
+
+const title = `${name} (${p ?? c.party ?? "?"}), ${raceShort(r)} ${raceYear}: campaign money and top donors`;
+const description = clip(
+  `${name}, ${partyName(c)}, ${candidacy(r).replace(/^C/, "c")}. ` +
+    (total > 0 ? `Raised ${money(total, true)}${topIndustry ? `; the top industry among donors was ${topIndustry.id}` : ""}. ` : "") +
+    `${pending ? PENDING : resultLine(r)}. Top contributors, industries and outside spending.`
+);
+---
+
+{
+  memberPage ? (
+    <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <title>{name}</title>
+        <meta name="robots" content="noindex" />
+        <link rel="canonical" href={new URL(memberPage, Astro.site).href} />
+        <meta http-equiv="refresh" content={`0; url=${memberPage}`} />
+      </head>
+      <body><p><a href={memberPage}>{name}'s page</a></p></body>
+    </html>
+  ) : (
+    <Base
+      {title}
+      {description}
+      og={{ type: "candidate", id: c.id }}
+      ogType="profile"
+      crumbs={[["2026 races", `/races/${raceYear}/`], [raceShort(r), raceHref(r)], [name, path]]}
+      jsonLd={candidateJsonLd(c, r, path)}
+    >
+      <header class="cand-head">
+        <div class="portrait-empty" aria-hidden="true">{name.split(" ").filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).slice(0, 2).join("")}</div>
+        <div>
+          <p class="kicker">{p && <span class={`ptag party-${p}`}>{p}</span>}{partyName(c)} · {role(c, r)} · <a href={raceHref(r)}>{raceName(r)}</a></p>
+          <h1>{name}</h1>
+        </div>
+      </header>
+
+      <p class="dek">
+        {name} ran for {r.office === "S" ? `the U.S. Senate in ${stateName(r.state)}` : `the U.S. House in ${raceName(r)}`} in {raceYear}.{" "}
+        {total > 0 ? (
+          <>
+            The campaign raised <strong>{money(total, true)}</strong>{m && m.individual > 0 && <>, {Math.round((m.individual / total) * 100)}% of it from individual donors</>}{own > 0 && <>, and {last} put in <strong>{money(own, true)}</strong> of their own</>}.
+          </>
+        ) : (
+          <>The campaign hasn't reported raising money to the FEC.</>
+        )}
+        {opponents.length > 0 && (
+          <>
+            {" "}Also in the race:{" "}
+            {opponents.slice(0, 4).map((o, i) => (
+              <>{i > 0 && (i === Math.min(opponents.length, 4) - 1 ? " and " : ", ")}<a href={candidateHref(o)}>{personName(o)}</a>{partyLetterOf(o) && ` (${partyLetterOf(o)})`}</>
+            ))}
+            {opponents.length > 4 && ` and ${opponents.length - 4} more`}.
+          </>
+        )}
+      </p>
+      <p class="status-line">{status}</p>
+      <div class:list={["result", { pending }]} role="note">
+        <strong>{pending ? PENDING : isWinner(r, c) ? "Won" : "Result"}.</strong>{" "}
+        {pending ? <>We show a winner only once {stateName(r.state)} certifies the result or the winner is sworn in.</> : <>{resultLine(r)}.</>}{" "}
+        <a href={raceHref(r)}>The whole race</a>
+      </div>
+
+      <dl class="stats">
+        <div class="stat">
+          <dt>
+            Raised, {raceYear - 1}–{raceYear}
+            <InfoPopover client:visible title="What counts as raised">
+              <p>Total receipts the campaign reported to the FEC for the {raceYear} cycle{m?.through && <>, through {m.through}</>}: individual donations, PAC and party money, and the candidate's own funds.</p>
+            </InfoPopover>
+          </dt>
+          <dd>{total > 0 ? money(total, true) : "–"}</dd>
+        </div>
+        <div class="stat"><dt>From PACs &amp; party</dt><dd>{m ? money(m.pac + m.party, true) : "–"}</dd></div>
+        <div class="stat"><dt>Small donors</dt><dd>{small !== undefined ? `${Math.round(small * 100)}%` : "–"}<small>of individual money</small></dd></div>
+        <div class="stat"><dt>Outside spending for</dt><dd>{c.outside.support > 0 ? money(c.outside.support, true) : "–"}</dd></div>
+        <div class="stat"><dt>Outside spending against</dt><dd>{c.outside.oppose > 0 ? money(c.outside.oppose, true) : "–"}</dd></div>
+      </dl>
+
+      <div class="grid-2">
+        <section class="story">
+          <h2>Where the money came from</h2>
+          {total > 0 ? (
+            <>
+              <p class="chart-dek">
+                Everything the campaign raised, by source.
+                {inState !== undefined && <> Of the itemized donations, <strong>{Math.round(inState * 100)}%</strong> came from people in {stateName(r.state)}.</>}
+              </p>
+              <PlotFigure
+                chart="stacked"
+                width={500}
+                label={`Money ${name} raised, by source`}
+                legend={SOURCES.map((s) => ({ label: s.label, color: s.color }))}
+                data={{ mode: "amount", series: SOURCES, rows: sourceRow }}
+                table={{ columns: ["Source", "Amount"], numeric: [1], rows: SOURCES.map((s) => [s.label, money(sourceRow[0]!.values[s.key as keyof (typeof sourceRow)[0]["values"]])]) }}
+              />
+              <p class="source">
+                FEC campaign summary{m?.through && <>, through {m.through}</>}. Own money counts contributions and loans; loans can be repaid.{" "}
+                <a href={`https://www.fec.gov/data/candidate/${c.id}/`}>{c.id} on fec.gov</a>
+              </p>
+            </>
+          ) : (
+            <p class="empty-note">No campaign summary is on file with the FEC for this candidate.</p>
+          )}
+        </section>
+
+        <section class="story">
+          <h2>Top industries</h2>
+          {sectors.length ? (
+            <>
+              <p class="chart-dek">PAC money plus itemized donations from people who work in each industry, estimated from the employer and occupation they gave.</p>
+              <PlotFigure
+                chart="bars"
+                width={500}
+                label={`Top industries funding ${name}`}
+                data={{ rows: sectors.slice(0, 8).map((s) => ({ label: s.id, value: s.total, href: `/sectors/${sectorSlug(s.id)}/` })), emphasize: [0] }}
+                table={{ columns: ["Industry", "Amount"], numeric: [1], rows: c.combinedSectors.map((s) => [s.id, money(s.total)]) }}
+              />
+            </>
+          ) : (
+            <p class="empty-note">No PAC money or itemized donations from people with a known industry.</p>
+          )}
+        </section>
+      </div>
+
+      {c.contributors.length > 0 && (
+        <section class="story">
+          <h2>Top contributors</h2>
+          <p class="chart-dek">Organizations: each one's PAC plus donations from people who list it as their employer.</p>
+          <RankedTable
+            heading="Contributor"
+            valueHeading="Gave"
+            rows={c.contributors.slice(0, 15).map((x) => ({
+              label: x.name,
+              value: x.total,
+              href: !x.id.startsWith("employer:") && organizationById.has(x.id) ? `/organizations/${x.id}/` : undefined,
+              note: x.pacs && x.individuals ? `PAC ${money(x.pacs, true)}, employees ${money(x.individuals, true)}` : x.pacs ? "PAC" : "Employees",
+            }))}
+          />
+        </section>
+      )}
+
+      {spenders.length > 0 && (
+        <section class="story">
+          <h2>Outside spending</h2>
+          <p class="chart-dek">
+            Groups spent <strong>{money(c.outside.support, true)}</strong> supporting {last} and <strong>{money(c.outside.oppose, true)}</strong> opposing them
+            {c.outside.generalSupport + c.outside.generalOppose < c.outside.support + c.outside.oppose && <>, {money(c.outside.generalSupport + c.outside.generalOppose, true)} of it in the general election</>}.
+            None of it goes to the campaign.
+          </p>
+          <PlotFigure
+            chart="diverging"
+            label={`Outside spending for and against ${name}, by group`}
+            legend={[
+              { label: "Supporting", color: "var(--support)" },
+              { label: "Opposing", color: "var(--oppose)" },
+            ]}
+            data={{ rows: spenders.slice(0, 10).map((s) => ({ label: s.label, href: s.href, support: s.support, oppose: s.oppose })) }}
+            table={{ columns: ["Group", "Type", "Supporting", "Opposing"], numeric: [2, 3], rows: spenders.map((s) => [{ text: s.label, href: s.href }, s.kind, s.support ? money(s.support) : "–", s.oppose ? money(s.oppose) : "–"]) }}
+          />
+        </section>
+      )}
+
+      {c.pacs.length > 0 && (
+        <section class="story">
+          <h2>PACs that gave</h2>
+          <p class="chart-dek">{c.pacCount.toLocaleString()} PACs and other committees gave {money(c.pacTotal, true)}{c.pacCount > c.pacs.length && <>; the {c.pacs.length} largest</>}.</p>
+          <RankedTable
+            heading="PAC"
+            valueHeading="Given"
+            rows={c.pacs.map((x) => {
+              const s = spender(x.id);
+              return { label: s.label, href: s.href, note: s.kind || undefined, value: x.total };
+            })}
+          />
+        </section>
+      )}
+
+      {ind && ind.employers.length > 0 && (
+        <section class="story">
+          <h2>Top employers of donors</h2>
+          <p class="chart-dek">Itemized donations ({ind.donations.toLocaleString()} of them, {money(ind.itemized, true)}) from people who listed each employer. Donations of $200 or less aren't itemized.</p>
+          <RankedTable
+            heading="Employer"
+            valueHeading="Donated"
+            rows={ind.employers.slice(0, 10).map((e) => ({
+              label: e.organization ? organizationById.get(e.organization)?.name ?? e.name : e.name,
+              value: e.total,
+              href: e.organization && organizationById.has(e.organization) ? `/organizations/${e.organization}/` : undefined,
+            }))}
+          />
+        </section>
+      )}
+
+      <p class="source">
+        From FEC bulk data for the {raceYear} cycle: the candidate master, campaign summaries, PAC contributions and itemized
+        individual donations, and independent expenditures including 24- and 48-hour notices.{" "}
+        <a href="/about/#races">How races are built</a>
+      </p>
+    </Base>
+  )
+}
+
+<style>
+  .cand-head { display: flex; gap: var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-4); }
+  .portrait-empty {
+    flex: none; width: 72px; height: 88px; border-radius: 2px; background: var(--surface-2); margin-bottom: var(--sp-4);
+    display: grid; place-items: center; font: 700 1.5rem/1 var(--serif); color: var(--text-muted); border: 1px solid var(--hairline);
+  }
+  .cand-head h1 { margin-bottom: var(--sp-4); }
+  .status-line { font-size: var(--fs-sm); color: var(--text-secondary); max-width: 72ch; margin: 0 0 var(--sp-3); }
+  .result {
+    margin: 0 0 var(--sp-6); padding: var(--sp-3) var(--sp-4); border-left: 3px solid var(--rule);
+    background: var(--surface-2); font-size: var(--fs-sm); max-width: 72ch;
+  }
+  .stat dd small { display: block; font-size: var(--fs-xs, 0.75rem); font-weight: 400; color: var(--text-muted); }
+</style>

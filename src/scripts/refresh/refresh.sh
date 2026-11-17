@@ -16,7 +16,7 @@ log() { print -r -- "$(date '+%Y-%m-%d %H:%M:%S') $*"; }
 
 RAILWAY_PROJECT=9c644391-3bf5-4923-905f-cea2ebd1902d
 RAILWAY_ENV=2f859f9f-6599-4d18-89cb-394f2d34d9c7
-STEPS=assignments,fec,bundling,committees,lobbying,individuals,donors,legislation
+STEPS=assignments,fec,bundling,committees,lobbying,individuals,donors,legislation,races
 SUMMARY=.cache/refresh/summary.txt
 mkdir -p .cache/refresh
 : > "$SUMMARY"

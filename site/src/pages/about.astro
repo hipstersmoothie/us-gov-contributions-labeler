@@ -5,6 +5,8 @@ import { congress, lobbyingSpan, ordinal, caucusOf, partyPlural } from "../lib/l
 import { filingSpan, revolvingStats, REVIEW } from "../lib/revolving";
 import { faraSince } from "../lib/fara";
 import { sinceLabel } from "../lib/travel";
+import { raceCoverage, REDRAWN_STATES } from "../lib/races";
+import { listOf } from "../lib/seo";
 
 // "Bernard Sanders and Angus S. King, Jr. with Democrats, and Kevin Kiley with Republicans"
 const independents = members.filter((m) => partyLetter(m.party) === "I" && caucusOf(m));
@@ -146,6 +148,37 @@ const byCaucus = ["D", "R"]
       which. And they don't say <strong>how much was spent on any one bill</strong>: a report's spending covers every
       issue lobbied on that quarter. So this site doesn't put an organization's PAC money next to how members voted on
       the bills it lobbied on. Reports name what was lobbied on, not what was paid for.
+    </p>
+
+    <h2 id="races">The 2026 races</h2>
+    <p>
+      The <a href="/races/2026/">race pages</a> cover every House and Senate race on the Nov. 3, 2026 ballot
+      ({raceCoverage.races ?? 0} races, {(raceCoverage.candidates ?? 0).toLocaleString()} candidates). Candidates and
+      their campaign committees come from the FEC's candidate master and candidate-committee files. Races are keyed by
+      the 2026 district each candidate filed for: {listOf(REDRAWN_STATES)} used new congressional maps in 2026
+      (per <a href="https://www.ncsl.org/redistricting-and-census/changing-the-maps-tracking-mid-decade-redistricting">NCSL's tracker</a>),
+      so their district numbers don't describe the same places as in 2024.
+    </p>
+    <p>
+      <strong>Who was on the ballot.</strong> The FEC doesn't record who won a primary, and its incumbent and status
+      codes don't either. A campaign must file a pre-general report before a general election it's on the ballot
+      for, and a post-general report after, so a candidate counts as on the November ballot when their campaign filed
+      one. Some campaigns file them anyway after losing a primary or retiring, so where two candidates of one party
+      filed them, only those with general-election money given after the primaries, or $10,000 or more of
+      general-election outside spending naming them, are kept. Where neither settles it ({raceCoverage.uncertain ?? 0} candidates),
+      the page says so. Duplicate FEC records for one person, linked to the same campaign committee, are merged.
+    </p>
+    <p>
+      <strong>Results.</strong> We never call a race. A winner is shown only when a state has certified the result
+      (entered by hand, with a link to the state's certification) or when the winner is sworn in and appears in the
+      congress-legislators data after Jan. 3, 2027. Until then each race says "Results pending certification".
+    </p>
+    <p>
+      <strong>Money.</strong> Every candidate is shown for the 2025–2026 cycle alone, incumbents too, so they
+      compare like for like. Totals are the campaign summaries the FEC processes from each report; contributors and
+      industries come from PAC contributions and itemized individual donations, classified the same way as for
+      members. Outside spending includes the 24- and 48-hour notices filed after each group's last processed report,
+      which carry the heaviest spending before an election.
     </p>
 
     <h2 id="revolving-door">Former staff who lobby</h2>

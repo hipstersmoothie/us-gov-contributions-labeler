@@ -108,7 +108,7 @@ export function largeReceipt(line: string, spenders: Set<string>, cycle: number)
 const NOT_AN_EMPLOYER: [RegExp, "Retired" | "Self-employed" | "Not employed" | "Not reported"][] = [
   [/^RETIRED\b/, "Retired"],
   [/^(SELF|SELF[- ]?EMPLOYED|OWNER)$/, "Self-employed"],
-  [/^(NOT[- ]EMPLOYED|NONE|UNEMPLOYED|HOMEMAKER|STUDENT|DISABLED)$/, "Not employed"],
+  [/^(NOT[- ]EMPLOYED|NONE|NO EMPLOYER|UNEMPLOYED|HOMEMAKER|STUDENT|DISABLED)$/, "Not employed"],
   [/^(|N\/?A|INFORMATION REQUESTED.*|REQUESTED|REFUSED|UNKNOWN|BEST EFFORTS.*)$/, "Not reported"],
 ];
 
@@ -124,6 +124,57 @@ const OCCUPATION_RULES: [RegExp, Sector][] = [
   [/PILOT|TRUCK/, "Transportation"],
 ];
 
+export interface EmployerInfo {
+  name: string;
+  organization?: string;
+  sector?: Sector;
+}
+
+/**
+ * Sorts itemized donations by who the donor works for. `classify` gives the
+ * donation's estimated sector and, for donors with an employer, the
+ * normalized employer key (undefined when the employer field normalizes to
+ * nothing: such donations count toward totals but no sector).
+ */
+export function donationClassifier(organizations: Record<string, Organization>) {
+  const orgSector = new Map(Object.values(organizations).map((o) => [o.id, o.sector]));
+  // employer key -> display name / matched org, computed once per key
+  const employerInfo = new Map<string, EmployerInfo>();
+  const occupationSector = new Map<string, Sector | undefined>();
+  const classifyOccupation = (occupation: string) => {
+    if (!occupationSector.has(occupation)) {
+      occupationSector.set(occupation, OCCUPATION_RULES.find(([re]) => re.test(occupation))?.[1]);
+    }
+    return occupationSector.get(occupation);
+  };
+  const classify = (employerRaw: string, occupation: string): { sector: IndividualSector | undefined; employer?: string } | undefined => {
+    const notEmployer = NOT_AN_EMPLOYER.find(([re]) => re.test(employerRaw))?.[1];
+    if (notEmployer) {
+      return {
+        sector:
+          notEmployer === "Retired"
+            ? "Retired"
+            : classifyOccupation(occupation) ?? (notEmployer === "Not employed" ? "Not employed" : undefined),
+      };
+    }
+    const key = normalizeOrg(employerRaw);
+    if (!key) return undefined;
+    let info = employerInfo.get(key);
+    if (!info) {
+      const slug = slugify(employerRaw);
+      const organization = orgSector.has(slug) ? slug : undefined;
+      info = {
+        name: titleCase(employerRaw),
+        organization,
+        sector: organization ? orgSector.get(organization) : sectorForName(employerRaw),
+      };
+      employerInfo.set(key, info);
+    }
+    return { sector: info.sector ?? classifyOccupation(occupation), employer: key };
+  };
+  return { classify, employerInfo };
+}
+
 export async function ingestIndividuals(
   legislators: Legislator[],
   cycles: number[],
@@ -134,27 +185,17 @@ export async function ingestIndividuals(
   const largeReceipts: LargeReceipt[] = [];
   const byFecId = new Map<string, string>();
   for (const l of legislators) for (const id of l.fec) byFecId.set(id, l.bioguide);
-  const orgSector = new Map(Object.values(organizations).map((o) => [o.id, o.sector]));
+  const { classify, employerInfo } = donationClassifier(organizations);
 
-  // employer key -> display name / matched org, computed once per key
-  const employerInfo = new Map<string, { name: string; organization?: string; sector?: Sector }>();
   // bioguide -> employer key -> amount
   const byMember = new Map<string, Map<string, number>>();
   // bioguide -> sector -> amount
   const sectors = new Map<string, Map<IndividualSector, number>>();
   const totals = new Map<string, { itemized: number; donations: number }>();
-  const occupationSector = new Map<string, Sector | undefined>();
   const legislatorById = new Map(legislators.map((l) => [l.bioguide, l]));
   const places = new Map<string, { inState: number; outOfState: number; unknown: number }>();
   // House members' in-state money by ZIP, placed in districts at the end.
   const inStateZips = new Map<string, Map<string, number>>();
-
-  const classifyOccupation = (occupation: string) => {
-    if (!occupationSector.has(occupation)) {
-      occupationSector.set(occupation, OCCUPATION_RULES.find(([re]) => re.test(occupation))?.[1]);
-    }
-    return occupationSector.get(occupation);
-  };
 
   for (const cycle of cycles) {
     console.log(`Individual donations ${cycle}`);
@@ -214,32 +255,13 @@ export async function ingestIndividuals(
       t.donations += type === "22Y" ? 0 : 1;
       totals.set(bioguide, t);
 
-      let sector: IndividualSector | undefined;
-      const notEmployer = NOT_AN_EMPLOYER.find(([re]) => re.test(employerRaw))?.[1];
-      if (notEmployer) {
-        sector =
-          notEmployer === "Retired"
-            ? "Retired"
-            : classifyOccupation(occupation) ?? (notEmployer === "Not employed" ? "Not employed" : undefined);
-      } else {
-        const key = normalizeOrg(employerRaw);
-        if (!key) continue;
-        let info = employerInfo.get(key);
-        if (!info) {
-          const slug = slugify(employerRaw);
-          const organization = orgSector.has(slug) ? slug : undefined;
-          info = {
-            name: titleCase(employerRaw),
-            organization,
-            sector: organization ? orgSector.get(organization) : sectorForName(employerRaw),
-          };
-          employerInfo.set(key, info);
-        }
-        sector = info.sector ?? classifyOccupation(occupation);
-
+      const classified = classify(employerRaw, occupation);
+      if (!classified) continue;
+      const { sector, employer } = classified;
+      if (employer) {
         let m = byMember.get(bioguide);
         if (!m) byMember.set(bioguide, (m = new Map()));
-        m.set(key, (m.get(key) ?? 0) + amount);
+        m.set(employer, (m.get(employer) ?? 0) + amount);
       }
 
       let s = sectors.get(bioguide);

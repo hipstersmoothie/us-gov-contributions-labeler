@@ -44,3 +44,26 @@ export interface BillRow {
   pattern: "party-line" | "near-unanimous" | "split";
   lobbying: number;
 }
+
+export interface RaceRow {
+  id: string;
+  /** "Arizona's 4th District" */
+  name: string;
+  /** "AZ-04", for sorting and search */
+  short: string;
+  href: string;
+  state: string;
+  chamber: "house" | "senate";
+  open: boolean;
+  /** Party letter (or "") and surname of up to four candidates on the ballot. */
+  field: { party: string; name: string }[];
+  /** Searchable: every candidate's full name. */
+  names: string;
+  raised: number;
+  /** General-election outside spending. */
+  outside: number;
+  tier: "10m" | "1m" | "some" | "none";
+  redrawn: boolean;
+  /** "Pending" or the result line. */
+  result: string;
+}

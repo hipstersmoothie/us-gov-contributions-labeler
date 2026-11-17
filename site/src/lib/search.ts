@@ -6,8 +6,9 @@ import { pacTotal } from "./derived";
 import { bills, shortStatus } from "./legislation";
 import { countries } from "./fara";
 import { activeSponsors, tripsBySponsor } from "./travel";
+import { races, raceName, raceShort, personName, partyName, raised } from "./races";
 
-export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f" | "t";
+export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f" | "t" | "r" | "n";
 export type SearchRow = [type: SearchType, id: string, label: string, detail: string, weight: number];
 
 const w = (n: number) => Math.round(n / 1000);
@@ -48,6 +49,19 @@ function rows(limit?: number): SearchRow[] {
       const n = tripsBySponsor.get(sp.key)!.length;
       return ["t", sp.slug, sp.name, `Paid for ${n} ${n === 1 ? "trip" : "trips"} by members and staff`, n];
     }),
+    // The short form is part of the label so "AZ-04" finds it too.
+    ...races.map((r): SearchRow => [
+      "r",
+      r.slug,
+      `${raceName(r)} (${raceShort(r)})`,
+      `2026 race · ${r.candidates.slice(0, 3).map(personName).join(", ")}`,
+      w(r.outside.total) + 1e6,
+    ]),
+    // Candidates who aren't members: members are found as members.
+    ...top(
+      races.flatMap((r) => r.candidates.filter((c) => !c.bioguide).map((c) => ({ c, r }))),
+      ({ c }) => raised(c)
+    ).map(({ c, r }): SearchRow => ["n", c.id.toLowerCase(), personName(c), `${partyName(c)} · 2026 candidate, ${raceShort(r)}`, w(raised(c))]),
     ...top(donors, (d) => d.total).map((d): SearchRow => [
       "d",
       d.id,

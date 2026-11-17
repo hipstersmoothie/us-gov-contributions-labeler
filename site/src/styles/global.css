@@ -377,6 +377,8 @@ tbody tr:hover { background: var(--surface-2); }
 .party-D { --swatch: var(--party-d); }
 .party-I { --swatch: var(--party-i); }
 .party-R { --swatch: var(--party-r); }
+/* Any other party (Libertarian, Green...): neutral, with its FEC code as the label. */
+.party-O { --swatch: var(--text-muted); }
 .ptag {
   display: inline-flex; align-items: center; justify-content: center; flex: none;
   min-width: 1.55em; height: 1.55em; padding: 0 3px; border-radius: 2px; margin-right: 6px; vertical-align: 1px;

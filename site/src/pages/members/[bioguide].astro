@@ -42,12 +42,16 @@ import TripsTable from "../../components/TripsTable.astro";
 import { legalFundByMember, years527, ein, IRS_SEARCH } from "../../lib/irs527";
 import { tripsByMember, summarize, sinceLabel, sponsorByKey, sponsorHref, TRIPS_SHOWN } from "../../lib/travel";
 import { bundlerName, bundlerNote, bundlerHref } from "../../lib/bundling";
+import { raceOfMember, raceName, raceHref, raceYear, resultLine, isWinner, formerMembers } from "../../lib/races";
 
 export function getStaticPaths() {
-  return members.map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
+  // Members who have left keep their page, marked as former (data/former-members.json).
+  return [...members, ...formerMembers].map((m) => ({ params: { bioguide: m.bioguide }, props: { m } }));
 }
 
-const { m } = Astro.props as { m: Member };
+const { m } = Astro.props as { m: Member & { former?: { left: string } } };
+const former = m.former;
+const leftOn = former && new Date(`${former.left}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 const raised = raisedTotal(m);
 const fromPacs = pacTotal(m);
 const sectorTotal = m.sectors.reduce((s, x) => s + x.total, 0);
@@ -95,7 +99,7 @@ const cycleRows = Object.entries(m.totals)
   .reverse();
 const inProgress = cycleRows.some((r) => r.label.includes("so far"));
 
-const points = memberPoints((x) => x.bioguide === m.bioguide).filter((x) => x.lane === chamber);
+const points = former ? [] : memberPoints((x) => x.bioguide === m.bioguide).filter((x) => x.lane === chamber);
 const chamberTop = [...points].sort((a, b) => b.value - a.value)[0]!;
 
 // Contributors: each organization's PAC plus its employees.
@@ -204,9 +208,9 @@ const agentGifts = faraGifts[m.bioguide] ?? [];
 const agentTotal = agentGifts.reduce((s, g) => s + g.total, 0);
 
 const path = `/members/${m.bioguide}/`;
-const title = `${m.name} (${partyState(m)}): campaign money, top donors and industries`;
+const title = `${former ? "Former member " : ""}${m.name} (${partyState(m)}): campaign money, top donors and industries`;
 const description = clip(
-  `${m.name}, ${office(m)}` +
+  `${m.name}, ${former ? `former ${office(m)}` : office(m)}` +
     (raised > 0
       ? `, raised ${money(raised, true)} from ${cycleRange.replace("–", " to ")}, ${money(fromPacs, true)} of it from PACs. `
       : `. `) +
@@ -225,6 +229,9 @@ const tripSponsorRows = [...memberTrips.reduce((acc, t) => {
   .sort((a, b) => b.n - a.n || a.s.name.localeCompare(b.s.name));
 const ethics = m.chamber === "senate" ? "Senate Ethics Committee" : "House Ethics Committee";
 const legalFund = legalFundByMember.get(m.bioguide);
+// Their 2026 race, if they ran in one.
+const ran = raceOfMember(m.bioguide);
+const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
 
 ---
 
@@ -234,7 +241,7 @@ const legalFund = legalFundByMember.get(m.bioguide);
   og={{ type: "member", id: m.bioguide }}
   ogType="profile"
   crumbs={[["Members", "/members/"], [m.name, path]]}
-  jsonLd={memberProfile(m, path)}
+  jsonLd={memberProfile(m, path, !!former)}
 >
   <header class="member-head">
     {
@@ -245,7 +252,7 @@ const legalFund = legalFundByMember.get(m.bioguide);
       )
     }
     <div>
-      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party}{caucusLetter && <> · caucuses with {partyPlural(caucusLetter)}</>} · {seat(m)}</p>
+      <p class="kicker"><span class={`ptag party-${p}`}>{p}</span>{m.party}{caucusLetter && !former && <> · caucuses with {partyPlural(caucusLetter)}</>} · {former ? <>Former member · {seat(m)} until {leftOn}</> : seat(m)}</p>
       <h1>{m.name}</h1>
     </div>
   </header>
@@ -257,7 +264,7 @@ const legalFund = legalFundByMember.get(m.bioguide);
         <>
           {last} raised <strong>{money(raised, true)}</strong> from {cycleRange.replace("–", " to ")},{" "}
           {pct(fromIndividuals, raised)}% of it from individual donors. PACs and other committees gave{" "}
-          <strong>{money(fromPacs, true)}</strong>, {comparison}.
+          <strong>{money(fromPacs, true)}</strong>{former ? "" : <>, {comparison}</>}.
         </>
       ) : (
         <>
@@ -284,10 +291,10 @@ const legalFund = legalFundByMember.get(m.bioguide);
         From PACs &amp; committees
         <InfoPopover client:visible title="PAC and committee money">
           <p>Direct contributions from PACs, leadership PACs and party and candidate committees, as itemized in FEC filings.</p>
-          <p>Ranked against all {rank.of} {peers}.</p>
+          {!former && <p>Ranked against all {rank.of} {peers}.</p>}
         </InfoPopover>
       </dt>
-      <dd>{money(fromPacs, true)}<small>No. {rank.rank} of {rank.of} in the {chamber}</small></dd>
+      <dd>{money(fromPacs, true)}{!former && <small>No. {rank.rank} of {rank.of} in the {chamber}</small>}</dd>
     </div>
     <div class="stat"><dt>Outside spending for</dt><dd>{m.outside.support > 0 ? money(m.outside.support, true) : "–"}</dd></div>
     <div class="stat"><dt>Outside spending against</dt><dd>{m.outside.oppose > 0 ? money(m.outside.oppose, true) : "–"}</dd></div>
@@ -322,6 +329,25 @@ const legalFund = legalFundByMember.get(m.bioguide);
           </div>
         )}
       </section>
+    )
+  }
+
+  {
+    ran && (
+      <p class="race-link">
+        <span class="kicker">{raceYear} race</span>{" "}
+        <a href={raceHref(ran.race)}>{raceName(ran.race)}</a>
+        <span class="muted">
+          {" "}·{" "}
+          {!ran.onBallot
+            ? "registered for this seat; not on the November ballot by FEC filings"
+            : ranAs?.uncertain
+              ? "FEC filings don't settle whether they were on the November ballot"
+              : ran.race.result.status === "pending"
+                ? "on the November ballot; results pending certification"
+                : ranAs && isWinner(ran.race, ranAs) ? "won" : resultLine(ran.race)}
+        </span>
+      </p>
     )
   }
 
@@ -452,7 +478,7 @@ const legalFund = legalFundByMember.get(m.bioguide);
     )
   }
 
-  <section class="story">
+  {!former && <section class="story">
     <h2>How {last} compares</h2>
     <p class="chart-dek">
       PAC and committee money to every member of the {chamber}, {cycleRange}. {last} is highlighted; each gray dot is
@@ -474,7 +500,7 @@ const legalFund = legalFundByMember.get(m.bioguide);
           .map((pt, i) => [i + 1, { text: pt.id === m.bioguide ? `${pt.name} (this page)` : pt.name, href: pt.href! }, pt.detail.split(",")[0]!, money(pt.value)]),
       }}
     />
-  </section>
+  </section>}
 
   {
     votes.length > 0 && (
@@ -871,6 +897,9 @@ const legalFund = legalFundByMember.get(m.bioguide);
 </Base>
 
 <style>
+  .race-link { margin: calc(-1 * var(--sp-4)) 0 var(--sp-6); font-size: var(--fs-sm); font-weight: 600; }
+  .race-link .kicker { margin-right: var(--sp-2); }
+  .race-link .muted { font-weight: 400; }
   .investments-link { margin: calc(-1 * var(--sp-4)) 0 var(--sp-6); font-size: var(--fs-sm); font-weight: 600; }
   .member-head { display: flex; gap: var(--sp-5); align-items: flex-end; margin-bottom: var(--sp-4); }
   .member-head img, .portrait-empty {

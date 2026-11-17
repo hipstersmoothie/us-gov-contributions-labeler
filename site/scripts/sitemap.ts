@@ -2,7 +2,8 @@
 // (members, organizations, PACs…; each far under the 50,000-URL limit), and a
 // robots.txt pointing to it, from the pages the build actually wrote.
 //
-// Left out: the 404 page, search results, and the HTML fragments pages load
+// Left out: the 404 page, search results, redirects (/races/, and a
+// candidate's page once they're a member), and the HTML fragments pages load
 // on demand (robots.txt keeps crawlers out of those; site/server sends
 // X-Robots-Tag: noindex with them and the /data/ files).
 import fs from "node:fs";
@@ -23,6 +24,19 @@ function dataDate() {
 
 const escape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
+/** A page that only points somewhere else (a meta refresh in its first bytes). */
+function isRedirect(out: string, p: string) {
+  try {
+    const fd = fs.openSync(path.join(out, p, "index.html"), "r");
+    const head = Buffer.alloc(400);
+    fs.readSync(fd, head, 0, head.length, 0);
+    fs.closeSync(fd);
+    return head.toString().includes('http-equiv="refresh"');
+  } catch {
+    return false;
+  }
+}
+
 export default function sitemap(): AstroIntegration {
   let site: URL;
   return {
@@ -39,6 +53,7 @@ export default function sitemap(): AstroIntegration {
           const p = pathname.replace(/^\//, "");
           // Pages only (they all end in a slash); not the JSON endpoints.
           if (!(p === "" || p.endsWith("/")) || SKIP.test(p)) continue;
+          if ((p === "races/" || p.startsWith("candidates/")) && isRedirect(out, p)) continue;
           const section = p.includes("/") && p.indexOf("/") < p.length - 1 ? p.slice(0, p.indexOf("/")) : "pages";
           if (!sections.has(section)) sections.set(section, []);
           sections.get(section)!.push(new URL(p, site).href);

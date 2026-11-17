@@ -7,13 +7,14 @@
 //   pnpm ingest --steps=legislation  just bills, votes and lobbying reports
 //   pnpm ingest --steps=revolving    just lobbyists' former government jobs
 //   pnpm ingest --steps=fara         just foreign lobbying
+//   pnpm ingest --steps=races        just the 2026 races (needs the fec cache)
 //
 // Needs FEC_API_KEY and SEC_USER_AGENT in .env. Every step caches to .cache/,
 // so an interrupted run picks up where it stopped.
 import "dotenv/config";
 import fs from "fs";
 import { parseArgs } from "util";
-import { getCurrentLegislators } from "./lib/legislators.js";
+import { getCurrentLegislators, lastTermEnds } from "./lib/legislators.js";
 import { recentCycles } from "./lib/cycles.js";
 import { discoverAccounts } from "./ingest/accounts.js";
 import { ingestFec, type FecData } from "./ingest/fec.js";
@@ -28,9 +29,11 @@ import { ingestLegislation, ldaQuarters, congressFor } from "./ingest/legislatio
 import { ingestBundling } from "./ingest/bundling.js";
 import { ingestRevolving } from "./ingest/revolving.js";
 import { ingestFara } from "./ingest/fara.js";
+import { ingestRaces } from "./ingest/races.js";
+import type { Member } from "./ingest/build.js";
 
 const STEPS = [
-  "accounts", "assignments", "fec", "bundling", "committees", "lobbying", "individuals", "donors", "legislation", "revolving", "fara",
+  "accounts", "assignments", "fec", "bundling", "committees", "lobbying", "individuals", "donors", "legislation", "revolving", "fara", "races",
 ] as const;
 const FEC_FILE = ".cache/fec/data.json";
 const ENRICHED_FILE = ".cache/enrich/result.json";
@@ -180,12 +183,45 @@ const data = buildData(
   lobbying,
   bundling
 );
+// Members who have left Congress keep their pages, as former members: their
+// last record is carried over from the previous members.json into
+// former-members.json, which the site reads and the labeler, lists and feeds
+// don't. On Jan. 3, 2027 that's everyone who didn't come back.
+const formerFile = "data/former-members.json";
+type Former = Member & { former: { left: string } };
+const previous = readJson<{ members: Member[] }>("data/members.json")?.members ?? [];
+const formerBefore = readJson<{ members: Former[] }>(formerFile)?.members ?? [];
+const current = new Set(legislators.map((l) => l.bioguide));
+const departed = previous.filter((m) => !current.has(m.bioguide) && !formerBefore.some((f) => f.bioguide === m.bioguide));
+const ends = await lastTermEnds(departed.map((m) => m.bioguide)).catch((e: Error) => {
+  console.warn(`  couldn't read when departing members' terms ended (${e.message}); using today`);
+  return new Map<string, string>();
+});
+const today = new Date().toISOString().slice(0, 10);
+const former: Former[] = [
+  // Someone who comes back (a special election, a later term) is a member again.
+  ...formerBefore.filter((f) => !current.has(f.bioguide)),
+  ...departed.map((m) => ({ ...m, former: { left: ends.get(m.bioguide) ?? today } })),
+].sort((a, b) => a.bioguide.localeCompare(b.bioguide));
+if (departed.length) console.log(`${departed.length} members left Congress: ${departed.map((m) => m.name).join(", ")}`);
+writeJson(formerFile, { generatedAt: data.members.generatedAt, members: former }, false);
+
 writeJson("data/members.json", data.members);
 writeJson("data/committees.json", data.committees);
 writeJson("data/organizations.json", data.organizations);
 writeJson("data/donors.json", data.donors);
 writeJson("data/congress-committees.json", data.congressCommittees);
 await writeStandalone(data.organizations.organizations);
+if (steps.has("races")) {
+  const races = await ingestRaces(
+    legislators,
+    required(fec, "fec"),
+    required(enriched, "committees"),
+    new Set(data.committees.committees.map((c) => c.id)),
+    former
+  );
+  writeJson("data/races.json", races, false);
+}
 console.log(
   `Wrote ${data.members.members.length} members, ` +
     `${data.organizations.organizations.length} organizations, ` +

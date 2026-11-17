@@ -171,7 +171,36 @@ export interface TravelCard {
   span: string;
 }
 
-export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard | TravelCard;
+/** A 2026 race: the leading candidates, what each raised, outside spending on each. */
+export interface RaceCard {
+  type: "race";
+  /** "2026 House race · Arizona" */
+  kicker: string;
+  /** "Arizona's 4th District" */
+  name: string;
+  /** "Results pending certification", or the certified result. */
+  status: string;
+  candidates: { label: string; party?: Party; note?: string; raised: number; support: number; oppose: number }[];
+  /** "2025–2026", for the footer. */
+  span: string;
+}
+
+/** A 2026 candidate who isn't a member of Congress. */
+export interface CandidateCard {
+  type: "candidate";
+  name: string;
+  party?: Party;
+  partyName: string;
+  /** "Candidate for the House, AZ-04" */
+  seat: string;
+  raised: number;
+  /** Raised by source: individuals, PACs and party, own money. */
+  sources: Bar[];
+  status: string;
+  span: string;
+}
+
+export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard | TravelCard | RaceCard | CandidateCard;
 
 export interface CardsFile {
   version: string;

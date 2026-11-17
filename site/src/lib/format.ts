@@ -34,7 +34,10 @@ export function candidateName(raw: string) {
   const isTitle = (t: string) => /^(MR|MRS|MS|DR|SEN|REP|HON|GOV|REV)\.?$/i.test(t);
   const titleCase = (w: string) =>
     w.toLowerCase().replace(/(^|[\s'-])([a-z])/g, (_, p: string, c: string) => p + c.toUpperCase()).replace(/\bMc([a-z])/g, (_, c: string) => "Mc" + c.toUpperCase());
-  const first = tokens.filter((t) => !isSuffix(t) && !isTitle(t)).map(titleCase);
+  // A nickname in quotes is the name they go by: "VINDMAN, YEVGENY 'EUGENE'" -> "Eugene Vindman".
+  const nickname = tokens.find((t) => /^["'(].+["')]$/.test(t));
+  const given = nickname ? [nickname.slice(1, -1)] : tokens.filter((t) => !isSuffix(t) && !isTitle(t));
+  const first = given.map(titleCase);
   const suffix = tokens.filter(isSuffix).map((t) => (/^(jr|sr)/i.test(t) ? titleCase(t.replace(/\.?$/, ".")) : t.toUpperCase()));
   return [...first, titleCase(last), ...suffix].join(" ").replace(/\s+/g, " ").trim() || raw;
 }
