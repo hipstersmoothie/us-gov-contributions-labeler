@@ -223,7 +223,16 @@ body {
   color: var(--text-primary);
   font: 400 1rem/1.55 var(--sans);
   -webkit-font-smoothing: antialiased;
+  /* A short page (a 404) still ends with the footer at the bottom of the
+     viewport: main grows to fill what's left. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
+/* The auto side margins from .wrap keep a flex item from stretching, so
+   main sets its width back to the full row. */
+body > main { flex: 1 0 auto; width: 100%; }
 
 a {
   color: inherit;
