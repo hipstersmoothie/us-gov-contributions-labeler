@@ -23,8 +23,10 @@ export interface LargeReceipt {
 
 type Who = Pick<LargeReceipt, "entityType" | "name" | "state" | "otherId">;
 
-export const isCommittee = (r: Who) => r.otherId.startsWith("C") || ["COM", "PAC", "PTY", "CCM"].includes(r.entityType);
-export const isPerson = (r: Who) => !isCommittee(r) && r.entityType === "IND";
+// A person's row is the person's, whatever committee id it carries.
+export const isPerson = (r: Who) => r.entityType === "IND";
+export const isCommittee = (r: Who) =>
+  ["COM", "PAC", "PTY", "CCM"].includes(r.entityType) || (r.otherId.startsWith("C") && !["IND", "ORG", "CAN"].includes(r.entityType));
 
 /** "MUSK, ELON R. MR." -> "Elon Musk" */
 export function personName(raw: string) {
@@ -63,7 +65,9 @@ export class OutsideReceipts {
     const r = line.split("|");
     const amount = Number(r[14]) || 0;
     if (!amount || !r[5]?.startsWith("1") || r[18] === "X") return;
-    const who = { entityType: r[6] ?? "", name: r[7] ?? "", state: r[9] ?? "", otherId: r[15] ?? "" };
+    // On an earmarked gift (15E) the committee id is the conduit's (ActBlue,
+    // WinRed), not the giver's.
+    const who = { entityType: r[6] ?? "", name: r[7] ?? "", state: r[9] ?? "", otherId: r[5] === "15E" ? "" : (r[15] ?? "") };
     const id = donorId(who);
     if (!id) return;
     const key = `${id}|${recipient}|${cycle}`;
