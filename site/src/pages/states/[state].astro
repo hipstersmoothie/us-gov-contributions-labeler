@@ -51,8 +51,8 @@ const itemList = {
 };
 ---
 
-<Base {title} {description} og={{ type: "state", id: stateSlug(d.state) }} crumbs={[["States", "/states/"], [d.name, path]]} jsonLd={itemList}>
-  <p class="kicker"><a href="/states/">States</a> · {territory ? who : makeup(s)}</p>
+<Base {title} {description} og={{ type: "state", id: stateSlug(d.state) }} crumbs={[[d.name, path]]} jsonLd={itemList}>
+  <p class="kicker">{territory ? who : makeup(s)}</p>
   <h1>{d.name}</h1>
   <p class="headline-summary">
     {Possessive} {who} took {money(s.pac, true)} from PACs{backers ? <>, the most from {backers}</> : null}.

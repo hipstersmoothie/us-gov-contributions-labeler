@@ -37,7 +37,7 @@
   display: flex; flex-direction: column; gap: 1px; padding: 7px var(--sp-4); cursor: pointer;
   outline: none; text-decoration: none; color: var(--text-primary);
 }
-.search-option[data-focused], .search-option[data-hovered] { background: var(--surface-2); }
+.search-option[data-focused], .search-option[data-hovered] { background: var(--highlight); }
 .search-option[data-focus-visible] { box-shadow: inset 3px 0 0 var(--text-primary); }
 .search-label { font-size: var(--fs-base); font-weight: 500; }
 .search-detail { font-size: var(--fs-sm); color: var(--text-muted); }
@@ -45,7 +45,27 @@
 .search-empty { margin: 0; padding: var(--sp-4); font-size: var(--fs-sm); color: var(--text-muted); }
 
 @keyframes pop-in { from { opacity: 0; transform: translateY(-4px); } }
-@media (prefers-reduced-motion: reduce) { .search-popover[data-entering], .select-popover[data-entering], .info-popover[data-entering] { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .search-popover[data-entering], .select-popover[data-entering], .info-popover[data-entering], .nav-popover[data-entering] { animation: none; } }
+
+/* --- section menus (SectionNav) ------------------------------------------------------ */
+/* A rule across the top, like the masthead's, rather than a floating card's rounded corners. */
+.nav-popover {
+  width: min(340px, calc(100vw - 24px)); background: var(--surface); border: 1px solid var(--hairline);
+  border-top: 2px solid var(--rule); border-radius: 0 0 4px 4px; box-shadow: var(--shadow);
+}
+.nav-popover[data-entering] { animation: pop-in 120ms ease-out; }
+.nav-menu { outline: none; padding: var(--sp-2) 0; }
+.nav-item {
+  display: flex; flex-direction: column; gap: 1px; padding: 8px var(--sp-4); cursor: pointer;
+  outline: none; text-decoration: none; color: var(--text-primary);
+}
+.nav-item[data-focused], .nav-item[data-hovered], .nav-item[data-pressed] { background: var(--highlight); }
+.nav-item[data-focus-visible] { outline: 2px solid var(--focus); outline-offset: -2px; }
+/* The page's own section: a bar like the nav's underline, turned on its side. */
+.nav-item[aria-current="page"] { box-shadow: inset 3px 0 0 var(--text-primary); }
+.nav-label { font: 600 var(--fs-base)/1.3 var(--sans); }
+.nav-item[aria-current="page"] .nav-label { font-weight: 700; }
+.nav-note { font-size: var(--fs-sm); line-height: 1.35; color: var(--text-muted); }
 
 /* --- filter fields ------------------------------------------------------------------ */
 .filter-bar {
@@ -92,7 +112,7 @@
 .select-option {
   padding: 7px var(--sp-3) 7px 30px; font-size: var(--fs-base); cursor: pointer; outline: none; position: relative;
 }
-.select-option[data-focused] { background: var(--surface-2); }
+.select-option[data-focused] { background: var(--highlight); }
 .select-option[data-focus-visible] { box-shadow: inset 3px 0 0 var(--text-primary); }
 .select-option[data-selected] { font-weight: 700; }
 .select-option[data-selected]::before { content: "✓"; position: absolute; left: 11px; }
@@ -104,7 +124,7 @@
   padding: 0 var(--sp-3); cursor: pointer; outline: none; white-space: nowrap;
 }
 .segment:first-child { border-left: 0; }
-.segment[data-hovered] { color: var(--text-primary); background: var(--surface-2); }
+.segment[data-hovered] { color: var(--text-primary); background: var(--highlight); }
 .segment[data-selected] { background: var(--text-primary); color: var(--page); }
 .segment[data-focus-visible] { outline: 2px solid var(--focus); outline-offset: -4px; }
 .segment .key { width: 8px; height: 8px; border-radius: 50%; background: var(--swatch); box-shadow: 0 0 0 1.5px var(--page); }
@@ -148,11 +168,11 @@
 .data-table .tr { cursor: pointer; }
 .data-table .cell-title { text-decoration-color: transparent; }
 @media (hover: hover) and (pointer: fine) {
-  .data-table .tr:hover { background: var(--surface-2); }
+  .data-table .tr:hover { background: var(--highlight); }
   .data-table .tr:hover .cell-title { text-decoration-color: var(--link-underline); }
   .data-table .tr .cell-title:hover { text-decoration-color: currentColor; }
 }
-.data-table .tr:has(.cell-title:focus-visible) { box-shadow: inset 3px 0 0 var(--focus); background: var(--surface-2); }
+.data-table .tr:has(.cell-title:focus-visible) { box-shadow: inset 3px 0 0 var(--focus); background: var(--highlight); }
 .data-table .td { padding: 9px var(--sp-3) 9px 0; border-bottom: 1px solid var(--hairline); vertical-align: middle; }
 /* Row headers read as ordinary cells. */
 .data-table tbody th { text-align: left; font: inherit; color: inherit; text-transform: none; letter-spacing: normal; }
@@ -167,7 +187,7 @@
   border: 1px solid var(--rule); border-radius: 3px; background: var(--page); color: var(--text-primary);
   font: inherit; font-size: var(--fs-sm); font-weight: 700; cursor: pointer;
 }
-.more-button[data-hovered] { background: var(--surface-2); }
+.more-button[data-hovered] { background: var(--highlight); }
 .more-button[data-focus-visible] { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 @media (max-width: 640px) {

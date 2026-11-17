@@ -105,6 +105,8 @@ async function og(req: http.IncomingMessage, res: http.ServerResponse, match: Re
  * /about/index.html both to /about/, the canonical URL. Only for pages that
  * exist, so files without an extension (/.well-known/atproto-did) are left be.
  */
+const REMOVED: Record<string, string> = { "/states": "/find/", "/states/": "/find/" };
+
 function canonicalPath(pathname: string) {
   let dir: string;
   if (pathname.endsWith("/index.html")) dir = pathname.slice(0, -"index.html".length);
@@ -153,6 +155,13 @@ const server = http.createServer((req, res) => {
   // Logged above by path alone: the address is in the body.
   if (req.method === "POST" && url.pathname === DISTRICT_PATH) {
     void findDistrict(req, res);
+    return;
+  }
+  // Pages that were removed, sent somewhere useful.
+  const gone = read && REMOVED[url.pathname];
+  if (gone) {
+    res.writeHead(301, { Location: gone });
+    res.end();
     return;
   }
   // MCP clients at /mcp; a browser opening the same URL gets the page about it, /mcp/.

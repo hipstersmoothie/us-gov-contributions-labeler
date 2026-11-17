@@ -136,6 +136,8 @@
   --page: #f9f9f7;
   --surface: #ffffff;
   --surface-2: #efeee9;
+  /* Hovered or focused rows and options. */
+  --highlight: var(--surface-2);
   --text-primary: #121212;
   --text-secondary: #4f4e4a;
   --text-muted: #6b6a65;
@@ -181,6 +183,8 @@
     --page: #121212;
     --surface: #1c1c1b;
     --surface-2: #1c1c1b;
+    /* --surface-2 matches --surface here, so highlights mix their own. */
+    --highlight: color-mix(in oklab, var(--text-primary) 7%, var(--surface));
     --text-primary: #f2f2ee;
     --text-secondary: #c3c2b7;
     --text-muted: #a3a29b;
@@ -274,24 +278,40 @@ main:focus { outline: none; }
 
 .sections { border-top: 1px solid var(--hairline); }
 .sections ul {
-  display: flex; gap: var(--sp-5); list-style: none; margin: 0 auto; overflow-x: auto;
+  display: flex; gap: var(--sp-6); list-style: none; margin: 0 auto; overflow-x: auto;
   scrollbar-width: none;
 }
 .sections ul::-webkit-scrollbar { display: none; }
-/* On a wide screen every section fits, spread across the column; narrower, the list scrolls. */
-@media (min-width: 1024px) { .sections ul { justify-content: space-between; gap: var(--sp-4); } }
-.sections a {
-  display: block; padding: 10px 0 9px; white-space: nowrap;
-  font-size: var(--fs-sm); font-weight: 600; color: var(--text-secondary); text-decoration: none;
-  border-bottom: 3px solid transparent;
+/* On Bluesky stands apart from the site's own sections, at the right end. */
+.sections li:last-child { margin-left: auto; }
+/* A link, or a menu's button once SectionNav hydrates; the two look the same. */
+.section-link {
+  display: flex; align-items: center; gap: 5px; padding: 10px 0 9px; margin: 0; white-space: nowrap;
+  font: 600 var(--fs-sm)/1.55 var(--sans); color: var(--text-secondary); text-decoration: none;
+  background: none; border: 0; border-bottom: 3px solid transparent; border-radius: 0; cursor: pointer;
 }
-@media (hover: hover) and (pointer: fine) { .sections a:hover { color: var(--text-primary); } }
-.sections a[aria-current="page"] { color: var(--text-primary); border-bottom-color: var(--text-primary); }
+/* The list scrolls sideways if it must, which would clip a ring outside the link. */
+.section-link:focus-visible, .section-link[data-focus-visible] { outline: 2px solid var(--focus); outline-offset: -2px; }
+@media (hover: hover) and (pointer: fine) { .section-link:hover { color: var(--text-primary); } }
+.section-link[data-pressed], .section-link[aria-expanded="true"] { color: var(--text-primary); }
+.section-link[aria-current="page"], .section-link[data-current] { color: var(--text-primary); border-bottom-color: var(--text-primary); }
+.section-link .chevron { margin-top: 1px; }
+.section-link[aria-expanded="true"] .chevron { transform: rotate(180deg); }
 
 /* --- footer --- */
 .site-footer { margin-top: var(--sp-8); border-top: 1px solid var(--hairline); color: var(--text-muted); font-size: var(--fs-sm); }
-.footer-grid { display: grid; grid-template-columns: auto 1fr auto; gap: var(--sp-3) var(--sp-6); padding-top: var(--sp-5); padding-bottom: var(--sp-7); align-items: baseline; }
+.footer-grid { display: grid; grid-template-columns: minmax(200px, 1fr) 3fr; gap: var(--sp-5) var(--sp-6); padding-top: var(--sp-5); padding-bottom: var(--sp-7); }
 .footer-grid p { margin: 0; }
+/* Every section, linked in the server's HTML for readers without JS and for crawlers. */
+.footer-map { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-5); }
+.footer-head {
+  font: 700 var(--fs-label)/1 var(--sans); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-primary); margin: 3px 0 var(--sp-3);
+}
+.footer-map ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.footer-map a { color: var(--text-secondary); text-decoration-color: transparent; }
+@media (hover: hover) and (pointer: fine) { .footer-map a:hover { color: var(--text-primary); text-decoration-color: currentColor; } }
+.footer-sources { grid-column: 1 / -1; padding-top: var(--sp-4); border-top: 1px solid var(--hairline); }
 .footer-brand { display: flex; flex-direction: column; gap: var(--sp-2); }
 .footer-brand .logo { display: block; height: 28px; width: auto; aspect-ratio: 645 / 128; }
 .footer-tagline { font: 400 var(--fs-base)/1.3 var(--serif); color: var(--text-secondary); }
@@ -374,7 +394,7 @@ th {
 th, td { padding: var(--sp-2) var(--sp-3) var(--sp-2) 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
 th:last-child, td:last-child { padding-right: 0; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: var(--surface-2); } }
+@media (hover: hover) and (pointer: fine) { tbody tr:hover { background: var(--highlight); } }
 
 /* --- party: a tinted tag with the letter, or a dot beside the full name. Never color alone. --- */
 .party::before {
@@ -406,5 +426,11 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
   .headline-summary { font-size: var(--fs-xl); }
   h2 { font-size: var(--fs-lg); }
   .footer-grid { grid-template-columns: 1fr; }
+  .footer-map { grid-template-columns: 1fr 1fr; gap: var(--sp-5) var(--sp-4); }
+  /* The five fit a 390px phone at 16px apart; narrower, the gaps give first (then it scrolls, below 360px). */
+  .sections ul { gap: clamp(8px, (100vw - 330px) / 4, var(--sp-4)); }
+  .section-link { gap: 4px; }
+}
+@media (max-width: 359px) {
   .sections ul { mask-image: linear-gradient(to right, #000 85%, transparent); padding-right: var(--sp-6); }
 }

@@ -162,6 +162,25 @@ pnpm feeds:publish                   # dry run: the feed generator records
 pnpm feeds:publish --apply           # write them; needs LABELER_PASSWORD and a live did.json
 ```
 
+## Posts
+
+`posts/` posts to Bluesky as @contributions.fyi on its own: series of posts written from templates out of the data on `main` (see [design/posts/README.md](design/posts/README.md)). So far:
+- `member-elect`: a post per certified winner new to their chamber
+- `new-on-bluesky`: a post when a member's first account is matched
+
+It reloads the data every 5 minutes. Each post has a key that makes it happen once. At most 2 go out a day across every series (`MAX_PER_DAY`), at least 4 hours apart, between 8 a.m. and 9 p.m. Eastern. A post waits until its page on the site says what the post says. Member-elect posts follow `races-<year>.json`, so they go out after `pnpm ingest --steps=races` is pushed.
+
+```sh
+pnpm posts:preview                    # what each series would post, from local data/
+pnpm posts:preview --since=HEAD~5     # including members newly on Bluesky since that commit
+pnpm posts:preview --pages            # with each link card, from the live site
+pnpm posts --dry --once               # the service against main's data, posting nothing
+```
+
+On Railway it's the `posts` service, built from `posts/Dockerfile`, with its SQLite database on a volume at `/data`. Variables:
+- `POSTS_APP_PASSWORD`: an app password for @contributions.fyi
+- `POSTS_MEMBER_ELECT`, `POSTS_NEW_ON_BLUESKY`: `on` (the default), `off`, or `dry` to log instead of post
+
 ## Website
 
 ```sh

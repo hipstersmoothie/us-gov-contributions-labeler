@@ -25,6 +25,8 @@
     "zip-districts": "tsx src/scripts/zip-districts.ts",
     "feeds": "tsx feeds/server.ts",
     "feeds:publish": "tsx feeds/publish.ts",
+    "posts": "tsx posts/server.ts",
+    "posts:preview": "tsx posts/preview.ts",
     "open-data-examples": "tsx src/scripts/open-data-examples.ts",
     "bluesky-profiles": "tsx src/scripts/fetch-bluesky-profiles.ts",
     "review-scans": "tsx src/scripts/disclosures/scan/review-server.ts",

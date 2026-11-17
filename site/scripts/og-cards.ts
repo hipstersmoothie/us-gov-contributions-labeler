@@ -369,7 +369,6 @@ cards["page/open-data"] = {
     { label: "PACs and committees", value: committees.length.toLocaleString() },
   ],
 };
-const stateRows = delegations.filter((d) => d.senators.length).map(summarizeState);
 cards["page/mcp"] = {
   type: "page",
   kicker: "For AI assistants",
@@ -381,14 +380,6 @@ cards["page/mcp"] = {
     { strong: "find_members", text: "who represents a ZIP code or address" },
     { strong: "query", text: "SQL across everything, down to FEC filings" },
   ],
-};
-cards["page/states"] = {
-  type: "page",
-  kicker: "States",
-  title: "Members of Congress by state",
-  dek: `Each state's senators and representatives, and what PACs gave them, ${cycleRange}.`,
-  barsTitle: "Most PAC money, by delegation",
-  bars: top(stateRows, (s) => s.pac, 4).map((s) => ({ label: s.d.name, value: s.pac, note: `${s.members.length} members` })),
 };
 cards["page/find"] = {
   type: "page",

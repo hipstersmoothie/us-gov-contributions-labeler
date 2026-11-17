@@ -40,6 +40,25 @@ export const memberCaucusName = (m: Member) => {
 export const CLIENTS_SHOWN = 25;
 export const VOTES_SHOWN = 10;
 
+/** How many of a summary's paragraphs go on the page: about the first 1,500
+ *  characters, not ending on a heading ("TITLE I--..."), or all of it when
+ *  what's left would be short. */
+export function summaryShown(blocks: string[]) {
+  const length = (b: string) => b.replace(/<[^>]+>/g, "").length;
+  let n = 0;
+  for (let chars = 0; n < blocks.length && (n === 0 || chars + length(blocks[n]!) <= 1_500); n++) chars += length(blocks[n]!);
+  while (n > 1 && length(blocks[n - 1]!) < 100 && !/[.:]\s*(<\/\w+>\s*)*$/.test(blocks[n - 1]!)) n--;
+  return blocks.slice(n).reduce((sum, b) => sum + length(b), 0) < 800 ? blocks.length : n;
+}
+
+/** "as passed by the House", from the version a CRS summary describes. */
+export function summaryVersion(version: string) {
+  const m = version.match(/^(Introduced in|Reported to|Passed) (House|Senate)$/);
+  if (m) return `as ${m[1] === "Passed" ? "passed by" : m[1]!.toLowerCase()} the ${m[2]}`;
+  if (/^Public Law/.test(version)) return "as enacted";
+  return `(${version})`;
+}
+
 /** "January 2025 through September 2026" */
 export const lobbyingSpan = (() => {
   if (!data.quarters.length) return "";

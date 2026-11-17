@@ -1,0 +1,15 @@
+---
+// The part of a bill's summary past what its page shows, loaded when the
+// reader opens it.
+import { bills, summaryShown, type Bill } from "../../../../lib/legislation";
+
+export const partial = true;
+export function getStaticPaths() {
+  return bills
+    .filter((b) => b.summary && summaryShown(b.summary.blocks) < b.summary.blocks.length)
+    .map((b) => ({ params: { id: b.id }, props: { b } }));
+}
+const { b } = Astro.props as { b: Bill };
+---
+
+<div class="summary-text" set:html={b.summary!.blocks.slice(summaryShown(b.summary!.blocks)).join("")} />
