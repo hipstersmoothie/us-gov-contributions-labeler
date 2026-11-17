@@ -20,6 +20,8 @@ import {
   lobbyingSpan,
   ordinal,
   congress,
+  summaryShown,
+  summaryVersion,
   PATTERN_LABEL,
   CLIENTS_SHOWN,
   type Bill,
@@ -66,6 +68,7 @@ const description = clip(
     `${status(b)}.${lastVote ? ` ${patternSentence(lastVote)}` : ""} ` +
     (clients.length ? `${clients.length.toLocaleString()} ${clients.length === 1 ? "organization" : "organizations"} reported lobbying on it.` : "")
 );
+const summaryCount = b.summary ? summaryShown(b.summary.blocks) : 0;
 const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.stance === "oppose" ? "Opposes" : undefined);
 ---
 
@@ -99,6 +102,37 @@ const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.sta
     {clients.length > 0 && <div class="stat"><dt>Said where they stood</dt><dd>{withStance.length}<small>of {clients.length.toLocaleString()}, in their reports</small></dd></div>}
     <div class="stat"><dt>Cosponsors</dt><dd>{b.cosponsors.length}</dd></div>
   </dl>
+
+  <section class="story">
+    <h2>What the bill does</h2>
+    {
+      b.summary ? (
+        <>
+          <p class="chart-dek">
+            The Congressional Research Service's summary of the bill {summaryVersion(b.summary.version)}, {fmtDate(b.summary.date)}.
+            {/^(Introduced|Reported)/.test(b.summary.version) && <> The version Congress voted on may differ.</>}
+          </p>
+          <div class="summary-text" set:html={b.summary.blocks.slice(0, summaryCount).join("")} />
+          {summaryCount < b.summary.blocks.length && (
+            <LazyDisclosure client:visible title="The rest of the summary" what="summary" src={`/fragments/bills/${b.id}/summary/`} />
+          )}
+        </>
+      ) : (
+        <p class="empty-note">The Congressional Research Service hasn't summarized {b.label} yet.</p>
+      )
+    }
+    <p class="full-text">
+      <a href={`${b.url}/text`}>Read the full text on congress.gov</a>
+      {
+        b.text?.pdf && (
+          <>
+            {" "}or <a href={b.text.pdf}>as a PDF</a>{" "}
+            <span class="muted">(latest version: {b.text.version}{b.text.date && <>, {fmtDate(b.text.date)}</>})</span>
+          </>
+        )
+      }
+    </p>
+  </section>
 
   <section class="story">
     <h2>How Congress voted</h2>
@@ -219,7 +253,8 @@ const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.sta
   }
 
   <p class="source">
-    Bill details from <a href={b.url}>congress.gov</a> (GovInfo bill status data, {ordinal(congress)} Congress). Votes from
+    Bill details from <a href={b.url}>congress.gov</a> (GovInfo bill status data, {ordinal(congress)} Congress); summaries
+    by the <a href="https://www.loc.gov/crsinfo/">Congressional Research Service</a>. Votes from
     the <a href="https://clerk.house.gov/Votes">House Clerk</a> and the{" "}
     <a href="https://www.senate.gov/legislative/votes_new.htm">Senate</a>. Lobbying from quarterly LD-2 reports on{" "}
     <a href="https://lda.gov/">lda.gov</a>, matched by the bill number written in each report.{" "}
@@ -243,4 +278,6 @@ const said = (c: LobbyingClient) => (c.stance === "support" ? "Supports" : c.sta
   .clients td:nth-child(2) { white-space: nowrap; color: var(--text-secondary); }
   .clients blockquote { margin: var(--sp-1) 0 0; color: var(--text-secondary); font: 400 var(--fs-sm)/1.45 var(--serif); max-width: 640px; }
   .committee-list { list-style: none; padding: 0; margin: 0; line-height: 1.9; }
+  .full-text { margin: var(--sp-4) 0 0; font-size: var(--fs-base); font-weight: 600; }
+  .full-text .muted { font-weight: 400; font-size: var(--fs-sm); }
 </style>

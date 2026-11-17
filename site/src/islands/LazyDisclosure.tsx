@@ -5,7 +5,7 @@
 import { useEffect, useState } from "react";
 import { Button, Disclosure, DisclosurePanel, Heading } from "react-aria-components";
 
-export default function LazyDisclosure({ title, src }: { title: string; src: string }) {
+export default function LazyDisclosure({ title, src, what = "list" }: { title: string; src: string; what?: string }) {
   const [open, setOpen] = useState(false);
   const [html, setHtml] = useState<string>();
   const [failed, setFailed] = useState(false);
@@ -33,7 +33,7 @@ export default function LazyDisclosure({ title, src }: { title: string; src: str
           <div dangerouslySetInnerHTML={{ __html: html }} />
         ) : failed ? (
           <p className="muted small">
-            Couldn't load the list. <a href={src}>Open it on its own</a>.
+            Couldn't load the {what}. <a href={src}>Open it on its own</a>.
           </p>
         ) : open ? (
           <p className="muted small" role="status">
@@ -42,7 +42,7 @@ export default function LazyDisclosure({ title, src }: { title: string; src: str
         ) : (
           // What the server renders, and so what shows without JS.
           <p className="small">
-            <a href={src}>Open the full list</a>
+            <a href={src}>Open the full {what}</a>
           </p>
         )}
       </DisclosurePanel>

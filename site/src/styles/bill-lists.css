@@ -1,6 +1,10 @@
-/* Lists that bill pages load on request (pages/fragments/bills/): fragment
-   pages ship no CSS of their own, so the page that loads them carries it. */
+/* Lists and summaries that bill pages load on request (pages/fragments/bills/):
+   fragment pages ship no CSS of their own, so the page that loads them carries it. */
 .roll-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--sp-4) var(--sp-6); }
 .roll-list ul { list-style: none; padding: 0; margin: 0; font-size: var(--fs-sm); line-height: 1.9; }
 .client-list { columns: 2 280px; column-gap: var(--sp-6); padding: 0; margin: 0; list-style: none; font-size: var(--fs-sm); line-height: 1.8; }
 .client-list li { break-inside: avoid; }
+.summary-text { max-width: 680px; font: 400 var(--fs-md)/1.6 var(--serif); }
+.summary-text p { margin: 0 0 var(--sp-3); text-wrap: pretty; }
+.summary-text ul, .summary-text ol { margin: 0 0 var(--sp-3); padding-left: var(--sp-5); }
+.summary-text li { margin-bottom: var(--sp-1); }

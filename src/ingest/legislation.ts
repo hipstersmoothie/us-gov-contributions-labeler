@@ -72,6 +72,69 @@ interface Bill {
   committees: string[];
   latestAction?: { date: string; text: string };
   laws: string[];
+  summary?: BillSummary;
+  text?: BillText;
+}
+
+const SUMMARY_TAGS = new Set(["p", "ul", "ol", "li", "strong", "em", "br", "a"]);
+
+/** A CRS summary's HTML, cut to the tags it uses for prose and split into its
+ *  top-level paragraphs and lists. Links keep only an http(s) href. */
+function summaryBlocks(html: string) {
+  const clean = html
+    .replace(/<(\/?)(\w+)([^>]*)>/g, (_, close: string, tag: string, attrs: string) => {
+      tag = tag.toLowerCase();
+      if (!SUMMARY_TAGS.has(tag)) return "";
+      if (tag !== "a" || close) return `<${close}${tag}>`;
+      const href = attrs.match(/href\s*=\s*"(https?:[^"]*)"/i)?.[1];
+      return href ? `<a href="${href}">` : "<a>";
+    })
+    .replace(/<a>([\s\S]*?)<\/a>/g, "$1")
+    .replace(/\s+/g, " ");
+  const blocks: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (const m of clean.matchAll(/<(\/?)(p|ul|ol)>/g)) {
+    if (!m[1]) {
+      if (depth++ === 0) start = m.index;
+    } else if (depth > 0 && --depth === 0) {
+      blocks.push(clean.slice(start, m.index + m[0].length).trim());
+    }
+  }
+  return blocks.filter((b) => b.replace(/<[^>]+>/g, "").trim());
+}
+
+/** The latest summary the Congressional Research Service wrote, without the
+ *  bill's name it opens with. */
+function latestSummary(b: any): BillSummary | undefined {
+  const s = (list(b.summaries?.summary) as any[])
+    .map((x) => ({ date: text(x.actionDate), updated: text(x.updateDate), version: text(x.actionDesc), html: text(x.text) }))
+    .sort((x, y) => x.date.localeCompare(y.date) || x.updated.localeCompare(y.updated))
+    .at(-1);
+  if (!s) return undefined;
+  const blocks = summaryBlocks(s.html);
+  if (blocks[0] && /^<p><strong>[^<]*<\/strong><\/p>$/.test(blocks[0])) blocks.shift();
+  return blocks.length ? { version: s.version, date: s.date, blocks } : undefined;
+}
+
+/** The newest printed version of the bill: the public law once enacted, then the
+ *  enrolled bill (GovInfo leaves it undated), then by date. */
+function latestText(b: any): BillText | undefined {
+  const rank = (v: { version: string; date: string }) =>
+    /^Public Law/i.test(v.version) ? "3" : !v.date ? "2" : "1" + v.date;
+  const v = (list(b.textVersions?.item) as any[])
+    .map((x) => ({
+      version: text(x.type),
+      date: text(x.date).slice(0, 10),
+      xml: (list(x.formats?.item) as any[]).map((f) => text(f.url)).find((u) => u.endsWith(".xml")),
+    }))
+    .filter((x) => x.xml)
+    .sort((x, y) => rank(x).localeCompare(rank(y)))
+    .at(-1);
+  if (!v) return undefined;
+  // .../BILLS-119hr1346rfs/xml/BILLS-119hr1346rfs.xml -> .../pdf/BILLS-119hr1346rfs.pdf
+  const pdf = v.xml!.replace(/\/(xml|uslm)\/([^/]+)\.xml$/, "/pdf/$2.pdf");
+  return { version: v.version, ...(v.date ? { date: v.date } : {}), ...(pdf !== v.xml ? { pdf } : {}) };
 }
 
 function parseBill(xml: string): Bill {
@@ -104,6 +167,8 @@ function parseBill(xml: string): Bill {
     committees: list(b.committees?.item).map((c: any) => text(c.systemCode)),
     latestAction: b.latestAction ? { date: text(b.latestAction.actionDate), text: text(b.latestAction.text) } : undefined,
     laws: list(b.laws?.item).map((l: any) => text(l.number)),
+    summary: latestSummary(b),
+    text: latestText(b),
   };
 }
 
@@ -506,6 +571,22 @@ export interface LobbyingClient {
   quote?: string;
 }
 
+export interface BillSummary {
+  /** The version of the bill it describes, as CRS names it: "Introduced in House", "Passed Senate", "Public Law". */
+  version: string;
+  date: string;
+  /** Paragraphs and lists, as HTML limited to p, ul, ol, li, strong, em, br and a. */
+  blocks: string[];
+}
+
+export interface BillText {
+  /** "Engrossed in House", "Enrolled Bill", "Public Law"... */
+  version: string;
+  date?: string;
+  /** GovInfo's PDF of that version. */
+  pdf?: string;
+}
+
 export interface LegislationBill {
   id: string;
   label: string;
@@ -522,6 +603,10 @@ export interface LegislationBill {
   latestAction?: { date: string; text: string };
   law?: string;
   url: string;
+  /** What the bill does, from the Congressional Research Service, when it has written one. */
+  summary?: BillSummary;
+  /** Its latest text; the full text is on congress.gov at `${url}/text`. */
+  text?: BillText;
   votes: LegislationVote[];
   lobbying: LobbyingClient[];
 }
@@ -721,6 +806,8 @@ export async function ingestLegislation(
         latestAction: b.latestAction,
         law: b.laws[0],
         url: `https://www.congress.gov/bill/${congress}th-congress/${URL_TYPE[b.type]}/${b.number}`,
+        summary: b.summary,
+        text: b.text,
         votes: vs.sort((x, y) => x.date.localeCompare(y.date) || x.roll - y.roll).map((v) => summarize(v, currentParty, caucusAt)),
         lobbying: clients.map((c, i) => (i < MAX_QUOTES ? c : { ...c, quote: undefined })),
       };
