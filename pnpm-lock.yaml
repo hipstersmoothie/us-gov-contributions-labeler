@@ -96,6 +96,9 @@ importers:
 
   site/server:
     dependencies:
+      '@modelcontextprotocol/server':
+        specifier: ^2.4.0
+        version: 2.4.0
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2
@@ -108,6 +111,9 @@ importers:
       serve-handler:
         specifier: ^6.1.7
         version: 6.1.7
+      zod:
+        specifier: ^4
+        version: 4.6.7
     devDependencies:
       '@types/compression':
         specifier: ^1.8.1
@@ -805,6 +811,14 @@ packages:
     resolution: {integrity: sha512-jaqSOTyi8r3ZgVuOzdMS1birMlj41/yFH+iW73HvWRjTAjJ5DNGpfL9r5KgnEEGxpRL8SkEUnfGJUgP9v8HQHw==}
     cpu: [x64]
     os: [win32]
+
+  '@modelcontextprotocol/core@2.4.0':
+    resolution: {integrity: sha512-z8QBKqdfXLPzkLQuG4xp8hrVEMm1PZ1IgxMN2sMbJiFiAKOWXnAzogXn2W4aqIBlP1ea6U5yiqVquvUNM1Cj6Q==}
+    engines: {node: '>=20'}
+
+  '@modelcontextprotocol/server@2.4.0':
+    resolution: {integrity: sha512-rgR9yxSaAJ+bcsi/XroT/S2AfPiIWloXAnrdfYSCms9ivVju0ishu/wW0J21Ho6+ZOR1r7RyeRbjiRuF87ix5Q==}
+    engines: {node: '>=20'}
 
   '@napi-rs/canvas-android-arm64@1.1.1':
     resolution: {integrity: sha512-rSEp3y+/YXw6TxSx4/NHSAFxumZrkMoXy2WiVqpKGT8oF5GHOUDzTKj45e5cvzophX4iFaxwKs3+/gNkJ7FmzQ==}
@@ -3328,6 +3342,15 @@ snapshots:
 
   '@libsql/win32-x64-msvc@0.5.0-pre.2':
     optional: true
+
+  '@modelcontextprotocol/core@2.4.0':
+    dependencies:
+      zod: 4.6.7
+
+  '@modelcontextprotocol/server@2.4.0':
+    dependencies:
+      '@modelcontextprotocol/core': 2.4.0
+      zod: 4.6.7
 
   '@napi-rs/canvas-android-arm64@1.1.1':
     optional: true

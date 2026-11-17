@@ -1,8 +1,9 @@
 // The production web server: the static site in dist/ exactly as `serve`
 // served it (serve-handler with ETags, behind compression), plus link-preview
 // images rendered on request at /og/<version>/<type>/<id>.png, and Plausible's
-// script and event endpoint proxied at /v/ (see plausible.ts), and the member
-// finder's address lookup at /api/district (see geocode.ts).
+// script and event endpoint proxied at /v/ (see plausible.ts), the member
+// finder's address lookup at /api/district (see geocode.ts), and the MCP server
+// for AI assistants at /mcp (see mcp.ts).
 //
 // Card images aren't built ahead of time: there are ~19K pages and a crawler
 // asks for a page's image once or twice, when someone shares the link. Each
@@ -17,6 +18,7 @@ import handler from "serve-handler";
 import { createRenderer } from "./render.ts";
 import { EVENT_PATH, SCRIPT_PATH, forwardEvent, serveScript } from "./plausible.ts";
 import { DISTRICT_PATH, findDistrict } from "./geocode.ts";
+import { MCP_PATH, createMcp } from "./mcp.ts";
 
 const SERVER_DIR = path.resolve(import.meta.dirname, "..");
 const DIST = path.resolve(process.env.DIST_DIR ?? path.join(SERVER_DIR, "../dist"));
@@ -27,6 +29,8 @@ const CACHE_BYTES = Number(process.env.OG_CACHE_MB ?? 64) * 1024 * 1024;
 
 const renderer = createRenderer(DATA, path.join(DIST, "photos"));
 const fallback = fs.readFileSync(path.join(DIST, "og.png"));
+const mcp = fs.existsSync(path.join(DATA, "mcp.sqlite")) ? createMcp(DATA) : undefined;
+if (!mcp) console.warn(`No ${DATA}/mcp.sqlite: serving without /mcp`);
 
 const YEAR = "public, max-age=31536000, immutable";
 const DAY = "public, max-age=86400";
@@ -149,6 +153,10 @@ const server = http.createServer((req, res) => {
   // Logged above by path alone: the address is in the body.
   if (req.method === "POST" && url.pathname === DISTRICT_PATH) {
     void findDistrict(req, res);
+    return;
+  }
+  if ((url.pathname === MCP_PATH || url.pathname === `${MCP_PATH}/`) && mcp) {
+    void mcp(req, res);
     return;
   }
   const moved = read && canonicalPath(url.pathname);

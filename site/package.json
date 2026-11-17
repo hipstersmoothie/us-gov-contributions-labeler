@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "tsx scripts/open-holdings.ts && tsx scripts/og-cards.ts && astro build",
+    "build": "tsx scripts/open-holdings.ts && tsx scripts/og-cards.ts && tsx scripts/mcp-data.ts && astro build",
     "preview": "astro preview",
     "start": "node server/src/index.ts"
   },

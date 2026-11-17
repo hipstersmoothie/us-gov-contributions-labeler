@@ -75,6 +75,12 @@ sqlite3 -header -column lobbying-filings.sqlite "
   WHERE organization = 'lockheed-martin' AND type NOT LIKE 'R%'
   ORDER BY posted DESC"`;
 
+const mcp = `# Claude Code
+claude mcp add --transport http contributions-fyi ${abs("/mcp")}
+
+# other clients: Streamable HTTP, no sign-in
+{ "mcpServers": { "contributions-fyi": { "type": "http", "url": "${abs("/mcp")}" } } }`;
+
 const goat = `goat get at://data.contributions.fyi/fyi.contributions.member/C000127
 goat record ls data.contributions.fyi --collection fyi.contributions.member
 goat repo export data.contributions.fyi -o contributions.car
@@ -238,6 +244,19 @@ const collections = [
       every itemized donation in its <a href="https://www.fec.gov/data/browse-data/?tab=bulk-data">bulk data</a>, and
       federal law bars using the names in it to ask for money or for commercial purposes.
     </p>
+
+    <h2 id="mcp">Ask an AI assistant</h2>
+    <p>
+      This site runs an <a href="https://modelcontextprotocol.io">MCP</a> server at <code>{abs("/mcp")}</code>, so
+      assistants like Claude can look things up here and link to the pages behind their answers. <code>search</code>{" "}
+      finds anything by name, as the search box does; <code>get_record</code> reads a page's full record;{" "}
+      <code>find_members</code> says who represents a ZIP code or street address; and <code>list_tables</code> and{" "}
+      <code>query</code> run SQL over everything above, <code>contributions.sqlite</code> and both filing files, plus
+      races and the districts of each ZIP code. It also has House members' investments, from their financial
+      disclosures, with the notice that comes with them: those aren't part of the open data, and 5 U.S.C. § 13107
+      limits how they can be used, so reading them in bulk asks you to agree to those limits first. Add it as a custom connector in your assistant's settings, or:
+    </p>
+    <Code code={mcp} lang="sh" themes={themes} defaultColor={false} />
 
     <h2>With goat</h2>
     <p>

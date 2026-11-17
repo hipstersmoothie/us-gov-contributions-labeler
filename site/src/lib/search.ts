@@ -7,9 +7,9 @@ import { bills, shortStatus } from "./legislation";
 import { countries } from "./fara";
 import { activeSponsors, tripsBySponsor } from "./travel";
 import { allRaces, candidateRaces, raceName, raceShort, personName, partyName, raised } from "./races";
+import type { SearchRow } from "../../server/src/search.ts";
 
-export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f" | "t" | "r" | "n";
-export type SearchRow = [type: SearchType, id: string, label: string, detail: string, weight: number];
+export type { SearchRow, SearchType } from "../../server/src/search.ts";
 
 const w = (n: number) => Math.round(n / 1000);
 

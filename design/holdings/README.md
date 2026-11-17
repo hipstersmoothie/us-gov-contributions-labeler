@@ -651,6 +651,21 @@ The prototype keeps to this: its data file is `site/src/data/holdings.json`,
 which `publish-records.ts` never reads, and nothing was written to Bluesky,
 the PDS or the labeler.
 
+The site's MCP server (`site/server/src/mcp.ts`, November 2026) serves the
+same data to AI assistants: an investments record per member and a holders
+record per company, as the pages show them, and the `disclosures` tables for
+SQL. Bulk reading has the click-through above: any query on the
+`disclosures` tables, or more than 25 records an hour from one client (500
+from all), needs the user's agreement to the § 13107 terms, asked by their
+own client (MCP elicitation), not the model. Agreeing gives a token good for
+24 hours for that client only. Clients that can't ask the user (no
+elicitation, or the 2025 protocol, which a stateless server can't ask
+through) get one member or company at a time and no SQL over disclosures.
+Every record and query result with this data carries the § 13107 notice, the
+server's instructions carry the reading rules from section 2 (ranges, whose
+it is, no PAC joins or committee overlap without the baseline), and none of it
+goes into the open data or the PDS.
+
 ## 5. Ingest cost
 
 Measured on this machine, for all current House members (CY2025 annual

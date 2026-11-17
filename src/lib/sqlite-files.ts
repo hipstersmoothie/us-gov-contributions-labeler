@@ -25,7 +25,7 @@ export const DATA_DB = path.join(OUT_DIR, "contributions.sqlite");
 export const FEC_DB = path.join(OUT_DIR, "fec-lines.sqlite");
 export const LOBBYING_DB = path.join(OUT_DIR, "lobbying-filings.sqlite");
 
-const read = (file: string) => JSON.parse(fs.readFileSync(path.join("data", file), "utf8")) as Record<string, Json>;
+const read = (file: string, dir = "data") => JSON.parse(fs.readFileSync(path.join(dir, file), "utf8")) as Record<string, Json>;
 
 /** What goes in contributions.sqlite: each file's collections, by field. The rest of a file's top level goes in `metadata`. */
 const DATA: Record<string, Record<string, Omit<Collection, "records"> & { description: string }>> = {
@@ -120,15 +120,16 @@ function describe(writer: TableWriter, descriptions: Map<string, string>) {
   }
 }
 
-export function buildDataDb(file = DATA_DB) {
+/** contributions.sqlite, from the data files in `dir` (the website's build runs from site/, so passes ../data). */
+export function buildDataDb(file = DATA_DB, dir = "data") {
   const writer = new TableWriter();
   const descriptions = new Map<string, string>();
   for (const [name, collections] of Object.entries(DATA)) {
-    if (!fs.existsSync(path.join("data", name))) {
+    if (!fs.existsSync(path.join(dir, name))) {
       console.warn(`  ${name}: missing, skipped`);
       continue;
     }
-    const json = read(name);
+    const json = read(name, dir);
     for (const [field, value] of Object.entries(json)) {
       const c = collections[field];
       if (c && value && typeof value === "object") {

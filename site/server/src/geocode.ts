@@ -45,7 +45,8 @@ const OVERALL = 600;
 const hits = new Map<string, number[]>();
 let overall: number[] = [];
 
-function limited(client: string, now = Date.now()) {
+/** Whether a client is over its share of lookups (the MCP server's find_members counts too). */
+export function limited(client: string, now = Date.now()) {
   const since = now - WINDOW_MS;
   overall = overall.filter((t) => t > since);
   const mine = (hits.get(client) ?? []).filter((t) => t > since);

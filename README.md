@@ -5,7 +5,7 @@ Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky l
 - `src/ingest/` pulls and joins the data into `data/*.json`
 - `src/label-server.ts` is the labeler service Bluesky talks to
 - `src/sync-labels.ts` brings the live labels in line with the data
-- `site/` is the Astro website built from `data/`
+- `site/` is the Astro website built from `data/`; its server (`site/server`) also hosts an [MCP](https://modelcontextprotocol.io) server at [contributions.fyi/mcp](https://contributions.fyi/open-data/#mcp) for AI assistants: search, page records (House members' investments included, with their § 13107 notice, and bulk access only after the user agrees to its terms), who represents a ZIP or address, and SQL over everything, including the open data's filing-level files, which `site/scripts/mcp-data.ts` fetches from the PDS at build time
 
 ## Data sources
 
