@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-11-15T17:45:24.708Z",
+  "fetchedAt": "2026-11-17T00:48:02.314Z",
   "account": {
     "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.account/did:plc:sp4ywsk4ykfkw2cshoqo3s7p",
-    "cid": "bafyreibjxxs64qtb2ose73hcy7knzn6x6frl6nkzwinn4kazmry3iophhe",
+    "cid": "bafyreidzl4tpomcb4pfb6gfard2bhskapfwiorkzfsgqvlt4yua45sdeta",
     "value": {
       "did": "did:plc:sp4ywsk4ykfkw2cshoqo3s7p",
       "url": "https://contributions.fyi/members/P000197/",
@@ -22,7 +22,7 @@
         "receipts": 38268871,
         "individual": 34099838,
         "outsideOppose": 52501,
-        "outsideSupport": 17648
+        "outsideSupport": 24069
       },
       "chamber": "house",
       "bioguide": "P000197",
@@ -30,15 +30,15 @@
       "topSectors": [
         {
           "id": "Health",
-          "total": 701610
+          "total": 969913
         },
         {
           "id": "Finance, Insurance & Real Estate",
-          "total": 627239
+          "total": 890895
         },
         {
-          "id": "Labor",
-          "total": 445999
+          "id": "Education",
+          "total": 647567
         }
       ],
       "topContributors": [
@@ -71,7 +71,7 @@
   },
   "dataset": {
     "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.dataset/self",
-    "cid": "bafyreicbqvnvxbzovip7hj655fab5erl73w33umc5zijpn7wof52fclbwa",
+    "cid": "bafyreig26terr6ew6cp467k4cwpdt5luhhsfvo7x6zh2roy66ypw755ubi",
     "value": {
       "name": "contributions.fyi",
       "$type": "fyi.contributions.dataset",
@@ -79,29 +79,31 @@
         {
           "blob": {
             "ref": {
-              "$link": "bafkreihr2b5pqrsgbqszkp4yyycxucc6rileijuvnizztntunm6bp7bxc4"
+              "$link": "bafkreieyrfkm5zbbj3uy3xfrro7n43pipfpa3tf7qkshvapd2qe25h2zve"
             },
-            "size": 1873469,
+            "size": 1945332,
             "$type": "blob",
             "mimeType": "application/gzip"
           },
           "name": "members.json.gz",
-          "sha256": "479b6da0a9f5ad21395ed4682c74d9cbbb67747febf86a6502c0f76276090a6e",
+          "format": "json",
+          "sha256": "2356a97c1314ead183d66522e325fd07f0b0689ed5223791e3a44cd127146b7e",
           "records": 539,
           "description": "Members of Congress, with sectors, contributors, outside spending, committee seats and individual donations."
         },
         {
           "blob": {
             "ref": {
-              "$link": "bafkreifauibyiq5hxg5nkyv7kjkm3sicn5waezy7lmat3xkga765iqpu2m"
+              "$link": "bafkreictuitl3lupusr4f3fpvcq23aniizbotqx6zvt6puf76bml6mi5le"
             },
-            "size": 1392334,
+            "size": 1422814,
             "$type": "blob",
             "mimeType": "application/gzip"
           },
           "name": "organizations.json.gz",
-          "sha256": "0c131815476ad2be737c33dd87d700216b17add6aea04b00d8cf5bdbaee9d564",
-          "records": 6684,
+          "format": "json",
+          "sha256": "7741a38f02c858093953ec5f547153a7417b33d18bde315c02ec6deaad83187d",
+          "records": 6929,
           "description": "Companies, unions and groups behind PACs."
         }
       ],
@@ -119,7 +121,7 @@
         2022,
         2024
       ],
-      "license": "The FEC, SEC and Lobbying Disclosure Act records this is built from are US government works in the public domain. contributions.fyi's own additions (sector and industry classifications, organization matching, Bluesky account matching and the compiled totals) are dedicated to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Attribution to contributions.fyi is appreciated, not required.",
+      "license": "The FEC, SEC, Census, Lobbying Disclosure Act and FARA records this is built from are US government works in the public domain. contributions.fyi's own additions (sector and industry classifications, organization matching, Bluesky account matching and the compiled totals) are dedicated to the public domain under CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Attribution to contributions.fyi is appreciated, not required.",
       "sources": [
         {
           "url": "https://www.fec.gov/data/browse-data/?tab=bulk-data",
@@ -129,10 +131,10 @@
         {
           "url": "https://api.open.fec.gov/developers/",
           "name": "FEC API",
-          "usedFor": "Leadership PAC sponsors"
+          "usedFor": "Leadership PAC sponsors; lists of Form 5, Form 9 and Form 3L reports"
         }
       ],
-      "updatedAt": "2026-11-15T16:40:09.092Z",
+      "updatedAt": "2026-11-17T00:47:32.604Z",
       "collections": [
         {
           "nsid": "fyi.contributions.member",
@@ -144,14 +146,14 @@
         }
       ],
       "description": "Who funds Congress: campaign contributions, outside spending and big donors for current members of Congress.",
-      "generatedAt": "2026-11-15T16:36:18.228Z",
-      "methodology": "Direct contributions from PACs and other political committees to current members of Congress, plus independent expenditures for and against them and donations of $50,000 or more to the outside spenders, from FEC bulk data. Each PAC is traced to the organization behind it (FEC connected organization, SEC EDGAR industry codes, lobbying disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted by organization: an organization's PAC money plus itemized donations from people who list it as their employer. Details: https://contributions.fyi/about/",
+      "generatedAt": "2026-11-17T00:31:57.741Z",
+      "methodology": "Direct contributions from PACs and other political committees to current members of Congress, plus independent expenditures for and against them and donations of $50,000 or more to the outside spenders, from FEC bulk data. Outside spending also counts 24/48-hour notices dated after a committee's last processed report, independent expenditures by groups and people that aren't political committees (Form 5), and, kept separate, electioneering communications (Form 9). Donor makeup splits individual money into small (unitemized) and itemized, and itemized money by the donor's state and, for House districts, ZIP code. Lobbyist bundling comes from campaigns' Form 3L reports. Each PAC is traced to the organization behind it (FEC connected organization, SEC EDGAR industry codes, lobbying disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted by organization: an organization's PAC money plus itemized donations from people who list it as their employer. Lobbyists' former government jobs (covered positions on LD-1 and LD-2 filings) are matched to current members and committees by name, only when exactly one fits. Foreign agents come from FARA bulk data; their donations are itemized FEC contributions from people with a FARA short form in effect, matched by name and employer. Details: https://contributions.fyi/about/",
       "recordsComplete": true
     }
   },
   "member": {
     "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C000127",
-    "cid": "bafyreihk7y26rcarqvaxvpw5uh7ih75x2d35qhaf3isqqvbhdtrufwwsp4",
+    "cid": "bafyreibjebhdepr34lpomzl7f4fw7r7dtpclhaypy4r66wasorkxmozci4",
     "value": {
       "name": "Maria Cantwell",
       "$type": "fyi.contributions.member",
@@ -166,21 +168,27 @@
           "pac": 0,
           "cycle": 2022,
           "party": 0,
+          "itemized": 517070,
           "receipts": 921937,
           "candidate": 0,
           "cashOnHand": 189631,
           "individual": 786963,
-          "disbursements": 1127914
+          "unitemized": 269893,
+          "disbursements": 1127914,
+          "candidateLoans": 0
         },
         {
           "pac": 76800,
           "cycle": 2024,
           "party": 0,
+          "itemized": 9014094,
           "receipts": 11147596,
           "candidate": 0,
           "cashOnHand": 611211,
           "individual": 10134573,
-          "disbursements": 10726016
+          "unitemized": 1120479,
+          "disbursements": 10726016,
+          "candidateLoans": 0
         }
       ],
       "chamber": "senate",
@@ -253,19 +261,56 @@
           "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.congressCommittee/SLIA"
         }
       ],
+      "formerStaff": [
+        {
+          "job": "Legislative Director, Sen. Maria Cantwell",
+          "name": "Daniel Sakura",
+          "firms": [
+            "Sakura Conservation Strategies"
+          ],
+          "ldaIds": [
+            122436
+          ],
+          "chamber": "senate",
+          "clients": [
+            "Asian & Pacific Islander Americans in Historic Preservation",
+            "Chesapeake Conservancy"
+          ]
+        },
+        {
+          "job": "Legislative Director, Sen. Maria Cantwell; Legislative Assistant, Sen. Maria Cantwell",
+          "name": "David Marten",
+          "firms": [
+            "Elevate Government Affairs, LLC"
+          ],
+          "ldaIds": [
+            141547
+          ],
+          "chamber": "senate",
+          "clients": [
+            "Aecom Technical Services, Inc.",
+            "Alaska Industrial Development and Export Authority"
+          ]
+        }
+      ],
       "individuals": {
+        "places": {
+          "inState": 3967063,
+          "unknown": 383,
+          "outOfState": 5730485
+        },
         "sectors": [
           {
-            "id": "Unknown",
-            "total": 2979582
+            "id": "Not employed",
+            "total": 3116630
           },
           {
-            "id": "Not employed",
-            "total": 2901719
+            "id": "Unknown",
+            "total": 3067578
           }
         ],
-        "itemized": 9293275,
-        "donations": 25482,
+        "itemized": 9697931,
+        "donations": 30327,
         "employers": [
           {
             "id": "T MOBILE",
@@ -275,7 +320,7 @@
           {
             "id": "MICROSOFT",
             "name": "Microsoft",
-            "total": 94763,
+            "total": 99063,
             "organization": "microsoft",
             "organizationUri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/microsoft"
           }
@@ -294,8 +339,8 @@
           "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/microsoft",
           "name": "Microsoft Corp",
           "pacs": 0,
-          "total": 94763,
-          "individuals": 94763
+          "total": 99063,
+          "individuals": 99063
         }
       ],
       "organizations": [
@@ -312,12 +357,34 @@
       ],
       "combinedSectors": [
         {
-          "id": "Unknown",
-          "total": 2991082
+          "id": "Not employed",
+          "total": 3116630
         },
         {
-          "id": "Not employed",
-          "total": 2901719
+          "id": "Unknown",
+          "total": 3079078
+        }
+      ],
+      "foreignAgentGifts": [
+        {
+          "last": "2023-06-14",
+          "agent": "Michael Smith",
+          "count": 5,
+          "first": "2022-06-30",
+          "total": 6600,
+          "committee": "C00349506",
+          "registrant": "6401",
+          "registrantName": "Cornerstone Government Affairs"
+        },
+        {
+          "last": "2023-11-29",
+          "agent": "Richard A. Gephardt",
+          "count": 3,
+          "first": "2023-03-27",
+          "total": 6600,
+          "committee": "C00349506",
+          "registrant": "5874",
+          "registrantName": "Gephardt Group Government Affairs, LLC"
         }
       ]
     }
@@ -326,7 +393,7 @@
     "records": [
       {
         "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C99002396",
-        "cid": "bafyreifbqlhn75hw7syne7ftdln3mrnsufxllkqjxej6j4egkkrrh7lkpe",
+        "cid": "bafyreiaomzaoekjfelds2ue4y3atythypugpjtx5grhqyle5nacktcluou",
         "value": {
           "id": "C99002396",
           "kind": "super-pac",
@@ -346,37 +413,37 @@
             }
           ],
           "outside": {
-            "oppose": 88472,
+            "oppose": 213095,
             "support": 0,
             "targets": [
               {
                 "id": "P000614",
                 "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/P000614",
-                "oppose": 50972,
+                "oppose": 101944,
                 "support": 0
               },
               {
                 "id": "O000174",
                 "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/O000174",
-                "oppose": 37500,
+                "oppose": 67500,
                 "support": 0
               }
             ]
           },
           "opponents": {
-            "oppose": 2243624,
-            "support": 0,
+            "oppose": 736410,
+            "support": 91349,
             "targets": [
               {
-                "id": "C001056",
-                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C001056",
-                "oppose": 533069,
+                "id": "H001104",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/H001104",
+                "oppose": 553110,
                 "support": 0
               },
               {
-                "id": "C001130",
-                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C001130",
-                "oppose": 533069,
+                "id": "C001035",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C001035",
+                "oppose": 115800,
                 "support": 0
               }
             ]
@@ -398,41 +465,35 @@
         }
       },
       {
-        "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C90023821",
-        "cid": "bafyreibgzmddgyuxgq33phfwj335ruyylr2vafyp6r7xeadjjyoquzmyou",
+        "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.committee/C90024027",
+        "cid": "bafyreidsmifk4os4fadodfyhbrg6pzlq5yb62dwxxf3ko6g7svisx57jry",
         "value": {
-          "id": "C90023821",
-          "kind": "other",
-          "name": "CLIMATE LEADERSHIP ACTION",
+          "id": "C90024027",
+          "kind": "non-committee",
+          "name": "DOWN HOME NC IE PAC",
           "$type": "fyi.contributions.committee",
-          "state": "DC",
+          "state": "NC",
           "total": 0,
           "sector": "Ideological & Single-Issue",
           "byCycle": [],
           "opponents": {
             "oppose": 0,
-            "support": 3862,
+            "support": 754,
             "targets": [
               {
-                "id": "S001215",
-                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/S001215",
+                "id": "E000246",
+                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/E000246",
                 "oppose": 0,
-                "support": 2053
-              },
-              {
-                "id": "C001056",
-                "uri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.member/C001056",
-                "oppose": 0,
-                "support": 603
+                "support": 754
               }
             ]
           },
           "recipients": [],
-          "organization": "climate-leadership-action-c90023821",
-          "organizationUri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/climate-leadership-action-c90023821"
+          "organization": "down-home-nc-ie-c90024027",
+          "organizationUri": "at://did:plc:ej5cllsvxdrzdsweyfgr2nge/fyi.contributions.organization/down-home-nc-ie-c90024027"
         }
       }
     ],
-    "cursor": "C90023821"
+    "cursor": "C90024027"
   }
 }
