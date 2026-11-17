@@ -108,6 +108,15 @@ way and every row links to the quote from the report.
 - **Only filings say who lobbied on what, never for which side.** Stance in
   the same clause as a bill number: support 6.9%, oppose 1.4%, both 0.5%, **neither 91%**. Treat every lobbying
   organization as "on every side".
+  That first reader overcounted: it read stance words in bill names ("SUPPORT for
+  Patients and Communities Act" tagged 50 of 51 clients as supporters), in the
+  neighbouring items of a list, and at the first stray "28" in a report. The
+  reader now blanks out bill names, reads only the citation's own item, and
+  requires a stance before a citation to point at it ("Oppose the X Act (H.R. 5)",
+  "In opposition to H.R. 5"). That left 641 of 14,002 bill-page rows with a stance
+  (from 1,154). In 120 sampled rows about 9 in 10 are right; most of the rest are
+  a stance on some provisions, not the whole bill. Each stance keeps the quote that
+  says it.
 - **Dollars aren't per bill.** A report's income/expenses cover every issue
   that quarter. "Spent $X lobbying on H.R. 3633" is not knowable; "$X across
   reports that mention H.R. 3633" is, and must be labeled that way.

@@ -12,6 +12,8 @@ export interface BillRef {
   otherCongress?: number;
   /** The name the filer wrote right after the number, if any ("Digital Asset Market Clarity Act"). */
   named?: string;
+  /** Where each citation of it starts and ends in the text. */
+  at: [number, number][];
 }
 
 const PREFIX: [RegExp, string][] = [
@@ -44,7 +46,9 @@ export function billRefs(text: string, congress: number): BillRef[] {
     const other = near && Number(near[1]) !== congress ? Number(near[1]) : undefined;
     const named = text.slice(end, end + 100).match(NAME_AFTER)?.[1];
     const bill = `${type}${number}`;
-    if (!found.has(bill)) found.set(bill, { bill, ...(other ? { otherCongress: other } : {}), ...(named ? { named } : {}) });
+    const ref = found.get(bill);
+    if (ref) ref.at.push([m.index!, end]);
+    else found.set(bill, { bill, ...(other ? { otherCongress: other } : {}), ...(named ? { named } : {}), at: [[m.index!, end]] });
   }
   return [...found.values()];
 }

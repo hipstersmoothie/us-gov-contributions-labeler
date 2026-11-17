@@ -694,24 +694,124 @@ function summarize(v: RollCall, currentParty: Map<string, string>, caucusAt: (id
   };
 }
 
-function stanceOf(clause: string): "support" | "oppose" | undefined {
-  const s = /\b(support(s|ed|ing)?|in favor|urg(e|ed|ing) (passage|enactment))\b/i.test(clause);
-  const o = /\b(oppos(e|ed|es|ing|ition)|against)\b/i.test(clause);
-  return s && !o ? "support" : o && !s ? "oppose" : undefined;
+// "support" (group 1) or "oppose" (group 2).
+const STANCE = /\b(?:(support(?:s|ed|ing)?|in favor|urg(?:e|ed|ing) (?:passage|enactment))|(oppos(?:e|ed|es|ing|ition)|against))\b/gi;
+// Before a citation, a stance has to point at it: "Oppose the X Act (H.R. 5)", "In opposition to
+// H.R. 5", "Urged Congress to support H.R. 5", not "in favor of a federal privacy law S. 5".
+const POINTS_AT = /^(?:[\s:,(–—-]|\b(?:the|of|to|for|on|its|passage|enactment|final|bill|legislation)\b)*$/i;
+// After one, it can't be some other verb's or noun's: "tax credits in H.R. 1 that support the
+// development of batteries", "funding to support autonomous vessels", "funding support for CPSC".
+const SOMEONE_ELSES = /\b(?:to|that|which|who|would|will|could|can|and|is|are|was|were|has|have|authorizes?|provides?|providing|bipartisan|funding|combat|life|technical|customer|income|price|agencies|programs|services)\s+$/i;
+// After one, "against" alone is too common ("imposes sanctions against foreign persons"): it has to
+// be someone's ("advocated against", "a letter against") or about the bill ("against the bill").
+const OWN_AGAINST =
+  /\b(?:advoca\w*|lobb\w*|vot\w*|work\w*|argu\w*|position\w*|campaign\w*|testif\w*|spoke|letter|statement|comments?)\s+against\s*$|^against\s+(?:it\b|passage|(?:the|this)\s+(?:bill|legislation|measure|resolution|package)\b)/i;
+// A capitalized stance some way after one starts the next item: "H.R. 1, the One Big Beautiful
+// Bill Act Support for GRAD PLUS loan program", "pipeline provisions in HR 1, Support 4z changes",
+// unless it's set off for this one: "H.R. 5: Support", "(Oppose)".
+const NEXT_ITEM = /^(?:Support|Supports|Supported|Supporting|SUPPORT|Oppose|Opposes|Opposed|Opposing|OPPOSE|In favor|Urge|Urged)\b/;
+
+// A bill's name isn't a stance: "SUPPORT for Patients and Communities Act", "Preventing Violence
+// Against Women Act", "Para Professional and Support Staff Act", "(SUPPORT) Act". Anything that
+// reads as an act's name is blanked out before looking, unless it starts with the stance itself
+// ("Supports the Clean Energy Act"), and so is anything in quotes.
+const ACT_NAME =
+  /(?<![\w(])(?!(?:Support|Supports|Supported|Oppose|Opposes|Opposed|Opposing|Urge|Urges|Urged|Urging)\b)\(?[A-Z][\w'’.-]*\)?(?:\s+(?:(?:of|and|for|the|to|in|on|a|an|by|with|from|that|&)\s+)*\(?[A-Z0-9][\w'’.-]*\)?)*\s+Act\b/g;
+const QUOTED = /"[^"\n]{3,120}"|“[^”\n]{3,120}”/g;
+
+// Where one item of a report ends: a semicolon, a line break, or the end of a sentence.
+const ITEM_END = /;|\n|\.["”')\]]*\s+/g;
+
+/** The text with the names of the bills it cites (and anything else that reads as a name) blanked
+ *  out, at the same length so offsets still line up, and where its items end. */
+function readable(textValue: string, names: (string | undefined)[]) {
+  const blank = (s: string) => " ".repeat(s.length);
+  let plain = textValue;
+  const lower = textValue.toLowerCase();
+  // Filers often leave off the year: "SUPPORT for Patients and Communities Reauthorization Act".
+  const all = names.flatMap((n) => (n ? [n, n.replace(/\s+of\s+\d{4}$/, "")] : []));
+  for (const name of new Set(all)) {
+    if (name.length < 8) continue;
+    const n = name.toLowerCase();
+    for (let i = lower.indexOf(n); i >= 0; i = lower.indexOf(n, i + n.length)) {
+      plain = plain.slice(0, i) + blank(name) + plain.slice(i + n.length);
+    }
+  }
+  plain = plain.replace(ACT_NAME, blank).replace(QUOTED, blank);
+  // Read off the text as filed ("Act. support Uyghur…" ends one), but not inside a name ("D.C. Crimes Act").
+  const ends = [...textValue.matchAll(ITEM_END)].filter((m) => plain[m.index] === textValue[m.index]).map((m) => m.index + m[0].length);
+  return { plain, ends };
 }
 
-/** The clause around a bill number, for a stance and a quote. */
-function around(textValue: string, number: number) {
-  const i = textValue.search(new RegExp(`\\b${number}\\b`));
-  if (i < 0) return { clause: "", quote: "" };
-  const start = Math.max(textValue.lastIndexOf(";", i), textValue.lastIndexOf("\n", i), i - 80, 0);
-  // Start and end the quote on word boundaries.
-  let q0 = Math.max(i - 80, 0);
+// n characters back from (or ahead of) i, not counting blanks.
+function back(s: string, i: number, n: number) {
+  while (i > 0 && n > 0) if (!/\s/.test(s[--i]!)) n--;
+  return i;
+}
+function ahead(s: string, i: number, n: number) {
+  while (i < s.length && n > 0) if (!/\s/.test(s[i++]!)) n--;
+  return i;
+}
+
+/** What a report says about one citation of a bill, for a stance and a quote. The stance is read
+ *  from the citation (with companion bills cited alongside it, "H.R. 28/S. 9") to the next
+ *  citation or the end of the item, plus the few words leading up to it, unless another bill is
+ *  cited first in the same item: in "H.R. 5 - support passage H.R. 6", the support is H.R. 5's.
+ *  When the name comes first, "Oppose the X Act (H.R. 5)", what leads up to it counts too. */
+function around(textValue: string, { plain, ends }: ReturnType<typeof readable>, at: [number, number], cites: [number, number][]) {
+  let [start, end] = at;
+  // Companions are joined by a slash, a comma or "and" ("HR 1 HR 247" are two items).
+  const between = (a: number, b: number) => /^[\s(]*(?:[/,&]|and\b|or\b)[\s/,&(]*$/i.test(textValue.slice(a, b));
+  const before = cites.filter(([, e]) => e <= start).reverse();
+  for (const [s, e] of before) if (between(e, start)) start = s; else break;
+  const after = cites.filter(([s]) => s >= end);
+  for (const [s, e] of after) if (between(end, s)) end = e; else break;
+  const prev = cites.filter(([, e]) => e <= start).at(-1)?.[1] ?? 0;
+  const next = cites.find(([s]) => s >= end)?.[0] ?? textValue.length;
+
+  // A name, blanked out, right before the citation (or its opening parenthesis).
+  let k = start;
+  while (k > prev && /[\s(]/.test(textValue[k - 1]!)) k--;
+  const nameFirst = k > prev && plain[k - 1] === " " && textValue[k - 1] !== " ";
+
+  const leadEnd = ends.filter((e) => e > prev && e <= start).at(-1);
+  const lead = nameFirst || leadEnd !== undefined || prev === 0 ? Math.max(leadEnd ?? prev, back(plain, start, 40)) : start;
+  let tailEnd = Math.min(ends.find((e) => e > end) ?? next, next, ahead(plain, end, 50));
+  // Up to the next item: "Opposed H.R. 4, the X Act Supported H.R. 5".
+  const theirs = [...plain.slice(end, tailEnd).matchAll(STANCE)].find((m) => {
+    const at = end + m.index;
+    if (POINTS_AT.test(plain.slice(at + m[0].length, next))) return true;
+    const gap = textValue.slice(end, at);
+    return NEXT_ITEM.test(textValue.slice(at)) && !/[(:–—-]\s*$/.test(gap);
+  });
+  if (theirs) tailEnd = end + theirs.index;
+
+  const hits: { at: number; stance: "support" | "oppose" }[] = [];
+  const leadHit = [...plain.slice(lead, start).matchAll(STANCE)].at(-1);
+  if (leadHit && POINTS_AT.test(plain.slice(lead + leadHit.index + leadHit[0].length, start))) {
+    hits.push({ at: lead + leadHit.index, stance: leadHit[1] ? "support" : "oppose" });
+  }
+  for (const m of plain.slice(end, tailEnd).matchAll(STANCE)) {
+    const before = plain.slice(lead, end + m.index);
+    if (SOMEONE_ELSES.test(before)) continue;
+    if (/^against$/i.test(m[0]) && !OWN_AGAINST.test(before + m[0]) && !OWN_AGAINST.test(plain.slice(end + m.index, tailEnd))) continue;
+    hits.push({ at: end + m.index, stance: m[1] ? "support" : "oppose" });
+  }
+  // "Monitor the following: H.R. 28" says they took no side.
+  const monitor = /\bmonitor(s|ed|ing)?\b/i.test(plain.slice(lead, start) + " " + plain.slice(end, tailEnd));
+  const stances = new Set(hits.map((h) => h.stance));
+  const stance = !monitor && stances.size === 1 ? hits[0]!.stance : undefined;
+  const said = stance ? hits[0]!.at : undefined;
+
+  // The quote shows the citation and where it says so, starting and ending on word boundaries.
+  const lo = Math.min(at[0], said ?? at[0]);
+  const hi = Math.max(at[1], (said ?? 0) + 12);
+  let q0 = Math.max(lo - 80, 0);
   if (q0 > 0) q0 = textValue.indexOf(" ", q0) + 1 || q0;
-  let q1 = Math.min(q0 + 200, textValue.length);
-  if (q1 < textValue.length) q1 = Math.max(textValue.lastIndexOf(" ", q1), i + 10);
+  let q1 = Math.min(Math.max(q0 + 200, hi + 40), textValue.length);
+  if (q1 < textValue.length) q1 = Math.max(textValue.lastIndexOf(" ", q1), hi);
   const quote = (q0 > 0 ? "…" : "") + textValue.slice(q0, q1).replace(/\s+/g, " ").trim() + (q1 < textValue.length ? "…" : "");
-  return { clause: textValue.slice(start, i + 60), quote };
+  return { stance, quote };
 }
 
 export async function ingestLegislation(
@@ -743,13 +843,18 @@ export async function ingestLegislation(
 
   // One pass over every report: which bills each client's reports name.
   const PERIOD: Record<string, string> = { first_quarter: "Q1", second_quarter: "Q2", third_quarter: "Q3", fourth_quarter: "Q4" };
-  type Citation = { name: string; org?: string; quarters: Set<string>; stances: Set<string>; quote: string };
+  // The quote is from where a stance was found, so the row shows it.
+  type Citation = { name: string; org?: string; quarters: Set<string>; stances: Set<string>; quote: string; stanceQuote?: string };
   const cited = new Map<string, Map<string, Citation>>();
   let kept = 0;
   let dropped = 0;
   for (const r of reports) {
     for (const a of r.activities) {
-      for (const ref of billRefs(a.text, congress)) {
+      const refs = billRefs(a.text, congress);
+      if (!refs.length) continue;
+      const cites = refs.flatMap((ref) => ref.at).sort((x, y) => x[0] - y[0]);
+      let plain: ReturnType<typeof readable> | undefined;
+      for (const ref of refs) {
         const bill = bills.get(ref.bill);
         if (!bill || ref.otherCongress) continue;
         if (!introducedBy(bill.introduced, r.year, r.period) || !nameAgrees(ref.named, [bill.name, bill.title, ...bill.shortTitles])) {
@@ -761,10 +866,21 @@ export async function ingestLegislation(
         const byClientForBill = cited.get(ref.bill) ?? cited.set(ref.bill, new Map()).get(ref.bill)!;
         const c = byClientForBill.get(key) ?? { name: r.client.name, org: matchOrg(r.client.name), quarters: new Set(), stances: new Set(), quote: "" };
         c.quarters.add(`${r.year} ${PERIOD[r.period]}`);
-        const { clause, quote } = around(a.text, bill.number);
-        const s = stanceOf(clause);
-        if (s) c.stances.add(s);
-        if (!c.quote) c.quote = quote;
+        plain ??= readable(
+          a.text,
+          refs.flatMap((x) => {
+            const b = bills.get(x.bill);
+            return [x.named, b?.name, b?.title, ...(b?.shortTitles ?? [])];
+          })
+        );
+        for (const at of ref.at) {
+          const { stance, quote } = around(a.text, plain, at, cites);
+          if (stance) {
+            c.stances.add(stance);
+            c.stanceQuote ??= quote;
+          }
+          if (!c.quote) c.quote = quote;
+        }
         byClientForBill.set(key, c);
       }
     }
@@ -787,7 +903,7 @@ export async function ingestLegislation(
           org: c.org,
           quarters: [...c.quarters].sort(),
           stance: c.stances.size === 1 ? ([...c.stances][0] as "support" | "oppose") : undefined,
-          quote: c.quote,
+          quote: (c.stances.size === 1 && c.stanceQuote) || c.quote,
         }))
         // Organizations on the site first, then by how long they lobbied on it.
         .sort((x, y) => Number(!!y.org) - Number(!!x.org) || y.quarters.length - x.quarters.length || x.name.localeCompare(y.name));
@@ -809,7 +925,8 @@ export async function ingestLegislation(
         summary: b.summary,
         text: b.text,
         votes: vs.sort((x, y) => x.date.localeCompare(y.date) || x.roll - y.roll).map((v) => summarize(v, currentParty, caucusAt)),
-        lobbying: clients.map((c, i) => (i < MAX_QUOTES ? c : { ...c, quote: undefined })),
+        // A stance always keeps its quote, so it can be checked.
+        lobbying: clients.map((c, i) => (i < MAX_QUOTES || c.stance ? c : { ...c, quote: undefined })),
       };
     })
     .sort((x, y) => y.lobbying.length - x.lobbying.length);
