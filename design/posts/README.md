@@ -36,8 +36,12 @@ rather than a cron, because the mention replies need to come within a minute.
   it wants, so a restart or rerun never posts twice. A series switched on late
   catches up on the backlog at its normal pace rather than in a burst.
 - **Pacing:**
-  - at least 45 minutes between any two scheduled posts
-  - a daily cap for each series
+  - at most 2 scheduled posts in any 24 hours, across every series
+    (`MAX_PER_DAY`)
+  - at least 4 hours between them, so it's one in the morning and one in the
+    afternoon
+  - a smaller daily cap for some series, so one series can't take both slots
+    every day
   - posting only between 8 a.m. and 9 p.m. Eastern
   - mention replies are exempt from all three
 - **Modes:** each series is `on`, `off` or `dry` (`POSTS_<SERIES>=dry`). In
@@ -110,7 +114,7 @@ How the post is put together:
   dropped from the end until the post fits, so contributors stay longest.
 - Winners with no campaign money on file get no post.
 - No pronouns: "the campaign", "the candidate's", the surname.
-- Capped at 4 a day.
+- Capped at 2 a day, which is every slot when there's nothing else.
 
 There are 14 races certified so far, which makes a backlog of 6 posts:
 - new to Congress: Annie Andrews, Nancy LaCore, Wes Climer, Janelle Sarauw
@@ -188,7 +192,7 @@ their quarters, and sometimes a `stance`).
 It uses averages per voter, not totals, so the bigger party doesn't look
 bought by headcount. When organizations have a `stance`, the post splits the
 money by stance. Without stance, it says "lobbied on it", never "for it".
-Each post has the bill card, and there's a cap of 4 a day, with the most
+Each post has the bill card, and there's a cap of 1 a day, with the most
 lobbied bills first.
 
 **Timing.** Weekly: `legislation` runs only in the Tuesday refresh, so the

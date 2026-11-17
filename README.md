@@ -168,7 +168,7 @@ pnpm feeds:publish --apply           # write them; needs LABELER_PASSWORD and a 
 - `member-elect`: a post per certified winner new to their chamber
 - `new-on-bluesky`: a post when a member's first account is matched
 
-It reloads the data every 5 minutes. Each post has a key that makes it happen once. Posts go out 45 minutes apart or more, 8 a.m. to 9 p.m. Eastern, up to each series' daily cap. A post waits until its page on the site says what the post says. Member-elect posts follow `races-<year>.json`, so they go out after `pnpm ingest --steps=races` is pushed.
+It reloads the data every 5 minutes. Each post has a key that makes it happen once. At most 2 go out a day across every series (`MAX_PER_DAY`), at least 4 hours apart, between 8 a.m. and 9 p.m. Eastern. A post waits until its page on the site says what the post says. Member-elect posts follow `races-<year>.json`, so they go out after `pnpm ingest --steps=races` is pushed.
 
 ```sh
 pnpm posts:preview                    # what each series would post, from local data/

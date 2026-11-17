@@ -4,7 +4,8 @@
 // Every few minutes it reloads the data, asks each series what it wants to
 // post, queues anything new (a post's key makes it happen once), and posts
 // the next one that's due: at most one per tick, MIN_GAP_MINUTES apart, only
-// during POST_HOURS Eastern, and up to each series' daily cap.
+// during POST_HOURS Eastern, MAX_PER_DAY in any 24 hours across every series,
+// and up to each series' own daily cap.
 //
 //   POSTS_APP_PASSWORD   app password for POSTS_IDENTIFIER (default the labeler's DID)
 //   POSTS_<SERIES>       on (default), off, or dry (log what it would post): POSTS_MEMBER_ELECT,
@@ -12,7 +13,7 @@
 //   DATA_DIR             SQLite database and cached data files (default .cache/posts)
 //   DATA_URL             where the data files are (default main on GitHub)
 //   SITE_URL             default https://contributions.fyi
-//   TICK_MINUTES (5), MIN_GAP_MINUTES (45), SETTLE_MINUTES (30), POST_HOURS (8-21)
+//   TICK_MINUTES (5), MIN_GAP_MINUTES (240), MAX_PER_DAY (2), SETTLE_MINUTES (30), POST_HOURS (8-21)
 //
 //   pnpm posts           run
 //   pnpm posts --dry     every series dry, no login: what it would queue and post
@@ -33,7 +34,9 @@ const DATA_URL = process.env.DATA_URL ?? "https://raw.githubusercontent.com/hips
 const SITE_URL = (process.env.SITE_URL ?? "https://contributions.fyi").replace(/\/$/, "");
 const IDENTIFIER = process.env.POSTS_IDENTIFIER ?? "did:plc:ylmdlijvrvgbe4md6v4dyce6";
 const TICK_MS = minutes("TICK_MINUTES", 5);
-const MIN_GAP_MS = minutes("MIN_GAP_MINUTES", 45);
+// Two a day, morning and afternoon, so the account never floods anyone's timeline.
+const MIN_GAP_MS = minutes("MIN_GAP_MINUTES", 240);
+const MAX_PER_DAY = Number(process.env.MAX_PER_DAY ?? 2);
 // Time for the site to deploy the data a new post is about.
 const SETTLE_MS = minutes("SETTLE_MINUTES", 30);
 const [FIRST_HOUR, LAST_HOUR] = (process.env.POST_HOURS ?? "8-21").split("-").map(Number) as [number, number];
@@ -108,9 +111,10 @@ async function postNext(now = Date.now()) {
   const hour = hourEastern(now);
   if (hour < FIRST_HOUR || hour >= LAST_HOUR) return;
   if (now - db.lastPostedAt() < MIN_GAP_MS) return;
+  if (db.postedSince(now - DAY_MS) >= MAX_PER_DAY) return;
   for (const row of db.due(now)) {
     if (modes[row.series] !== "on") continue;
-    if (db.postedSince(row.series, now - DAY_MS) >= SERIES[row.series].dailyCap) continue;
+    if (db.postedSince(now - DAY_MS, row.series) >= SERIES[row.series].dailyCap) continue;
     try {
       const page = await fetchPage(`${SITE_URL}${row.link}`, row.expect ?? undefined);
       const card = { ...page, title: row.title ?? page.title, description: row.description ?? page.description };

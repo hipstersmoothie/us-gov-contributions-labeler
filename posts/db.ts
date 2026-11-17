@@ -96,8 +96,14 @@ export function openDb(dataDir: string) {
       ) as { at: number | null };
       return row.at ?? 0;
     },
-    postedSince(series: SeriesName, since: number) {
-      return (db.prepare("SELECT count(*) AS n FROM posts WHERE status = 'posted' AND series = ? AND posted_at >= ?").get(series, since) as { n: number }).n;
+    /** Posts made since `since`, of any series or of one. */
+    postedSince(since: number, series?: SeriesName) {
+      const row = (
+        series
+          ? db.prepare("SELECT count(*) AS n FROM posts WHERE status = 'posted' AND posted_at >= ? AND series = ?").get(since, series)
+          : db.prepare("SELECT count(*) AS n FROM posts WHERE status = 'posted' AND posted_at >= ?").get(since)
+      ) as { n: number };
+      return row.n;
     },
     counts() {
       return db.prepare("SELECT series, status, count(*) AS n FROM posts GROUP BY series, status ORDER BY series, status").all() as {
