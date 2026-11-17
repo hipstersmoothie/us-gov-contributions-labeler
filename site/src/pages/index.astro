@@ -63,10 +63,6 @@ const PARTY_SERIES = [
 >
   <p class="kicker">contributions.fyi · PAC money, {cycleRange}</p>
   <h1 class="tagline">Who funds <em>your</em> member of Congress?</h1>
-  <p class="find-cta">
-    <a class="find-button" href="/find/">Find your members <span aria-hidden="true">→</span></a>
-    <span class="find-hint">by ZIP code or street address</span>
-  </p>
   <p class="dek">
     PACs and other committees gave <strong>{money(total, true)}</strong> to the {members.length} current members of
     Congress from {cycleRange.replace("–", " to ")}. <strong>{top.name}</strong> gave the most, {inEvery(top.total / total)}.
@@ -75,6 +71,7 @@ const PARTY_SERIES = [
     ({money(senate.raised, true)} to {money(house.raised, true)}), so PACs paid for only about {senate.share}% of their
     campaigns.
   </p>
+  <p class="find-cta"><a class="find-button" href="/find/">Find your members <span aria-hidden="true">→</span></a></p>
 
   <dl class="stats">
     <div class="stat"><dt>PAC &amp; committee money</dt><dd>{money(total, true)}</dd></div>
@@ -190,12 +187,11 @@ const PARTY_SERIES = [
 </Base>
 
 <style>
-  .find-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-4); margin: 0 0 var(--sp-5); }
+  .find-cta { margin: calc(-1 * var(--sp-2)) 0 var(--sp-6); }
   .find-button {
-    display: inline-flex; align-items: center; gap: 0.5em; padding: 0 var(--sp-5); height: 48px;
-    background: var(--text-primary); color: var(--page); font: 700 var(--fs-md)/1 var(--sans); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5em; padding: 0 var(--sp-4); height: 40px;
+    background: var(--text-primary); color: var(--page); font: 700 var(--fs-base)/1 var(--sans); text-decoration: none;
   }
-  .find-hint { font-size: var(--fs-sm); color: var(--text-secondary); }
   .find-button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
   @media (hover: hover) and (pointer: fine) {
     .find-button:hover { background: var(--text-secondary); }
