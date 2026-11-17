@@ -12,7 +12,7 @@ const COLUMNS: ColumnDef<RaceRow>[] = [
     sort: (r) => r.short,
     cell: (r) => (
       <span>
-        <span className="cell-title">{r.name}</span>
+        <a className="cell-title" href={r.href}>{r.name}</a>
         <span className="cell-note">
           {[r.open ? "Open seat" : "", r.redrawn ? "New district lines" : ""].filter(Boolean).join(" · ") || (r.chamber === "senate" ? "Incumbent running" : r.short)}
         </span>
@@ -103,7 +103,6 @@ export default function RacesTable({ rows, states }: { rows: RaceRow[]; states: 
         noun={filtered.length === 1 ? "race" : "races"}
         rows={filtered}
         columns={COLUMNS}
-        href={(r) => r.href}
         sort={{ column: f.sort, direction: f.dir as "ascending" | "descending" }}
         onSort={(s) => set({ sort: String(s.column), dir: s.direction })}
         pageSize={100}
