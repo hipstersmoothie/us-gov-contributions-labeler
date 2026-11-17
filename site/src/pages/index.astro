@@ -8,9 +8,6 @@ import { PARTY_COLOR } from "../lib/charts";
 import { memberPoints, topIds, pacTotal, inEvery, pct, shortSeat, chamberName } from "../lib/derived";
 import { shortSector } from "../lib/format";
 import { website } from "../lib/seo";
-import Finder from "../islands/find/Finder";
-import "../styles/find.css";
-import { CONGRESS, congressName, congressYears } from "../lib/districts";
 
 const total = sectors.reduce((s, x) => s + x.total, 0);
 const byPacMoney = members
@@ -66,7 +63,10 @@ const PARTY_SERIES = [
 >
   <p class="kicker">contributions.fyi · PAC money, {cycleRange}</p>
   <h1 class="tagline">Who funds <em>your</em> member of Congress?</h1>
-  <Finder client:load congress={CONGRESS} congressLabel={`${congressName} (${congressYears})`} cycleRange={cycleRange.replace(/\u2060/g, "")} size="home" />
+  <p class="find-cta">
+    <a class="find-button" href="/find/">Find your members <span aria-hidden="true">→</span></a>
+    <span class="find-hint">by ZIP code or street address</span>
+  </p>
   <p class="dek">
     PACs and other committees gave <strong>{money(total, true)}</strong> to the {members.length} current members of
     Congress from {cycleRange.replace("–", " to ")}. <strong>{top.name}</strong> gave the most, {inEvery(top.total / total)}.
@@ -188,3 +188,16 @@ const PARTY_SERIES = [
     </section>
   </div>
 </Base>
+
+<style>
+  .find-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-4); margin: 0 0 var(--sp-5); }
+  .find-button {
+    display: inline-flex; align-items: center; gap: 0.5em; padding: 0 var(--sp-5); height: 48px;
+    background: var(--text-primary); color: var(--page); font: 700 var(--fs-md)/1 var(--sans); text-decoration: none;
+  }
+  .find-hint { font-size: var(--fs-sm); color: var(--text-secondary); }
+  .find-button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  @media (hover: hover) and (pointer: fine) {
+    .find-button:hover { background: var(--text-secondary); }
+  }
+</style>
