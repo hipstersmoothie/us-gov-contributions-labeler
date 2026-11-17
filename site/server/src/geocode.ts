@@ -40,12 +40,13 @@ const STATE_FIPS: Record<string, string> = {
 // polite user of a free service. Counts only; addresses never enter. ----------------
 
 const WINDOW_MS = 10 * 60 * 1000;
-const PER_CLIENT = 20;
+export const PER_CLIENT = 20;
 const OVERALL = 600;
 const hits = new Map<string, number[]>();
 let overall: number[] = [];
 
-function limited(client: string, now = Date.now()) {
+/** Whether a client is over its share of lookups (the MCP server's find_members counts too). */
+export function limited(client: string, now = Date.now()) {
   const since = now - WINDOW_MS;
   overall = overall.filter((t) => t > since);
   const mine = (hits.get(client) ?? []).filter((t) => t > since);

@@ -7,10 +7,12 @@
     "start": "node src/index.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/server": "^2.4.0",
     "@resvg/resvg-js": "^2.6.2",
     "compression": "^1.8.1",
     "satori": "^0.63.2",
-    "serve-handler": "^6.1.7"
+    "serve-handler": "^6.1.7",
+    "zod": "^4.2.0"
   },
   "devDependencies": {
     "@types/compression": "^1.8.1",

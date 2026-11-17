@@ -71,6 +71,7 @@ export const MORE_LINKS: NavItem[] = [
   ...NAV_LINKS,
   { href: "/about/", label: "How this data works" },
   { href: "/open-data/", label: "Open data" },
+  { href: "/mcp/", label: "AI assistants" },
 ];
 
 export const isCurrent = (item: NavItem, path: string) => (item.match ?? [item.href]).some((p) => path.startsWith(p));
