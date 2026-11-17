@@ -26,21 +26,5 @@ export function surname(name: string) {
   return name.replace(/,? (Jr\.|Sr\.|II|III|IV)$/, "").split(" ").at(-1)!;
 }
 
-/** FEC candidate names, "OZ, MEHMET DR" -> "Mehmet Oz", "JOHNSON, RONALD EDWARD MR II" -> "Ronald Edward Johnson II". */
-export function candidateName(raw: string) {
-  const [last = "", rest = ""] = raw.split(",").map((s) => s.trim());
-  const tokens = rest.split(/\s+/).filter(Boolean);
-  const isSuffix = (t: string) => /^(JR|SR|II|III|IV)\.?$/i.test(t);
-  const isTitle = (t: string) => /^(MR|MRS|MS|DR|SEN|REP|HON|GOV|REV)\.?$/i.test(t);
-  const titleCase = (w: string) =>
-    w.toLowerCase().replace(/(^|[\s'-])([a-z])/g, (_, p: string, c: string) => p + c.toUpperCase()).replace(/\bMc([a-z])/g, (_, c: string) => "Mc" + c.toUpperCase());
-  // A nickname in quotes is the name they go by: "VINDMAN, YEVGENY 'EUGENE'" -> "Eugene Vindman".
-  const nickname = tokens.find((t) => /^["'(].+["')]$/.test(t));
-  const given = nickname ? [nickname.slice(1, -1)] : tokens.filter((t) => !isSuffix(t) && !isTitle(t));
-  const first = given.map(titleCase);
-  const suffix = tokens.filter(isSuffix).map((t) => (/^(jr|sr)/i.test(t) ? titleCase(t.replace(/\.?$/, ".")) : t.toUpperCase()));
-  return [...first, titleCase(last), ...suffix].join(" ").replace(/\s+/g, " ").trim() || raw;
-}
-
-/** FEC party codes as a tag letter, where one applies. */
-export const partyCode = (code?: string) => ({ DEM: "D", REP: "R", IND: "I", NPA: "I", UN: "I" } as Record<string, string>)[code ?? ""];
+/** FEC candidate names and party codes, shared with the posts service. */
+export { candidateName, partyCode } from "../../../src/lib/names.ts";
