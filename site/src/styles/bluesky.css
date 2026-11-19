@@ -67,6 +67,7 @@
 .bsky-card-handle { margin: 0 0 var(--sp-2); font-size: var(--fs-sm); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bsky-card-handle a { color: var(--text-secondary); }
 .bsky-card .bsky-pill { font-size: 11.5px; padding: 1px 7px; }
+.bsky-card :is(.bsky-pills, .bsky-card-contrib) + .bsky-pills { margin-top: 6px; }
 .bsky-card-contrib { margin: 6px 0 0; font-size: 12px; line-height: 1.45; color: var(--text-secondary); }
 .bsky-card-contrib-k { font-weight: 700; color: var(--text-muted); }
 
@@ -141,6 +142,7 @@
 .bsky-means p, .bsky-means ul { font-size: var(--fs-sm); color: var(--text-secondary); margin: 0; line-height: 1.5; }
 .bsky-means ul { padding-left: 1.1em; }
 .bsky-means li { margin-bottom: 2px; }
+.bsky-means p + p { margin-top: var(--sp-2); }
 
 /* --- hub: follow ------------------------------------------------------------------- */
 .bsky-follow {

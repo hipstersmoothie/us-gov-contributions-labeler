@@ -9,9 +9,11 @@
 //
 // Each member's Bluesky accounts get their top 3 sectors and top 3
 // contributors, counted by organization: an organization's PAC, donations
-// from its employees, and donations earmarked through its PAC. Labels that no longer apply (changed rankings, former
-// members, mismatched accounts) are negated. Only differences are sent, so
-// re-running is a no-op.
+// from its employees, and donations earmarked through its PAC; then, in
+// 10-point steps, the share of their individual money from small donors and
+// the share of donations over $200 from in or out of state. Labels that no
+// longer apply (changed rankings, former members, mismatched accounts) are
+// negated. Only differences are sent, so re-running is a no-op.
 //
 // Works from any machine: reads current labels from the labeler's public
 // endpoint and writes through its authenticated emitEvent endpoint.
@@ -24,7 +26,7 @@ import {
   getLabelerLabelDefinitions,
   setLabelerLabelDefinitions,
 } from "@skyware/labeler/scripts";
-import { fetchLiveLabels, labelerServiceUrl, memberLabels, PER_KIND } from "./lib/labels.js";
+import { donorShares, fetchLiveLabels, labelerServiceUrl, memberLabels, PER_KIND, type MemberLabel } from "./lib/labels.js";
 import type { Member, OrganizationRecord } from "./ingest/build.js";
 
 const LABELER_DID = (process.env.LABELER_DID ?? process.env.DID ?? "did:plc:ylmdlijvrvgbe4md6v4dyce6") as `did:${string}`;
@@ -49,6 +51,38 @@ const orgById = new Map(organizations.map((o) => [o.id, o]));
 const range = `${cycles[0]! - 1}–${cycles.at(-1)}`;
 const more = SITE_URL ? `\n\nDetails: ${SITE_URL}` : "";
 
+// The median member's shares, for context in the donor labels' descriptions.
+const median = (chamber: Member["chamber"], k: "small" | "inState") => {
+  const v = members
+    .filter((m) => m.chamber === chamber)
+    .map((m) => donorShares(m)[k])
+    .filter((x) => x !== undefined)
+    .sort((a, b) => a - b);
+  const mid = Math.floor(v.length / 2);
+  return `${Math.round((v.length % 2 ? v[mid]! : (v[mid - 1]! + v[mid]!) / 2) * 100)}%`;
+};
+const medians = (k: "small" | "inState") => `${median("house", k)} in the House and ${median("senate", k)} in the Senate`;
+
+function describe(l: MemberLabel) {
+  const b = l.bucket;
+  switch (l.kind) {
+    case "sector":
+      return `${l.fullName}: one of the top ${PER_KIND} sectors funding this member of Congress's campaign, ${range}, per FEC filings.\n\n${METHODOLOGY}${more}`;
+    case "contributor":
+      return `${l.fullName} is one of the top ${PER_KIND} contributors to this member of Congress's campaign, ${range}, per FEC filings.\n\n${METHODOLOGY}${more}`;
+    case "small-donors":
+      return (
+        `Donors who gave $200 or less a year gave ${b!.lo ? `${b!.lo}–${b!.hi}%` : "under 10%"} of the money individuals gave this member of Congress's campaign, ${range}, per FEC filings. ` +
+        `Campaigns report those donations only as a total. For the median member it's ${medians("small")}.${more}`
+      );
+    case "home-state":
+      return (
+        `${b!.lo}–${b!.hi}% of the donations over $200 to this member of Congress's campaign came from people ${b!.inState ? "in" : "outside"} the member's state, ${range}, per FEC filings. ` +
+        `Smaller donations are reported without an address, so they aren't counted. For the median member, ${medians("inState")} came from in state.${more}`
+      );
+  }
+}
+
 // --- what the labels should be ------------------------------------------
 
 interface Definition {
@@ -61,16 +95,7 @@ const desired = new Map<string, Set<string>>();
 
 for (const m of members) {
   if (!m.accounts.length) continue;
-  const labels: Definition[] = memberLabels(m, orgById).map((l) => ({
-    value: l.value,
-    name: l.name,
-    description:
-      l.kind === "sector"
-        ? `${l.fullName}: one of the top ${PER_KIND} sectors funding this member of Congress's campaign, ${range}, per FEC filings.` +
-          `\n\n${METHODOLOGY}${more}`
-        : `${l.fullName} is one of the top ${PER_KIND} contributors to this member of Congress's campaign, ${range}, per FEC filings.` +
-          `\n\n${METHODOLOGY}${more}`,
-  }));
+  const labels: Definition[] = memberLabels(m, orgById).map((l) => ({ value: l.value, name: l.name, description: describe(l) }));
 
   for (const l of labels) {
     definitions.set(l.value, l);

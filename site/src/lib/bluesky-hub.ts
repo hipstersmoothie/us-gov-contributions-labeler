@@ -27,13 +27,15 @@ export function shortSeat(m: Member) {
 }
 
 /** Where a label points on this site. */
-export function labelHref(l: { kind: "sector" | "contributor"; id: string }) {
+export function labelHref(l: { kind: string; id: string }) {
   if (l.kind === "sector") return `/sectors/${sectorSlug(l.id)}/`;
-  return organizationById.has(l.id) ? `/organizations/${l.id}/` : undefined;
+  if (l.kind === "contributor") return organizationById.has(l.id) ? `/organizations/${l.id}/` : undefined;
+  return undefined;
 }
 
+const CARD_KIND = { sector: "s", contributor: "c", "small-donors": "d", "home-state": "d" } as const;
 export function cardLabels(m: Member): CardLabel[] {
-  return labelsFor(m).map((l) => ({ k: l.kind === "sector" ? "s" : "c", n: l.kind === "sector" ? shortSector(l.name) : l.name, h: labelHref(l) }));
+  return labelsFor(m).map((l) => ({ k: CARD_KIND[l.kind], n: l.kind === "sector" ? shortSector(l.name) : l.name, h: labelHref(l) }));
 }
 
 /** One member, flattened for a profile card. */

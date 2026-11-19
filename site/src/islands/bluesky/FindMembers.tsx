@@ -16,19 +16,24 @@ const fmt = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractio
 const followerText = (n: number) => `${n >= 10_000 ? fmt.format(n) : n.toLocaleString("en-US")} follower${n === 1 ? "" : "s"}`;
 const byOrder = (a: CardRow, b: CardRow) => a.district - b.district || a.name.localeCompare(b.name);
 
+const PILL_KIND = { s: "Sector: ", c: "Contributor: ", d: "" };
+
 export function Pills({ labels, links = false }: { labels: CardLabel[]; links?: boolean }) {
   return (
-    <ul className="bsky-pills" aria-label={labels.every((l) => l.k === "s") ? "Top sectors" : "Labels on their posts"}>
+    <ul
+      className="bsky-pills"
+      aria-label={labels.every((l) => l.k === "s") ? "Top sectors" : labels.every((l) => l.k === "d") ? "Donor makeup" : "Labels on their posts"}
+    >
       {labels.map((l) => (
         <li key={l.k + l.n}>
           {links && l.h ? (
             <a className={`bsky-pill bsky-pill-${l.k}`} href={l.h}>
-              <span className="visually-hidden">{l.k === "s" ? "Sector: " : "Contributor: "}</span>
+              <span className="visually-hidden">{PILL_KIND[l.k]}</span>
               {l.n}
             </a>
           ) : (
             <span className={`bsky-pill bsky-pill-${l.k}`}>
-              <span className="visually-hidden">{l.k === "s" ? "Sector: " : "Contributor: "}</span>
+              <span className="visually-hidden">{PILL_KIND[l.k]}</span>
               {l.n}
             </span>
           )}
@@ -68,6 +73,7 @@ function Card({ r }: { r: CardRow }) {
               .join(" · ")}
           </p>
         )}
+        {r.labels && r.labels.some((l) => l.k === "d") && <Pills labels={r.labels.filter((l) => l.k === "d")} />}
       </div>
     </li>
   );
