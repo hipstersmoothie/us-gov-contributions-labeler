@@ -169,20 +169,70 @@ export function labelName(name: string, id?: string) {
 }
 
 export interface MemberLabel {
-  kind: "sector" | "contributor";
+  kind: "sector" | "contributor" | "small-donors" | "home-state";
   value: string;
   /** Short enough for a label chip: "SEIU", "Lockheed Martin". */
   name: string;
   /** The organization's full name, for descriptions. */
   fullName: string;
-  /** The sector name, or the contributor's organization id. */
+  /** The sector name, the contributor's organization id, or the share's bucket ("60-70"). */
   id: string;
+  /** Donor labels' 10-point range; for home-state, which side it counts. */
+  bucket?: { lo: number; hi: number; inState?: boolean };
+}
+
+type DonorTotals = { totals: Record<number, { itemized?: number; unitemized?: number }>; individuals?: { places?: { inState: number; outOfState: number } } };
+
+/** Below this much individual money a share says little; no label. */
+const MIN_DONATIONS = 10_000;
+
+/** A member's donor makeup over the dataset's cycles, as their page shows it:
+ *  small donors' share of individual money, and the in-state share of itemized
+ *  money with a known address. */
+export function donorShares(m: DonorTotals) {
+  const totals = Object.values(m.totals);
+  const sum = (f: (t: (typeof totals)[number]) => number | undefined) => totals.reduce((s, t) => s + Math.max(f(t) ?? 0, 0), 0);
+  const small = sum((t) => t.unitemized);
+  const individual = small + sum((t) => t.itemized);
+  const places = m.individuals?.places;
+  const placed = places ? Math.max(places.inState, 0) + Math.max(places.outOfState, 0) : 0;
+  return {
+    small: individual >= MIN_DONATIONS ? small / individual : undefined,
+    inState: placed >= MIN_DONATIONS ? Math.max(places!.inState, 0) / placed : undefined,
+  };
+}
+
+const TENS = ["zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety", "one-hundred"];
+/** A share's 10-point bucket, from the whole percent the site shows: 0.676 → [60, 70]. */
+const bucket = (share: number) => {
+  const lo = Math.min(Math.floor(Math.round(share * 100) / 10), 9) * 10;
+  return [lo, lo + 10] as const;
+};
+
+function donorLabels(m: DonorTotals): MemberLabel[] {
+  const { small, inState } = donorShares(m);
+  const labels: MemberLabel[] = [];
+  if (small !== undefined) {
+    const [lo, hi] = bucket(small);
+    const name = lo ? `Small donors gave ${lo}–${hi}%` : "Small donors gave under 10%";
+    labels.push({ kind: "small-donors", value: `small-donors-${TENS[lo / 10]}-to-${TENS[hi / 10]}`, name, fullName: name, id: `${lo}-${hi}`, bucket: { lo, hi } });
+  }
+  if (inState !== undefined) {
+    // Whichever side gave most: "90–100% out of state" reads better than "0–10% in state".
+    const home = Math.round(inState * 100) >= 50;
+    const [lo, hi] = bucket(home ? inState : 1 - inState);
+    const where = home ? "in state" : "out of state";
+    const name = `Donors over $200: ${lo}–${hi}% ${where}`;
+    labels.push({ kind: "home-state", value: `${home ? "in" : "out-of"}-state-${TENS[lo / 10]}-to-${TENS[hi / 10]}`, name, fullName: name, id: `${home ? "in" : "out"}-${lo}-${hi}`, bucket: { lo, hi, inState: home } });
+  }
+  return labels;
 }
 
 /** The labels the labeler puts on a member's accounts: their top 3 sectors
- *  and top 3 contributors, counting an organization's PAC, its employees and donations earmarked through its PAC. */
+ *  and top 3 contributors, counting an organization's PAC, its employees and donations earmarked through its PAC,
+ *  then how much of their individual money came from small donors and how much from their own state. */
 export function memberLabels(
-  m: { combinedSectors: { id: string }[]; contributors: { id: string; name: string }[] },
+  m: { combinedSectors: { id: string }[]; contributors: { id: string; name: string }[] } & DonorTotals,
   orgById: Map<string, { sector?: string }>
 ): MemberLabel[] {
   const sectors = m.combinedSectors
@@ -194,5 +244,5 @@ export function memberLabels(
     .slice(0, PER_KIND)
     // The value comes from the full name so it never changes when the display name does.
     .map((c) => ({ kind: "contributor" as const, value: labelValue(c.name), name: labelName(c.name, c.id), fullName: c.name, id: c.id }));
-  return [...sectors, ...contributors].filter((l) => l.value);
+  return [...sectors, ...contributors, ...donorLabels(m)].filter((l) => l.value);
 }

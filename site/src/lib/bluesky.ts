@@ -141,7 +141,7 @@ export const labeler: Output = {
   key: "labeler",
   kind: "labeler",
   name: `@${HANDLE}`,
-  blurb: `Labels each member's account with their top ${PER_KIND} funding sectors and top ${PER_KIND} contributors`,
+  blurb: `Labels each member's account with their top ${PER_KIND} funding sectors and top ${PER_KIND} contributors, and their small-donor and in-state shares`,
   url: LABELER_URL,
   group: "Labeler",
   count: members.filter((m) => m.accounts.length).length,

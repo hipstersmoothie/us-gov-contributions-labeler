@@ -85,7 +85,7 @@ const top = [...onBluesky].sort((a, b) => followers(b) - followers(a)).slice(0, 
 const topMax = followers(top[0]!);
 
 // --- labels: a mock post from the most-followed member with a full set of labels
-const sample = [...onBluesky].sort((a, b) => followers(b) - followers(a)).find((m) => labelsFor(m).length === PER_KIND * 2 && mainAccount(m)?.avatar)!;
+const sample = [...onBluesky].sort((a, b) => followers(b) - followers(a)).find((m) => labelsFor(m).length === PER_KIND * 2 + 2 && mainAccount(m)?.avatar)!;
 const sampleAccount = mainAccount(sample)!;
 const sampleLabels = labelsFor(sample);
 
@@ -223,7 +223,7 @@ const groups: ListGroup[] = GROUP_ORDER.filter((g) => listsByGroup.has(g)).map((
     <h2 id="labels-h">What the labels are</h2>
     <p class="chart-dek">
       Subscribe to our labeler and every member's posts carry their top {PER_KIND} funding sectors and top {PER_KIND} contributing
-      organizations, {cycleRange}.
+      organizations, {cycleRange}, and how much of their donors' money came from small donors and from their own state.
     </p>
     <div class="bsky-labels-grid">
       <figure class="bsky-mock">
@@ -272,6 +272,11 @@ const groups: ListGroup[] = GROUP_ORDER.filter((g) => listsByGroup.has(g)).map((
             <p>
               The sector or organization was among the {PER_KIND} that gave the member the most, {cycleRange}, per FEC filings.
               Organizations don't donate themselves: the money is from their PACs and the people who work there.
+            </p>
+            <p>
+              The donor labels give shares of the money individuals gave, in 10-point ranges: how much came from small donors
+              ($200 or less a year), and how much of the donations over $200 came from in or out of the member's state.
+              Smaller donations are reported without an address.
             </p>
           </div>
           <div>

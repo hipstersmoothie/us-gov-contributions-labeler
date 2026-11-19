@@ -2,8 +2,8 @@
 // are served per state from /data/bluesky/<state>.json.
 
 export interface CardLabel {
-  /** s = sector, c = contributor */
-  k: "s" | "c";
+  /** s = sector, c = contributor, d = donor makeup (small donors, home state) */
+  k: "s" | "c" | "d";
   n: string;
   h?: string;
 }
