@@ -10,7 +10,7 @@ import { MIN_DONATION, OutsideReceipts } from "./receipts.js";
 import { normalizeOrg, slugify, titleCase } from "../lib/names.js";
 import { sectorForName, type Sector } from "../lib/sectors.js";
 import type { Legislator } from "../lib/legislators.js";
-import type { Organization } from "./committees.js";
+import type { Committee, Organization } from "./committees.js";
 import { districtKey, loadZipDistricts } from "../lib/districts.js";
 
 
@@ -29,7 +29,21 @@ export interface MemberIndividuals {
    * district lines is split by land area.
    */
   places?: { inState: number; outOfState: number; unknown: number; inDistrict?: number };
+  /**
+   * Donations earmarked through a PAC (15E lines naming it as the conduit),
+   * by the PAC's committee id. Part of `itemized`, but not of `employers` or
+   * `sectors`: the build credits them to the PAC's organization.
+   */
+  earmarked?: { committee: string; total: number }[];
 }
+
+// Conduits that pass on donations for anyone: payment platforms, not groups
+// donors are giving through because of who they are.
+const PLATFORMS = new Set([
+  "C00401224", // ActBlue
+  "C00694323", // WinRed
+  "C00468314", // Democracy Engine
+]);
 
 export interface EmployerGiving {
   organization: string;
@@ -142,7 +156,9 @@ export async function ingestIndividuals(
   cycles: number[],
   organizations: Record<string, Organization>,
   /** Outside spenders whose large donors we want. */
-  spenders: Set<string>
+  spenders: Set<string>,
+  /** Committees we have organizations for: earmarks through them are credited to the organization. */
+  committees: Record<string, Committee>
 ) {
   const outsideReceipts = new OutsideReceipts(spenders);
   const byFecId = new Map<string, string>();
@@ -153,6 +169,8 @@ export async function ingestIndividuals(
   const byMember = new Map<string, Map<string, number>>();
   // bioguide -> sector -> amount
   const sectors = new Map<string, Map<IndividualSector, number>>();
+  // bioguide -> conduit committee id -> amount
+  const earmarked = new Map<string, Map<string, number>>();
   const totals = new Map<string, { itemized: number; donations: number }>();
   const legislatorById = new Map(legislators.map((l) => [l.bioguide, l]));
   const places = new Map<string, { inState: number; outOfState: number; unknown: number }>();
@@ -216,6 +234,16 @@ export async function ingestIndividuals(
       t.donations += type === "22Y" ? 0 : 1;
       totals.set(bioguide, t);
 
+      // Earmarked through a PAC (other than a payment platform): the PAC's
+      // money in the rankings, not the donor's employer's.
+      const conduit = type === "15E" ? r[15] ?? "" : "";
+      if (conduit && !PLATFORMS.has(conduit) && committees[conduit]) {
+        let e = earmarked.get(bioguide);
+        if (!e) earmarked.set(bioguide, (e = new Map()));
+        e.set(conduit, (e.get(conduit) ?? 0) + amount);
+        continue;
+      }
+
       const classified = classify(employerRaw, occupation);
       if (!classified) continue;
       const { sector, employer } = classified;
@@ -278,6 +306,12 @@ export async function ingestIndividuals(
         unknown: Math.round(unknown),
         inDistrict: inDistrict.has(bioguide) ? Math.round(inDistrict.get(bioguide)!) : undefined,
       }))(places.get(bioguide)!),
+      earmarked: earmarked.has(bioguide)
+        ? [...earmarked.get(bioguide)!]
+            .map(([committee, total]) => ({ committee, total: Math.round(total) }))
+            .filter((e) => e.total > 0)
+            .sort((a, b) => b.total - a.total)
+        : undefined,
     };
   }
 

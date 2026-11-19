@@ -8,5 +8,6 @@
   "C00410407": { "sector": "Finance, Insurance & Real Estate", "industry": "Securities brokerage", "name": "Edward Jones" },
   "C00461129": { "sector": "Finance, Insurance & Real Estate", "industry": "Reinsurance", "name": "Reinsurance Group of America" },
   "C00389403": { "sector": "Transportation", "industry": "Automotive aftermarket" },
-  "C00360362": { "sector": "Agribusiness", "industry": "Food processing" }
+  "C00360362": { "sector": "Agribusiness", "industry": "Food processing" },
+  "C00193433": { "name": "EMILY's List" }
 }

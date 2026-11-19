@@ -127,6 +127,7 @@ const contributor = (c: Member["contributors"][number]) => ({
   total: usd(c.total),
   pacs: usd(c.pacs),
   individuals: usd(c.individuals),
+  earmarked: c.earmarked === undefined ? undefined : usd(c.earmarked),
 });
 
 // Former staff now lobbying, by member and by committee; foreign agents' donations by member.
@@ -192,6 +193,7 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
         total: usd(e.total),
       })),
       sectors: amounts(m.individuals.sectors),
+      earmarked: m.individuals.earmarked?.map((e) => ({ id: e.committee, total: usd(e.total) })),
       places: m.individuals.places && {
         inState: usd(m.individuals.places.inState),
         outOfState: usd(m.individuals.places.outOfState),
@@ -255,6 +257,7 @@ const toOrganization = (o: OrganizationRecord) =>
     recipients: amounts(o.recipients, "member"),
     outsideGifts: amounts(o.outsideGifts, "committee"),
     employees: o.employees && { total: usd(o.employees.total), recipients: amounts(o.employees.recipients, "member") },
+    earmarked: o.earmarked && { total: usd(o.earmarked.total), recipients: amounts(o.earmarked.recipients, "member") },
     bundled: o.bundled && { total: usd(o.bundled.total), recipients: amounts(o.bundled.recipients, "member"), bundlers: o.bundled.bundlers.map((b) => ({ ...b, total: usd(b.total) })) },
     lobbyingSpend: o.lobbyingSpend && {
       total: usd(o.lobbyingSpend.total),
@@ -466,7 +469,7 @@ const METHODOLOGY =
   "for House districts, ZIP code. Lobbyist bundling comes from campaigns' Form 3L reports. " +
   "Each PAC is traced to the organization behind it (FEC connected organization, SEC EDGAR industry codes, lobbying " +
   "disclosures, then keywords in the name) and given one of a fixed set of sectors. Contributor totals are counted by " +
-  "organization: an organization's PAC money plus itemized donations from people who list it as their employer. " +
+  "organization: an organization's PAC money, itemized donations from people who list it as their employer, and donations earmarked through its PAC. " +
   "Lobbyists' former government jobs (covered positions on LD-1 and LD-2 filings) are matched to current members and " +
   "committees by name, only when exactly one fits. Foreign agents come from FARA bulk data; their donations are itemized " +
   "FEC contributions from people with a FARA short form in effect, matched by name and employer. " +

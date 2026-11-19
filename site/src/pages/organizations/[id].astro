@@ -5,7 +5,7 @@ import RankedTable from "../../components/RankedTable.astro";
 import MoreDisclosure from "../../islands/MoreDisclosure";
 import Chambers from "../../components/Chambers.astro";
 import { PARTY_COLOR } from "../../lib/charts";
-import { recipientPoints, pct, chamberName } from "../../lib/derived";
+import { recipientPoints, pct, chamberName, possessive } from "../../lib/derived";
 import { moneyAuto } from "../../lib/format";
 import { organizationBills, lobbyingSpan } from "../../lib/legislation";
 import StaffTable from "../../components/StaffTable.astro";
@@ -169,6 +169,7 @@ const description = clip(
     <div class="stat"><dt>Given to current members</dt><dd>{money(o.total, true)}</dd></div>
     <div class="stat"><dt>Members funded</dt><dd>{o.recipients.length}</dd></div>
     {o.employees && <div class="stat"><dt>From its employees</dt><dd>{money(o.employees.total, true)}</dd></div>}
+    {o.earmarked && <div class="stat"><dt>Earmarked through its PAC</dt><dd>{money(o.earmarked.total, true)}</dd></div>}
     {o.lobbyingSpend && <div class="stat"><dt>Spent lobbying</dt><dd>{money(o.lobbyingSpend.total, true)}</dd></div>}
     {o.sec && <div class="stat"><dt>Ticker</dt><dd><a href={secUrl}>{o.sec.ticker}</a></dd></div>}
   </dl>
@@ -592,6 +593,27 @@ const description = clip(
           {orgTrips.length > TRIPS_SHOWN ? <><a href={sponsorHref(travelSponsor)}>All {orgTrips.length.toLocaleString()} trips</a>, from</> : "From"} House and
           Senate gift travel filings. <a href="/travel/">All sponsored travel</a>.
         </p>
+      </section>
+    )
+  }
+
+  {
+    o.earmarked && (
+      <section class="story">
+        <h2>Donations earmarked through its PAC</h2>
+        <p class="chart-dek">
+          Donations people sent to current members' campaigns through {possessive(o.name)} PAC, which passed them
+          on, {cycleRange}: {money(o.earmarked.total, true)} in all. The campaigns report them as individual donations
+          earmarked through the PAC; they count toward {possessive(o.name)} total for each member.
+        </p>
+        <RankedTable
+          heading="Member"
+          valueHeading="Earmarked"
+          rows={o.earmarked.recipients.slice(0, 10).map((r) => {
+            const m = memberById.get(r.id);
+            return { label: m?.name ?? r.id, value: r.total, href: `/members/${r.id}/`, party: m ? partyLetter(m.party) : undefined, note: m ? `${chamberName(m)}, ${m.state}` : undefined };
+          })}
+        />
       </section>
     )
   }

@@ -180,7 +180,7 @@ export interface MemberLabel {
 }
 
 /** The labels the labeler puts on a member's accounts: their top 3 sectors
- *  and top 3 contributors, counting an organization's PAC plus its employees. */
+ *  and top 3 contributors, counting an organization's PAC, its employees and donations earmarked through its PAC. */
 export function memberLabels(
   m: { combinedSectors: { id: string }[]; contributors: { id: string; name: string }[] },
   orgById: Map<string, { sector?: string }>

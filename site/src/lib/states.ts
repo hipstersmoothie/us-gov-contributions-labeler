@@ -17,7 +17,7 @@ export interface StateSummary {
   /** PAC and employee money by industry, across the delegation. */
   industries: { id: string; total: number; members: number }[];
   /** Organizations (their PACs and employees) and employers without a PAC. */
-  contributors: { id: string; name: string; total: number; pacs: number; individuals: number; members: number; href?: string }[];
+  contributors: { id: string; name: string; total: number; pacs: number; individuals: number; earmarked: number; members: number; href?: string }[];
   /** Outside spending naming the delegation's members, by group; support and opposition apart. */
   outside: { support: number; oppose: number; opponents: { support: number; oppose: number }; spenders: { id: string; label: string; href: string; note: string; support: number; oppose: number }[] };
 }
@@ -47,12 +47,14 @@ export function summarizeState(d: Delegation): StateSummary {
         total: 0,
         pacs: 0,
         individuals: 0,
+        earmarked: 0,
         members: 0,
         href: organizationById.has(c.id) ? `/organizations/${c.id}/` : undefined,
       };
       row.total += c.total;
       row.pacs += c.pacs;
       row.individuals += c.individuals;
+      row.earmarked += c.earmarked ?? 0;
       row.members++;
       contributors.set(c.id, row);
     }

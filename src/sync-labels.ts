@@ -8,8 +8,8 @@
 //                              for unattended runs
 //
 // Each member's Bluesky accounts get their top 3 sectors and top 3
-// contributors, counted by organization: an organization's PAC plus
-// donations from its employees. Labels that no longer apply (changed rankings, former
+// contributors, counted by organization: an organization's PAC, donations
+// from its employees, and donations earmarked through its PAC. Labels that no longer apply (changed rankings, former
 // members, mismatched accounts) are negated. Only differences are sent, so
 // re-running is a no-op.
 //
@@ -29,8 +29,9 @@ import type { Member, OrganizationRecord } from "./ingest/build.js";
 
 const LABELER_DID = (process.env.LABELER_DID ?? process.env.DID ?? "did:plc:ylmdlijvrvgbe4md6v4dyce6") as `did:${string}`;
 const METHODOLOGY =
-  "The organizations themselves did not donate; the money came from their PACs and from their employees, " +
-  "members or owners. Individual donations are counted by the employer donors listed.";
+  "The organizations themselves did not donate; the money came from their PACs, from their employees, " +
+  "members or owners, and from donors who sent it through their PACs (earmarked). Other individual donations " +
+  "are counted by the employer donors listed.";
 const SITE_URL = process.env.SITE_URL;
 
 const { values: args } = parseArgs({

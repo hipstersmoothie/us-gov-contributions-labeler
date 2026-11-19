@@ -25,7 +25,8 @@
           "outsideGifts": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Donations to super PACs and other outside spenders (FEC committee ids)." },
           "employees": { "type": "ref", "ref": "#employees" },
           "lobbyingSpend": { "type": "ref", "ref": "#lobbyingSpend" },
-          "bundled": { "type": "ref", "ref": "#bundled" }
+          "bundled": { "type": "ref", "ref": "#bundled" },
+          "earmarked": { "type": "ref", "ref": "#earmarked" }
         }
       }
     },
@@ -88,6 +89,15 @@
         "total": { "type": "integer", "description": "US dollars." },
         "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." },
         "bundlers": { "type": "array", "items": { "type": "ref", "ref": "#bundler" } }
+      }
+    },
+    "earmarked": {
+      "type": "object",
+      "description": "Donations individuals gave current members' campaigns earmarked through its PACs, as the campaigns reported them (FEC 15E lines naming the PAC as the conduit).",
+      "required": ["total", "recipients"],
+      "properties": {
+        "total": { "type": "integer", "description": "US dollars." },
+        "recipients": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By member (bioguide id), largest first." }
       }
     },
     "bundler": {

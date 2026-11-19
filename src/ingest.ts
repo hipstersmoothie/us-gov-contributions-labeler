@@ -157,7 +157,8 @@ if (steps.has("individuals")) {
     legislators,
     cycles,
     required(enriched, "committees").organizations,
-    outsideSpenders(required(fec, "fec"))
+    outsideSpenders(required(fec, "fec")),
+    required(enriched, "committees").committees
   );
   writeJson(INDIVIDUALS_FILE, individuals, false);
 }

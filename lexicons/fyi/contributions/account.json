@@ -22,7 +22,7 @@
           "cycles": { "type": "array", "items": { "type": "integer" }, "description": "Election cycles the totals cover." },
           "totals": { "type": "ref", "ref": "#totals" },
           "topSectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Top 5 sectors (id is the sector) from PAC and individual money combined, leaving out Unknown, Retired, Not employed and party committees. The same ranking the labeler's sector labels use." },
-          "topContributors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.member#contributor" }, "description": "Top 5 contributors (an organization's PAC money plus donations from people who list it as their employer), leaving out party committees." },
+          "topContributors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.member#contributor" }, "description": "Top 5 contributors (an organization's PAC money, donations from people who list it as their employer, and donations earmarked through its PAC), leaving out party committees." },
           "url": { "type": "string", "format": "uri", "description": "The member's page on contributions.fyi." }
         }
       }

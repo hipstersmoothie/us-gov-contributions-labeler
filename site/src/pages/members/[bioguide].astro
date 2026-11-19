@@ -102,10 +102,13 @@ const inProgress = cycleRows.some((r) => r.label.includes("so far"));
 const points = former ? [] : memberPoints((x) => x.bioguide === m.bioguide).filter((x) => x.lane === chamber);
 const chamberTop = [...points].sort((a, b) => b.value - a.value)[0]!;
 
-// Contributors: each organization's PAC plus its employees.
+// Contributors: each organization's PAC, its employees, and donations
+// earmarked through its PAC.
+const contribEarmarked = contributors.reduce((s, c) => s + (c.earmarked ?? 0), 0);
 const CONTRIB = [
   { key: "pacs", label: "Its PAC", color: "var(--bar)", ink: "var(--on-bar)" },
   { key: "individuals", label: "Its employees", color: "var(--bar-muted)", ink: "var(--on-bar-muted)" },
+  ...(contribEarmarked ? [{ key: "earmarked", label: "Earmarked through its PAC", color: "var(--context)", ink: "var(--on-context)" }] : []),
 ];
 const topContributors = contributors.slice(0, 12).map((c) => {
   const org = c.id.startsWith("employer:") ? undefined : organizationById.get(c.id);
@@ -545,23 +548,24 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
       <section class="story">
         <h2>Top contributors</h2>
         <p class="chart-dek">
-          Each organization's PAC plus donations from its employees. Across{" "}
-          {possessive(last)} top {contributors.length} contributors, PACs gave <strong>{money(contribPac, true)}</strong> and
-          employees <strong>{money(contribEmp, true)}</strong>.
+          Each organization's PAC, donations from its employees, and donations people sent through its PAC (earmarked
+          for {last}). Across {possessive(last)} top {contributors.length} contributors, PACs gave{" "}
+          <strong>{money(contribPac, true)}</strong>, employees <strong>{money(contribEmp, true)}</strong>
+          {contribEarmarked > 0 && <>, and donors gave <strong>{money(contribEarmarked, true)}</strong> earmarked through PACs</>}.
         </p>
         <PlotFigure
           chart="stacked"
-          label="Top contributors, split into PAC and employee giving"
+          label="Top contributors, split into PAC, employee and earmarked giving"
           legend={CONTRIB.map((s) => ({ label: s.label, color: s.color }))}
           data={{
             mode: "amount",
             series: CONTRIB,
-            rows: topContributors.map(({ c, href }) => ({ label: c.name, href, values: { pacs: c.pacs, individuals: c.individuals } })),
+            rows: topContributors.map(({ c, href }) => ({ label: c.name, href, values: { pacs: c.pacs, individuals: c.individuals, earmarked: c.earmarked ?? 0 } })),
           }}
           table={{
-            columns: ["Organization", "PAC", "Employees", "Total"],
-            numeric: [1, 2, 3],
-            rows: contributors.map((c) => [c.name, money(c.pacs), money(c.individuals), money(c.total)]),
+            columns: ["Organization", "PAC", "Employees", "Earmarked", "Total"],
+            numeric: [1, 2, 3, 4],
+            rows: contributors.map((c) => [c.name, money(c.pacs), money(c.individuals), money(c.earmarked ?? 0), money(c.total)]),
           }}
         />
       </section>

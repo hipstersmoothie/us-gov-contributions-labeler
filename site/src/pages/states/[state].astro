@@ -169,7 +169,7 @@ const itemList = {
               label: c.name,
               href: c.href,
               value: c.total,
-              note: [c.pacs > 0 && `PAC ${moneyAuto(c.pacs)}`, c.individuals > 0 && `employees ${moneyAuto(c.individuals)}`, `to ${c.members} of ${n}`].filter(Boolean).join(" · "),
+              note: [c.pacs > 0 && `PAC ${moneyAuto(c.pacs)}`, c.individuals > 0 && `employees ${moneyAuto(c.individuals)}`, c.earmarked > 0 && `earmarked ${moneyAuto(c.earmarked)}`, `to ${c.members} of ${n}`].filter(Boolean).join(" · "),
             }))}
           />
         </section>

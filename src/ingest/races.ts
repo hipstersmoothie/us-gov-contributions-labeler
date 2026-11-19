@@ -467,7 +467,8 @@ export async function ingestRaces(
     return d >= E.lateGeneralFrom && d <= E.electionDay;
   };
   for await (const r of bulk(year, "pas2")) {
-    if (r[5] !== "24K" && r[5] !== "24Z") continue;
+    // Earmark lines are a conduit's voids and refunds, not its money (see fec.ts).
+    if ((r[5] !== "24K" && r[5] !== "24Z") || /EARMARK/i.test(r[20] ?? "")) continue;
     const cand = r[16]!;
     if (!candidates.has(cand)) continue;
     if (isLateGeneral(r[3], r[13])) add(lateGeneral, cand, Number(r[14]) || 0);

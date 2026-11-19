@@ -444,8 +444,11 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       if (!bioguide) continue;
       const amount = Number(r[14]) || 0;
 
-      // 24K: direct contribution, 24Z: in-kind.
-      if (r[5] === "24K" || r[5] === "24Z") {
+      // 24K: direct contribution, 24Z: in-kind. Lines for donations earmarked
+      // through the PAC aren't its own money: the campaign reports those as
+      // individual donations (15E), and pas2 has mostly the conduit's voids
+      // and refunds of them ("VOID: REFUNDED EARMARK OF ...").
+      if ((r[5] === "24K" || r[5] === "24Z") && !/EARMARK/i.test(r[20] ?? "")) {
         const byMember = (data.contributions[r[0]!] ??= {});
         const byCycle = (byMember[bioguide] ??= {});
         byCycle[cycle] = (byCycle[cycle] ?? 0) + amount;

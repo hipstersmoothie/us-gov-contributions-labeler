@@ -28,7 +28,7 @@
           "bundling": { "type": "ref", "ref": "#bundling" },
           "assignments": { "type": "array", "items": { "type": "ref", "ref": "#assignment" }, "description": "Congressional committee seats." },
           "individuals": { "type": "ref", "ref": "#individuals" },
-          "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "Top contributors, counted by organization: its PAC money plus donations from people who list it as their employer. Top 50." },
+          "contributors": { "type": "array", "items": { "type": "ref", "ref": "#contributor" }, "description": "Top contributors, counted by organization: its PAC money, donations from people who list it as their employer, and donations earmarked through its PAC. Top 50." },
           "combinedSectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Sectors from PAC and individual money combined (id is the sector), largest first." },
           "formerStaff": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#formerStaffer" }, "description": "Lobbyists on lobbying filings of the current Congress who listed a job with this member among their covered positions (former government jobs). Only unambiguous name matches." },
           "foreignAgentGifts": { "type": "array", "items": { "type": "ref", "ref": "#foreignAgentGift" }, "description": "Donations to this member's campaign from people registered as foreign agents under FARA at the time, from itemized FEC records matched by name and employer." }
@@ -117,7 +117,8 @@
         "donations": { "type": "integer", "description": "Number of itemized donations." },
         "employers": { "type": "array", "items": { "type": "ref", "ref": "#employer" }, "description": "By the employer donors listed, largest first." },
         "sectors": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "By the employer's estimated sector (id is the sector)." },
-        "places": { "type": "ref", "ref": "#places" }
+        "places": { "type": "ref", "ref": "#places" },
+        "earmarked": { "type": "array", "items": { "type": "ref", "ref": "fyi.contributions.defs#amount" }, "description": "Itemized donations earmarked through a PAC, by the PAC (fyi.contributions.committee record key), largest first. Part of itemized, not of employers or sectors. Payment platforms (ActBlue, WinRed, Democracy Engine) aren't counted as conduits." }
       }
     },
     "places": {
@@ -186,9 +187,10 @@
         "id": { "type": "string", "description": "fyi.contributions.organization record key, or 'employer:<name>' for employers without a PAC." },
         "uri": { "type": "string", "format": "at-uri", "description": "The fyi.contributions.organization record, if there is one." },
         "name": { "type": "string" },
-        "total": { "type": "integer", "description": "US dollars: pacs + individuals." },
+        "total": { "type": "integer", "description": "US dollars: pacs + individuals + earmarked." },
         "pacs": { "type": "integer", "description": "US dollars from the organization's PACs." },
-        "individuals": { "type": "integer", "description": "US dollars from people listing it as their employer." }
+        "individuals": { "type": "integer", "description": "US dollars from people listing it as their employer." },
+        "earmarked": { "type": "integer", "description": "US dollars individuals gave earmarked through the organization's PAC (FEC 15E lines naming it as the conduit). Not counted in individuals." }
       }
     },
     "foreignAgentGift": {

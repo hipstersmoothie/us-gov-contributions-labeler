@@ -83,6 +83,8 @@ export interface Contributor {
   total: number;
   pacs: number;
   individuals: number;
+  /** Donations earmarked through its PAC: given by individuals, passed on by the PAC. */
+  earmarked?: number;
 }
 
 interface Outside {
@@ -126,6 +128,8 @@ export type OrganizationRecord = Organization &
     lobbyingSpend?: LobbyingSpend;
     /** Contributions its lobbyists or its PAC bundled for current members (Form 3L). */
     bundled?: { total: number; recipients: { id: string; total: number }[]; bundlers: { id: string; name: string; total: number }[] };
+    /** Donations earmarked through its PACs to current members. */
+    earmarked?: { total: number; recipients: { id: string; total: number }[] };
   };
 export type DonorRecord = Omit<Donor, "gifts"> & {
   total: number;
@@ -342,11 +346,30 @@ export function buildData(
     const sectorTotals = new Map(pacSectors ?? []);
     for (const s of ind?.sectors ?? []) add(sectorTotals, s.id, s.total);
 
+    for (const e of ind?.earmarked ?? []) {
+      const committee = enriched.committees[e.committee]!;
+      const id = committee.organization;
+      const c = contributors.get(id) ?? { id, name: enriched.organizations[id]?.name ?? id, total: 0, pacs: 0, individuals: 0 };
+      c.earmarked = (c.earmarked ?? 0) + e.total;
+      c.total += e.total;
+      contributors.set(id, c);
+      add(sectorTotals, committee.sector, e.total);
+    }
+
     return {
       contributors: [...contributors.values()].sort((a, b) => b.total - a.total).slice(0, 50),
       combinedSectors: ranked(sectorTotals),
     };
   };
+
+  // Earmarked donations by the organization whose PAC passed them on.
+  const orgEarmarks = new Map<string, Map<string, number>>();
+  for (const [bioguide, ind] of Object.entries(individuals?.members ?? {})) {
+    for (const e of ind.earmarked ?? []) {
+      const org = enriched.committees[e.committee]?.organization;
+      if (org) add(forMember(orgEarmarks, org), bioguide, e.total);
+    }
+  }
 
   const giverFields = (id: string): Giver => {
     const g = givers.get(id);
@@ -415,6 +438,7 @@ export function buildData(
       const gifts = giftsByOrg.get(o.id);
       const employees = individuals?.employers[o.id];
       const bundled = orgBundles.get(o.id);
+      const earmarked = orgEarmarks.get(o.id);
       return {
         ...o,
         ...giverFields(`org:${o.id}`),
@@ -426,6 +450,7 @@ export function buildData(
           recipients: ranked(bundled.recipients),
           bundlers: ranked(bundled.bundlers).map((b) => ({ ...b, name: bundling!.bundlers[b.id]!.name })),
         },
+        earmarked: earmarked && { total: sum([...earmarked.values()]), recipients: ranked(earmarked) },
       };
     })
     .sort((a, b) => b.total - a.total);

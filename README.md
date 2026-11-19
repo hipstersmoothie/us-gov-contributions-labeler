@@ -21,7 +21,7 @@ Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky l
 | [IRS political organization filings](https://www.irs.gov/charities-non-profits/political-organizations/political-organization-filing-and-disclosure) | Organizations' gifts to state-level 527 groups, members' legal defense funds (`src/scripts/irs527/`, `data/irs527.json`; see `design/irs527/README.md`) |
 | Bluesky | Matching members to their accounts |
 
-Contributions are counted by organization: an organization's total is its PAC plus donations from people who list it as their employer.
+Contributions are counted by organization: an organization's total is its PAC, donations from people who list it as their employer, and donations earmarked through its PAC (sent to a campaign through the PAC, as with AIPAC or J Street; payment platforms like ActBlue and WinRed don't count).
 
 ## Setup
 

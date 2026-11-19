@@ -115,13 +115,18 @@ export function sectorForIssues(issues: { code: string; count: number }[]) {
   return best?.[0];
 }
 
-/** Last resort for associations with no SEC or lobbying record. */
+/**
+ * Last resort for associations with no SEC or lobbying record. The patterns
+ * match word prefixes ("insur", "financ"), so short ones carry exceptions for
+ * the longer words they'd catch: "coal" isn't "coalition", "corn" isn't
+ * "Cornerstone" or "Cornell", "gas" isn't "gastroenterology".
+ */
 const NAME_RULES: [RegExp, Sector][] = [
   [/\b(postal|letter carriers|federal employees|federal managers|treasury employees|police|fire ?fighters|sheriffs)/i, "Labor"],
   [/\b(realtor|real estate|home ?builder|mortgage|bank|banker|credit union|insur|financ|invest|securities|capital|accountant|cpa)/i, "Finance, Insurance & Real Estate"],
   [/\b(physician|medical|medicine|hospital|health|nurs|dental|dentist|pharm|surgeon|clinic|anesthesi|radiolog|optometr|chiropract|patholog|cardiolog|dermatolog|orthop|osteopath|otolaryng|surg|laborator|psychiatr|psycholog|urolog|oncolog|ophthalm|podiatr)/i, "Health"],
-  [/\b(oil|gas|petroleum|energy|electric|coal|propane|pipeline|nuclear|mining|solar|wind|utilit|forest|timber|water users)/i, "Energy & Natural Resources"],
-  [/\b(farm|agri|cattle|beef|pork|dairy|sugar|cotton|soybean|corn|wheat|rice|grain|poultry|citrus|grower|peanut|fisher|seafood|food|beverage|beer|wine|spirits|restaurant|grocer)/i, "Agribusiness"],
+  [/\b(oil|gas(?!t|s)|petroleum|energy|electric|coal(?!it)|propane|pipeline|nuclear|mining|solar|wind(?!ow|sor)|utilit|forest|timber|water users)/i, "Energy & Natural Resources"],
+  [/\b(farm|agri|cattle|beef|pork|dairy|sugar|cotton|soybean|corn(?!er|ell|ing|ish)|wheat|rice|grain(?!ger)|poultry|citrus|grower|peanut|fisher(?:ies|men|man)|seafood|food|beverage|beer|wine|spirits|restaurant|grocer)/i, "Agribusiness"],
   [/\b(defense|aerospace|aircraft|missile)/i, "Defense"],
   [/\b(telecom|broadband|cable|wireless|broadcast|software|technology|internet|semiconductor|computer)/i, "Communications & Technology"],
   [/\b(construct|contractor|builder|engineer|architect|concrete|cement|plumb|roofing|electrical contractors)/i, "Construction"],
