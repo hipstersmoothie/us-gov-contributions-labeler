@@ -153,14 +153,15 @@ for (const c of congressCommittees) {
   const { seats, gap } = hemicycle(ordered.length);
   const sum = (list: Member[]) => {
     const out = new Map<string, number>();
-    for (const m of list) for (const x of m.sectors) if (!NOT_INDUSTRY.includes(x.id)) out.set(x.id, (out.get(x.id) ?? 0) + x.total);
+    for (const m of list) for (const x of m.sectors) out.set(x.id, (out.get(x.id) ?? 0) + x.total);
     return out;
   };
   const mine = sum(seated.map((s) => s.m));
   const base = sum(c.chamber === "joint" ? members : members.filter((m) => m.chamber === c.chamber));
+  // Shares of all PAC money, as the committee page shows them; only the top sector has to be an industry.
   const mineTotal = [...mine.values()].reduce((a, b) => a + b, 0);
   const baseTotal = [...base.values()].reduce((a, b) => a + b, 0);
-  const top = [...mine].sort((a, b) => b[1] - a[1])[0];
+  const top = [...mine].filter(([id]) => !NOT_INDUSTRY.includes(id)).sort((a, b) => b[1] - a[1])[0];
   cards[`committee/${c.id}`] = {
     type: "committee",
     name: c.name,

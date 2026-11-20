@@ -210,8 +210,9 @@ const toMember = (m: Member & { opponents?: Opponents }) =>
 const partyOrgs = new Set(
   organizationsFile.organizations.filter((o) => o.sector === "Party & Candidate Committees").map((o) => o.id)
 );
+// Summed from the rounded cycles, so it equals what the member record's totals add up to.
 const sumCycles = (m: Member, k: "receipts" | "individual" | "pac") =>
-  usd(Object.values(m.totals).reduce((n, t) => n + t[k], 0));
+  Object.values(m.totals).reduce((n, t) => n + usd(t[k]), 0);
 
 // One per Bluesky account, so a client can ask "who funds this account?"
 // with nothing but its DID.

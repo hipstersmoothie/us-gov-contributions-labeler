@@ -114,7 +114,7 @@ export function parseResults(file: string): ResultLine[] {
     const state = col(r, "STATE ABBREVIATION");
     const s = seat(col(r, "DISTRICT"));
     const name = col(r, "CANDIDATE NAME");
-    if (!/^[A-Z]{2}$/.test(state) || !s || !name || /^(total|scattered|blank|void|over|under|write-in)/i.test(name)) return [];
+    if (!/^[A-Z]{2}$/.test(state) || !s || !name || /^(total|scatter\w*|blank|void|over|under|write-in)s?\b/i.test(name)) return [];
     const pct = num(col(r, "GENERAL %"));
     return [{
       state,

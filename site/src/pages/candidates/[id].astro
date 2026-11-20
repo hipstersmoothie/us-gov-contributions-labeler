@@ -64,7 +64,8 @@ const topIndustry = sectors[0];
 const sourceRow = [{ label: name, values: sourceValues(c) }];
 const spenders = c.outside.spenders.map((s) => ({ ...spender(s.id), ...s }));
 const ind = c.individuals;
-const inState = ind ? ind.places.inState / Math.max(ind.itemized, 1) : undefined;
+// Of the money with a known address, as member pages and the labels count it.
+const inState = ind ? ind.places.inState / Math.max(ind.places.inState + ind.places.outOfState, 1) : undefined;
 const pending = noResult(r);
 
 const status = c.onBallot

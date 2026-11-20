@@ -320,35 +320,65 @@ export async function ingestFec(legislators: Legislator[], cycles: number[]) {
       return !!y && x?.chamber === "senate" && y.chamber === "senate" && x.state === y.state;
     };
 
+    // Each candidate id's campaign committees (principal and authorized) this
+    // cycle. A candidate who ran in a special and the regular election the
+    // same year is linked to the same committee twice, so these are sets.
+    const campaignsOf = new Map<string, Set<string>>();
+    for await (const r of rows(ccl)) {
+      const [candId, , , cmteId, , designation] = r;
+      if (designation !== "P" && designation !== "A") continue;
+      campaignsOf.get(candId!)?.add(cmteId!) ?? campaignsOf.set(candId!, new Set([cmteId!]));
+    }
+
+    // weball has a row per candidate id, with the totals of the committees
+    // linked to it. A member who moved from the House to the Senate keeps
+    // their old id, and weball repeats the Senate committee's totals under
+    // it (the old id has no committees of its own this cycle), so summing a
+    // member's rows would double their money. Keep a row only if its
+    // committees aren't all covered by another of the member's rows; rows
+    // for distinct committees (a House and a Senate run in one cycle) add up.
+    const weballRows = new Map<string, string[][]>();
     for await (const r of rows(weball)) {
       const bioguide = byFecId.get(r[0]!);
-      if (!bioguide) continue;
-      const n = (i: number) => Number(r[i]) || 0;
-      const totals = (data.totals[bioguide] ??= {});
-      const prev = totals[cycle];
-      // A member can have more than one candidate ID in a cycle (House + Senate).
-      totals[cycle] = {
-        receipts: n(5) + (prev?.receipts ?? 0),
-        disbursements: n(7) + (prev?.disbursements ?? 0),
-        cashOnHand: n(10) + (prev?.cashOnHand ?? 0),
-        individual: n(17) + (prev?.individual ?? 0),
-        pac: n(25) + (prev?.pac ?? 0),
-        party: n(26) + (prev?.party ?? 0),
-        candidate: n(11) + (prev?.candidate ?? 0),
-        candidateLoans: n(12) + (prev?.candidateLoans ?? 0),
+      if (bioguide) weballRows.get(bioguide)?.push(r) ?? weballRows.set(bioguide, [r]);
+    }
+    for (const [bioguide, all] of weballRows) {
+      const committees = all.map((r) => campaignsOf.get(r[0]!) ?? new Set<string>());
+      const covered = (i: number) =>
+        committees.some((other, j) => {
+          if (j === i || ![...committees[i]!].every((c) => other.has(c))) return false;
+          return other.size > committees[i]!.size || j < i;
+        });
+      const kept = all.filter((_, i) => !covered(i));
+      const n = (i: number) => kept.reduce((s, r) => s + (Number(r[i]) || 0), 0);
+      // With two campaigns in one cycle, what one committee transferred to the
+      // other is in both rows: the first's disbursements and the second's
+      // receipts, along with the money it was raised as. Count it once.
+      const transferred = kept.length > 1 ? n(8) : 0;
+      (data.totals[bioguide] ??= {})[cycle] = {
+        receipts: Math.max(n(5) - transferred, 0),
+        disbursements: Math.max(n(7) - transferred, 0),
+        cashOnHand: n(10),
+        individual: n(17),
+        pac: n(25),
+        party: n(26),
+        candidate: n(11),
+        candidateLoans: n(12),
       };
     }
 
     // Itemized and unitemized individual money, from each member's own
-    // campaign committees (principal and authorized) this cycle.
-    for await (const r of rows(ccl)) {
-      const [candId, , , cmteId, , designation] = r;
-      const bioguide = byFecId.get(candId!);
-      const summary = summaries.get(cmteId!);
-      const totals = bioguide && data.totals[bioguide]?.[cycle];
-      if (!totals || !summary || (designation !== "P" && designation !== "A")) continue;
-      totals.itemized = (totals.itemized ?? 0) + summary.itemized;
-      totals.unitemized = (totals.unitemized ?? 0) + summary.unitemized;
+    // campaign committees this cycle, each committee once.
+    for (const [bioguide, totals] of Object.entries(data.totals)) {
+      const own = new Set((legislatorById.get(bioguide)?.fec ?? []).flatMap((id) => [...(campaignsOf.get(id) ?? [])]));
+      const t = totals[cycle];
+      if (!t) continue;
+      for (const cmteId of own) {
+        const summary = summaries.get(cmteId);
+        if (!summary) continue;
+        t.itemized = (t.itemized ?? 0) + summary.itemized;
+        t.unitemized = (t.unitemized ?? 0) + summary.unitemized;
+      }
     }
 
     for await (const r of rows(cm)) {
