@@ -20,12 +20,19 @@ const names = new Map<string, string>([
   ...JSON.parse(fs.readFileSync("data/congress-committees.json", "utf8")).committees.map((c: any) => [c.id, c.name]),
 ]);
 
-// A seeded shuffle, so a sample can be redrawn the same way.
+// A seeded shuffle, so a sample can be redrawn the same way. mulberry32, in
+// 32-bit integer arithmetic: a multiply in floats loses the low bits, and a
+// shuffle that indexes with them stops being uniform.
 function shuffle<T>(list: T[], seed = 20261116) {
+  const random = () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
   const out = [...list];
   for (let i = out.length - 1; i > 0; i--) {
-    seed = (seed * 1103515245 + 12345) % 2 ** 31;
-    const j = seed % (i + 1);
+    const j = Math.floor(random() * (i + 1));
     [out[i], out[j]] = [out[j]!, out[i]!];
   }
   return out;

@@ -11,9 +11,10 @@ export const graphemes = (text: string) => [...segmenter.segment(text)].length;
 
 /** $2,011,264 -> "$2M"; $1,634,600 -> "$1.6M"; $723,631 -> "$724K"; $950 -> "$950". */
 export function usd(n: number) {
-  if (n >= 1e9) return `$${trim((n / 1e9).toFixed(1))}B`;
-  if (n >= 1e6) return `$${trim((n / 1e6).toFixed(1))}M`;
-  if (n >= 1e3) return `$${Math.round(n / 1e3)}K`;
+  // Each unit takes over where rounding would otherwise print "$1000K".
+  if (n >= 999.95e6) return `$${trim((n / 1e9).toFixed(1))}B`;
+  if (n >= 999.5e3) return `$${trim((n / 1e6).toFixed(1))}M`;
+  if (n >= 999.5) return `$${Math.round(n / 1e3)}K`;
   return `$${Math.round(n)}`;
 }
 const trim = (s: string) => s.replace(/\.0$/, "");

@@ -54,6 +54,8 @@ const former = m.former;
 const leftOn = former && new Date(`${former.left}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 const raised = raisedTotal(m);
 const fromPacs = pacTotal(m);
+// The build lists a member's 50 largest committees; the totals count every one.
+const capped = m.committees.length >= 50;
 const sectorTotal = m.sectors.reduce((s, x) => s + x.total, 0);
 const photo = photoUrl(m.bioguide);
 const initials = `${m.name[0]}${surname(m.name)[0]}`;
@@ -135,7 +137,7 @@ const makeup = donorMakeup(m);
 const shares = makeup && makeupShares(makeup);
 const medians = chamberMakeupMedians(m.chamber);
 const stateName = STATES[m.state] ?? m.state;
-const pctOf = (v: number | undefined) => (v === undefined ? "–" : `${Math.round(v * 100)}%`);
+const pctOf = (v: number | undefined) => (v === undefined ? "–" : v > 0 && v < 0.005 ? "<1%" : `${Math.round(v * 100)}%`);
 const self = makeup ? makeup.selfGiven + makeup.selfLoans : 0;
 const makeupRows = makeup
   ? [
@@ -873,8 +875,8 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
   {
     m.committees.length > 0 && (
       <section class="story">
-        <h2>Every PAC that gave</h2>
-        <p class="chart-dek">The {m.committees.length.toLocaleString()} committees that contributed to {last}, largest first.</p>
+        <h2>{capped ? "The PACs that gave most" : "Every PAC that gave"}</h2>
+        <p class="chart-dek">The {m.committees.length.toLocaleString()} committees that {capped ? "gave the most" : "contributed"} to {last}, largest first.</p>
         <RankedTable
           heading="PAC"
           valueHeading="Given"
@@ -884,7 +886,7 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
           })}
         />
         {m.committees.length > 10 && (
-          <MoreDisclosure client:visible title={`All ${m.committees.length.toLocaleString()} PACs`}>
+          <MoreDisclosure client:visible title={`${capped ? "Top" : "All"} ${m.committees.length.toLocaleString()} PACs`}>
             <table>
               <tbody>
                 {m.committees.map((c) => (

@@ -13,8 +13,11 @@ const zips = await loadZipDistricts(congress);
 
 const out: Record<string, Record<string, number>> = {};
 for (const zip of [...zips.keys()].sort()) {
-  const parts = [...zips.get(zip)!].filter(([, share]) => share > 0).sort((a, b) => b[1] - a[1]);
-  out[zip] = Object.fromEntries(parts.map(([key, share]) => [key, Math.round(share * 10_000) / 10_000]));
+  const parts = [...zips.get(zip)!]
+    .map(([key, share]) => [key, Math.round(share * 10_000) / 10_000] as const)
+    .filter(([, share]) => share > 0)
+    .sort((a, b) => b[1] - a[1]);
+  out[zip] = Object.fromEntries(parts);
 }
 
 const file = path.resolve("data/districts", `${congress}.json`);

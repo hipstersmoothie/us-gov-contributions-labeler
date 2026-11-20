@@ -4,7 +4,9 @@ import { members, memberById, partyLetter, generatedAt, type Member } from "./da
 import type { Seat, SwarmPoint } from "./charts";
 import { moneyAuto } from "./format";
 
-export const pacTotal = (m: Member) => m.committees.reduce((s, c) => s + c.total, 0);
+// From `sectors`, not `committees`: the build keeps a member's 50 largest
+// committees but every sector, and the same contributions go into both.
+export const pacTotal = (m: Member) => m.sectors.reduce((s, c) => s + c.total, 0);
 export const raisedTotal = (m: Member) => Object.values(m.totals).reduce((s, t) => s + t.receipts, 0);
 
 const pacByMember = new Map(members.map((m) => [m.bioguide, pacTotal(m)]));

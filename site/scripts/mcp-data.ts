@@ -75,7 +75,7 @@ const descriptions: Record<string, string> = {
   races: "House and Senate general-election races, every election year with data: candidates, their money, PAC and outside spending, results. `key` is year/slug, e.g. 2026/az-04",
   race_committees: "Names of committees that spent in races but aren't in `committees`",
   elections: "Each election year's facts: dates, redistricting, primary systems, runoffs, certification calendar",
-  zip_districts: `ZIP codes to House districts of the ${CONGRESS}th Congress, with the share of the ZIP's population in each (district 0 is at-large)`,
+  zip_districts: `ZIP codes to House districts of the ${CONGRESS}th Congress, with the share of the ZIP's land area in each (district 0 is at-large)`,
   former_members: "Members who have left Congress, as they were when they left (`former_left` is the date)",
   disclosures: `Members' financial disclosures from the House Clerk (House only; the Senate's aren't included), as of ${disclosuresAt.slice(0, 10)}: annual report, holdings and trades (since 2025), keyed by bioguide. Values are the ranges filed (min, max; open = "over"), owner is whose it is (self, spouse, joint, child), scanned rows were read by machine from paper forms. Under 5 U.S.C. § 13107 these reports may not be used for any commercial purpose (other than news media's), to determine a credit rating, or to solicit money for any political, charitable or other purpose`,
   records: "Each page's full record as JSON (for get_record; compressed)",

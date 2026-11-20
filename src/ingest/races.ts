@@ -32,11 +32,11 @@ import fs from "fs";
 import { fecBulk } from "../lib/download.js";
 import type { Legislator } from "../lib/legislators.js";
 import type { Sector } from "../lib/sectors.js";
-import type { FecData } from "./fec.js";
+import type { CandidateOutside, FecData } from "./fec.js";
 import type { Committee, Organization } from "./committees.js";
 import { committeeSummaries, pages, cachedJson, parseCsv } from "./outside.js";
 import { donationClassifier, mainEntry, rows, type IndividualSector } from "./individuals.js";
-import { byCandidate as resultsByCandidate, fecElectionFiles, parseBallot, parseResults } from "./election-results.js";
+import { byCandidate as resultsByCandidate, fecElectionFiles, parseBallot, parseResults, type ResultLine } from "./election-results.js";
 
 /** The hand-entered facts about one election (data/elections-<year>.json). */
 export interface Election {
@@ -455,6 +455,35 @@ export async function ingestRaces(
     if (r.spe_id && r.spe_nam && !cm.has(r.spe_id)) cm.set(r.spe_id, { name: r.spe_nam, kind: r.spe_id.startsWith("C9") ? "non-committee" : "other" });
   }
 
+  // One person, two candidate ids: the same campaign committee linked to
+  // both. Keep the one that's a member, else the one that raised more, and
+  // do it before anything is collected by id below, so the committees' PAC
+  // money, donations and outside spending land on the id kept.
+  const raceOfCand = (c: { race: string }) => c.race;
+  /** A merged-away id -> the id kept, so official lists naming either find the candidate. */
+  const alias = new Map<string, string>();
+  const canon = (id: string) => alias.get(id) ?? id;
+  let merged = 0;
+  for (const c of [...candidates.values()]) {
+    if (!candidates.has(c.id)) continue;
+    for (const cmte of [...c.committees]) {
+      for (const otherId of candidatesOf.get(cmte) ?? []) {
+        const o = candidates.get(otherId);
+        if (!o || o.id === c.id || raceOfCand(o) !== raceOfCand(c)) continue;
+        const keep = !!o.bioguide !== !!c.bioguide ? (c.bioguide ? c : o) : (c.money?.receipts ?? 0) >= (o.money?.receipts ?? 0) ? c : o;
+        const drop = keep === c ? o : c;
+        keep.onBallot ||= drop.onBallot;
+        for (const id of drop.committees) if (!keep.committees.includes(id)) keep.committees.push(id);
+        keep.reports = [...new Set([...(keep.reports ?? []), ...(drop.reports ?? [])])];
+        if (!keep.reports.length) delete keep.reports;
+        candidates.delete(drop.id);
+        alias.set(drop.id, keep.id);
+        for (const [from, to] of alias) if (to === drop.id) alias.set(from, keep.id);
+        merged++;
+      }
+    }
+  }
+
   // PAC and committee contributions to the candidates.
   const pacsBy = new Map<string, Map<string, number>>();
   // Money given for the general election after the primaries: only a
@@ -469,7 +498,7 @@ export async function ingestRaces(
   for await (const r of bulk(year, "pas2")) {
     // Earmark lines are a conduit's voids and refunds, not its money (see fec.ts).
     if ((r[5] !== "24K" && r[5] !== "24Z") || /EARMARK/i.test(r[20] ?? "")) continue;
-    const cand = r[16]!;
+    const cand = canon(r[16]!);
     if (!candidates.has(cand)) continue;
     if (isLateGeneral(r[3], r[13])) add(lateGeneral, cand, Number(r[14]) || 0);
     let m = pacsBy.get(cand);
@@ -522,8 +551,15 @@ export async function ingestRaces(
   }
   console.log(`  ${(seen / 1e6).toFixed(1)}M rows; itemized donations for ${ind.size} candidates`);
 
-  // Outside spending by candidate, from the fec step.
-  const outside = fec.byCandidate?.[year] ?? {};
+  // Outside spending by candidate, from the fec step, with merged ids' together.
+  const outside: Record<string, Record<string, CandidateOutside>> = {};
+  for (const [id, byCommittee] of Object.entries(fec.byCandidate?.[year] ?? {})) {
+    const target = (outside[canon(id)] ??= {});
+    for (const [committee, o] of Object.entries(byCommittee)) {
+      const row = (target[committee] ??= { support: 0, oppose: 0, generalSupport: 0, generalOppose: 0 });
+      for (const k of ["support", "oppose", "generalSupport", "generalOppose"] as const) row[k] += o[k];
+    }
+  }
 
   // Fill in each candidate.
   for (const c of candidates.values()) {
@@ -582,32 +618,6 @@ export async function ingestRaces(
     };
   }
 
-  // One person, two candidate ids: the same campaign committee linked to
-  // both. Keep the one that's a member, else the one that raised more.
-  const raceOfCand = (c: { race: string }) => c.race;
-  /** A merged-away id -> the id kept, so official lists naming either find the candidate. */
-  const alias = new Map<string, string>();
-  const canon = (id: string) => alias.get(id) ?? id;
-  let merged = 0;
-  for (const c of [...candidates.values()]) {
-    if (!candidates.has(c.id)) continue;
-    for (const cmte of c.committees) {
-      for (const otherId of candidatesOf.get(cmte) ?? []) {
-        const o = candidates.get(otherId);
-        if (!o || o.id === c.id || raceOfCand(o) !== raceOfCand(c)) continue;
-        const keep = !!o.bioguide !== !!c.bioguide ? (c.bioguide ? c : o) : (c.money?.receipts ?? 0) >= (o.money?.receipts ?? 0) ? c : o;
-        const drop = keep === c ? o : c;
-        keep.onBallot ||= drop.onBallot;
-        keep.reports = [...new Set([...(keep.reports ?? []), ...(drop.reports ?? [])])];
-        if (!keep.reports.length) delete keep.reports;
-        candidates.delete(drop.id);
-        alias.set(drop.id, keep.id);
-        for (const [from, to] of alias) if (to === drop.id) alias.set(from, keep.id);
-        merged++;
-      }
-    }
-  }
-
   // The FEC's official compilations, once published: the ballot list
   // decides who was on the ballot in every race it covers, and the results
   // give votes and winners.
@@ -640,8 +650,18 @@ export async function ingestRaces(
     }
     console.log(`  FEC ballot list: ${ballotLines.length} candidates in ${ballotRaces.size} races; ${unmatched} not matched to an FEC candidate record (write-ins, no FEC filing)`);
   } else console.log("  FEC ballot list not published yet; using campaigns' general-election reports");
-  const official = files.results ? resultsByCandidate(parseResults(files.results).filter(counts)) : undefined;
-  if (official) console.log(`  FEC official results: ${official.size} candidates`);
+  // Results race by race: an FEC id can turn up on another race's lines (a
+  // write-in elsewhere, a typo), and its votes mustn't add to the candidate's.
+  const resultsByRace = (lines: ResultLine[]) => {
+    const groups = new Map<string, ResultLine[]>();
+    for (const l of lines) {
+      const race = raceId(l.office, l.state, E.houseSeats[l.state] === 1 ? 0 : l.district);
+      groups.get(race)?.push(l) ?? groups.set(race, [l]);
+    }
+    return new Map([...groups].map(([race, ls]) => [race, resultsByCandidate(ls)]));
+  };
+  const officialByRace = files.results ? resultsByRace(parseResults(files.results).filter(counts)) : undefined;
+  if (officialByRace) console.log(`  FEC official results: ${[...officialByRace.values()].reduce((n, m) => n + m.size, 0)} candidates in ${officialByRace.size} races`);
   else console.log("  FEC official results not published yet");
 
   // General-election reports are a superset: some campaigns file one after
@@ -715,6 +735,7 @@ export async function ingestRaces(
     const office = id.endsWith("-S") ? "S" : "H";
     const state = id.slice(0, 2);
     const district = office === "H" ? (id.endsWith("-AL") ? 0 : Number(id.slice(3))) : undefined;
+    const official = officialByRace?.get(id);
     // Every official claim about who won, before choosing whom to show:
     // a winner is on the ballot whatever the filings suggested.
     const claims: Claim[] = [];
@@ -885,5 +906,5 @@ export async function ingestRaces(
     pacsClassified: Math.round((100 * sum(shownCandidates.flatMap((c) => c.pacs.filter((p) => enriched.committees[p.id]).map((p) => p.total)))) / Math.max(1, sum(shownCandidates.flatMap((c) => c.pacs.map((p) => p.total))))),
   };
   console.log(`  ${JSON.stringify(coverage)}`);
-  return { generatedAt: new Date().toISOString(), year, electionDay: E.electionDay, newCongress: E.newCongress, election: E, fec: { ballot: !!ballotLines, results: !!official }, races, committees, members, coverage };
+  return { generatedAt: new Date().toISOString(), year, electionDay: E.electionDay, newCongress: E.newCongress, election: E, fec: { ballot: !!ballotLines, results: !!officialByRace }, races, committees, members, coverage };
 }
