@@ -89,6 +89,35 @@ const byCaucus = ["D", "R"]
       compared with the median member of the same chamber.
     </p>
 
+    <h2 id="spending">Where the money goes</h2>
+    <p>
+      Each member's page has a <strong>Where the money goes</strong> section, and <a href="/vendors/">Campaign spending</a> lists
+      the vendors paid the most. The source is the FEC's bulk file of operating expenditures: every payment over $200 a campaign
+      committee itemizes (Form 3, line 17) or a leadership PAC does (Form 3X, line 21B), with the payee and the purpose in the
+      filer's own words. Only current members' campaign committees and the leadership PACs they sponsor are counted.
+    </p>
+    <p>
+      Purposes are grouped from that text: "media buy", "digital advertising" and "TV" are all advertising; "fundraising
+      consulting", "direct mail" and "list rental" are fundraising. The groups come from a fixed list of patterns, checked against
+      a sample by hand; a purpose that matches nothing is "unclear", not guessed. Payments a campaign made by credit card or
+      through a payroll service appear in the file twice, once as the card bill and again, flagged as memo entries, as what the
+      card paid for. Totals count only the bill; the payee lists count what it paid for, so "American Express" isn't anyone's
+      biggest vendor. Where a campaign didn't itemize a card bill, it stays under the card company.
+    </p>
+    <p>
+      Spellings are merged ("Aisle 518" and "Aisle 518 Strategies, LLC") by a short hand-kept list; companies with similar
+      names that are different businesses, like a payment platform and its processing arm, are kept apart. A vendor gets its
+      own page once members' campaigns and leadership PACs paid it $250,000 or more from five or more committees over the three
+      cycles. People paid by name, mostly staff, are rolled up as one line and never listed; payments to the candidate are
+      shown as one line with the purposes filed, usually travel reimbursements, which are allowed. The FEC codes these payments
+      by hand after a report is filed, so the current cycle runs weeks to months behind e-filing; each page says what date its
+      payments are reported through.
+    </p>
+    <p>
+      The sale-and-use restriction on FEC data (52 U.S.C. § 30111(a)(4)) protects contributors' names; vendors aren't contributors,
+      so nothing here is held back. The file is <code>data/disbursements.json</code> in the <a href="https://github.com/hipstersmoothie/us-gov-contributions-labeler">repository</a>.
+    </p>
+
     <h2 id="bundling">Lobbyist bundling</h2>
     <p>
       When a registered lobbyist or a lobbyist's PAC collects contributions from others and passes them to a campaign

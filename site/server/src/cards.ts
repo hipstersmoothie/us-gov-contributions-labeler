@@ -6,7 +6,7 @@
 // drawn size, so nothing here is set smaller than 22px and the one number
 // the card is about is the biggest thing on it. Party is never color alone:
 // every party fill sits next to its letter or name.
-import type { Bar, BillCard, CandidateCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, RaceCard, SectorCard, Split, StateCard, Target, TravelCard } from "./types.ts";
+import type { Bar, BillCard, CandidateCard, Card, CommitteeCard, CountryCard, DonorCard, MemberCard, OrgCard, PacCard, PageCard, Party, RaceCard, SectorCard, Split, StateCard, Target, TravelCard, SpendingCard } from "./types.ts";
 
 export const WIDTH = 1200;
 export const HEIGHT = 630;
@@ -599,17 +599,17 @@ function page(c: PageCard, a: Assets) {
   );
 }
 
-/** A sponsor's trips, or all of them: the count big, then whose offices. */
-function travel(c: TravelCard, a: Assets) {
+/** A sponsor's trips, or all of them: the count big, then whose offices. Also a vendor's payments, in dollars. */
+function travel(c: TravelCard | SpendingCard, a: Assets) {
   const W = 520;
   const trips = (n: number) => `${n.toLocaleString()} ${n === 1 ? "trip" : "trips"}`;
   const right = c.bars?.length
-    ? div({ flexDirection: "column" }, c.barsTitle ? sectionLabel(c.barsTitle) : null, bars(c.bars, W, { format: trips, rowHeight: 70 }))
+    ? div({ flexDirection: "column" }, c.barsTitle ? sectionLabel(c.barsTitle) : null, bars(c.bars, W, { format: c.type === "travel" ? trips : money, rowHeight: 70 }))
     : null;
   const [first, ...rest] = c.stats;
   return frame(
     a,
-    "Privately sponsored travel",
+    c.type === "travel" ? "Privately sponsored travel" : "Campaign spending",
     div(
       { flex: 1, gap: 56 },
       div(
@@ -799,6 +799,7 @@ export function cardTree(card: Card, assets: Assets): Node {
     case "page":
       return page(card, assets);
     case "travel":
+    case "spending":
       return travel(card, assets);
     case "race":
       return race(card, assets);
@@ -834,6 +835,7 @@ export function altText(card: Card): string {
     case "page":
       return `${card.title}. ${card.dek}`;
     case "travel":
+    case "spending":
       return `${card.title}: ${card.dek}`;
     case "race":
       return `${card.name}, ${card.kicker.replace(/ ·.*/, "")}: ${card.candidates.map((x) => `${x.label}${x.party ? ` (${x.party})` : ""} raised ${money(x.raised)}`).join("; ")}. ${card.status}.`;

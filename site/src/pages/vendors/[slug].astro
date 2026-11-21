@@ -1,0 +1,120 @@
+---
+// One campaign vendor: who paid it, how much, and for what.
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import PartySplit from "../../components/PartySplit.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
+import { money, cycleRange } from "../../lib/data";
+import { cycleLabel } from "../../lib/derived";
+import { clip, listOf } from "../../lib/seo";
+import { titleCase } from "../../../../src/lib/names.ts";
+import { vendorDisplayName } from "../../../../src/lib/spending.ts";
+import { vendors, vendorPartySplit, payerRow, payerCounts, payersPhrase, bucketRows, bucketPhrase, PAYERS_SHOWN, MEMO_NOTE, type Vendor } from "../../lib/disbursements";
+
+export function getStaticPaths() {
+  return vendors.map((v) => ({ params: { slug: v.id }, props: { v } }));
+}
+const { v } = Astro.props as { v: Vendor };
+const path = `/vendors/${v.id}/`;
+const span = cycleRange.replace("–", " to ");
+const split = vendorPartySplit(v);
+const counts = payerCounts(v);
+const payers = v.payers.map(payerRow).filter((r): r is NonNullable<typeof r> => !!r);
+const topPurpose = v.purposes[0];
+const buckets = bucketRows(v.buckets, 6);
+const cycles = Object.entries(v.byCycle)
+  .map(([c, amount]) => ({ cycle: Number(c), amount }))
+  .filter((r) => r.amount > 0)
+  .sort((a, b) => b.cycle - a.cycle);
+const filedAs = (v.aliases ?? []).map((a) => vendorDisplayName(a, titleCase)).filter((a) => a !== v.name);
+const description = clip(
+  `${v.name} was paid ${money(v.total, true)} by ${payersPhrase(v)} from ${span}${topPurpose ? `, mostly for ${topPurpose.text.toLowerCase()}` : ""}. ` +
+    (payers[0] ? `${payers[0].label} paid it the most, ${money(payers[0].value, true)}.` : "")
+);
+---
+
+<Base title={`${v.name}: what campaigns paid it`} {description} og={{ type: "spending", id: v.id }} crumbs={[["Campaign spending", "/vendors/"], [v.name, path]]}>
+  <p class="kicker"><a href="/vendors/">Campaign vendor</a></p>
+  <h1>{v.name}</h1>
+  <p class="dek">
+    {v.name} was paid <strong>{money(v.total, true)}</strong> by {payersPhrase(v)} from {span}
+    {topPurpose ? <>, mostly for <strong>{topPurpose.text.toLowerCase()}</strong>.</> : "."}
+    {v.passThrough && (
+      <>
+        {" "}It's a card or payroll company: where campaigns itemized what they paid through it, that money is counted under the real payee, and
+        what's here is the rest.
+      </>
+    )}
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Paid, {cycleRange}</dt><dd>{money(v.total, true)}</dd></div>
+    <div class="stat"><dt>Members' campaigns</dt><dd>{counts.members.toLocaleString()}</dd></div>
+    {counts.pacs > 0 && <div class="stat"><dt>Leadership PACs</dt><dd>{counts.pacs.toLocaleString()}</dd></div>}
+    {topPurpose && <div class="stat"><dt>Most often for</dt><dd class="text">{topPurpose.text}</dd></div>}
+  </dl>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Who paid it</h2>
+      <p class="chart-dek">Members' campaigns and leadership PACs, by what they paid {v.name} over {cycleRange}.</p>
+      <RankedTable
+        heading="Campaign or PAC"
+        valueHeading="Paid"
+        caption={`What each campaign or leadership PAC paid ${v.name}`}
+        rows={payers.slice(0, PAYERS_SHOWN).map((r) => ({ label: r.label, href: r.href, party: r.party, note: [r.note, r.purpose?.toLowerCase()].filter(Boolean).join(" · "), value: r.value }))}
+      />
+      {payers.length > PAYERS_SHOWN && (
+        <MoreDisclosure client:visible title={`All ${payers.length.toLocaleString()} campaigns and PACs`}>
+          <RankedTable
+            heading="Campaign or PAC"
+            valueHeading="Paid"
+            rows={payers.slice(PAYERS_SHOWN).map((r) => ({ label: r.label, href: r.href, party: r.party, note: [r.note, r.purpose?.toLowerCase()].filter(Boolean).join(" · "), value: r.value }))}
+            max={payers[0]!.value}
+          />
+        </MoreDisclosure>
+      )}
+    </section>
+    <section class="story">
+      <h2>Split by party</h2>
+      <p class="chart-dek">By the party of the member whose campaign or leadership PAC paid.</p>
+      <PartySplit split={split} label={`Payments to ${v.name} by payer party`} />
+      <h2 class="spaced">What it was paid for</h2>
+      <p class="chart-dek">The purposes campaigns filed, as written on their reports.</p>
+      <PlotFigure
+        chart="bars"
+        width={500}
+        label={`Payments to ${v.name} by filed purpose`}
+        data={{ rows: v.purposes.slice(0, 8).map((p) => ({ label: p.text, value: p.amount })), total: v.total }}
+        table={{ columns: ["Purpose as filed", "Amount"], numeric: [1], rows: v.purposes.map((p) => [p.text, money(p.amount)]) }}
+      />
+      {buckets.length > 1 && (
+        <p class="muted small">
+          Grouped: {listOf(buckets.slice(0, 3).map((b) => `${bucketPhrase(b.key)} ${Math.round((b.value / v.total) * 100)}%`))}.
+        </p>
+      )}
+    </section>
+  </div>
+
+  <section class="story">
+    <h2>By election cycle</h2>
+    <ul class="cycles">
+      {cycles.map((r) => (
+        <li><strong>{money(r.amount, true)}</strong> <span class="muted">{cycleLabel(r.cycle)}</span></li>
+      ))}
+    </ul>
+    {filedAs.length > 0 && <p class="muted small">Also filed as {listOf(filedAs.map((a) => `“${a}”`))}; the spellings are counted together.</p>}
+    <p class="source">
+      From the FEC's operating expenditures files: payments of more than $200 that members' campaign committees and leadership PACs itemized,{" "}
+      {cycleRange}. {MEMO_NOTE} Vendors with a page here were paid at least $250,000 by five or more committees.{" "}
+      <a href="/about/#spending">How spending is counted</a>.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .stat dd.text { font-size: var(--fs-lg); line-height: 1.25; }
+  .cycles { list-style: none; padding: 0; margin: 0 0 var(--sp-4); display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-6); }
+  .cycles li { font-size: var(--fs-md); }
+</style>

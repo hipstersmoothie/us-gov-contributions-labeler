@@ -13,11 +13,12 @@ export const TYPE_LABEL: Record<SearchType, string> = {
   b: "Bills",
   f: "Foreign lobbying by country",
   t: "Trip sponsors",
+  v: "Campaign vendors",
   r: "House and Senate races",
   n: "Candidates",
   h: "Companies members own",
 };
-export const TYPE_ORDER: SearchType[] = ["m", "n", "r", "o", "p", "d", "t", "b", "c", "f"];
+export const TYPE_ORDER: SearchType[] = ["m", "n", "r", "o", "p", "d", "v", "t", "b", "c", "f"];
 
 export function group(hits: Hit[]) {
   return TYPE_ORDER.map((type) => ({ type, title: TYPE_LABEL[type], hits: hits.filter((h) => h.type === type) })).filter(

@@ -4,6 +4,7 @@ import RankedTable from "../../components/RankedTable.astro";
 import PartySplit from "../../components/PartySplit.astro";
 import Chambers from "../../components/Chambers.astro";
 import OutsideTable from "../../components/OutsideTable.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
 import {
   committees,
   organizationById,
@@ -22,7 +23,8 @@ import {
   hidesDonors,
   type Committee,
 } from "../../lib/data";
-import { chamberName } from "../../lib/derived";
+import { chamberName, cycleLabel, pct } from "../../lib/derived";
+import { pacSpending, latestCycle, bucketRows, bucketPhrase, vendorHref, dateLabel, VENDORS_SHOWN, MEMO_NOTE } from "../../lib/disbursements";
 import { clip, listOf, organization } from "../../lib/seo";
 
 export function getStaticPaths() {
@@ -42,6 +44,20 @@ const nonCommittee = c.kind === "non-committee";
 const ecOnly = c.id.startsWith("C3");
 
 const path = `/pacs/${c.id}/`;
+// Leadership PACs: contributions to other committees against their own operating costs, newest cycle on file.
+const lp = c.kind === "leadership-pac" ? pacSpending(c.id) : undefined;
+const lpCycle = lp && latestCycle(Object.fromEntries(Object.entries(lp.byCycle).map(([k, v]) => [k, { total: Math.max(v.disbursements, v.total) }])));
+const ls = lpCycle ? lp!.byCycle[lpCycle] : undefined;
+const lpRows = ls ? bucketRows(ls.buckets, 6) : [];
+const lpOther = ls ? Math.max(ls.disbursements - ls.contributions - ls.total - ls.independent, 0) : 0;
+const lpSegments = ls
+  ? [
+      { label: "contributions to other committees", value: ls.contributions, color: "var(--bar)", ink: "var(--on-bar)" },
+      { label: "its own operating costs", value: ls.total, color: "var(--bar-muted)", ink: "var(--on-bar-muted)" },
+      ...(ls.independent > 0 ? [{ label: "independent expenditures", value: ls.independent, color: "var(--context)", ink: "var(--on-context)" }] : []),
+      ...(lpOther > 0 ? [{ label: "unitemized spending, refunds and transfers", value: lpOther, color: "var(--surface-2)", ink: "var(--text-primary)" }] : []),
+    ].filter((s) => s.value > 0)
+  : [];
 const span = cycleRange.replace("–", " to ");
 const topRecipient = memberById.get(c.recipients[0]?.id ?? "");
 const spent = [
@@ -138,6 +154,65 @@ const description = clip(
     {c.opponents && c.opponents.oppose > 0 && <div class="stat"><dt>Spent opposing members' opponents</dt><dd>{money(c.opponents.oppose, true)}</dd></div>}
     {c.electioneering && <div class="stat"><dt>On ads naming members, without a for or against</dt><dd>{money(c.electioneering.total, true)}</dd></div>}
   </dl>
+
+  {
+    ls && lpCycle && ls.disbursements > 0 && (
+      <section class="story" id="spending">
+        <h2>Where its money goes</h2>
+        <p class="chart-dek">
+          In the {cycleLabel(lpCycle)} cycle {name} spent <strong>{money(ls.disbursements, true)}</strong>
+          {ls.coverage && <> through {dateLabel(ls.coverage)}</>}: <strong>{pct(ls.contributions, ls.disbursements)}%</strong> as contributions
+          to other committees and <strong>{pct(ls.total, ls.disbursements)}%</strong> on its own itemized operating costs
+          {ls.independent > 0 && <>, with {money(ls.independent, true)} in independent expenditures</>}.
+          {lpRows[0] && ls.total > 0 && <> Of the operating costs, {bucketPhrase(lpRows[0].key)} took {pct(lpRows[0].value, ls.total)}%.</>}{" "}
+          A leadership PAC exists to give to other candidates; fundraising, consultants and travel are what it spends getting there.
+        </p>
+        {lpSegments.length > 0 && (
+          <PlotFigure
+            chart="makeup"
+            width={640}
+            label={`${name}: everything it spent, ${cycleLabel(lpCycle)}`}
+            data={{ rows: [{ label: "Everything it spent", segments: lpSegments }] }}
+            table={{ columns: ["Part", "Amount"], numeric: [1], rows: lpSegments.map((s) => [s.label, money(s.value)]) }}
+          />
+        )}
+        {ls.total > 0 && (
+          <div class="grid-2">
+            <div>
+              <h3>Operating costs by purpose</h3>
+              <PlotFigure
+                chart="bars"
+                width={500}
+                label={`${name}'s operating costs by purpose, ${cycleLabel(lpCycle)}`}
+                data={{ rows: lpRows.map((r) => ({ label: r.short, value: r.value })), emphasize: [0], total: ls.total }}
+                table={{ columns: ["Purpose", "Amount"], numeric: [1], rows: lpRows.map((r) => [r.label, money(r.value)]) }}
+              />
+            </div>
+            <div>
+              <h3>Biggest payees</h3>
+              <RankedTable
+                heading="Payee"
+                valueHeading="Paid"
+                rank={false}
+                caption={`${name}'s biggest payees, ${cycleLabel(lpCycle)}`}
+                rows={ls.vendors.slice(0, VENDORS_SHOWN).map((v) => ({
+                  label: v.name,
+                  href: v.vendor ? vendorHref(v.vendor) : undefined,
+                  note: [v.purpose, v.itemized ? "paid by card or payroll service, itemized" : undefined].filter(Boolean).join(" · "),
+                  value: v.amount,
+                }))}
+              />
+            </div>
+          </div>
+        )}
+        <p class="source">
+          Totals from the FEC's PAC summary file; payees from its operating expenditures file (Form 3X, line 21B)
+          {ls.through && <>, processed through {dateLabel(ls.through)}</>}. {MEMO_NOTE}{" "}
+          <a href="/vendors/">All campaign vendors</a> · <a href="/about/#spending">How spending is counted</a>.
+        </p>
+      </section>
+    )
+  }
 
   {
     c.opponents && (

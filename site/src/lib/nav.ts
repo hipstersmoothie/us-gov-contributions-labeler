@@ -48,6 +48,7 @@ export const navGroups = (latestYear: number): NavGroup[] => [
       },
       { href: "/donors/", label: "Big donors", note: "Who funds the super PACs" },
       { href: "/bundling/", label: "Bundling", note: "Contributions lobbyists gathered for members" },
+      { href: "/vendors/", label: "Campaign spending", note: "Where campaigns' money goes, vendor by vendor" },
     ],
   },
   {

@@ -14,6 +14,7 @@ Who funds Congress: [contributions.fyi](https://contributions.fyi), a [Bluesky l
 | [congress-legislators](https://github.com/unitedstates/congress-legislators) | Current members, IDs, committee seats, photos |
 | [FEC bulk data](https://www.fec.gov/data/browse-data/?tab=bulk-data) | Campaign totals, PAC contributions, outside spending, individual and super PAC donations |
 | [FEC API](https://api.open.fec.gov/developers/) | Leadership PAC sponsors |
+| FEC bulk data, operating expenditures (`oppexp`) and PAC summaries (`webk`) | What campaigns and leadership PACs spend, by purpose and vendor (`src/ingest/disbursements.ts`, `data/disbursements.json`; see `design/disbursements/README.md`) |
 | [SEC EDGAR](https://www.sec.gov/edgar) | Industry codes for public companies |
 | [Lobbying disclosures](https://lda.gov/api/) | What organizations lobby on and spend, which PACs they run, lobbyists' former government jobs |
 | [FARA bulk data](https://efile.fara.gov/ords/fara/f?p=API:BULKDATA) | Foreign agents, their foreign principals by country, and (with FEC itemized records) their donations |

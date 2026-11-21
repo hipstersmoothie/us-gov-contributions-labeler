@@ -1,0 +1,118 @@
+---
+// Where campaigns spend their money: by purpose, and the vendors that take the most of it.
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
+import { money, cycleRange, members } from "../../lib/data";
+import { cycleLabel } from "../../lib/derived";
+import { vendors, spendingCycles, spendingMembers, memberSpending, allMembersBuckets, bucketRows, bucketPhrase, payerCounts, INDEX_SHOWN, MEMO_NOTE } from "../../lib/disbursements";
+
+const latest = spendingCycles.at(-1)!;
+const current = allMembersBuckets(latest);
+const rows = bucketRows(current.buckets, 10);
+// Everything members' campaigns itemized over the cycles.
+let allCycles = 0;
+for (const id of spendingMembers) for (const s of Object.values(memberSpending(id)!.byCycle)) allCycles += s.total;
+const withRows = spendingMembers.filter((id) => memberSpending(id)!.byCycle[latest]).length;
+const vendorTotal = vendors.reduce((s, v) => s + v.total, 0);
+const top50 = vendors.slice(0, 50).reduce((s, v) => s + v.total, 0);
+const byUse = [...vendors].sort((a, b) => b.payers.length - a.payers.length || b.total - a.total);
+const row = (v: (typeof vendors)[number]) => {
+  const c = payerCounts(v);
+  return {
+    label: v.name,
+    href: `/vendors/${v.id}/`,
+    note: [v.purposes[0]?.text.toLowerCase(), `${v.payers.length} ${v.payers.length === 1 ? "committee" : "committees"}`].filter(Boolean).join(" · "),
+    value: v.total,
+    pacsOnly: c.members === 0,
+  };
+};
+const description = `Members of Congress' campaigns itemized ${money(allCycles, true)} in spending from ${cycleRange.replace("–", " to ")}. Where it went, by purpose, and the ${vendors.length} vendors paid the most: media buyers, fundraising firms, consultants, payment processors.`;
+---
+
+<Base title="Where campaigns spend their money" {description} og={{ type: "spending", id: "index" }} crumbs={[["Campaign spending", "/vendors/"]]}>
+  <p class="kicker">Campaign spending</p>
+  <h1>Where campaigns spend their money</h1>
+  <p class="dek">
+    The campaigns of current members of Congress itemized <strong>{money(allCycles, true)}</strong> in spending from{" "}
+    {cycleRange.replace("–", " to ")}: {withRows} of the {members.length} members' campaigns have payments on file for the{" "}
+    {cycleLabel(latest)} cycle, {money(current.total, true)} so far.
+    {rows[0] && rows[1] && (
+      <>
+        {" "}{bucketPhrase(rows[0].key).replace(/^./, (c) => c.toUpperCase())} takes {Math.round((rows[0].value / current.total) * 100)}% of it and{" "}
+        {bucketPhrase(rows[1].key)} {Math.round((rows[1].value / current.total) * 100)}%.
+      </>
+    )}{" "}
+    A few hundred vendors carry most of the money: the 50 paid the most took {Math.round((top50 / vendorTotal) * 100)}% of what went to the{" "}
+    {vendors.length} with pages here.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Itemized spending, {cycleRange}</dt><dd>{money(allCycles, true)}</dd></div>
+    <div class="stat"><dt>{cycleLabel(latest)}</dt><dd>{money(current.total, true)}<small>{withRows} campaigns with payments on file</small></dd></div>
+    <div class="stat"><dt>Vendors with pages</dt><dd>{vendors.length.toLocaleString()}<small>paid $250,000 or more by five or more committees</small></dd></div>
+  </dl>
+
+  <section class="story" id="how-to-read">
+    <h2>How to read these</h2>
+    <ul>
+      <li>
+        Campaigns report every payment over $200 to the FEC with a payee and a purpose in their own words. The purposes here are grouped from
+        that text ("media buy", "digital advertising", "TV" are all advertising); where the text says nothing, the payment is "unclear",
+        not guessed.
+      </li>
+      <li>{MEMO_NOTE}</li>
+      <li>
+        The FEC codes these payments by hand after a report is filed, so the current cycle runs weeks to months behind: each member's page
+        says what date their campaign's payments are reported through.
+      </li>
+      <li>
+        This is what campaigns and leadership PACs spent, not what they raised; what each PAC gave a campaign is on the{" "}
+        <a href="/organizations/">organization</a> and <a href="/members/">member</a> pages. Staff paid by name are rolled up as one
+        line and never listed.
+      </li>
+    </ul>
+  </section>
+
+  <section class="story">
+    <h2>By purpose, {cycleLabel(latest)}</h2>
+    <p class="chart-dek">Everything members' campaigns itemized this cycle, grouped by what the filing says it was for.</p>
+    <PlotFigure
+      chart="bars"
+      width={640}
+      label={`Members' campaign spending by purpose, ${cycleLabel(latest)}`}
+      data={{ rows: rows.map((r) => ({ label: r.label, value: r.value })), emphasize: [0], total: current.total }}
+      table={{ columns: ["Purpose", "Amount"], numeric: [1], rows: rows.map((r) => [r.label, money(r.value)]) }}
+    />
+  </section>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Paid the most</h2>
+      <p class="chart-dek">By what members' campaigns and leadership PACs paid them over {cycleRange}.</p>
+      <RankedTable heading="Vendor" valueHeading="Paid" caption="Vendors by what members' campaigns and leadership PACs paid them" rows={vendors.slice(0, INDEX_SHOWN).map(row)} />
+      {vendors.length > INDEX_SHOWN && (
+        <MoreDisclosure client:visible title={`All ${vendors.length.toLocaleString()} vendors`}>
+          <RankedTable heading="Vendor" valueHeading="Paid" rows={vendors.slice(INDEX_SHOWN).map(row)} max={vendors[0]!.total} />
+        </MoreDisclosure>
+      )}
+    </section>
+    <section class="story">
+      <h2>Used by the most campaigns</h2>
+      <p class="chart-dek">The vendors the most committees paid, however much: payment processors, software, airlines, the party committees' caterers.</p>
+      <RankedTable
+        heading="Vendor"
+        valueHeading="Committees"
+        caption="Vendors by how many campaigns and leadership PACs paid them"
+        rows={byUse.slice(0, 25).map((v) => ({ label: v.name, href: `/vendors/${v.id}/`, note: `${v.purposes[0]?.text.toLowerCase() ?? ""} · ${money(v.total, true)} in all`, value: v.payers.length }))}
+      />
+    </section>
+  </div>
+
+  <p class="source">
+    From the FEC's operating expenditures bulk files (Form 3 line 17 and Form 3X line 21B), for current members' campaign committees and the
+    leadership PACs they sponsor, {cycleRange}. Spellings of one vendor are merged by hand (<code>data/vendor-aliases.json</code>).{" "}
+    <a href="/about/#spending">How spending is counted</a>.
+  </p>
+</Base>

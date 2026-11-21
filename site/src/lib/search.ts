@@ -6,6 +6,7 @@ import { pacTotal } from "./derived";
 import { bills, shortStatus } from "./legislation";
 import { countries } from "./fara";
 import { activeSponsors, tripsBySponsor } from "./travel";
+import { vendors } from "./disbursements";
 import { allRaces, candidateRaces, raceName, raceShort, personName, partyName, raised } from "./races";
 import type { SearchRow } from "../../server/src/search.ts";
 
@@ -38,6 +39,7 @@ function rows(limit?: number): SearchRow[] {
     ]),
     // The number is part of the label so "H.R. 1" finds it too.
     ...bills.map((b): SearchRow => ["b", b.id, `${b.name} (${b.label})`, [b.policyArea, shortStatus(b)].filter(Boolean).join(" · "), b.lobbying.length]),
+    ...top(vendors, (v) => v.total).map((v): SearchRow => ["v", v.id, v.name, `Campaign vendor${v.purposes[0] ? ` · ${v.purposes[0].text.toLowerCase()}` : ""}`, w(v.total)]),
     ...countries.map((c): SearchRow => [
       "f",
       c.id,

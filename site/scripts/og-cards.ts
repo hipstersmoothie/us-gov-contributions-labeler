@@ -31,6 +31,7 @@ import { countries, principalsByCountry, registrantById, activePrincipals, activ
 import { revolvingStats, lobbyists, membersByStaff, filingYears } from "../src/lib/revolving";
 import { trips, activeSponsors, tripsBySponsor, summarize, sinceLabel } from "../src/lib/travel";
 import { bundledMembers, bundlingTotal, bundlers, bundlerName } from "../src/lib/bundling";
+import { vendors, spendingCycles, spendingMembers, memberSpending, allMembersBuckets, bucketRows, bucketPhrase, payerRow, payersPhrase } from "../src/lib/disbursements";
 import { delegations, stateSlug, zipCoverage } from "../src/lib/districts";
 import { summarizeState, makeup } from "../src/lib/states";
 import { possessive } from "../src/islands/find/core";
@@ -451,9 +452,52 @@ for (const sp of activeSponsors) {
   };
 }
 
-// --- House and Senate races, and candidates who aren't members -------------------
+// --- campaign spending ----------------------------------------------------------------
 
 const asParty = (p: string | undefined) => (p === "D" || p === "R" || p === "I" ? (p as Party) : undefined);
+
+if (vendors.length && spendingCycles.length) {
+  const latest = spendingCycles.at(-1)!;
+  const current = allMembersBuckets(latest);
+  const top = bucketRows(current.buckets, 2);
+  let allCycles = 0;
+  for (const id of spendingMembers) for (const s of Object.values(memberSpending(id)!.byCycle)) allCycles += s.total;
+  cards["spending/index"] = {
+    type: "spending",
+    kicker: "Campaign spending",
+    title: "Where campaigns spend their money",
+    dek: `Members' campaigns itemized ${money(allCycles, true)} in spending, ${cycleRange.replace(/\u2060/g, "")}${top[0] ? `; ${bucketPhrase(top[0].key)} takes ${Math.round((top[0].value / current.total) * 100)}% this cycle` : ""}.`,
+    stats: [
+      { value: money(allCycles, true), label: "itemized by members' campaigns" },
+      { value: vendors.length.toLocaleString(), label: "vendors with pages" },
+    ],
+    barsTitle: "Paid the most",
+    bars: vendors.slice(0, 4).map((v) => ({ label: v.name, value: v.total })),
+    span: cycleRange.replace(/\u2060/g, ""),
+  };
+  for (const v of vendors) {
+    const payers = v.payers.slice(0, 4).flatMap((p) => {
+      const r = payerRow(p);
+      return r ? [{ label: r.label, value: p.total, party: asParty(r.party), note: r.note }] : [];
+    });
+    cards[`spending/${v.id}`] = {
+      type: "spending",
+      kicker: "Campaign vendor",
+      title: v.name,
+      dek: `Paid ${money(v.total, true)} by ${payersPhrase(v)}${v.purposes[0] ? `, mostly for ${v.purposes[0].text.toLowerCase()}` : ""}.`,
+      stats: [
+        { value: money(v.total, true), label: "from members' campaigns and leadership PACs" },
+        { value: v.payers.length.toLocaleString(), label: v.payers.length === 1 ? "committee" : "committees" },
+      ],
+      barsTitle: "Paid it the most",
+      bars: payers,
+      span: cycleRange.replace(/\u2060/g, ""),
+    };
+  }
+}
+
+// --- House and Senate races, and candidates who aren't members -------------------
+
 const statusOf = (r: (typeof allRaces)[number]) => (r.result.status === "pending" ? PENDING : resultLine(r));
 for (const r of allRaces) {
   cards[`race/${r.year}-${r.slug}`] = {

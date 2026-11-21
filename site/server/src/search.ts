@@ -1,10 +1,10 @@
 // Ranking for the search index (site/src/lib/search.ts builds the rows): the
 // site's search box runs it in the browser, the MCP server's search tool here.
 // "h", companies members own, is only in the MCP server's index.
-export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f" | "t" | "r" | "n" | "h";
+export type SearchType = "m" | "c" | "o" | "p" | "d" | "b" | "f" | "t" | "r" | "n" | "h" | "v";
 export type SearchRow = [type: SearchType, id: string, label: string, detail: string, weight: number];
 
-const PATH: Record<SearchType, string> = { m: "members", c: "committees", o: "organizations", p: "pacs", d: "donors", b: "bills", f: "foreign-lobbying", t: "travel/sponsors", r: "races", n: "candidates", h: "holdings/companies" };
+const PATH: Record<SearchType, string> = { m: "members", c: "committees", o: "organizations", p: "pacs", d: "donors", b: "bills", f: "foreign-lobbying", t: "travel/sponsors", r: "races", n: "candidates", h: "holdings/companies", v: "vendors" };
 export const urlFor = (type: SearchType, id: string) => `/${PATH[type]}/${id}/`;
 /** What the MCP server's tools call each type. */
 export const TYPE_NAMES: Record<SearchType, string> = {
@@ -15,6 +15,7 @@ export const TYPE_NAMES: Record<SearchType, string> = {
   p: "pac",
   d: "donor",
   t: "trip_sponsor",
+  v: "vendor",
   b: "bill",
   c: "congress_committee",
   f: "country",

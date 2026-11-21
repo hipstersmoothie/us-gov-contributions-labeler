@@ -216,7 +216,19 @@ export interface StateCard {
   sectors: Bar[];
 }
 
-export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard | TravelCard | RaceCard | CandidateCard | StateCard;
+/** Campaign spending: the /vendors/ index and each vendor's page. Drawn like a travel card, in dollars. */
+export interface SpendingCard {
+  type: "spending";
+  kicker: string;
+  title: string;
+  dek: string;
+  stats: { label: string; value: string }[];
+  bars?: Bar[];
+  barsTitle?: string;
+  span: string;
+}
+
+export type Card = MemberCard | OrgCard | PacCard | DonorCard | SectorCard | CommitteeCard | BillCard | CountryCard | PageCard | TravelCard | SpendingCard | RaceCard | CandidateCard | StateCard;
 
 export interface CardsFile {
   version: string;
