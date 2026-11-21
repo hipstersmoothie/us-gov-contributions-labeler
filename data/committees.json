@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T16:16:19.786Z",
+  "generatedAt": "2026-11-21T01:42:49.524Z",
   "cycles": [
     2022,
     2024,
@@ -8128,7 +8128,7 @@
       "byCycle": {},
       "recipients": [],
       "outside": {
-        "support": 121962998,
+        "support": 121206657,
         "oppose": 0,
         "targets": [
           {
@@ -8138,7 +8138,7 @@
           },
           {
             "id": "H001104",
-            "support": 37630506,
+            "support": 36874165,
             "oppose": 0
           },
           {
@@ -19926,7 +19926,7 @@
       "byCycle": {},
       "recipients": [],
       "outside": {
-        "support": 13634584,
+        "support": 13696663,
         "oppose": 5657105,
         "targets": [
           {
@@ -19940,13 +19940,13 @@
             "oppose": 0
           },
           {
-            "id": "C000059",
-            "support": 944490,
+            "id": "C001035",
+            "support": 977115,
             "oppose": 0
           },
           {
-            "id": "C001035",
-            "support": 874267,
+            "id": "C000059",
+            "support": 944490,
             "oppose": 0
           },
           {
@@ -20030,11 +20030,6 @@
             "oppose": 416360
           },
           {
-            "id": "S001198",
-            "support": 381945,
-            "oppose": 0
-          },
-          {
             "id": "V000136",
             "support": 0,
             "oppose": 381772
@@ -20047,6 +20042,11 @@
           {
             "id": "B001327",
             "support": 342867,
+            "oppose": 0
+          },
+          {
+            "id": "S001198",
+            "support": 341176,
             "oppose": 0
           },
           {
@@ -86586,7 +86586,7 @@
       "state": "DC",
       "reportedDonations": 0,
       "organization": "black-progressive-action-coalition-c90017997",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -110909,7 +110909,7 @@
         ]
       },
       "opponents": {
-        "support": 10396758,
+        "support": 10396759,
         "oppose": 0,
         "targets": [
           {
@@ -110979,7 +110979,7 @@
           },
           {
             "id": "M001215",
-            "support": 330271,
+            "support": 330272,
             "oppose": 0
           },
           {
@@ -281336,7 +281336,7 @@
       "kind": "super-pac",
       "state": "DC",
       "organization": "american-conservation-coalition-c00877233",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 28800,
       "byCycle": {
         "2024": 14300,
@@ -293236,7 +293236,7 @@
       "kind": "pac",
       "state": "DC",
       "organization": "new-democrat-coalition-action-c00409730",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 1037951,
       "byCycle": {
         "2022": 407000,
@@ -447213,7 +447213,6 @@
     {
       "id": "C00762427",
       "name": "APPLIED RESEARCH ASSOCIATES, INC. POLITICAL ACTION COMMITTEE (ARAPAC)",
-      "connectedOrg": "APPLIED RESEARCH ASSOCIATES, INC.",
       "orgType": "C",
       "kind": "pac",
       "state": "VA",
@@ -449834,6 +449833,305 @@
       ]
     },
     {
+      "id": "C00345132",
+      "name": "REPUBLICAN JEWISH COALITION POLITICAL ACTION COMMITTEE (RJC-PAC)",
+      "connectedOrg": "REPUBLICAN JEWISH COALITION",
+      "orgType": "M",
+      "kind": "pac",
+      "state": "DC",
+      "organization": "republican-jewish-coalition",
+      "sector": "Energy & Natural Resources",
+      "industry": "Energy/Nuclear",
+      "total": 559500,
+      "byCycle": {
+        "2022": 140000,
+        "2024": 232000,
+        "2026": 187500
+      },
+      "recipients": [
+        {
+          "id": "K000392",
+          "total": 25000
+        },
+        {
+          "id": "M001222",
+          "total": 25000
+        },
+        {
+          "id": "L000599",
+          "total": 20000
+        },
+        {
+          "id": "T000250",
+          "total": 15000
+        },
+        {
+          "id": "F000466",
+          "total": 15000
+        },
+        {
+          "id": "C001133",
+          "total": 15000
+        },
+        {
+          "id": "G000601",
+          "total": 15000
+        },
+        {
+          "id": "F000484",
+          "total": 15000
+        },
+        {
+          "id": "B001298",
+          "total": 14500
+        },
+        {
+          "id": "D000594",
+          "total": 12500
+        },
+        {
+          "id": "V000129",
+          "total": 12500
+        },
+        {
+          "id": "V000135",
+          "total": 12500
+        },
+        {
+          "id": "K000399",
+          "total": 12500
+        },
+        {
+          "id": "K000398",
+          "total": 12500
+        },
+        {
+          "id": "N000193",
+          "total": 12500
+        },
+        {
+          "id": "M001215",
+          "total": 12500
+        },
+        {
+          "id": "B001321",
+          "total": 12500
+        },
+        {
+          "id": "S001183",
+          "total": 10000
+        },
+        {
+          "id": "S001196",
+          "total": 10000
+        },
+        {
+          "id": "S001176",
+          "total": 10000
+        },
+        {
+          "id": "C001098",
+          "total": 10000
+        },
+        {
+          "id": "S001217",
+          "total": 10000
+        },
+        {
+          "id": "B001327",
+          "total": 10000
+        },
+        {
+          "id": "M001230",
+          "total": 10000
+        },
+        {
+          "id": "J000311",
+          "total": 10000
+        },
+        {
+          "id": "S001198",
+          "total": 10000
+        },
+        {
+          "id": "M001244",
+          "total": 10000
+        },
+        {
+          "id": "K000397",
+          "total": 7500
+        },
+        {
+          "id": "J000307",
+          "total": 7500
+        },
+        {
+          "id": "C000059",
+          "total": 7500
+        },
+        {
+          "id": "E000300",
+          "total": 7500
+        },
+        {
+          "id": "Y000064",
+          "total": 5000
+        },
+        {
+          "id": "M000194",
+          "total": 5000
+        },
+        {
+          "id": "J000293",
+          "total": 5000
+        },
+        {
+          "id": "B001236",
+          "total": 5000
+        },
+        {
+          "id": "B001319",
+          "total": 5000
+        },
+        {
+          "id": "M001153",
+          "total": 5000
+        },
+        {
+          "id": "L000577",
+          "total": 5000
+        },
+        {
+          "id": "B001305",
+          "total": 5000
+        },
+        {
+          "id": "B001299",
+          "total": 5000
+        },
+        {
+          "id": "M001157",
+          "total": 5000
+        },
+        {
+          "id": "W000437",
+          "total": 5000
+        },
+        {
+          "id": "S001232",
+          "total": 5000
+        },
+        {
+          "id": "C001053",
+          "total": 5000
+        },
+        {
+          "id": "M001213",
+          "total": 5000
+        },
+        {
+          "id": "M001136",
+          "total": 5000
+        },
+        {
+          "id": "F000470",
+          "total": 5000
+        },
+        {
+          "id": "M001242",
+          "total": 5000
+        },
+        {
+          "id": "F000450",
+          "total": 5000
+        },
+        {
+          "id": "J000312",
+          "total": 5000
+        },
+        {
+          "id": "F000463",
+          "total": 5000
+        },
+        {
+          "id": "B001323",
+          "total": 5000
+        },
+        {
+          "id": "D000032",
+          "total": 5000
+        },
+        {
+          "id": "B001282",
+          "total": 5000
+        },
+        {
+          "id": "R000618",
+          "total": 5000
+        },
+        {
+          "id": "H001104",
+          "total": 5000
+        },
+        {
+          "id": "S001195",
+          "total": 5000
+        },
+        {
+          "id": "W000804",
+          "total": 5000
+        },
+        {
+          "id": "H001058",
+          "total": 5000
+        },
+        {
+          "id": "R000584",
+          "total": 5000
+        },
+        {
+          "id": "H001052",
+          "total": 2500
+        },
+        {
+          "id": "H001095",
+          "total": 2500
+        },
+        {
+          "id": "G000593",
+          "total": 2500
+        },
+        {
+          "id": "M000317",
+          "total": 2500
+        },
+        {
+          "id": "S000168",
+          "total": 2500
+        },
+        {
+          "id": "H001091",
+          "total": 2500
+        },
+        {
+          "id": "G000597",
+          "total": 2500
+        },
+        {
+          "id": "T000480",
+          "total": 2500
+        },
+        {
+          "id": "F000482",
+          "total": 2500
+        },
+        {
+          "id": "H001100",
+          "total": 2500
+        }
+      ]
+    },
+    {
       "id": "C00160770",
       "name": "WALGREEN CO PAC (WALGREENSPAC)",
       "connectedOrg": "WALGREEN CO",
@@ -450433,305 +450731,6 @@
         {
           "id": "M001226",
           "total": 1000
-        }
-      ]
-    },
-    {
-      "id": "C00345132",
-      "name": "REPUBLICAN JEWISH COALITION POLITICAL ACTION COMMITTEE (RJC-PAC)",
-      "connectedOrg": "REPUBLICAN JEWISH COALITION",
-      "orgType": "M",
-      "kind": "pac",
-      "state": "DC",
-      "organization": "republican-jewish-coalition",
-      "sector": "Ideological & Single-Issue",
-      "industry": "Foreign Relations",
-      "total": 559500,
-      "byCycle": {
-        "2022": 140000,
-        "2024": 232000,
-        "2026": 187500
-      },
-      "recipients": [
-        {
-          "id": "K000392",
-          "total": 25000
-        },
-        {
-          "id": "M001222",
-          "total": 25000
-        },
-        {
-          "id": "L000599",
-          "total": 20000
-        },
-        {
-          "id": "T000250",
-          "total": 15000
-        },
-        {
-          "id": "F000466",
-          "total": 15000
-        },
-        {
-          "id": "C001133",
-          "total": 15000
-        },
-        {
-          "id": "G000601",
-          "total": 15000
-        },
-        {
-          "id": "F000484",
-          "total": 15000
-        },
-        {
-          "id": "B001298",
-          "total": 14500
-        },
-        {
-          "id": "D000594",
-          "total": 12500
-        },
-        {
-          "id": "V000129",
-          "total": 12500
-        },
-        {
-          "id": "V000135",
-          "total": 12500
-        },
-        {
-          "id": "K000399",
-          "total": 12500
-        },
-        {
-          "id": "K000398",
-          "total": 12500
-        },
-        {
-          "id": "N000193",
-          "total": 12500
-        },
-        {
-          "id": "M001215",
-          "total": 12500
-        },
-        {
-          "id": "B001321",
-          "total": 12500
-        },
-        {
-          "id": "S001183",
-          "total": 10000
-        },
-        {
-          "id": "S001196",
-          "total": 10000
-        },
-        {
-          "id": "S001176",
-          "total": 10000
-        },
-        {
-          "id": "C001098",
-          "total": 10000
-        },
-        {
-          "id": "S001217",
-          "total": 10000
-        },
-        {
-          "id": "B001327",
-          "total": 10000
-        },
-        {
-          "id": "M001230",
-          "total": 10000
-        },
-        {
-          "id": "J000311",
-          "total": 10000
-        },
-        {
-          "id": "S001198",
-          "total": 10000
-        },
-        {
-          "id": "M001244",
-          "total": 10000
-        },
-        {
-          "id": "K000397",
-          "total": 7500
-        },
-        {
-          "id": "J000307",
-          "total": 7500
-        },
-        {
-          "id": "C000059",
-          "total": 7500
-        },
-        {
-          "id": "E000300",
-          "total": 7500
-        },
-        {
-          "id": "Y000064",
-          "total": 5000
-        },
-        {
-          "id": "M000194",
-          "total": 5000
-        },
-        {
-          "id": "J000293",
-          "total": 5000
-        },
-        {
-          "id": "B001236",
-          "total": 5000
-        },
-        {
-          "id": "B001319",
-          "total": 5000
-        },
-        {
-          "id": "M001153",
-          "total": 5000
-        },
-        {
-          "id": "L000577",
-          "total": 5000
-        },
-        {
-          "id": "B001305",
-          "total": 5000
-        },
-        {
-          "id": "B001299",
-          "total": 5000
-        },
-        {
-          "id": "M001157",
-          "total": 5000
-        },
-        {
-          "id": "W000437",
-          "total": 5000
-        },
-        {
-          "id": "S001232",
-          "total": 5000
-        },
-        {
-          "id": "C001053",
-          "total": 5000
-        },
-        {
-          "id": "M001213",
-          "total": 5000
-        },
-        {
-          "id": "M001136",
-          "total": 5000
-        },
-        {
-          "id": "F000470",
-          "total": 5000
-        },
-        {
-          "id": "M001242",
-          "total": 5000
-        },
-        {
-          "id": "F000450",
-          "total": 5000
-        },
-        {
-          "id": "J000312",
-          "total": 5000
-        },
-        {
-          "id": "F000463",
-          "total": 5000
-        },
-        {
-          "id": "B001323",
-          "total": 5000
-        },
-        {
-          "id": "D000032",
-          "total": 5000
-        },
-        {
-          "id": "B001282",
-          "total": 5000
-        },
-        {
-          "id": "R000618",
-          "total": 5000
-        },
-        {
-          "id": "H001104",
-          "total": 5000
-        },
-        {
-          "id": "S001195",
-          "total": 5000
-        },
-        {
-          "id": "W000804",
-          "total": 5000
-        },
-        {
-          "id": "H001058",
-          "total": 5000
-        },
-        {
-          "id": "R000584",
-          "total": 5000
-        },
-        {
-          "id": "H001052",
-          "total": 2500
-        },
-        {
-          "id": "H001095",
-          "total": 2500
-        },
-        {
-          "id": "G000593",
-          "total": 2500
-        },
-        {
-          "id": "M000317",
-          "total": 2500
-        },
-        {
-          "id": "S000168",
-          "total": 2500
-        },
-        {
-          "id": "H001091",
-          "total": 2500
-        },
-        {
-          "id": "G000597",
-          "total": 2500
-        },
-        {
-          "id": "T000480",
-          "total": 2500
-        },
-        {
-          "id": "F000482",
-          "total": 2500
-        },
-        {
-          "id": "H001100",
-          "total": 2500
         }
       ]
     },
@@ -460315,7 +460314,7 @@
       },
       "opponents": {
         "support": 1119620,
-        "oppose": 48100,
+        "oppose": 83023,
         "targets": [
           {
             "id": "M001242",
@@ -460348,6 +460347,11 @@
             "oppose": 44960
           },
           {
+            "id": "S001223",
+            "support": 0,
+            "oppose": 37508
+          },
+          {
             "id": "T000490",
             "support": 3150,
             "oppose": 0
@@ -460366,11 +460370,6 @@
             "id": "L000566",
             "support": 3000,
             "oppose": 0
-          },
-          {
-            "id": "S001223",
-            "support": 0,
-            "oppose": 2585
           },
           {
             "id": "B001281",
@@ -474172,6 +474171,243 @@
       ]
     },
     {
+      "id": "C00692327",
+      "name": "LETS GET TO WORK PAC",
+      "connectedOrg": "SCOTT",
+      "kind": "pac",
+      "state": "FL",
+      "organization": "scott",
+      "sector": "Ideological & Single-Issue",
+      "total": 500000,
+      "byCycle": {
+        "2022": 160000,
+        "2024": 160000,
+        "2026": 180000
+      },
+      "recipients": [
+        {
+          "id": "R000618",
+          "total": 20000
+        },
+        {
+          "id": "F000484",
+          "total": 20000
+        },
+        {
+          "id": "B001257",
+          "total": 15000
+        },
+        {
+          "id": "D000600",
+          "total": 15000
+        },
+        {
+          "id": "S000168",
+          "total": 15000
+        },
+        {
+          "id": "C000880",
+          "total": 10000
+        },
+        {
+          "id": "M000934",
+          "total": 10000
+        },
+        {
+          "id": "P000603",
+          "total": 10000
+        },
+        {
+          "id": "S001184",
+          "total": 10000
+        },
+        {
+          "id": "H001061",
+          "total": 10000
+        },
+        {
+          "id": "Y000064",
+          "total": 10000
+        },
+        {
+          "id": "G000386",
+          "total": 10000
+        },
+        {
+          "id": "B001236",
+          "total": 10000
+        },
+        {
+          "id": "L000575",
+          "total": 10000
+        },
+        {
+          "id": "T000250",
+          "total": 10000
+        },
+        {
+          "id": "L000577",
+          "total": 10000
+        },
+        {
+          "id": "J000293",
+          "total": 10000
+        },
+        {
+          "id": "B001299",
+          "total": 10000
+        },
+        {
+          "id": "M001215",
+          "total": 10000
+        },
+        {
+          "id": "C001096",
+          "total": 10000
+        },
+        {
+          "id": "B001261",
+          "total": 10000
+        },
+        {
+          "id": "W000437",
+          "total": 10000
+        },
+        {
+          "id": "F000463",
+          "total": 10000
+        },
+        {
+          "id": "H001089",
+          "total": 10000
+        },
+        {
+          "id": "C001098",
+          "total": 10000
+        },
+        {
+          "id": "S000929",
+          "total": 10000
+        },
+        {
+          "id": "B001314",
+          "total": 10000
+        },
+        {
+          "id": "M001198",
+          "total": 10000
+        },
+        {
+          "id": "S001198",
+          "total": 10000
+        },
+        {
+          "id": "H001104",
+          "total": 10000
+        },
+        {
+          "id": "C001035",
+          "total": 10000
+        },
+        {
+          "id": "C001056",
+          "total": 10000
+        },
+        {
+          "id": "M001244",
+          "total": 10000
+        },
+        {
+          "id": "R000584",
+          "total": 10000
+        },
+        {
+          "id": "M001212",
+          "total": 10000
+        },
+        {
+          "id": "C001047",
+          "total": 10000
+        },
+        {
+          "id": "H000601",
+          "total": 10000
+        },
+        {
+          "id": "N000190",
+          "total": 10000
+        },
+        {
+          "id": "B001305",
+          "total": 5000
+        },
+        {
+          "id": "B001319",
+          "total": 5000
+        },
+        {
+          "id": "B001260",
+          "total": 5000
+        },
+        {
+          "id": "M001242",
+          "total": 5000
+        },
+        {
+          "id": "M001243",
+          "total": 5000
+        },
+        {
+          "id": "L000599",
+          "total": 5000
+        },
+        {
+          "id": "P000622",
+          "total": 5000
+        },
+        {
+          "id": "E000295",
+          "total": 5000
+        },
+        {
+          "id": "L000571",
+          "total": 5000
+        },
+        {
+          "id": "C001075",
+          "total": 5000
+        },
+        {
+          "id": "D000618",
+          "total": 5000
+        },
+        {
+          "id": "C001095",
+          "total": 5000
+        },
+        {
+          "id": "B001282",
+          "total": 5000
+        },
+        {
+          "id": "H001079",
+          "total": 5000
+        },
+        {
+          "id": "H001082",
+          "total": 5000
+        },
+        {
+          "id": "C001129",
+          "total": 5000
+        },
+        {
+          "id": "R000605",
+          "total": 5000
+        }
+      ]
+    },
+    {
       "id": "C00762682",
       "name": "STEER PAC",
       "kind": "leadership-pac",
@@ -474409,243 +474645,6 @@
         },
         {
           "id": "C001129",
-          "total": 5000
-        }
-      ]
-    },
-    {
-      "id": "C00692327",
-      "name": "LETS GET TO WORK PAC",
-      "connectedOrg": "SCOTT",
-      "kind": "pac",
-      "state": "FL",
-      "organization": "scott",
-      "sector": "Ideological & Single-Issue",
-      "total": 500000,
-      "byCycle": {
-        "2022": 160000,
-        "2024": 160000,
-        "2026": 180000
-      },
-      "recipients": [
-        {
-          "id": "R000618",
-          "total": 20000
-        },
-        {
-          "id": "F000484",
-          "total": 20000
-        },
-        {
-          "id": "B001257",
-          "total": 15000
-        },
-        {
-          "id": "D000600",
-          "total": 15000
-        },
-        {
-          "id": "S000168",
-          "total": 15000
-        },
-        {
-          "id": "C000880",
-          "total": 10000
-        },
-        {
-          "id": "M000934",
-          "total": 10000
-        },
-        {
-          "id": "P000603",
-          "total": 10000
-        },
-        {
-          "id": "S001184",
-          "total": 10000
-        },
-        {
-          "id": "H001061",
-          "total": 10000
-        },
-        {
-          "id": "Y000064",
-          "total": 10000
-        },
-        {
-          "id": "G000386",
-          "total": 10000
-        },
-        {
-          "id": "B001236",
-          "total": 10000
-        },
-        {
-          "id": "L000575",
-          "total": 10000
-        },
-        {
-          "id": "T000250",
-          "total": 10000
-        },
-        {
-          "id": "L000577",
-          "total": 10000
-        },
-        {
-          "id": "J000293",
-          "total": 10000
-        },
-        {
-          "id": "B001299",
-          "total": 10000
-        },
-        {
-          "id": "M001215",
-          "total": 10000
-        },
-        {
-          "id": "C001096",
-          "total": 10000
-        },
-        {
-          "id": "B001261",
-          "total": 10000
-        },
-        {
-          "id": "W000437",
-          "total": 10000
-        },
-        {
-          "id": "F000463",
-          "total": 10000
-        },
-        {
-          "id": "H001089",
-          "total": 10000
-        },
-        {
-          "id": "C001098",
-          "total": 10000
-        },
-        {
-          "id": "S000929",
-          "total": 10000
-        },
-        {
-          "id": "B001314",
-          "total": 10000
-        },
-        {
-          "id": "M001198",
-          "total": 10000
-        },
-        {
-          "id": "S001198",
-          "total": 10000
-        },
-        {
-          "id": "H001104",
-          "total": 10000
-        },
-        {
-          "id": "C001035",
-          "total": 10000
-        },
-        {
-          "id": "C001056",
-          "total": 10000
-        },
-        {
-          "id": "M001244",
-          "total": 10000
-        },
-        {
-          "id": "R000584",
-          "total": 10000
-        },
-        {
-          "id": "M001212",
-          "total": 10000
-        },
-        {
-          "id": "C001047",
-          "total": 10000
-        },
-        {
-          "id": "H000601",
-          "total": 10000
-        },
-        {
-          "id": "N000190",
-          "total": 10000
-        },
-        {
-          "id": "B001305",
-          "total": 5000
-        },
-        {
-          "id": "B001319",
-          "total": 5000
-        },
-        {
-          "id": "B001260",
-          "total": 5000
-        },
-        {
-          "id": "M001242",
-          "total": 5000
-        },
-        {
-          "id": "M001243",
-          "total": 5000
-        },
-        {
-          "id": "L000599",
-          "total": 5000
-        },
-        {
-          "id": "P000622",
-          "total": 5000
-        },
-        {
-          "id": "E000295",
-          "total": 5000
-        },
-        {
-          "id": "L000571",
-          "total": 5000
-        },
-        {
-          "id": "C001075",
-          "total": 5000
-        },
-        {
-          "id": "D000618",
-          "total": 5000
-        },
-        {
-          "id": "C001095",
-          "total": 5000
-        },
-        {
-          "id": "B001282",
-          "total": 5000
-        },
-        {
-          "id": "H001079",
-          "total": 5000
-        },
-        {
-          "id": "H001082",
-          "total": 5000
-        },
-        {
-          "id": "C001129",
-          "total": 5000
-        },
-        {
-          "id": "R000605",
           "total": 5000
         }
       ]
@@ -601742,7 +601741,7 @@
       "kind": "super-pac",
       "state": "IL",
       "organization": "l-and-c-coalition-c00883322",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -636907,7 +636906,7 @@
       "kind": "pac",
       "state": "MD",
       "organization": "american-gastroenterological-association",
-      "sector": "Health",
+      "sector": "Energy & Natural Resources",
       "industry": "Health Issues",
       "total": 245000,
       "byCycle": {
@@ -648464,7 +648463,7 @@
       "kind": "super-pac",
       "state": "DC",
       "organization": "common-ground-coalition-c00961854",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -669814,7 +669813,7 @@
         ]
       },
       "opponents": {
-        "support": 184571,
+        "support": 184572,
         "oppose": 7952,
         "targets": [
           {
@@ -669959,7 +669958,7 @@
           },
           {
             "id": "L000599",
-            "support": 861,
+            "support": 862,
             "oppose": 0
           },
           {
@@ -680051,7 +680050,6 @@
     {
       "id": "C00699439",
       "name": "ZILLOW GROUP, INC. POLITICAL ACTION COMMITTEE (ZG PAC)",
-      "connectedOrg": "ZILLOW GROUP, INC.",
       "orgType": "C",
       "kind": "pac",
       "state": "WA",
@@ -692385,7 +692383,7 @@
       "kind": "pac",
       "state": "DC",
       "organization": "affordable-housing-tax-credit-coalition",
-      "sector": "Finance, Insurance & Real Estate",
+      "sector": "Energy & Natural Resources",
       "industry": "Housing",
       "total": 177500,
       "byCycle": {
@@ -716576,7 +716574,7 @@
       "kind": "super-pac",
       "state": "FL",
       "organization": "november-coalition-c00766659",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -725669,7 +725667,7 @@
       "kind": "super-pac",
       "state": "MO",
       "organization": "broker-action-coalition-c00820712",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 144000,
       "byCycle": {
         "2022": 7500,
@@ -735860,12 +735858,12 @@
       },
       "opponents": {
         "support": 0,
-        "oppose": 6947010,
+        "oppose": 6815510,
         "targets": [
           {
             "id": "R000618",
             "support": 0,
-            "oppose": 6947010
+            "oppose": 6815510
           }
         ]
       },
@@ -744703,7 +744701,7 @@
       "kind": "super-pac",
       "state": "DE",
       "organization": "cornerstone-founders-c00948653",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Agribusiness",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -766883,7 +766881,7 @@
     {
       "id": "C00786822",
       "name": "MAXWELL ALEJANDRO FROST FOR CONGRESS",
-      "connectedOrg": "MADSOUL VICTORY FUND",
+      "connectedOrg": "BLUE TO THE FUTURE",
       "kind": "candidate",
       "state": "FL",
       "organization": "maxwell-alejandro-frost-for-congress-c00786822",
@@ -770608,7 +770606,6 @@
     {
       "id": "C00656868",
       "name": "THE CHEMOURS COMPANY POLITICAL ACTION COMMITTEE CHEMOURS PAC",
-      "connectedOrg": "THE CHEMOURS COMPANY",
       "orgType": "C",
       "kind": "pac",
       "state": "DC",
@@ -790178,7 +790175,7 @@
       "kind": "super-pac",
       "state": "DE",
       "organization": "disabled-veterans-coalition-c00759332",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -830511,7 +830508,7 @@
       "kind": "pac",
       "state": "DC",
       "organization": "turkish-coaliton-usa-c00432526",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 65400,
       "byCycle": {
         "2022": 13500,
@@ -840027,7 +840024,7 @@
       "kind": "pac",
       "state": "DC",
       "organization": "national-coalition-of-turkish-american-womens-c00487181",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 59420,
       "byCycle": {
         "2022": 24020,
@@ -842551,7 +842548,7 @@
       "state": "CA",
       "reportedDonations": 0,
       "organization": "coalition-to-grow-san-francisco-grow-sf-c90021387",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -844903,7 +844900,7 @@
       "kind": "non-committee",
       "state": "IL",
       "organization": "republican-hindu-coalition-c90016924",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -850791,6 +850788,85 @@
       ]
     },
     {
+      "id": "C00699470",
+      "name": "PRO-ISRAEL AMERICA PAC",
+      "orgType": "M",
+      "kind": "pac",
+      "state": "DC",
+      "organization": "pro-israel-america",
+      "sector": "Ideological & Single-Issue",
+      "total": 53500,
+      "byCycle": {
+        "2022": 53500
+      },
+      "recipients": [
+        {
+          "id": "K000397",
+          "total": 7500
+        },
+        {
+          "id": "V000129",
+          "total": 7500
+        },
+        {
+          "id": "G000598",
+          "total": 5000
+        },
+        {
+          "id": "T000468",
+          "total": 5000
+        },
+        {
+          "id": "B001298",
+          "total": 5000
+        },
+        {
+          "id": "S001215",
+          "total": 4000
+        },
+        {
+          "id": "M001220",
+          "total": 3000
+        },
+        {
+          "id": "C001113",
+          "total": 2500
+        },
+        {
+          "id": "B001313",
+          "total": 2500
+        },
+        {
+          "id": "P000614",
+          "total": 2500
+        },
+        {
+          "id": "G000592",
+          "total": 2500
+        },
+        {
+          "id": "L000590",
+          "total": 2500
+        },
+        {
+          "id": "H001072",
+          "total": 1000
+        },
+        {
+          "id": "S000522",
+          "total": 1000
+        },
+        {
+          "id": "L000593",
+          "total": 1000
+        },
+        {
+          "id": "F000466",
+          "total": 1000
+        }
+      ]
+    },
+    {
       "id": "C00371948",
       "name": "BRIDGESTONE AMERICAS INC. PAC",
       "connectedOrg": "BRIDGESTONE AMERICAS INC.",
@@ -850873,85 +850949,6 @@
         },
         {
           "id": "M001236",
-          "total": 1000
-        }
-      ]
-    },
-    {
-      "id": "C00699470",
-      "name": "PRO-ISRAEL AMERICA PAC",
-      "orgType": "M",
-      "kind": "pac",
-      "state": "DC",
-      "organization": "pro-israel-america",
-      "sector": "Ideological & Single-Issue",
-      "total": 53500,
-      "byCycle": {
-        "2022": 53500
-      },
-      "recipients": [
-        {
-          "id": "K000397",
-          "total": 7500
-        },
-        {
-          "id": "V000129",
-          "total": 7500
-        },
-        {
-          "id": "G000598",
-          "total": 5000
-        },
-        {
-          "id": "T000468",
-          "total": 5000
-        },
-        {
-          "id": "B001298",
-          "total": 5000
-        },
-        {
-          "id": "S001215",
-          "total": 4000
-        },
-        {
-          "id": "M001220",
-          "total": 3000
-        },
-        {
-          "id": "C001113",
-          "total": 2500
-        },
-        {
-          "id": "B001313",
-          "total": 2500
-        },
-        {
-          "id": "P000614",
-          "total": 2500
-        },
-        {
-          "id": "G000592",
-          "total": 2500
-        },
-        {
-          "id": "L000590",
-          "total": 2500
-        },
-        {
-          "id": "H001072",
-          "total": 1000
-        },
-        {
-          "id": "S000522",
-          "total": 1000
-        },
-        {
-          "id": "L000593",
-          "total": 1000
-        },
-        {
-          "id": "F000466",
           "total": 1000
         }
       ]
@@ -851422,7 +851419,7 @@
       "kind": "pac",
       "state": "DC",
       "organization": "turkish-american-coalition-tac-c00530865",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 53200,
       "byCycle": {
         "2022": 4500,
@@ -870874,7 +870871,7 @@
     {
       "id": "C00856005",
       "name": "FRIENDS OF TIM MOORE",
-      "connectedOrg": "MOORE NC VICTORY FUND",
+      "connectedOrg": "NC STRONG BUCKHOUT, HARRIGAN, KNOTT, MCDOWELL, MOORE",
       "kind": "candidate",
       "state": "NC",
       "organization": "friends-of-tim-moore-c00856005",
@@ -877816,7 +877813,7 @@
       "kind": "super-pac",
       "state": "TN",
       "organization": "tennessee-immigrant-and-refugee-rights-coalition-votes-action-c00816173",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -895191,7 +895188,7 @@
       "kind": "pac",
       "state": "CA",
       "organization": "peninsula-democratic-coalition-c00427203",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 31496,
       "byCycle": {
         "2022": 14996,
@@ -919622,12 +919619,12 @@
       },
       "opponents": {
         "support": 0,
-        "oppose": 63290,
+        "oppose": 63291,
         "targets": [
           {
             "id": "F000466",
             "support": 0,
-            "oppose": 63290
+            "oppose": 63291
           }
         ]
       },
@@ -919745,7 +919742,7 @@
     {
       "id": "C00765099",
       "name": "MELANIE FOR NEW MEXICO",
-      "connectedOrg": "NEW MEXICO HOUSE VICTORY FUND 2028",
+      "connectedOrg": "NEW MEXICO HOUSE VICTORY FUND 2026",
       "kind": "candidate",
       "state": "NM",
       "organization": "melanie-for-new-mexico-c00765099",
@@ -924212,7 +924209,7 @@
       "state": "CA",
       "reportedDonations": 0,
       "organization": "civic-empowerment-coalition-c90022773",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -924765,7 +924762,7 @@
       "kind": "super-pac",
       "state": "DC",
       "organization": "pak-american-coalition-super-c00826669",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 19200,
       "byCycle": {
         "2024": 19200
@@ -927029,7 +927026,7 @@
       "kind": "super-pac",
       "state": "CO",
       "organization": "american-freedom-coalition-c00879676",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -927446,13 +927443,11 @@
     {
       "id": "C00303685",
       "name": "NORTH AMERICAN COAL CORP. POLITICAL ACTION COMM. NACPAC",
-      "connectedOrg": "THE NORTH AMERICAN COAL CORPORATION",
       "orgType": "C",
       "kind": "pac",
       "state": "TX",
-      "organization": "north-american-coal",
+      "organization": "north-american-coal-nacpac",
       "sector": "Energy & Natural Resources",
-      "industry": "Health Issues",
       "total": 18200,
       "byCycle": {
         "2022": 3500,
@@ -942459,7 +942454,7 @@
       "kind": "pac",
       "state": "CO",
       "organization": "people-for-bikes-coalition-dba-bikespac",
-      "sector": "Unknown",
+      "sector": "Energy & Natural Resources",
       "total": 12500,
       "byCycle": {
         "2022": 9000,
@@ -943378,6 +943373,36 @@
       }
     },
     {
+      "id": "C00548438",
+      "name": "WISCONSIN MEDICAL SOCIETY POLITICAL ACTION COMMITTEE",
+      "connectedOrg": "WISCONSIN MEDICAL SOCIETY",
+      "orgType": "M",
+      "kind": "pac",
+      "state": "WI",
+      "organization": "wisconsin-medical-society",
+      "sector": "Health",
+      "industry": "Medicare/Medicaid",
+      "total": 12300,
+      "byCycle": {
+        "2024": 7600,
+        "2026": 4700
+      },
+      "recipients": [
+        {
+          "id": "B001230",
+          "total": 4900
+        },
+        {
+          "id": "P000607",
+          "total": 4500
+        },
+        {
+          "id": "S001213",
+          "total": 2900
+        }
+      ]
+    },
+    {
       "id": "C00497313",
       "name": "MANNIK AND SMITH GROUP INC PAC THE AKA MSG PAC",
       "connectedOrg": "THE MANNIK & SMITH GROUP, INC.",
@@ -943448,36 +943473,6 @@
         {
           "id": "B001327",
           "total": 1000
-        }
-      ]
-    },
-    {
-      "id": "C00548438",
-      "name": "WISCONSIN MEDICAL SOCIETY POLITICAL ACTION COMMITTEE",
-      "connectedOrg": "WISCONSIN MEDICAL SOCIETY",
-      "orgType": "M",
-      "kind": "pac",
-      "state": "WI",
-      "organization": "wisconsin-medical-society",
-      "sector": "Health",
-      "industry": "Medicare/Medicaid",
-      "total": 12300,
-      "byCycle": {
-        "2024": 7600,
-        "2026": 4700
-      },
-      "recipients": [
-        {
-          "id": "B001230",
-          "total": 4900
-        },
-        {
-          "id": "P000607",
-          "total": 4500
-        },
-        {
-          "id": "S001213",
-          "total": 2900
         }
       ]
     },
@@ -950757,7 +950752,6 @@
     {
       "id": "C00219121",
       "name": "SHEETZ INC POLITICAL ACTION COMMITTEE",
-      "connectedOrg": "SHEETZ, INC.",
       "orgType": "C",
       "kind": "pac",
       "state": "PA",
@@ -952498,7 +952492,7 @@
       "kind": "super-pac",
       "state": "UT",
       "organization": "independent-voter-coalition-c00797324",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -952819,7 +952813,7 @@
       "kind": "super-pac",
       "state": "TX",
       "organization": "american-coalition-for-crisis-relief-c00709113",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -964834,7 +964828,7 @@
       "kind": "pac",
       "state": "GA",
       "organization": "coalition-of-franchisee-associations",
-      "sector": "Misc Business",
+      "sector": "Energy & Natural Resources",
       "industry": "Small Business",
       "total": 6000,
       "byCycle": {
@@ -969486,7 +969480,7 @@
       "kind": "super-pac",
       "state": "OK",
       "organization": "american-patriotic-coalition-c00753152",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 5000,
       "byCycle": {
         "2022": 5000
@@ -970902,7 +970896,7 @@
       "kind": "pac",
       "state": "GA",
       "organization": "purpl-ac-c00764936",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -974651,6 +974645,7 @@
     {
       "id": "C00900936",
       "name": "TURNOUT FOR DEMOCRACY",
+      "connectedOrg": "LAURA FRIEDMAN",
       "kind": "leadership-pac",
       "state": "CA",
       "organization": "turnout-for-democracy-c00900936",
@@ -980240,7 +980235,7 @@
       "kind": "pac",
       "state": "KS",
       "organization": "american-coalition-for-rural-engagement",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 3000,
       "byCycle": {
         "2026": 3000
@@ -981196,7 +981191,7 @@
       "kind": "super-pac",
       "state": "DC",
       "organization": "democratic-coalition-c00612846",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -981982,7 +981977,7 @@
       "kind": "pac",
       "state": "FL",
       "organization": "cardiovascular-coalition",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 2500,
       "byCycle": {
         "2022": 2500
@@ -985517,7 +985512,7 @@
       "kind": "pac",
       "state": "UT",
       "organization": "hero-coalition-c00771915",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 2000,
       "byCycle": {
         "2024": 2000
@@ -985789,7 +985784,7 @@
       "kind": "pac",
       "state": "TX",
       "organization": "99-coalition-c00842963",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 2000,
       "byCycle": {
         "2024": 2000
@@ -989378,7 +989373,7 @@
       "state": "CA",
       "reportedDonations": 0,
       "organization": "south-county-coalition-supporting-paulding-and-dantona-for-supervisor-c90023532",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -989705,7 +989700,7 @@
       "kind": "pac",
       "state": "CA",
       "organization": "turkish-coalition-california-c00489898",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 1250,
       "byCycle": {
         "2026": 1250
@@ -990473,6 +990468,30 @@
           }
         ]
       }
+    },
+    {
+      "id": "C00805671",
+      "name": "FAITH IN AMERICA PAC",
+      "kind": "leadership-pac",
+      "state": "IL",
+      "organization": "faith-in-america-c00805671",
+      "sector": "Party & Candidate Committees",
+      "sponsors": [
+        {
+          "fecId": "H0IL15129",
+          "bioguide": "M001211"
+        }
+      ],
+      "total": 1000,
+      "byCycle": {
+        "2024": 1000
+      },
+      "recipients": [
+        {
+          "id": "A000379",
+          "total": 1000
+        }
+      ]
     },
     {
       "id": "C00631002",
@@ -991825,30 +991844,6 @@
       ]
     },
     {
-      "id": "C00805671",
-      "name": "FAITH IN AMERICA PAC",
-      "kind": "leadership-pac",
-      "state": "IL",
-      "organization": "faith-in-america-c00805671",
-      "sector": "Party & Candidate Committees",
-      "sponsors": [
-        {
-          "fecId": "H0IL15129",
-          "bioguide": "M001211"
-        }
-      ],
-      "total": 1000,
-      "byCycle": {
-        "2024": 1000
-      },
-      "recipients": [
-        {
-          "id": "A000379",
-          "total": 1000
-        }
-      ]
-    },
-    {
       "id": "C00592659",
       "name": "VICENTE GONZALEZ FOR CONGRESS",
       "connectedOrg": "VICENTE GONZALEZ VICTORY FUND",
@@ -992436,11 +992431,11 @@
     {
       "id": "C00178541",
       "name": "TEAMSTERS JOINT COUNCIL 53 POLITICAL ACTION COMMITTEE",
-      "connectedOrg": "TEAMSTERS NO. 53 TCWH",
+      "connectedOrg": "COMMONWEALTH ASSOCIATION OF SCHOOL ADMINISTRATORS - TEAMSTERS LOCAL 502 PAC",
       "orgType": "L",
       "kind": "pac",
       "state": "PA",
-      "organization": "teamsters-no-53-tcwh",
+      "organization": "teamsters-joint-council-53",
       "sector": "Labor",
       "total": 1000,
       "byCycle": {
@@ -995389,7 +995384,7 @@
       "kind": "super-pac",
       "state": "TX",
       "organization": "biafran-american-coalition-dba-biafra-c00891226",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 500,
       "byCycle": {
         "2024": 500
@@ -996047,7 +996042,7 @@
       "kind": "super-pac",
       "state": "TX",
       "organization": "family-first-coalition-c00761577",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -998640,6 +998635,17 @@
       ]
     },
     {
+      "id": "C00781385",
+      "name": "AMERICA'S PROMISE",
+      "kind": "super-pac",
+      "state": "VA",
+      "organization": "americas-promise-c00781385",
+      "sector": "Ideological & Single-Issue",
+      "total": 0,
+      "byCycle": {},
+      "recipients": []
+    },
+    {
       "id": "C30003321",
       "name": "CAFE ACCION",
       "kind": "non-committee",
@@ -998667,7 +998673,7 @@
       "state": "CA",
       "reportedDonations": 100000,
       "organization": "civic-empowerment-coalition-c30003339",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -998688,7 +998694,7 @@
       "state": "DC",
       "reportedDonations": 0,
       "organization": "coalition-for-app-fairness-c30003289",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -1003675,7 +1003681,7 @@
       "kind": "super-pac",
       "state": "CA",
       "organization": "victory-coalition-c00851279",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -1006865,7 +1006871,7 @@
       "kind": "super-pac",
       "state": "MA",
       "organization": "progress-coalition-c00887323",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -1008504,7 +1008510,7 @@
       "kind": "pac",
       "state": "NJ",
       "organization": "democratic-coalition-of-ocean-county",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
@@ -1010854,12 +1010860,12 @@
       "byCycle": {},
       "recipients": [],
       "opponents": {
-        "support": 90231,
+        "support": 105931,
         "oppose": 0,
         "targets": [
           {
             "id": "K000398",
-            "support": 90231,
+            "support": 105931,
             "oppose": 0
           }
         ]
@@ -1010974,7 +1010980,7 @@
       "kind": "super-pac",
       "state": "KS",
       "organization": "kansas-ag-communities-coalition-c00569582",
-      "sector": "Ideological & Single-Issue",
+      "sector": "Energy & Natural Resources",
       "total": 0,
       "byCycle": {},
       "recipients": [],
