@@ -44,6 +44,8 @@ import { tripsByMember, summarize, sinceLabel, sponsorByKey, sponsorHref, TRIPS_
 import { bundlerName, bundlerNote, bundlerHref } from "../../lib/bundling";
 import { raceOfMember, raceName, raceHref, resultLine, isWinner, noResult, day, formerMembers } from "../../lib/races";
 import { memberSpending, latestCycle, bucketRows, bucketPhrase, vendorHref, dateLabel, STAFF_LABEL, VENDORS_SHOWN, MEMO_NOTE } from "../../lib/disbursements";
+import HonoraryTable from "../../components/HonoraryTable.astro";
+import { itemsByMember, summarize as summarizeHonorary, topPayees, topFilers, share, sinceLabel as honorarySinceLabel, LDA_NOTE, WHAT_NOTE, HONORARY_SHOWN } from "../../lib/ld203";
 
 export function getStaticPaths() {
   // Members who have left keep their page, marked as former (data/former-members.json).
@@ -208,6 +210,13 @@ const earlierSpend = spend
   ? Object.entries(spend.byCycle).filter(([c, s]) => Number(c) !== spendCycle && s.total > 0).sort((a, b) => Number(b[0]) - Number(a[0]))
   : [];
 const sentence = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// Events and causes honoring the member, from lobbying organizations' LD-203 reports.
+const honoring = itemsByMember.get(m.bioguide) ?? [];
+const honor = summarizeHonorary(honoring);
+const honorShare = honoring.reduce((s, i) => s + share(i), 0);
+const honorPayees = topPayees(honoring, 3);
+const honorFilers = topFilers(honoring, 3);
 
 // Passage votes, and where they broke with their party.
 const votes = memberVotes(m);
@@ -930,6 +939,35 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
       sponsor's post-travel form. <a href="/travel/">All sponsored travel</a>.
     </p>
   </section>
+
+  {
+    honoring.length > 0 && (
+      <section class="story" id="honorary">
+        <h2>Events and causes honoring {last}</h2>
+        <p class="chart-dek">
+          Since {honorarySinceLabel}, {honor.filers} {honor.filers === 1 ? "lobbying organization" : "lobbying organizations"} reported paying{" "}
+          <strong>{money(honor.total, true)}</strong> for {honor.items} {honor.items === 1 ? "event or cause" : "events and causes"} that honored {last}
+          {honorPayees[0] && <>, most of it to {honorPayees.map((p, i) => <>{i > 0 && (i === honorPayees.length - 1 ? " and " : ", ")}{p.name}</>)}</>}.
+          {honor.shared > 0 && (
+            <>
+              {" "}{honor.shared === honor.items ? "Each" : `${honor.shared} of the`} {honor.shared === 1 ? "item names" : "items name"} other honorees too; split evenly, {possessive(last)} share comes to about {money(honorShare, true)}.
+            </>
+          )}
+          {honorFilers[0] && <> {honorFilers.map((f, i) => <>{i > 0 && (i === honorFilers.length - 1 ? " and " : ", ")}{f.href ? <a href={f.href}>{f.name}</a> : f.name}</>)} reported the most.</>}
+        </p>
+        <HonoraryTable rows={honoring.slice(0, HONORARY_SHOWN)} caption={`Honorary and meeting expenses naming ${m.name}`} view="member" />
+        {honoring.length > HONORARY_SHOWN && (
+          <MoreDisclosure client:visible title={`${honoring.length - HONORARY_SHOWN} earlier items`}>
+            <HonoraryTable rows={honoring.slice(HONORARY_SHOWN)} caption={`Honorary and meeting expenses naming ${m.name}, continued`} view="member" />
+          </MoreDisclosure>
+        )}
+        <p class="source">
+          {WHAT_NOTE} From LD-203 reports on lda.gov; each amount links to the report. {LDA_NOTE}{" "}
+          <a href="/honorary/">All honorary expenses</a> · <a href="/about/#honorary">How these are counted</a>.
+        </p>
+      </section>
+    )
+  }
 
   {
     legalFund && (

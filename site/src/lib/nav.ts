@@ -58,6 +58,7 @@ export const navGroups = (latestYear: number): NavGroup[] => [
       { href: "/revolving-door/", label: "Revolving door", note: "Former staff who now lobby" },
       { href: "/foreign-lobbying/", label: "Foreign lobbying", note: "Agents of foreign governments and companies" },
       { href: "/travel/", label: "Sponsored travel", note: "Trips paid for by outside groups" },
+      { href: "/honorary/", label: "Honorary expenses", note: "What lobbying organizations pay to honor members" },
     ],
   },
 ];

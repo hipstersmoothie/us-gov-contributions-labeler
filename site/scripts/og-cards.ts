@@ -32,6 +32,7 @@ import { revolvingStats, lobbyists, membersByStaff, filingYears } from "../src/l
 import { trips, activeSponsors, tripsBySponsor, summarize, sinceLabel } from "../src/lib/travel";
 import { bundledMembers, bundlingTotal, bundlers, bundlerName } from "../src/lib/bundling";
 import { vendors, spendingCycles, spendingMembers, memberSpending, allMembersBuckets, bucketRows, bucketPhrase, payerRow, payersPhrase } from "../src/lib/disbursements";
+import { honorary, inaugural, library, honorarySince, summarize as summarizeHonorary, topPayees } from "../src/lib/ld203";
 import { delegations, stateSlug, zipCoverage } from "../src/lib/districts";
 import { summarizeState, makeup } from "../src/lib/states";
 import { possessive } from "../src/islands/find/core";
@@ -494,6 +495,23 @@ if (vendors.length && spendingCycles.length) {
       span: cycleRange.replace(/\u2060/g, ""),
     };
   }
+}
+
+// --- honorary expenses (LD-203) ---------------------------------------------------
+
+if (honorary.length) {
+  const all = summarizeHonorary(honorary);
+  const named = summarizeHonorary(honorary.filter((i) => i.members.length));
+  cards["page/honorary"] = {
+    type: "page",
+    kicker: "Honorary expenses",
+    title: "What lobbying organizations pay to honor members",
+    dek: `${money(all.total, true)} for events and causes honoring federal officials since ${honorarySince}, ${money(named.total, true)} of it naming ${named.members} current members; ${money(summarizeHonorary(inaugural).total, true)} to inaugural committees and ${money(summarizeHonorary(library).total, true)} to presidential libraries.`,
+    foot: "LD-203 lobbying contribution reports from lda.gov",
+    span: `since ${honorarySince}`,
+    barsTitle: "Where the money goes",
+    bars: topPayees(honorary, 4).map((p) => ({ label: p.name, value: p.total })),
+  };
 }
 
 // --- House and Senate races, and candidates who aren't members -------------------

@@ -1,0 +1,73 @@
+---
+// LD-203 honorary and meeting expenses: when, who paid, what it paid for, and
+// who it honored, each amount linked to the filing.
+import { moneyAuto } from "../lib/format";
+import { filerName, filerHref, payeeName, honoreeLinks, itemDate, dateLabel, type Ld203Item } from "../lib/ld203";
+
+interface Props {
+  rows: Ld203Item[];
+  caption: string;
+  /** "member": one member's items, so show who paid. "org": one filer's, so show who was honored. "index": both. */
+  view: "member" | "org" | "index";
+}
+const { rows, caption, view } = Astro.props;
+const clip = (s: string, n = 90) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
+---
+
+<table class="honorary-table">
+  <caption class="visually-hidden">{caption}</caption>
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      {view !== "org" && <th scope="col">Paid by</th>}
+      <th scope="col">Paid to</th>
+      {view !== "member" && <th scope="col">Honoring</th>}
+      <th scope="col" class="num">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((i) => {
+        const href = filerHref(i);
+        const links = honoreeLinks(i);
+        return (
+          <tr>
+            <td class="date">{dateLabel(itemDate(i))}</td>
+            {view !== "org" && <td>{href ? <a href={href}>{filerName(i)}</a> : filerName(i)}{i.contributor && <span class="muted small block">through {i.contributor}</span>}</td>}
+            <td>
+              {payeeName(i)}
+              {view === "member" && i.honorees > 1 && <span class="muted small block">{i.honorees - 1 === 1 ? "with one other honoree" : `with ${i.honorees - 1} other honorees`}</span>}
+              {i.comments && <span class="muted small block" title={i.comments}>{clip(i.comments, 120)}</span>}
+            </td>
+            {view !== "member" && (
+              <td class="small">
+                {links.length ? (
+                  <>
+                    {links.map((l, k) => (
+                      <>
+                        {k > 0 && ", "}
+                        <a href={l.href}>{l.name}</a>
+                      </>
+                    ))}
+                    {i.honorees > links.length && <span class="muted"> and {i.honorees - links.length} {i.honorees - links.length === 1 ? "other" : "others"}</span>}
+                  </>
+                ) : (
+                  <span class="muted" title={i.honoree.length > 90 ? i.honoree : undefined}>{clip(i.honoree) || "Not stated"}</span>
+                )}
+              </td>
+            )}
+            <td class="num"><a href={i.url} title="The LD-203 report on lda.gov">{moneyAuto(Math.round(i.amount))}</a></td>
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</table>
+
+<style is:global>
+  .honorary-table { width: 100%; }
+  .honorary-table td { vertical-align: baseline; }
+  .honorary-table .date { white-space: nowrap; }
+  .honorary-table .block { display: block; }
+  .honorary-table td:last-child, .honorary-table th:last-child { white-space: nowrap; }
+</style>

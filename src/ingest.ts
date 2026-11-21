@@ -9,6 +9,7 @@
 //   pnpm ingest --steps=fara         just foreign lobbying
 //   pnpm ingest --steps=races        just the House and Senate races (needs the fec cache)
 //   pnpm ingest --steps=disbursements  just what campaigns and leadership PACs spent (needs data/committees.json)
+//   pnpm ingest --steps=ld203        just lobbyists' honorary expenses and presidential gifts (LD-203; needs data/organizations.json)
 //
 // Needs FEC_API_KEY and SEC_USER_AGENT in .env. Every step caches to .cache/,
 // so an interrupted run picks up where it stopped.
@@ -32,11 +33,12 @@ import { ingestRevolving } from "./ingest/revolving.js";
 import { ingestFara } from "./ingest/fara.js";
 import { ingestRaces, electionYears, loadElection, racesFile } from "./ingest/races.js";
 import { ingestDisbursements } from "./ingest/disbursements.js";
+import { ingestLd203 } from "./ingest/ld203.js";
 import type { CommitteeRecord } from "./ingest/build.js";
 import type { Member } from "./ingest/build.js";
 
 const STEPS = [
-  "accounts", "assignments", "fec", "bundling", "committees", "lobbying", "individuals", "donors", "legislation", "revolving", "fara", "races", "disbursements",
+  "accounts", "assignments", "fec", "bundling", "committees", "lobbying", "individuals", "donors", "legislation", "revolving", "fara", "races", "disbursements", "ld203",
 ] as const;
 const FEC_FILE = ".cache/fec/data.json";
 const ENRICHED_FILE = ".cache/enrich/result.json";
@@ -80,7 +82,7 @@ console.log(`Cycles ${cycles.join(", ")}; ${legislators.length} current members`
 // Bills and votes, lobbyists' former jobs, foreign lobbying and campaign
 // spending only need what's already in data/, so they can be refreshed on
 // their own without rebuilding everything else.
-const STANDALONE = new Set(["legislation", "revolving", "fara", "disbursements"]);
+const STANDALONE = new Set(["legislation", "revolving", "fara", "disbursements", "ld203"]);
 if ([...steps].every((s) => STANDALONE.has(s))) {
   const { organizations } = required(readJson<{ organizations: OrganizationRecord[] }>("data/organizations.json"), "committees");
   await writeStandalone(organizations);
@@ -92,6 +94,7 @@ async function writeStandalone(organizations: OrganizationRecord[]) {
     const { committees } = required(readJson<{ committees: CommitteeRecord[] }>("data/committees.json"), "committees");
     writeJson("data/disbursements.json", await ingestDisbursements(legislators, cycles, committees), false);
   }
+  if (steps.has("ld203")) writeJson("data/ld203.json", await ingestLd203(legislators, organizations), false);
   if (!steps.has("revolving") && !steps.has("fara")) return;
   // Both read the LD-1 and LD-2 filings the legislation step caches.
   const { filings } = await ldaQuarters(congressFor().years, Number(args["legislation-minutes"]));

@@ -1,0 +1,167 @@
+---
+// Honorary expenses: what lobbying organizations pay for events honoring members, and their gifts to presidential committees.
+import Base from "../../layouts/Base.astro";
+import PlotFigure from "../../components/PlotFigure.astro";
+import RankedTable from "../../components/RankedTable.astro";
+import HonoraryTable from "../../components/HonoraryTable.astro";
+import MoreDisclosure from "../../islands/MoreDisclosure";
+import { money, partyLetter } from "../../lib/data";
+import { shortSeat } from "../../lib/derived";
+import {
+  honorary, inaugural, library, honorarySince, memberSince, sinceLabel, itemDate, summarize, topPayees, topFilers, topMembers, honoreeBreakdown,
+  PAYEE_LABEL, LDA_NOTE, WHAT_NOTE, HONORARY_SHOWN,
+} from "../../lib/ld203";
+
+const all = summarize(honorary);
+const named = honorary.filter((i) => i.members.length);
+const namedSum = summarize(named);
+const current = honorary.filter((i) => itemDate(i) >= memberSince);
+const payees = topPayees(honorary);
+const filers = topFilers(honorary);
+const members = topMembers(current);
+const breakdown = honoreeBreakdown(honorary);
+const byYear = [...new Set(honorary.map((i) => i.year))].sort().map((y) => ({ year: y, total: honorary.filter((i) => i.year === y).reduce((s, i) => s + i.amount, 0) }));
+const byClass = Object.entries(
+  honorary.reduce((acc, i) => ({ ...acc, [i.payeeClass]: (acc[i.payeeClass] ?? 0) + i.amount }), {} as Record<string, number>)
+).sort((a, b) => b[1] - a[1]);
+const pic = summarize(inaugural);
+const ple = summarize(library);
+const picFilers = topFilers(inaugural);
+const pleFilers = topFilers(library);
+const biggest = [...honorary].sort((a, b) => b.amount - a.amount);
+const description = `Companies, trade groups and unions that lobby reported ${money(all.total, true)} in honorary and meeting expenses since ${honorarySince}: galas, awards dinners and charities honoring members of Congress. Plus ${money(pic.total, true)} to inaugural committees and ${money(ple.total, true)} to presidential libraries.`;
+---
+
+<Base title="What lobbying organizations pay to honor members of Congress" {description} og={{ type: "page", id: "honorary" }} crumbs={[["Honorary expenses", "/honorary/"]]}>
+  <p class="kicker">Honorary expenses</p>
+  <h1>What lobbying organizations pay to honor members</h1>
+  <p class="dek">
+    Since {honorarySince}, {all.filers.toLocaleString()} companies, trade groups, unions and lobbying firms have reported paying{" "}
+    <strong>{money(all.total, true)}</strong> for events that honored or were hosted by federal officials: caucus foundations' galas, awards
+    dinners, scholarship funds, museum events. <strong>{money(namedSum.total, true)}</strong> of it names a current member of Congress as an honoree,{" "}
+    {namedSum.members} members in all. Separately, the same filers reported <strong>{money(pic.total, true)}</strong> in gifts to presidential inaugural
+    committees and <strong>{money(ple.total, true)}</strong> to presidential libraries.
+  </p>
+
+  <dl class="stats">
+    <div class="stat"><dt>Honorary and meeting expenses, since {honorarySince}</dt><dd>{money(all.total, true)}<small>{all.items.toLocaleString()} items from {all.filers} filers</small></dd></div>
+    <div class="stat"><dt>Naming a current member</dt><dd>{money(namedSum.total, true)}<small>{namedSum.members} members</small></dd></div>
+    <div class="stat"><dt>Inaugural committee gifts</dt><dd>{money(pic.total, true)}<small>{pic.filers} filers</small></dd></div>
+    <div class="stat"><dt>Presidential library gifts</dt><dd>{money(ple.total, true)}<small>{ple.filers} filers</small></dd></div>
+  </dl>
+
+  <section class="story how" id="how-to-read">
+    <h2>How to read these</h2>
+    <ul>
+      <li>{WHAT_NOTE} It's reported twice a year on the LD-203 form by every registered lobbying organization and every lobbyist.</li>
+      <li>
+        The honoree is written in the filer's words: a named member, "Members of the Congressional Black Caucus", the whole Cabinet, or a
+        paragraph. A member's page lists an item only when it names them by first and last name (or a surname no other current member
+        shares, with a title); when an item names several people, the full amount is shown and the member's share is a fraction of it.
+      </li>
+      <li>
+        The same filings also list PAC and lobbyist contributions to campaigns; those are in the FEC data elsewhere on this site and
+        aren't repeated here. Where a filer put a contribution to a PAC or party in the honorary box, it's left out.
+      </li>
+      <li>A filer that is itself a charity or university reports the cost of its own event, such as a university's commencement honoring a senator.</li>
+    </ul>
+  </section>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Where the money goes</h2>
+      <p class="chart-dek">The payees, across spellings. Caucus foundations and congressional institutes take {Math.round(((byClass.find(([k]) => k === "caucus")?.[1] ?? 0) / all.total) * 100)}%.</p>
+      <PlotFigure
+        chart="bars"
+        width={500}
+        label="Honorary and meeting expenses by payee"
+        data={{ rows: payees.slice(0, 10).map((p) => ({ label: p.name, value: p.total })), emphasize: [0], total: all.total }}
+        table={{ columns: ["Payee", "Items", "Amount"], numeric: [1, 2], rows: payees.slice(0, 40).map((p) => [p.name, p.items, money(p.total)]) }}
+      />
+      <p class="muted small">By kind: {byClass.map(([k, v], i) => <>{i > 0 && "; "}{PAYEE_LABEL[k as keyof typeof PAYEE_LABEL].toLowerCase()} {money(v, true)}</>)}.</p>
+    </section>
+    <section class="story">
+      <h2>Who is honored</h2>
+      <p class="chart-dek">What the honoree line names, by dollars.</p>
+      <PlotFigure
+        chart="bars"
+        width={500}
+        label="Honorary and meeting expenses by who was honored"
+        data={{ rows: breakdown.map((b) => ({ label: b.label, value: b.total })), total: all.total }}
+        table={{ columns: ["Honoree", "Amount"], numeric: [1], rows: breakdown.map((b) => [b.label, money(b.total)]) }}
+      />
+      <h3 class="spaced">By year</h3>
+      <ul class="years">{byYear.map((y) => <li><strong>{money(y.total, true)}</strong> <span class="muted">{y.year}</span></li>)}</ul>
+    </section>
+  </div>
+
+  <div class="grid-2">
+    <section class="story">
+      <h2>Who pays</h2>
+      <p class="chart-dek">Filers by honorary and meeting expenses since {honorarySince}, linked where they have a page here.</p>
+      <RankedTable heading="Filer" valueHeading="Reported" caption="Filers by honorary and meeting expenses" rows={filers.slice(0, 25).map((f) => ({ label: f.name, href: f.href, note: `${f.items} ${f.items === 1 ? "item" : "items"}`, value: f.total }))} />
+      {filers.length > 25 && (
+        <MoreDisclosure client:visible title={`All ${filers.length} filers`}>
+          <RankedTable heading="Filer" valueHeading="Reported" rows={filers.slice(25).map((f) => ({ label: f.name, href: f.href, note: `${f.items} ${f.items === 1 ? "item" : "items"}`, value: f.total }))} max={filers[0]!.total} />
+        </MoreDisclosure>
+      )}
+    </section>
+    <section class="story">
+      <h2>Members honored most</h2>
+      <p class="chart-dek">Since {sinceLabel}, by the member's share of items that name them; items naming several people are split evenly.</p>
+      <RankedTable
+        heading="Member"
+        valueHeading="Share"
+        caption="Members by their share of honorary and meeting expenses naming them"
+        rows={members.slice(0, 25).map((r) => ({ label: r.m.name, href: `/members/${r.m.bioguide}/`, party: partyLetter(r.m.party), note: `${shortSeat(r.m)} · ${r.items} ${r.items === 1 ? "item" : "items"}`, value: Math.round(r.total) }))}
+      />
+      {members.length > 25 && (
+        <MoreDisclosure client:visible title={`All ${members.length} members named`}>
+          <RankedTable heading="Member" valueHeading="Share" rows={members.slice(25).map((r) => ({ label: r.m.name, href: `/members/${r.m.bioguide}/`, party: partyLetter(r.m.party), note: `${shortSeat(r.m)} · ${r.items} ${r.items === 1 ? "item" : "items"}`, value: Math.round(r.total) }))} max={Math.round(members[0]!.total)} />
+        </MoreDisclosure>
+      )}
+    </section>
+  </div>
+
+  <section class="story">
+    <h2>The biggest items</h2>
+    <p class="chart-dek">Single reported expenses, largest first. A few of these are a filer's whole event, or a charity gift made in a member's name.</p>
+    <HonoraryTable rows={biggest.slice(0, HONORARY_SHOWN)} caption="Largest honorary and meeting expenses" view="index" />
+    <MoreDisclosure client:visible title="Next 40 largest">
+      <HonoraryTable rows={biggest.slice(HONORARY_SHOWN, HONORARY_SHOWN + 40)} caption="Largest honorary and meeting expenses, continued" view="index" />
+    </MoreDisclosure>
+  </section>
+
+  <div class="grid-2">
+    <section class="story" id="inaugural">
+      <h2>Gifts to inaugural committees</h2>
+      <p class="chart-dek">{money(pic.total, true)} from {pic.filers} filers, nearly all to the 2025 Trump-Vance inaugural committee.</p>
+      <RankedTable heading="Filer" valueHeading="Gave" caption="Gifts to presidential inaugural committees by filer" rows={picFilers.slice(0, 20).map((f) => ({ label: f.name, href: f.href, value: f.total }))} />
+      {picFilers.length > 20 && (
+        <MoreDisclosure client:visible title={`All ${picFilers.length} filers`}>
+          <RankedTable heading="Filer" valueHeading="Gave" rows={picFilers.slice(20).map((f) => ({ label: f.name, href: f.href, value: f.total }))} max={picFilers[0]!.total} />
+        </MoreDisclosure>
+      )}
+    </section>
+    <section class="story" id="library">
+      <h2>Gifts to presidential libraries</h2>
+      <p class="chart-dek">{money(ple.total, true)} from {ple.filers} filers to presidential library and center foundations.</p>
+      <RankedTable heading="Filer" valueHeading="Gave" caption="Gifts to presidential libraries by filer" rows={pleFilers.slice(0, 20).map((f) => ({ label: f.name, href: f.href, note: topPayees(library.filter((i) => i.registrant === f.id), 1)[0]?.name, value: f.total }))} />
+      {pleFilers.length > 20 && (
+        <MoreDisclosure client:visible title={`All ${pleFilers.length} filers`}>
+          <RankedTable heading="Filer" valueHeading="Gave" rows={pleFilers.slice(20).map((f) => ({ label: f.name, href: f.href, value: f.total }))} max={pleFilers[0]!.total} />
+        </MoreDisclosure>
+      )}
+    </section>
+  </div>
+
+  <p class="source">
+    From LD-203 lobbying contribution reports filed under 2 U.S.C. § 1604(d), read from the{" "}
+    <a href="https://lda.gov/api/">lda.gov API</a>; each amount links to its report. Amendments replace the report they amend. {LDA_NOTE}{" "}
+    <a href="/about/#honorary">How these are counted</a>.
+  </p>
+</Base>
+
+<style>
+  .years { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-5); }
+</style>

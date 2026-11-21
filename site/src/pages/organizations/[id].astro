@@ -24,6 +24,8 @@ import {
 } from "../../lib/fara";
 import "../../styles/lobbying.css";
 import TripsTable from "../../components/TripsTable.astro";
+import HonoraryTable from "../../components/HonoraryTable.astro";
+import { itemsByOrg, summarize as summarizeHonorary, topPayees, topMembers, honorarySince, TYPE_LABEL, LDA_NOTE, WHAT_NOTE, HONORARY_SHOWN, type Ld203Item } from "../../lib/ld203";
 import { givingByOrg, groups527, years527, IRS_SEARCH } from "../../lib/irs527";
 import { sponsorByOrganization, tripsBySponsor, summarize, officeParties, sinceLabel, sponsorHref, byMembersSentence, TRIPS_SHOWN } from "../../lib/travel";
 import {
@@ -57,6 +59,14 @@ const split = partySplit(o.recipients);
 const pacs = o.committees.map((id) => committeeById.get(id)).filter((c) => !!c);
 const issues = o.lobbying?.issues.slice(0, 10) ?? [];
 const name = o.name.startsWith("The ") ? o.name : o.name.match(/^(National|American|International)\b/) ? `The ${o.name}` : o.name;
+// Honorary expenses and presidential gifts it reported on LD-203 forms.
+const ld203 = itemsByOrg.get(o.id) ?? [];
+const orgHonorary = ld203.filter((i) => i.type === "he" || i.type === "me");
+const orgPresidential = ld203.filter((i) => i.type === "pic" || i.type === "ple");
+const orgHonor = summarizeHonorary(orgHonorary);
+const orgHonorPayees = topPayees(orgHonorary);
+const orgHonorMembers = topMembers(orgHonorary);
+const presidentialLine = (list: Ld203Item[]) => list.map((i) => `${money(i.amount, true)} to ${displayName(i.payee)} (${i.year})`);
 
 // Plain-language summary: party lean, and what a typical gift looked like.
 const amounts = o.recipients.map((r) => r.total).sort((a, b) => a - b);
@@ -572,6 +582,61 @@ const description = clip(
           From Schedule A of Forms 8872 filed with the{" "}<a href={IRS_SEARCH}>IRS</a>, matched by the contributor's name
           {filedAs.length > 0 && <> (filed as {filedAs.map((n, i) => <>{i > 0 && ", "}“{n}”</>)})</>}. Amended reports replace the
           ones they amend. <a href="/about/#state-groups">About this data</a>.
+        </p>
+      </section>
+    )
+  }
+
+  {
+    ld203.length > 0 && (
+      <section class="story" id="honorary">
+        <h2>Events honoring members, and gifts to presidential committees</h2>
+        {orgHonorary.length > 0 && (
+          <p class="chart-dek">
+            Since {honorarySince}, {name} reported paying <strong>{money(orgHonor.total, true)}</strong> for {orgHonor.items}{" "}
+            {orgHonor.items === 1 ? "event or cause" : "events and causes"} honoring or hosted by federal officials
+            {orgHonorPayees[0] && <>, most of it to {orgHonorPayees.slice(0, 3).map((p, i) => <>{i > 0 && (i === Math.min(orgHonorPayees.length, 3) - 1 ? " and " : ", ")}{p.name}</>)}</>}.
+            {orgHonor.members > 0 && <> {orgHonor.members} current {orgHonor.members === 1 ? "member of Congress is" : "members of Congress are"} named as honorees.</>}
+          </p>
+        )}
+        {orgPresidential.length > 0 && (
+          <p class="chart-dek">
+            It also reported {orgPresidential.some((i) => i.type === "pic") && orgPresidential.some((i) => i.type === "ple") ? "gifts to a presidential inaugural committee and a presidential library" : orgPresidential[0]!.type === "pic" ? "gifts to a presidential inaugural committee" : "gifts to a presidential library"}:{" "}
+            {presidentialLine(orgPresidential).join("; ")}.
+          </p>
+        )}
+        {orgHonorary.length > 0 && (
+          <>
+            {orgHonorMembers.length > 0 && (
+              <div class="grid-2">
+                <div>
+                  <h3>Members it honored</h3>
+                  <RankedTable
+                    heading="Member"
+                    valueHeading="Share"
+                    rank={false}
+                    caption={`Members named as honorees in ${o.name}'s LD-203 reports`}
+                    rows={orgHonorMembers.slice(0, 8).map((r) => ({ label: r.m.name, href: `/members/${r.m.bioguide}/`, party: partyLetter(r.m.party), note: `${r.items} ${r.items === 1 ? "item" : "items"}`, value: Math.round(r.total) }))}
+                  />
+                </div>
+                <div>
+                  <h3>Where the money went</h3>
+                  <RankedTable heading="Payee" valueHeading="Paid" rank={false} caption={`Payees of ${o.name}'s honorary and meeting expenses`} rows={orgHonorPayees.slice(0, 8).map((p) => ({ label: p.name, note: `${p.items} ${p.items === 1 ? "item" : "items"}`, value: Math.round(p.total) }))} />
+                </div>
+              </div>
+            )}
+            <h3 class="spaced">Most recent</h3>
+            <HonoraryTable rows={orgHonorary.slice(0, HONORARY_SHOWN)} caption={`${o.name}'s honorary and meeting expenses`} view="org" />
+            {orgHonorary.length > HONORARY_SHOWN && (
+              <MoreDisclosure client:visible title={`${orgHonorary.length - HONORARY_SHOWN} earlier items`}>
+                <HonoraryTable rows={orgHonorary.slice(HONORARY_SHOWN)} caption={`${o.name}'s honorary and meeting expenses, continued`} view="org" />
+              </MoreDisclosure>
+            )}
+          </>
+        )}
+        <p class="source">
+          {WHAT_NOTE} From its LD-203 reports on lda.gov ({[...new Set(ld203.map((i) => TYPE_LABEL[i.type].toLowerCase()))].join(", ")}); each amount links to the report. {LDA_NOTE}{" "}
+          <a href="/honorary/">All honorary expenses</a>.
         </p>
       </section>
     )
