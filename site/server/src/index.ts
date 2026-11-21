@@ -3,7 +3,8 @@
 // images rendered on request at /og/<version>/<type>/<id>.png, and Plausible's
 // script and event endpoint proxied at /v/ (see plausible.ts), the member
 // finder's address lookup at /api/district (see geocode.ts), and the MCP server
-// for AI assistants at /mcp (see mcp.ts).
+// for AI assistants at /mcp (see mcp.ts). Once a new build is live, it sends
+// the pages that changed to IndexNow (see indexnow.ts).
 //
 // Card images aren't built ahead of time: there are ~19K pages and a crawler
 // asks for a page's image once or twice, when someone shares the link. Each
@@ -19,6 +20,7 @@ import { createRenderer } from "./render.ts";
 import { EVENT_PATH, SCRIPT_PATH, forwardEvent, serveScript } from "./plausible.ts";
 import { DISTRICT_PATH, findDistrict } from "./geocode.ts";
 import { MCP_PATH, createMcp } from "./mcp.ts";
+import { submitChanges } from "./indexnow.ts";
 
 const SERVER_DIR = path.resolve(import.meta.dirname, "..");
 const DIST = path.resolve(process.env.DIST_DIR ?? path.join(SERVER_DIR, "../dist"));
@@ -139,6 +141,13 @@ const server = http.createServer((req, res) => {
   });
   const url = new URL(req.url ?? "/", "http://localhost");
   const read = req.method === "GET" || req.method === "HEAD";
+  // www.contributions.fyi is the same site under one name: contributions.fyi.
+  const host = req.headers.host ?? "";
+  if (host.startsWith("www.")) {
+    res.writeHead(301, { Location: `https://${host.slice(4)}${url.pathname}${url.search}` });
+    res.end();
+    return;
+  }
   const match = read && url.pathname.match(OG_PATH);
   if (match) {
     void og(req, res, match);
@@ -191,6 +200,7 @@ server.listen(PORT, "0.0.0.0", () => {
   // satori parses the fonts on its first render (~0.5s); do that now, not on a crawler's request.
   const first = renderer.card("page/search");
   if (first) void renderer.render(first).catch((err: unknown) => console.error("og warm-up failed:", err));
+  void submitChanges(DIST).catch((err: unknown) => console.error("indexnow failed:", err));
 });
 
 for (const signal of ["SIGTERM", "SIGINT"] as const) {
