@@ -451,74 +451,6 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
     </section>
   </div>
 
-  <section class="story" id="spending">
-    <h2>Where the money goes</h2>
-    {
-      sp && spendCycle ? (
-        <>
-          <p class="chart-dek">
-            {possessive(last)} campaign itemized <strong>{money(sp.total, true)}</strong> in spending in the {cycleLabel(spendCycle)} cycle
-            {sp.through && <>, reported through {dateLabel(sp.through)}</>}
-            {spentInAll && spentInAll > sp.total * 1.05 ? <>, of the {money(spentInAll, true)} it spent in all.</> : "."}
-            {spendRows[0] && <> {sentence(bucketPhrase(spendRows[0].key))} took {pct(spendRows[0].value, sp.total)}%</>}
-            {topPayee ? (
-              <>
-                ; the biggest payee was {topPayee.vendor ? <a href={vendorHref(topPayee.vendor)}>{topPayee.name}</a> : <span>{topPayee.name}</span>},{" "}
-                {money(topPayee.amount, true)}{topPayee.purpose && <> for {topPayee.purpose.toLowerCase()}</>}.
-              </>
-            ) : "."}
-          </p>
-          <div class="grid-2">
-            <div>
-              <h3>By purpose</h3>
-              <PlotFigure
-                chart="bars"
-                width={500}
-                label={`${possessive(m.name)} campaign spending by purpose, ${cycleLabel(spendCycle)}`}
-                data={{ rows: spendRows.map((r) => ({ label: r.short, value: r.value })), emphasize: [0], total: sp.total }}
-                table={{ columns: ["Purpose", "Amount"], numeric: [1], rows: spendRows.map((r) => [r.label, money(r.value)]) }}
-              />
-            </div>
-            <div>
-              <h3>Biggest payees</h3>
-              <RankedTable
-                heading="Payee"
-                valueHeading="Paid"
-                rank={false}
-                caption={`${possessive(m.name)} campaign's biggest payees, ${cycleLabel(spendCycle)}`}
-                rows={sp.vendors.slice(0, VENDORS_SHOWN).map((v) => ({
-                  label: v.name,
-                  href: v.vendor ? vendorHref(v.vendor) : undefined,
-                  note: [v.purpose, v.itemized ? "paid by card or payroll service, itemized" : undefined].filter(Boolean).join(" · "),
-                  value: v.amount,
-                }))}
-              />
-            </div>
-          </div>
-          {sp.candidate && (
-            <p class="muted small">
-              Paid to {last} directly: {money(sp.candidate.amount, true)}
-              {sp.candidate.purposes.length > 0 && <>, filed as {listOf(sp.candidate.purposes.map((p) => p.toLowerCase()))}</>}. Candidates may be
-              reimbursed for campaign expenses they paid themselves.
-            </p>
-          )}
-          {earlierSpend.length > 0 && (
-            <p class="muted small">
-              Earlier cycles: {earlierSpend.map(([c, s], i) => <>{i > 0 && "; "}{money(s.total, true)} in {cycleLabel(Number(c))}</>)}.
-            </p>
-          )}
-          <p class="source">
-            From the FEC's operating expenditures file: payments over $200 the campaign itemized on Form 3, line 17
-            {sp.through && <>, processed through {dateLabel(sp.through)}</>}. {MEMO_NOTE} Staff paid by name are one line.{" "}
-            <a href="/vendors/">All campaign vendors</a> · <a href="/about/#spending">How spending is counted</a>.
-          </p>
-        </>
-      ) : (
-        <p class="empty-note">No itemized spending by {possessive(last)} campaign is in the FEC's processed files for {cycleRange}.</p>
-      )
-    }
-  </section>
-
   {
     makeup && shares && (
       <section class="story">
@@ -990,6 +922,74 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
       </section>
     )
   }
+
+  <section class="story" id="spending">
+    <h2>Where the money goes</h2>
+    {
+      sp && spendCycle ? (
+        <>
+          <p class="chart-dek">
+            {possessive(last)} campaign itemized <strong>{money(sp.total, true)}</strong> in spending in the {cycleLabel(spendCycle)} cycle
+            {sp.through && <>, reported through {dateLabel(sp.through)}</>}
+            {spentInAll && spentInAll > sp.total * 1.05 ? <>, of the {money(spentInAll, true)} it spent in all.</> : "."}
+            {spendRows[0] && <> {sentence(bucketPhrase(spendRows[0].key))} took {pct(spendRows[0].value, sp.total)}%</>}
+            {topPayee ? (
+              <>
+                ; the biggest payee was {topPayee.vendor ? <a href={vendorHref(topPayee.vendor)}>{topPayee.name}</a> : <span>{topPayee.name}</span>},{" "}
+                {money(topPayee.amount, true)}{topPayee.purpose && <> for {topPayee.purpose.toLowerCase()}</>}.
+              </>
+            ) : "."}
+          </p>
+          <div class="grid-2">
+            <div>
+              <h3>By purpose</h3>
+              <PlotFigure
+                chart="bars"
+                width={500}
+                label={`${possessive(m.name)} campaign spending by purpose, ${cycleLabel(spendCycle)}`}
+                data={{ rows: spendRows.map((r) => ({ label: r.short, value: r.value })), emphasize: [0], total: sp.total }}
+                table={{ columns: ["Purpose", "Amount"], numeric: [1], rows: spendRows.map((r) => [r.label, money(r.value)]) }}
+              />
+            </div>
+            <div>
+              <h3>Biggest payees</h3>
+              <RankedTable
+                heading="Payee"
+                valueHeading="Paid"
+                rank={false}
+                caption={`${possessive(m.name)} campaign's biggest payees, ${cycleLabel(spendCycle)}`}
+                rows={sp.vendors.slice(0, VENDORS_SHOWN).map((v) => ({
+                  label: v.name,
+                  href: v.vendor ? vendorHref(v.vendor) : undefined,
+                  note: [v.purpose, v.itemized ? "paid by card or payroll service, itemized" : undefined].filter(Boolean).join(" · "),
+                  value: v.amount,
+                }))}
+              />
+            </div>
+          </div>
+          {sp.candidate && (
+            <p class="muted small">
+              Paid to {last} directly: {money(sp.candidate.amount, true)}
+              {sp.candidate.purposes.length > 0 && <>, filed as {listOf(sp.candidate.purposes.map((p) => p.toLowerCase()))}</>}. Candidates may be
+              reimbursed for campaign expenses they paid themselves.
+            </p>
+          )}
+          {earlierSpend.length > 0 && (
+            <p class="muted small">
+              Earlier cycles: {earlierSpend.map(([c, s], i) => <>{i > 0 && "; "}{money(s.total, true)} in {cycleLabel(Number(c))}</>)}.
+            </p>
+          )}
+          <p class="source">
+            From the FEC's operating expenditures file: payments over $200 the campaign itemized on Form 3, line 17
+            {sp.through && <>, processed through {dateLabel(sp.through)}</>}. {MEMO_NOTE} Staff paid by name are one line.{" "}
+            <a href="/vendors/">All campaign vendors</a> · <a href="/about/#spending">How spending is counted</a>.
+          </p>
+        </>
+      ) : (
+        <p class="empty-note">No itemized spending by {possessive(last)} campaign is in the FEC's processed files for {cycleRange}.</p>
+      )
+    }
+  </section>
 
   {
     m.committees.length > 0 && (
