@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@skyware/labeler@0.1.13':
-    hash: nj2trdfdmahu3uidk4qbumiipm
+    hash: fnobt32vhnn23d6yf2iat2d7om
     path: patches/@skyware__labeler@0.1.13.patch
 
 importers:
@@ -24,7 +24,7 @@ importers:
         version: 0.7.19
       '@skyware/labeler':
         specifier: ^0.1.8
-        version: 0.1.13(patch_hash=nj2trdfdmahu3uidk4qbumiipm)
+        version: 0.1.13(patch_hash=fnobt32vhnn23d6yf2iat2d7om)
       await-to-js:
         specifier: ^3.0.0
         version: 3.0.0
@@ -3595,7 +3595,7 @@ snapshots:
       fflate: 0.7.3
       string.prototype.codepointat: 0.2.1
 
-  '@skyware/labeler@0.1.13(patch_hash=nj2trdfdmahu3uidk4qbumiipm)':
+  '@skyware/labeler@0.1.13(patch_hash=fnobt32vhnn23d6yf2iat2d7om)':
     dependencies:
       '@atcute/bluesky': 1.0.8(@atcute/client@2.0.4)
       '@atcute/cbor': 1.0.6

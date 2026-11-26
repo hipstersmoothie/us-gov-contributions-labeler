@@ -69,7 +69,11 @@ async function refreshMembers() {
   } catch (err) {
     console.error("Members refresh failed:", err);
     if (!membership.all.size && fs.existsSync(MEMBERS_CACHE)) {
-      applyMembers(fs.readFileSync(MEMBERS_CACHE, "utf8"), "cache");
+      try {
+        applyMembers(fs.readFileSync(MEMBERS_CACHE, "utf8"), "cache");
+      } catch (err) {
+        console.error("Members cache unusable:", err);
+      }
     }
   }
 }
@@ -77,8 +81,12 @@ async function refreshMembers() {
 await refreshMembers();
 setInterval(refreshMembers, REFRESH_MS);
 setInterval(() => {
-  const removed = db.prune();
-  if (removed) console.log(`Pruned ${removed} posts older than 30 days`);
+  try {
+    const removed = db.prune();
+    if (removed) console.log(`Pruned ${removed} posts older than 30 days`);
+  } catch (err) {
+    console.error("Prune failed:", err);
+  }
 }, 60 * 60 * 1000);
 
 // --- HTTP -----------------------------------------------------------------------
@@ -118,7 +126,9 @@ function getFeedSkeleton(params: URLSearchParams) {
 }
 
 const server = http.createServer((req, res) => {
-  const url = new URL(req.url ?? "/", "http://localhost");
+  // Not new URL: it throws on paths like "//", which would take the server down.
+  const url = URL.parse(req.url ?? "/", "http://localhost");
+  if (!url) return json(res, 400, { error: "InvalidRequest" });
   try {
     switch (url.pathname) {
       case "/.well-known/did.json":

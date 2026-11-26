@@ -428,7 +428,7 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..dfc71c0d0f77372a4f5720ae54fafb07
  			SELECT * FROM labels
  			WHERE 1 = 1
  			${patterns.length ? "AND " + patterns.map(() => "uri LIKE ?").join(" OR ") : ""}
-@@ -235,156 +250,181 @@ export class LabelerServer {
+@@ -235,156 +250,178 @@ export class LabelerServer {
  			ORDER BY id ASC
  			LIMIT ?
  		`);
@@ -467,7 +467,6 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..dfc71c0d0f77372a4f5720ae54fafb07
 +   */
 +  subscribeLabelsHandler = (ws, req) => {
 +    const cursor = parseInt(req.query.cursor ?? "NaN", 10);
-+    console.log("CURSOR", cursor);
 +    if (!Number.isNaN(cursor)) {
 +      const latest = this.db
 +        .prepare(
@@ -487,7 +486,6 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..dfc71c0d0f77372a4f5720ae54fafb07
 +        )
 +        .get();
 +      if (cursor > (latest.id ?? 0)) {
-+        console.log("BAD CURSOR", cursor);
 +        const errorBytes = frameToBytes("error", {
 +          error: "FutureCursor",
 +          message: "Cursor is in the future",
@@ -561,7 +559,6 @@ index f6600d73a82fa0ceb6af4d079891b6a4a8049306..dfc71c0d0f77372a4f5720ae54fafb07
 -            throw new XRPCError(400, { kind: "InvalidRequest", description: "Invalid subject" });
 +      try {
 +        for (const row of stmt.iterate(cursor)) {
-+          console.log("SEND", row);
 +          const { id: seq, ...label } = row;
 +          const bytes = frameToBytes(
 +            "message",

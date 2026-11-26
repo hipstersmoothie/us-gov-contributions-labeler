@@ -10,6 +10,8 @@ const server = new LabelerServer({
 });
 
 server.app.listen({ port: PORT, host: "::" }, (error, address) => {
-  if (error) console.error(error);
-  else console.log(`Labeler server listening on ${address}`);
+  if (!error) return console.log(`Labeler server listening on ${address}`);
+  // Exiting non-zero so the service restarts: a listen error alone exits 0, and stays down.
+  console.error(error);
+  process.exit(1);
 });

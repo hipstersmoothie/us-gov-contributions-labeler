@@ -19,6 +19,7 @@ export function openDb(dataDir: string) {
   const db = new Database(path.join(dataDir, "feeds.db"));
   db.exec(`
     PRAGMA journal_mode = WAL;
+    PRAGMA busy_timeout = 5000;
     CREATE TABLE IF NOT EXISTS posts (
       uri TEXT PRIMARY KEY,
       cid TEXT NOT NULL,

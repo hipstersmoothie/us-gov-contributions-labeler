@@ -48,16 +48,28 @@ export class Jetstream {
   private failures = 0;
   private lastEventAt = Date.now();
   private stopped = false;
+  private reconnectTimer?: ReturnType<typeof setTimeout>;
   events = 0;
 
   constructor(private db: Db) {
     const saved = db.getState(CURSOR_KEY);
     if (saved) this.cursor = Number(saved);
-    setInterval(() => this.cursor && db.setState(CURSOR_KEY, String(this.cursor)), 5000).unref();
+    setInterval(() => {
+      try {
+        if (this.cursor) db.setState(CURSOR_KEY, String(this.cursor));
+      } catch (err) {
+        console.error("Jetstream: saving the cursor failed", err);
+      }
+    }, 5000).unref();
     setInterval(() => {
       if (this.ws && Date.now() - this.lastEventAt > IDLE_MS) {
         console.log("Jetstream: idle, reconnecting");
-        this.ws.close();
+        // Not waiting for "close": a host that never answers the close frame
+        // leaves the socket closing forever, and ingest stopped with it.
+        const old = this.ws;
+        this.ws = undefined;
+        old.close();
+        this.reconnect();
       }
     }, 60_000).unref();
   }
@@ -73,7 +85,7 @@ export class Jetstream {
     this.dids = dids;
     if (!dids.length) return;
     if (this.ws?.readyState === WebSocket.OPEN) this.sendOptions();
-    else if (!this.ws) this.connect();
+    else if (!this.ws && !this.reconnectTimer) this.connect();
   }
 
   stop() {
@@ -114,15 +126,24 @@ export class Jetstream {
     });
     ws.addEventListener("error", (e) => console.error(`Jetstream: ${host} error`, (e as ErrorEvent).message ?? ""));
     ws.addEventListener("close", () => {
-      if (this.ws === ws) this.ws = undefined;
-      if (this.stopped) return;
-      this.failures++;
-      // Move to the next host after repeated failures.
-      if (this.failures % 3 === 0) this.hostIndex++;
-      const delay = Math.min(60_000, 1000 * 2 ** Math.min(this.failures, 6));
-      console.log(`Jetstream: closed, reconnecting in ${delay / 1000}s`);
-      setTimeout(() => this.connect(), delay);
+      // A socket already replaced (see the idle check) doesn't reconnect again.
+      if (this.ws !== ws) return;
+      this.ws = undefined;
+      this.reconnect();
     });
+  }
+
+  private reconnect() {
+    if (this.stopped || this.reconnectTimer) return;
+    this.failures++;
+    // Move to the next host after repeated failures.
+    if (this.failures % 3 === 0) this.hostIndex++;
+    const delay = Math.min(60_000, 1000 * 2 ** Math.min(this.failures, 6));
+    console.log(`Jetstream: closed, reconnecting in ${delay / 1000}s`);
+    this.reconnectTimer = setTimeout(() => {
+      this.reconnectTimer = undefined;
+      this.connect();
+    }, delay);
   }
 
   private handle(e: JetstreamEvent) {
@@ -216,6 +237,8 @@ export function backfill(db: Db, dids: string[]) {
     );
     console.log(`Backfill: done, ${added} posts`);
   };
-  backfilling = (backfilling ?? Promise.resolve()).then(run, run);
+  // A database error fails this run, logged; uncaught, it would end the process.
+  const logged = () => run().catch((err: unknown) => console.error("Backfill failed:", err));
+  backfilling = (backfilling ?? Promise.resolve()).then(logged);
   return backfilling;
 }

@@ -145,7 +145,13 @@ const server = http.createServer((req, res) => {
   res.on("finish", () => {
     console.log(`${req.method} ${req.url} ${res.statusCode} ${(performance.now() - start).toFixed(0)}ms`);
   });
-  const url = new URL(req.url ?? "/", "http://localhost");
+  // Not new URL: it throws on paths like "//", and a throw here takes the server down.
+  const url = URL.parse(req.url ?? "/", "http://localhost");
+  if (!url) {
+    res.writeHead(400);
+    res.end();
+    return;
+  }
   const read = req.method === "GET" || req.method === "HEAD";
   // www.contributions.fyi is the same site under one name: contributions.fyi.
   const host = req.headers.host ?? "";
