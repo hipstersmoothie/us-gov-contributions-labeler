@@ -29,6 +29,12 @@ const PORT = Number(process.env.PORT ?? 3000);
 /** Rendered PNGs kept in memory, by total size. */
 const CACHE_BYTES = Number(process.env.OG_CACHE_MB ?? 64) * 1024 * 1024;
 
+// A request handler that rejects fails that one request, not the site: by
+// default Node exits, and a crash every few minutes once used up Railway's
+// restarts and kept the site down for two days. (Uncaught exceptions still
+// exit; the service restarts on any exit.)
+process.on("unhandledRejection", (err) => console.error("unhandled rejection:", err));
+
 const renderer = createRenderer(DATA, path.join(DIST, "photos"));
 const fallback = fs.readFileSync(path.join(DIST, "og.png"));
 const mcp = fs.existsSync(path.join(DATA, "mcp.sqlite")) ? createMcp(DATA) : undefined;

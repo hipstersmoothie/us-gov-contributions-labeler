@@ -26,7 +26,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import type http from "node:http";
 import path from "node:path";
-import { Readable } from "node:stream";
+import { Readable, pipeline } from "node:stream";
 import zlib from "node:zlib";
 import { DatabaseSync } from "node:sqlite";
 import { CLIENT_CAPABILITIES_META_KEY, McpServer, acceptedContent, createMcpHandler, inputRequired } from "@modelcontextprotocol/server";
@@ -177,19 +177,32 @@ function query(client: string, request: QueryRequest): Promise<QueryResult> {
       child.kill("SIGKILL");
     }, QUERY_TIMEOUT_MS);
     let result: QueryResult | undefined;
-    child.once("message", (r: QueryResult) => (result = r));
-    child.once("exit", () => {
+    let settled = false;
+    const finish = (fallback: QueryResult) => {
+      if (settled) return;
+      settled = true;
       clearTimeout(timer);
       running--;
       busy.delete(client);
-      resolve(
-        result ??
-          (timedOut
-            ? { error: `The query took longer than ${QUERY_TIMEOUT_MS / 1000} seconds and was stopped. Narrow it with WHERE on an indexed id, or LIMIT.` }
-            : { error: "The query used too much memory and was stopped. Narrow it, or select fewer or smaller columns." })
-      );
-    });
-    child.send(request);
+      resolve(result ?? fallback);
+    };
+    child.once("message", (r: QueryResult) => (result = r));
+    child.once("exit", () =>
+      finish(
+        timedOut
+          ? { error: `The query took longer than ${QUERY_TIMEOUT_MS / 1000} seconds and was stopped. Narrow it with WHERE on an indexed id, or LIMIT.` }
+          : { error: "The query used too much memory and was stopped. Narrow it, or select fewer or smaller columns." }
+      )
+    );
+    // A process that couldn't start, or a closed channel: without a listener, this error would take the server down.
+    const failed = (err: Error | null) => {
+      if (!err) return;
+      console.error("mcp query worker:", err.message);
+      child.kill("SIGKILL");
+      finish({ error: "The query couldn't run; try again in a few seconds." });
+    };
+    child.once("error", failed);
+    child.send(request, failed);
   });
 }
 
@@ -434,7 +447,8 @@ export function createMcp(dir: string) {
         } as RequestInit)
       );
       res.writeHead(response.status, { ...Object.fromEntries(response.headers), ...cors });
-      if (response.body) Readable.fromWeb(response.body as never).pipe(res);
+      // pipeline, not pipe: a client that hangs up mid-stream errors the body, and pipe leaves that error unhandled.
+      if (response.body) pipeline(Readable.fromWeb(response.body as never), res, () => {});
       else res.end();
     } catch (err) {
       console.error("mcp:", err);

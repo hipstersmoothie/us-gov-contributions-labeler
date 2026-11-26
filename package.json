@@ -20,6 +20,7 @@
     "publish-records": "tsx src/publish-records.ts",
     "build-sqlite": "tsx src/build-sqlite.ts",
     "sync-lists": "tsx src/sync-lists.ts",
+    "uptime": "tsx src/uptime.ts",
     "dedupe-labels": "tsx src/scripts/dedupe-labels.ts",
     "photos": "tsx src/scripts/fetch-photos.ts",
     "zip-districts": "tsx src/scripts/zip-districts.ts",
