@@ -49,14 +49,21 @@ export async function serveScript(req: http.IncomingMessage, res: http.ServerRes
 export async function forwardEvent(req: http.IncomingMessage, res: http.ServerResponse) {
   const chunks: Buffer[] = [];
   let size = 0;
-  for await (const chunk of req as AsyncIterable<Buffer>) {
-    size += chunk.length;
-    if (size > MAX_EVENT_BYTES) {
-      res.writeHead(413);
-      res.end();
-      return;
+  try {
+    for await (const chunk of req as AsyncIterable<Buffer>) {
+      size += chunk.length;
+      if (size > MAX_EVENT_BYTES) {
+        res.writeHead(413);
+        res.end();
+        return;
+      }
+      chunks.push(chunk);
     }
-    chunks.push(chunk);
+  } catch {
+    // The visitor left mid-send (a closed tab aborts the beacon); uncaught, this takes the server down.
+    res.writeHead(400);
+    res.end();
+    return;
   }
   // Railway's edge puts the visitor's address first in X-Forwarded-For.
   const forwarded = req.headers["x-forwarded-for"];
