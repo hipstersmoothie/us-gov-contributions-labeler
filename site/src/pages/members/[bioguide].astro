@@ -739,42 +739,27 @@ const ranAs = ran?.race.candidates.find((c) => c.bioguide === m.bioguide);
 
   {
     ind && (
-      <div class="grid-2">
-        <section class="story">
-          <h2>Individual donors by industry</h2>
-          <p class="chart-dek">
-            Estimated from the employer and occupation on {ind.donations.toLocaleString()} itemized donations
-            ({money(ind.itemized, true)}). Donations of $200 or less aren't itemized.
-          </p>
-          <PlotFigure
-            chart="bars"
-            width={500}
-            label="Itemized individual donations by sector"
-            data={{
-              rows: ind.sectors.slice(0, 8).map((s) => ({
-                label: s.id,
-                value: s.total,
-                href: ["Retired", "Not employed", "Unknown"].includes(s.id) ? undefined : `/sectors/${sectorSlug(s.id)}/`,
-              })),
-              total: ind.itemized,
-            }}
-            table={{ columns: ["Sector", "Amount"], numeric: [1], rows: ind.sectors.map((s) => [s.id, money(s.total)]) }}
-          />
-        </section>
-        <section class="story">
-          <h2>Top employers of donors</h2>
-          <p class="chart-dek">Itemized donations from people who listed each employer.</p>
-          <RankedTable
-            heading="Employer"
-            valueHeading="Donated"
-            rows={ind.employers.slice(0, 10).map((e) => ({
-              label: e.organization ? organizationById.get(e.organization)?.name ?? e.name : e.name,
-              value: e.total,
-              href: e.organization ? `/organizations/${e.organization}/` : undefined,
-            }))}
-          />
-        </section>
-      </div>
+      <section class="story">
+        <h2>Individual donors by industry</h2>
+        <p class="chart-dek">
+          Estimated from the employer and occupation on {ind.donations.toLocaleString()} itemized donations
+          ({money(ind.itemized, true)}). Donations of $200 or less aren't itemized.
+        </p>
+        <PlotFigure
+          chart="bars"
+          width={500}
+          label="Itemized individual donations by sector"
+          data={{
+            rows: ind.sectors.slice(0, 8).map((s) => ({
+              label: s.id,
+              value: s.total,
+              href: ["Retired", "Not employed", "Unknown"].includes(s.id) ? undefined : `/sectors/${sectorSlug(s.id)}/`,
+            })),
+            total: ind.itemized,
+          }}
+          table={{ columns: ["Sector", "Amount"], numeric: [1], rows: ind.sectors.map((s) => [s.id, money(s.total)]) }}
+        />
+      </section>
     )
   }
 

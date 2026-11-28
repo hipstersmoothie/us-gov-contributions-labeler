@@ -258,22 +258,6 @@ const description = clip(
         </section>
       )}
 
-      {ind && ind.employers.length > 0 && (
-        <section class="story">
-          <h2>Top employers of donors</h2>
-          <p class="chart-dek">Itemized donations ({ind.donations.toLocaleString()} of them, {money(ind.itemized, true)}) from people who listed each employer. Donations of $200 or less aren't itemized.</p>
-          <RankedTable
-            heading="Employer"
-            valueHeading="Donated"
-            rows={ind.employers.slice(0, 10).map((e) => ({
-              label: e.organization ? organizationById.get(e.organization)?.name ?? e.name : e.name,
-              value: e.total,
-              href: e.organization && organizationById.has(e.organization) ? `/organizations/${e.organization}/` : undefined,
-            }))}
-          />
-        </section>
-      )}
-
       {earlier.length > 0 && (
         <p class="earlier">
           Also ran in{" "}
