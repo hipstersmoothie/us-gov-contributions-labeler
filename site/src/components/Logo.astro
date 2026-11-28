@@ -2,8 +2,17 @@
 // The Donut C wordmark, inlined from design/logo/logo-light.svg so the header
 // follows the theme: its fills map onto the colour tokens (set as styles,
 // since var() isn't reliable in SVG presentation attributes).
+//
+// The outlines are ~13 KB, so a page carries them once: the header's copy
+// names them (#logo-art) and the footer's draws them with <use>.
 import fs from "node:fs";
 import path from "node:path";
+
+interface Props {
+  /** Draw the header's copy instead of inlining another. */
+  reuse?: boolean;
+}
+const { reuse = false } = Astro.props;
 
 const FILLS: Record<string, string> = {
   "#e34948": "var(--party-r)",
@@ -17,7 +26,15 @@ const svg = source
   .replace(/<title>[^<]*<\/title>/, "")
   .replace(/\s(width|height|role|aria-label)="[^"]*"/g, "")
   .replace("<svg ", '<svg class="logo" aria-hidden="true" focusable="false" ')
-  .replace(/fill="(#[0-9a-fA-F]{6})"/g, (_, hex: string) => `style="fill: ${FILLS[hex.toLowerCase()] ?? hex}"`);
+  .replace(/fill="(#[0-9a-fA-F]{6})"/g, (_, hex: string) => `style="fill: ${FILLS[hex.toLowerCase()] ?? hex}"`)
+  .replace(/(<svg[^>]*>)([\s\S]*)<\/svg>/, '$1<g id="logo-art">$2</g></svg>');
+const viewBox = source.match(/viewBox="([^"]*)"/)?.[1];
 ---
 
-<Fragment set:html={svg} />
+{
+  reuse ? (
+    <svg class="logo" aria-hidden="true" focusable="false" viewBox={viewBox}><use href="#logo-art" /></svg>
+  ) : (
+    <Fragment set:html={svg} />
+  )
+}

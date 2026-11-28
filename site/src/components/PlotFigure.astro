@@ -26,9 +26,16 @@ interface Props {
 const { chart, data, width = 1040, label, legend, table } = Astro.props;
 
 const { document } = parseHTML("<!doctype html><html><body></body></html>");
-const el = Plot.plot({ ...charts[chart](data as never, { width, interactive: false }), document } as Plot.PlotOptions) as unknown as Element;
-stripMarkLabels(el);
-const svg = el.outerHTML;
+const render = (w: number) => {
+  const el = Plot.plot({ ...charts[chart](data as never, { width: w, interactive: false }), document } as Plot.PlotOptions) as unknown as Element;
+  stripMarkLabels(el);
+  return el.outerHTML;
+};
+// A wide chart scaled down to a phone is unreadable, so phones get their own
+// render (see the container query below), and only load Plot for the tip.
+const PHONE = 360;
+const statics = [{ w: width, svg: render(width), phone: false }];
+if (width > 480) statics.push({ w: PHONE, svg: render(PHONE), phone: true });
 const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
 ---
 
@@ -45,8 +52,10 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
       </ul>
     )
   }
-  <plot-chart data-width={width}>
-    <div class="canvas" set:html={svg} />
+  <plot-chart>
+    <div class="canvas">
+      {statics.map((s) => <div class:list={["static", { phone: s.phone, wide: statics.length > 1 && !s.phone }]} data-width={s.w} set:html={s.svg} />)}
+    </div>
     <script type="application/json" set:html={json} />
   </plot-chart>
   <slot name="note" />
@@ -110,20 +119,20 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
       const json = this.querySelector('script[type="application/json"]');
       if (!json?.textContent) return;
       this.#spec = JSON.parse(json.textContent);
-      // The build-time SVG is right at its own width; Plot only has to load
-      // for the hover tip, or to redraw at a different width (phones, tablets).
+      // A build-time SVG is right near its own width; Plot only has to load
+      // for the hover tip, or to redraw at a different width (tablets).
       this.addEventListener("pointerenter", () => this.#start(), { once: true });
       this.addEventListener("focusin", () => this.#start(), { once: true });
       new IntersectionObserver(
         ([entry], io) => {
           if (!entry?.isIntersecting) return;
           io.disconnect();
-          if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) settled.then(() => this.#start());
+          if (this.#misfit()) settled.then(() => this.#start());
         },
         { rootMargin: "300px" }
       ).observe(this);
       new ResizeObserver(() => {
-        if (Math.abs(this.clientWidth - Number(this.dataset.width)) > 24) settled.then(() => this.#start());
+        if (this.#misfit()) settled.then(() => this.#start());
         this.#render();
       }).observe(this);
 
@@ -145,6 +154,18 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
       }
       this.addEventListener("pointercancel", () => this.#dismiss());
       this.addEventListener("click", (e) => this.#click(e));
+    }
+
+    /**
+     * Whether the build-time SVG on screen is too far from the chart's width
+     * to scale: 24px for a wide one, ±12% for the phone one, so one render
+     * covers phones from 360 to 430px.
+     */
+    #misfit() {
+      const shown = [...this.querySelectorAll<HTMLElement>(".static")].find((s) => s.getClientRects().length);
+      if (!shown) return false;
+      const target = Number(shown.dataset.width);
+      return Math.abs(this.clientWidth - target) > (shown.classList.contains("phone") ? target * 0.12 : 24);
     }
 
     #start() {
@@ -215,8 +236,12 @@ const json = JSON.stringify({ chart, data }).replace(/</g, "\\u003c");
 
 <style>
   .plot-figure { margin: 0; }
-  plot-chart { display: block; min-width: 0; }
+  plot-chart { display: block; min-width: 0; container-type: inline-size; }
   .canvas :global(svg) { display: block; max-width: 100%; height: auto; --plot-background: var(--surface); }
+  /* The phone render, when there is one, up to 480px wide; scaled up to fill. */
+  .phone :global(svg) { width: 100%; }
+  @container (max-width: 480px) { .wide { display: none; } }
+  @container (min-width: 480.02px) { .phone { display: none; } }
   .canvas :global(a:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
   .canvas :global(svg.is-linked) { cursor: pointer; }
   .canvas :global(svg a) { text-decoration: none; }

@@ -43,6 +43,7 @@ if (!mcp) console.warn(`No ${DATA}/mcp.sqlite: serving without /mcp`);
 const YEAR = "public, max-age=31536000, immutable";
 const DAY = "public, max-age=86400";
 const HOUR = "public, max-age=3600";
+const MONTH = "public, max-age=2592000";
 
 // --- the image cache: an LRU by bytes, plus in-flight renders so two crawlers
 // asking at once share one render ----------------------------------------------------------
@@ -129,9 +130,13 @@ function canonicalPath(pathname: string) {
   return file.startsWith(DIST + path.sep) && fs.existsSync(file) ? dir : undefined;
 }
 
+// Built assets have a content hash in their names. Fonts don't, so a changed
+// font needs a new file name; portraits change about once a Congress.
 // Pages are indexed; the data files and HTML fragments they load aren't.
 const HEADERS = [
   { source: "/_astro/**", headers: [{ key: "Cache-Control", value: YEAR }] },
+  { source: "/fonts/**", headers: [{ key: "Cache-Control", value: YEAR }] },
+  { source: "/photos/**", headers: [{ key: "Cache-Control", value: MONTH }] },
   { source: "/{data,fragments}/**", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
   { source: "/*.json", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
 ];
